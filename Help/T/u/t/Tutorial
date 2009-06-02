@@ -1,0 +1,60 @@
+This is a small '''tutorial''' on how to use the [[mw:Extensions:JHilbert|JHilbert]], the automated proof verifier driving this wiki. We shall prove the statement "two plus two equals four" from a small set of simple axioms.
+
+If you're really, ''really'' impatient, you can skip all the preliminary blah blah and jump right to the [[Interface:Tutorial|implementation of some of the Peano axioms]].
+
+== Why this tutorial? ==
+
+While JHilbert is a relatively simple piece of software compared with other formal logic suites such as [[w:Coq|Coq]] or [[w:Isabelle (theorem prover)|Isabelle]], it is also more complex than most other MediaWiki extensions, so a tutorial to provide a gentle introduction for newcomers seems in order. Besides, most people prefer learning by example (at least initially) to just ingesting the specs.
+
+== Prerequisites ==
+
+In order to reproduce the effects of the JHilbert code in this tutorial, you'll need a MediaWiki installation with the JHilbert extension properly installed and a JHilbert server running on your MediaWiki host. Wikiproofs is such an installation.
+
+== Why <math>2+2=4</math>? ==
+
+So, why choose the statement "<math>2+2=4</math>" for a tutorial? For one, because it's simple! At least it seems so at first glance. Almost all, say, eight-year old children with access to formal education know that <math>2+2=4</math>. On the other hand, it is not natural knowledge. Children have to be taught addition of small integers. It usually doesn't come to them naturally. In this sense, <code>2+2=4</code> is a true cultural achievement.
+
+To illustrate how complicated even a trivial statement like <math>2+2=4</math> can get, check out Norman Megill's [[w:metamath|metamath]] [http://us.metamath.org/mpegif/2p2e4.html proof of <math>2+2=4</math>]. His proof database is founded on very general axioms. The advantage of this is that you can formalise virtually all the fancy stuff mathematicians are working with, such as vector spaces and complex numbers. With all the other proofs here to help, the metamath proof of a simple statement like <math>2+2=4</math> is reasonably short (ten metamath steps). But if you were to unravel the proof back to the initial axioms, you'd have to untangle 2452 subtheorems totalling 25933 steps[http://us.metamath.org/mpegif/mmset.html#trivia]. An awe-inspiring demonstration of the human power of abstraction.
+
+For this tutorial, we will, of course, keep things much, much simpler.
+
+== What is <math>2+2=4</math> anyway? ==
+
+At the beginning of each formalisation is the question what the stuff we're talking about actually ''means''. Per se, <math>2+2=4</math> is just a string of symbols. We recognise four different symbols in this string: <math>2</math>, <math>4</math>, <math>+</math> and <math>=</math>.
+
+The first two symbols, <math>2</math> and <math>4</math>, are instances of ''natural numbers'', that is, the numbers <math>0,1,2,3,4,5,\ldots</math>. (In school, you may have learned that zero does not belong in the natural numbers. While the inclusion of zero implies certain slight variations in the handling of certain definitions, this is effectively just convention. For this tutorial, the natural numbers will contain zero.) Note that this is just one of the simpler explanations for what <math>2</math> and <math>4</math> should mean. We could just as well have stipulated that <math>2</math> and <math>4</math> should be [[w:complex numbers|complex numbers]] (which would clearly go beyond the scope of a tutorial). As there are many natural numbers, we need some way to express which ones are <math>2</math> and <math>4</math>.
+
+The next symbol, <math>+</math>, the symbol for ''addition'', is able to take two natural numbers to make a new one. We might say, <math>+</math> is a ''function'' which enables us to create the ''term'' <math>2+2</math> whose ''value'' is a natural number. Of course, many such functions exist: multiplication, exponentiation, and so on. So we'll have to make the meaning of <math>+</math> precisely clear. Note that <math>2+2</math> is by no means a simplest possible term, as <math>2</math> and <math>4</math> already constitute primitive terms.
+
+The last symbol, <math>=</math>, the symbol for ''equality'', is also able to take two natural numbers, or, more general, two terms whose values are natural numbers to make something new. However, <math>2+2=4</math> is not a term in the sense of arithmetic. Rather, it is a ''formula'': something for which the question "Is it true that …?" makes sense. So, while "Is it true that <math>2+2</math>?" is not a sensible question to ask, "Is it true that <math>2+2=4</math>?" is.
+
+So, let's sum up what we need:
+# A formalisation of the natural numbers, and of formulas involving natural numbers (equality is enough for our purposes).
+# A precise description of the natural numbers <math>2</math> and <math>4</math>.
+# A precise definition of the addition operation.
+
+Sounds difficult to formalise? It is! Fortunately, ''we'' do not need to rack our brains as someone else has already done it for us.
+
+== The Peano axioms ==
+
+:''Some material in this section was taken from the article [[w:Peano axioms|Peano axioms]] from Wikipedia, the free encyclopedia.''
+
+In 1889, Italian mathematician [[w:Guiseppe Peano|Guiseppe Peano]] found the following nine formal statements to describe the natural numbers and equality. For all natural numbers <math>x,y,z</math>:
+
+# <math>x=x</math>.
+# If <math>x=y</math>, then <math>y=x</math>.
+# If <math>x=y</math> and <math>y=z</math>, then <math>x=z</math>.
+# If <math>x=a</math> for some <math>a</math>, then <math>a</math> is a natural number.
+# <math>0</math> is a natural number.
+# There is a [[w:function (mathematics)|function]] <math>\mathrm{succ}</math> (the successor function) such that <math>\mathrm{succ}(x)</math> is a natural number.
+# <math>\mathrm{succ}(x)\neq 0</math>.
+# The function <math>\mathrm{succ}</math> is [[w:Injective function|injective]].
+# If <math>A</math> is a set such that <math>0\in A</math> and for all <math>a\in A</math> we have <math>\mathrm{succ}(a)\in A</math>, then all natural numbers are contained in&nbsp;<math>A</math>.
+
+Addition can then be defined for all natural numbers using the induction principle to which the ninth axiom gives rise: <math>x+0=x</math> and <math>\mathrm{succ}(x+y)=x+\mathrm{succ}(y)</math>, and likewise for the left summand. The number <math>2</math> is simply the successor of the successor of <math>0</math>, and <math>4</math> is defined likewise.
+
+We are going to teach JHilbert (some of) the Peano axioms in the next section. As you can see, we also need concepts like "If … then", "and", "not" and even set theory to implement these axioms. However, to keep things simple, we will not define these concepts but rather emulate them with JHilbert intrinsics where possible, and drop the axioms for which this is not easily possible. The remaining axioms will be enough to prove that <math>2+2=4</math>.
+
+:''This tutorial continues in the Interface namespace: [[Interface:Tutorial]]''
+
+[[Category:Tutorial]]
