@@ -1,8 +1,28 @@
-<big>'''MediaWiki has been successfully installed.'''</big>
+__NOTOC__ __NOEDITSECTION__
+<div class="mainpage">
+{| id="titlebox"
+|-
+<div id="welcome">
+<div id="welcomeheader">
+Welcome to '''Wikiproofs'''
+</div>
+<div id="welcomefooter">
+the '''free''' repository of '''automatically verified proofs'''<br />
+to which '''anyone can contribute'''.
+</div>
+* [[Wikiproofs:Subject index|Subject index]]
+* [[Wikiproofs:JHilbert|Verifier development]]
+</div>
+|-
+----
+'''[[Wikiproofs:About|Wikiproofs]]''' is an online repository of [[Wikiproofs:Copyright policy|free]] [[w:formal system|formalisations]]. It is possible to [[w:deductive reasoning|reason]] within such a formalisation, that is, to put forth statements and write formal proofs for some of them. These proofs are immediately verified upon submission by an automated proof verifier. The largest domain of human reasoning is [[w:mathematics|mathematics]], but Wikiproof's underlying proof verifier is sufficiently generic to allow for other formal systems as well.
+|}
+[[Image:Zeichen 123.svg|100px|left]] Everything is still pretty much under construction. If you're intrigued, stop by in the [[Wikiproofs:tearoom|tearoom]], the central place of discussion.
+</div>
 
-Consult the [http://meta.wikimedia.org/wiki/Help:Contents User's Guide] for information on using the wiki software.
+== Links of interest ==
 
-== Getting started ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]
+* [[mw:Extension:JHilbert|JHilbert extension]]. JHilbert is the proof verifier behind Wikiproofs.
+* [http://wiki.planetmath.org/AsteroidMeta/JHilbert JHilbert page on AsteroidMeta]
+* [http://www.mathi.uni-heidelberg.de/~alex/jhilbert JHilbert download page]
+* [http://us.metamath.org Metamath], a (non-wiki) site similar in spirit to Wikiproofs.
