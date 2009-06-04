@@ -1,3 +1,52 @@
-[[Image:Zeichen 123.svg|100px]] This page needs to be written.
+Wikiproofs is a public, collaborative project. In order to fulfil its operational needs, a certain amount of personally identifiable information is collected, stored and processed. This page lists in detail what kind of possibly personally identifiably data is collected, stored and processed, what this data is used for, who has access to it, and how long the data is retained.
+
+== All users ==
+
+The underlying server software (but not the wiki software) collects and stores the following data for each request:
+* the [[w:Internet Protocol|Internet Protocol]] (IP) address from which the request originated,
+* the host through which the site was accessed (normally <code>www.wikiproofs.de</code>),
+* date and time of the request,
+* the request string,
+* the server response code and response size,
+* the [[w:HTTP referrer|HTTP referrer]],
+* the [[w:user agent|user agent]].
+This data is used for maintenance and debugging purposes only. Only the site operator has access to it. Each dataset is deleted from the server after a few days.
+
+The wiki software asks the browser to store [[w:Cookie (browser)|session cookies]]. They are stored on the user's machine, not on the server. Users may choose to reject these cookies. The cookies are only required for logging in and editing. The wiki software asks the browser to keep the cookies only for a limited time since the last visit of Wikiproofs. This time limit does not exceed thirty days. Since cookie data is stored on the user's machine, it is the user's responsibility to protect it from third party access. On a public computer it is advisable to clear all session cookies after concluding usage of Wikiproofs.
+
+== Readers ==
+
+Readers are users who use the Wikiproofs site for browsing only. They do not partake in editing or similar actions which alter the state of the wiki.
+
+The wiki software of the Wikiproofs site does not store any personally identifiable information of Readers other than the information pertaining to all users as described in the previous section.
+
+== Registered users ==
+
+Everyone who has not been banned has the option of registering a user account with Wikiproofs. Upon registering, the respective user name and password hash are stored on the server. Upon each login, identification information is stored in the session cookies (see above). Therefore, registered users must not deny the session cookies, as otherwise login will fail.
+
+Associated with each registered user is a set of preferences (stored on the server), which each user may optionally set or alter. Some of these preferences contain personally identifiable information:
+* Users may elect to disclose their real name, which is then publicly associated with their contributions in perpetuity.
+* Users may elect to disclose their e-Mail address to use the various email functions of the wiki. The e-Mail address is not normally disclosed to other users of the wiki or even the general public. However, when user A uses the wiki e-Mail feature to write a message to user B, user B gains knowledge of A's e-Mail address (though not vice-versa).
+* Users' signatures are publicly visible whenever they sign a contribution with three or four tildes.
+
+A list of all registered users, along with their status (autoconfirmed, administrator, etc.) is publicly available through [[Special:ListUsers]].
+
+All user contributions are publicly recorded along with user name, date and time in page histories and possibly logs for perpetuity, as lies in the nature of a public wiki project.
+
+== Anonymous users ==
+
+It is possible to partake in editing and possibly other actions which alter the state of the wiki without being logged in. As for the data collected, the same rules as for registered users also apply to anonymous users, with the following provision: since the wiki does not know a user name for an anonymous user, that user's IP address is used instead of the user name. This means that the IP addresses of anonymous editors are publicly visible for perpetuity. For best protection of personally identifiable information, it is therefore advisable to register.
+
+== Exceptional cases ==
+
+Wikiproofs does not regularly collect, store, process or disclose personally identifiable information other than described above. However, exceptions may be made in the following situations:
+* with permission of the affected user,
+* in response to a compulsory legal request from the authorities,
+* in imminent danger, self-defense, emergency or other valid legal excuse,
+* where the user has been persistently vandalising articles or otherwise acting in a disruptive way, data may be released to a third-party (such as an ISP's abuse department) to assist in complaint formulation. Likewise, data may be released if Wikiproofs ''receives'' a valid complaint from a third party, as long as such a release is legal.
+
+== Disclaimer ==
+
+Wikiproofs cannot guarantee that visitors do not use data mining, correlation approaches or other advanced attacks on privacy which may result in disclosure of personally identifiable information other than described above. Wikiproofs strongly discourages such practices.
 
 [[Category:Wikiproofs]]
