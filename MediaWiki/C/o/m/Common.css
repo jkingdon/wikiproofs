@@ -3,8 +3,7 @@
 /**
  * Main page
  */
-.page-Main_Page .firstHeading,
-.page-Main_Page #siteSub {
+.page-Main_Page .firstHeading, .page-Main_Page #siteSub {
 	display:none;
 }
 
@@ -40,6 +39,19 @@
         left:50%;
         position:absolute;
         top:0px;
+}
+
+/**
+ * Shortcut layout (if a shortcut exists)
+ * float and clear are controlled by the shortcut template
+ */
+#shortcut {
+        background:white;
+        border:1px solid gray;
+        font-size:smaller;
+        margin:0px 0px 0.5em 1ex;
+        padding:5px;
+        text-align:center;
 }
 
 /* </pre> */
