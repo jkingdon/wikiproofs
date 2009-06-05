@@ -1,12 +1,12 @@
 __NOTOC__ __NOEDITSECTION__
 <div class="mainpage">
-{| id="titlebox"
+{| class="titlebox"
 |-
-<div id="welcome">
-<div id="welcomeheader">
+| <div class="welcome">
+<div class="welcomeheader">
 Welcome to '''Wikiproofs'''
 </div>
-<div id="welcomefooter">
+<div class="welcomefooter">
 the '''free''' repository of '''automatically verified proofs'''<br />
 to which '''anyone can contribute'''.
 </div>
@@ -14,6 +14,7 @@ to which '''anyone can contribute'''.
 * [[Wikiproofs:JHilbert|Verifier development]]
 </div>
 |-
+|
 ----
 '''[[Wikiproofs:About|Wikiproofs]]''' is an online repository of [[Wikiproofs:Copyright policy|free]] [[w:formal system|formalisations]]. It is possible to [[w:deductive reasoning|reason]] within such a formalisation, that is, to put forth statements and write formal proofs for some of them. These proofs are immediately verified upon submission by an automated proof verifier. The largest domain of human reasoning is [[w:mathematics|mathematics]], but Wikiproof's underlying proof verifier is sufficiently generic to allow for other formal systems as well.
 |}
