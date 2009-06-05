@@ -7,25 +7,25 @@
         position:static;
 }
 
-.mainpage #titlebox {
-        background-color:#f1f5fc;
-        border:1px solid #569BBB;
+.mainpage .titlebox {
+        background-color:#f1f6fc;
+        border:1px solid #56a8fc;
         margin:0em 0em 1em 0em;
         padding-left:2em;
         width:100%;
 }
 
-.mainpage #welcome {
+.mainpage .welcome {
         float:left;
         padding-right:7em;
 }
 
-.mainpage #welcome-header {
+.mainpage .welcome-header {
         font-size:200%;
         padding-bottom:0.15em;
 }
 
-.mainpage #welcome-footer {
+.mainpage .welcome-footer {
         font-size:75%;
 }
 
