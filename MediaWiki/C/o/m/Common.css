@@ -1,0 +1,32 @@
+/* <pre>CSS placed here will be applied to all skins */
+
+/**
+ * Main page
+ */
+.mainpage {
+        position:static;
+}
+
+.mainpage #titlebox {
+        background-color:#f1f5fc;
+        border:1px solid #569BBB;
+        margin:0em 0em 1em 0em;
+        padding-left:2em;
+        width:100%;
+}
+
+.mainpage #welcome {
+        float:left;
+        padding-right:7em;
+}
+
+.mainpage #welcome-header {
+        font-size:200%;
+        padding-bottom:0.15em;
+}
+
+.mainpage #welcome-footer {
+        font-size:75%;
+}
+
+/* </pre> */
