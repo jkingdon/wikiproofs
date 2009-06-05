@@ -12,7 +12,7 @@
 }
 
 .mainpage .titlebox {
-        background-color:#f1f6fc;
+        background:#f1f6fc;
         border:1px solid #56a8fc;
         margin:0em 0em 2ex 0em;
         padding:0.5ex 0.5em 0.5ex 0.5em;
@@ -49,9 +49,47 @@
         background:white;
         border:1px solid gray;
         font-size:smaller;
+        font-weight:bolder;
         margin:0px 0px 0.5em 1ex;
         padding:5px;
         text-align:center;
+}
+
+/**
+ * Header layout
+ */
+#header {
+        border:1px solid black;
+        width:100%;
+}
+
+#header .main {
+        background:#f1f6fc;
+        position:relative;
+        width:100%;
+}
+
+#header .left {
+        position:absolute;
+        text-align:left;
+}
+
+#header .title {
+        left:20%;
+        position:absolute;
+        text-align:center;
+        width:60%;
+}
+
+#header .right {
+        left:80%;
+        position:absolute;
+        text-align:right;
+        width:20%;
+}
+
+#header .notes {
+        background:#fafafa;
 }
 
 /* </pre> */
