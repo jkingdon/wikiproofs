@@ -11,7 +11,6 @@
         background-color:#f1f6fc;
         border:1px solid #56a8fc;
         margin:0em 0em 1em 0em;
-        padding-left:2em;
         width:100%;
 }
 
@@ -20,12 +19,12 @@
         padding-right:7em;
 }
 
-.mainpage .welcome-header {
+.mainpage .welcomeheader {
         font-size:200%;
         padding-bottom:0.15em;
 }
 
-.mainpage .welcome-footer {
+.mainpage .welcomefooter {
         font-size:75%;
 }
 
