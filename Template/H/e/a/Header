@@ -1,0 +1,44 @@
+<div id="header">
+<div class="main">
+<span class="left">{{{previous|}}}</span><span class="title">'''{{{title|{{SUBPAGENAME}}}}}''' {{{section|}}}</span><span class="right">{{{next|}}}</span>
+</div>
+{{#if:{{{shortcut|}}}{{{notes|}}}|<div class="notes">
+{{#if:{{{shortcut|}}}|{{shortcut|{{{shortcut}}}}}}}{{{notes|}}}
+</div>}}
+</div><noinclude>Usage:
+<pre>{{header
+ | title    = 
+ | subtitle =
+ | left     = 
+ | right    = 
+ | shortcut =
+ | notes    =  
+}}</pre>
+
+Parameters are as follows:
+* <code>title</code>: Title of the page, filled in from the page title by default.
+* <code>subtitle</code>: For substructuring a document spread over multiple pages (a chapter number for example). Optional.
+* <code>left</code> and <code>right</code>: stuff to display left and right of the title, such as chapter navigation links. Optional.
+* <code>shortcut</code>: A short cut to the page. Will be displayed in the ''Notes'' section. Optional.
+* <code>notes</code>: Additional notes. Optional.
+
+Example usage:
+<pre>{{header
+ | title    = Logic
+ | subtitle = Propositional Calculus
+ | left     = left
+ | right    = right
+ | shortcut =
+ | notes    = Blah.
+}}</pre>
+{{header
+ | title    = Logic
+ | subtitle = Propositional Calculus
+ | left     = left
+ | right    = right
+ | shortcut =
+ | notes    = Blah.
+}}
+
+[[Category:Templates]]
+</noinclude>
