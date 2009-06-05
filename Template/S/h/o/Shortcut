@@ -1,0 +1,9 @@
+<div id="shortcut" class="noprint" style="float:{{{float|right}}};clear:{{{clear|right}}}">
+[[:Category:Shortcuts|Shortcut]]:<br />{{{1}}}
+</div><noinclude>
+Use this template to display a short cut on the page. It has one unnamed, mandatory parameter, the link(s) to the short cut(s). Do not use this template more than once on a page.
+
+By default, the template floats to the right. This behaviour can be changed with the named <code>float</code> and <code>clear</code> [[w:CSS|CSS]] parameters.
+
+[[Category:Templates|Shortcut]]
+</noinclude>
