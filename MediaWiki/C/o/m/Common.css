@@ -15,7 +15,7 @@
 .mainpage .titlebox {
         background-color:#f1f6fc;
         border:1px solid #56a8fc;
-        margin:0em 0em 1em 0em;
+        margin:0em 0em 2ex 0em;
         width:100%;
 }
 
@@ -26,11 +26,12 @@
 
 .mainpage .welcomeheader {
         font-size:200%;
-        padding-bottom:0.15em;
+        margin-top:-1ex;
 }
 
 .mainpage .welcomefooter {
-        font-size:75%;
+        font-size:90%;
+        margin-top:-3ex;
 }
 
 /* </pre> */
