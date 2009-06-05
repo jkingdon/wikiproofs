@@ -3,6 +3,11 @@
 /**
  * Main page
  */
+.page-Main_Page .firstHeading,
+.page-Main_Page #siteSub {
+	display:none;
+}
+
 .mainpage {
         position:static;
 }
