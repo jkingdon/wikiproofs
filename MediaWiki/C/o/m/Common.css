@@ -16,22 +16,30 @@
         background-color:#f1f6fc;
         border:1px solid #56a8fc;
         margin:0em 0em 2ex 0em;
-        width:100%;
+        padding:0.5ex 0.5em 0.5ex 0.5em;
+        width:98%;
+}
+
+.mainpage .boxtop {
+        position:relative;
 }
 
 .mainpage .welcome {
-        float:left;
-        padding-right:7em;
+        position:absolute;
 }
 
 .mainpage .welcomeheader {
         font-size:200%;
-        margin-top:-1ex;
 }
 
 .mainpage .welcomefooter {
         font-size:90%;
-        margin-top:-2ex;
+}
+
+.mainpage .tblinks {
+        left:50%;
+        position:absolute;
+        top:0px;
 }
 
 /* </pre> */
