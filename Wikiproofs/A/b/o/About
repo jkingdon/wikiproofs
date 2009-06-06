@@ -1,0 +1,14 @@
+{{header
+ | title    = About Wikiproofs
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = [[WP:ABOUT]]
+ | notes    = 
+}}
+
+'''Wikiproofs''' is a repository of [[w:automated proof checking|automatically verified proofs]]. The project is collaborative in nature, meaning that anyone can add new content or improve existing proofs. The content of Wikiproofs is also [[w:free content|free]] in the sense that anyone can distribute or modify the textual contents of Wikiproofs under the terms of the [http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons Attribution-Share Alike 3.0 Unported Licence].
+
+The goal of Wikiproofs is to collect both formal and informal proofs of all important theorems of mathematics, formal logic and possibly other formalisable systems. For this purpose, Wikiproofs is backed by [[mw:Extension:JHilbert|JHilbert]], a very simple and flexible proof verifier.
+
+[[Category:Wikiproofs|About]]
