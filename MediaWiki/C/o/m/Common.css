@@ -86,4 +86,48 @@
         width:100%;
 }
 
+/**
+ * JHilbert output
+ */
+.jhilbert {
+        background:#eeeeee;
+        border:1px solid gray;
+        font-family:monospace;
+        font-style:normal;
+        font-weight:normal;
+}
+
+.jhilbert .comment {
+        color:silver;
+}
+
+.jhilbert .keyword {
+        font-weight:bold;
+}
+
+.jhilbert .kind {
+        color:lime;
+}
+
+.jhilbert .label {
+        color:olive;
+}
+
+.jhilbert .locator {
+        color:blue;
+        text-decoration:underline;
+}
+
+.jhilbert .param {
+        color:maroon;
+}
+
+.jhilbert .stat {
+        color:fuchsia;
+}
+
+.jhilbert .var {
+        font-style:italic;
+}
+
 /* </pre> */
