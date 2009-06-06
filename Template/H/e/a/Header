@@ -13,11 +13,11 @@
 Usage:
 <pre>{{header
  | title    = 
- | subtitle =
+ | subtitle = 
  | left     = 
  | right    = 
- | shortcut =
- | notes    =  
+ | shortcut = 
+ | notes    = 
 }}</pre>
 
 Parameters are as follows:
