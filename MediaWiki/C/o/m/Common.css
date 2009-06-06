@@ -58,37 +58,37 @@
 /**
  * Header layout
  */
-#header {
+#headertemplate {
         border:1px solid black;
         width:100%;
 }
 
-#header .main {
+#headertemplate .main {
         background:#f1f6fc;
         position:relative;
         width:100%;
 }
 
-#header .left {
+#headertemplate .left {
         position:absolute;
         text-align:left;
 }
 
-#header .title {
+#headertemplate .title {
         left:20%;
         position:absolute;
         text-align:center;
         width:60%;
 }
 
-#header .right {
+#headertemplate .right {
         left:80%;
         position:absolute;
         text-align:right;
         width:20%;
 }
 
-#header .notes {
+#headertemplate .notes {
         background:#fafafa;
 }
 
