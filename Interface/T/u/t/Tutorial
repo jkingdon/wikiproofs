@@ -17,24 +17,28 @@ Next, we want to teach JHilbert the first four Peano axioms, that is, the axioms
 The <code>term</code> command here defines the new symbol "=". This new symbol can now be used to create expressions from two natural numbers, such as <code>(= x y)</code>. Hmm, shouldn't that be <code>(x = y)</code>? In fact, both are possible. JHilbert makes no assumption where orders of symbols, like operators and relation symbols, are a matter of convention, depending on the symbol itself. The "natural" order for JHilbert is [[w:Polish notation|Polish notation]], but you can place the term symbol (here the equal sign) later '''if''' you don't have a variable with the same name as otherwise the term symbol will "shadow" the variable. If don't use Polish notation, JHilbert will reorder the expression internally. The <code>formula</code> identifier of the <code>term</code> command tells JHilbert that expressions with <code>=</code> are of kind "formula". Now we can state the equality axioms:
 <jh>stmt (eqreflexive () () (x = x)) # 1st Peano axiom
 stmt (eqsymmetric () ((x = y)) (y = x)) # 2nd Peano axiom
-stmt (eqtransitive () ((x = y) (y = z)) (x = z)) # 3rd Peano axiom</jh>
+stmt (eqtransitive () ((x = y) (y = z)) (x = z)) # 3rd Peano axiom
+</jh>
 These are the first three Peano axioms, which we have given the names <code>eqreflexive</code>, <code>eqsymmetric</code> and <code>eqtransitive</code> respectively. The empty bracket after their names are for disjoint variable constraints, which are beyond the scope of this tutorial. Then, there follow the hypotheses required to invoke the statements later in proofs. The first Peano axioms does not have any hypotheses (empty bracket), the second has one hypothesis, and the third Peano axiom has two hypotheses. Finally, the <code>stmt</code> commands are concluded with the consequents of the statement. Remember that the variables, such as <code>x</code>, are just placeholders for any natural numbers. So <code>eqreflexive</code> yields, not only <code>(x = x)</code> but also <code>(y = y)</code> and (once we have defined addition) <code>((x + x) = (x + x))</code>. It does ''not'' yield <code>(y = z)</code> as the same variables must be replaced with the same expressions (proper substitution). It does not yield <code>((y = z) = (y = z))</code> either, because, while we have the same expression, <code>(y = z)</code> twice, it is not of the right kind ("formula" vs. "nat").
 
 And what about the fourth axiom? Well, in the small universe we have been teaching JHilbert, there are only equations between natural numbers. So we do not need to specifically state the fourth axiom. One could also say that the fourth axiom is implied by the definition of <code>=</code>.
 
 Next, we define our very first natural number, zero:
-<jh>term (nat (0)) # 5th Peano axiom</jh>
+<jh>term (nat (0)) # 5th Peano axiom
+</jh>
 Neat, huh? Compare this with the definition of <code>=</code>. Just like <code>=</code>, <code>0</code> is a JHilbert term symbol, but this one doesn't take any expressions to make a <code>nat</code>, it just ''is'' a <code>nat</code>. We call such terms ''constants''.
 
 Next, we define the successor function:
 <jh>term (nat (succ nat)) # 6th Peano axiom, a
-stmt (succfunc () ((x = y)) ((succ x) = (succ y))) # 6th Peano axiom, b</jh>
+stmt (succfunc () ((x = y)) ((succ x) = (succ y))) # 6th Peano axiom, b
+</jh>
 To encode the sixth axiom, we needed two commands. One <code>term</code> to introduce the successor function, and one <code>stmt</code> to establish that <code>succ</code> is actually a function (i.e., application of <math>\mathrm{succ}</math> to the same values always yields the same results).
 
 The seventh Peano axiom says that zero is not the successor of any natural number. As we have no concept for "not" handy right now, we just ignore the seventh axiom, to keep matters simple for this tutorial. The axiom is not needed to prove <math>2+2=4</math>.
 
 The eighth axiom is just the reverse of the <code>succfunc</code> statement:
-<jh>stmt (succinj () (((succ x) = (succ y))) (x = y)) # 8th Peano axiom</jh>
+<jh>stmt (succinj () (((succ x) = (succ y))) (x = y)) # 8th Peano axiom
+</jh>
 
 The ninth axiom would require some kind of set theory, so we ignore this axiom as well.
 
