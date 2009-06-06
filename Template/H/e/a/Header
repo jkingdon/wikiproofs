@@ -1,11 +1,16 @@
-<div id="header">
-<div class="main">
-<span class="left">{{{previous|}}}</span><span class="title">'''{{{title|{{SUBPAGENAME}}}}}''' {{{section|}}}</span><span class="right">{{{next|}}}</span>
-</div>
-{{#if:{{{shortcut|}}}{{{notes|}}}|<div class="notes">
-{{#if:{{{shortcut|}}}|{{shortcut|{{{shortcut}}}}}}}{{{notes|}}}
-</div>}}
-</div><noinclude>Usage:
+<div id="headertemplate">
+{| class="main"
+|-
+| class="left" | {{{left|}}}
+| class="title" | '''{{{title|{{SUBPAGENAME}}}}}''' {{{subtitle|}}}
+| class="right" | {{{right|}}}
+|}
+{| class="notes"
+|- 
+| {{#if:{{{shortcut|}}}|{{shortcut|{{{shortcut}}}}}}}{{{notes|}}}
+|}
+</div><noinclude>
+Usage:
 <pre>{{header
  | title    = 
  | subtitle =
@@ -28,7 +33,7 @@ Example usage:
  | subtitle = Propositional Calculus
  | left     = left
  | right    = right
- | shortcut =
+ | shortcut = SC
  | notes    = Blah.
 }}</pre>
 {{header
@@ -36,7 +41,7 @@ Example usage:
  | subtitle = Propositional Calculus
  | left     = left
  | right    = right
- | shortcut =
+ | shortcut = SC
  | notes    = Blah.
 }}
 
