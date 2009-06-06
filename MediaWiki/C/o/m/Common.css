@@ -52,44 +52,38 @@
         font-weight:bolder;
         margin:0px 0px 0.5em 1ex;
         padding:5px;
-        text-align:center;
 }
 
 /**
  * Header layout
  */
-#headertemplate {
-        border:1px solid black;
-        width:100%;
-}
-
 #headertemplate .main {
         background:#f1f6fc;
-        position:relative;
-        width:100%;
-}
-
-#headertemplate .left {
-        position:absolute;
-        text-align:left;
+        border:1px solid blue;
+        margin-bottom:0.5ex;
+        text-align:center;
+        width:100%
 }
 
 #headertemplate .title {
-        left:20%;
-        position:absolute;
         text-align:center;
         width:60%;
 }
 
+#headertemplate .left {
+        text-align:left;
+        width:20%
+}
+
 #headertemplate .right {
-        left:80%;
-        position:absolute;
         text-align:right;
         width:20%;
 }
 
 #headertemplate .notes {
         background:#fafafa;
+        border-bottom:1px solid black;
+        width:100%;
 }
 
 /* </pre> */
