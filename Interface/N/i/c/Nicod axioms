@@ -1,0 +1,50 @@
+{{header
+ | title    = Nicod axioms
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The Nicod axioms are an axiomatic system for propositional logic requiring only two axioms to prove all true statements of classical propositional logic.
+}}
+
+The Nicod axioms, named for [[w:Jean Nicod|Jean Nicod]], are an especially spartan axiomatic system for [[w:propositional logic|propositional logic]], yet strong enough to derive all true statements. Nicod introduced it in his article [[s:A Reduction in the number of the Primitive Propositions of Logic|A Reduction in the number of the Primitive Propositions of Logic]].
+
+Nicod makes use of a discovery by [[w:Henry Sheffer|Henry Sheffer]] that all the logical truth functions can be expressed through a single one, the [[w:Sheffer stroke|Sheffer stroke]] <math>\vert</math>, which classically means either [[w:Logical NAND|Logical NAND]] or [[w:Logical NOR|Logical NOR]]. Nicod defines the four classical truth functions negation, implication, disjunction and conjunction in terms of the version of the Sheffer stroke with the NAND meaning.
+
+Let us first define well-formed formulas just as in [[Interface:Principia Mathematica propositional logic|Principia Mathematica]], with <math>p,q,r,s,t</math> as placeholders.
+<jh>
+kind (wff)
+var (wff p q r s t)
+</jh>
+
+== Truth functions ==
+
+The basic truth function of the Nicod system is the Sheffer stroke <math>\vert</math>:
+<jh>
+term (wff (| wff wff))
+</jh>
+Through the Sheffer stroke, negation <math>\neg</math>, implication <math>\rightarrow</math>, disjunction <math>\vee</math>, and conjunction <math>\wedge</math> can be defined:
+<jh>
+def ((¬ p) (p | p))
+def ((→ p q) (p | (q | q)))
+def ((∨ p q) ((p | p) | (q | q)))
+def ((∧ p q) ((p | q) | (p | q)))
+</jh>
+
+== Nicod's axioms ==
+
+Just as Principia, Nicod's system requires some rule of detachment. It is as follows:
+<jh>
+stmt (applyRule () (p (p | (q | r))) r)
+</jh>
+Note that if <math>q</math> were replaced by <math>r</math> in this rule, it would just be the classical [[w:modus ponens|modus ponens]]. Note that if <math>p</math> is true, then <math>p\vert(q\vert r)</math> can only be true, if both <math>q</math> and <math>r</math> are true, so the rule is sound as it stands, despite <math>q</math> not appearing in the consequent.
+
+The only further axiom, called the ''Prop'' for proposition, is as follows.
+<jh>
+stmt (Prop () () ((p | (q | r)) | ((t | (t | t)) | ((s | q) | (¬ (p | s))))))
+</jh>
+This is basically a generalised form of a combination of the Principia ''Identity'' <math>p\rightarrow p</math> and ''Syllogism'' <math>(p\rightarrow q)\rightarrow((q\rightarrow s)\rightarrow(p\rightarrow s))</math>.
+
+These two axioms are sufficient to derive all true formulas of classical propositional logic.
+
+[[Category:Classical propositional logic|Nicod axioms]]
