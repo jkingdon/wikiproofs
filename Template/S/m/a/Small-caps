@@ -1,0 +1,18 @@
+<includeonly><span style="font-variant:small-caps">{{{1}}}</span></includeonly><noinclude>
+
+Usage:
+<pre>
+{{small-caps|text}}
+</pre>
+
+This template renders text in small caps. Example:
+<pre>
+{{small-caps|Large and Small}}
+</pre>
+gives: {{small-caps|Large and Small}}.
+
+You can use <code><nowiki>{{sc|text}}</nowiki></code> as an abbreviation.
+
+[[Category:Templates]]
+
+</noinclude>
