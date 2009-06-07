@@ -1,0 +1,37 @@
+{{header
+ | title    = Principia Mathematica
+ | subtitle = Propositional Logic
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = This interface defines the "primitive ideas" (axioms) making up the propositional logic part of the [[w:Principia Mathematica|Principia Mathematica]]<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref>.
+}}
+
+== Well-formed formulas ==
+
+We first introduce the kind of [[w:well-formed formula|well-formed formula]]s, abbreviated as "wff". This kind subsumes the Principia Mathematica concepts of elementary and non-elementary propositions and, due to the recursive nature of JHilbert, propositional functions as well. We also introduce three variables, <math>p,q,r</math>, as placeholders for wffs.
+<jh>
+kind (wff)
+var (wff p q r)
+</jh>
+
+== Logical connectives ==
+
+Of the standard five [[w:logical connective|logical connective]]s of classical propositional logic, Principia requires only [[w:disjunction|disjunction]] (<math>\vee</math>-symbol) and [[w:implication|implication]] (<math>\rightarrow</math>-symbol) for its axioms. However, disjunction and [[w:negation|negation]] (<math>\neg</math>-symbol) are actually used as primitive logical connective. Implication is defined from them:
+<jh>
+term (wff (¬ wff)) # Negation
+term (wff (∨ wff wff)) # Disjunction
+def ((→ p q) ((¬ p) ∨ q)) # Implication, *1.01
+</jh>
+
+== The axioms ==
+
+We are now in the position to state the six axioms for propositional logic of Principia (five, if you don't count the rule of detachment).
+
+[[Image:Zeichen 123.svg|100px|left]] ''This section is still incomplete''
+
+== References ==
+
+<references />
+
+[[Category:Classical propositional logic]]
