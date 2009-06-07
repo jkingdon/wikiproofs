@@ -1,0 +1,18 @@
+[http://msc2010.org Mathematics Subject Classification]:
+
+'''{{{1}}}''' {{{2}}}
+
+The Mathematics Subject Classification (MSC2010) is a five-digit classification scheme for mathematical works formulated by the [http://www.ams.org/ American Mathematical Society].<noinclude>
+
+Usage:
+<pre>
+{{msc2010|five-digit-code|subject}}
+</pre>
+
+This template should be used on category pages, for example
+<pre>
+{{msc2010|03B05|Classical propositional logic}}
+</pre>
+
+[[Category:Templates]]
+</noinclude>
