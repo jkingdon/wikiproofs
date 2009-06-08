@@ -45,6 +45,10 @@ stmt (Prop () () ((p | (q | r)) | ((t | (t | t)) | ((s | q) | (¬ (p | s))))))
 </jh>
 This is basically a generalised form of a combination of the Principia ''Identity'' <math>p\rightarrow p</math> and ''Syllogism'' <math>(p\rightarrow q)\rightarrow((q\rightarrow s)\rightarrow(p\rightarrow s))</math>.
 
-These two axioms are sufficient to derive all true formulas of classical propositional logic.
+These two axioms are sufficient to derive all true formulas of classical propositional logic. However, one should mention that proving the Principia axioms from the ''Prop'' and the above rule detachment is not as easy a matter as Nicod imagined. For in both the Principia, implication are derived concepts. In Principia, implication is derived from negation and disjunction, while Nicod naturally derives it from the Sheffer stroke. Unfortunately, these two derivations are not compatible. This gap was first noticed by B.&nbsp;A.&nbsp;Bernstein<ref>{{sc|B. A. Bernstein}}, Remarks on Nicod's reduction of Principia Mathematica, ''J. Symbolic Logic'' '''2''' no.&nbsp;4, 1937.</ref>.
+
+== References ==
+
+<references />
 
 [[Category:Classical propositional logic|Nicod axioms]]
