@@ -1,8 +1,12 @@
 == TODO ==
-* [[MediaWiki:Common.css]]
-* CharInsert stuff
-* [[Wikiproofs:About]]
-* [[Wikiproofs:Tearoom]]
-* [[Wikiproofs:Copyrights]]
-* Header templates
-* Propositional logic
+* Main page: some "featured piece"
+* Main page: more JHilbert info
+* Help pages: JHilbert manual
+* Redesign of JHilbert with associativity and precedence
+* Propositional logic:
+** The several Łukasiewicz axiom systems: two Sheffer systems, and the three-proposition classical propositional calculus
+** Wajsberg's axiom
+** Possibly some of Branden Fitelson's [http://fitelson.org/ar.html stuff]?
+** Meredith
+** "Standard propositional calculus", as a toolbox for further developments
+* First-order logic
