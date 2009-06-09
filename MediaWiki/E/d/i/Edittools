@@ -1,6 +1,12 @@
 <!-- Text here will be shown below edit and upload forms. -->
 <div id="specialchars">
-<p class="specialbasic" id="Logic">
+<p class="specialbasic" id="Logic symbols">
 <charinsert>⊤ ⊥ ¬ ∧ ∨ → ↔ ∀ ∃</charinsert>
+</p>
+
+<p class="specialbasic" id="Greek letters"><!-- Should be from #1D400 onwards, but many fonts and browsers don't correctly render characters beyond the BMP yet-->
+<charinsert>Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω</charinsert>
+<br />
+<charinsert>α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω</charinsert>
 </p>
 </div>
