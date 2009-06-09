@@ -83,6 +83,7 @@
 #headertemplate .notes {
         background:#fafafa;
         border-bottom:1px solid black;
+        margin-bottom:1ex;
         width:100%;
 }
 
