@@ -74,12 +74,19 @@ thm (Permutation () () ((s | p) | (¬ (p | s))) (
         applyRule
 ))
 </jh>
+Very often, we will need a simple permutation of a result just derived. It is therefore worthwhile to introduce the following permutation rule:
+<jh>
+thm (permute () ((H (s | p))) (p | s) (
+        H
+        s p Permutation
+        applyRule
+))
+</jh>
 By permuting the identity, we get
 <jh>
 thm (Tautology () () (((p | p) | (p | p)) | (p | p)) (
         (p | p) Id
-        (p | p) ((p | p) | (p | p)) Permutation
-        applyRule
+        permute
 ))
 </jh>
 Finally, we prove the following addition law:
@@ -93,8 +100,7 @@ We first push an ''Id'' on the stack as we shall need it in a minute:
 Now, by permuting ''Permutation'',
 <jh>
         (s | s) p Permutation
-        ((s | s) | p) (¬ (p | (s | s))) Permutation
-        applyRule
+        permute
 </jh>
 we arrive at <math>(\neg(p\vert(s\vert s)))\vert((s\vert s)\vert p)</math>. Using this with the ''Prop'',
 <jh>
@@ -104,7 +110,76 @@ we arrive at <math>(\neg(p\vert(s\vert s)))\vert((s\vert s)\vert p)</math>. Usin
 we get <math>(s\vert(s\vert s))\vert(\neg((\neg(p\vert(s\vert s)))\vert s))</math>. With the ''Id'' pushed on the stack, we get the permutation of what we want to prove. We can now finish the proof easily:
 <jh>
         applyRule
-        (¬ (p | (s | s))) s Permutation
+        permute
+))
+</jh>
+
+== Syllogism ==
+
+Before we can go on to prove an Association and a Summation law, we first need a Syllogism law. This law is basically already present in the ''Prop'', but with a deliberate permutation that enabled us to prove the very ''Permutation'' law above. It will require some work to remove this permutation. We first need a lemma:
+<jh>
+thm (SyllogismLemma () () ((p | p) | (¬ (s | p))) (
+</jh>
+The proof of this lemma will be similar in structure to the proof of ''Addition'': we use a permuted ''Permutation'' with the ''Prop'' to obtain the desired result with the ''Identity'', only this time, we need the permuted ''Identity'':
+<jh>
+        p Id
+        permute
+</jh>
+Using the permuted ''Permutation'' with the ''Prop''
+<jh>
+        p s Permutation
+        permute
+        (¬ (s | p)) p s t (p | p) Prop
+        applyRule
+</jh>
+yields <math>(p/p\vert p)\vert(\neg((\neg(s\vert p))\vert(p\vert p)))</math>, so we finish the proof as in ''Association'':
+<jh>
+        applyRule
+        permute
+))
+</jh>
+We now derive the Syllogism with the build-in permutation:
+<jh>
+thm (S' () () ((p | (q | r)) | (¬ ((s | q) | (¬ (p | s))))) (
+</jh>
+The proof works through a transition from <math>P\vert\pi/Q</math> (i.e., the ''Prop'') to <math>P\vert Q/Q</math>, so we put the ''Prop'' on the stack to apply the rule later:
+<jh>
+        p q r t s Prop
+</jh>
+We use the lemma above to convert the <math>\pi</math> in the ''Prop'' to a <math>Q</math>:
+<jh>
+        (Q p q s) (π t) SyllogismLemma
+        ((Q p q s) | (Q p q s)) ((π t) | (Q p q s)) ((π t) | (Q p q s)) t (P p q r) Prop
+        applyRule
+</jh>
+What we have now is <math>P\vert\pi/Q\rightarrow Q/Q\vert P</math>, so all we need to finish the proof is to apply the rule and permute the consequent:
+<jh>
+        applyRule
+        permute
+))
+</jh>
+Now, ''S''' differs from a "real" syllogism only in the permutation <math>s\vert q</math> vs. <math>q\vert s</math>. Unfortunately, this permutation is buried deep within ''S','' so some work is required.
+<jh>
+thm (Syllogism () () ((p | (q | r)) | (¬ ((q | s) | (¬ (p | s))))) (
+        q s Permutation
+        (q | s) (s | q) (s | q) (¬ (p | s)) S'
+        applyRule
+        permute
+</jh>
+At this point, we have <math>((q\vert s)\rightarrow(p\vert s))\leftarrow((p\vert s)\leftarrow(s\vert q))</math>. Let's permute the consequent,
+<jh>
+        (s | q) (¬ (p | s)) Permutation
+        ((s | q) | (¬ (p | s))) ((¬ (p | s)) | (s | q)) ((¬ (p | s)) | (s | q))
+                (¬ ((q | s) | (¬ (p | s)))) S'
+        applyRule
+        applyRule
+        permute
+</jh>
+giving <math>((q\vert s)\rightarrow(p\vert s))\leftarrow((s\vert q)\rightarrow(p\vert s))</math>. All we need to do now is to prepend the first antecedent, <math>p\vert q/r</math>, to finish the proof via ''S''' itself:
+<jh>
+        p q r s S'
+        (p | (q | r)) ((s | q) | (¬ (p | s))) ((s | q) | (¬ (p | s))) (¬ ((q | s) | (¬ (p | s)))) S'
+        applyRule
         applyRule
 ))
 </jh>
