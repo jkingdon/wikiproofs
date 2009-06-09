@@ -138,7 +138,8 @@ yields <math>(p/p\vert p)\vert(\neg((\neg(s\vert p))\vert(p\vert p)))</math>, so
         permute
 ))
 </jh>
-We now derive the Syllogism with the build-in permutation:
+
+We now derive the Syllogism with the built-in permutation:
 <jh>
 thm (S' () () ((p | (q | r)) | (¬ ((s | q) | (¬ (p | s))))) (
 </jh>
@@ -159,6 +160,7 @@ What we have now is <math>P\vert\pi/Q\rightarrow Q/Q\vert P</math>, so all we ne
 ))
 </jh>
 Now, ''S''' differs from a "real" syllogism only in the permutation <math>s\vert q</math> vs. <math>q\vert s</math>. Unfortunately, this permutation is buried deep within ''S','' so some work is required.
+
 <jh>
 thm (Syllogism () () ((p | (q | r)) | (¬ ((q | s) | (¬ (p | s))))) (
         q s Permutation
@@ -181,6 +183,91 @@ giving <math>((q\vert s)\rightarrow(p\vert s))\leftarrow((s\vert q)\rightarrow(p
         (p | (q | r)) ((s | q) | (¬ (p | s))) ((s | q) | (¬ (p | s))) (¬ ((q | s) | (¬ (p | s)))) S'
         applyRule
         applyRule
+))
+</jh>
+
+Just as in Principia, this ''Syllogism'' can be used to chain implications. As this is a frequent application, we define a rule to that effect:
+<jh>
+thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
+        H2 H1
+        p q q (r | r) Syllogism
+        applyRule
+        applyRule
+))
+</jh>
+
+== Association ==
+
+Now we can prove ''Association'',
+<jh>
+thm (Association () () ((p | (¬ (q | r))) | (¬ (q | (¬ (p | r))))) (
+</jh>
+in other words, <math>(p\rightarrow(q\vert r))\rightarrow(q\rightarrow(p\vert r))</math>.
+''Syllogism'',
+<jh>
+        p (q | r) (q | r) r Syllogism
+</jh>
+gives us <math>(p\rightarrow(q\vert r))\rightarrow(((q\vert r)\vert r)\rightarrow(p\vert r))</math>. To continue, we need the statement <math>q\rightarrow q/r\vert r</math>. Call this statement <math>L</math>. We shall prove <math>L</math> in two steps.
+
+=== Step 1: <math>q\rightarrow L</math> ===
+
+We prove this step by a chain of syllogisms. We begin by chaining ''Addition'' and ''Syllogism'' itself:
+<jh>
+        q r Addition
+        r q q r Syllogism
+        applySyllogism
+</jh>
+This yields <math>q\rightarrow((q\vert r)\rightarrow(r\vert r))</math>. One more ''Syllogism''
+<jh>
+        (q | r) (r | r) (r | r) r Syllogism
+        applySyllogism
+</jh>
+yields <math>q\rightarrow((r/r\vert r)\rightarrow(q/r\vert r))</math>. In order to arrive at <math>L</math>, we need the statement <math>q\rightarrow(r/r\vert r)</math>, which is an addition to a permuted ''Id'':
+<jh>
+        r Id
+        permute
+        ((r | r) | r) q Addition
+        applyRule
+</jh>
+We now implement this statement,
+<jh>
+        q ((r | r) | r) ((r | r) | r) (¬ ((q | r) | r)) Syllogism
+        applyRule
+        applySyllogism
+</jh>
+completing the first step.
+
+=== Step 2: <math>(L\vert L)\rightarrow q</math> ===
+
+This is simply the syllogism lemma from above, with a few permutations:
+<jh>
+        q (¬ ((q | r) | r)) SyllogismLemma
+        (¬ ((q | r) | r)) q Permutation
+        applySyllogism
+        permute
+</jh>
+
+=== Combination of the two steps ===
+
+We can combine these two steps through a ''Syllogism'',
+<jh>
+        (¬ (q | (¬ ((q | r) | r)))) q q (¬ (q | (¬ ((q | r) | r)))) Syllogism
+        applyRule
+        applyRule
+</jh>
+to achieve <math>L/L\vert L/L</math>. This reduces to <math>L</math> by ''Tautology'':
+<jh>
+        (q | (¬ ((q | r) | r))) Tautology
+        applyRule
+</jh>
+
+=== Continuation of the proof of Association ===
+
+Now that we have proven <math>L</math>, what remains is the simple matter of implementing it in the syllogism derived at the very beginning of the proof:
+<jh>
+        q ((q | r) | r) ((q | r) | r) (¬ (p | r)) Syllogism
+        applyRule
+        applySyllogism
 ))
 </jh>
 
