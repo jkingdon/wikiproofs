@@ -64,6 +64,51 @@ thm (Id () () (t | (t | t)) (
 ))
 </jh>
 
+== Permutation, Tautology and Addition ==
+
+Combining ''Id'' with the ''Prop'', we can now derive theorems which roughly correspond to the Principia axioms ''Perm'', ''Taut'' and ''Add''. By the form of the ''Prop'', we immediately get the following permutation theorem:
+<jh>
+thm (Permutation () () ((s | p) | (¬ (p | s))) (
+        p Id
+        p p p t s Prop
+        applyRule
+))
+</jh>
+By permuting the identity, we get
+<jh>
+thm (Tautology () () (((p | p) | (p | p)) | (p | p)) (
+        (p | p) Id
+        (p | p) ((p | p) | (p | p)) Permutation
+        applyRule
+))
+</jh>
+Finally, we prove the following addition law:
+<jh>
+thm (Addition () () (s | (¬ (p | (s | s)))) (
+</jh>
+We first push an ''Id'' on the stack as we shall need it in a minute:
+<jh>
+        s Id
+</jh>
+Now, by permuting ''Permutation'',
+<jh>
+        (s | s) p Permutation
+        ((s | s) | p) (¬ (p | (s | s))) Permutation
+        applyRule
+</jh>
+we arrive at <math>(\neg(p\vert(s\vert s)))\vert((s\vert s)\vert p)</math>. Using this with the ''Prop'',
+<jh>
+        (¬ (p | (s | s))) (s | s) p t s Prop
+        applyRule
+</jh>
+we get <math>(s\vert(s\vert s))\vert(\neg((\neg(p\vert(s\vert s)))\vert s))</math>. With the ''Id'' pushed on the stack, we get the permutation of what we want to prove. We can now finish the proof easily:
+<jh>
+        applyRule
+        (¬ (p | (s | s))) s Permutation
+        applyRule
+))
+</jh>
+
 :''This page is still incomplete.''
 
 [[Category:Classical propositional logic]]
