@@ -1,0 +1,69 @@
+{{header
+ | title    = Nicod's reduction of Principia Mathematica
+ | subtitle = 
+ | left     =
+ | right    = 
+ | shortcut = 
+ | notes    = In 1916, [[w:Jean Nicod|Jean Nicod]] endeavoured to reduce the propositional calculus of [[w:Principia Mathematica|Principia Mathematica]] to a single rule of detachment and a single further axiom.
+
+[[Image:Zeichen 123.svg|75px]]Work in progess!
+}}
+
+In his work [[s:A Reduction in the number of the Primitive Propositions of Logic|A Reduction in the number of the Primitive Propositions of Logic]], [[w:Jean Nicod|Jean Nicod]] puts forth a single rule of detachment and a single further axiom, the ''Prop'' in terms of the [[w:Sheffer stroke|Sheffer stroke]] in order to reduce the propositional logic of [[w:Principa Mathematica|Principa Mathematica]] to just these two axioms.
+
+The axioms are defined in [[Interface:Nicod axioms]], which we import straight away.
+<jh>
+import (NICOD Interface:Nicod_axioms () ())
+</jh>
+For reference, the two axioms are <math>\vdash p,\vdash p\vert(q\vert r)\Rightarrow\vdash r</math> and <math>(p\vert(q\vert r))\vert((t\vert(t\vert t))\vert((s\vert q)\vert(\neg(p\vert s)))))</math>.
+
+It is our goal to derive the Principia axioms in [[Interface:Principia Mathematica propositional logic]].
+
+== Proof of <math>t\vert(t\vert t)</math> ==
+
+The first step is to prove the Identity theorem <math>t\vert(t\vert t)</math>, abbreviated ''Id'', which, in Nicod's definitions, is just <math>t\rightarrow t</math>, one of Principia's theorems. We first define some placeholders for well-formed formulas and some abbreviations.
+<jh>
+var (wff p q r s t u)
+def ((P p q r) (p | (q | r)))
+def ((Q p q s) ((s | q) | (¬ (p | s))))
+def ((π t) (t | (t | t)))
+def ((Q1 s t) ((s | t) | (¬ (t | s))))
+def ((T s t) ((π t) | ((π t) | (Q1 s t))))
+</jh>
+Given these abbreviations, the ''Prop'' has the form <math>P\vert\pi/Q</math>, where we use, following Nicod, slanted strokes to indicate stronger precedence. Our goal is to prove <math>\pi</math>. We do this in several steps. First, we prove a kind of permutation law:
+<jh>
+thm (IdLemma1 () () ((u | ((π t) | s)) | (¬ ((s | (π t)) | u))) (
+        t t t t s Prop
+        (π t) (π t) (Q1 s t) t s Prop
+        applyRule # yields (s | π) | (¬ (π | s))
+        (s | (π t)) ((π t) | s) ((π t) | s) t u Prop
+        applyRule
+))
+</jh>
+This lemma enables us to prove two more lemmas. For one, <math>Q/\pi\vert P</math>, the "reverse" of the ''Prop'', and finally a special case of <math>(u\vert P)\vert(\neg(T\vert u))</math>.
+<jh>
+thm (IdLemma2 () () (((Q p q s) | (π t)) | (P p q r)) (
+        p q r t s Prop
+        (P p q r) t (Q p q s) IdLemma1
+        applyRule
+))
+thm (IdLemma3 () () ((u | (P ((Q1 s t) | (π t)) t (t | t))) | (¬ ((T s t) | u))) (
+        (π t) t (Q1 s t) IdLemma1
+        (T s t) (P ((Q1 s t) | (π t)) t (t | t)) (P ((Q1 s t) | (π t)) t (t | t)) t u Prop
+        applyRule
+))
+</jh>
+Now we can prove Identity, <math>\pi</math>, by substituting <math>Q/\pi</math> for <math>u</math> in Lemma&nbsp;3 and using Lemma&nbsp;2 to arrive at <math>T|Q/\pi</math>, since <math>T</math> is just the ''Prop'' with all variables set to <math>t</math>.
+<jh>
+thm (Id () () (t | (t | t)) (
+        t t t t t Prop
+        ((Q1 t t) | (π t)) t t t (t | t) IdLemma2
+        ((Q ((Q1 t t) | (π t)) t t) | (π t)) t t IdLemma3
+        applyRule # yields T|Q/π
+        applyRule
+))
+</jh>
+
+:''This page is still incomplete.''
+
+[[Category:Classical propositional logic]]
