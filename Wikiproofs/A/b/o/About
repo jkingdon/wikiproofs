@@ -4,11 +4,27 @@
  | left     = 
  | right    = 
  | shortcut = [[WP:ABOUT]]
- | notes    = 
+ | notes    = A short outline of Wikiproofs.
 }}
 
 '''Wikiproofs''' is a repository of [[w:automated proof checking|automatically verified proofs]]. The project is collaborative in nature, meaning that anyone can add new content or improve existing proofs. The content of Wikiproofs is also [[w:free content|free]] in the sense that anyone can distribute or modify the textual contents of Wikiproofs under the terms of the [http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons Attribution-Share Alike 3.0 Unported Licence].
 
 The goal of Wikiproofs is to collect both formal and informal proofs of all important theorems of mathematics, formal logic and possibly other formalisable systems. For this purpose, Wikiproofs is backed by [[mw:Extension:JHilbert|JHilbert]], a very simple and flexible proof verifier.
+
+== Hilbert's program ==
+
+It was the [[w:Hilbert's program|idea]] of mathematician [[w:David Hilbert|David Hilbert]] to formalise as much as possible of the body of extant mathematics. In fact, he proposed to formalise ''all'' exiting theories based on a set of universal axioms and then prove [[w:soundness|soundness]] and [[w:Completeness#Logical_completeness|completeness]]. This was laster proved to be impossible by [[w:Kurt Gödel|Kurt Gödel]]. Nevertheless, Wikiproofs strives to implement those parts of Hilbert's program which are possible and interesting.
+
+== The JHilbert proof verifier ==
+
+For the formalisation of ''all'' mathematics to be possible, a simple and flexible proof verifier is required. Most proof verifiers and automated theorem provers have a very specific complex metalogic already built in. JHilbert, in contrast, uses only a few very simple concepts (simple substitution rule, disjoint variable constraints, stack-based proofs). This makes it at least in some way adaptable to virtually all mathematics.
+
+These very simple but highly effective concepts go back to the work of Norman Megill, who implemented them in his [http://us.metamath.org Metamath] program. On his highly recommended metamath website, thousands of proofs can be browsed at leisure.
+
+Later, [[w:Raph Levien|Raph Levien]] developed the Metamath concepts into [http://wiki.planetmath.org/AsteroidMeta/Ghilbert Ghilbert], enriching them (among other things) with definitions and module support.
+
+JHilbert is the continuation of Ghilbert. It started out as a clone and is still largely identical with Ghilbert.
+
+Without David Hilbert, Norman Megill and Raph Levien, the Wikiproofs project would not have been possible.
 
 [[Category:Wikiproofs|About]]
