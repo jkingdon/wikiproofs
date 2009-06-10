@@ -23,6 +23,12 @@ term (wff (¬ wff)) # Negation
 term (wff (∨ wff wff)) # Disjunction
 def ((→ p q) ((¬ p) ∨ q)) # Implication, *1.01
 </jh>
+Though not strictly needed for the axioms, Principia also defines [[w:logical conjunction|conjunction]] (<math>\wedge</math>-symbol) and the [[w:biconditional|biconditional]] (<math>\leftrightarrow</math>-symbol):
+<jh>
+def ((∧ p q) (¬ ((¬ p) ∨ (¬ q)))) # Conjunction, *3.01
+def ((↔ p q) ((p → q) ∧ (q → p))) # Biconditional, *4.01
+</jh>
+Note that Principia actually uses different symbols for negation, implication, conjunction and the biconditional. However, the present symbols reflect current usage.
 
 == The axioms ==
 
