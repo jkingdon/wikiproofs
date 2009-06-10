@@ -5,8 +5,6 @@
  | right    = 
  | shortcut = 
  | notes    = In 1916, [[w:Jean Nicod|Jean Nicod]] endeavoured to reduce the propositional calculus of [[w:Principia Mathematica|Principia Mathematica]] to a single rule of detachment and a single further axiom.
-
-[[Image:Zeichen 123.svg|75px]]Work in progess!
 }}
 
 In his work [[s:A Reduction in the number of the Primitive Propositions of Logic|A Reduction in the number of the Primitive Propositions of Logic]], [[w:Jean Nicod|Jean Nicod]] puts forth a single rule of detachment and a single further axiom, the ''Prop'' in terms of the [[w:Sheffer stroke|Sheffer stroke]] in order to reduce the propositional logic of [[w:Principa Mathematica|Principa Mathematica]] to just these two axioms.
@@ -153,7 +151,7 @@ We use the lemma above to convert the <math>\pi</math> in the ''Prop'' to a <mat
         ((Q p q s) | (Q p q s)) ((π t) | (Q p q s)) ((π t) | (Q p q s)) t (P p q r) Prop
         applyRule
 </jh>
-What we have now is <math>P\vert\pi/Q\rightarrow Q/Q\vert P</math>, so all we need to finish the proof is to apply the rule and permute the consequent:
+What we have now is <math>P\vert\pi/Q\rightarrow Q/Q\vert P</math>, so all we need to finish the proof is to apply the rule and permute the right-hand part:
 <jh>
         applyRule
         permute
@@ -281,6 +279,153 @@ thm (Summation () () ((q | s) → ((p | (q | r)) → (p | s))) (
         applyRule
 ))
 </jh>
+
+== Export of [[Interface:Principia Mathematica propositional logic]] ==
+
+In order to show that Nicod's system is as least as strong as the propositional logic of Principia Mathematica, we need to derive the Principia axioms within Nicod's system. In terms of Nicod's definition of the logical connectives, this is very simple, as the rule, ''Tautology'', ''Addition'', ''Permutation'', ''Association'' and ''Summation'' are all either identical to or even more general than the corresponding Principia axioms.
+
+=== Principia axioms with Nicod's logical connectives ===
+
+We only need to invoke the correct special case of already proven statements.
+<jh>
+thm (applyModusPonens () ((H1 p) (H2 (p → q))) q (
+        H1 H2 applyRule
+))
+
+thm (Taut () () ((p ∨ p) → p) (
+        p Tautology
+))
+
+thm (Add () () (q → (p ∨ q)) (
+        s (p | p) Addition
+))
+
+thm (Perm () () ((p ∨ q) → (q ∨ p)) (
+        (p | p) (q | q) Permutation
+))
+
+thm (Assoc () () ((p ∨ (q ∨ r)) → (q ∨ (p ∨ r))) (
+        (p | p) (q | q) (r | r) Association
+))
+
+thm (Sum () () ((q → r) → ((p ∨ q) → (p ∨ r))) (
+        q (r | r) (p | p) q Summation
+))
+</jh>
+This looks as if we're done: all Principia axioms have been derived verbatim. Still, an export would fail, for the following reason: in [[Interface:Principia Mathematica propositional logic]], implication <math>p\rightarrow q</math> is not an indefinable functor, but rather an abbreviation for <math>(\neg p)\vee q</math>. In Nicod's system, this translates to <math>(p/p\vert p/p)\vert q/q</math>, which is different from Nicod's definition of implication, <math>p\vert q/q</math>. So the Principia axioms are actually different from the theorems proven above. This was first explicitly mentioned by Bernstein<ref>{{sc|B. A. Bernstein}}, Remarks on Nicod's reduction of Principia Mathematica, ''J. Symbolic Logic'' '''2''' no.&nbsp;4, 1937.</ref>, though it was probably obvious to Nicod as he provided the necessary transport theorems to convert the above theorems to the real Principia axioms.
+
+=== Transport theorems ===
+
+For the purpose of exportation, we shall prepend all Principia symbols with a dot in order to distinguish them from the symbols of Nicod's system. First, we subsume the well-formed formulas of Principia under Nicod's system:
+<jh>
+kindbind (wff .wff)
+</jh>
+Next, we define the logical connectives. Negation and Disjunction are used as indefinables in Principia, so we just set them to their Nicod equivalents:
+<jh>
+def ((.¬ p) (¬ p))
+def ((.∨ p q) (p ∨ q))
+</jh>
+For the remaining connectives, however, we use the Principia definitions:
+<jh>
+def ((.→ p q) ((.¬ p) .∨ q))
+def ((.∧ p q) (.¬ ((.¬ p) .∨ (.¬ q))))
+def ((.↔ p q) ((p .→ q) .∧ (q .→ p)))
+</jh>
+In particular, <math>\rightarrow</math> is different from <math>.\rightarrow</math>. We now show that they are derivable from each other within Nicod's system.
+<jh>
+thm (ImplicationExport () () ((p → q) → (p .→ q)) (
+</jh>
+In other words, <math>(p\vert q/q)\rightarrow((p/p\vert p/p)\vert q/q)</math>. As the right-hand part is equal on both sides, we can prove this with ''Tautology'' and ''Syllogism'':
+<jh>
+        p Tautology
+        ((p | p) | (p | p)) p p (q | q) Syllogism
+        applyRule
+))
+</jh>
+The reverse theorem is shown in the same way, except that we use ''Addition'' to create the reversed Tautology:
+<jh>
+thm (ImplicationImport () () ((p .→ q) → (p → q)) (
+        p (p | p) Addition
+        p ((p | p) | (p | p)) ((p | p) | (p | p)) (q | q) Syllogism
+        applyRule
+))
+</jh>
+In transporting the Principia axioms from <math>\rightarrow</math> to <math>.\rightarrow</math>, it will be very convenient to have these two theorems handy as rules:
+<jh>
+thm (importImplication () ((H (p .→ q))) (p → q) (
+        H
+        p q ImplicationImport
+        applyRule
+))
+
+thm (exportImplication () ((H (p → q))) (p .→ q) (
+        H
+        p q ImplicationExport
+        applyRule
+))
+</jh>
+
+=== Axiom transport ===
+
+All Principia axioms except ''Sum'' use implication only as their head symbol, so their transport is trivial:
+<jh>
+thm (.applyModusPonens () ((H1 p) (H2 (p .→ q))) q (
+        H1 H2
+        importImplication
+        applyRule
+))
+
+thm (.Taut () () ((p .∨ p) .→ p) (
+        p Taut
+        exportImplication
+))
+
+thm (.Add () () (q .→ (p .∨ q)) (
+        q p Add
+        exportImplication
+))
+
+thm (.Perm () () ((p .∨ q) .→ (q .∨ p)) (
+        p q Perm
+        exportImplication
+))
+
+thm (.Assoc () () ((p .∨ (q .∨ r)) .→ (q .∨ (p .∨ r))) (
+        p q r Assoc
+        exportImplication
+))
+</jh>
+For ''Sum'' it is slightly more difficult, as implication appears three times:
+<jh>
+thm (.Sum () () ((q .→ r) .→ ((p .∨ q) .→ (p .∨ r))) (
+        q r p Sum
+</jh>
+First, we transport the leftmost implication using a ''Syllogism'':
+<jh>
+        q r ImplicationImport
+        (q .→ r) (q → r) (q → r) (¬ ((p .∨ q) → (p .∨ r))) Syllogism
+        applyRule
+        applyRule
+</jh>
+Next, we transport the rightmost implication:
+<jh>
+        (p .∨ q) (p .∨ r) ImplicationExport
+        applySyllogism
+</jh>
+And finally, we transport the heading implication:
+<jh>
+        exportImplication
+))
+</jh>
+
+This completes the proof of the Principia axioms. We can now export the [[Interface:Principia Mathematica propositional logic]]:
+<jh>
+export (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () .)
+</jh>
+
+== References ==
+
+<references />
 
 :''This page is still incomplete.''
 
