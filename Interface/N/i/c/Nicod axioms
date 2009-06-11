@@ -25,6 +25,7 @@ var (wff p q r s t)
 
 == Truth functions ==
 
+[[Image:Logical connectives expressed with NAND.svg|150px|thumb|right|Truth functions expressed with Sheffer's stroke (click to enlarge)]]
 The basic truth function of the Nicod system is the Sheffer stroke <math>\vert</math>:
 <jh>
 term (wff (| wff wff))
