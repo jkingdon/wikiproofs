@@ -8,17 +8,17 @@
 |-
 ! class="imports" | Imported by
 |-
-| {{{imports}}}
+| {{{importedby}}}
 |-
 ! class="exports" | Exported by
 |-
-| {{{exports}}}
+| {{{exportedby}}}
 |}<noinclude>Usage:
 <pre>
 {{modules
 | parameters = 
-| imports    = 
-| exports    = 
+| importedby = 
+| exportedby = 
 }}
 </pre>
 
