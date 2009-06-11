@@ -6,6 +6,12 @@
  | shortcut = 
  | notes    = The Nicod axioms are an axiomatic system for propositional logic requiring only two axioms to prove all true statements of classical propositional logic.
 }}
+{{modules
+| parameters = ''none''
+| importedby = [[Nicod's reduction of Principia Mathematica]]
+| exportedby = ''none''
+}}
+
 
 The Nicod axioms, named for [[w:Jean Nicod|Jean Nicod]], are an especially spartan axiomatic system for [[w:propositional logic|propositional logic]], yet strong enough to derive all true statements. Nicod introduced it in his article [[s:A Reduction in the number of the Primitive Propositions of Logic|A Reduction in the number of the Primitive Propositions of Logic]].
 
