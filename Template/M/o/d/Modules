@@ -1,0 +1,29 @@
+{| class="modules_template"
+|-
+! class="heading" | Module usage
+|-
+! class="parameters" | Parameters
+|-
+| {{{parameters}}}
+|-
+! class="imports" | Imported by
+|-
+| {{{imports}}}
+|-
+! class="exports" | Exported by
+|-
+| {{{exports}}}
+|}<noinclude>Usage:
+<pre>
+{{modules
+| parameters = 
+| imports    = 
+| exports    = 
+}}
+</pre>
+
+Use this template in the <code>Interface</code> namespace on JHilbert interfaces to list the modules the interface is imported or exported by, and the parameters.
+
+[[Category:Templates|Modules]]
+
+</noinclude>
