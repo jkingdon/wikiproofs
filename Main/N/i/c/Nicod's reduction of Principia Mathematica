@@ -271,6 +271,17 @@ Now that we have proven <math>L</math>, what remains is the simple matter of imp
 ))
 </jh>
 
+== Summation ==
+
+Now that the long proof of ''Association'' is finished, the Nicod version of ''Summation'', <math>q/s\rightarrow(p\vert q/r\rightarrow p/s)</math>, is just a consequence of ''Syllogism''.
+<jh>
+thm (Summation () () ((q | s) → ((p | (q | r)) → (p | s))) (
+        p q r s Syllogism
+        (p | (q | r)) (q | s) (¬ (p | s)) Association
+        applyRule
+))
+</jh>
+
 :''This page is still incomplete.''
 
 [[Category:Classical propositional logic]]
