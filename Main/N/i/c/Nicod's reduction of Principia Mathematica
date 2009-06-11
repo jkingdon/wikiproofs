@@ -6,6 +6,10 @@
  | shortcut = 
  | notes    = In 1916, [[w:Jean Nicod|Jean Nicod]] endeavoured to reduce the propositional calculus of [[w:Principia Mathematica|Principia Mathematica]] to a single rule of detachment and a single further axiom.
 }}
+{{interfaces
+| imports = [[Interface:Nicod axioms|Nicod axioms]]
+| exports = [[Interface:Principia Mathematica propositional logic|Principia Mathematica propositional logic]]
+}}
 
 In his work [[s:A Reduction in the number of the Primitive Propositions of Logic|A Reduction in the number of the Primitive Propositions of Logic]], [[w:Jean Nicod|Jean Nicod]] puts forth a single rule of detachment and a single further axiom, the ''Prop'' in terms of the [[w:Sheffer stroke|Sheffer stroke]] in order to reduce the propositional logic of [[w:Principa Mathematica|Principa Mathematica]] to just these two axioms.
 
