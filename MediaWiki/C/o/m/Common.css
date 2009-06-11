@@ -16,29 +16,18 @@
         border:1px solid #56a8fc;
         margin:0em 0em 2ex 0em;
         padding:0.5ex 0.5em 0.5ex 0.5em;
-        width:98%;
-}
-
-.mainpage .boxtop {
-        position:relative;
-}
-
-.mainpage .welcome {
-        position:absolute;
+        width:100%;
 }
 
 .mainpage .welcomeheader {
         font-size:200%;
+        padding-bottom:1ex;
+        padding-top:1ex;
+        width:50%;
 }
 
 .mainpage .welcomefooter {
         font-size:90%;
-}
-
-.mainpage .tblinks {
-        left:50%;
-        position:absolute;
-        top:0px;
 }
 
 /**
