@@ -6,6 +6,12 @@
  | shortcut = 
  | notes    = This interface defines the "primitive ideas" (axioms) making up the propositional logic part of the [[w:Principia Mathematica|Principia Mathematica]]<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref>.
 }}
+{{modules
+| parameters = ''none''
+| importedby = ''none''
+| exportedby = [[Nicod's reduction of Principia Mathematica]]
+}}
+
 
 == Well-formed formulas ==
 
