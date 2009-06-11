@@ -1,22 +1,19 @@
 __NOTOC__ __NOEDITSECTION__
 <div class="mainpage">
-<div class="titlebox">
-<div class="boxtop">
-<span class="welcome">
-<div class="welcomeheader">
-Welcome to '''Wikiproofs'''
-</div>
-<div class="welcomefooter">
-the '''free''' repository of '''instantly verified proofs'''<br />
-to which '''anyone can contribute'''.
-</div></span><span class="tblinks">
+{| class="titlebox"
+|-
+| class="welcomeheader" | Welcome to '''Wikiproofs'''
+| rowspan="2" |
+* [[Help:Tutorial|Tutorial]]
 * [[Wikiproofs:Subject index|Subject index]]
 * [[Wikiproofs:JHilbert|Verifier development]]
-</span>
-</div>
+|-
+| class="welcomefooter" | the '''free''' repository of '''instantly verified proofs'''<br />to which '''anyone can contribute'''.
+|-
+| colspan="2" |
 ----
 '''[[Wikiproofs:About|Wikiproofs]]''' is an online repository of [[Wikiproofs:Copyrights|free]] [[w:formal system|formalisations]]. It is possible to [[w:deductive reasoning|reason]] within such a formalisation, that is, to put forth statements and write formal proofs for some of them. These proofs are immediately verified upon submission by an automated proof verifier. The largest domain of human reasoning is [[w:mathematics|mathematics]], but Wikiproof's underlying proof verifier is sufficiently generic to allow for other formal systems as well.
-</div>
+|}
 [[Image:Zeichen 123.svg|100px|left]] Everything is still pretty much under construction. If you're intrigued, stop by in the [[Wikiproofs:tearoom|tearoom]], the central place of discussion.
 </div>
 
