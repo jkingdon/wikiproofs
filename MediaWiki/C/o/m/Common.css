@@ -120,4 +120,27 @@
         font-style:italic;
 }
 
+/**
+ * [[Template:Interfaces]]
+ */
+.interfaces_template {
+        background:#f0f0f0;
+        border:1px solid gray;
+        border-collapse:collapse;
+        float:right;
+        margin:0.5em;
+        width:30%
+}
+
+.interfaces_template .heading {
+        background:#f7e7e7;
+        font-size:125%;
+}
+
+.interfaces_template .imports,.exports {
+        background:#f7f0f0;
+        border-bottom:1px solid gray;
+        border-top:2px solid gray;
+}
+
 /* </pre> */
