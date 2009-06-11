@@ -1,0 +1,24 @@
+{| class="interfaces_template"
+|-
+! class="heading" | Used interfaces
+|-
+! class="imports" | Imports
+|-
+| {{{imports}}}
+|-
+! class="exports" | Exports
+|-
+| {{{exports}}}
+|}<noinclude>Usage:
+<pre>
+{{interfaces
+| imports = 
+| exports = 
+}}
+</pre>
+
+Use this template in the main namespace on JHilbert modules to denote the interfaces the module imports and exports.
+
+[[Category:Templates|Interfaces]]
+
+</noinclude>
