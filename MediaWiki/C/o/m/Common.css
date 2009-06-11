@@ -121,9 +121,9 @@
 }
 
 /**
- * [[Template:Interfaces]]
+ * [[Template:Modules]], [[Template:Interfaces]]
  */
-.interfaces_template {
+.modules_template,.interfaces_template {
         background:#f0f0f0;
         border:1px solid gray;
         border-collapse:collapse;
@@ -132,12 +132,23 @@
         width:30%
 }
 
+.modules_template .heading {
+        background:#e7fde7;
+        font-size:125%;
+}
+
 .interfaces_template .heading {
         background:#f7e7e7;
         font-size:125%;
 }
 
-.interfaces_template .imports,.exports {
+.modules_template .parameters, .modules_template .imports, .modules_template .exports {
+        background:#f0fdf0;
+        border-bottom:1px solid gray;
+        border-top:2px solid gray;
+}
+
+.interfaces_template .imports, .interfaces_template .exports {
         background:#f7f0f0;
         border-bottom:1px solid gray;
         border-top:2px solid gray;
