@@ -14,10 +14,11 @@ __NOTOC__ __NOEDITSECTION__
 ----
 '''[[Wikiproofs:About|Wikiproofs]]''' is an online repository of [[Wikiproofs:Copyrights|free]] [[w:formal system|formalisations]]. It is possible to [[w:deductive reasoning|reason]] within such a formalisation, that is, to put forth statements and write formal proofs for some of them. These proofs are immediately verified upon submission by an automated proof verifier. The largest domain of human reasoning is [[w:mathematics|mathematics]], but Wikiproof's underlying proof verifier is sufficiently generic to allow for other formal systems as well.
 |}
-[[Image:Zeichen 123.svg|100px|left]] Everything is still pretty much under construction. If you're intrigued, stop by in the [[Wikiproofs:tearoom|tearoom]], the central place of discussion.
-</div>
+<center>[[:Category:Categories|Main category]] '''·''' [[Wikiproofs:Tearoom|Tearoom]] '''·''' [[:Category:Mathematics Subject Classification|Mathematics]] '''·''' [[Help:Contents|Help]]</center>
+{{featured}}
 
-<big>[[Help:Tutorial|Tutorial]] for newcomers.</big>
+[[Image:Zeichen 123.svg|50px]] A community portal box is still missing here. Visit the '''[[Wikiproofs:tearoom|tearoom]]''' to engage in discussion about this project.
+</div>
 
 == Links of interest ==
 
