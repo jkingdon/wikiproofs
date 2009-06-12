@@ -1,0 +1,12 @@
+<noinclude><div class="mainpage"></noinclude><div class="featured">
+<div class="heading">
+'''Featured'''
+</div>
+[[Image:Logical connectives expressed with NAND.svg|100px|left]] '''[[Nicod's reduction of Principia Mathematica]]''' is the largely successful attempt of French philosopher [[w:Jean Nicod|Jean Nicod]] to reduce the number of those indefinable concepts of [[w:Principia Mathematica|Principia Mathematica]] which make up [[w:propositional logic|propositional logic]]. Principia Mathematica uses two indefinable [[w:logical connective|logical connective]]s and six axioms (or axiom schema), one of which is a detachment rule, [[w:Modus Ponens|Modus Ponens]]. [[Interface:Nicod axioms|Nicod's system]], on the other hand, uses only one logical connective, the [[w:Sheffer stroke|Sheffer stroke]] discovered by [[w:Henry Sheffer|Henry Sheffer]], and two axioms. Again, one of these axioms is a detachment rule, a slightly generalised version of Modus Ponens. The only other axiom, called the ''Prop'' for proposition, is a clever combination of an identity statement, a [[w:syllogism|syllogism]] and a permutation. These axioms are enough to derive the [[Interface:Principia Mathematica propositional logic|Principia axioms]] from them.
+</div><noinclude></div>
+
+This template is transcluded from the [[Main Page]].
+
+[[Category:Templates|Featured]]
+
+</noinclude>
