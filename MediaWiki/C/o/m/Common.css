@@ -30,6 +30,20 @@
         font-size:90%;
 }
 
+.mainpage .featured {
+        background:#f0fef0;
+        border:1px solid #58fd58;
+        padding:1ex;
+}
+
+.mainpage .featured .heading {
+        background:#d0fdd0;
+        border:1px solid #40fd40;
+        font-size:125%;
+        margin-bottom:1ex;
+        text-align:center;
+}
+
 /**
  * Shortcut layout (if a shortcut exists)
  * float and clear are controlled by the shortcut template
