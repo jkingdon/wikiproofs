@@ -1,0 +1,23 @@
+{{header
+ | title    = Project scope
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = [[WP:SCOPE]]
+ | notes    = This page explains the project scope of Wikiproofs: what kind of material should be included in Wikiproofs, and what does not belong here.
+}}
+
+== What Wikiproofs is ==
+
+Wikiproofs is an online repository of formalisations, and formal reasoning within such formal systems. In most formal systems, such reasoning is about exhibiting the "truth" of certain statements. It is a concession to the power of most of such formal systems that a very large number of true statements can be formulated within them. Most of these statements are of no practical value, uninteresting, or even boring. Therefore, a formal system on Wikiproofs, and the theorems proved within it, are subject to certain '''quality criteria''':
+* The philosphical, mathematical or scientific ideas a formalisation is based on should have been published in a high-quality, peer-reviewed forum before, where the peers are members of a well-accredited scholarly community. Examples of such a forum are journals of high reputation, or textbooks of well-recognised value. Note that Wikiproofs does not forbid original research in a formalisation per se. However, it should be limited to the concepts such a formalisation is based on.
+* In particular, [[w:Crank (person)|cranky]] stuff of all kind is not welcome.
+* Formalisations and Reasoning should be "correct", i.e. the axiom systems should meet the appropriate soundness and, possibly, completeness criteria, and theorems should check out successfully from the JHilbert verifier.
+
+== What Wikiproofs is not ==
+
+* ''An ontological database.'' While the JHilbert verifier should be generally capable of mimicking an ontological system, it is probably not the right tool to build an ontological database. [http://www.cyc.com/cyc/opencyc/overview OpenCyc] or the [http://semantic-mediawiki.org/wiki/Semantic_MediaWiki semantic MediaWiki] might be better-suited. The border between an ontology and a formalisation in the scope of Wikiproofs may be fuzzy, but generally, the number of JHilbert '''thm''' commands should significantly outweigh the number of '''stmt''' commands for which there is no corresponding '''thm''' command.
+* ''An informal encyclopaedia of mathematics.'' Theories and proofs should be expressed within the JHilbert language.
+* ''A general mathematics discussion site.'' Discussions should be confined to the Wikiproofs scope and the JHilbert verifier. Wikiproofs is not here to help you solving your maths homework.
+
+[[Category:Wikiproofs|Scope]]
