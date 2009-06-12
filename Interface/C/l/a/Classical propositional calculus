@@ -1,0 +1,51 @@
+{{header
+ | title    = Classical propositional calculus
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = This interface collects all important theorems from [[w:classical propositional calculus|classical propositional calculus]]. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use propositional logic, without proving anything new within it.
+
+[[Image:Zeichen 123.svg|50px]] Still under construction!
+}}
+
+== Well-formed formulas ==
+
+We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.
+<jh>
+kind (wff)
+var (wff p q r s)
+</jh>
+
+== Logical connectives ==
+
+There are five standard [[w:logical connective|logical connective]]s in the classical propositional calculus, [[w:negation|negation]],
+<jh>
+term (wff (¬ wff))
+</jh>
+[[w:material conditional|implication]],
+<jh>
+term (wff (→ wff wff))
+</jh>
+[[w:logical disjunction|disjunction]],
+<jh>
+term (wff (∨ wff wff))
+</jh>
+[[w:logical conjunction|conjunction]],
+<jh>
+term (wff (∧ wff wff))
+</jh>
+and, finally, the [[w:logical biconditional|biconditional]],
+<jh>
+term (wff (↔ wff wff))
+</jh>
+In addition, one can also consider the constant formulas (or [[w:nullary#Nullary|nullary]] connectives) "the true",
+<jh>
+term (wff (⊤))
+</jh>
+and "the false",
+<jh>
+term (wff (⊥))
+</jh>
+
+[[Category:Classical propositional logic|!]]
