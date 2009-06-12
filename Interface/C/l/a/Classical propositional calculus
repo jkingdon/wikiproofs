@@ -77,7 +77,7 @@ Chaining [[w:antecedent|antecedent]]s in an implication is equivalent to a conju
 <jh>
 stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
 </jh>
-The distributive law of implication. Whitehead and Russell also call this the Simplification Principle:
+The distributive law of implication.
 <jh>
 stmt (ImplicationDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))))
 </jh>
@@ -95,6 +95,54 @@ stmt (Syllogism () () ((p → q) → ((q → r) → (p → r))))
 <jh>
 stmt (ModusPonens () () (p → ((p → q) → q)))
 stmt (ModusTollens () () ((¬ q) → ((p → q) → (¬ p))))
+</jh>
+Implication as a truth function:
+<jh>
+stmt (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
+</jh>
+
+=== Statements abount disjunction and conjunction ===
+
+==== Idempotence ====
+
+<jh>
+stmt (DisjunctionIdempotence () () (p ↔ (p ∨ p)))
+stmt (ConjunctionIdempotence () () (p ↔ (p ∧ p)))
+</jh>
+
+==== Associativity ====
+
+<jh>
+stmt (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))))
+stmt (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))))
+</jh>
+
+==== Commutativity ====
+
+<jh>
+stmt (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)))
+stmt (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)))
+</jh>
+
+==== Distributive laws ====
+
+<jh>
+stmt (DisjunctionDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))))
+stmt (ConjunctionDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))))
+</jh>
+
+==== De Morgan's laws ====
+
+<jh>
+stmt (DisjunctionNegation () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))))
+stmt (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))))
+</jh>
+
+==== Disjunction and conjunction as truth functions ====
+
+<jh>
+stmt (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
+stmt (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
 </jh>
 
 [[Category:Classical propositional logic|!]]
