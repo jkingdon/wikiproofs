@@ -131,6 +131,15 @@ stmt (DisjunctionDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨
 stmt (ConjunctionDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))))
 </jh>
 
+==== Introduction and elimination laws ====
+
+<jh>
+stmt (DisjunctionIntroductionLeft () () (p → (q ∨ p)))
+stmt (DisjunctionIntroductionRight () () (p → (p ∨ q)))
+stmt (ConjunctionEliminationLeft () () ((p ∧ q) → q))
+stmt (ConjunctionEliminationRight () () ((p ∧ q) → p))
+</jh>
+
 ==== De Morgan's laws ====
 
 <jh>
@@ -143,6 +152,43 @@ stmt (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))))
 <jh>
 stmt (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
 stmt (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
+</jh>
+
+=== Statements about the biconditional ===
+
+The biconditional simply creates an [[w:equivalence relation|equivalence relation]] among well-formed formulas:
+<jh>
+stmt (BiconditionalReflexivity () () (p ↔ p))
+stmt (BiconditionalSymmetry () () ((p ↔ q) → (q ↔ p)))
+stmt (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)))
+</jh>
+This equivalence relation creates two [[w:equivalence class|equivalence class]]es, the true and the false formulas:
+<jh>
+stmt (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)))
+stmt (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)))
+</jh>
+Biconditional as a truth function:
+<jh>
+stmt (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
+</jh>
+
+=== Some truth function interdependencies ===
+
+Biconditional as bidirectional implication:
+<jh>
+stmt (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))))
+</jh>
+Biconditional as equivalence:
+<jh>
+stmt (BiconditionalEquivalence () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))))
+</jh>
+Implication as disjunction:
+<jh>
+stmt (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)))
+</jh>
+Negation as implication:
+<jh>
+stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
 </jh>
 
 [[Category:Classical propositional logic|!]]
