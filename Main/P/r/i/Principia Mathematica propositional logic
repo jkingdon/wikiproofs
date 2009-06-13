@@ -1,0 +1,105 @@
+{{header
+ | title    = Principia Mathematica
+ | subtitle = propositional logic
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The purpose of this page is to prove the statements of [[Interface:Classical propositional calculus]] from the [[Interface:Principia Mathematica propositional logic|Principia Mahematica]]<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref> axioms for propositional logic.
+
+[[Image:Zeichen 123.svg|50px]] Still under construction
+}}
+{{interfaces
+| imports = [[Interface:Principia Mathematica propositional logic|Principia Mathematica propositional logic]]
+| exports = [[Image:Zeichen 123.svg|35px]] None yet
+}}
+
+<jh>
+import (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () ())
+</jh>
+We define some variables for well-formed formulas:
+<jh>
+var (wff p q r s)
+</jh>
+Principia Mathematica does not define the [[w:nullary#Nullary|nullary]] [[w:logical connective|connectives]] "the true", <math>\top</math>, and "the false", <math>\bot</math>, so we define them here:
+<jh>
+def ((⊤) (p ∨ (¬ p)))
+def ((⊥) (p ∧ (¬ p)))
+</jh>
+We shall now begin to derive the statements. Whitehead and Russell use a decimal numbering system of the form <math>*r</math>, where <math>r</math> is a rational number with a small number of digits after the decimal point. Unless we give theorems our own name, we shall adopt their system for easier reference. Where we do use our own names, we sometimes give the decimal reference in a JHilbert comment.
+
+== Immediate consequences from the axioms ==
+
+The [[w:modus ponens|modus ponens]] rule is an axiom of Principia Mathematica, so we don't need to prove it. The ''Perm'' axiom immediately gives rise to the [[w:logical disjunction|disjunctive]] commutativity rule:
+<jh>
+thm (swapDisjunction () ((H (p ∨ q))) (q ∨ p) (
+        H
+        p q Perm
+        applyModusPonens
+))
+</jh>
+Since Principia Mathematica defines implication, <math>p\rightarrow q</math>, as <math>(\neg p)\vee q</math>, the ''Add'' axiom yields the introduction of an antecedent (Whitehead and Russell call it "Simplification").
+<jh>
+thm (AntecedentIntroduction () () (p → (q → p)) ( # *2.02
+        p (¬ q) Add
+))
+</jh>
+It will be convenient to have this theorem as helper rule:
+<jh>
+thm (introduceAntecedent () ((H p)) (q → p) (
+        H
+        p q AntecedentIntroduction
+        applyModusPonens
+))
+</jh>
+Again due to the way implication is defined, ''Perm'' gives us our first transposition rule:
+<jh>
+thm (*2.03 () () ((p → (¬ q)) → (q → (¬ p))) (
+        (¬ p) (¬ q) Perm
+))
+
+thm (transposeWithNegatedConsequent () ((H (p → (¬ q)))) (q → (¬ p)) (
+        H
+        p q *2.03
+        applyModusPonens
+))
+</jh>
+Next, we prove a precursor to the commutative law of Conjunction, which will be very convenient until we get Peano's transportation principle. We call this theorem ''Comm'' in accordance with Whitehead and Russell.
+<jh>
+thm (Comm () () ((p → (q → r)) → (q → (p → r))) ( # *2.04
+        (¬ p) (¬ q) r Assoc
+))
+
+thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
+        H
+        p q r Comm
+        applyModusPonens
+))
+</jh>
+This theorem enables us to prove ''Syllogism'' from the ''Sum'' axiom:
+<jh>
+thm (*2.05 () () ((q → r) → ((p → q) → (p → r))) (
+        q r (¬ p) Sum
+))
+
+thm (Syllogism () () ((p → q) → ((q → r) → (p → r))) ( # *2.06
+        q r p *2.05
+        (q → r) (p → q) (p → r) Comm
+        applyModusPonens
+))
+
+thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
+        H2
+        H1
+        p q r Syllogism
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+:''This page is still incomplete''
+
+== References ==
+
+<references />
+
+[[Category:Classical propositional logic]]
