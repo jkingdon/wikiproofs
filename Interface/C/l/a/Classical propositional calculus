@@ -101,6 +101,10 @@ stmt (Syllogism () () ((p → q) → ((q → r) → (p → r))))
 stmt (ModusPonens () () (p → ((p → q) → q)))
 stmt (ModusTollens () () ((¬ q) → ((p → q) → (¬ p))))
 </jh>
+Introduction of an antecedent. Whitehead and Russell call this "Simplification":
+<jh>
+stmt (AntecedentIntroduction () () (p → (q → p)))
+</jh>
 Implication as a truth function:
 <jh>
 stmt (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
@@ -132,8 +136,10 @@ stmt (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)))
 ==== Distributive laws ====
 
 <jh>
-stmt (DisjunctionDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))))
-stmt (ConjunctionDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))))
+stmt (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))))
+stmt (DisjunctionRightDistribution () () (((p ∧ q) ∨ r) ↔ ((p ∨ r) ∧ (q ∨ r))))
+stmt (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))))
+stmt (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (q ∧ r))))
 </jh>
 
 ==== Introduction and elimination laws ====
@@ -194,6 +200,78 @@ stmt (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)))
 Negation as implication:
 <jh>
 stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
+</jh>
+
+== Rules ==
+
+Each propositional calculus needs at least one rule of detachment (modus ponens appears to be the most common). However, it will be convenient to have certain toolbox of rules implementing often used statements.
+
+=== Negation and implication ===
+
+Double negation elimination:
+<jh>
+stmt (eliminateDoubleNegation () ((¬ (¬ p))) p)
+</jh>
+Peano's importation and exportation rules:
+<jh>
+stmt (import () ((p → (q → r))) ((p ∧ q) → r))
+stmt (export () (((p ∧ q) → r)) (p → (q → r)))
+</jh>
+Distribute and collect antecedents:
+<jh>
+stmt (distributeAntecedent () ((p → (q → r))) ((p → q) → (p → r)))
+stmt (collectAntecedent () (((p → q) → (p → r))) (p → (q → r)))
+</jh>
+Four transposition rules:
+<jh>
+stmt (eliminateTransposition () (((¬ q) → (¬ p))) (p → q))
+stmt (introduceTransposition () ((p → q)) ((¬ q) → (¬ p)))
+stmt (transposeWithNegatedAntecedent () (((¬ p) → q)) ((¬ q) → p))
+stmt (transposeWithNegatedConsequent () ((p → (¬ q))) (q → (¬ p)))
+</jh>
+Syllogism:
+<jh>
+stmt (applySyllogism () ((p → q) (q → r)) (p → r))
+</jh>
+Modus ponens and modus tollens:
+<jh>
+stmt (applyModusPonens () (p (p → q)) q)
+stmt (applyModusTollens () ((¬ q) (p → q)) (¬ p))
+</jh>
+
+=== Disjunction and conjunction ===
+
+Associative laws:
+<jh>
+stmt (groupDisjunctionLeft () ((p ∨ (q ∨ r))) ((p ∨ q) ∨ r))
+stmt (groupDisjunctionRight () (((p ∨ q) ∨ r)) (p ∨ (q ∨ r)))
+stmt (groupConjunctionLeft () ((p ∧ (q ∧ r))) ((p ∧ q) ∧ r))
+stmt (groupConjunctionRight () (((p ∧ q) ∧ r)) (p ∧ (q ∧ r)))
+</jh>
+Commutative laws:
+<jh>
+stmt (swapDisjunction () ((p ∨ q)) (q ∨ p))
+stmt (swapConjunction () ((p ∧ q)) (q ∧ p))
+</jh>
+Distributive laws:
+<jh>
+stmt (distributeLeftDisjunction () ((p ∨ (q ∧ r))) ((p ∨ q) ∧ (p ∨ r)))
+stmt (collectLeftDisjunction () (((p ∨ q) ∧ (p ∨ r))) (p ∨ (q ∧ r)))
+stmt (distributeRightDisjunction () (((p ∧ q) ∨ r)) ((p ∨ r) ∧ (q ∨ r)))
+stmt (collectRightDisjunction () (((p ∨ r) ∧ (q ∨ r))) ((p ∧ q) ∨ r))
+stmt (distributeLeftConjunction () ((p ∧ (q ∨ r))) ((p ∧ q) ∨ (p ∧ r)))
+stmt (collectLeftConjunction () (((p ∧ q) ∨ (p ∧ r))) (p ∧ (q ∨ r)))
+stmt (distributeRightConjunction () (((p ∨ q) ∧ r)) ((p ∧ r) ∨ (q ∧ r)))
+stmt (collectRightConjunction () (((p ∧ r) ∨ (q ∧ r))) ((p ∨ q) ∧ r))
+</jh>
+Combining two statements:
+<jh>
+stmt (combineStatements () (p q) (p ∧ q))
+</jh>
+Conjunction elimination:
+<jh>
+stmt (eliminateRightConjunction () ((p ∧ q)) p)
+stmt (eliminateLeftConjunction () ((p ∧ q)) q)
 </jh>
 
 [[Category:Classical propositional logic|!]]
