@@ -48,4 +48,53 @@ and "the false",
 term (wff (⊥))
 </jh>
 
+== Simple statements ==
+
+Here are the statements which do not require any hypotheses.
+
+=== Constant statements ===
+
+The simplest statements are the "true" and the "not false" statement:
+<jh>
+stmt (True () () (⊤))
+stmt (NotFalse () () (¬ (⊥)))
+</jh>
+
+=== Statements about negation ===
+
+Double negation:
+<jh>
+stmt (DoubleNegation () () (p ↔ (¬ (¬ p))))
+</jh>
+Negation as a truth function:
+<jh>
+stmt (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))))
+</jh>
+
+=== Statements about implication ===
+
+Chaining [[w:antecedent|antecedent]]s in an implication is equivalent to a conjunction of these antecedents. This is the importation/exportation principle of [[w:Giuseppe Peano|Giuseppe Peano]].
+<jh>
+stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
+</jh>
+The distributive law of implication. Whitehead and Russell also call this the Simplification Principle:
+<jh>
+stmt (ImplicationDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))))
+</jh>
+Three [[w:Transposition_(logic)|transposition]] statements:
+<jh>
+stmt (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))))
+stmt (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)))
+stmt (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))))
+</jh>
+[[w:Syllogism|Syllogism]]:
+<jh>
+stmt (Syllogism () () ((p → q) → ((q → r) → (p → r))))
+</jh>
+[[w:Modus ponens|Modus ponens]] and [[w:modus tollens|modus tollens]]:
+<jh>
+stmt (ModusPonens () () (p → ((p → q) → q)))
+stmt (ModusTollens () () ((¬ q) → ((p → q) → (¬ p))))
+</jh>
+
 [[Category:Classical propositional logic|!]]
