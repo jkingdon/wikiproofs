@@ -6,7 +6,7 @@
  | shortcut = 
  | notes    = This interface collects all important theorems from [[w:classical propositional calculus|classical propositional calculus]]. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use propositional logic, without proving anything new within it.
 
-[[Image:Zeichen 123.svg|50px]] Still under construction!
+Statements can be added if necessary, but then the exporting modules have to be updated accordingly.
 }}
 {{modules
 | parameters = ''None''
@@ -272,6 +272,38 @@ Conjunction elimination:
 <jh>
 stmt (eliminateRightConjunction () ((p ∧ q)) p)
 stmt (eliminateLeftConjunction () ((p ∧ q)) q)
+</jh>
+
+=== Biconditional ===
+
+Introduction and elimination:
+<jh>
+stmt (introduceBiconditional () ((p → q) (q → p)) (p ↔ q))
+stmt (eliminateBiconditionalLeft () ((p ↔ q)) (p → q))
+stmt (eliminateBiconditionalRight () ((p ↔ q)) (q → p))
+</jh>
+Symmetry:
+<jh>
+stmt (swapBiconditional () ((p ↔ q)) (q ↔ p))
+</jh>
+Transitivity:
+<jh>
+stmt (combineBiconditionals () ((p ↔ q) (q ↔ r)) (p ↔ r))
+</jh>
+Expression builders:
+<jh>
+stmt (buildNegation () ((p ↔ q)) ((¬ p) ↔ (¬ q)))
+stmt (buildImplication () ((p ↔ q) (r ↔ s)) ((p → r) ↔ (q → s)))
+stmt (buildFromAntecedents () ((p ↔ q)) ((p → r) ↔ (q ↔ r)))
+stmt (buildFromConsequents () ((p ↔ q)) ((r → p) ↔ (r → q)))
+stmt (buildDisjunction () ((p ↔ q) (r ↔ s)) ((p ∨ r) ↔ (q ∨ s)))
+stmt (buildLeftDisjunction () ((p ↔ q)) ((r ∨ p) ↔ (r ∨ q)))
+stmt (buildRightDisjunction () ((p ↔ q)) ((p ∨ r) ↔ (q ∨ r)))
+stmt (buildConjunction () ((p ↔ q) (r ↔ s)) ((p ∧ r) ↔ (q ∧ s)))
+stmt (buildLeftConjunction () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
+stmt (buildRightConjunction () ((p ↔ q)) ((p ∧ r) ↔ (q ∧ r)))
+stmt (buildBiconditional () ((p ↔ q) (r ↔ s)) ((p ↔ r) ↔ (q ↔ s)))
+stmt (buildLeftBiconditional () ((p ↔ q)) ((r ↔ p) ↔ (r ↔ q)))
 </jh>
 
 [[Category:Classical propositional logic|!]]
