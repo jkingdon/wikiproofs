@@ -147,6 +147,8 @@ stmt (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (
 <jh>
 stmt (DisjunctionIntroductionLeft () () (p → (q ∨ p)))
 stmt (DisjunctionIntroductionRight () () (p → (p ∨ q)))
+stmt (DisjunctionElimination () () ((p ∨ q) → ((p → r) → ((q → r) → r))))
+stmt (ConjunctionIntroduction () () (p → ((p → q) → ((p → r) → (q ∧ r)))))
 stmt (ConjunctionEliminationLeft () () ((p ∧ q) → q))
 stmt (ConjunctionEliminationRight () () ((p ∧ q) → p))
 </jh>
@@ -177,6 +179,10 @@ This equivalence relation creates two [[w:equivalence class|equivalence class]]e
 <jh>
 stmt (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)))
 stmt (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)))
+</jh>
+The left hand side of ''Tautology'' is precisely the [[w:tertium non datur|tertium non datur]] statement ensuring the existence of at most two truth-values:
+<jh>
+stmt (TertiumNonDatur () () (p ∨ (¬ p)))
 </jh>
 Biconditional as a truth function:
 <jh>
@@ -264,12 +270,11 @@ stmt (collectLeftConjunction () (((p ∧ q) ∨ (p ∧ r))) (p ∧ (q ∨ r)))
 stmt (distributeRightConjunction () (((p ∨ q) ∧ r)) ((p ∧ r) ∨ (q ∧ r)))
 stmt (collectRightConjunction () (((p ∧ r) ∨ (q ∧ r))) ((p ∨ q) ∧ r))
 </jh>
-Combining two statements:
+Introduction/elimination rules:
 <jh>
+stmt (eliminateDisjunction () ((p ∨ q) (p → r) (q → r)) r)
 stmt (combineStatements () (p q) (p ∧ q))
-</jh>
-Conjunction elimination:
-<jh>
+stmt (introduceConjunction () (p (p → q) (p → r)) (q ∧ r))
 stmt (eliminateRightConjunction () ((p ∧ q)) p)
 stmt (eliminateLeftConjunction () ((p ∧ q)) q)
 </jh>
