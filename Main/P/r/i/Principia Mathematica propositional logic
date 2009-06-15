@@ -159,7 +159,7 @@ to get <math>((\neg p)\rightarrow q)\rightarrow((\neg q)\rightarrow(\neg(\neg p)
         applySyllogism
 ))
 
-thm (transposeLeftNegation () ((H ((¬ p) → q))) ((¬ q) → p) (
+thm (transposeWithNegatedAntecedent () ((H ((¬ p) → q))) ((¬ q) → p) (
         H
         p q *2.15
         applyModusPonens
@@ -192,6 +192,78 @@ thm (*2.17 () () (((¬ q) → (¬ p)) → (p → q)) (
 thm (eliminateTransposition () ((H ((¬ q) → (¬ p)))) (p → q) (
         H
         q p *2.17
+        applyModusPonens
+))
+</jh>
+Next, we prove the disjunction introduction laws. Introduction from the left is just the ''Add'' axiom of principia, and a permutation yields the introduction from the right.
+<jh>
+thm (DisjuctionIntroductionLeft () () (p → (q ∨ p)) (
+        p q Add
+))
+
+thm (introduceLeftDisjunction () ((H p)) (q ∨ p) (
+        H
+        p q DisjuctionIntroductionLeft
+        applyModusPonens
+))
+
+thm (DisjuctionIntroductionRight () () (p → (p ∨ q)) ( # *2.2
+        p q DisjuctionIntroductionLeft
+        q p Perm
+        applySyllogism
+))
+
+thm (introduceRightDisjunction () ((H p)) (p ∨ q) (
+        H
+        p q DisjuctionIntroductionRight
+        applyModusPonens
+))
+</jh>
+Next, we prove the modus ponens law with ''Assoc'':
+<jh>
+thm (*2.25 () () (p ∨ ((p ∨ q) → q)) (
+        (p ∨ q) Id
+        (¬ (p ∨ q)) p q Assoc
+        applyModusPonens
+))
+
+thm (ModusPonens () () (p → ((p → q) → q)) ( # *2.27
+        (¬ p) q *2.25
+))
+</jh>
+We now "repair" the extra twist in the ''Assoc'' axiom to get the actual associativity rules for disjunction:
+<jh>
+thm (*2.3 () () ((p ∨ (q ∨ r)) → (p ∨ (r ∨ q))) (
+        q r Perm
+        (q ∨ r) (r ∨ q) p Sum
+        applyModusPonens
+))
+
+thm (*2.31 () () ((p ∨ (q ∨ r)) → ((p ∨ q) ∨ r)) (
+        p q r *2.3
+        p r q Assoc
+        applySyllogism
+        r (p ∨ q) Perm
+        applySyllogism
+))
+
+thm (groupDisjunctionLeft () ((H (p ∨ (q ∨ r)))) ((p ∨ q) ∨ r) (
+        H
+        p q r *2.31
+        applyModusPonens
+))
+
+thm (*2.32 () () (((p ∨ q) ∨ r) → (p ∨ (q ∨ r))) (
+        (p ∨ q) r Perm
+        r p q Assoc
+        applySyllogism
+        p r q *2.3
+        applySyllogism
+))
+
+thm (groupDisjunctionRight () ((H ((p ∨ q) ∨ r))) (p ∨ (q ∨ r)) (
+        H
+        p q r *2.32
         applyModusPonens
 ))
 </jh>
