@@ -95,6 +95,26 @@ thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
         applyModusPonens
 ))
 </jh>
+The commutated syllogism yields the "identity" ''Id'', <math>p\rightarrow p</math>, and, by ''Perm'', [[w:tertium non datur|tertium non datur]], which is, by our definition, just <math>\top</math>:
+<jh>
+thm (Id () () (p → p) ( # *2.08
+        p p Add
+        p Taut
+        (p ∨ p) p p *2.05
+        applyModusPonens
+        applyModusPonens
+))
+
+thm (TertiumNonDatur () () (p ∨ (¬ p)) ( # *2.11
+        p Id
+        (¬ p) p Perm
+        applyModusPonens
+))
+
+thm (True () () (⊤) (
+        p TertiumNonDatur
+))
+</jh>
 
 :''This page is still incomplete''
 
