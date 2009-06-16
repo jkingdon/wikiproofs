@@ -319,6 +319,23 @@ thm (*2.38 () () ((q → r) → ((q ∨ p) → (r ∨ p))) (
 ))
 </jh>
 
+== Conjunction ==
+
+In this section we prove statements involving conjunction <math>p\wedge q</math>. Recall that conjunction is defined by <math>\neg((\neg p)\vee(\neg q))</math>. Our first theorem is the rule that two true statements can be combined to a conjunction.
+<jh>
+thm (combineStatements () ((H1 p) (H2 q)) (p ∧ q) ( # *3.03
+        H2
+        H1
+        ((¬ p) ∨ (¬ q)) TertiumNonDatur
+</jh>
+The trick is now to write <math>(\neg p)\vee(\neg q)\vee\ldots</math> as <math>p\rightarrow(q\rightarrow\ldots)</math>:
+<jh>
+        groupDisjunctionRight
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 
 == References ==
