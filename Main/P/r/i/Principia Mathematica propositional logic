@@ -267,6 +267,57 @@ thm (groupDisjunctionRight () ((H ((p ∨ q) ∨ r))) (p ∨ (q ∨ r)) (
         applyModusPonens
 ))
 </jh>
+Now we prove three helpful theorems regarding expression building with disjunctions, that is, they are companions to the ''Sum'' axiom. All these proofs proceed in two steps, using a syllogism to alter the consequent of ''Sum''.
+<jh>
+thm (*2.36 () () ((q → r) → ((p ∨ q) → (r ∨ p))) (
+</jh>
+As first step, we simply take the ''Sum'' axiom,
+<jh>
+        q r p Sum
+</jh>
+and prove <math>((p\vee q)\rightarrow(p\vee r))\rightarrow((p\vee q)\rightarrow(r\vee p))</math> as second step,
+<jh>
+        p r Perm
+        (p ∨ r) (r ∨ p) (p ∨ q) *2.05
+        applyModusPonens
+</jh>
+so that the result follows via a syllogism:
+<jh>
+        applySyllogism
+))
+
+thm (*2.37 () () ((q → r) → ((q ∨ p) → (p ∨ r))) (
+</jh>
+As first step, we take the ''Sum'' axiom with transposed consequent, that is <math>(q\rightarrow r)\rightarrow((\neg(p\vee r))\rightarrow(\neg(p\vee q)))</math>,
+<jh>
+        q r p Sum
+        (p ∨ q) (p ∨ r) *2.16
+        applySyllogism
+</jh>
+As second step, we prove <math>((\neg(p\vee r))\rightarrow(\neg(p\vee q)))\rightarrow((\neg(p\vee r))\rightarrow(\neg(q\vee p)))</math>
+<jh>
+        q p Perm
+        introduceTransposition
+        (¬ (p ∨ q)) (¬ (q ∨ p)) (¬ (p ∨ r)) *2.05
+        applyModusPonens
+</jh>
+Combining these two steps, the result follows by transposing the consequent back.
+<jh>
+        applySyllogism
+        (p ∨ r) (q ∨ p) *2.17
+        applySyllogism
+))
+</jh>
+Finally, <math>*2.38</math> follows directly from <math>*2.37</math> in the same way.
+<jh>
+thm (*2.38 () () ((q → r) → ((q ∨ p) → (r ∨ p))) (
+        q r p *2.37
+        p r Perm
+        (p ∨ r) (r ∨ p) (q ∨ p) *2.05
+        applyModusPonens
+        applySyllogism
+))
+</jh>
 
 :''This page is still incomplete''
 
