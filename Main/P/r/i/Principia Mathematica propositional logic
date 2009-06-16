@@ -95,24 +95,104 @@ thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
         applyModusPonens
 ))
 </jh>
-The commutated syllogism yields the "identity" ''Id'', <math>p\rightarrow p</math>, and, by ''Perm'', [[w:tertium non datur|tertium non datur]], which is, by our definition, just <math>\top</math>:
+The syllogism yields the "identity" ''Id'', <math>p\rightarrow p</math>, and, by ''Perm'', [[w:tertium non datur|tertium non datur]], which is, by our definition, just <math>\top</math>:
 <jh>
 thm (Id () () (p → p) ( # *2.08
         p p Add
         p Taut
-        (p ∨ p) p p *2.05
-        applyModusPonens
-        applyModusPonens
+        applySyllogism
 ))
 
 thm (TertiumNonDatur () () (p ∨ (¬ p)) ( # *2.11
         p Id
-        (¬ p) p Perm
-        applyModusPonens
+        swapDisjunction        
 ))
 
 thm (True () () (⊤) (
         p TertiumNonDatur
+))
+</jh>
+Actually, for Whitehead and Russell use the permutation of our ''TertiumNonDatur'' as theirs.
+
+With the ''TertiumNonDatur'', we can tackle double negation:
+<jh>
+thm (*2.12 () () (p → (¬ (¬ p))) (
+        (¬ p) TertiumNonDatur
+))
+
+thm (*2.13 () () (p ∨ (¬ (¬ (¬ p)))) (
+        p TertiumNonDatur
+        (¬ p) *2.12
+        (¬ p) (¬ (¬ (¬ p))) p Sum
+        applyModusPonens
+        applyModusPonens
+))
+
+thm (*2.14 () () ((¬ (¬ p)) → p) (
+        p *2.13
+        swapDisjunction
+))
+
+thm (eliminateDoubleNegation () ((H (¬ (¬ p)))) p (
+        H
+        p *2.14
+        applyModusPonens
+))
+</jh>
+Combined with double negation, the transposition law <math>*2.03</math> we already have yields the remaining three:
+<jh>
+thm (*2.15 () () (((¬ p) → q) → ((¬ q) → p)) (
+        q *2.12
+        q (¬ (¬ q)) (¬ p) *2.05
+        applyModusPonens
+</jh>
+We now have <math>((\neg p)\rightarrow q)\rightarrow((\neg p)\rightarrow(\neg(\neg q)))</math>. We transpose the consequent using our transposition law <math>*2.03</math>
+<jh>
+        (¬ p) (¬ q) *2.03
+        applySyllogism
+</jh>
+to get <math>((\neg p)\rightarrow q)\rightarrow((\neg q)\rightarrow(\neg(\neg p)))</math>. All that remains to do now is to eliminate the double negation.
+<jh>
+        p *2.14
+        (¬ (¬ p)) p (¬ q) *2.05
+        applyModusPonens
+        applySyllogism
+))
+
+thm (transposeLeftNegation () ((H ((¬ p) → q))) ((¬ q) → p) (
+        H
+        p q *2.15
+        applyModusPonens
+))
+</jh>
+The proofs of the next two theorems work similar but are actually easier due to a more favourable distribution of negations:
+<jh>
+thm (*2.16 () () ((p → q) → ((¬ q) → (¬ p))) (
+        q *2.12
+        q (¬ (¬ q)) p *2.05
+        applyModusPonens
+        p (¬ q) *2.03
+        applySyllogism
+))
+
+thm (introduceTransposition () ((H (p → q))) ((¬ q) → (¬ p)) (
+        H
+        p q *2.16
+        applyModusPonens
+))
+
+thm (*2.17 () () (((¬ q) → (¬ p)) → (p → q)) (
+        (¬ q) p *2.03
+        q *2.14
+        (¬ (¬ q)) q p *2.05
+        applyModusPonens
+        applySyllogism
+))
+
+thm (eliminateTransposition () ((H ((¬ q) → (¬ p)))) (p → q) (
+        H
+        q p *2.17
+        applyModusPonens
 ))
 </jh>
 
