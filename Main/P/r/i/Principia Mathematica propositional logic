@@ -318,6 +318,14 @@ thm (*2.38 () () ((q → r) → ((q ∨ p) → (r ∨ p))) (
         applySyllogism
 ))
 </jh>
+The next theorem yields a double negation of the left hand side of a disjunction. This is a useful helper theorem.
+<jh>
+thm (*2.53 () () ((p ∨ q) → ((¬ p) → q)) (
+        p *2.12
+        p (¬ (¬ p)) q *2.38
+        applyModusPonens
+))
+</jh>
 
 == Conjunction ==
 
@@ -332,6 +340,64 @@ The trick is now to write <math>(\neg p)\vee(\neg q)\vee\ldots</math> as <math>p
 <jh>
         groupDisjunctionRight
         applyModusPonens
+        applyModusPonens
+))
+</jh>
+We can prove the commutative law for conjunction from ''Perm'' using transpositions:
+<jh>
+thm (*3.22 () () ((p ∧ q) → (q ∧ p)) (
+        (q ∧ p) Id
+        eliminateTransposition
+        (¬ q) (¬ p) Perm
+        applySyllogism
+        introduceTransposition
+))
+
+thm (swapConjunction () ((H (p ∧ q))) (q ∧ p) (
+        H
+        p q *3.22
+        applyModusPonens
+))
+</jh>
+Next, we prove the negation of <math>\bot</math>:
+<jh>
+thm (*3.24 () () (¬ (p ∧ (¬ p))) (
+        (¬ p) TertiumNonDatur
+        ((¬ p) ∨ (¬ (¬ p))) *2.12
+        applyModusPonens
+))
+
+thm (NotFalse () () (¬ (⊥)) (
+        p *3.24
+))
+</jh>
+Next, we prove the conjunction elimination theorems.
+<jh>
+thm (ConjunctionEliminationRight () () ((p ∧ q) → p) ( # *3.26
+        p q AntecedentIntroduction
+        groupDisjunctionLeft
+</jh>
+This gives us <math>((\neg p)\vee(\neg q))\vee p</math>. All we need now is a double negation of the left bracket.
+<jh>
+        ((¬ p) ∨ (¬ q)) p *2.53
+        applyModusPonens
+))
+
+thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+        H
+        p q ConjunctionEliminationRight
+        applyModusPonens
+))
+
+thm (ConjunctionEliminationLeft () () ((p ∧ q) → q) ( # *3.27
+        p q *3.22
+        q p ConjunctionEliminationRight
+        applySyllogism
+))
+
+thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+        H
+        p q ConjunctionEliminationLeft
         applyModusPonens
 ))
 </jh>
