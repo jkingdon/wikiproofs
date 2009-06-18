@@ -402,6 +402,47 @@ thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
 ))
 </jh>
 
+== Biconditional ==
+
+In Principia, the biconditional <math>p\leftrightarrow q</math> is defined simply as <math>(p\rightarrow q)\wedge(q\rightarrow p)</math>, so our combination and elimination theorems for conjunction immediately yield the corresponding introduction and elimination rules for the biconditional.
+<jh>
+thm (introduceBiconditional () ((H1 (p → q)) (H2 (q → p))) (p ↔ q) (
+        H1 H2 combineStatements
+))
+
+thm (eliminateBiconditionalLeft () ((H (p ↔ q))) (p → q) (
+        H eliminateRightConjunction
+))
+
+thm (eliminateBiconditionalRight () ((H (p ↔ q))) (q → p) (
+        H eliminateLeftConjunction
+))
+</jh>
+Some more easy theorems:
+<jh>
+thm (DoubleNegation () () (p ↔ (¬ (¬ p))) (
+        p *2.12
+        p *2.14
+        introduceBiconditional
+))
+
+thm (BiconditionalReflexivity () () (p ↔ p) ( # *4.2
+        p Id
+        p Id
+        introduceBiconditional
+))
+
+thm (BiconditionalSymmetry () () ((p ↔ q) → (q ↔ p)) ( # *4.21
+        (p → q) (q → p) *3.22
+))
+
+thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
+        H
+        p q BiconditionalSymmetry
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 
 == References ==
