@@ -318,14 +318,104 @@ thm (*2.38 () () ((q → r) → ((q ∨ p) → (r ∨ p))) (
         applySyllogism
 ))
 </jh>
-The next theorem yields a double negation of the left hand side of a disjunction. This is a useful helper theorem.
-<jh>
+Our next goal will be to prove the ''if'' part of the implication distribution theorem, <math>(p\rightarrow(q\rightarrow r))\leftrightarrow((p\rightarrow q)\rightarrow(p\rightarrow r))</math>. Given that implication is defined from disjunction and negation in Principia, it would seem more natural to use [[w:de Morgan's law|de Morgan's law]] for disjunction negation for that. However, we don't have that yet, and in fact, implication distribution is instrumental to prove the factual combination theorem ''Fact'' below, which in turn is required for de Morgan's law. So what we shall do instead is to install equivalences such as <math>p\leftrightarrow(\neg(\neg p))</math, <math>p\leftrightarrow p\vee p</math> and <math>p\vee q\leftrightarrow q\vee p</math> in more or less deep subexpression in a long chain of theorems until we finally arrive at the desired result. <jh>
 thm (*2.53 () () ((p ∨ q) → ((¬ p) → q)) (
+</jh>
+That is, we make <math>(p\vee q)\rightarrow((\neg(\neg p))\vee q)</math> from <math>p\rightarrow(\neg(\neg q))</math>.
+<jh>
         p *2.12
         p (¬ (¬ p)) q *2.38
         applyModusPonens
 ))
+
+thm (*2.6 () () (((¬ p) → q) → ((p → q) → q)) (
+        (¬ p) q q *2.38
 </jh>
+This gives us already the result, except that the last <math>q</math> has been duplicated, <math>q\vee q</math>. We remove the duplicate using the ''Taut'' axiom.
+<jh>
+        q Taut
+        (q ∨ q) q (¬ ((¬ p) ∨ q)) Sum
+        applyModusPonens
+        applySyllogism
+))
+
+thm (*2.62 () () ((p ∨ q) → ((p → q) → q)) (
+        p q *2.53
+        p q *2.6
+        applySyllogism
+))
+
+thm (*2.621 () () ((p → q) → ((p ∨ q) → q)) (
+        p q *2.62
+        applyComm
+))
+
+thm (*2.73 () () ((p → q) → (((p ∨ q) ∨ r) → (q ∨ r))) (
+        p q *2.621
+        (p ∨ q) q r *2.38
+        applySyllogism
+))
+
+thm (*2.74 () () ((q → p) → (((p ∨ q) ∨ r) → (p ∨ r))) (
+</jh>
+This is the same as <math>*2.73</math> except for a permutation in the second antecedent. Since this permutation is nested four levels deep, some work is required. We begin with <math>*2.73</math>,
+<jh>
+        q p r *2.73
+</jh>
+and prove the permutation <math>((p\vee q)\vee r)\rightarrow((q\vee p)\vee r)</math>:
+<jh>
+        p q r *2.32
+        p q r Assoc
+        applySyllogism
+        q p r *2.31
+        applySyllogism
+</jh>
+We can now install this permutation as an antecedent through a transposition. Then the theorem follows through a syllogism.
+<jh>
+        introduceTransposition # -((q v p) v r) → -((p ∨ q) ∨ r)
+        (¬ ((q ∨ p) ∨ r)) (¬ ((p ∨ q) ∨ r)) (p ∨ r) *2.38
+        applyModusPonens
+        applySyllogism
+))
+
+thm (*2.75 () () ((p ∨ q) → ((p ∨ (q → r)) → (p ∨ r))) (
+</jh>
+This is <math>*2.74</math>, with <math>q</math> replaced with <math>\neg q</math>, plus some of the usual transformations.
+<jh>
+        p q Perm
+        q p *2.53
+        applySyllogism # (p v q) -> (-q -> p)
+</jh>
+This gives us <math>(p\vee q)\rightarrow((\neg q)\rightarrow p)</math>, which we can connect with <math>*2.74</math>,
+<jh>
+        (¬ q) p r *2.74
+        applySyllogism # (p v q) -> (((p v -q) v r) -> (p v r))
+</jh>
+so we get <math>(p\vee q)\rightarrow(((p\vee(\neg q))\vee r)\rightarrow(p\vee r))</math>. The rest of the proof is now to effect the disjunctive associativity law in the second antecedent.
+<jh>
+        p (¬ q) r *2.31
+        introduceTransposition
+        (¬ ((p ∨ (¬ q)) ∨ r)) (¬ (p ∨ ((¬ q) ∨ r))) (p ∨ r) *2.38
+        applyModusPonens
+        applySyllogism
+))
+
+thm (*2.76 () () ((p ∨ (q → r)) → ((p ∨ q) → (p ∨ r))) (
+        p q r *2.75
+        applyComm
+))
+
+thm (*2.77 () () ((p → (q → r)) → ((p → q) → (p → r))) (
+        (¬ p) q r *2.76
+))
+
+thm (distributeAntecedent () ((H (p → (q → r)))) ((p → q) → (p → r)) (
+        H
+        p q r *2.77
+        applyModusPonens
+))
+</jh>
+Theorem <math>*2.77</math> is now precisely the ''if'' part of the implicational distribution law.
 
 == Conjunction ==
 
