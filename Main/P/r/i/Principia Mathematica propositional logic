@@ -577,6 +577,61 @@ thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
         applyModusPonens
 ))
 </jh>
+Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
+<jh>
+thm (Fact () () ((p → q) → ((p ∧ r) → (q ∧ r))) ( # *3.45
+        p q (¬ r) Syllogism
+        (q → (¬ r)) (p → (¬ r)) *2.16
+        applySyllogism
+))
+
+thm (*3.47 () () (((p → r) ∧ (q → s)) → ((p ∧ q) → (r ∧ s))) (
+</jh>
+We prove this theorem in two steps. First we use the left hand side of the antecedent to deduce <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow((p\wedge q)\rightarrow(q\wedge r))</math>:
+<jh>
+        (p → r) (q → s) ConjunctionEliminationRight
+        p r q Fact
+        applySyllogism
+        r q *3.22
+        (p ∧ q) introduceAntecedent distributeAntecedent
+        applySyllogism
+</jh>
+Now we do the same with the right hand side of the antecedent to get <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow((q\wedge r)\rightarrow(r\wedge s))</math>. The theorem then follows from a syllogism in the consequent.
+<jh>
+        (p → r) (q → s) ConjunctionEliminationLeft
+        q s r Fact
+        applySyllogism
+        s r *3.22
+        (q ∧ r) introduceAntecedent distributeAntecedent
+        applySyllogism
+        applySyllogismInConsequent
+))
+
+thm (combineImplicationsAsConjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
+        H1 H2 combineStatements
+        p r q s *3.47
+        applyModusPonens
+))
+
+thm (*3.48 () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) (
+</jh>
+This theorem follows exactly as <math>*3.47</math>, except that we use the ''Sum'' type theorem <math>*2.37</math> instead of ''Fact'' and <math>*3.22</math>.
+<jh>
+        (p → r) (q → s) ConjunctionEliminationRight
+        p r q *2.37
+        applySyllogism
+        (p → r) (q → s) ConjunctionEliminationLeft
+        q s r *2.37
+        applySyllogism
+        applySyllogismInConsequent
+))
+
+thm (combineImplicationsAsDisjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
+        H1 H2 combineStatements
+        p r q s *3.48
+        applyModusPonens
+))
+</jh>
 
 == Biconditional ==
 
