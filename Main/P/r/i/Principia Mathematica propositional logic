@@ -420,7 +420,7 @@ thm (eliminateBiconditionalRight () ((H (p ↔ q))) (q → p) (
 </jh>
 Some more easy theorems:
 <jh>
-thm (DoubleNegation () () (p ↔ (¬ (¬ p))) (
+thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
         p *2.12
         p *2.14
         introduceBiconditional
@@ -440,6 +440,21 @@ thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
         H
         p q BiconditionalSymmetry
         applyModusPonens
+))
+
+thm (buildNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
+        H eliminateBiconditionalRight
+        introduceTransposition
+        H eliminateBiconditionalLeft
+        introduceTransposition
+        combineStatements
+))
+</jh>
+Since the definition of conjunction in Principia is based on [[w:De Morgan's laws|De Morgan's laws]], the laws themselves are not hard to prove.
+<jh>
+thm (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.51
+        ((¬ p) ∨ (¬ q)) DoubleNegation
+        swapBiconditional
 ))
 </jh>
 
