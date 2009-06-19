@@ -540,6 +540,43 @@ thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
         applyModusPonens
 ))
 </jh>
+We now prove Peano's import and export principles. We begin with exportation:
+<jh>
+thm (*3.3 () () (((p ∧ q) → r) → (p → (q → r))) (
+</jh>
+To shift the bracket right, we combine transposition and the ''Comm'' axiom to get <math>((p\wedge q)\rightarrow r)\rightarrow(p\rightarrow((\neg r)\rightarrow(\neg q)))</math>:
+<jh>
+        ((¬ p) ∨ (¬ q)) r *2.15
+        (¬ r) p (¬ q) Comm
+        applySyllogism
+</jh>
+What remains to do now is to install a transposition of <math>r</math> with <math>q</math>:
+<jh>
+        r q *2.17
+        p introduceAntecedent distributeAntecedent
+        applySyllogism
+))
+
+thm (export () ((H ((p ∧ q) → r))) (p → (q → r)) (
+        H
+        p q r *3.3
+        applyModusPonens
+))
+</jh>
+Importation is simpler as the conjunction is in the consequent this time:
+<jh>
+thm (*3.31 () () ((p → (q → r)) → ((p ∧ q) → r)) (
+        (¬ p) (¬ q) r *2.31
+        ((¬ p) ∨ (¬ q)) r *2.53
+        applySyllogism
+))
+
+thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
+        H
+        p q r *3.31
+        applyModusPonens
+))
+</jh>
 
 == Biconditional ==
 
