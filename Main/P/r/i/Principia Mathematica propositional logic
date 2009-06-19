@@ -649,6 +649,35 @@ thm (eliminateBiconditionalRight () ((H (p ↔ q))) (q → p) (
         H eliminateLeftConjunction
 ))
 </jh>
+In order to prove the biconditional function theorem <math>(p\leftrightarrow q)\leftrightarrow((\neg p)\leftrightarrow(\neg q))</math>, we combine the two transposition laws <math>*2.16</math> and <math>*2.17</math>:
+<jh>
+thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) (
+        p q *2.16
+        q p *2.16
+        combineImplicationsAsConjunction
+</jh>
+This gives us <math>(p\leftrightarrow q)\rightarrow((\neg q)\leftrightarrow(\neg p))</math>, the right hand side of which must be permuted:
+<jh>
+        ((¬ q) → (¬ p)) ((¬ p) → (¬ q)) *3.22
+        applySyllogism
+</jh>
+Now the same again for <math>*2.17</math>:
+<jh>
+        p q *2.17
+        q p *2.17
+        combineImplicationsAsConjunction
+        (q → p) (p → q) *3.22
+        applySyllogism
+        introduceBiconditional
+))
+
+thm (buildNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalLeft
+        applyModusPonens
+))
+</jh>
 Some more easy theorems:
 <jh>
 thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
@@ -673,12 +702,16 @@ thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
         applyModusPonens
 ))
 
-thm (buildNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
-        H eliminateBiconditionalRight
-        introduceTransposition
-        H eliminateBiconditionalLeft
-        introduceTransposition
-        combineStatements
+thm (*4.37 () () ((p ↔ q) → ((p ∨ r) ↔ (q ∨ r))) (
+        p q r *2.38
+        q p r *2.38
+        combineImplicationsAsConjunction
+))
+
+thm (buildRightDisjunction () ((H (p ↔ q))) ((p ∨ r) ↔ (q ∨ r)) (
+        H
+        p q r *4.37
+        applyModusPonens
 ))
 </jh>
 Since the definition of conjunction in Principia is based on [[w:De Morgan's laws|De Morgan's laws]], the laws themselves are not hard to prove.
@@ -687,6 +720,8 @@ thm (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.5
         ((¬ p) ∨ (¬ q)) DoubleNegation
         swapBiconditional
 ))
+
+
 </jh>
 
 :''This page is still incomplete''
