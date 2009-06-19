@@ -468,16 +468,20 @@ thm (applySyllogismInConsequent () ((H1 (p → (q → r))) (H2 (p → (r → s))
 
 == Conjunction ==
 
-In this section we prove statements involving conjunction <math>p\wedge q</math>. Recall that conjunction is defined by <math>\neg((\neg p)\vee(\neg q))</math>. Our first theorem is the rule that two true statements can be combined to a conjunction.
+In this section we prove statements involving conjunction <math>p\wedge q</math>. Recall that conjunction is defined by <math>\neg((\neg p)\vee(\neg q))</math>. Our first theorem is the combination of two statements to a conjunction.
 <jh>
-thm (combineStatements () ((H1 p) (H2 q)) (p ∧ q) ( # *3.03
-        H2
-        H1
+thm (*3.2 () () (p → (q → (p ∧ q))) (
         ((¬ p) ∨ (¬ q)) TertiumNonDatur
 </jh>
 The trick is now to write <math>(\neg p)\vee(\neg q)\vee\ldots</math> as <math>p\rightarrow(q\rightarrow\ldots)</math>:
 <jh>
         groupDisjunctionRight
+))
+
+thm (combineStatements () ((H1 p) (H2 q)) (p ∧ q) ( # *3.03
+        H2
+        H1
+        p q *3.2
         applyModusPonens
         applyModusPonens
 ))
@@ -587,6 +591,23 @@ thm (*3.33 () () (((p → q) ∧ (q → r)) → (p → r)) (
 thm (*3.34 () () (((q → r) ∧ (p → q)) → (p → r)) (
        q r p *2.05
        import
+))
+</jh>
+Next, we prove ''Comp'', the principle of composition,
+<jh>
+thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) (
+        q r *3.2
+        q (r → (q ∧ r)) p *2.05
+        applyModusPonens
+        p r (q ∧ r) *2.77
+        applySyllogism
+        import
+))
+
+thm (applyComp () ((H1 (p → q)) (H2 (p → r))) (p → (q ∧ r)) (
+        H1 H2 combineStatements
+        p q r Comp
+        applyModusPonens
 ))
 </jh>
 Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
@@ -721,31 +742,32 @@ thm (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)) (
 First factor:
 <jh>
         (p ↔ q) (q ↔ r) ConjunctionEliminationRight
-        (p ↔ q) ConjunctionEliminationRight
+        (p → q) (q → p) ConjunctionEliminationRight
         applySyllogism
 </jh>
 Third factor:
 <jh>
         (p ↔ q) (q ↔ r) ConjunctionEliminationLeft
-        (q ↔ r) ConjunctionEliminationRight
+        (q → r) (r → q) ConjunctionEliminationRight
         applySyllogism
         applySyllogismInConsequent
 </jh>
 Fourth factor:
 <jh>
         (p ↔ q) (q ↔ r) ConjunctionEliminationLeft
-        (q ↔ r) ConjunctionEliminationLeft
+        (q → r) (r → q) ConjunctionEliminationLeft
         applySyllogism
 </jh>
 Second factor:
 <jh>
         (p ↔ q) (q ↔ r) ConjunctionEliminationRight
-        (p ↔ q) ConjunctionEliminationLeft
+        (p → q) (q → p) ConjunctionEliminationLeft
         applySyllogism
         applySyllogismInConsequent
-        #FIXME: Something's amiss here
+        applyComp
 ))
 </jh>
+Another easy builder theorem:
 <jh>
 
 thm (*4.37 () () ((p ↔ q) → ((p ∨ r) ↔ (q ∨ r))) (
@@ -767,7 +789,11 @@ thm (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.5
         swapBiconditional
 ))
 
-
+thm (*4.54 () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
+        p DoubleNegation
+        (¬ q) buildRightDisjunction
+        buildNegation
+))
 </jh>
 
 :''This page is still incomplete''
