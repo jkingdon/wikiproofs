@@ -577,6 +577,18 @@ thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
         applyModusPonens
 ))
 </jh>
+We can use importation to prove syllogisms in conjunction form:
+<jh>
+thm (*3.33 () () (((p → q) ∧ (q → r)) → (p → r)) (
+        p q r Syllogism
+        import
+))
+
+thm (*3.34 () () (((q → r) ∧ (p → q)) → (p → r)) (
+       q r p *2.05
+       import
+))
+</jh>
 Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
 <jh>
 thm (Fact () () ((p → q) → ((p ∧ r) → (q ∧ r))) ( # *3.45
@@ -649,7 +661,7 @@ thm (eliminateBiconditionalRight () ((H (p ↔ q))) (q → p) (
         H eliminateLeftConjunction
 ))
 </jh>
-In order to prove the biconditional function theorem <math>(p\leftrightarrow q)\leftrightarrow((\neg p)\leftrightarrow(\neg q))</math>, we combine the two transposition laws <math>*2.16</math> and <math>*2.17</math>:
+In order to prove the negation function theorem <math>(p\leftrightarrow q)\leftrightarrow((\neg p)\leftrightarrow(\neg q))</math>, we combine the two transposition laws <math>*2.16</math> and <math>*2.17</math>:
 <jh>
 thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) (
         p q *2.16
@@ -701,6 +713,40 @@ thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
         p q BiconditionalSymmetry
         applyModusPonens
 ))
+</jh>
+The proof of biconditional transitivity is somewhat more complicated. The antecedent contains essentially four disjunctions factors. Each of them has to be picked out and applied:
+<jh>
+thm (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)) ( # *4.22
+</jh>
+First factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionEliminationRight
+        (p ↔ q) ConjunctionEliminationRight
+        applySyllogism
+</jh>
+Third factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionEliminationLeft
+        (q ↔ r) ConjunctionEliminationRight
+        applySyllogism
+        applySyllogismInConsequent
+</jh>
+Fourth factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionEliminationLeft
+        (q ↔ r) ConjunctionEliminationLeft
+        applySyllogism
+</jh>
+Second factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionEliminationRight
+        (p ↔ q) ConjunctionEliminationLeft
+        applySyllogism
+        applySyllogismInConsequent
+        #FIXME: Something's amiss here
+))
+</jh>
+<jh>
 
 thm (*4.37 () () ((p ↔ q) → ((p ∨ r) ↔ (q ∨ r))) (
         p q r *2.38
