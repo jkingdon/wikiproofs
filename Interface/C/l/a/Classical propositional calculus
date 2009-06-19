@@ -271,55 +271,32 @@ stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
 
 Each propositional calculus needs at least one rule of detachment (modus ponens appears to be the most common). However, it will be convenient to have certain toolbox of rules implementing often used statements.
 
-=== Negation and implication ===
-
-Double negation elimination:
+Negation and implication:
 <jh>
+stmt (introduceDoubleNegation () (p) (¬ (¬ p)))
 stmt (eliminateDoubleNegation () ((¬ (¬ p))) p)
-</jh>
-Peano's importation and exportation rules:
-<jh>
-stmt (import () ((p → (q → r))) ((p ∧ q) → r))
-stmt (export () (((p ∧ q) → r)) (p → (q → r)))
-</jh>
-Distribute and collect antecedents:
-<jh>
+stmt (introduceAntecedent () (p) (q → p))
+stmt (applySyllogism () ((p → q) (q → r)) (p → r))
+stmt (applySyllogismInConsequent () ((p → (q → r)) (p → (r → s))) (p → (q → s)))
 stmt (distributeAntecedent () ((p → (q → r))) ((p → q) → (p → r)))
 stmt (collectAntecedent () (((p → q) → (p → r))) (p → (q → r)))
-</jh>
-Four transposition rules:
-<jh>
 stmt (eliminateTransposition () (((¬ q) → (¬ p))) (p → q))
 stmt (introduceTransposition () ((p → q)) ((¬ q) → (¬ p)))
 stmt (transposeWithNegatedAntecedent () (((¬ p) → q)) ((¬ q) → p))
 stmt (transposeWithNegatedConsequent () ((p → (¬ q))) (q → (¬ p)))
 </jh>
-Syllogism:
+Disjunction and conjunction:
 <jh>
-stmt (applySyllogism () ((p → q) (q → r)) (p → r))
-</jh>
-Modus ponens and modus tollens:
-<jh>
-stmt (applyModusPonens () (p (p → q)) q)
-stmt (applyModusTollens () ((¬ q) (p → q)) (¬ p))
-</jh>
-
-=== Disjunction and conjunction ===
-
-Associative laws:
-<jh>
+stmt (cloneAsDisjunction () (p) (p ∨ p))
+stmt (conflateDisjunction () ((p ∨ p)) p)
+stmt (cloneAsConjunction () (p) (p ∧ p))
+stmt (conflateConjunction () ((p ∧ p)) p)
 stmt (groupDisjunctionLeft () ((p ∨ (q ∨ r))) ((p ∨ q) ∨ r))
 stmt (groupDisjunctionRight () (((p ∨ q) ∨ r)) (p ∨ (q ∨ r)))
 stmt (groupConjunctionLeft () ((p ∧ (q ∧ r))) ((p ∧ q) ∧ r))
 stmt (groupConjunctionRight () (((p ∧ q) ∧ r)) (p ∧ (q ∧ r)))
-</jh>
-Commutative laws:
-<jh>
 stmt (swapDisjunction () ((p ∨ q)) (q ∨ p))
 stmt (swapConjunction () ((p ∧ q)) (q ∧ p))
-</jh>
-Distributive laws:
-<jh>
 stmt (distributeLeftDisjunction () ((p ∨ (q ∧ r))) ((p ∨ q) ∧ (p ∨ r)))
 stmt (collectLeftDisjunction () (((p ∨ q) ∧ (p ∨ r))) (p ∨ (q ∧ r)))
 stmt (distributeRightDisjunction () (((p ∧ q) ∨ r)) ((p ∨ r) ∧ (q ∨ r)))
@@ -329,45 +306,84 @@ stmt (collectLeftConjunction () (((p ∧ q) ∨ (p ∧ r))) (p ∧ (q ∨ r)))
 stmt (distributeRightConjunction () (((p ∨ q) ∧ r)) ((p ∧ r) ∨ (q ∧ r)))
 stmt (collectRightConjunction () (((p ∧ r) ∨ (q ∧ r))) ((p ∨ q) ∧ r))
 </jh>
-Introduction/elimination rules:
+De Morgan's laws:
 <jh>
-stmt (eliminateDisjunction () ((p ∨ q) (p → r) (q → r)) r)
-stmt (combineStatements () (p q) (p ∧ q))
-stmt (introduceConjunction () (p (p → q) (p → r)) (q ∧ r))
-stmt (eliminateRightConjunction () ((p ∧ q)) p)
+stmt (distributeNegationPDP () ((¬ (p ∨ q))) ((¬ p) ∧ (¬ q)))
+stmt (distributeNegationPDN () ((¬ (p ∨ (¬ q)))) ((¬ p) ∧ q))
+stmt (distributeNegationNDP () ((¬ ((¬ p) ∨ q))) (p ∧ (¬ q)))
+stmt (distributeNegationNDN () ((¬ ((¬ p) ∨ (¬ q)))) (p ∧ q))
+stmt (distributeNegationPCP () ((¬ (p ∧ q))) ((¬ p) ∨ (¬ q)))
+stmt (distributeNegationPCN () ((¬ (p ∧ (¬ q)))) ((¬ p) ∨ q))
+stmt (distributeNegationNCP () ((¬ ((¬ p) ∧ q))) (p ∨ (¬ q)))
+stmt (distributeNegationNCN () ((¬ ((¬ p) ∧ (¬ q)))) (p ∨ q))
+stmt (collectNegationPDP () ((p ∨ q)) (¬ ((¬ p) ∧ (¬ q))))
+stmt (collectNegationPDN () ((p ∨ (¬ q))) (¬ ((¬ p) ∧ q)))
+stmt (collectNegationNDP () (((¬ p) ∨ q)) (¬ (p ∧ (¬ q))))
+stmt (collectNegationNDN () (((¬ p) ∨ (¬ q))) (¬ (p ∧ q)))
+stmt (collectNegationPCP () ((p ∧ q)) (¬ ((¬ p) ∨ (¬ q))))
+stmt (collectNegationPCN () ((p ∧ (¬ q))) (¬ ((¬ p) ∨ q)))
+stmt (collectNegationNCP () (((¬ p) ∧ q)) (¬ (p ∨ (¬ q))))
+stmt (collectNegationNCN () (((¬ p) ∧ (¬ q))) (¬ (p ∨ q)))
+</jh>
+Other rules containing negation, implication, disjunction and conjunction:
+<jh>
+stmt (import () ((p → (q → r))) ((p ∧ q) → r))
+stmt (export () (((p ∧ q) → r)) (p → (q → r)))
+stmt (applyModusPonens () (p (p → q)) q)
+stmt (applyModusTollens () ((¬ q) (p → q)) (¬ p))
+stmt (introduceLeftDisjunction () (p) (q ∨ p))
+stmt (introduceRightDisjunction () (p) (p ∨ q))
+stmt (eliminateLeftDisjunction () ((p ∨ q) (p → q)) q)
+stmt (eliminateRightDisjunction () ((p ∨ q) (q → p)) p)
+stmt (introduceConjunction () (p q) (p ∧ q))
 stmt (eliminateLeftConjunction () ((p ∧ q)) q)
+stmt (eliminateRightConjunction () ((p ∧ q)) p)
+stmt (eliminateCases () ((p → q) ((¬ p) → q)) q)
+stmt (composeDisjunction () ((p → r) (q → r)) ((p ∨ q) → r))
+stmt (extractLeftDisjunction () (((p ∨ q) → r)) (p → r))
+stmt (extractRightDisjunction () (((p ∨ q) → r)) (q → r))
+stmt (composeConjunction () ((p → q) (p → r)) (p → (q ∧ r)))
+stmt (extractLeftConjunction () ((p → (q ∧ r))) (p → q))
+stmt (extractRightConjunction () ((p → (q ∧ r))) (p → r))
+stmt (disjoinLL () ((p → q)) ((r ∨ p) → (r ∨ q)))
+stmt (disjoinLR () ((p → q)) ((r ∨ p) → (q ∨ r)))
+stmt (disjoinRL () ((p → q)) ((p ∨ r) → (r ∨ q)))
+stmt (disjoinRR () ((p → q)) ((p ∨ r) → (q ∨ r)))
+stmt (disjoin () ((p → q) (r → s)) ((p ∨ r) → (q ∨ s)))
+stmt (conjoinLL () ((p → q)) ((r ∧ p) → (r ∧ q)))
+stmt (conjoinLR () ((p → q)) ((r ∧ p) → (q ∧ r)))
+stmt (conjoinRL () ((p → q)) ((p ∧ r) → (r ∧ q)))
+stmt (conjoinRR () ((p → q)) ((p ∧ r) → (q ∧ r)))
+stmt (conjoin () ((p → q) (r → s)) ((p ∧ r) → (q ∧ s)))
 </jh>
-
-=== Biconditional ===
-
-Introduction and elimination:
-<jh>
-stmt (introduceBiconditional () ((p → q) (q → p)) (p ↔ q))
-stmt (eliminateBiconditionalLeft () ((p ↔ q)) (p → q))
-stmt (eliminateBiconditionalRight () ((p ↔ q)) (q → p))
-</jh>
-Symmetry:
+Biconditional:
 <jh>
 stmt (swapBiconditional () ((p ↔ q)) (q ↔ p))
-</jh>
-Transitivity:
-<jh>
-stmt (combineBiconditionals () ((p ↔ q) (q ↔ r)) (p ↔ r))
-</jh>
-Expression builders:
-<jh>
-stmt (buildNegation () ((p ↔ q)) ((¬ p) ↔ (¬ q)))
+stmt (applyBiconditionalTransitivity () ((p ↔ q) (q ↔ r)) (p ↔ r))
+stmt (eliminateLeftBiconditionalImplication () ((p ↔ q)) (q → p))
+stmt (eliminateRightBiconditionalImplication () ((p ↔ q)) (p → q))
+stmt (eliminateLeftBiconditionalDisjunction () ((p ↔ q)) (p ∨ (¬ q)))
+stmt (eliminateRightBiconditionalDisjunction () ((p ↔ q)) ((¬ p) ∨ q))
+stmt (addNegation () ((p ↔ q)) ((¬ p) ↔ (¬ q)))
+stmt (removeNegation () (((¬ p) ↔ (¬ q))) (p ↔ q))
 stmt (buildImplication () ((p ↔ q) (r ↔ s)) ((p → r) ↔ (q → s)))
-stmt (buildFromAntecedents () ((p ↔ q)) ((p → r) ↔ (q ↔ r)))
-stmt (buildFromConsequents () ((p ↔ q)) ((r → p) ↔ (r → q)))
 stmt (buildDisjunction () ((p ↔ q) (r ↔ s)) ((p ∨ r) ↔ (q ∨ s)))
-stmt (buildLeftDisjunction () ((p ↔ q)) ((r ∨ p) ↔ (r ∨ q)))
-stmt (buildRightDisjunction () ((p ↔ q)) ((p ∨ r) ↔ (q ∨ r)))
 stmt (buildConjunction () ((p ↔ q) (r ↔ s)) ((p ∧ r) ↔ (q ∧ s)))
-stmt (buildLeftConjunction () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
-stmt (buildRightConjunction () ((p ↔ q)) ((p ∧ r) ↔ (q ∧ r)))
 stmt (buildBiconditional () ((p ↔ q) (r ↔ s)) ((p ↔ r) ↔ (q ↔ s)))
-stmt (buildLeftBiconditional () ((p ↔ q)) ((r ↔ p) ↔ (r ↔ q)))
+stmt (convertFromBiconditionalToImplications () ((p ↔ q)) ((p → q) ∧ (q → p)))
+stmt (convertToBiconditionalFromImplications () (((p → q) ∧ (q → p))) (p ↔ q))
+stmt (introduceBiconditionalFromImplications () ((p → q) (q → p)) (p ↔ q))
+stmt (convertFromBiconditionalToDisjunction () ((p ↔ q)) ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))))
+stmt (convertToBiconditionalFromDisjunction () (((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))) (p ↔ q))
+stmt (convertFromBiconditionalToConjunction () ((p ↔ q)) (((¬ p) ∨ q) ∧ (p ∨ (¬ q))))
+stmt (convertToBiconditionalFromConjunction () ((((¬ p) ∨ q) ∧ (p ∨ (¬ q)))) (p ↔ q))
+stmt (introduceBiconditionalFromDisjunctions () (((¬ p) ∨ q) (p ∨ (¬ q))) (p ↔ q))
+stmt (convertFromImplicationToDisjunction () ((p → q)) ((¬ p) ∨ q))
+stmt (convertToImplicationFromDisjunction () (((¬ p) ∨ q)) (p → q))
+stmt (convertFromDisjunctionToImplication () ((p ∨ q)) ((¬ p) → q))
+stmt (convertToDisjunctionFromImplication () (((¬ p) → q)) (p ∨ q))
+stmt (convertFromNegationToImplication () ((¬ p)) (p → (⊥)))
+stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
 </jh>
 
 == References ==
