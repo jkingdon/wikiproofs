@@ -65,76 +65,60 @@ stmt (True () () (⊤))
 stmt (NotFalse () () (¬ (⊥)))
 </jh>
 
-=== Statements about negation ===
+=== Negation and implication ===
 
-Double negation:
+[[w:double negative elimination|Double negation]]:
 <jh>
 stmt (DoubleNegation () () (p ↔ (¬ (¬ p))))
 </jh>
-Negation as a truth function:
+Implication is [[w:reflexive relation|reflexive]]. Sometimes, this is called "Identity" or "Tautology".
 <jh>
-stmt (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))))
+stmt (ImplicationReflexivity () () (p → p))
 </jh>
-
-=== Statements about implication ===
-
-Chaining [[w:antecedent|antecedent]]s in an implication is equivalent to a conjunction of these antecedents. This is the importation/exportation principle of [[w:Giuseppe Peano|Giuseppe Peano]].
+Introduction of an [[w:antecedent (logic)|antecedent]]. Whitehead and Russell call this "Simplification"<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref>:
 <jh>
-stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
-</jh>
-The distributive law of implication.
-<jh>
-stmt (ImplicationDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))))
-</jh>
-Three [[w:Transposition_(logic)|transposition]] statements:
-<jh>
-stmt (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))))
-stmt (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)))
-stmt (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))))
+stmt (AntecedentIntroduction () () (p → (q → p)))
 </jh>
 [[w:Syllogism|Syllogism]]:
 <jh>
 stmt (Syllogism () () ((p → q) → ((q → r) → (p → r))))
 </jh>
-[[w:Modus ponens|Modus ponens]] and [[w:modus tollens|modus tollens]]:
+Syllogism can also applied to formulas with a common antecedent:
 <jh>
-stmt (ModusPonens () () (p → ((p → q) → q)))
-stmt (ModusTollens () () ((¬ q) → ((p → q) → (¬ p))))
+stmt (SyllogismInConsequent () () ((p → (q → r)) → ((p → (r → s)) → (p → (q → s)))))
 </jh>
-Introduction of an antecedent. Whitehead and Russell call this "Simplification":
+If the [[w:consequent|consequent]] of an implication is an implication itself, its antecedent can be distributed over antecedent and consequent of the consequent, and vice versa.
 <jh>
-stmt (AntecedentIntroduction () () (p → (q → p)))
+stmt (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))))
 </jh>
-Implication as a truth function:
+There are three [[w:Transposition_(logic)|transposition]] statements:
 <jh>
-stmt (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
+stmt (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))))
+stmt (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)))
+stmt (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))))
 </jh>
 
-=== Statements abount disjunction and conjunction ===
+=== Disjunction and conjunction ===
 
-==== Idempotence ====
-
+[[w:Idempotence|Idempotence]]:
 <jh>
 stmt (DisjunctionIdempotence () () (p ↔ (p ∨ p)))
 stmt (ConjunctionIdempotence () () (p ↔ (p ∧ p)))
 </jh>
 
-==== Associativity ====
-
+[[w:Associativity|Associativity]]:
 <jh>
 stmt (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))))
 stmt (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))))
 </jh>
 
-==== Commutativity ====
-
+[[w:Commutativity|Commutativity]]:
 <jh>
 stmt (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)))
 stmt (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)))
 </jh>
 
-==== Distributive laws ====
-
+[[w:Distributivity|Distributivity]]:
 <jh>
 stmt (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))))
 stmt (DisjunctionRightDistribution () () (((p ∧ q) ∨ r) ↔ ((p ∨ r) ∧ (q ∨ r))))
@@ -142,32 +126,80 @@ stmt (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p
 stmt (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (q ∧ r))))
 </jh>
 
-==== Introduction and elimination laws ====
+=== De Morgan's laws ===
 
+Since [[w:De Morgan's laws|De Morgan's laws]] have many forms, we use the suffix <code>xAy</code> to indicate the form. A law with suffix <code>xAy</code> will have the form <code>(¬ (z B w)) ↔ &hellip;</code>, where <code>B</code> is <code>∨</code> or <code>∧</code> if <code>A</code> is <code>D</code> or <code>C</code>, respectively. <code>z</code> is <code>p</code> or <code>(¬ p)</code> if <code>z</code> is <code>P</code> or <code>N</code>, respectively. Likewise for <code>w</code>, except that <code>q</code> is used instead of <code>p</code>.
 <jh>
-stmt (DisjunctionIntroductionLeft () () (p → (q ∨ p)))
-stmt (DisjunctionIntroductionRight () () (p → (p ∨ q)))
-stmt (DisjunctionElimination () () ((p ∨ q) → ((p → r) → ((q → r) → r))))
-stmt (ConjunctionIntroduction () () (p → ((p → q) → ((p → r) → (q ∧ r)))))
-stmt (ConjunctionEliminationLeft () () ((p ∧ q) → q))
-stmt (ConjunctionEliminationRight () () ((p ∧ q) → p))
+stmt (DeMorganPDP () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))))
+stmt (DeMorganPDN () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)))
+stmt (DeMorganNDP () () ((¬ ((¬ p) ∨ q)) ↔ (p ∧ (¬ q))))
+stmt (DeMorganNDN () () ((¬ ((¬ p) ∨ (¬ q))) ↔ (p ∧ q)))
+stmt (DeMorganPCP () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))))
+stmt (DeMorganPCN () () ((¬ (p ∧ (¬ q))) ↔ ((¬ p) ∨ q)))
+stmt (DeMorganNCP () () ((¬ ((¬ p) ∧ q)) ↔ (p ∨ (¬ q))))
+stmt (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)))
 </jh>
 
-==== De Morgan's laws ====
+=== Other statements containing negation, implication, disjunction and conjunction ===
 
+Implication is [[w:transitive relation|transitive]]:
 <jh>
-stmt (DisjunctionNegation () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))))
-stmt (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))))
+stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
+</jh>
+Although there is no associativity law for implication, we have the following importation/exportation principle due to [[w:Guiseppe Peano|Guiseppe Peano]]:
+<jh>
+stmt (Importation () () ((p → (q → r)) → ((p ∧ q) → r)))
+stmt (Exportation () () (((p ∧ q) → r) → (p → (q → r))))
+stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
+</jh>
+Two famous implication elimination principles, [[w:Modus ponens|Modus ponens]] and [[w:modus tollens|modus tollens]]:
+<jh>
+stmt (ModusPonens () () ((p ∧ (p → q)) → q))
+stmt (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)))
+</jh>
+Introduction and elimination principles for disjunction:
+<jh>
+stmt (DisjunctionLeftIntroduction () () (p → (q ∨ p)))
+stmt (DisjunctionRightIntroduction () () (p → (p ∨ q)))
+stmt (DisjunctionLeftElimination () () (((p ∨ q) ∧ (p → q)) → q))
+stmt (DisjunctionRightElimination () () (((p ∨ q) ∧ (q → p)) → p))
+</jh>
+Introduction and elimination principles for conjunction:
+<jh>
+stmt (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))))
+stmt (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))))
+stmt (ConjunctionLeftElimination () () ((p ∧ q) → q))
+stmt (ConjunctionRightElimination () () ((p ∧ q) → p))
+</jh>
+Case by case elimination:
+<jh>
+stmt (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q))
+</jh>
+Composition for disjunction and conjunction:
+<jh>
+stmt (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)))
+stmt (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))))
+</jh>
+Summation for disjunction. We use the suffixes <code>LL</code>, <code>LR</code>, <code>RL</code> and <code>RR</code> to indicate if the summands were added to the left or the right of antecedent or consequent, respectively.
+<jh>
+stmt (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))))
+stmt (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))))
+stmt (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))))
+stmt (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))))
+stmt (DisjunctionSummation () () (((p → q) ∧ (r → s)) → ((p ∨ r) → (q ∨ s))))
+</jh>
+Multiplication for conjunction, with the same suffixes as above.
+<jh>
+stmt (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))))
+stmt (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))))
+stmt (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))))
+stmt (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))))
+stmt (ConjunctionMultiplication () () (((p → q) ∧ (r → s)) → ((p ∧ r) → (q ∧ s))))
 </jh>
 
-==== Disjunction and conjunction as truth functions ====
+=== Biconditional ===
 
-<jh>
-stmt (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
-stmt (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
-</jh>
-
-=== Statements about the biconditional ===
+==== Equivalence relation ====
 
 The biconditional simply creates an [[w:equivalence relation|equivalence relation]] among well-formed formulas:
 <jh>
@@ -184,24 +216,51 @@ The left hand side of ''Tautology'' is precisely the [[w:tertium non datur|terti
 <jh>
 stmt (TertiumNonDatur () () (p ∨ (¬ p)))
 </jh>
-Biconditional as a truth function:
+
+==== Weakenings ====
+
+A biconditional makes a strong statement. Often, we only need a weaker statement. For introductions, see the section on [[#Truth function interdependencies|truth function interdependencies]].
 <jh>
-stmt (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
+stmt (BiconditionalImplicationLeftElimination () () ((p ↔ q) → (q → p)))
+stmt (BiconditionalImplicationRightElimination () () ((p ↔ q) → (p → q)))
+stmt (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))))
+stmt (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)))
 </jh>
 
-=== Some truth function interdependencies ===
+==== Truth functions ====
 
+The logical connectives are functions on the equivalence classes of true and false formulas. That is, if <math>p_1,\ldots,p_n</math> and <math>q_1,\ldots,q_n</math> are formulas such that <math>p_i</math> and <math>q_i</math> are in the same equivalence class for <math>i=1,\ldots,n</math>, then an <math>n</math>-ary logical connective will send both groups of formulas to the same equivalence class. We express this for our truth functions:
+<jh>
+stmt (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))))
+stmt (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
+stmt (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
+stmt (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
+stmt (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
+</jh>
+Note that only negation has <code>↔</code> as its leading connective because it is the only truth function  which is [[w:injective|injective]]
+
+==== Truth function interdependencies ====
+
+The truth functions are not always independent of each other. We have already seen that in De Morgan's laws. Here are the remaining important interdependencies:
 Biconditional as bidirectional implication:
 <jh>
 stmt (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))))
 </jh>
-Biconditional as equivalence:
+Biconditional as disjunction of the two equivalence classes:
 <jh>
-stmt (BiconditionalEquivalence () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))))
+stmt (BiconditionalDisjunction () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))))
+</jh>
+Biconditional as conjunction:
+<jh>
+stmt (BiconditionalConjunction () () ((p ↔ q) ↔ (((¬ p) ∨ q) ∧ (p ∨ (¬ q)))))
 </jh>
 Implication as disjunction:
 <jh>
 stmt (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)))
+</jh>
+Disjunction as implication:
+<jh>
+stmt (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)))
 </jh>
 Negation as implication:
 <jh>
@@ -310,5 +369,9 @@ stmt (buildRightConjunction () ((p ↔ q)) ((p ∧ r) ↔ (q ∧ r)))
 stmt (buildBiconditional () ((p ↔ q) (r ↔ s)) ((p ↔ r) ↔ (q ↔ s)))
 stmt (buildLeftBiconditional () ((p ↔ q)) ((r ↔ p) ↔ (r ↔ q)))
 </jh>
+
+== References ==
+
+<references />
 
 [[Category:Classical propositional logic|!]]
