@@ -2,107 +2,107 @@
 |-
 ! Theorem name !! Principia number
 |-
-| True
+| True || *2.11
 |-
-| NotFalse
+| NotFalse || *3.24
 |-
-| DoubleNegation
+| DoubleNegation || *4.13
 |-
-| ImplicationReflexivity
+| ImplicationReflexivity || *2.08
 |-
-| AntecedentIntroduction
+| AntecedentIntroduction || *2.02
 |-
-| Syllogism
+| Syllogism || *2.06
 |-
-| SyllogismInConsequent
+| SyllogismInConsequent || *2.83
 |-
-| AntecedentDistribution
+| AntecedentDistribution || (*2.77 + ??)
 |-
-| Transposition
+| Transposition || *4.1
 |-
-| TranspositionWithNegatedAntecedent
+| TranspositionWithNegatedAntecedent || (*2.15 x2)
 |-
-| TranspositionWithNegatedConsequent
+| TranspositionWithNegatedConsequent || (*2.03 x2)
 |-
-| DisjunctionIdempotence
+| DisjunctionIdempotence || *4.25
 |-
-| ConjunctionIdempotence
+| ConjunctionIdempotence || *4.24
 |-
-| DisjunctionAssociativity
+| DisjunctionAssociativity || *4.33
 |-
-| ConjunctionAssociativity
+| ConjunctionAssociativity || *4.32
 |-
-| DisjunctionCommutativity
+| DisjunctionCommutativity || *4.31
 |-
-| ConjunctionCommutativity
+| ConjunctionCommutativity || *4.3
 |-
-| DisjunctionLeftDistribution
+| DisjunctionLeftDistribution || *4.41
 |-
 | DisjunctionRightDistribution
 |-
-| ConjunctionLeftDistribution
+| ConjunctionLeftDistribution || *4.4
 |-
 | ConjunctionRightDistribution
 |-
-| DeMorganPDP
+| DeMorganPDP || (*4.56 swapped)
 |-
-| DeMorganPDN
+| DeMorganPDN || (*4.54 swapped)
 |-
-| DeMorganNDP
+| DeMorganNDP || (*4.52 swapped)
 |-
-| DeMorganNDN
+| DeMorganNDN || (*4.5 swapped)
 |-
-| DeMorganPCP
+| DeMorganPCP || *4.51
 |-
-| DeMorganPCN
+| DeMorganPCN || *4.53
 |-
-| DeMorganNCP
+| DeMorganNCP || *4.55
 |-
-| DeMorganNCN
+| DeMorganNCN || *4.57
 |-
-| ImplicationTransitivity
+| ImplicationTransitivity || *3.33
 |-
-| Importation
+| Importation || *3.31
 |-
-| Exportation
+| Exportation || *3.3
 |-
-| Transportation
+| Transportation || (*3.3 + *3.31)
 |-
-| ModusPonens
+| ModusPonens || *3.35
 |-
-| ModusTollens
+| ModusTollens || (*3.35 + Transposition)
 |-
-| DisjunctionLeftIntroduction
+| DisjunctionLeftIntroduction || *1.3
 |-
-| DisjunctionRightIntroduction
+| DisjunctionRightIntroduction || *2.2
 |-
 | DisjunctionLeftElimination
 |-
 | DisjunctionRightElimination
 |-
-| ConjunctionLeftIntroduction
+| ConjunctionLeftIntroduction || *3.21
 |-
-| ConjunctionRightIntroduction
+| ConjunctionRightIntroduction || *3.2
 |-
-| ConjunctionLeftElimination
+| ConjunctionLeftElimination || *3.27
 |-
-| ConjunctionRightElimination
+| ConjunctionRightElimination || *3.26
 |-
-| CaseElimination
+| CaseElimination || *4.83
 |-
-| DisjunctionComposition
+| DisjunctionComposition || *4.77
 |-
-| ConjunctionComposition
+| ConjunctionComposition || *4.76
 |-
-| DisjunctionSummationLL
+| DisjunctionSummationLL || *1.6
 |-
-| DisjunctionSummationLR
+| DisjunctionSummationLR || *2.36
 |-
-| DisjunctionSummationRL
+| DisjunctionSummationRL || *2.37
 |-
-| DisjunctionSummationRR
+| DisjunctionSummationRR || *2.38
 |-
-| DisjunctionSummation
+| DisjunctionSummation || *3.48
 |-
 | ConjunctionMultiplicationLL
 |-
@@ -110,31 +110,31 @@
 |-
 | ConjunctionMultiplicationRL
 |-
-| ConjunctionMultiplicationRR
+| ConjunctionMultiplicationRR || *3.45
 |-
-| ConjunctionMultiplication
+| ConjunctionMultiplication || *3.47
 |-
-| BiconditionalReflexivity
+| BiconditionalReflexivity || *4.2
 |-
-| BiconditionalSymmetry
+| BiconditionalSymmetry || (*4.21 weakened)
 |-
-| BiconditionalTransitivity
+| BiconditionalTransitivity || *4.22
 |-
-| Tautology
+| Tautology || *4.2
 |-
-| Contradiction
+| Contradiction || *4.2
 |-
-| TertiumNonDatur
+| TertiumNonDatur || *2.11
 |-
-| BiconditionalImplicationLeftElimination
+| BiconditionalImplicationLeftElimination || *3.27
 |-
-| BiconditionalImplicationRightElimination
+| BiconditionalImplicationRightElimination || *3.26
 |-
 | BiconditionalDisjunctionLeftElimination
 |-
 | BiconditionalDisjunctionRightElimination
 |-
-| NegationFunction
+| NegationFunction || *4.11
 |-
 | ImplicationFunction
 |-
@@ -150,9 +150,9 @@
 |-
 | BiconditionalConjunction
 |-
-| ImplicationDisjunction
+| ImplicationDisjunction || *4.6
 |-
-| DisjunctionImplication
+| DisjunctionImplication || (*4.64 swapped)
 |-
 | NegationImplication
 |}
