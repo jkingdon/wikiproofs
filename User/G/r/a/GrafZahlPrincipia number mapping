@@ -1,0 +1,158 @@
+{| border="1" style="font-family:monospace"
+|-
+! Theorem name !! Principia number
+|-
+| True
+|-
+| NotFalse
+|-
+| DoubleNegation
+|-
+| ImplicationReflexivity
+|-
+| AntecedentIntroduction
+|-
+| Syllogism
+|-
+| SyllogismInConsequent
+|-
+| AntecedentDistribution
+|-
+| Transposition
+|-
+| TranspositionWithNegatedAntecedent
+|-
+| TranspositionWithNegatedConsequent
+|-
+| DisjunctionIdempotence
+|-
+| ConjunctionIdempotence
+|-
+| DisjunctionAssociativity
+|-
+| ConjunctionAssociativity
+|-
+| DisjunctionCommutativity
+|-
+| ConjunctionCommutativity
+|-
+| DisjunctionLeftDistribution
+|-
+| DisjunctionRightDistribution
+|-
+| ConjunctionLeftDistribution
+|-
+| ConjunctionRightDistribution
+|-
+| DeMorganPDP
+|-
+| DeMorganPDN
+|-
+| DeMorganNDP
+|-
+| DeMorganNDN
+|-
+| DeMorganPCP
+|-
+| DeMorganPCN
+|-
+| DeMorganNCP
+|-
+| DeMorganNCN
+|-
+| ImplicationTransitivity
+|-
+| Importation
+|-
+| Exportation
+|-
+| Transportation
+|-
+| ModusPonens
+|-
+| ModusTollens
+|-
+| DisjunctionLeftIntroduction
+|-
+| DisjunctionRightIntroduction
+|-
+| DisjunctionLeftElimination
+|-
+| DisjunctionRightElimination
+|-
+| ConjunctionLeftIntroduction
+|-
+| ConjunctionRightIntroduction
+|-
+| ConjunctionLeftElimination
+|-
+| ConjunctionRightElimination
+|-
+| CaseElimination
+|-
+| DisjunctionComposition
+|-
+| ConjunctionComposition
+|-
+| DisjunctionSummationLL
+|-
+| DisjunctionSummationLR
+|-
+| DisjunctionSummationRL
+|-
+| DisjunctionSummationRR
+|-
+| DisjunctionSummation
+|-
+| ConjunctionMultiplicationLL
+|-
+| ConjunctionMultiplicationLR
+|-
+| ConjunctionMultiplicationRL
+|-
+| ConjunctionMultiplicationRR
+|-
+| ConjunctionMultiplication
+|-
+| BiconditionalReflexivity
+|-
+| BiconditionalSymmetry
+|-
+| BiconditionalTransitivity
+|-
+| Tautology
+|-
+| Contradiction
+|-
+| TertiumNonDatur
+|-
+| BiconditionalImplicationLeftElimination
+|-
+| BiconditionalImplicationRightElimination
+|-
+| BiconditionalDisjunctionLeftElimination
+|-
+| BiconditionalDisjunctionRightElimination
+|-
+| NegationFunction
+|-
+| ImplicationFunction
+|-
+| DisjunctionFunction
+|-
+| ConjunctionFunction
+|-
+| BiconditionalFunction
+|-
+| BiconditionalImplication
+|-
+| BiconditionalDisjunction
+|-
+| BiconditionalConjunction
+|-
+| ImplicationDisjunction
+|-
+| DisjunctionImplication
+|-
+| NegationImplication
+|}
