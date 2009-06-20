@@ -1,5 +1,4 @@
 == TODO ==
-* Main page: some "featured piece"
 * Main page: more JHilbert info
 * Help pages: JHilbert manual
 * Redesign of JHilbert with associativity and precedence
@@ -8,5 +7,5 @@
 ** Wajsberg's axiom
 ** Possibly some of Branden Fitelson's [http://fitelson.org/ar.html stuff]?
 ** Meredith
-** "Standard propositional calculus", as a toolbox for further developments
+** "Standard propositional calculus", as a toolbox for further developments. Started interface in [[Interface:Classical propositional calculus]], should be derived from Principia Mathematica or other stuff. [[/Principia number mapping]]
 * First-order logic
