@@ -301,7 +301,7 @@ thm (Taut () () ((p ∨ p) → p) (
 ))
 
 thm (Add () () (q → (p ∨ q)) (
-        s (p | p) Addition
+        q (p | p) Addition
 ))
 
 thm (Perm () () ((p ∨ q) → (q ∨ p)) (
