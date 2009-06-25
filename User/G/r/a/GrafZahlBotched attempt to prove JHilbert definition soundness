@@ -15,12 +15,32 @@
 
 '''Definition.''' <math>N:=\Sigma^*\setminus\{\epsilon\}</math>, that is, the set of all non-empty, finite [[w:sequence|sequence]]s of characters is the set of ''names''.
 
-'''Lemma.''' The set of names <math>N</math> is [[w:countably infinite|countably infinite]].
+'''Lemma 1.''' The set of names <math>N</math> is [[w:countably infinite|countably infinite]].
 
 {{sc|Proof.}} <math>N</math> is infinite because <math>\Sigma\neq\emptyset</math>, and countable because <math>\Sigma</math> is finite.
 
 === Kinds ===
 
-'''Definition.''' The ''kinds'' are a tuple <math>(K,\sim)</math> where <math>K\subseteq N</math> is finite and <math>\sim</math> is an [[w:equivalence relation|equivalence relation]] on <math>K</math>. We denote the set <math>K/\sim</math> of all [[w:equivalence class|equivalence class]]es by <math>\mathcal{K}</math>.
+'''Definition.''' The ''kinds'' are a [[w:tuple|tuple]] <math>(K,\sim)</math> where <math>K\subseteq N</math> is finite and <math>\sim</math> is an [[w:equivalence relation|equivalence relation]] on <math>K</math>. We denote the set <math>K/\sim</math> of all [[w:equivalence class|equivalence class]]es by <math>\mathcal{K}</math>.
+
+Where no confusion is possible, we shall not distinguish between kinds and equivalence classes of kinds.
 
 '''Explanation.''' <math>K</math> and <math>\sim</math> are user-defined in JHilbert through the <code>kind</code> and <code>kindbind</code> commands. The <code>kind</code> command adds a new name to <math>K</math> which initially is equivalent only to itself. The <code>kindbind</code> command adds a relation between two kinds in <math>K</math> to <math>\sim</math> (possibly after adding a new name to <math>K</math>) and completes <math>\sim</math> by [[w:reflexive closure|reflexive]], [[w:symmetric closure|symmetric]] and [[w:transitive closure|transitive]] [[w:closure (mathematics)|closure]].
+
+=== Variables ===
+
+'''Definition.''' A tuple <math>(n,k)</math> with <math>n\in N</math> and <math>k\in\mathcal{K}</math> is a ''variable''. For each variable <math>v=(n,k)</math> we denote the [[w:projection (set theory)|projection]] <math>(n,k)\mapsto n</math>, the ''name of <math>v</math>'', by <math>N(v)</math>, and the projection <math>(n,k)\mapsto k</math>, the ''kind of <math>v</math>'', by <math>K(v)</math>.
+
+'''Definition.''' A finite set <math>V</math> is called a ''permissible set of variables'' if all elements of <math>V</math> are variables, and the [[w:restriction (mathematics)|restriction]] of the name projection <math>N</math> to <math>V</math> is [[w:injective|injective]].
+
+'''Lemma 2.''' Let <math>V</math> be a permissible set of variables. Then any <math>W\subseteq V</math> is also a permissible set of variables.
+
+{{sc|Proof.}} <math>W</math> is finite since <math>V</math> is finite. <math>W</math> contains only variables since <math>W</math> is contained in <math>V</math>. Finally, the restriction of an injective function remains injective.
+
+'''Theorem 1.''' Let <math>V</math> be a permissible set of variables. Then for any <math>k\in\mathcal{K}</math> there is a <math>n\in N</math> such that <math>(n,k)\notin V</math> and <math>V':=V\cup\{(n,k)\}</math> is a permissible set of variables.
+
+{{sc|Proof.}} Since <math>V</math> is finite, the image <math>N(V)</math> is finite as well. Now, <math>N</math> is infinite by Lemma 1. Therefore, there exists an <math>n\in N\setminus N(V)</math>. Since <math>n\notin (\left.N\right|_V)^{-1}(N)</math>, <math>(n,k)\notin V</math>. <math>V'</math> is finite because <math>V</math> and the singleton <math>\{(n,k)\}</math> are finite, and <math>(n,k)</math> is clearly a variable. Again, since <math>n\notin (\left.N\right|_V)^{-1}(N)</math>, <math>N((n,k))\neq N(v)</math> for all <math>v\in V</math>. Therefore, the name projection is injective on <math>V'</math>.
+
+'''Definition.''' The ''variables'' are a permissible set of variables <math>V</math>. It is [[w:partition of a set|partitioned]] into three subsets, the ''named variables'' <math>V_N</math>, the ''unnamed variables'' <math>V_U</math> and the ''dummy variables'' <math>V_D</math>. By Lemma 2, these subsets are also permissible sets of variables.
+
+'''Explanation.''' The named variables <math>V_N</math> are user-defined through the <code>var</code> command. Unnamed variables and dummy variables are automatically introduced as explained later. Since the empty set is a permissible set of variables, Theorem 1 ensures that such automatic introduction of new variables is always possible. In fact, JHilbert cheats a little by extending <math>\Sigma</math> for this purpose, so the namespace for user-defined variables doesn't become polluted.
