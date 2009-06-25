@@ -1,0 +1,26 @@
+{{header
+ | title    = Definition soundness of first-order logic in JHilbert
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Attempt at a formal proof of soundness of first-order logic in JHilbert.
+}}
+
+== JHilbert related stuff ==
+
+=== Names ===
+
+'''Definition.''' <math>\Sigma</math> is a [[w:finite set|finite]], [[w:empty set|non-empty]] [[w:set (mathematics)|set]], the ''characters''.
+
+'''Definition.''' <math>N:=\Sigma^*\setminus\{\epsilon\}</math>, that is, the set of all non-empty, finite [[w:sequence|sequence]]s of characters is the set of ''names''.
+
+'''Lemma.''' The set of names <math>N</math> is [[w:countably infinite|countably infinite]].
+
+{{sc|Proof.}} <math>N</math> is infinite because <math>\Sigma\neq\emptyset</math>, and countable because <math>\Sigma</math> is finite.
+
+=== Kinds ===
+
+'''Definition.''' The ''kinds'' are a tuple <math>(K,\sim)</math> where <math>K\subseteq N</math> is finite and <math>\sim</math> is an [[w:equivalence relation|equivalence relation]] on <math>K</math>. We denote the set <math>K/\sim</math> of all [[w:equivalence class|equivalence class]]es by <math>\mathcal{K}</math>.
+
+'''Explanation.''' <math>K</math> and <math>\sim</math> are user-defined in JHilbert through the <code>kind</code> and <code>kindbind</code> commands. The <code>kind</code> command adds a new name to <math>K</math> which initially is equivalent only to itself. The <code>kindbind</code> command adds a relation between two kinds in <math>K</math> to <math>\sim</math> (possibly after adding a new name to <math>K</math>) and completes <math>\sim</math> by [[w:reflexive closure|reflexive]], [[w:symmetric closure|symmetric]] and [[w:transitive closure|transitive]] [[w:closure (mathematics)|closure]].
