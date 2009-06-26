@@ -62,3 +62,46 @@ Where no confusion is possible, we shall not distinguish between kinds and equiv
 '''Definition.''' The ''term functors'' are a set <math>F_T\subseteq F</math>. By Lemma 3, term functors are a permissible set of functors.
 
 '''Explanation.''' Term functors are user-defined in JHilbert through the <code>term</code> command. However, they are not the only functors as definitions (see below) give rise to further functors.
+
+=== Expressions ===
+
+'''Definition.''' We define when some element <math>e</math> is an ''expression'', and what the ''kind of <math>e</math>'', <math>K(e)</math>, is, [[w:recursive definition|recursively]] as follows:
+# If <math>e\in V</math> then <math>e</math> is an expression. (In this case, <math>K(e)</math> is defined by the definition of the kind of a variable.)
+# If <math>e=(f,s)</math> where <math>f\in F</math> and <math>s</math> is a finite sequence of expressions such that <math>PC(f)=|s|</math> and for <math>i=1,\ldots,|s|</math> the <math>i</math>-th element of <math>s</math>, <math>s_i</math>, fulfils the equation <math>IK_i(f)=K(s_i)</math>, then <math>e</math> is an expression.
+# Nothing else is an expression.
+# If <math>e=(f,s)</math> is an expression, then <math>K(e)=K(f)</math>.
+We denote the set of all expressions by <math>E(V,F)</math>.
+
+'''Lemma 4.''' The set <math>E(V,F)</math> is either finite or countably infinite.
+
+{{sc|Proof.}} By using [[w:polish notation|polish notation]] we may consider <math>E(V,F)</math> a subset of <math>(V\cup F)^*</math>. Since both <math>V</math> and <math>F</math> are finite, that set is finite or countably infinite. Hence <math>E(V,F)</math> is finite or countably infinite.
+
+'''Definition.''' Let <math>e\in E(V,F)</math>. Then we define the ''length of <math>e</math>'', <math>|e|</math> recursively as follows:
+# If <math>e\in V</math> then <math>|e|=1</math>.
+# If <math>e=(f,s)</math> then <math>|e|</math> is the sum of the lengths of the expressions in <math>s</math>, plus one.
+
+'''Lemma 5.''' Let <math>e\in E(V,F)</math>. Then <math>|e|=1</math> if and only if either <math>e\in V</math> or <math>e=(f,s)</math> with <math>PC(f)=0</math> and hence <math>s=\epsilon</math>.
+
+{{sc|Proof.}} If <math>e\in V</math> or <math>e=(f,s)</math> with the stated properties then clearly <math>|e|=1</math>. Now assume <math>e=(f,s)</math> with <math>PC(f)\neq 0</math>. But then surely <math>|e|>1</math> since all expressions in <math>s</math> have length at least one.
+
+'''Definition.''' Let <math>e_1,e_2\in E(V,F)</math>. Then we define when <math>e_2</math> is a ''subexpression'' of <math>e_1</math> recursively as follows.
+# If <math>e_1\in V</math> then <math>e_2</math> is a subexpression of <math>e_1</math> if and only if <math>e_1=e_2</math>.
+# If <math>e_1=(f,s)</math> then <math>e_2</math> is a subexpression of <math>e_1</math> if and only if either <math>e_1=e_2</math> or <math>e_2</math> is a subexpression of one of the expressions in <math>s</math>.
+
+'''Lemma 6.''' Let <math>e_1\in E(V,F)</math> and let <math>e_2</math> be a subexpression of <math>e_1</math>. Then <math>|e_2|\leq|e_1|</math> and equality holds if and only if <math>e_1=e_2</math>.
+
+{{sc|Proof.}} This follows from the strict [[w:monotonicity|monotonicity]] of the addition of [[w:positive integer|positive integer]]s.
+
+'''Definition.''' Let <math>e\in E(V,F)</math> and <math>v\in V</math>. We define when <math>v</math> is ''apparent'' in <math>e</math> recursively as follows:
+# If <math>e\in V</math> then <math>v</math> is apparent in <math>e</math> if and only if <math>e=v</math>.
+# If <math>e=(f,s)</math> then <math>v</math> is apparent in <math>e</math> if and only if it is apparent in at least one of the expressions in <math>s</math>.
+We denote the set of apparent variables of <math>e</math> by <math>A(e)</math>.
+
+'''Definition.''' Let <math>e\in E(V,F)</math> and let <math>v_1,v_2\in A(e)</math>. We define when <math>v_1\leq_e v_2</math> recursively as follows:
+# If <math>e\in V</math> then <math>v_1\leq_e v_2</math>.
+# If <math>e=(f,s)</math> and there is an expression <math>e_1</math> in <math>s</math> such that
+#:* <math>v_1\in A(e_1)</math>,
+#:* <math>v_2\notin A(e')</math> for all expressions <math>e'</math> before <math>e_1</math> in <math>s</math>,
+#:* <math>v_2\notin A(e_1)</math> or <math>v_1\leq_{e_1} v_2</math>,
+#:then <math>v_1\leq_e v_2</math>.
+# <math>v_1\leq_e v_2</math> in no other case.
