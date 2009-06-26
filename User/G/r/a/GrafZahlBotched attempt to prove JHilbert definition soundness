@@ -132,3 +132,27 @@ We denote the set of apparent variables of <math>e</math> by <math>A(e)</math>.
 '''Lemma 11.''' Let <math>e_1,e_2\in E(V,F)</math> be such that <math>e_2</math> arises from <math>e_1</math> by proper substitution. Then the proper substitution map <math>u\colon A(e_1)\to E(V,F)</math> such that <math>\tilde{u}(e_1)=e_2</math> is [[w:unique|unique]].
 
 {{sc|Proof.}} Assume there are two such maps <math>u_1,u_2\colon A(e_1)\to E(V,F)</math> which are different. Then there is a <math>v\in A(e_1)</math> such that <math>u_1(v)\neq u_2(v)</math>. We proceed with an induction over <math>|e_1|</math>. If <math>|e_1|=1</math>, then either <math>e_1=(f,\epsilon)</math> in which case <math>A(e_1)=\emptyset</math>, so <math>u_1,u_2</math> cannot be distinct, or <math>e_1\in V</math>. In this case, <math>e_1=v</math> since <math>v</math> is apparent in <math>e_1</math>. But then <math>u_1(e_1)\neq u_2(e_1)</math>, which is [[w:reductio ad absurdum|absurd]]. Now assume the statement proven for all expressions of length smaller than <math>|e_1|>1</math>. Then <math>e_1=(f,(e_{11},\ldots,e_{1n}))</math>, so there must be a positive integer <math>1\leq i\leq n</math> such that <math>\tilde{u}_1(e_{1i})\neq\tilde{u}_2(e_{1i})</math> since <math>v</math> must be apparent in one of the <math>e_{1i}</math>. But this contradicts the induction hypothesis in combination with Lemma 10.
+
+'''Definition.''' Let <math>(f,s)</math> be an expression. Then <math>f</math> is called the ''head functor'' of <math>(f,s)</math>.
+
+=== Definitions ===
+
+'''Definition.''' We define the ''definition functors'' as <math>F_D:=F\setminus F_T</math>.
+
+'''Definition.''' Let <math>l\in V^*</math>. Write <math>l=(v_1,\ldots,v_n)</math>. Then we set <math>K(l):=(K(v_1),\ldots,K(v_n))\in\mathcal{K}^*</math>.
+
+'''Definition.''' Let <math>d=(n,l,e)</math> with <math>n\in N</math>, <math>l\in V_U^*</math> and <math>e\in E(V,K)</math> such that <math>F(d):=(n,K(e),K(l))\in F_D</math>. Assume furthermore that for all <math>v\in A(e)</math> either <math>v</math> occurs in <math>l</math> or <math>v\in V_D</math>. Then <math>d</math> is called a ''definition-like tuple''.
+
+'''Definition.''' Let <math>D</math> be a set of definition-like tuples such that <math>F\colon D\to F_D</math> is [[w:bijective|bijective]]. Assume furthermore that there exists a function <math>\beta</math>, the ''depth'', defined on <math>F</math> and <math>E(V,F)</math>, with values in <math>\mathbb{Z}_{\geq 0}</math> such that all the following properties hold:
+# <math>\beta(f)=0</math> for all <math>f\in F_T</math>.
+# <math>\beta(v)=0</math> for all <math>v\in V</math>.
+# For all <math>(f,s)\in E(V,F)\setminus V</math>, <math>\beta((f,s))=\beta(f)</math>.
+# For all <math>f\in F_D</math> the definition-like tuple <math>F^{-1}(f)=(n,l,e)</math> fulfils the property <math>\beta(f)=\beta(e)+1</math>.
+# For all <math>v\in V_D</math> there is exactly one <math>f\in F_D</math> such that for the definition-like tuple <math>F^{-1}(f)=(n,l,e)</math> the property <math>v\in A(e)</math> holds.
+Then <math>D</math> is called a ''valid set of definitions'' for <math>F_D</math>.
+
+'''Explanation.''' The definitions of JHilbert, user-defined via the <code>def</code> command fulfil the above properties of a valid set of definitions. When new <code>def</code> commands are evaluated, <math>F_D</math>, <math>V_U</math> and <math>V_D</math> are grown accordingly. Theorem 1 ensures that this is always possible. There are, of course, many valid sets of definitions. From now on, we shall assume <math>D</math> to be one arbitrary such set.
+
+'''Lemma 12.''' The set <math>D</math> is finite.
+
+{{sc|Proof.}} Since, <math>F</math> is finite, so is <math>F_D</math>. The finiteness of <math>D</math> now follows from the bijectivity of <math>F\colon D\to F_D</math>.
