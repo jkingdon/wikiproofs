@@ -43,4 +43,22 @@ Where no confusion is possible, we shall not distinguish between kinds and equiv
 
 '''Definition.''' The ''variables'' are a permissible set of variables <math>V</math>. It is [[w:partition of a set|partitioned]] into three subsets, the ''named variables'' <math>V_N</math>, the ''unnamed variables'' <math>V_U</math> and the ''dummy variables'' <math>V_D</math>. By Lemma 2, these subsets are also permissible sets of variables.
 
-'''Explanation.''' The named variables <math>V_N</math> are user-defined through the <code>var</code> command. Unnamed variables and dummy variables are automatically introduced as explained later. Since the empty set is a permissible set of variables, Theorem 1 ensures that such automatic introduction of new variables is always possible. In fact, JHilbert cheats a little by extending <math>\Sigma</math> for this purpose, so the namespace for user-defined variables doesn't become polluted.
+'''Explanation.''' The named variables <math>V_N</math> are user-defined in JHilbert through the <code>var</code> command. Unnamed variables and dummy variables are automatically introduced as explained later. Since the empty set is a permissible set of variables, Theorem 1 ensures that such automatic introduction of new variables is always possible. In fact, JHilbert cheats a little by extending <math>\Sigma</math> for this purpose, so the namespace for user-defined variables doesn't become polluted.
+
+=== Functors ===
+
+'''Definition.''' A tuple <math>(n,k,l)</math> with <math>n\in N</math>, <math>k\in\mathcal{K}</math> and <math>l\in\mathcal{K}^*</math> is a ''functor''. For each functor <math>f=(n,k,l)</math>, we denote the projection <math>(n,k,l)\mapsto n</math>, the ''name of <math>f</math>'', by <math>N(f)</math>, and the projection <math>(n,k,l)\mapsto k</math>, the ''kind of <math>f</math>'', by <math>K(f)</math>. Furthermore, we denote the function <math>(n,k,l)\mapsto|l|</math>, where <math>|l|</math> is the length of the sequence <math>l</math>, the ''place count of <math>f</math>'', by <math>PC(f)</math>. For each <math>i\in\mathbb{N}</math>, <math>1\leq i\leq PC(f)</math>, we denote by <math>IK_i(f)</math> the mapping of <math>(n,k,l)</math> to the <math>i</math>-th projection of <math>l</math>. We call <math>IK_i(f)</math> the ''<math>i</math>-th input kind of <math>f</math>.''
+
+'''Definition.''' A finite set <math>F</math> is called a ''permissible set of functors'' if all elements of <math>F</math> are functors and the restriction of the name projection <math>N</math> to <math>F</math> is injective.
+
+'''Lemma 3.''' Let <math>F</math> be a permissible set of functors. Then any <math>G\subseteq F</math> is also a permissible set of functors.
+
+{{sc|Proof.}} The proof is similar to the proof of Lemma 2.
+
+'''Definition.''' The ''functors'' are a permissible set of functors <math>F</math>.
+
+=== Term functors ===
+
+'''Definition.''' The ''term functors'' are a set <math>F_T\subseteq F</math>. By Lemma 3, term functors are a permissible set of functors.
+
+'''Explanation.''' Term functors are user-defined in JHilbert through the <code>term</code> command. However, they are not the only functors as definitions (see below) give rise to further functors.
