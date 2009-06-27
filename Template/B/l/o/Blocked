@@ -1,0 +1,18 @@
+<div id="blockbox">
+[[Image:Octagon-warning.svg|30px]] '''You have been blocked from editing Wikiproofs''' {{#if:{{{2|}}}|for {{{2}}}|indefinitely}} because of {{{1}}}.
+</div><noinclude>
+
+== Usage ==
+
+<pre>
+{{subst:blocked|reason}}
+</pre>
+or
+<pre>
+{{subst:blocked|reason|duration}}
+</pre>
+If no duration is given, it will be rendered as "indefinitely".
+
+[[Category:Templates|Blocked]]
+
+</noinclude>
