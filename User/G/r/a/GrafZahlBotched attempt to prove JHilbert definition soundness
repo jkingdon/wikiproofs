@@ -209,3 +209,23 @@ Lemma 14 ensures that the recursion in this definition terminates.
 '''Lemma 20.''' Let <math>u</math> be a proper substitution map. Then <math>\tilde{u}</math> is well-defined on <math>E(V,F)_D</math>.
 
 {{sc|Proof.}} Let <math>e_1,e_2</math> be D-equivalent. Then by Lemma 19 and D-equivalence <math>CUF(\tilde{u}(e_1))=CUF(\tilde{u}(CUF(e_1)))=CUF(\tilde{u}(CUF(e_2)))=CUF(\tilde{u}(e_2))</math>. This implies the lemma.
+
+'''Definition.''' Let <math>e\in E(V,F)</math>. Then a variable <math>v\in V</math> ''occurs'' in <math>e</math> if <math>v\in A(CUF(e))</math>. We denote the set of all variables occurring in <math>e</math> by <math>O(e)</math>.
+
+'''Lemma 21.''' Let <math>e\in E(V,F)</math>. Then <math>O(e)\setminus V_D\subseteq A(e)</math>.
+
+{{sc|Proof.}} By the definition of <math>D</math>, the only new variables an unfolding of a subexpression of <math>e</math> can incur are dummy variables.
+
+=== DV constraints ===
+
+'''Definition.''' Let <math>A</math> be a set and <math>R\subseteq A\times A</math>. Then <math>R</math> is called ''self-avoiding'' if <math>(x,x)\notin R</math> for all <math>x\in A</math>.
+
+'''Definition.''' Let <math>R\subseteq A\times A</math>. Then the set <math>R\setminus\{(x,x):x\in A\}</math> is called the ''self-avoiding aperture'' of <math>R</math>.
+
+'''Lemma 22.''' Let <math>R\subseteq A\times A</math>. Furthermore, let <math>R_1</math> be the symmetric closure of the self-avoiding aperture of <math>R</math> and <math>R_2</math> the self-avoiding aperture of the symmetric closure of <math>R</math>. Then <math>R_1=R_2</math>.
+
+{{sc|Proof.}} Let <math>(x,y)\in R_1</math>. Then <math>(x,y)\in R\setminus\{(x,x):x\in A\}</math> or <math>(y,x)\in R\setminus\{(x,x):x\in A\}</math>. In particular <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)</math> is an element of the symmetric closure of <math>R</math>. Since <math>x\neq y</math>, <math>(x,y)\in R_2</math>. If, on the other hand, <math>(x,y)\in R_2</math>, then <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)\in R_1</math>
+
+'''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''. A DV constraint on <math>V_N</math> is called a ''named DV constraint''.
+
+'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>.
