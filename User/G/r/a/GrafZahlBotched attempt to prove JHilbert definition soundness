@@ -92,6 +92,11 @@ We denote the set of all expressions by <math>E(V,F)</math>.
 
 {{sc|Proof.}} This follows from the strict [[w:monotonicity|monotonicity]] of the addition of [[w:positive integer|positive integer]]s.
 
+'''Definition.''' Let <math>e\in E(V,F)</math> and <math>f\in F</math>. We define when <math>f</math> is ''apparent'' in <math>e</math> recursively as follows:
+# If <math>e=(f',\epsilon)</math> then <math>f</math> is apparent in <math>e</math> if and only if <math>f=f'</math>.
+# If <math>e=(f',s)</math> then <math>f</math> is apparent in <math>e</math> if and only if either <math>f=f'</math> or <math>f</math> is apparent in at least one of the expressions in <math>s</math>.
+# In no other case is <math>f</math> apparent in <math>e</math>.
+
 '''Definition.''' Let <math>e\in E(V,F)</math> and <math>v\in V</math>. We define when <math>v</math> is ''apparent'' in <math>e</math> recursively as follows:
 # If <math>e\in V</math> then <math>v</math> is apparent in <math>e</math> if and only if <math>e=v</math>.
 # If <math>e=(f,s)</math> then <math>v</math> is apparent in <math>e</math> if and only if it is apparent in at least one of the expressions in <math>s</math>.
@@ -147,8 +152,8 @@ We denote the set of apparent variables of <math>e</math> by <math>A(e)</math>.
 # <math>\beta(f)=0</math> for all <math>f\in F_T</math>.
 # <math>\beta(v)=0</math> for all <math>v\in V</math>.
 # For all <math>(f,s)\in E(V,F)\setminus V</math>, <math>\beta((f,s))=\beta(f)</math>.
-# For all <math>f\in F_D</math> the definition-like tuple <math>F^{-1}(f)=(n,l,e)</math> fulfils the property <math>\beta(f)=\beta(e)+1</math>.
-# For all <math>v\in V_D</math> there is exactly one <math>f\in F_D</math> such that for the definition-like tuple <math>F^{-1}(f)=(n,l,e)</math> the property <math>v\in A(e)</math> holds.
+# For all <math>f\in F_D</math> the definition-like tuple <math>F^{-1}(f)=(n,l,e)</math> fulfils the property that <math>\beta(f)>\beta(e')</math> for all subexpressions <math>e'</math> of <math>e</math>. Specifically, <math>\beta(f)=\beta(e)+1</math>.
+# For each <math>v\in V_D</math> there is exactly one <math>f\in F_D</math> such that for the definition-like tuple <math>F^{-1}(f)=(n,l,e)</math> the property <math>v\in A(e)</math> holds.
 Then <math>D</math> is called a ''valid set of definitions'' for <math>F_D</math>.
 
 '''Explanation.''' The definitions of JHilbert, user-defined via the <code>def</code> command fulfil the above properties of a valid set of definitions. When new <code>def</code> commands are evaluated, <math>F_D</math>, <math>V_U</math> and <math>V_D</math> are grown accordingly. Theorem 1 ensures that this is always possible. There are, of course, many valid sets of definitions. From now on, we shall assume <math>D</math> to be one arbitrary such set.
@@ -156,3 +161,43 @@ Then <math>D</math> is called a ''valid set of definitions'' for <math>F_D</math
 '''Lemma 12.''' The set <math>D</math> is finite.
 
 {{sc|Proof.}} Since, <math>F</math> is finite, so is <math>F_D</math>. The finiteness of <math>D</math> now follows from the bijectivity of <math>F\colon D\to F_D</math>.
+
+'''Lemma 13.''' If <math>f\in F_D</math> then <math>\beta(f)>0</math>.
+
+{{sc|Proof.}} This follows from the definition of <math>\beta</math>.
+
+'''Definition.''' Let <math>e\in E(V,F)</math>. Then we define the ''maximum depth'' of <math>e</math> as <math>\hat{\beta}(e):=\max\beta(e')</math>, where <math>e'</math> runs over all subexpressions of <math>e</math>.
+
+'''Definition.''' Let <math>e=(f,(e_1,\ldots,e_m))\in E(V,F)\setminus V</math> be an expression such that <math>f\in F_D</math> and let <math>(n,(v_1,\ldots,v_m),e')=F^{-1}(f)</math>. Define the proper substitution map <math>u</math> by setting <math>u(v_i)=e_i</math> for <math>i=1,\ldots,m</math>. Then <math>\tilde{u}(e')</math> is called the ''unfolding'' of <math>e</math>.
+
+'''Lemma 14.''' Let <math>e_1,e_2\in E(V,F)</math>. If <math>e_2</math> is the unfolding of <math>e_1</math> then <math>\beta(e_1)=\beta(e_2)+1</math> and <math>\hat{\beta}(e_1)\geq\hat{\beta}(e_2)</math>.
+
+{{sc|Proof.}} Since <math>e_1</math> has an unfolding, it has a head functor which is a definition functor. The first claim now results from the definition of <math>\beta</math>. The second claim follows since by the definition of <math>D</math>, all apparent functors of <math>e_2</math> which are not apparent functors of <math>e_1</math> have lower depth than <math>e_1</math>.
+
+'''Definition.''' Let <math>e\in E(V,F)</math>. Then we define the ''complete unfolding'' of <math>e</math>, <math>CUF(e)</math> recursively as follows.
+# If <math>e\in V</math> then <math>CUF(e)=e</math>.
+# If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_T</math> then <math>CUF(e)=(f,(CUF(e_1),\ldots,CUF(e_m)))</math>.
+# If the head functor of <math>e</math> is a definition functor and <math>e'</math> is the unfolding of <math>e</math> then <math>CUF(e)=CUF(e')</math>.
+Lemma 14 ensures that the recursion in this definition terminates.
+
+'''Lemma 15.''' Let <math>e\in E(V,F)</math>. Then all apparent functors of <math>CUF(e)</math> are term functors. In other words, <math>\hat{\beta}(e)=0</math>.
+
+{{sc|Proof.}} Due to the definition of <math>CUF</math>, <math>\beta(f)=0</math> for all apparent functors of <math>e</math>. Hence the claim follows from Lemma 13.
+
+'''Definition.''' We denote the subset of <math>E(V,F)</math> of expressions all of whose apparent functors are term functors by <math>E(V,F_T)</math>.
+
+'''Lemma 16.''' <math>CUF</math> is an [[w:idempotent|idempotent]] operation.
+
+{{sc|Proof.}} Let <math>e\in E(V,F_T)</math>. By Lemma 15 it is sufficient to show that <math>CUF(e)=e</math>. If <math>|e|=1</math>, this follows by direct calculation. Assume the statement proven for expressions of length smaller than <math>|e|>1</math>. Then <math>e=(f,(e_1,\ldots,e_m))</math> and <math>CUF(e)=CUF((f,(e_1,\ldots,e_m)))=(f,CUF(e_1),\ldots,CUF(e_m))=(f,(e_1,\ldots,e_m))=e</math> by induction hypothesis.
+
+'''Definition.''' Let <math>e_1,e_2\in E(V,F)</math>. Then <math>e_1</math> and <math>e_2</math> are called ''D-equivalent'' if <math>CUF(e_1)=CUF(e_2)</math>.
+
+'''Lemma 17.''' D-equivalence is an equivalence relation.
+
+{{sc|Proof.}} Reflexivity and symmetry are clear. Transitivity follows from the uniqueness of the complete unfolding.
+
+'''Definition.''' Let <math>e\in E(V,F)</math>. Then we denote the equivalence class of <math>e</math> with respect to D-equivalence by <math>[e]_D</math> and the set of all equivalence classes by <math>E(V,F)_D</math>.
+
+'''Lemma 18.''' <math>E(V,F_T)</math> is a set of representatives for <math>E(V,F)_D</math>.
+
+{{sc|Proof.}} Let <math>C\in E(V,F)_D</math>. Since D-equivalence is an equivalence relation, <math>D\neq\emptyset</math>. Therefore there exists an <math>e\in C</math>. Now <math>CUF(e)</math> and <math>e</math> are D-equivalent and <math>CUF(e)\in E(V,F_T)</math> by Lemma 15. Now let <math>e'\in E(V,F_T)</math> be another representative for <math>C</math>. By definition of D-equivalence, <math>CUF(e')=CUF(CUF(e))</math>. Since <math>e'\in E(V,F_T)</math> and due to idempotence <math>e'=CUF(e)</math>. This proves the lemma.
