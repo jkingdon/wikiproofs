@@ -216,6 +216,8 @@ Lemma 14 ensures that the recursion in this definition terminates.
 
 {{sc|Proof.}} By the definition of <math>D</math>, the only new variables an unfolding of a subexpression of <math>e</math> can incur are dummy variables.
 
+'''Definition.''' Let <math>e_1,\ldots,e_m,e_1',\ldots,e_m'\in E(V,F)_D</math>. Assume there is a proper substitution map <math>u</math> such that <math>u(e_i)=e_i'</math> for all <math>i=1,\ldots,m</math>. Then the <math>e_1,\ldots,e_m</math> are called ''simultaneously [[w:unification|unifiable]]'' with the <math>e_1',\ldots,e_m'</math>.
+
 === DV constraints ===
 
 '''Definition.''' Let <math>A</math> be a set and <math>R\subseteq A\times A</math>. Then <math>R</math> is called ''self-avoiding'' if <math>(x,x)\notin R</math> for all <math>x\in A</math>.
@@ -226,6 +228,26 @@ Lemma 14 ensures that the recursion in this definition terminates.
 
 {{sc|Proof.}} Let <math>(x,y)\in R_1</math>. Then <math>(x,y)\in R\setminus\{(x,x):x\in A\}</math> or <math>(y,x)\in R\setminus\{(x,x):x\in A\}</math>. In particular <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)</math> is an element of the symmetric closure of <math>R</math>. Since <math>x\neq y</math>, <math>(x,y)\in R_2</math>. If, on the other hand, <math>(x,y)\in R_2</math>, then <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)\in R_1</math>
 
-'''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''. A DV constraint on <math>V_N</math> is called a ''named DV constraint''.
+'''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''. A DV constraint on <math>V_N</math> is called a ''named DV constraint'' and a DV constraint on <math>V_U</math> is called an ''unnamed DV constraint''.
 
-'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>.
+'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>. Furthermore, if <math>W\subseteq V</math>, we define <math>\Delta_W:=\bigcup\limits_{\Delta'\subseteq\Delta}\Delta'</math>, where <math>\Delta'</math> runs over those DV constraints with <math>A(\Delta')\subseteq W</math>, the ''restriction'' of <math>\Delta</math> to <math>W</math>.
+
+'''Lemma 23.''' Each restriction of a DV constraint is again a DV constraint. The same holds for named and unnamed DV constraints, respectively.
+
+{{sc|Proof.}} This follows since the union of two self-avoiding relations is self-avoiding, and likewise the union of two symmetric relations is again symmetric.
+
+=== Statements ===
+
+'''Definition.''' A tuple <math>s=(n,\Delta,h,e)</math> with <math>n\in N</math>, <math>\Delta</math> a DV constraint, <math>h\in E(V,F)^*</math> and <math>e\in E(V,F)</math> is a ''statement'' if the following additional properties are fulfilled:
+* <math>A(e)\subseteq V_U</math> and <math>A(e')\subseteq V_U</math> for all <math>e'</math> in <math>h</math>. In other words, <math>A(s)\subseteq V_U</math>, where we define <math>A(s):=A(e)\cup\bigcup\limits_{k=1}^{|h|}A(h_k)</math>,
+* <math>A(\Delta)\subseteq A(s)</math>.
+We we define the ''name'', <math>A(s):=n</math>, the ''DV constraints'' <math>DV(s):=\Delta</math>, the ''hypotheses'' <math>H(s):=h</math>, the ''number of hypotheses'' <math>NH(s):=|h|</math> and the ''consequent'' <math>C(s):=e</math>.
+If <math>s</math> fulfils precisely the same properties except that <math>V_U</math> is replaced by <math>V_N</math> then <math>s</math> is called a ''pending statement''.
+
+'''Definition.''' A finite set <math>S</math> is called a ''permissible set of statements'' if all elements of <math>S</math> are statements and the restriction of the name projection <math>N</math> to <math>S</math> is injective.
+
+'''Lemma 24.''' Let <math>S</math> be a permissible set of statements. Then any <math>S'\subseteq S</math> is also a permissible set of statements.
+
+{{sc|Proof.}} The proof is similar to the proof of Lemma 2.
+
+'''Explanation.''' First, statements are user-defined in JHilbert using the <code>stmt</code> and <code>thm</code> commands (where the <code>thm</code> statements have first to be derived as defined below). The user writes the statements as pending statements which are subsequently ''anonymised'' by introducing new unnamed variables that replace the named ones in the pending statement. Theorem 1 shows that this is always possible.
