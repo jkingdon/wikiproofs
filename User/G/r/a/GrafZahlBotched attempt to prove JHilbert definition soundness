@@ -7,7 +7,7 @@
  | notes    = Attempt at a formal proof of soundness of first-order logic in JHilbert.
 }}
 
-== JHilbert related stuff ==
+== JHilbert ==
 
 === Names ===
 
@@ -362,6 +362,49 @@ Most first order languages can be construed as a case of <math>\mathcal{L}</math
 :'''MP.''' If there is a derivable formula <math>q</math> such that <math>(q\rightarrow p)</math> is derivable, then <math>p</math> is derivable.
 :'''X.''' Nothing else is derivable.
 We denote the set of derivable formulas by <math>\mathfrak{D}</math>.
+
+=== Captured occurrences of variables ===
+
+'''Definition.''' Let <math>n\in\mathbb{Z}_{>0}</math>, <math>p</math> be a formula which consists of at least <math>n</math> symbols and suppose the <math>n</math>-th symbol of <math>p</math> is the variable <math>v\in\mathfrak{V}</math>. In other words, we have a specific occurrence of <math>v</math> in <math>p</math>, denoted by <math>o(v,p,n)</math>. Then we define when <math>o(v,p,n)</math> is ''uncaptured'' recursively as follows:
+# If <math>p</math> is atomic, then <math>o(v,p,n)</math> is uncaptured.
+# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>o(v,p,n)</math> is uncaptured if and only if that occurrence of <math>v</math> in <math>q</math> is uncaptured.
+# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>o(v,p,n)</math> is uncaptured if and only if either that occurence takes place in <math>q_1</math> and is uncaptured there, or it takes place in <math>q_2</math> and is uncaptured there.
+# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>o(v,p,n)</math> is uncaptured if and only if <math>v</math> and <math>w</math> are distinct (in particular, <math>n>2</math>) and that occurrence of <math>v</math> in <math>q</math> is uncaptured.
+If <math>o(v,p,n)</math> is not uncaptured, it is ''captured''.
+
+'''Explanation.''' In programmer lingo, an occurrence of a variable <math>v</math> being captured would mean that <math>v</math> lies in the [[w:scope (programming)|scope]] of a quantifier of the form <math>\forall v\ldots</math>.
+
+== Implementation of first order logic in JHilbert ==
+
+In this section we will give a description of an implementation of <math>\mathcal{L}</math>. Of course, the implementation we describe will depend on <math>\mathcal{L}</math> and possibly on user definitions. The implementation will largely be concerned with a JHilbert ''interface''. Later, when we check the soundness of the implementation, we will be concerned with an arbitrary ''proof module'' which imports the interface.
+
+First, our interface will need the three kinds
+ kind (variable)
+ kind (term)
+ kind (formula)
+to mimic first order variables, terms and formulas as JHilbert expressions (see below). Note that we shall not need separate kinds for constants or atomic formulas.
+
+The set <math>\mathfrak{V}</math> is countably infinite. However, variables in JHilbert are local to a module. A module only has finite length, so only a finite number of variables is required in a single module. (This is a slightly dangerous statement as the length of the module depends on the number of variables being declared. What we mean is that essentially, we write the module without <code>var</code> commands first and then add <code>var</code> commands as needed and nothing more.) Hence we shall introduce a sufficient number of variables for first order variables and terms:
+ var (variable v1 v2 v3 &hellip; )
+ var (term V1 V2 V3 &hellip; )
+(replace "&hellip;" with sufficiently many variable names).
+
+In order to express that first order variables are first order terms, we introduce the following functor:
+ term (term (tv variable))
+The <code>tv</code> functor will make terms of variables in JHilbert expressions.
+
+We implement the constants <math>c_1,\ldots,c_{N_C}</math> as nullary functors:
+ term (term (c1))
+ term (term (c2))
+ &hellip;
+ term (term (c<math>_{N_C}</math>))
+(fill in the necessary lines for "&hellip;" and replace <math>_{N_C}</math> with the appropriate representation of <math>N_C</math> in the [[w:decimal|decimal]] system).
+
+For each <math>k\in\mathbb{Z}_{>0}</math>, we implement the function symbols <math>f^k_1,\ldots,f^k_{N^k_F}</math> by <math>k</math>-ary functors
+ term (term (f_<math>k</math>_1 term &hellip; term))
+ &hellip;
+ term (term (f_<math>k</math>_<math>_{N^k_F}</math> term &hellip; term))
+(fill in the necessary lines, replace <math>k</math> and <math>_{N^k_F}</math> with the proper decimal representations and make the place count of the functors <math>k</math>).
 
 == References ==
 
