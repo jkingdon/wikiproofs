@@ -271,3 +271,30 @@ Note that V-equivalence is not an equivalence relation on <math>E(V,F)</math> (o
 '''Definition.''' Let <math>s</math> be a pending statement and <math>(\Delta,(e_1,\ldots,e_m))</math> be a proof in progress for <math>s</math>. Then <math>(\Delta,(e_1,\ldots,e_m))</math> is called a ''proof'' of <math>s</math> if <math>m=1</math>, <math>C(s)</math> and <math>e_1</math> are V-equivalent and <math>\Delta_W\subseteq DV(s)</math>, where <math>W=\bigcup\limits_{i=1}^{NH(s)}A(H_i(s))\cup (O(e_1)\setminus V_D)</math>.
 
 '''Explanation.''' At the end of the proof, we would like the proof result (i.e., the only expression class in the proof in progress) to contain the consequent. However, due to definitions, dummy variables may be incurred. Therefore we demand only V-equivalence: the user is allowed to fill in the dummies with variables that are unrelated to <math>s</math>, as is ensured by the restrictions on [[w:domain of a function|domain]] and [[w:codomain|codomain]] of the proper substitution map <math>u</math> in V-equivalence. Furthermore, the required DV constraints <math>\Delta</math> amassed during proof development must be a subset of the DV constraints <math>s</math> promises to hold. Again, unrelated variables are stripped. This begs the question how soundness is ensured due to ignored DV constraints on these unrelated variables. The solution is to always consider these unrelated variables implicitly distinct. This is ensured by the injectivity of <math>u</math>. On the other hand, one might fear that this implicit constraint is too restrictive (i.e. it may destroy completeness of some normally complete systems). However, the only unrelated variables in the consequent are dummy variables, and each of these appears in at most one definition. One onus is left on the user: to match all these dummy variables uniquely, extra variables might have to be defined. In theory, the number of extra variables can grow arbitrarily large. In practice, however, one should not need more than a handful, so this is hardly a nuisance.
+
+== First order logic ==
+
+The material in this section follows <ref name="bilaniuk">{{sc|S. Bilaniuk}}, A Problem Course in Mathematical Logic</ref> very closely.
+
+=== The first order language ===
+
+'''Definition.''' <math>\sigma</math> is called a ''symbol'' of first order logic if and only if exactly one of the following conditions applies:
+# <math>\sigma</math> is a ''parenthesis'', <math>(</math> or <math>)</math>.
+# <math>\sigma</math> is a ''logical connective'', <math>\rightarrow</math> or <math>\neg</math>.
+# <math>\sigma</math> is the ''quantifier'' <math>\forall</math>.
+# <math>\sigma\in\mathfrak{V}</math> where <math>\mathfrak{V}</math> is a finite or countably infinite set of ''first order variables''.
+# <math>\sigma</math> is the ''equality symbol'' <math>=</math>.
+# <math>\sigma\in\mathfrak{C}</math> where <math>\mathfrak{C}</math> is a finite or countably infinite set of ''constants''.
+# There is a <math>k\in\mathbb{Z}_{>0}</math> such that <math>\sigma\in\mathfrak{F}_k</math>, where <math>\mathfrak{F}_k</math> is a finite or countably infinite set of <math>k</math>-place ''function symbols''.
+# There is a <math>k\in\mathbb{Z}_{>0}</math> such that <math>\sigma\in\mathfrak{R}_k</math>, where <math>\mathfrak{R}_k</math> is a finite or countably infinite set of <math>k</math>-place ''relation symbols''.
+We denote the set of all symbols taken together by <math>\mathfrak{S}</math>.
+
+Obviously, the definition of a symbol depends on what the sets <math>\mathfrak{V},\mathfrak{C},\mathfrak{F}_k,\mathfrak{R}_k</math> are. We shall specifiy that at the end of this subsection.
+
+'''Definition.''' We recursively define what a ''term'' is as follows:
+# Each constant or variable symbol is a term.
+# If <math>t_1,\ldots,t_n</math> are terms and <math>f\in\mathfrak{F}_n</math>, then the sequence <math>ft_1\cdots t_n</math> is a term.
+
+== References ==
+
+<references />
