@@ -321,10 +321,10 @@ Obviously, the definition of a symbol depends on what the sets <math>\mathfrak{V
 '''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. Then <math>v</math> ''occurs'' in <math>p</math> if <math>v</math> occurs in the string of symbols making up <math>p</math>.
 
 '''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. We define when <math>v</math> ''occurs free'' in <math>p</math> recursively as follows:
-# If <math>p</math> is atomic then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs in <math>p</math>.
-# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q</math>.
-# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q_1</math> or <math>q_2</math>.
-# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> and <math>w</math> are distinct and <math>v</math> occurs free in <math>q</math>.
+# If <math>p</math> is atomic, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs in <math>p</math>.
+# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q</math>.
+# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q_1</math> or <math>q_2</math>.
+# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> and <math>w</math> are distinct and <math>v</math> occurs free in <math>q</math>.
 
 '''Definition.''' Our ''language'' <math>\mathcal{L}:=(\mathfrak{V},\mathfrak{C},\{\mathfrak{F}_k\}_{k\in\mathbb{Z}_{>0}},\{\mathfrak{R}_k\}_{k\in\mathbb{Z}_{>0}})</math> will be a language where <math>\mathfrak{V}</math> is countably infinite, all other sets are finite, and <math>\mathfrak{F}_k=\mathfrak{R}_k=\emptyset</math> for <math>k\gg 0</math>. We must ensure that all symbols are unique, so we denote the elements as follows:
 * <math>\mathfrak{V}=\{v_1,v_2,v_3,\ldots\}</math>,
@@ -333,6 +333,35 @@ Obviously, the definition of a symbol depends on what the sets <math>\mathfrak{V
 * <math>\mathfrak{R}_k=\{r^k_1,r^k_2,\ldots,r^k_{N^k_R}\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>.
 
 Most first order languages can be construed as a case of <math>\mathcal{L}</math>. For a specific (finite) situation this is always possible. Most practical languages have very few relation symbols. For example, there are axiomatisations of set theory which need only <math>\in</math>.
+
+=== Deductions ===
+
+'''Definition.''' Let <math>t</math> be a term and <math>v\in\mathfrak{V}</math>. Then <math>v</math> ''occurs'' in <math>t</math> if <math>v</math> occurs in the string of symbols making up <math>t</math>.
+
+'''Definition.''' Let <math>p</math> be a formula, <math>v\in\mathfrak{V}</math> and <math>t</math> be a term. Then we define when <math>t</math> is ''substitutable'' for <math>v</math> in <math>p</math> recursively as follows:
+# If <math>p</math> is atomic, then <math>t</math> is substitutable for <math>v</math> in <math>p</math>.
+# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>t</math> is substitutable for <math>v</math> in <math>p</math> if and only if <math>t</math> is substitutable for <math>v</math> in <math>q</math>.
+# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>t</math> is substitutable for <math>v</math> in <math>p</math> if and only if <math>t</math> is substitutable for <math>v</math> in both <math>q_1</math> and <math>q_2</math>.
+# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>t</math> is substitutable for <math>v</math> in <math>p</math> if and only if either <math>v</math> does not occur free in <math>p</math> or if <math>w</math> does not occur in <math>t</math> and <math>t</math> is substitutable for <math>v</math> in <math>q</math>.
+
+'''Definition.''' Let <math>p</math> be a formula, <math>v\in\mathfrak{V}</math> and <math>t</math> be a term which is substitutable for <math>v</math> in <math>p</math>. Then we define the ''substitution'' of <math>v</math> for <math>t</math> in <math>p</math>, denoted by <math>p_t^v</math>, recursively as follows:
+# If <math>p</math> is atomic, then <math>p_t^v</math> is <math>p</math> with all occurrences of <math>v</math> replaced with <math>t</math>.
+# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>p_t^v</math> is <math>(\neg q_t^v)</math>.
+# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>p_t^v</math> is <math>({q_1}_t^v\rightarrow{q_2}_t^v)</math>.
+# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>p_t^v</math> is <math>\forall w q_t^v</math> if <math>v</math> and <math>w</math> are distinct, and simply <math>p</math> if they are not.
+
+'''Definition.''' Let <math>p</math> be a formula. We define when <math>p</math> is ''derivable'' recursively as follows.
+:'''A1.''' If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow(q_2\rightarrow q_1))</math>, then <math>p</math> is derivable.
+:'''A2.''' If there are formulas <math>q_1,q_2,q_3</math> such that <math>p</math> has the form <math>((q_1\rightarrow(q_2\rightarrow q_3))\rightarrow((q_1\rightarrow q_2)\rightarrow(q_1\rightarrow q_3)))</math>, then <math>p</math> is derivable.
+:'''A3.''' If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(((\neg q_2)\rightarrow(\neg q_1))\rightarrow(((\neg q_2)\rightarrow q_1)\rightarrow q_2))</math>, then <math>p</math> is derivable.
+:'''A4.''' If there is a <math>v\in\mathfrak{V}</math>, a formula <math>q</math> and a term <math>t</math> such that <math>t</math> is substitutable for <math>v</math> in <math>q</math>, such that <math>p</math> has the form <math>(\forall v q\rightarrow q_t^v)</math>, then <math>p</math> is derivable.
+:'''A5.''' If there is a <math>v\in\mathfrak{V}</math> and formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(\forall v(q_1\rightarrow q_2)\rightarrow(\forall vq_1\rightarrow\forall vq_2))</math>, then <math>p</math> is derivable.
+:'''A6.''' If there is a formula <math>q</math> and a <math>v\in\mathfrak{V}</math> which does not occur free in <math>q</math> such that <math>p</math> has the form <math>(q\rightarrow\forall v q)</math>, then <math>p</math> is derivable.
+:'''A7.''' If there is a <math>v\in\mathfrak{V}</math> such that <math>p</math> has the form <math>=vv</math>, then <math>p</math> is derivable.
+:'''A8.''' If there are <math>v,w\in\mathfrak{V}</math> and atomic formulas <math>q_1,q_2</math> which are identical symbol for symbol except that for each occurrence of <math>v</math> in <math>q_1</math>, <math>q_2</math> may have either <math>v</math> or <math>w</math> at that location, such that <math>p</math> has the form <math>(=vw\rightarrow(q_1\rightarrow q_2))</math>, then <math>p</math> is derivable.
+:'''MP.''' If there is a derivable formula <math>q</math> such that <math>(q\rightarrow p)</math> is derivable, then <math>p</math> is derivable.
+:'''X.''' Nothing else is derivable.
+We denote the set of derivable formulas by <math>\mathfrak{D}</math>.
 
 == References ==
 
