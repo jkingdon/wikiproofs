@@ -289,11 +289,49 @@ The material in this section follows <ref name="bilaniuk">{{sc|S. Bilaniuk}}, A 
 # There is a <math>k\in\mathbb{Z}_{>0}</math> such that <math>\sigma\in\mathfrak{R}_k</math>, where <math>\mathfrak{R}_k</math> is a finite or countably infinite set of <math>k</math>-place ''relation symbols''.
 We denote the set of all symbols taken together by <math>\mathfrak{S}</math>.
 
-Obviously, the definition of a symbol depends on what the sets <math>\mathfrak{V},\mathfrak{C},\mathfrak{F}_k,\mathfrak{R}_k</math> are. We shall specifiy that at the end of this subsection.
+Obviously, the definition of a symbol depends on what the sets <math>\mathfrak{V},\mathfrak{C},\{\mathfrak{F}_k\}_{k\in\mathbb{Z}_{>0}},\{\mathfrak{R}_k\}_{k\in\mathbb{Z}_{>0}}</math> are. We shall specifiy that at the end of this subsection.
 
 '''Definition.''' We recursively define what a ''term'' is as follows:
 # Each constant or variable symbol is a term.
 # If <math>t_1,\ldots,t_n</math> are terms and <math>f\in\mathfrak{F}_n</math>, then the sequence <math>ft_1\cdots t_n</math> is a term.
+# Nothing else is a term.
+
+'''Lemma 26.''' If a sequence of symbols can be interpreted as a term, then this interpretation is unique.
+
+{{sc|Proof.}} This follows from the uniqueness of Polish notation, given that the place count of the function symbols is known.
+
+'''Definition.''' We recursively define what an ''atomic formula'' is as follows:
+# If <math>t_1,\ldots,t_n</math> are terms and <math>r\in\mathfrak{R}_n</math>, then <math>rt_1\cdots t_n</math> is an atomic formula.
+# If <math>t_1,t_2</math> are terms, then <math>=t_1t_2</math> is an atomic formula.
+# Nothing else is an atomic formula.
+
+'''Definition.''' We recursively define what a ''formula'' is as follows:
+# Every atomic formula is a formula.
+# If <math>p</math> is a formula, so is <math>(\neg p)</math>.
+# If <math>p,q</math> are formulas, so is <math>(p\rightarrow q)</math>.
+# If <math>p</math> is a formula and <math>v\in\mathfrak{V}</math>, then <math>\forall v p</math> is a formula.
+# Nothing else is a formula.
+
+'''Lemma 27.''' If a sequence of symbols can be interpreted as a formula, then this interpretation is unique.
+
+{{sc|Proof.}} For atomic formulas and formulas involving the quantifier <math>\forall</math> this follows from uniqueness of Polish notation and lemma 26. For the other formulas this follows from the use of parentheses (which are used nowhere else).
+
+(We're getting a little sloppy here. Actually one would need induction over the number of symbols in a formula.)
+
+'''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. Then <math>v</math> ''occurs'' in <math>p</math> if <math>v</math> occurs in the string of symbols making up <math>p</math>.
+
+'''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. We define when <math>v</math> ''occurs free'' in <math>p</math> recursively as follows:
+# If <math>p</math> is atomic then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs in <math>p</math>.
+# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q_1</math>.
+# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q_1</math> or <math>q_2</math>.
+# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> and <math>w</math> are distinct and <math>v</math> occurs free in <math>q</math>.
+
+'''Definition.''' Our ''language'' <math>\mathcal{L}_1:=(\mathfrak{V},\mathfrak{C},\{\mathfrak{F}_k\}_{k\in\mathbb{Z}_{>0}},\{\mathfrak{R}_k\}_{k\in\mathbb{Z}_{>0}})</math> will be the worst-case language where all the symbol sets are countably infinite. We must ensure that all symbols are unique, so we denote the elements as follows:
+* <math>\mathfrak{V}=\{v_1,v_2,v_3,\ldots\}</math>,
+* <math>\mathfrak{C}=\{c_1,c_2,c_3,\ldots\}</math>,
+* <math>\mathfrak{F}_k=\{f^k_1,f^k_2,f^k_3,\ldots\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>,
+* <math>\mathfrak{R}_k=\{r^k_1,r^k_2,r^k_3,\ldots\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>.
+All other languages can be construed as subsets of <math>\mathcal{L}_1</math>.
 
 == References ==
 
