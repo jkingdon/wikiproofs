@@ -316,22 +316,23 @@ Obviously, the definition of a symbol depends on what the sets <math>\mathfrak{V
 
 {{sc|Proof.}} For atomic formulas and formulas involving the quantifier <math>\forall</math> this follows from uniqueness of Polish notation and lemma 26. For the other formulas this follows from the use of parentheses (which are used nowhere else).
 
-(We're getting a little sloppy here. Actually one would need induction over the number of symbols in a formula.)
+(We're getting a little sloppy in the proofs of lemmata 26 and 27. Actually one would need induction over the number of symbols in a formula.)
 
 '''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. Then <math>v</math> ''occurs'' in <math>p</math> if <math>v</math> occurs in the string of symbols making up <math>p</math>.
 
 '''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. We define when <math>v</math> ''occurs free'' in <math>p</math> recursively as follows:
 # If <math>p</math> is atomic then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs in <math>p</math>.
-# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q_1</math>.
+# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q</math>.
 # If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q_1</math> or <math>q_2</math>.
 # If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math> then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> and <math>w</math> are distinct and <math>v</math> occurs free in <math>q</math>.
 
-'''Definition.''' Our ''language'' <math>\mathcal{L}_1:=(\mathfrak{V},\mathfrak{C},\{\mathfrak{F}_k\}_{k\in\mathbb{Z}_{>0}},\{\mathfrak{R}_k\}_{k\in\mathbb{Z}_{>0}})</math> will be the worst-case language where all the symbol sets are countably infinite. We must ensure that all symbols are unique, so we denote the elements as follows:
+'''Definition.''' Our ''language'' <math>\mathcal{L}:=(\mathfrak{V},\mathfrak{C},\{\mathfrak{F}_k\}_{k\in\mathbb{Z}_{>0}},\{\mathfrak{R}_k\}_{k\in\mathbb{Z}_{>0}})</math> will be a language where <math>\mathfrak{V}</math> is countably infinite, all other sets are finite, and <math>\mathfrak{F}_k=\mathfrak{R}_k=\emptyset</math> for <math>k\gg 0</math>. We must ensure that all symbols are unique, so we denote the elements as follows:
 * <math>\mathfrak{V}=\{v_1,v_2,v_3,\ldots\}</math>,
-* <math>\mathfrak{C}=\{c_1,c_2,c_3,\ldots\}</math>,
-* <math>\mathfrak{F}_k=\{f^k_1,f^k_2,f^k_3,\ldots\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>,
-* <math>\mathfrak{R}_k=\{r^k_1,r^k_2,r^k_3,\ldots\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>.
-All other languages can be construed as subsets of <math>\mathcal{L}_1</math>.
+* <math>\mathfrak{C}=\{c_1,c_2,\ldots,c_{N_C}\}</math>,
+* <math>\mathfrak{F}_k=\{f^k_1,f^k_2,\ldots,f^k_{N^k_F}\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>,
+* <math>\mathfrak{R}_k=\{r^k_1,r^k_2,\ldots,r^k_{N^k_R}\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>.
+
+Most first order languages can be construed as a case of <math>\mathcal{L}</math>. For a specific (finite) situation this is always possible. Most practical languages have very few relation symbols. For example, there are axiomatisations of set theory which need only <math>\in</math>.
 
 == References ==
 
