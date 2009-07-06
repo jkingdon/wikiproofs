@@ -384,9 +384,10 @@ First, our interface will need the three kinds
  kind (formula)
 to mimic first order variables, terms and formulas as JHilbert expressions (see below). Note that we shall not need separate kinds for constants or atomic formulas.
 
-The set <math>\mathfrak{V}</math> is countably infinite. However, variables in JHilbert are local to a module. A module only has finite length, so only a finite number of variables is required in a single module. (This is a slightly dangerous statement as the length of the module depends on the number of variables being declared. What we mean is that essentially, we write the module without <code>var</code> commands first and then add <code>var</code> commands as needed and nothing more.) Hence we shall introduce a sufficient number of variables for first order variables and terms:
+The set <math>\mathfrak{V}</math> is countably infinite. However, variables in JHilbert are local to a module. A module only has finite length, so only a finite number of variables is required in a single module. (This is a slightly dangerous statement as the length of the module depends on the number of variables being declared. What we mean is that essentially, we write the module without <code>var</code> commands first and then add <code>var</code> commands as needed and nothing more.) Hence we shall introduce a sufficient number of variables for first order variables and terms, and since we're at it, also for formulas:
  var (variable v1 v2 v3 &hellip; )
  var (term V1 V2 V3 &hellip; )
+ var (formula p1 p2 p3 &hellip; )
 (replace "&hellip;" with sufficiently many variable names).
 
 In order to express that first order variables are first order terms, we introduce the following functor:
@@ -405,6 +406,54 @@ For each <math>k\in\mathbb{Z}_{>0}</math>, we implement the function symbols <ma
  &hellip;
  term (term (f_<math>k</math>_<math>_{N^k_F}</math> term &hellip; term))
 (fill in the necessary lines, replace <math>k</math> and <math>_{N^k_F}</math> with the proper decimal representations and make the place count of the functors <math>k</math>).
+
+For each <math>k\in\mathbb{Z}_{>0}</math>, we implement the relation symbols <math>r^k_1,\ldots,r^k_{N^k_F}</math> by <math>k</math>-ary functors
+ term (formula (r_<math>k</math>_1 term &hellip; term))
+ &hellip;
+ term (forumla (r_<math>k</math>_<math>_{N^k_R}</math> term &hellip; term))
+(fill in the necessary lines, replace <math>k</math> and <math>_{N^k_R}</math> with the proper decimal representations and make the place count of the functors <math>k</math>).
+The equality symbol can be treated as a binary relation symbol:
+ term (formula (= term term))
+
+Implementation of non-atomic formulas is straightforward:
+ term (formula (¬ formula))
+ term (formula (→ formula formula))
+ term (formula (∀ variable formula))
+We also define some derived connectives:
+ def ((∧ p1 p2) (¬ (p1 → (¬ p2))))
+ def ((∨ p1 p2) ((¬ p1) → p2))
+ def ((↔ p1 p2) ((p1 → p2) ∧ (p2 → p1)))
+
+Next, we implement substitutions in terms. JHilbert already has a built-in substitution mechanism. We need additional substitution axioms only for replacing <code>(tv ''variable'')</code> terms with generic terms. First, we define a term substitution functor:
+ term (term (tsubst term variable term))
+(meaning each occurrence of <code>''variable''</code> in the first <code>''term''</code> is replaced by the second <code>''term''</code>. For <code>tv</code>-free terms, it has no effect:
+ stmt (tsubstid ((v1 V1)) () (= (tsubst V1 v1 V2) V1))
+We need a generic variable-to-term substitution:
+ stmt (tvsubst () () (= (tsubst (tv v1) v1 V1) V1))
+Finally, we need a substitution axiom for each function symbol <math>f^k_m</math>:
+ stmt (tsubst_''k''_''m'' () () (=
+  (tsubst (f_''k''_''m'' V1 &hellip; V''m'') v1 V''m+1'')
+  (f_''k''_''m'' (tsubst V1 v1 V''m+1'') &hellip; (tsubst V''m'' v1 V''m+1''))
+ ))
+(fill in the JHilbert expressions and replace the italic arithmetic expressions by their proper decimal representation).
+
+Now that we have substitutions in terms, we should also define them for formulas via a functor
+ term (formula (fsubst formula variable term))
+Note that the meaning of <code>fsubst</code> here is:
+:'''If''' <code>''term''</code> is substitutable for <code>''variable''</code> in <code>''formula''</code> then <code>(fsubst ''formula'' ''variable'' ''term'')</code> is that substitution.
+In other words, we must make sure that the axioms involving <code>fsubst</code> are applicable only in the case of substitutability. For a relation symbol <math>r^k_m</math> we need an axiom similar to the case of function symbols:
+ stmt (fsubst_''k''_''m'' () () (
+  (fsubst (r_''k''_''m'' V1 &hellip; V''m'') v1 V''m+1'') ↔
+  (r_''k''_''m'' (tsubst V1 v1 V''m+1'') &hellip; (tsubst V''m'' v1 V''m+1''))
+ ))
+Likewise for the equality symbol:
+ stmt (fsubsteq () () ((fsubst (= V1 V2) v1 V3) ↔ (= (tsubst V1 v1 V3) (tsubst V2 v1 V3))))
+We also need a straightforward substitution axiom each for negation and implication:
+ stmt (fsubstneg () () ((fsubst (¬ p1) v1 V1) ↔ (¬ (fsubst p1 v1 V1))))
+ stmt (fsubstimp () () ((fsubst (p1 → p2) v1 V1) ↔ ((fsubst p1 v1 V1) → (fsubst p2 v1 V1))
+For formulas involving the quantifier we must distinguish between whether the substituted variable is equal to the quantified variable or not.
+ stmt (fsubstalleq () () ((fsubst (∀ v1 p1) v1 V1) ↔ (∀ v1 p1)))
+ stmt (fsubstallneq ((v1 v2)) () ((fsubst (∀ v1 p1) v2 V1) ↔ (∀ v1 (fsubst p1 v2 V1))))
 
 == References ==
 
