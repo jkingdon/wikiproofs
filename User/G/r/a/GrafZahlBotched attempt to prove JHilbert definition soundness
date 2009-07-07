@@ -432,8 +432,8 @@ We need a generic variable-to-term substitution:
  stmt (tvsubst () () (= (tsubst (tv v1) v1 V1) V1))
 Finally, we need a substitution axiom for each function symbol <math>f^k_m</math>:
  stmt (tsubst_''k''_''m'' () () (=
-  (tsubst (f_''k''_''m'' V1 &hellip; V''m'') v1 V''m+1'')
-  (f_''k''_''m'' (tsubst V1 v1 V''m+1'') &hellip; (tsubst V''m'' v1 V''m+1''))
+  (tsubst (f_''k''_''m'' V1 &hellip; V''k'') v1 V''k+1'')
+  (f_''k''_''m'' (tsubst V1 v1 V''k+1'') &hellip; (tsubst V''k'' v1 V''k+1''))
  ))
 (fill in the JHilbert expressions and replace the italic arithmetic expressions by their proper decimal representation).
 
@@ -443,8 +443,8 @@ Note that the meaning of <code>fsubst</code> here is:
 :'''If''' <code>''term''</code> is substitutable for <code>''variable''</code> in <code>''formula''</code> then <code>(fsubst ''formula'' ''variable'' ''term'')</code> is that substitution.
 In other words, we must make sure that the axioms involving <code>fsubst</code> are applicable only in the case of substitutability. For a relation symbol <math>r^k_m</math> we need an axiom similar to the case of function symbols:
  stmt (fsubst_''k''_''m'' () () (
-  (fsubst (r_''k''_''m'' V1 &hellip; V''m'') v1 V''m+1'') ↔
-  (r_''k''_''m'' (tsubst V1 v1 V''m+1'') &hellip; (tsubst V''m'' v1 V''m+1''))
+  (fsubst (r_''k''_''m'' V1 &hellip; V''k'') v1 V''k+1'') ↔
+  (r_''k''_''m'' (tsubst V1 v1 V''k+1'') &hellip; (tsubst V''k'' v1 V''k+1''))
  ))
 Likewise for the equality symbol:
  stmt (fsubsteq () () ((fsubst (= V1 V2) v1 V3) ↔ (= (tsubst V1 v1 V3) (tsubst V2 v1 V3))))
@@ -454,6 +454,39 @@ We also need a straightforward substitution axiom each for negation and implicat
 For formulas involving the quantifier we must distinguish between whether the substituted variable is equal to the quantified variable or not.
  stmt (fsubstalleq () () ((fsubst (∀ v1 p1) v1 V1) ↔ (∀ v1 p1)))
  stmt (fsubstallneq ((v1 v2)) () ((fsubst (∀ v1 p1) v2 V1) ↔ (∀ v1 (fsubst p1 v2 V1))))
+
+Finally, we must implement the axioms '''A1''' through '''A8''' and '''MP''' of first order logic in JHilbert. '''A8''' is a special case which we treat below. The other axioms we implement as follows:
+ stmt (MP () (p1 (p1 → p2)) p2)
+ stmt (A1 () () (p1 → (p2 → p1)))
+ stmt (A2 () () ((p1 → (p2 → p3)) → ((p1 → p2) → (p1 → p3))))
+ stmt (A3 () () (((¬ p2) → (¬ p1)) → (((¬ p2) → p1) → p2)))
+ stmt (A4 () () ((∀ v1 p1) → (fsubst p1 v1 V1)))
+ stmt (A5 () () ((∀ v1 (p1 → p2)) → ((∀ v1 p1) → (∀ v1 p2))))
+ stmt (A6 () ((v1 p1)) (p1 → (∀ v1 p1)))
+ stmt (A7 () () (= V1 V1))
+The implementation of '''A8''' depends on the function and relation symbols which can make up an atomic formula. For each function symbol <math>f^k_m</math> we need <math>k</math> axioms:
+ stmt (A8_f_''k''_''m''_1 () () ((= V1 V''k+1'') → (= (f_''k''_''m'' V1 &hellip; V''k'') (f_''k''_''m'' V''k+1'' V2 &hellip; V''k''))))
+ &hellip;
+ stmt (A8_f_''k''_''m''_''k'' () () ((= V''k'' V''k+1'') → (= (f_''k''_''m'' V1 &hellip; V''k'') (f_''k''_''m'' V1 &hellip; V''k-1'' V''k+1''))))
+Likewise for each relation symbol <math>r^k_m</math>:
+ stmt (A8_r_''k''_''m''_1 () () ((= V1 V''k+1'') → ((r_''k''_''m'' V1 &hellip; V''k'') → (r_''k''_''m'' V''k+1'' V2 &hellip; V''k''))))
+ &hellip;
+ stmt (A8_r_''k''_''m''_''k'' () () ((= V''k'' V''k+1'') → ((f_''k''_''m'' V1 &hellip; V''k'') → (r_''k''_''m'' V1 &hellip; V''k-1'' V''k+1''))))
+And for equality:
+ stmt (A8_eq () () ((= V1 V2) → ((= V1 V3) → (= V2 V3))))
+A similar statement for the right hand sides of equalities is superfluous due to the symmetry of equality, which follows from '''A7''' and the [[w:propositional calculus|propositional calculus]] axioms.
+
+Note that in practice, the number of function and relation symbols will usually be low. On the other hand, there may be concise constructions for what are essentially an infinite number of constants, function symbols or relation symbols. The class builders from set theory are an example. Such constructions may need special implementations of '''A8'''.
+
+Finally we introduce the mapping <math>J</math> from the first order formulas to the JHilbert expressions of kind <code>''formula''</code>. Given a first-order formula <math>p</math>, we iterate over its symbols. In JHilbert, we start with the empty token sequence and add tokens as follows:
+* For each opening parenthesis <math>(</math>, append an opening parenthesis <code>(</code>. Likewise, for each closing parenthesis <math>)</math>, append a closing parenthesis <code>)</code>.
+* For each logical connective <math>\neg</math> or <math>\rightarrow</math>, append the JHilbert functor <code>¬</code> or <code>→</code>, respectively.
+* For each quantifier <math>\forall</math>, append the tokens <code>(∀</code>, and once the variable and the formula that follow have been handled, append <code>)</code>.
+* For each first-order variable <math>v_i</math>, append <code>v''i''</code> if the immediately preceding symbol in the first-order formula is <math>\forall</math>, else append <code>V''i''</code> if that occurrence of <math>v_i</math> is uncaptured, else append <code>(tv v''i'')</code>.
+* For each constant symbol <math>c_k</math> append <code>(c''k'')</code>.
+* For each <math>k</math>-ary functor symbol <math>f^k_i</math> append <code>(f_''k''_''i''</code>, and once the <math>k</math> terms that follow have been handled, append <code>)</code>.
+* For each <math>k</math>-ary relation symbol <math>r^k_i</math> append <code>(r_''k''_''i''</code>, and once the <math>k</math> terms that follow have been handled, append <code>)</code>.
+It is clear that this procedure generates valid JHilbert expressions of type formula. Bound and free variables, or more precisely, captured and uncaptured occurrences are simulated by <code>''variable''</code> variables with <code>tv</code> functor and <code>''term''</code> variables respectively.
 
 == References ==
 
