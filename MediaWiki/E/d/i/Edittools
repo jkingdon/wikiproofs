@@ -4,6 +4,10 @@
 <charinsert>⊤ ⊥ ¬ ∧ ∨ → ↔ ∀ ∃</charinsert>
 </p>
 
+<p class="specialbasic" id="Set theory">
+<charinsert>∈ ∉ ⊆ ⊊ ⊈ ∩ ∪ ⋂ ⋃</charinsert>
+</p>
+
 <p class="specialbasic" id="Greek letters"><!-- Should be from #1D400 onwards, but many fonts and browsers don't correctly render characters beyond the BMP yet-->
 <charinsert>Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω</charinsert>
 <br />
