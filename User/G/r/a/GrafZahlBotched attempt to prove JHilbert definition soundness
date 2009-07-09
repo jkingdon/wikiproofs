@@ -272,226 +272,60 @@ Note that V-equivalence is not an equivalence relation on <math>E(V,F)</math> (o
 
 '''Explanation.''' At the end of the proof, we would like the proof result (i.e., the only expression class in the proof in progress) to contain the consequent. However, due to definitions, dummy variables may be incurred. Therefore we demand only V-equivalence: the user is allowed to fill in the dummies with variables that are unrelated to <math>s</math>, as is ensured by the restrictions on [[w:domain of a function|domain]] and [[w:codomain|codomain]] of the proper substitution map <math>u</math> in V-equivalence. Furthermore, the required DV constraints <math>\Delta</math> amassed during proof development must be a subset of the DV constraints <math>s</math> promises to hold. Again, unrelated variables are stripped. This begs the question how soundness is ensured due to ignored DV constraints on these unrelated variables. The solution is to always consider these unrelated variables implicitly distinct. This is ensured by the injectivity of <math>u</math>. On the other hand, one might fear that this implicit constraint is too restrictive (i.e. it may destroy completeness of some normally complete systems). However, the only unrelated variables in the consequent are dummy variables, and each of these appears in at most one definition. One onus is left on the user: to match all these dummy variables uniquely, extra variables might have to be defined. In theory, the number of extra variables can grow arbitrarily large. In practice, however, one should not need more than a handful, so this is hardly a nuisance.
 
-== First order logic ==
+== Implementation of Metamath first order logic in JHilbert ==
 
-The material in this section follows <ref name="bilaniuk">{{sc|S. Bilaniuk}}, A Problem Course in Mathematical Logic</ref> very closely.
+In this section we implement the first order logic part of the Metamath proof explorer <ref name="megill">{{sc|N. Megill}}, Metamath Proof Explorer, http://us.metamath.org/mpegif/mmset.html</ref> in JHilbert. Our interface is as follows:
+ kind (set)
+ kind (class)
+ kind (wff)
+ 
+ var (set x y z)
+ var (wff φ χ ψ)
+ 
+ term (class (cv set))
+ term (wff (= class class))
+ term (wff (∈ class class))
+ term (wff (¬ wff))
+ term (wff (→ wff wff))
+ term (wff (∀ set wff))
+ 
+ stmt (ax-mp () (φ (φ → χ)) χ)
+ stmt (ax-gen () (φ) (∀ x φ))
+ stmt (ax-1 () () (φ → (χ → φ)))
+ stmt (ax-2 () () ((φ → (χ → ψ)) → ((φ → χ) → (φ → ψ))))
+ stmt (ax-3 () () (((¬ φ) → (¬ χ)) → (χ → φ)))
+ stmt (ax-4 () () ((∀ x φ) → φ))
+ stmt (ax-5 () () ((∀ x (φ → χ)) → ((∀ x φ) → (∀ x χ))))
+ stmt (ax-6 () () ((¬ (∀ x φ)) → (∀ x (¬ (∀ x φ)))))
+ stmt (ax-7 () () ((∀ x (∀ y φ)) → (∀ y (∀ x φ))))
+ stmt (ax-8 () () (((cv x) = (cv y)) → (((cv x) = (cv z)) → ((cv y) = (cv z)))))
+ stmt (ax-9 () () (¬ (∀ x (¬ ((cv x) = (cv y))))))
+ stmt (ax-10 () () ((∀ x ((cv x) = (cv y))) → (∀ y ((cv y) = (cv x)))))
+ stmt (ax-11 () () (((cv x) = (cv y)) → ((∀ x φ) → (∀ x (((cv x) = (cv y)) → φ)))))
+ stmt (ax-12 () () ((¬ (∀ z ((cv z) = (cv x)))) → ((¬ (∀ z ((cv z) = (cv y)))) →
+  (((cv x) = (cv y)) → (∀ z ((cv x) = (cv y)))))))
+ stmt (ax-13 () () (((cv x) = (cv y)) → (((cv x) ∈ (cv z)) → ((cv y) ∈ (cv z)))))
+ stmt (ax-14 () () (((cv x) = (cv y)) → (((cv z) ∈ (cv x)) → ((cv z) ∈ (cv y)))))
+ stmt (ax-15 () () ((¬ (∀ z ((cv z) = (cv x)))) → ((¬ (∀ z ((cv z) = (cv y)))) →
+  (((cv x) ∈ (cv y)) → (∀ z ((cv x) ∈ (cv y)))))))
+ stmt (ax-17 ((φ x)) () (φ → (∀ x φ)))
+Note that we do not need <code>ax-16</code> due to <code>ax-17</code> [http://us.metamath.org/mpegif/ax-16.html]. Also note that we do not need any variables of kind <code>class</code>.
 
-=== The first order language ===
+From now on we consider some JHilbert proof module which imports only the above interface but otherwise has arbitrary valid content.
 
-'''Definition.''' <math>\sigma</math> is called a ''symbol'' of first order logic if and only if exactly one of the following conditions applies:
-# <math>\sigma</math> is a ''parenthesis'', <math>(</math> or <math>)</math>.
-# <math>\sigma</math> is a ''logical connective'', <math>\rightarrow</math> or <math>\neg</math>.
-# <math>\sigma</math> is the ''quantifier'' <math>\forall</math>.
-# <math>\sigma\in\mathfrak{V}</math> where <math>\mathfrak{V}</math> is a finite or countably infinite set of ''first order variables''.
-# <math>\sigma</math> is the ''equality symbol'' <math>=</math>.
-# <math>\sigma\in\mathfrak{C}</math> where <math>\mathfrak{C}</math> is a finite or countably infinite set of ''constants''.
-# There is a <math>k\in\mathbb{Z}_{>0}</math> such that <math>\sigma\in\mathfrak{F}_k</math>, where <math>\mathfrak{F}_k</math> is a finite or countably infinite set of <math>k</math>-place ''function symbols''.
-# There is a <math>k\in\mathbb{Z}_{>0}</math> such that <math>\sigma\in\mathfrak{R}_k</math>, where <math>\mathfrak{R}_k</math> is a finite or countably infinite set of <math>k</math>-place ''relation symbols''.
-We denote the set of all symbols taken together by <math>\mathfrak{S}</math>.
+'''Definition.''' We define a mapping <math>MM</math> from JHilbert expressions <math>e</math> to Metamath syntax as follows.
+# Create an injective mapping <math>u</math> from <math>O(e)</math> to Metamath variables (that is, Metamath tokens defined with the Metamath <code>$v</code> command) such that for all <math>v\in O(e)</math>, <math>K(v)</math> matches the Metamath type of <math>u(v)</math> as defined by a Metamath <code>$f</code> command (for example <code>vx $f set x $.</code> for a variable whose JHilbert kind is <code>set</code>). If there are not enough Metamath variables to make <math>u</math> injective, define some new ones using <code>$v</code> and <code>$f</code>.
+# Take the JHilbert token stream representation of <math>CUF(e)</math> where we assume that the functors <code>=</code>, <code>∈</code> and <code>→</code> are used in infix notation, and <code>¬</code> and <code>∀</code> are used in prefix notation, and convert them symbol for symbol to a Metamath token sequence. Parentheses are converted verbatim. Variables are converted with <math>u</math>. Functors <code>cv</code>, <code>=</code>, <code>∈</code>, <code>¬</code>, <code>→</code>, <code>∀</code> are converted to <math>\epsilon</math>, <code>=</code>, <code>e.</code>, <code>-.</code>, <code>-></code> and <code>A.</code>, respectively.
+# Remove all superfluous parentheses from the Metamath token sequence.
 
-Obviously, the definition of a symbol depends on what the sets <math>\mathfrak{V},\mathfrak{C},\{\mathfrak{F}_k\}_{k\in\mathbb{Z}_{>0}},\{\mathfrak{R}_k\}_{k\in\mathbb{Z}_{>0}}</math> are. We shall specifiy that at the end of this subsection.
+'''Example.''' Take the expression <code>(((cv x) = (cv y)) → ((∀ x φ) → (∀ x (((cv x) = (cv y)) → φ))))</code>. Then <math>O(e)=\{x,y,\varphi\}</math>. A valid variable mapping would be <code>x → x</code>, <code>y → y</code>, <code>φ → ph</code>. The conversion then first yields <code>( ( ( x ) = ( y ) ) -> ( ( A. x ph ) -> ( A. x ( ( ( x ) = ( y ) ) -> ph ) ) ) )</code> and, after removing the superfluous parentheses, <code>( x = y -> ( A. x ph -> A. x ( x = y -> ph ) ) )</code>.
 
-'''Definition.''' We recursively define what a ''term'' is as follows:
-# Each constant or variable symbol is a term.
-# If <math>t_1,\ldots,t_n</math> are terms and <math>f\in\mathfrak{F}_n</math>, then the sequence <math>ft_1\cdots t_n</math> is a term.
-# Nothing else is a term.
-
-'''Lemma 26.''' If a sequence of symbols can be interpreted as a term, then this interpretation is unique.
-
-{{sc|Proof.}} This follows from the uniqueness of Polish notation, given that the place count of the function symbols is known.
-
-'''Definition.''' We recursively define what an ''atomic formula'' is as follows:
-# If <math>t_1,\ldots,t_n</math> are terms and <math>r\in\mathfrak{R}_n</math>, then <math>rt_1\cdots t_n</math> is an atomic formula.
-# If <math>t_1,t_2</math> are terms, then <math>=t_1t_2</math> is an atomic formula.
-# Nothing else is an atomic formula.
-
-'''Definition.''' We recursively define what a ''formula'' is as follows:
-# Every atomic formula is a formula.
-# If <math>p</math> is a formula, so is <math>(\neg p)</math>.
-# If <math>p,q</math> are formulas, so is <math>(p\rightarrow q)</math>.
-# If <math>p</math> is a formula and <math>v\in\mathfrak{V}</math>, then <math>\forall v p</math> is a formula.
-# Nothing else is a formula.
-
-'''Lemma 27.''' If a sequence of symbols can be interpreted as a formula, then this interpretation is unique.
-
-{{sc|Proof.}} For atomic formulas and formulas involving the quantifier <math>\forall</math> this follows from uniqueness of Polish notation and lemma 26. For the other formulas this follows from the use of parentheses (which are used nowhere else).
-
-(We're getting a little sloppy in the proofs of lemmata 26 and 27. Actually one would need induction over the number of symbols in a formula.)
-
-'''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. Then <math>v</math> ''occurs'' in <math>p</math> if <math>v</math> occurs in the string of symbols making up <math>p</math>.
-
-'''Definition.''' Let <math>p</math> be a formula and <math>v\in\mathfrak{V}</math>. We define when <math>v</math> ''occurs free'' in <math>p</math> recursively as follows:
-# If <math>p</math> is atomic, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs in <math>p</math>.
-# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q</math>.
-# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> occurs free in <math>q_1</math> or <math>q_2</math>.
-# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>v</math> occurs free in <math>p</math> if and only if <math>v</math> and <math>w</math> are distinct and <math>v</math> occurs free in <math>q</math>.
-
-'''Definition.''' Our ''language'' <math>\mathcal{L}:=(\mathfrak{V},\mathfrak{C},\{\mathfrak{F}_k\}_{k\in\mathbb{Z}_{>0}},\{\mathfrak{R}_k\}_{k\in\mathbb{Z}_{>0}})</math> will be a language where <math>\mathfrak{V}</math> is countably infinite, all other sets are finite, and <math>\mathfrak{F}_k=\mathfrak{R}_k=\emptyset</math> for <math>k\gg 0</math>. We must ensure that all symbols are unique, so we denote the elements as follows:
-* <math>\mathfrak{V}=\{v_1,v_2,v_3,\ldots\}</math>,
-* <math>\mathfrak{C}=\{c_1,c_2,\ldots,c_{N_C}\}</math>,
-* <math>\mathfrak{F}_k=\{f^k_1,f^k_2,\ldots,f^k_{N^k_F}\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>,
-* <math>\mathfrak{R}_k=\{r^k_1,r^k_2,\ldots,r^k_{N^k_R}\}</math> for all <math>k\in\mathbb{Z}_{>0}</math>.
-
-Most first order languages can be construed as a case of <math>\mathcal{L}</math>. For a specific (finite) situation this is always possible. Most practical languages have very few relation symbols. For example, there are axiomatisations of set theory which need only <math>\in</math>.
-
-=== Deductions ===
-
-'''Definition.''' Let <math>t</math> be a term and <math>v\in\mathfrak{V}</math>. Then <math>v</math> ''occurs'' in <math>t</math> if <math>v</math> occurs in the string of symbols making up <math>t</math>.
-
-'''Definition.''' Let <math>p</math> be a formula, <math>v\in\mathfrak{V}</math> and <math>t</math> be a term. Then we define when <math>t</math> is ''substitutable'' for <math>v</math> in <math>p</math> recursively as follows:
-# If <math>p</math> is atomic, then <math>t</math> is substitutable for <math>v</math> in <math>p</math>.
-# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>t</math> is substitutable for <math>v</math> in <math>p</math> if and only if <math>t</math> is substitutable for <math>v</math> in <math>q</math>.
-# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>t</math> is substitutable for <math>v</math> in <math>p</math> if and only if <math>t</math> is substitutable for <math>v</math> in both <math>q_1</math> and <math>q_2</math>.
-# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>t</math> is substitutable for <math>v</math> in <math>p</math> if and only if either <math>v</math> does not occur free in <math>p</math> or if <math>w</math> does not occur in <math>t</math> and <math>t</math> is substitutable for <math>v</math> in <math>q</math>.
-
-'''Definition.''' Let <math>p</math> be a formula, <math>v\in\mathfrak{V}</math> and <math>t</math> be a term which is substitutable for <math>v</math> in <math>p</math>. Then we define the ''substitution'' of <math>v</math> for <math>t</math> in <math>p</math>, denoted by <math>p_t^v</math>, recursively as follows:
-# If <math>p</math> is atomic, then <math>p_t^v</math> is <math>p</math> with all occurrences of <math>v</math> replaced with <math>t</math>.
-# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>p_t^v</math> is <math>(\neg q_t^v)</math>.
-# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>p_t^v</math> is <math>({q_1}_t^v\rightarrow{q_2}_t^v)</math>.
-# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>p_t^v</math> is <math>\forall w q_t^v</math> if <math>v</math> and <math>w</math> are distinct, and simply <math>p</math> if they are not.
-
-'''Definition.''' Let <math>p</math> be a formula. We define when <math>p</math> is ''derivable'' recursively as follows.
-:'''A1.''' If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow(q_2\rightarrow q_1))</math>, then <math>p</math> is derivable.
-:'''A2.''' If there are formulas <math>q_1,q_2,q_3</math> such that <math>p</math> has the form <math>((q_1\rightarrow(q_2\rightarrow q_3))\rightarrow((q_1\rightarrow q_2)\rightarrow(q_1\rightarrow q_3)))</math>, then <math>p</math> is derivable.
-:'''A3.''' If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(((\neg q_2)\rightarrow(\neg q_1))\rightarrow(((\neg q_2)\rightarrow q_1)\rightarrow q_2))</math>, then <math>p</math> is derivable.
-:'''A4.''' If there is a <math>v\in\mathfrak{V}</math>, a formula <math>q</math> and a term <math>t</math> such that <math>t</math> is substitutable for <math>v</math> in <math>q</math>, such that <math>p</math> has the form <math>(\forall v q\rightarrow q_t^v)</math>, then <math>p</math> is derivable.
-:'''A5.''' If there is a <math>v\in\mathfrak{V}</math> and formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(\forall v(q_1\rightarrow q_2)\rightarrow(\forall vq_1\rightarrow\forall vq_2))</math>, then <math>p</math> is derivable.
-:'''A6.''' If there is a formula <math>q</math> and a <math>v\in\mathfrak{V}</math> which does not occur free in <math>q</math> such that <math>p</math> has the form <math>(q\rightarrow\forall v q)</math>, then <math>p</math> is derivable.
-:'''A7.''' If there is a <math>v\in\mathfrak{V}</math> such that <math>p</math> has the form <math>=vv</math>, then <math>p</math> is derivable.
-:'''A8.''' If there are <math>v,w\in\mathfrak{V}</math> and atomic formulas <math>q_1,q_2</math> which are identical symbol for symbol except that for each occurrence of <math>v</math> in <math>q_1</math>, <math>q_2</math> may have either <math>v</math> or <math>w</math> at that location, such that <math>p</math> has the form <math>(=vw\rightarrow(q_1\rightarrow q_2))</math>, then <math>p</math> is derivable.
-:'''MP.''' If there is a derivable formula <math>q</math> such that <math>(q\rightarrow p)</math> is derivable, then <math>p</math> is derivable.
-:'''X.''' Nothing else is derivable.
-We denote the set of derivable formulas by <math>\mathfrak{D}</math>.
-
-=== Captured occurrences of variables ===
-
-'''Definition.''' Let <math>n\in\mathbb{Z}_{>0}</math>, <math>p</math> be a formula which consists of at least <math>n</math> symbols and suppose the <math>n</math>-th symbol of <math>p</math> is the variable <math>v\in\mathfrak{V}</math>. In other words, we have a specific occurrence of <math>v</math> in <math>p</math>, denoted by <math>o(v,p,n)</math>. Then we define when <math>o(v,p,n)</math> is ''uncaptured'' recursively as follows:
-# If <math>p</math> is atomic, then <math>o(v,p,n)</math> is uncaptured.
-# If there is a formula <math>q</math> such that <math>p</math> has the form <math>(\neg q)</math>, then <math>o(v,p,n)</math> is uncaptured if and only if that occurrence of <math>v</math> in <math>q</math> is uncaptured.
-# If there are formulas <math>q_1,q_2</math> such that <math>p</math> has the form <math>(q_1\rightarrow q_2)</math>, then <math>o(v,p,n)</math> is uncaptured if and only if either that occurence takes place in <math>q_1</math> and is uncaptured there, or it takes place in <math>q_2</math> and is uncaptured there.
-# If there is a <math>w\in\mathfrak{V}</math> and a formula <math>q</math> such that <math>p</math> has the form <math>\forall w q</math>, then <math>o(v,p,n)</math> is uncaptured if and only if <math>v</math> and <math>w</math> are distinct (in particular, <math>n>2</math>) and that occurrence of <math>v</math> in <math>q</math> is uncaptured.
-If <math>o(v,p,n)</math> is not uncaptured, it is ''captured''.
-
-'''Explanation.''' In programmer lingo, an occurrence of a variable <math>v</math> being captured would mean that <math>v</math> lies in the [[w:scope (programming)|scope]] of a quantifier of the form <math>\forall v\ldots</math>.
-
-== Implementation of first order logic in JHilbert ==
-
-In this section we will give a description of an implementation of <math>\mathcal{L}</math>. Of course, the implementation we describe will depend on <math>\mathcal{L}</math> and possibly on user definitions. The implementation will largely be concerned with a JHilbert ''interface''. Later, when we check the soundness of the implementation, we will be concerned with an arbitrary ''proof module'' which imports the interface.
-
-First, our interface will need the three kinds
- kind (variable)
- kind (term)
- kind (formula)
-to mimic first order variables, terms and formulas as JHilbert expressions (see below). Note that we shall not need separate kinds for constants or atomic formulas.
-
-The set <math>\mathfrak{V}</math> is countably infinite. However, variables in JHilbert are local to a module. A module only has finite length, so only a finite number of variables is required in a single module. (This is a slightly dangerous statement as the length of the module depends on the number of variables being declared. What we mean is that essentially, we write the module without <code>var</code> commands first and then add <code>var</code> commands as needed and nothing more.) Hence we shall introduce a sufficient number of variables for first order variables and terms, and since we're at it, also for formulas:
- var (variable v1 v2 v3 &hellip; )
- var (term V1 V2 V3 &hellip; )
- var (formula p1 p2 p3 &hellip; )
-(replace "&hellip;" with sufficiently many variable names).
-
-In order to express that first order variables are first order terms, we introduce the following functor:
- term (term (tv variable))
-The <code>tv</code> functor will make terms of variables in JHilbert expressions.
-
-We implement the constants <math>c_1,\ldots,c_{N_C}</math> as nullary functors:
- term (term (c1))
- term (term (c2))
- &hellip;
- term (term (c<math>_{N_C}</math>))
-(fill in the necessary lines for "&hellip;" and replace <math>_{N_C}</math> with the appropriate representation of <math>N_C</math> in the [[w:decimal|decimal]] system).
-
-For each <math>k\in\mathbb{Z}_{>0}</math>, we implement the function symbols <math>f^k_1,\ldots,f^k_{N^k_F}</math> by <math>k</math>-ary functors
- term (term (f_<math>k</math>_1 term &hellip; term))
- &hellip;
- term (term (f_<math>k</math>_<math>_{N^k_F}</math> term &hellip; term))
-(fill in the necessary lines, replace <math>k</math> and <math>_{N^k_F}</math> with the proper decimal representations and make the place count of the functors <math>k</math>).
-
-For each <math>k\in\mathbb{Z}_{>0}</math>, we implement the relation symbols <math>r^k_1,\ldots,r^k_{N^k_F}</math> by <math>k</math>-ary functors
- term (formula (r_<math>k</math>_1 term &hellip; term))
- &hellip;
- term (forumla (r_<math>k</math>_<math>_{N^k_R}</math> term &hellip; term))
-(fill in the necessary lines, replace <math>k</math> and <math>_{N^k_R}</math> with the proper decimal representations and make the place count of the functors <math>k</math>).
-The equality symbol can be treated as a binary relation symbol:
- term (formula (= term term))
-
-Implementation of non-atomic formulas is straightforward:
- term (formula (¬ formula))
- term (formula (→ formula formula))
- term (formula (∀ variable formula))
-We also define some derived connectives:
- def ((∧ p1 p2) (¬ (p1 → (¬ p2))))
- def ((∨ p1 p2) ((¬ p1) → p2))
- def ((↔ p1 p2) ((p1 → p2) ∧ (p2 → p1)))
-
-Next, we implement substitutions in terms. JHilbert already has a built-in substitution mechanism. We need additional substitution axioms only for replacing <code>(tv ''variable'')</code> terms with generic terms. First, we define a term substitution functor:
- term (term (tsubst term variable term))
-(meaning each occurrence of <code>''variable''</code> in the first <code>''term''</code> is replaced by the second <code>''term''</code>. For <code>tv</code>-free terms, it has no effect:
- stmt (tsubstid ((v1 V1)) () (= (tsubst V1 v1 V2) V1))
-We need a generic variable-to-term substitution:
- stmt (tvsubst () () (= (tsubst (tv v1) v1 V1) V1))
-Finally, we need a substitution axiom for each function symbol <math>f^k_m</math>:
- stmt (tsubst_''k''_''m'' () () (=
-  (tsubst (f_''k''_''m'' V1 &hellip; V''k'') v1 V''k+1'')
-  (f_''k''_''m'' (tsubst V1 v1 V''k+1'') &hellip; (tsubst V''k'' v1 V''k+1''))
- ))
-(fill in the JHilbert expressions and replace the italic arithmetic expressions by their proper decimal representation).
-
-Now that we have substitutions in terms, we should also define them for formulas via a functor
- term (formula (fsubst formula variable term))
-Note that the meaning of <code>fsubst</code> here is:
-:'''If''' <code>''term''</code> is substitutable for <code>''variable''</code> in <code>''formula''</code> then <code>(fsubst ''formula'' ''variable'' ''term'')</code> is that substitution.
-In other words, we must make sure that the axioms involving <code>fsubst</code> are applicable only in the case of substitutability. For a relation symbol <math>r^k_m</math> we need an axiom similar to the case of function symbols:
- stmt (fsubst_''k''_''m'' () () (
-  (fsubst (r_''k''_''m'' V1 &hellip; V''k'') v1 V''k+1'') ↔
-  (r_''k''_''m'' (tsubst V1 v1 V''k+1'') &hellip; (tsubst V''k'' v1 V''k+1''))
- ))
-Likewise for the equality symbol:
- stmt (fsubsteq () () ((fsubst (= V1 V2) v1 V3) ↔ (= (tsubst V1 v1 V3) (tsubst V2 v1 V3))))
-We also need a straightforward substitution axiom each for negation and implication:
- stmt (fsubstneg () () ((fsubst (¬ p1) v1 V1) ↔ (¬ (fsubst p1 v1 V1))))
- stmt (fsubstimp () () ((fsubst (p1 → p2) v1 V1) ↔ ((fsubst p1 v1 V1) → (fsubst p2 v1 V1))
-For formulas involving the quantifier we must distinguish between whether the substituted variable is equal to the quantified variable or not.
- stmt (fsubstalleq () () ((fsubst (∀ v1 p1) v1 V1) ↔ (∀ v1 p1)))
- stmt (fsubstallneq ((v1 v2) (v1 V1)) () ((fsubst (∀ v1 p1) v2 V1) ↔ (∀ v1 (fsubst p1 v2 V1))))
-
-Finally, we must implement the axioms '''A1''' through '''A8''' and '''MP''' of first order logic in JHilbert. '''A8''' is a special case which we treat below. The other axioms we implement as follows:
- stmt (MP () (p1 (p1 → p2)) p2)
- stmt (A1 () () (p1 → (p2 → p1)))
- stmt (A2 () () ((p1 → (p2 → p3)) → ((p1 → p2) → (p1 → p3))))
- stmt (A3 () () (((¬ p2) → (¬ p1)) → (((¬ p2) → p1) → p2)))
- stmt (A4 () () ((∀ v1 p1) → (fsubst p1 v1 V1)))
- stmt (A5 () () ((∀ v1 (p1 → p2)) → ((∀ v1 p1) → (∀ v1 p2))))
- stmt (A6 ((v1 p1)) () (p1 → (∀ v1 p1)))
- stmt (A7 () () (= V1 V1))
-The implementation of '''A8''' depends on the function and relation symbols which can make up an atomic formula. For each function symbol <math>f^k_m</math> we need <math>k</math> axioms:
- stmt (A8_f_''k''_''m''_1 () () ((= V1 V''k+1'') → (= (f_''k''_''m'' V1 &hellip; V''k'') (f_''k''_''m'' V''k+1'' V2 &hellip; V''k''))))
- &hellip;
- stmt (A8_f_''k''_''m''_''k'' () () ((= V''k'' V''k+1'') → (= (f_''k''_''m'' V1 &hellip; V''k'') (f_''k''_''m'' V1 &hellip; V''k-1'' V''k+1''))))
-Likewise for each relation symbol <math>r^k_m</math>:
- stmt (A8_r_''k''_''m''_1 () () ((= V1 V''k+1'') → ((r_''k''_''m'' V1 &hellip; V''k'') → (r_''k''_''m'' V''k+1'' V2 &hellip; V''k''))))
- &hellip;
- stmt (A8_r_''k''_''m''_''k'' () () ((= V''k'' V''k+1'') → ((f_''k''_''m'' V1 &hellip; V''k'') → (r_''k''_''m'' V1 &hellip; V''k-1'' V''k+1''))))
-And for equality:
- stmt (A8_eq () () ((= V1 V2) → ((= V1 V3) → (= V2 V3))))
-A similar statement for the right hand sides of equalities is superfluous due to the symmetry of equality, which follows from '''A7''' and the [[w:propositional calculus|propositional calculus]] axioms. We also have introduced the substitution functor <code>tsubst</code> above. It needs a similar axiom:
- stmt (A8_tsubst () () ((= V1 V2) → (= (tsubst V1 v1 V3) (tsubst V2 v1 V3))))
-
-Note that in practice, the number of function and relation symbols will usually be low. On the other hand, there may be concise constructions for what are essentially an infinite number of constants, function symbols or relation symbols. The class builders from set theory are an example. Such constructions may need special implementations of '''A8'''.
-
-Finally we introduce the mapping <math>J</math> from the first order formulas to the JHilbert expressions of kind <code>''formula''</code>. Given a first-order formula <math>p</math>, we iterate over its symbols. In JHilbert, we start with the empty token sequence and add tokens as follows:
-* For each opening parenthesis <math>(</math>, append an opening parenthesis <code>(</code>. Likewise, for each closing parenthesis <math>)</math>, append a closing parenthesis <code>)</code>.
-* For each logical connective <math>\neg</math> or <math>\rightarrow</math>, append the JHilbert functor <code>¬</code> or <code>→</code>, respectively.
-* For each quantifier <math>\forall</math>, append the tokens <code>(∀</code>, and once the variable and the formula that follow have been handled, append <code>)</code>.
-* For each first-order variable <math>v_i</math>, append <code>v''i''</code> if the immediately preceding symbol in the first-order formula is <math>\forall</math>, else append <code>(tv v''i'')</code>.
-* For each constant symbol <math>c_k</math> append <code>(c''k'')</code>.
-* For each <math>k</math>-ary functor symbol <math>f^k_i</math> append <code>(f_''k''_''i''</code>, and once the <math>k</math> terms that follow have been handled, append <code>)</code>.
-* For each <math>k</math>-ary relation symbol <math>r^k_i</math> append <code>(r_''k''_''i''</code>, and once the <math>k</math> terms that follow have been handled, append <code>)</code>.
-It is clear that this procedure generates valid JHilbert expressions of type formula. Bound and free variables, or more precisely, captured and uncaptured occurrences are simulated by <code>''variable''</code> variables with <code>tv</code> functor and <code>''term''</code> variables respectively.
-
-== Soundness ==
-
-Assume a JHilbert proof module imports the interface from the previous section and contains an arbitrary number of definitions.
+'''Definition.''' Let <math>s=(n,\Delta,h,e)</math> be a pending statement. We extend <math>MM</math> to <math>s</math> as follows.
+# As above, create an injective mapping <math>u</math> to Metamath variables, only this time let the domain of <math>u</math> include not only <math>O(e)</math> but also <math>O(e')</math> for each expression <math>e'</math> in <math>h</math>, and <math>A(\Delta)</math>. It is clear that <math>u</math> satisfies the properties of the previous definition for all expressions occurring in <math>s</math>.
+# For each <math>(v,w)\in\Delta</math> create an appropriate <code>$d</code> command.
+# For each hypothesis <math>e'</math> of <math>s</math>, create an essential Metamath hypothesis <code>''label'' $e |- <math>MM(e')</math> $.</code> with a suitable label.
+# As for the consequent, use <math>MM(e)</math> preceded by a turnstile <code>|-</code>.
+These steps are slightly vague but there is an up to permutation of DV constraints and hypotheses unique way to complete the definition such that <math>MM(s)</math> becomes a valid Metamath token stream of the form <code>${ &hellip; $p &hellip; $= ? $. $}</code> not containing comments.
 
 == References ==
 
