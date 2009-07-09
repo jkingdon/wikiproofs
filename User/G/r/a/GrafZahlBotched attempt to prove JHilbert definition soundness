@@ -320,12 +320,26 @@ From now on we consider some JHilbert proof module which imports only the above 
 
 '''Example.''' Take the expression <code>(((cv x) = (cv y)) → ((∀ x φ) → (∀ x (((cv x) = (cv y)) → φ))))</code>. Then <math>O(e)=\{x,y,\varphi\}</math>. A valid variable mapping would be <code>x → x</code>, <code>y → y</code>, <code>φ → ph</code>. The conversion then first yields <code>( ( ( x ) = ( y ) ) -> ( ( A. x ph ) -> ( A. x ( ( ( x ) = ( y ) ) -> ph ) ) ) )</code> and, after removing the superfluous parentheses, <code>( x = y -> ( A. x ph -> A. x ( x = y -> ph ) ) )</code>.
 
-'''Definition.''' Let <math>s=(n,\Delta,h,e)</math> be a pending statement. We extend <math>MM</math> to <math>s</math> as follows.
+'''Definition.''' Let <math>s=(n,\Delta,h,e)</math> be a (pending) statement. We extend <math>MM</math> to <math>s</math> as follows.
 # As above, create an injective mapping <math>u</math> to Metamath variables, only this time let the domain of <math>u</math> include not only <math>O(e)</math> but also <math>O(e')</math> for each expression <math>e'</math> in <math>h</math>, and <math>A(\Delta)</math>. It is clear that <math>u</math> satisfies the properties of the previous definition for all expressions occurring in <math>s</math>.
 # For each <math>(v,w)\in\Delta</math> create an appropriate <code>$d</code> command.
 # For each hypothesis <math>e'</math> of <math>s</math>, create an essential Metamath hypothesis <code>''label'' $e |- <math>MM(e')</math> $.</code> with a suitable label.
 # As for the consequent, use <math>MM(e)</math> preceded by a turnstile <code>|-</code>.
-These steps are slightly vague but there is an up to permutation of DV constraints and hypotheses unique way to complete the definition such that <math>MM(s)</math> becomes a valid Metamath token stream of the form <code>${ &hellip; $p &hellip; $= ? $. $}</code> not containing comments.
+These steps are slightly vague but given a fixed unique name <code>''name''</code>, there is an up to permutation of DV constraints and hypotheses unique way to complete the definition such that <math>MM(s)</math> becomes a valid Metamath token stream of the form <code>${ &hellip; ''name'' $p &hellip; $= ? $. $}</code> not containing comments.
+
+== Soundness of JHilbert ==
+
+In order to prove the soundness of JHilbert, we must show that each pending JHilbert statement for which a JHilbert proof exists, is provable in Metamath as well (this proves soundness under the assumption that Metamath is sound as well). Essentially, we show this by induction over the minimum number of steps a proof must have.
+
+'''Lemma 26.''' Let <math>s</math> be a pending statement for which a JHilbert proof exists that consists of only one step which is a hypothesis step. Then there is a Metamath proof for <math>MM(s)</math>.
+
+{{sc|Proof.}} The complete JHilbert proof has the form <math>(\emptyset,(e))</math>, where <math>C(s)</math> and <math>e</math> are V-equivalent. Let <math>u</math> be the variable mapping for V-equivalence. Now consider a pending statement <math>s'</math> with <math>DV(s')=DV(s)</math>, <math>H(s')=H(s)</math> and <math>C(s')\in e</math>. Such a pending statement exists because <math>e</math> is the equivalence class of a hypothesis <math>e'</math> of <math>s</math> and hence <math>A(e')\subseteq V_N</math>. Then <math>CUF(C(s'))=CUF(e)</math>, so <math>MM(s')</math> is provable in Metamath by simply invoking the hypothesis <math>MM(e)</math>. Now, to prove <math>MM(s)</math>, we only need to invoke <math>MM(s')</math> with the correct variables.
+
+'''Lemma 27.''' The Metamath mapping <math>MM(s)</math> for each of the statements <code>ax-mp</code>, <code>ax-gen</code>, <code>ax-1</code> through <code>ax-15</code> and <code>ax-17</code> (regarded as pending statements) is provable in Metamath.
+
+{{sc|Proof.}} By their nature, these axioms map precisely to their Metamath counterparts, except possibly with different variable names which can be rectified by invoking the corresponding original Metamath axiom with the correct variables.
+
+'''Lemma 28.''' Let <math>s'</math> be a statement such that <math>MM(s')</math> is provable in Metamath and let <math>s</math> be a pending statement such that
 
 == References ==
 
