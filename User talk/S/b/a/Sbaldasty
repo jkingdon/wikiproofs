@@ -1,0 +1,7 @@
+== Welcome ==
+
+Hi Steven, and welcome to Wikiproofs. Everything is still a little experimental and, unfortunately, not very well-documented yet, so do not hesitate to ask me any questions you might have. Feel free to mess around with JHilbert a little, with a local copy [http://www.mathi.uni-heidelberg.de/~alex/jhilbert/jhilbert-devel.jar] on your own machine or directly here on this wiki. The wiki integration works reasonably well though the host machine is slightly memory-starved. So if you get strange "Feed error" messages, just press the preview button again or [[mw:Manual:purge|purge]] the page.
+
+I am currently in the process of drafting an informal soundness proof for JHilbert relative to Metamath. An e-Mail exchange with Raph Levien, who has recently become active on Ghilbert again, convinced me to do so. Note however, that the JHilbert software itself has not yet undergone rigorous testing yet.
+
+Anyway, I hope you have fun with JHilbert and this wiki.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 08:31, 9 July 2009 (UTC)
