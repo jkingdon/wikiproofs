@@ -311,35 +311,57 @@ In this section we implement the first order logic part of the Metamath proof ex
  stmt (ax-17 ((φ x)) () (φ → (∀ x φ)))
 Note that we do not need <code>ax-16</code> due to <code>ax-17</code> [http://us.metamath.org/mpegif/ax-16.html]. Also note that we do not need any variables of kind <code>class</code>.
 
-From now on we consider some JHilbert proof module which imports only the above interface but otherwise has arbitrary valid content.
+From now on we consider some JHilbert proof module which imports only the above interface but otherwise has arbitrary valid content. In what follows we shall make frequent references to the formalisation of Metamath as done in Appendix C of the Metamath book<ref name="metamath">{{sc|N. Megill}}, The Metamath Book, http://us.metamath.org/downloads/metamath.pdf</ref>.
 
-'''Definition.''' We define a mapping <math>MM</math> from JHilbert expressions <math>e</math> to Metamath syntax as follows.
-# Create an injective mapping <math>u</math> from <math>O(e)</math> to Metamath variables (that is, Metamath tokens defined with the Metamath <code>$v</code> command) such that for all <math>v\in O(e)</math>, <math>K(v)</math> matches the Metamath type of <math>u(v)</math> as defined by a Metamath <code>$f</code> command (for example <code>vx $f set x $.</code> for a variable whose JHilbert kind is <code>set</code>). If there are not enough Metamath variables to make <math>u</math> injective, define some new ones using <code>$v</code> and <code>$f</code>.
-# Take the JHilbert token stream representation of <math>CUF(e)</math> where we assume that the functors <code>=</code>, <code>∈</code> and <code>→</code> are used in infix notation, and <code>¬</code> and <code>∀</code> are used in prefix notation, and convert them symbol for symbol to a Metamath token sequence. Parentheses are converted verbatim. Variables are converted with <math>u</math>. Functors <code>cv</code>, <code>=</code>, <code>∈</code>, <code>¬</code>, <code>→</code>, <code>∀</code> are converted to <math>\epsilon</math>, <code>=</code>, <code>e.</code>, <code>-.</code>, <code>-></code> and <code>A.</code>, respectively.
-# Remove all superfluous parentheses from the Metamath token sequence.
+'''Definition.''' Let <math>CN:=\{(,),\mathrm{set},\mathrm{class},\mathrm{wff},=,\in,\neg,\rightarrow,\forall,\vdash\}</math>, <math>VR:=V</math>, <math>T:=\{(t,v):v\in VR, t=K(v)\}</math> (in particular, the first component of all elementf of <math>T</math> is one of <math>\mathrm{set},\mathrm{class},\mathrm{wff}</math>), and let <math>\Gamma</math> be the set of Metamath statements representing the functors and axioms given above (except <code>cv</code>, which is unnecessary in Metamath). We shall then consider the ''Metamath formal system'' <math>\mathfrak{F}:=(CN,VR,\Gamma)</math>. We denote the Metamath universe of <math>\mathfrak{F}</math> by <math>\mathfrak{U}</math>.
 
-'''Example.''' Take the expression <code>(((cv x) = (cv y)) → ((∀ x φ) → (∀ x (((cv x) = (cv y)) → φ))))</code>. Then <math>O(e)=\{x,y,\varphi\}</math>. A valid variable mapping would be <code>x → x</code>, <code>y → y</code>, <code>φ → ph</code>. The conversion then first yields <code>( ( ( x ) = ( y ) ) -> ( ( A. x ph ) -> ( A. x ( ( ( x ) = ( y ) ) -> ph ) ) ) )</code> and, after removing the superfluous parentheses, <code>( x = y -> ( A. x ph -> A. x ( x = y -> ph ) ) )</code>.
+'''Definition.''' We denote the mapping from JHilbert statements <math>s=(n,\Delta,h,e)</math> to Metamath statements <math>(D_M,T_M,H,A)</math> by <math>MM</math>. If <math>h\in E(V,F_T)^*</math> and <math>e\in E(V,F_T)</math>, then <math>MM</math> maps as expected. In the general case, <math>MM</math> maps so that if <math>h=(e_1,\ldots,e_m)</math>, then <math>H=(MM(CUF(e_1)),\ldots,MM(CUF(e_m))</math>, and <math>A=MM(CUF(e))</math>. In addition, for each dummy variable <math>d</math> appearing in <math>CUF(e_1),\ldots,CUF(e_m),CUF(e)</math>, all unordered pairs <math>\{d,v\}</math> where <math>v\in VR\setminus\{d\}</math> are added to <math>D</math>.
 
-'''Definition.''' Let <math>s=(n,\Delta,h,e)</math> be a (pending) statement. We extend <math>MM</math> to <math>s</math> as follows.
-# As above, create an injective mapping <math>u</math> to Metamath variables, only this time let the domain of <math>u</math> include not only <math>O(e)</math> but also <math>O(e')</math> for each expression <math>e'</math> in <math>h</math>, and <math>A(\Delta)</math>. It is clear that <math>u</math> satisfies the properties of the previous definition for all expressions occurring in <math>s</math>.
-# For each <math>(v,w)\in\Delta</math> create an appropriate <code>$d</code> command.
-# For each hypothesis <math>e'</math> of <math>s</math>, create an essential Metamath hypothesis <code>''label'' $e |- <math>MM(e')</math> $.</code> with a suitable label.
-# As for the consequent, use <math>MM(e)</math> preceded by a turnstile <code>|-</code>.
-These steps are slightly vague but given a fixed unique name <code>''name''</code>, there is an up to permutation of DV constraints and hypotheses unique way to complete the definition such that <math>MM(s)</math> becomes a valid Metamath token stream of the form <code>${ &hellip; ''name'' $p &hellip; $= ? $. $}</code> not containing comments.
+'''Example.''' <math>MM(\texttt{ax-11})=(\emptyset,\{(\mathrm{set},x),(\mathrm{set},y),(\mathrm{wff},\varphi)\},\emptyset,\vdash (x=y\rightarrow(\forall x\varphi\rightarrow\forall x(x=y\rightarrow\varphi))))</math>.
 
 == Soundness of JHilbert ==
 
-In order to prove the soundness of JHilbert, we must show that each pending JHilbert statement for which a JHilbert proof exists, is provable in Metamath as well (this proves soundness under the assumption that Metamath is sound as well). Essentially, we show this by induction over the minimum number of steps a proof must have.
+In order to prove the soundness of JHilbert, we must show that each pending JHilbert statement for which a JHilbert proof exists, is provable in Metamath as well (this proves soundness under the assumption that Metamath is sound as well). This means that for each provable JHilbert statement <math>s</math> we must show that <math>MM(s)\in\mathfrak{U}</math>. Essentially, we show this by induction over the minimum number of steps a proof must have.
+
+'''Definition.''' Let <math>S:=(D,T,H,A)</math> be a Metamath pre-statement. Then we define a family <math>(Cl(S)_k)_{k\in\mathbb{Z}_{\geq 0}}</math> recursively as follows.
+# <math>Cl(S)_0:=T\cup H</math>.
+# If for some <math>(D_M',T_M',H',A')\in\Gamma</math> and some Metamath substitution <math>\sigma</math> we have <math>\sigma(T_M'\cup H')\subseteq Cl(S)_{k-1}</math>, and for all <math>\{\alpha,\beta\}\in D_M'</math>, <math>\gamma\in\mathcal{V}(\sigma(\alpha))</math>, <math>\delta\in\mathcal{V}(\sigma(\beta))</math> we have <math>\{\gamma,\delta\}\in D</math>, then <math>\sigma(A')\in Cl(S)_k</math>.
+# Nothing else is in <math>Cl(S)_k</math>.
+
+'''Lemma 26.''' Let <math>S:=(D,T,H,A)</math> be a Metamath pre-statement and let <math>Cl(S)</math> be the closure of <math>S</math>. Then <math>Cl(S)=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl(S)_k</math>.
+
+{{sc|Proof.}}
+
+
+<!--FIXME: cruft below -->
 
 '''Lemma 26.''' Let <math>s</math> be a pending statement for which a JHilbert proof exists that consists of only one step which is a hypothesis step. Then there is a Metamath proof for <math>MM(s)</math>.
 
-{{sc|Proof.}} The complete JHilbert proof has the form <math>(\emptyset,(e))</math>, where <math>C(s)</math> and <math>e</math> are V-equivalent. Let <math>u</math> be the variable mapping for V-equivalence. Now consider a pending statement <math>s'</math> with <math>DV(s')=DV(s)</math>, <math>H(s')=H(s)</math> and <math>C(s')\in e</math>. Such a pending statement exists because <math>e</math> is the equivalence class of a hypothesis <math>e'</math> of <math>s</math> and hence <math>A(e')\subseteq V_N</math>. Then <math>CUF(C(s'))=CUF(e)</math>, so <math>MM(s')</math> is provable in Metamath by simply invoking the hypothesis <math>MM(e)</math>. Now, to prove <math>MM(s)</math>, we only need to invoke <math>MM(s')</math> with the correct variables.
+{{sc|Proof.}} The complete JHilbert proof has the form <math>(\emptyset,(e))</math>, where <math>C(s)</math> and <math>e</math> are V-equivalent. Let <math>u</math> be the variable mapping for V-equivalence. Now consider a pending statement <math>s'</math> with <math>DV(s')=DV(s)</math>, <math>H(s')=H(s)</math> and <math>C(s')\in e</math>. Such a pending statement exists because <math>e</math> is the equivalence class of a hypothesis <math>e'</math> of <math>s</math> and hence <math>A(e')\subseteq V_N</math>. Then <math>CUF(C(s'))=CUF(e)</math>, so <math>MM(s')</math> is provable in Metamath by simply invoking the hypothesis <math>MM(e)</math>. Now, the DV constraints of <math>MM(s')</math> are the images of <math>DV(s)</math> under the metamath variable mapping (let's call it <math>MV'</math>), plus the additional constraints for dummy variables. The DV constraints of <math>MM(s)</math> are also the images of <math>DV(s)</math> under that statement's Metamath variable mapping (denote it by <math>MV</math>), plus additional constraints for possibly other dummy variables. Clearly, the variables of <math>s'</math> are a subset of the variables of <math>s</math>, so since <math>MV'</math> is injective and <math>\tilde{u}</math> maps variables to variables, we can define the injective mapping <math>F:=MV\circ\tilde{u}\circ MV^{\prime-1}</math>. Then the image of the variables of <math>MM(s')</math> under <math>F</math> is a subset of the variables of <math>MM(s)</math>. In particular, the DV constraints of <math>MM(s)</math> are more restrictive than the ones of <math>MM(s')</math>, so we can prove <math>MM(s)</math> simply by invoking <math>MM(s')</math> with the variables obtained by applying <math>F</math>.
 
 '''Lemma 27.''' The Metamath mapping <math>MM(s)</math> for each of the statements <code>ax-mp</code>, <code>ax-gen</code>, <code>ax-1</code> through <code>ax-15</code> and <code>ax-17</code> (regarded as pending statements) is provable in Metamath.
 
-{{sc|Proof.}} By their nature, these axioms map precisely to their Metamath counterparts, except possibly with different variable names which can be rectified by invoking the corresponding original Metamath axiom with the correct variables.
+{{sc|Proof.}} By their nature, these axioms map precisely to their Metamath counterparts, except possibly with different variable names which can be rectified by invoking the corresponding original Metamath axiom with the correct variables (or by choosing <math>MV</math> to be the correct variable mapping in the first place). In particular, there are no dummy variables at all.
 
-'''Lemma 28.''' Let <math>s'</math> be a statement such that <math>MM(s')</math> is provable in Metamath and let <math>s</math> be a pending statement such that
+'''Lemma 28.''' Let <math>s_1,\ldots,s_l</math> be statements such that <math>MM(s_i)</math> is provable in Metamath for <math>i=1,\ldots,l</math>. Let <math>s</math> be a pending statement such that there is a JHilbert proof for <math>s</math> all of whose proof steps are either hypotheses or one of the statements <math>s_1,\ldots,s_l</math>. Then <math>MM(s)</math> is provable in Metamath.
+
+{{sc|Proof.}} Let <math>(\Delta,(e))</math> be the JHilbert proof for <math>s</math> and let <math>MV</math> be the Metamath variable mapping for <math>MM(s)</math>. Consider first the case that <math>C(s)\in e</math>.
+
+'''Lemma 28.''' Let <math>s'</math> be a statement such that <math>MM(s')</math> is provable in Metamath and let <math>s</math> be a pending statement such that there is a JHilbert proof for <math>s</math> achievable in only one proof step, namely <math>s'</math>. Then <math>MM(s)</math> is provable in Metamath.
+
+{{sc|Proof.}} Let <math>(\Delta,(e))</math> be the JHilbert proof for <math>s</math>. Since it is achievable in only one step, <math>H(s')=\epsilon</math>. Now, there is a proper substitution map <math>u</math> such that <math>[\tilde{u}(C(s'))]_D=e</math>. Furthermore, <math>\Delta</math> is the symmetric closure of the union of all <math>A(\tilde{u}(v_1))\times A(\tilde{u}(v_2))</math>, <math>(v_1,v_2)\in DV(s')</math>. Now assume <math>C(s)\in e</math>. Then the only variables which can appear in <math>\Delta</math> without being apparent in <math>s</math> are the dummy variables of the hypotheses and the consequent of <math>s</math>. Since <math>MM(s)</math> provides for maximal DV constraints for those dummies by definition, <math>MM(s)</math> is provable in metamath by invoking <math>MM(s')</math>. If <math>C(s)\notin e</math>, then <math>C(s)</math> and <math>e</math> are still V-equivalent. Let <math>u</math> be the V-equivalence mapping. By definition, <math>u</math> is injective. Now let <math>v</math> be a variable appearing in <math>\Delta</math> which is not apparent in the hypotheses or the consequent of <math>s</math>. Then there must occur some dummy <math>d</math> in the hypotheses or the consequent of <math>s</math> such that <math>u^{-1}(d)=v</math>. The provability of <math>MM(s)</math> now follows as in the proof of Lemma 26.
+
+'''Proposition 1.''' All JHilbert statements proved with at most one proof step from the axioms are provable in Metamath.
+
+{{sc|Proof.}} This is the combination of lemma 26, 27, and 28.
+
+'''Hypothesis.''' Let <math>k\in\mathbb{Z}_{>0}</math> be arbitrary but fixed. Assume that all JHilbert statements proved with at most <math>k</math> proof steps from the axioms are provable in Metamath.
+
+'''Lemma 29.''' Assume the JHilbert statement <math>s</math> has a proof consisting of more than just one proof step. Then the last step in such a proof is not a hypothesis step.
+
+{{sc|Proof.}} After each proof step, the proof in progress has the form <math>(\Delta,(e_1,\ldots,e_m))</math> with <math>m\geq 1</math>. So after the next-to-last proof step, we have <math>m\geq 1</math>. If the last proof step were a hypothesis, we would end up with a proof in progress that has <math>m\geq 2</math>. Such a proof in progress, however, is not a proof.
+
+'''Lemma 30.''' Let <math>s'</math> be a statement such that <math>MM(s')</math> is provable in Metamath and let <math>s</math> be a pending statement such that there is a JHilbert proof for <math>s</math> achievable in only one proof step, namely s'. Then MM(s) is provable in Metamath. 
 
 == References ==
 
