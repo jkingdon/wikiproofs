@@ -236,6 +236,14 @@ Lemma 14 ensures that the recursion in this definition terminates.
 
 {{sc|Proof.}} This follows since the union of two self-avoiding relations is self-avoiding, and likewise the union of two symmetric relations is again symmetric.
 
+'''Definition.''' Let <math>u</math> be a proper substitution map and <math>R\subseteq V\times V</math>. Then we extend <math>\tilde{u}</math> to <math>R</math> by <math>\tilde{u}(R):=\bigcup\limits_{(v,w)\in R}A(v)\times A(w)</math>.
+
+'''Lemma 24.''' Let <math>R\subseteq V\times V</math> be a symmetric relation and <math>u</math> a proper subtitution map. Then <math>\tilde{u}(R)</math> is also a symmetric relation.
+
+{{sc|Proof.}} Let <math>(v,w)\in \tilde{u}(R)</math>, then there is a <math>(v',w')\in R</math> such that <math>(v,w)\in A(v')\times A(w')</math>. Now, <math>R</math> is symmetric, so <math>(w',v')\in R</math> and thus <math>A(w')\times A(v')\subseteq\tilde{u}(R)</math>. This proves the lemma.
+
+Note that the application of a proper substitution map to a DV constraint does not ncessarily yield a DV constraint.
+
 === Statements ===
 
 '''Definition.''' A tuple <math>s=(n,\Delta,h,e)</math> with <math>n\in N</math>, <math>\Delta</math> a DV constraint, <math>h\in E(V,F)^*</math> and <math>e\in E(V,F)</math> is a ''statement'' if the following additional properties are fulfilled:
