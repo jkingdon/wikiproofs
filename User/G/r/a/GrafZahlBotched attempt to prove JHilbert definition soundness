@@ -281,14 +281,20 @@ Note that V-equivalence is not an equivalence relation on <math>E(V,F)</math> (o
 
 '''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the ''closure'' of <math>s</math> with respect to <math>S</math>, denoted by <math>Cl_S(s)</math>, to be the smallest subset of <math>E(V,F)_D</math> such that
 # <math>[H_i(s)]_D\in Cl_S(s)</math> for all <math>i=1,\ldots,NH(s)</math>,
-# For all <math>s'\in S</math> and all proper substitution maps <math>u\colon V_U\to V_N</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)</math> whenever all of the following are true:
+# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in A(s')</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)</math> whenever all of the following are true:
 :* <math>\tilde{u}([H_i(s')]_D)\in Cl_S(s)</math> for all <math>i=1,\ldots,NH(s')</math>.
 :* <math>\tilde{u}(DV(s'))</math> is a DV constraint. Its restriction to <math>\bigcup\limits_{i=1}^{NH(s)}A(H_i(s))\cup A(\tilde{u}(C(s')))</math> is a subset of <math>DV(s)</math>.
 The pending statement <math>s</math> is called ''provable from <math>S</math>'' if there is an <math>e\in Cl_S(s)</math> such that <math>C(s)</math> and <math>e</math> are V-equivalent.
 
+<!--FIXME: The following lemma is probably bogus-->
+'''Lemma ??.''' Let <math>S</math> be a permissible set of statements and <math>s</math> be a pending statement. Let some <math>e\in Cl_S(s)</math> arise from the statement <math>s'\in S</math> and the proper substitution map <math>u</math> by the previous definition. Then <math>\tilde{u}(DV(s'))\setminus(V\times V_D\cup V_D\times V)\subseteq DV(s)</math>.
+
+{{sc|Proof.}} Let <math>v\in A(\tilde{u}(DV(s')))</math>. Then <math>v\in A(\tilde{u}(C(s')))</math> or <math>v\in A(\tilde{u}(H_i(s')))</math> for some <math>i\in\{1,\ldots,NH(s')\}</math>. In the first case, if <math>v</math> is not a dummy variable then <math>v\in A(\tilde{u}([C(s')]_D))</math> and hence <math>v\in A(DV(s))</math>. In the second case, if <math>v</math> is not a dummy variable, then <math>v\in A(\tilde{u}([H_i(s')]_D))</math>.
+<!--FIXME: This proof is incomplete-->
+
 '''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the family <math>(Cl_S(s)_k)_{k\in\mathbb{Z}_{\geq 0}}</math> recursively as follows.
 # <math>Cl_S(s)_0:=\{[H_i(s)]_D\}_{i=1}^{NH(s)}</math>.
-# For all <math>s'\in S</math> and all proper substitution maps <math>u\colon V_U\to V_N</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)_k</math> whenever all of the following are true:
+# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in A(s')</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)_k</math> whenever all of the following are true:
 :* <math>\tilde{u}([H_i(s')]_D)\in\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math> for all <math>i=1,\ldots,NH(s')</math>.
 :* <math>\tilde{u}(DV(s'))</math> is a DV constraint. Its restriction to <math>\bigcup\limits_{i=1}^{NH(s)}A(H_i(s))\cup A(\tilde{u}(C(s')))</math> is a subset of <math>DV(s)</math>.
 
@@ -357,9 +363,9 @@ From now on we consider some JHilbert proof module which imports only the above 
 
 '''Definition.''' Let <math>CN:=\{(,),\mathrm{set},\mathrm{class},\mathrm{wff},=,\in,\neg,\rightarrow,\forall,\vdash\}</math>, <math>VR:=V</math>, <math>T:=\{(t,v):v\in VR, t=K(v)\}</math> (in particular, the first component of all elementf of <math>T</math> is one of <math>\mathrm{set},\mathrm{class},\mathrm{wff}</math>), and let <math>\Gamma</math> be the set of Metamath statements representing the functors and axioms given above (except <code>cv</code>, which is unnecessary in Metamath). We shall then consider the ''Metamath formal system'' <math>\mathfrak{F}:=(CN,VR,\Gamma)</math>. We denote the Metamath universe of <math>\mathfrak{F}</math> by <math>\mathfrak{U}</math>.
 
-'''Definition.''' We denote the mapping from JHilbert statements <math>s=(n,\Delta,h,e)</math> to Metamath statements <math>(D_M,T_M,H,A)</math> by <math>MM</math>. If <math>h\in E(V,F_T)^*</math> and <math>e\in E(V,F_T)</math>, then <math>MM</math> maps as expected. In the general case, <math>MM</math> maps so that if <math>h=(e_1,\ldots,e_m)</math>, then <math>H=(MM(CUF(e_1)),\ldots,MM(CUF(e_m))</math>, and <math>A=MM(CUF(e))</math>. In addition, for each dummy variable <math>d</math> appearing in <math>CUF(e_1),\ldots,CUF(e_m),CUF(e)</math>, all unordered pairs <math>\{d,v\}</math> where <math>v\in VR\setminus\{d\}</math> are added to <math>D</math>.
+'''Definition.''' We denote the mapping from JHilbert statements <math>s=(n,\Delta,h,e)</math> to Metamath pre-statements <math>(D,T,H,A)</math> by <math>MM</math>. If <math>h\in E(V,F_T)^*</math> and <math>e\in E(V,F_T)</math>, then <math>MM</math> maps as expected. In the general case, <math>MM</math> maps so that if <math>h=(e_1,\ldots,e_m)</math>, then <math>H=(MM(CUF(e_1)),\ldots,MM(CUF(e_m))</math>, and <math>A=MM(CUF(e))</math>. We map the DV constraints as <math>D:=MM(\Delta):=\{\{v,w\}\subseteq V:(v,w)\in\Delta\}</math>. In addition, we add the maximal dummy variable constraints <math>\{\{v,w\}:v\in V_D,w\in V\setminus\{v\}\}</math> to <math>D</math>.
 
-'''Example.''' <math>MM(\texttt{ax-11})=(\emptyset,\{(\mathrm{set},x),(\mathrm{set},y),(\mathrm{wff},\varphi)\},\emptyset,\vdash (x=y\rightarrow(\forall x\varphi\rightarrow\forall x(x=y\rightarrow\varphi))))</math>.
+'''Example.''' The reduct of <math>MM(\texttt{ax-11})</math> is <math>(\emptyset,\{(\mathrm{set},x),(\mathrm{set},y),(\mathrm{wff},\varphi)\},\emptyset,\vdash (x=y\rightarrow(\forall x\varphi\rightarrow\forall x(x=y\rightarrow\varphi))))</math>.
 
 '''Lemma 33.''' The map <math>MM</math> is well-defined on <math>E(V,F)_D</math>.
 
