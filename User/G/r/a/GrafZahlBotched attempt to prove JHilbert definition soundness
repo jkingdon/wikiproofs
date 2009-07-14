@@ -276,10 +276,12 @@ We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s)
 # If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and <math>u\colon O(e)\setminus A(s)\to V\setminus A(s)</math> is an injective proper substitution map, then <math>\tilde{u}(e)\in Cl_S(s)_k</math>.
 # For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)_k</math> whenever all of the following are true:
 :* <math>\tilde{u}([H(s')]_D)\subseteq\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>,
-:* <math>\tilde{u}(DV(s'))</math> is a DV constraint such that <math>\tilde{u}(DV(s'))^e\subseteq DV(s)^e</math>.
+:* <math>\tilde{u}(DV(s'))</math> is a DV constraint such that <math>\tilde{u}(DV(s'))_{A(s)}\subseteq DV(s)_{A(s)}</math>.
 We call the [[w:union (set theory)|union]] <math>Cl_S(s):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math>. The statement <math>s</math> is called ''provable'' if <math>[C(s)]_D\in Cl_S(s)</math>.
 
-'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
+'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map with domain <math>A(s)</math> such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
+
+{{sc|Proof.}} Let <math>e\in Cl_S(s)_0</math>, then <math>e</math> is the D-equivalence class of a hypothesis of <math>s</math>. Therefore, <math>\tilde{u}(e)</math> is the D-equivalence class of a hypothesis of <math>\tilde{u}(s)</math>, that is <math>\tilde{u}(e)\in Cl_S(\tilde{u}(s))_0\subseteq Cl_S(\tilde{u}(s))</math>. Now let <math>k\in\mathbb{Z}_{>0}</math> and assume that <math>\tilde{u}\left(Cl_S(0)_j\right)\subseteq Cl_S(\tilde{u}(s))_j</math> is already proven for <math>j=0,\ldots,k-1</math>. Let <math>e\in Cl_S(s)_k</math>. Assume first that there is an <math>e'\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and an injective proper substitution map <math>u'\colon O(e)\setminus A(s)\to V\setminus A(s)</math> such that <math>\tilde{u}'(e')=e</math>. By induction hypothesis, <math>\tilde{u}(e')\in\bigcup\limits_{j=1}^{k-1}Cl_S(\tilde{u}(s))_j</math>.<!--FIXME: proof incomplete-->
 
 <!--FIXME: update stuff below-->
 
