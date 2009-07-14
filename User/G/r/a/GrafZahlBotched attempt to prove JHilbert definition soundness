@@ -246,10 +246,10 @@ Note that the application of a proper substitution map to a DV constraint does n
 
 === Statements ===
 
-'''Definition.''' A tuple <math>s=(n,\Delta,h,e)</math> with <math>n\in N</math>, <math>\Delta</math> a DV constraint, <math>h\in E(V,F)^*</math> and <math>e\in E(V,F)</math> is a ''statement'' if the following additional properties are fulfilled:
-* <math>A(e)\subseteq V_U</math> and <math>A(e')\subseteq V_U</math> for all <math>e'</math> in <math>h</math>. In other words, <math>A(s)\subseteq V_U</math>, where we define <math>A(s):=A(e)\cup\bigcup\limits_{k=1}^{|h|}A(h_k)</math>,
+'''Definition.''' A tuple <math>s=(n,\Delta,h,e)</math> with <math>n\in N</math>, <math>\Delta</math> a DV constraint, <math>h\subseteq E(V,F)</math> a finite set, and <math>e\in E(V,F)</math> is a ''statement'' if the following additional properties are fulfilled:
+* <math>A(e)\subseteq V_U</math> and <math>A(e')\subseteq V_U</math> for all <math>e'\in h</math>. In other words, <math>A(s)\subseteq V_U</math>, where we define <math>A(s):=A(e)\cup\bigcup A(h)</math>,
 * <math>A(\Delta)\subseteq A(s)</math>.
-We define the ''name'', <math>A(s):=n</math>, the ''DV constraints'' <math>DV(s):=\Delta</math>, the ''hypotheses'' <math>H(s):=h</math>, the ''number of hypotheses'' <math>NH(s):=|h|</math>, the <math>i</math>-th ''hypothesis'' <math>H_i(s)</math> as the <math>i</math>-th projection of <math>H(s)</math>, for <math>i=1,\ldots,NH(s)</math>, and the ''consequent'' <math>C(s):=e</math>.
+We define the ''name'', <math>A(s):=n</math>, the ''DV constraints'' <math>DV(s):=\Delta</math>, the ''hypotheses'' <math>H(s):=h</math>, the ''number of hypotheses'' <math>NH(s):=|h|</math>, and the ''consequent'' <math>C(s):=e</math>. We also define the ''mandatory variables'' of <math>s</math> to be <math>M(s):=A(s)\setminus\bigcup A(h)</math>.
 If <math>s</math> fulfils precisely the same properties except that <math>V_U</math> is replaced by <math>V_N</math> then <math>s</math> is called a ''pending statement''.
 
 '''Definition.''' A finite set <math>S</math> is called a ''permissible set of statements'' if all elements of <math>S</math> are statements and the restriction of the name projection <math>N</math> to <math>S</math> is injective.
@@ -261,9 +261,9 @@ If <math>s</math> fulfils precisely the same properties except that <math>V_U</m
 '''Definition.''' Let <math>s</math> be a (pending) statement and let <math>u</math> be a proper substitution map. Now define
 * <math>n':=N(s)</math>,
 * <math>\Delta':=\tilde{u}(DV(s))</math>,
-* <math>h_i':=\tilde{u}(H_i(s))</math> for all <math>i=1,\ldots,NH(s)</math>,
+* <math>h':=\tilde{u}(H(s))</math>,
 * <math>c':=\tilde{u}(C(s))</math>.
-We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta',(h_1',\ldots,h_{NH(s)}'),c')</math>.
+We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta',h',c')</math>.
 
 '''Lemma 26.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
 
@@ -271,38 +271,17 @@ We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s)
 
 '''Explanation.''' First, statements are user-defined in JHilbert using the <code>stmt</code> and <code>thm</code> commands (where the <code>thm</code> statements have first to be derived as defined below). The user writes the statements as pending statements which are subsequently anonymised by introducing new unnamed variables that replace the named ones in the pending statement. Note that by theorem 1, it is always possible to introduce new unnamed variables if necessary for the anonymisation.
 
-'''Definition.''' Let <math>s</math> be a pending statement and <math>e\in E(V,F)_D</math>. Assume there is a <math>W\subseteq V</math> with <math>W\cap A(s)=\emptyset</math> and an injective map <math>u\colon W\to V\setminus A(s)</math> which is a proper substitution map such that <math>\tilde{u}(e)=[C(s)]_D</math>. Then <math>C(s)</math> and <math>e</math> are called ''V-equivalent'' (with respect to <math>s</math>).
+'''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the sets <math>Cl_S(s)_k</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
+# <math>Cl_S(s)_0:=[H(s)]_D</math>.
+# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and <math>u\colon O(e)\setminus A(s)\to V\setminus A(s)</math> is an injective proper substitution map, then <math>\tilde{u}(e)\in Cl_S(s)_k</math>.
+# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)_k</math> whenever all of the following are true:
+:* <math>\tilde{u}([H(s')]_D)\subseteq\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>,
+:* <math>\tilde{u}(DV(s'))</math> is a DV constraint such that <math>\tilde{u}(DV(s'))^e\subseteq DV(s)^e</math>.
+We call the [[w:union (set theory)|union]] <math>Cl_S(s):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math>. The statement <math>s</math> is called ''provable'' if <math>[C(s)]_D\in Cl_S(s)</math>.
 
-Note that V-equivalence is not an equivalence relation on <math>E(V,F)</math> (or <math>E(V,F)_D</math>) because it is a relation between different sets. Furthermore, the actual equivalence depends on the apparent variables in the statement. However, we can say that V-equivalence is coarser than D-equivalence in the following sense.
+'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
 
-'''Lemma 27.''' Let <math>s</math> be a pending statement and let <math>e\in E(V,F)</math> be D-equivalent to <math>C(s)</math>. Then <math>C(s)</math> and <math>[e]_D</math> are V-equivalent.
-
-{{sc|Proof.}} D-equivalence implies <math>[e]_D=[C(s)]_D</math>. Hence the requirement <math>\tilde{u}([e]_D)=[C(s)]_D</math> is fulfilled by an empty map <math>u</math>. Clearly, such a map fulfils the further requirements of V-equivalence. This proves the statement.
-
-'''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the ''closure'' of <math>s</math> with respect to <math>S</math>, denoted by <math>Cl_S(s)</math>, to be the smallest subset of <math>E(V,F)_D</math> such that
-# <math>[H_i(s)]_D\in Cl_S(s)</math> for all <math>i=1,\ldots,NH(s)</math>,
-# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in A(s')</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)</math> whenever all of the following are true:
-:* <math>\tilde{u}([H_i(s')]_D)\in Cl_S(s)</math> for all <math>i=1,\ldots,NH(s')</math>.
-:* <math>\tilde{u}(DV(s'))</math> is a DV constraint. Its restriction to <math>\bigcup\limits_{i=1}^{NH(s)}A(H_i(s))\cup A(\tilde{u}(C(s')))</math> is a subset of <math>DV(s)</math>.
-The pending statement <math>s</math> is called ''provable from <math>S</math>'' if there is an <math>e\in Cl_S(s)</math> such that <math>C(s)</math> and <math>e</math> are V-equivalent.
-
-<!--FIXME: The following lemma is probably bogus-->
-'''Lemma ??.''' Let <math>S</math> be a permissible set of statements and <math>s</math> be a pending statement. Let some <math>e\in Cl_S(s)</math> arise from the statement <math>s'\in S</math> and the proper substitution map <math>u</math> by the previous definition. Then <math>\tilde{u}(DV(s'))\setminus(V\times V_D\cup V_D\times V)\subseteq DV(s)</math>.
-
-{{sc|Proof.}} Let <math>v\in A(\tilde{u}(DV(s')))</math>. Then <math>v\in A(\tilde{u}(C(s')))</math> or <math>v\in A(\tilde{u}(H_i(s')))</math> for some <math>i\in\{1,\ldots,NH(s')\}</math>. In the first case, if <math>v</math> is not a dummy variable then <math>v\in A(\tilde{u}([C(s')]_D))</math> and hence <math>v\in A(DV(s))</math>. In the second case, if <math>v</math> is not a dummy variable, then <math>v\in A(\tilde{u}([H_i(s')]_D))</math>.
-<!--FIXME: This proof is incomplete-->
-
-'''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the family <math>(Cl_S(s)_k)_{k\in\mathbb{Z}_{\geq 0}}</math> recursively as follows.
-# <math>Cl_S(s)_0:=\{[H_i(s)]_D\}_{i=1}^{NH(s)}</math>.
-# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in A(s')</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)_k</math> whenever all of the following are true:
-:* <math>\tilde{u}([H_i(s')]_D)\in\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math> for all <math>i=1,\ldots,NH(s')</math>.
-:* <math>\tilde{u}(DV(s'))</math> is a DV constraint. Its restriction to <math>\bigcup\limits_{i=1}^{NH(s)}A(H_i(s))\cup A(\tilde{u}(C(s')))</math> is a subset of <math>DV(s)</math>.
-
-'''Lemma 28.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then <math>Cl_S(s)=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math>.
-
-{{sc|Proof.}} The inclusion <math>\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k\subseteq Cl_S(s)</math> is clear due to the definition of closure. On the other hand,  <math>\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> already fulfils the properties of a closure, so equality follows from the minimality requirement.
-
-'''Lemma 29.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
+<!--FIXME: update stuff below-->
 
 {{sc|Proof.}} By definition, <math>\tilde{u}(Cl_S(s)_0)=Cl_S(\tilde{u}(s))_0</math>. Now let <math>k>0</math> and assume that we have already proven that <math>\tilde{u}(Cl_S(s)_l)\subseteq Cl_S(\tilde{u}(s))</math> for <math>l=0,\ldots,k-1</math>. Let <math>e\in\tilde{u}(Cl_S(s)_k)</math>. Then there is an <math>e'\in Cl_S(s)_k</math> such that <math>\tilde{u}(e')=e</math>. Let <math>s'\in S</math> be the statement and <math>u'</math> be the proper substitution map from which <math>e'</math> arises. Then <math>\tilde{u}(\tilde{u}'([H_i(s')]_D))\in Cl_S(\tilde{u}(s))</math> by induction hypothesis. Furthermore the restriction of <math>\tilde{u}'(DV(s'))</math> is a subset of <math>DV(s)</math> and thus the restriction of <math>\tilde{u}(\tilde{u}'(DV(s'))</math> is a subset of <math>\tilde{u}(DV(s))=DV(\tilde{u}(s))</math>. Therefore <math>e=\tilde{u}(e')=\tilde{u}(\tilde{u}'([Cl_S(s')]_D))\in Cl_S(\tilde{u}(s))</math>. The claim now follows from lemma 28.
 
