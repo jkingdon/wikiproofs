@@ -230,7 +230,7 @@ Lemma 14 ensures that the recursion in this definition terminates.
 
 '''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''. A DV constraint on <math>V_N</math> is called a ''named DV constraint'' and a DV constraint on <math>V_U</math> is called an ''unnamed DV constraint''.
 
-'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>. Furthermore, we define the ''extended DV constraint'' <math>\Delta^e</math> to be the self-avoiding aperture of the symmetric closure of <math>(V\setminus A(\Delta))\times V\cup\Delta</math>.
+'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>. Furthermore, for <math>W\subseteq V</math>, we define the ''extended DV constraint'' <math>\Delta_W</math> to be the self-avoiding aperture of the symmetric closure of <math>(V\setminus W)\times V\cup\Delta</math>.
 
 '''Lemma 23.''' The union of two DV constraints is again a DV constraint. The same holds for named and unnamed DV constraints, respectively.
 
