@@ -45,6 +45,33 @@ Where no confusion is possible, we shall not distinguish between kinds and equiv
 
 '''Explanation.''' The named variables <math>V_N</math> are user-defined in JHilbert through the <code>var</code> command. Unnamed variables and dummy variables are automatically introduced as explained later. Since the empty set is a permissible set of variables, Theorem 1 ensures that such automatic introduction of new variables is always possible. In fact, JHilbert cheats a little by extending <math>\Sigma</math> for this purpose, so the namespace for user-defined variables doesn't become polluted.
 
+=== DV constraints ===
+
+'''Definition.''' Let <math>A</math> be a set and <math>R\subseteq A\times A</math>. Then <math>R</math> is called ''self-avoiding'' if <math>(x,x)\notin R</math> for all <math>x\in A</math>.
+
+'''Definition.''' Let <math>R\subseteq A\times A</math>. Then the set <math>R\setminus\{(x,x):x\in A\}</math> is called the ''self-avoiding aperture'' of <math>R</math>.
+
+'''Lemma 22.''' Let <math>R\subseteq A\times A</math>. Furthermore, let <math>R_1</math> be the symmetric closure of the self-avoiding aperture of <math>R</math> and <math>R_2</math> the self-avoiding aperture of the symmetric closure of <math>R</math>. Then <math>R_1=R_2</math>.
+
+{{sc|Proof.}} Let <math>(x,y)\in R_1</math>. Then <math>(x,y)\in R\setminus\{(x,x):x\in A\}</math> or <math>(y,x)\in R\setminus\{(x,x):x\in A\}</math>. In particular <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)</math> is an element of the symmetric closure of <math>R</math>. Since <math>x\neq y</math>, <math>(x,y)\in R_2</math>. If, on the other hand, <math>(x,y)\in R_2</math>, then <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)\in R_1</math>
+
+'''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''. A DV constraint on <math>V_N</math> is called a ''named DV constraint'' and a DV constraint on <math>V_U</math> is called an ''unnamed DV constraint''.
+
+'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>.
+
+'''Lemma 23.''' The union of two DV constraints is again a DV constraint. The same holds for named and unnamed DV constraints, respectively.
+
+{{sc|Proof.}} This follows since the union of two self-avoiding relations is self-avoiding, and likewise the union of two symmetric relations is again symmetric.
+
+<!--FIXME: The remainder of this subsection must come after the definition of proper substitution map-->
+'''Definition.''' Let <math>u</math> be a proper substitution map and <math>R\subseteq V\times V</math>. Then we extend <math>\tilde{u}</math> to <math>R</math> by <math>\tilde{u}(R):=\bigcup\limits_{(v,w)\in R}O(\tilde{u}(v))\times O(\tilde{u}(w))</math>.
+
+'''Lemma 24.''' Let <math>R\subseteq V\times V</math> be a symmetric relation and <math>u</math> a proper substitution map. Then <math>\tilde{u}(R)</math> is also a symmetric relation.
+
+{{sc|Proof.}} Let <math>(v,w)\in \tilde{u}(R)</math>, then there is a <math>(v',w')\in R</math> such that <math>(v,w)\in O(\tilde{u}(v'))\times O(\tilde{u}(w'))</math>. Now, <math>R</math> is symmetric, so <math>(w',v')\in R</math> and thus <math>O(\tilde{u}(w'))\times O(\tilde{u}(v'))\subseteq\tilde{u}(R)</math>. This proves the lemma.
+
+Note that the application of a proper substitution map to a DV constraint does not necessarily yield a DV constraint.
+
 === Functors ===
 
 '''Definition.''' A tuple <math>(n,k,l)</math> with <math>n\in N</math>, <math>k\in\mathcal{K}</math> and <math>l\in\mathcal{K}^*</math> is a ''functor''. For each functor <math>f=(n,k,l)</math>, we denote the projection <math>(n,k,l)\mapsto n</math>, the ''name of <math>f</math>'', by <math>N(f)</math>, and the projection <math>(n,k,l)\mapsto k</math>, the ''kind of <math>f</math>'', by <math>K(f)</math>. Furthermore, we denote the function <math>(n,k,l)\mapsto|l|</math>, where <math>|l|</math> is the length of the sequence <math>l</math>, the ''place count of <math>f</math>'', by <math>PC(f)</math>. For each <math>i\in\mathbb{N}</math>, <math>1\leq i\leq PC(f)</math>, we denote by <math>IK_i(f)</math> the mapping of <math>(n,k,l)</math> to the <math>i</math>-th projection of <math>l</math>. We call <math>IK_i(f)</math> the ''<math>i</math>-th input kind of <math>f</math>.''
@@ -218,32 +245,6 @@ Lemma 14 ensures that the recursion in this definition terminates.
 
 '''Definition.''' Let <math>e_1,\ldots,e_m,e_1',\ldots,e_m'\in E(V,F)_D</math>. Assume there is a proper substitution map <math>u</math> such that <math>\tilde{u}(CUF(e_i))=CUF(e_i')</math> for all <math>i=1,\ldots,m</math>. Then the <math>e_1,\ldots,e_m</math> are called ''simultaneously [[w:unification|unifiable]]'' with the <math>e_1',\ldots,e_m'</math>.
 
-=== DV constraints ===
-
-'''Definition.''' Let <math>A</math> be a set and <math>R\subseteq A\times A</math>. Then <math>R</math> is called ''self-avoiding'' if <math>(x,x)\notin R</math> for all <math>x\in A</math>.
-
-'''Definition.''' Let <math>R\subseteq A\times A</math>. Then the set <math>R\setminus\{(x,x):x\in A\}</math> is called the ''self-avoiding aperture'' of <math>R</math>.
-
-'''Lemma 22.''' Let <math>R\subseteq A\times A</math>. Furthermore, let <math>R_1</math> be the symmetric closure of the self-avoiding aperture of <math>R</math> and <math>R_2</math> the self-avoiding aperture of the symmetric closure of <math>R</math>. Then <math>R_1=R_2</math>.
-
-{{sc|Proof.}} Let <math>(x,y)\in R_1</math>. Then <math>(x,y)\in R\setminus\{(x,x):x\in A\}</math> or <math>(y,x)\in R\setminus\{(x,x):x\in A\}</math>. In particular <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)</math> is an element of the symmetric closure of <math>R</math>. Since <math>x\neq y</math>, <math>(x,y)\in R_2</math>. If, on the other hand, <math>(x,y)\in R_2</math>, then <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)\in R_1</math>
-
-'''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''. A DV constraint on <math>V_N</math> is called a ''named DV constraint'' and a DV constraint on <math>V_U</math> is called an ''unnamed DV constraint''.
-
-'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>. Furthermore, for <math>W\subseteq V</math>, we define the ''extended DV constraint'' <math>\Delta_W</math> to be the self-avoiding aperture of the symmetric closure of <math>(V\setminus W)\times V\cup\Delta</math>.
-
-'''Lemma 23.''' The union of two DV constraints is again a DV constraint. The same holds for named and unnamed DV constraints, respectively.
-
-{{sc|Proof.}} This follows since the union of two self-avoiding relations is self-avoiding, and likewise the union of two symmetric relations is again symmetric.
-
-'''Definition.''' Let <math>u</math> be a proper substitution map and <math>R\subseteq V\times V</math>. Then we extend <math>\tilde{u}</math> to <math>R</math> by <math>\tilde{u}(R):=\bigcup\limits_{(v,w)\in R}A(\tilde{u}(v))\times A(\tilde{u}(w))</math>.
-
-'''Lemma 24.''' Let <math>R\subseteq V\times V</math> be a symmetric relation and <math>u</math> a proper substitution map. Then <math>\tilde{u}(R)</math> is also a symmetric relation.
-
-{{sc|Proof.}} Let <math>(v,w)\in \tilde{u}(R)</math>, then there is a <math>(v',w')\in R</math> such that <math>(v,w)\in A(\tilde{u}(v'))\times A(\tilde{u}(w'))</math>. Now, <math>R</math> is symmetric, so <math>(w',v')\in R</math> and thus <math>A(\tilde{u}(w'))\times A(\tilde{u}(v'))\subseteq\tilde{u}(R)</math>. This proves the lemma.
-
-Note that the application of a proper substitution map to a DV constraint does not necessarily yield a DV constraint.
-
 === Statements ===
 
 '''Definition.''' A tuple <math>s=(n,\Delta,h,e)</math> with <math>n\in N</math>, <math>\Delta</math> a DV constraint, <math>h\subseteq E(V,F)</math> a finite set, and <math>e\in E(V,F)</math> is a ''statement'' if the following additional properties are fulfilled:
@@ -266,21 +267,21 @@ If <math>s</math> fulfils precisely the same properties except that <math>V_U</m
 * <math>c':=\tilde{u}(C(s))</math>.
 We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta',h',c')</math>.
 
+<!--FIXME: The following lemma is broken due to the brokenness of the above definition-->
 '''Lemma 26.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
 
 {{sc|Proof.}} Since <math>u</math> is injective and its [[w:codomain|codomain]] is contained in <math>V_U</math>, <math>\tilde{u}(DV(s))</math> is self-avoiding and therefore a DV constraint by lemma 24. The remainder of the lemma is clear.
 
 '''Explanation.''' First, statements are user-defined in JHilbert using the <code>stmt</code> and <code>thm</code> commands (where the <code>thm</code> statements have first to be derived as defined below). The user writes the statements as pending statements which are subsequently anonymised by introducing new unnamed variables that replace the named ones in the pending statement. Note that by theorem 1, it is always possible to introduce new unnamed variables if necessary for the anonymisation.
 
-'''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the sets <math>Cl_S(s)_k</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
-# <math>Cl_S(s)_0:=H(s)</math>.
-# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and <math>u\colon(O(e)\cap V_N)\setminus O(s)\to V_D</math> is an injective proper substitution map, then all <math>e'\in[\tilde{u}(e)]_D</math> for which <math>A(e)\subseteq V_N</math> are an element of <math>Cl_S(s)_k</math>.
-# For all <math>s'\in S</math> and all proper substitution maps <math>u</math>, <math>\tilde{u}(C(s'))\in Cl_S(s)_k</math> whenever all of the following are true:
+'''Definition.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_D\colon V_N\setminus O(s)\to V_D</math> an injective proper substitution map. Then we define the sets <math>Cl(S,s,u_D)_k</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
+# <math>Cl_S(s)_0:=CUF(H(s))</math>.
+# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl(S,s,u_D)_j</math>, then <math>\tilde{u}_D(e)\in Cl(S,s,u_D)_k</math>.
+# For all <math>s'\in S</math> and all proper substitution maps <math>u</math>, <math>CUF(\tilde{u}(CUF(C(s'))))\in Cl(S,s,u_D)_k</math> whenever all of the following are true:
 :* <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>,
-:* <math>A(\tilde{u}(C(s')))\subseteq V_N</math>,
-:* For each hypothesis <math>h\in H(s')</math>, <math>[\tilde{u}(CUF(h))]_D\cap\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j\neq\emptyset</math>,
-:* <math>\tilde{u}(DV(s'))</math> is a DV constraint such that <math>\tilde{u}(DV(s'))_{A(s)}\subseteq DV(s)_{A(s)}</math>.
-We call the [[w:union (set theory)|union]] <math>Cl_S(s):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math>. The statement <math>s</math> is called ''provable'' if <math>C(s)\in Cl_S(s)</math>.
+:* <math>CUF(\tilde{u}(CUF(H(s'))))\subseteq\bigcup\limits_{j=0}^{k-1}Cl(S,s,u_D)_j</math>,
+:* <math>\tilde{u}(DV(s'))\subseteq DV(s)</math>.
+We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl(S,s,u_D)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' if there exists a <math>u_D</math> such that <math>CUF(C(s))\in Cl(S,s,u_D)</math>.
 
 '''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map with domain <math>O(s)</math> such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
 
