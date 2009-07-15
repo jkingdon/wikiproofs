@@ -249,7 +249,7 @@ Note that the application of a proper substitution map to a DV constraint does n
 '''Definition.''' A tuple <math>s=(n,\Delta,h,e)</math> with <math>n\in N</math>, <math>\Delta</math> a DV constraint, <math>h\subseteq E(V,F)</math> a finite set, and <math>e\in E(V,F)</math> is a ''statement'' if the following additional properties are fulfilled:
 * <math>A(e)\subseteq V_U</math> and <math>A(e')\subseteq V_U</math> for all <math>e'\in h</math>. In other words, <math>A(s)\subseteq V_U</math>, where we define <math>A(s):=A(e)\cup\bigcup A(h)</math>,
 * <math>A(\Delta)\subseteq A(s)</math>.
-We define the ''name'', <math>A(s):=n</math>, the ''DV constraints'' <math>DV(s):=\Delta</math>, the ''hypotheses'' <math>H(s):=h</math>, the ''number of hypotheses'' <math>NH(s):=|h|</math>, and the ''consequent'' <math>C(s):=e</math>. We also define the ''mandatory variables'' of <math>s</math> to be <math>M(s):=A(s)\setminus\bigcup A(h)</math>.
+We define the ''name'', <math>A(s):=n</math>, the ''DV constraints'' <math>DV(s):=\Delta</math>, the ''hypotheses'' <math>H(s):=h</math>, the ''number of hypotheses'' <math>NH(s):=|h|</math>, and the ''consequent'' <math>C(s):=e</math>. We also define the ''mandatory variables'' of <math>s</math> to be <math>M(s):=A(s)\setminus\bigcup A(h)</math> and the ''occurring variables'' <math>O(s):=O(e)\cup\bigcup O(h)</math>.
 If <math>s</math> fulfils precisely the same properties except that <math>V_U</math> is replaced by <math>V_N</math> then <math>s</math> is called a ''pending statement''.
 
 '''Definition.''' A finite set <math>S</math> is called a ''permissible set of statements'' if all elements of <math>S</math> are statements and the restriction of the name projection <math>N</math> to <math>S</math> is injective.
@@ -258,6 +258,7 @@ If <math>s</math> fulfils precisely the same properties except that <math>V_U</m
 
 {{sc|Proof.}} The proof is similar to the proof of Lemma 2.
 
+<!--FIXME: The following definition is broken-->
 '''Definition.''' Let <math>s</math> be a (pending) statement and let <math>u</math> be a proper substitution map. Now define
 * <math>n':=N(s)</math>,
 * <math>\Delta':=\tilde{u}(DV(s))</math>,
@@ -272,15 +273,16 @@ We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s)
 '''Explanation.''' First, statements are user-defined in JHilbert using the <code>stmt</code> and <code>thm</code> commands (where the <code>thm</code> statements have first to be derived as defined below). The user writes the statements as pending statements which are subsequently anonymised by introducing new unnamed variables that replace the named ones in the pending statement. Note that by theorem 1, it is always possible to introduce new unnamed variables if necessary for the anonymisation.
 
 '''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the sets <math>Cl_S(s)_k</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
-# <math>Cl_S(s)_0:=[H(s)]_D</math>.
-# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and <math>u\colon(A(e)\cap V_N)\setminus A(s)\to V_D</math> is an injective proper substitution map, then <math>\tilde{u}(e)\in Cl_S(s)_k</math>. (<math>\tilde{u}(e)</math> is well-defined by lemma 20.)
-# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>, <math>[\tilde{u}(CUF(C(s')))]_D\in Cl_S(s)_k</math> whenever all of the following are true:
+# <math>Cl_S(s)_0:=H(s)</math>.
+# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and <math>u\colon(O(e)\cap V_N)\setminus O(s)\to V_D</math> is an injective proper substitution map, then all <math>e'\in[\tilde{u}(e)]_D</math> for which <math>A(e)\subseteq V_N</math> are an element of <math>Cl_S(s)_k</math>.
+# For all <math>s'\in S</math> and all proper substitution maps <math>u</math>, <math>\tilde{u}(C(s'))\in Cl_S(s)_k</math> whenever all of the following are true:
+:* <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>,
 :* <math>A(\tilde{u}(C(s')))\subseteq V_N</math>,
-:* <math>[\tilde{u}(CUF(H(s')))]_D\subseteq\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>,
+:* For each hypothesis <math>h\in H(s')</math>, <math>[\tilde{u}(CUF(h))]_D\cap\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j\neq\emptyset</math>,
 :* <math>\tilde{u}(DV(s'))</math> is a DV constraint such that <math>\tilde{u}(DV(s'))_{A(s)}\subseteq DV(s)_{A(s)}</math>.
-We call the [[w:union (set theory)|union]] <math>Cl_S(s):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math>. The statement <math>s</math> is called ''provable'' if <math>[C(s)]_D\in Cl_S(s)</math>.
+We call the [[w:union (set theory)|union]] <math>Cl_S(s):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math>. The statement <math>s</math> is called ''provable'' if <math>C(s)\in Cl_S(s)</math>.
 
-'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map with domain <math>A(s)</math> such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
+'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map with domain <math>O(s)</math> such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
 
 {{sc|Proof.}} Let <math>e\in Cl_S(s)_0</math>, then <math>e</math> is the D-equivalence class of a hypothesis of <math>s</math>. Therefore, <math>\tilde{u}(e)</math> is the D-equivalence class of a hypothesis of <math>\tilde{u}(s)</math>, that is <math>\tilde{u}(e)\in Cl_S(\tilde{u}(s))_0\subseteq Cl_S(\tilde{u}(s))</math>. Now let <math>k\in\mathbb{Z}_{>0}</math> and assume that <math>\tilde{u}\left(Cl_S(0)_j\right)\subseteq Cl_S(\tilde{u}(s))_j</math> is already proven for <math>j=0,\ldots,k-1</math>. Let <math>e\in Cl_S(s)_k</math>. Assume first that there is an <math>e'\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and an injective proper substitution map <math>u'\colon O(e)\setminus A(s)\to V\setminus A(s)</math> such that <math>\tilde{u}'(e')=e</math>. By induction hypothesis, <math>\tilde{u}(e')\in\bigcup\limits_{j=1}^{k-1}Cl_S(\tilde{u}(s))_j</math>.<!--FIXME: proof incomplete-->
 
