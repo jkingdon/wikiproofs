@@ -202,11 +202,11 @@ Lemma 14 ensures that the recursion in this definition terminates.
 
 {{sc|Proof.}} Let <math>C\in E(V,F)_D</math>. Since D-equivalence is an equivalence relation, <math>C\neq\emptyset</math>. Therefore there exists an <math>e\in C</math>. Now <math>CUF(e)</math> and <math>e</math> are D-equivalent and <math>CUF(e)\in E(V,F_T)</math> by Lemma 15. Now let <math>e'\in E(V,F_T)</math> be another representative for <math>C</math>. By definition of D-equivalence, <math>CUF(e')=CUF(CUF(e))</math>. Since <math>e'\in E(V,F_T)</math> and due to idempotence <math>e'=CUF(e)</math>. This proves the lemma.
 
-'''Lemma 19.''' Let <math>u</math> be a proper substitution map and let <math>e\in E(V,F)</math>. Then <math>\tilde{u}(e)</math> and <math>\tilde{u}(CUF(e))</math> are D-equivalent.
+'''Lemma 19.''' Let <math>u</math> be a proper substitution map whose domain does not contain dummy variables and let <math>e\in E(V,F)</math>. Then <math>\tilde{u}(e)</math> and <math>\tilde{u}(CUF(e))</math> are D-equivalent.
 
-{{sc|Proof.}} This is clear if <math>e\in V</math>. If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>\beta(f)=0</math> then <math>CUF(\tilde{u}(e))=(f,(CUF(\tilde{u}(e_1)),\ldots,CUF(\tilde{u}(e_m))))</math>, by induction over <math>|e|</math>, <math>=(f,(CUF(\tilde{u}(CUF(e_1))),\ldots,CUF(\tilde{u}(CUF(e_m)))))=CUF(\tilde{u}(CUF(e)))</math>. For the case <math>\beta(f)>0</math> assume the statement proven for all expressions of depth shallower than <math>e</math>. Let <math>e'</math> be the unfolding of <math>e</math>, then <math>\tilde{u}(e')</math> is the unfolding of <math>\tilde{u}(e)</math>, in particular <math>\beta(\tilde{u}(e))>\beta(\tilde{u}(e'))</math> and hence <math>CUF(\tilde{u}(e))=CUF(\tilde{u}(e'))=CUF(\tilde{u}(CUF(e')))=CUF(\tilde{u}(CUF(e)))</math> by induction hypothesis.
+{{sc|Proof.}} This is clear if <math>e\in V</math>. If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>\beta(f)=0</math> then <math>CUF(\tilde{u}(e))=(f,(CUF(\tilde{u}(e_1)),\ldots,CUF(\tilde{u}(e_m))))</math>, by induction over <math>|e|</math>, <math>=(f,(CUF(\tilde{u}(CUF(e_1))),\ldots,CUF(\tilde{u}(CUF(e_m)))))=CUF(\tilde{u}(CUF(e)))</math>. For the case <math>\beta(f)>0</math> assume the statement proven for all expressions of depth shallower than <math>e</math>. Let <math>e'</math> be the unfolding of <math>e</math>, then <math>\tilde{u}(e')</math> is the unfolding of <math>\tilde{u}(e)</math> because dummy variables are mapped identically, in particular <math>\beta(\tilde{u}(e))>\beta(\tilde{u}(e'))</math> and hence <math>CUF(\tilde{u}(e))=CUF(\tilde{u}(e'))=CUF(\tilde{u}(CUF(e')))=CUF(\tilde{u}(CUF(e)))</math> by induction hypothesis.
 
-'''Lemma 20.''' Let <math>u</math> be a proper substitution map. Then <math>\tilde{u}</math> is well-defined on <math>E(V,F)_D</math>.
+'''Lemma 20.''' Let <math>u</math> be a proper substitution map whose domain does not contain dummy variables. Then <math>\tilde{u}</math> is well-defined on <math>E(V,F)_D</math>.
 
 {{sc|Proof.}} Let <math>e_1,e_2</math> be D-equivalent. Then by Lemma 19 and D-equivalence <math>CUF(\tilde{u}(e_1))=CUF(\tilde{u}(CUF(e_1)))=CUF(\tilde{u}(CUF(e_2)))=CUF(\tilde{u}(e_2))</math>. This implies the lemma.
 
@@ -216,7 +216,7 @@ Lemma 14 ensures that the recursion in this definition terminates.
 
 {{sc|Proof.}} By the definition of <math>D</math>, the only new variables an unfolding of a subexpression of <math>e</math> can incur are dummy variables.
 
-'''Definition.''' Let <math>e_1,\ldots,e_m,e_1',\ldots,e_m'\in E(V,F)_D</math>. Assume there is a proper substitution map <math>u</math> such that <math>u(e_i)=e_i'</math> for all <math>i=1,\ldots,m</math>. Then the <math>e_1,\ldots,e_m</math> are called ''simultaneously [[w:unification|unifiable]]'' with the <math>e_1',\ldots,e_m'</math>.
+'''Definition.''' Let <math>e_1,\ldots,e_m,e_1',\ldots,e_m'\in E(V,F)_D</math>. Assume there is a proper substitution map <math>u</math> such that <math>\tilde{u}(CUF(e_i))=CUF(e_i')</math> for all <math>i=1,\ldots,m</math>. Then the <math>e_1,\ldots,e_m</math> are called ''simultaneously [[w:unification|unifiable]]'' with the <math>e_1',\ldots,e_m'</math>.
 
 === DV constraints ===
 
@@ -273,9 +273,10 @@ We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s)
 
 '''Definition.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then we define the sets <math>Cl_S(s)_k</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
 # <math>Cl_S(s)_0:=[H(s)]_D</math>.
-# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and <math>u\colon O(e)\setminus A(s)\to V\setminus A(s)</math> is an injective proper substitution map, then <math>\tilde{u}(e)\in Cl_S(s)_k</math>.
-# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>, <math>\tilde{u}([C(s')]_D)\in Cl_S(s)_k</math> whenever all of the following are true:
-:* <math>\tilde{u}([H(s')]_D)\subseteq\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>,
+# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and <math>u\colon(A(e)\cap V_N)\setminus A(s)\to V_D</math> is an injective proper substitution map, then <math>\tilde{u}(e)\in Cl_S(s)_k</math>. (<math>\tilde{u}(e)</math> is well-defined by lemma 20.)
+# For all <math>s'\in S</math> and all proper substitution maps <math>u</math> such that <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>, <math>[\tilde{u}(CUF(C(s')))]_D\in Cl_S(s)_k</math> whenever all of the following are true:
+:* <math>A(\tilde{u}(C(s')))\subseteq V_N</math>,
+:* <math>[\tilde{u}(CUF(H(s')))]_D\subseteq\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>,
 :* <math>\tilde{u}(DV(s'))</math> is a DV constraint such that <math>\tilde{u}(DV(s'))_{A(s)}\subseteq DV(s)_{A(s)}</math>.
 We call the [[w:union (set theory)|union]] <math>Cl_S(s):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math>. The statement <math>s</math> is called ''provable'' if <math>[C(s)]_D\in Cl_S(s)</math>.
 
