@@ -55,9 +55,9 @@ Where no confusion is possible, we shall not distinguish between kinds and equiv
 
 {{sc|Proof.}} Let <math>(x,y)\in R_1</math>. Then <math>(x,y)\in R\setminus\{(x,x):x\in A\}</math> or <math>(y,x)\in R\setminus\{(x,x):x\in A\}</math>. In particular <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)</math> is an element of the symmetric closure of <math>R</math>. Since <math>x\neq y</math>, <math>(x,y)\in R_2</math>. If, on the other hand, <math>(x,y)\in R_2</math>, then <math>x\neq y</math> and <math>(x,y)\in R</math> or <math>(y,x)\in R</math>. Therefore <math>(x,y)\in R_1</math>
 
-'''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''. A DV constraint on <math>V_N</math> is called a ''named DV constraint'' and a DV constraint on <math>V_U</math> is called an ''unnamed DV constraint''.
+'''Definition.''' A symmetric, self-avoiding relation on <math>V</math> is called a ''DV constraint''.
 
-'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>.
+'''Definition.''' Let <math>\Delta</math> be a DV constraint. Then we define the set <math>A(\Delta):=\{v\in V:\exists w\in V:(v,w)\in\Delta\}</math>. If <math>A(\Delta)\subseteq V_N</math>, then <math>\Delta</math> is called a ''named DV constraint'', and if <math>A(\Delta)\subseteq V_U</math>, then <math>\Delta</math> is called an ''unnamed DV constraint''.
 
 '''Lemma 4.''' The union of two DV constraints is again a DV constraint. The same holds for named and unnamed DV constraints, respectively.
 
@@ -222,29 +222,17 @@ Lemma 16 ensures that the recursion in this definition terminates.
 
 Note that the application of a proper substitution map to a DV constraint does not necessarily yield a DV constraint.
 
-<!--FIXME: update from here-->
+'''Definition.''' Let <math>\Delta</math> be a symmetric relation on <math>V</math> and <math>e</math> an expression. Then <math>(\Delta,e)</math> is called an ''extended expression.'' For an extended expression <math>(\Delta,e)</math> we define <math>DV((\Delta,e)):=\Delta</math> and <math>EXP((\Delta,e)):=e</math>.
 
-'''Definition.''' Let <math>e_1,e_2\in E(V,F)</math>. Then <math>e_1</math> and <math>e_2</math> are called ''D-equivalent'' if <math>CUF(e_1)=CUF(e_2)</math>.
+'''Definition.''' Let <math>e\in E(V,F)</math>. Then we define the ''extended complete unfolding'' <math>ECUF(e)</math> recursively as follows.
+# If <math>e\in V</math> then <math>ECUF(e)=(\emptyset,e)</math>.
+# If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_T</math> then <math>ECUF(e):=(\Delta,(f,(CUF(e_1),\ldots,CUF(e_m)))</math>, where <math>\Delta=\bigcup\limits_{i=1}^mDV(ECUF(e_i))</math>.
+# If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_D</math> and <math>e'</math> is the unfolding of <math>e</math> with unfolding map <math>u</math>, then <math>ECUF(e)=(\Delta,CUF(e'))</math>, where <math>\Delta=\tilde{u}(DV(F^{-1}(f)))\cup DV(ECUF(e'))</math>.
+Again, lemma 16 guarantees that the recursion in this definition terminates.
 
-'''Lemma 17.''' D-equivalence is an equivalence relation.
+'''Lemma 21.''' Let <math>e\in E(V,F)</math>, then <math>EXP(ECUF(e))=CUF(e)\in E(V,F_T)</math>.
 
-{{sc|Proof.}} Reflexivity and symmetry are clear. Transitivity follows from the uniqueness of the complete unfolding.
-
-'''Definition.''' Let <math>e\in E(V,F)</math>. Then we denote the equivalence class of <math>e</math> with respect to D-equivalence by <math>[e]_D</math> and the set of all equivalence classes by <math>E(V,F)_D</math>.
-
-'''Lemma 18.''' <math>E(V,F_T)</math> is a set of representatives for <math>E(V,F)_D</math>.
-
-{{sc|Proof.}} Let <math>C\in E(V,F)_D</math>. Since D-equivalence is an equivalence relation, <math>C\neq\emptyset</math>. Therefore there exists an <math>e\in C</math>. Now <math>CUF(e)</math> and <math>e</math> are D-equivalent and <math>CUF(e)\in E(V,F_T)</math> by Lemma 15. Now let <math>e'\in E(V,F_T)</math> be another representative for <math>C</math>. By definition of D-equivalence, <math>CUF(e')=CUF(CUF(e))</math>. Since <math>e'\in E(V,F_T)</math> and due to idempotence <math>e'=CUF(e)</math>. This proves the lemma.
-
-'''Lemma 19.''' Let <math>u</math> be a proper substitution map whose domain does not contain dummy variables and let <math>e\in E(V,F)</math>. Then <math>\tilde{u}(e)</math> and <math>\tilde{u}(CUF(e))</math> are D-equivalent.
-
-{{sc|Proof.}} This is clear if <math>e\in V</math>. If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>\beta(f)=0</math> then <math>CUF(\tilde{u}(e))=(f,(CUF(\tilde{u}(e_1)),\ldots,CUF(\tilde{u}(e_m))))</math>, by induction over <math>|e|</math>, <math>=(f,(CUF(\tilde{u}(CUF(e_1))),\ldots,CUF(\tilde{u}(CUF(e_m)))))=CUF(\tilde{u}(CUF(e)))</math>. For the case <math>\beta(f)>0</math> assume the statement proven for all expressions of depth shallower than <math>e</math>. Let <math>e'</math> be the unfolding of <math>e</math>, then <math>\tilde{u}(e')</math> is the unfolding of <math>\tilde{u}(e)</math> because dummy variables are mapped identically, in particular <math>\beta(\tilde{u}(e))>\beta(\tilde{u}(e'))</math> and hence <math>CUF(\tilde{u}(e))=CUF(\tilde{u}(e'))=CUF(\tilde{u}(CUF(e')))=CUF(\tilde{u}(CUF(e)))</math> by induction hypothesis.
-
-'''Lemma 20.''' Let <math>u</math> be a proper substitution map whose domain does not contain dummy variables. Then <math>\tilde{u}</math> is well-defined on <math>E(V,F)_D</math>.
-
-{{sc|Proof.}} Let <math>e_1,e_2</math> be D-equivalent. Then by Lemma 19 and D-equivalence <math>CUF(\tilde{u}(e_1))=CUF(\tilde{u}(CUF(e_1)))=CUF(\tilde{u}(CUF(e_2)))=CUF(\tilde{u}(e_2))</math>. This implies the lemma.
-
-'''Definition.''' Let <math>e_1,\ldots,e_m,e_1',\ldots,e_m'\in E(V,F)_D</math>. Assume there is a proper substitution map <math>u</math> such that <math>\tilde{u}(CUF(e_i))=CUF(e_i')</math> for all <math>i=1,\ldots,m</math>. Then the <math>e_1,\ldots,e_m</math> are called ''simultaneously [[w:unification|unifiable]]'' with the <math>e_1',\ldots,e_m'</math>.
+{{sc|Proof.}} This follows from the definition and lemma 17.
 
 === Statements ===
 
