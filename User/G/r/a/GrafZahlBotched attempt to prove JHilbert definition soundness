@@ -244,11 +244,10 @@ If <math>s</math> fulfils precisely the same properties except that <math>V_U</m
 
 '''Definition.''' A finite set <math>S</math> is called a ''permissible set of statements'' if all elements of <math>S</math> are statements and the restriction of the name projection <math>N</math> to <math>S</math> is injective.
 
-'''Lemma 25.''' Let <math>S</math> be a permissible set of statements. Then any <math>S'\subseteq S</math> is also a permissible set of statements.
+'''Lemma 22.''' Let <math>S</math> be a permissible set of statements. Then any <math>S'\subseteq S</math> is also a permissible set of statements.
 
 {{sc|Proof.}} The proof is similar to the proof of Lemma 2.
 
-<!--FIXME: The following definition is broken-->
 '''Definition.''' Let <math>s</math> be a (pending) statement and let <math>u</math> be a proper substitution map. Now define
 * <math>n':=N(s)</math>,
 * <math>\Delta':=\tilde{u}(DV(s))</math>,
@@ -256,21 +255,26 @@ If <math>s</math> fulfils precisely the same properties except that <math>V_U</m
 * <math>c':=\tilde{u}(C(s))</math>.
 We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta',h',c')</math>.
 
-<!--FIXME: The following lemma is broken due to the brokenness of the above definition-->
-'''Lemma 26.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
+'''Lemma 23.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
 
-{{sc|Proof.}} Since <math>u</math> is injective and its [[w:codomain|codomain]] is contained in <math>V_U</math>, <math>\tilde{u}(DV(s))</math> is self-avoiding and therefore a DV constraint by lemma 24. The remainder of the lemma is clear.
+{{sc|Proof.}} Since <math>u</math> is injective, <math>\tilde{u}(DV(s))</math> is self-avoiding and therefore a DV constraint by lemma 20. The remainder of the lemma is clear.
 
 '''Explanation.''' First, statements are user-defined in JHilbert using the <code>stmt</code> and <code>thm</code> commands (where the <code>thm</code> statements have first to be derived as defined below). The user writes the statements as pending statements which are subsequently anonymised by introducing new unnamed variables that replace the named ones in the pending statement. Note that by theorem 1, it is always possible to introduce new unnamed variables if necessary for the anonymisation.
 
-'''Definition.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_D\colon V_N\setminus O(s)\to V_D</math> an injective proper substitution map. Then we define the sets <math>Cl(S,s,u_D)_k</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
-# <math>Cl_S(s)_0:=CUF(H(s))</math>.
-# If <math>e\in\bigcup\limits_{j=1}^{k-1}Cl(S,s,u_D)_j</math>, then <math>\tilde{u}_D(e)\in Cl(S,s,u_D)_k</math>.
-# For all <math>s'\in S</math> and all proper substitution maps <math>u</math>, <math>CUF(\tilde{u}(CUF(C(s'))))\in Cl(S,s,u_D)_k</math> whenever all of the following are true:
-:* <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>,
-:* <math>CUF(\tilde{u}(CUF(H(s'))))\subseteq\bigcup\limits_{j=0}^{k-1}Cl(S,s,u_D)_j</math>,
-:* <math>\tilde{u}(DV(s'))\subseteq DV(s)</math>.
-We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl(S,s,u_D)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' if there exists a <math>u_D</math> such that <math>CUF(C(s))\in Cl(S,s,u_D)</math>.
+'''Definition.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_D\colon V_N\setminus O(s)\to V_D</math> an injective proper substitution map. Assume <math>\Delta^s:=DV(s)\cup\bigcup\limits_{h\in H(s)}DV(ECUF(h))\cup DV(ECUF(C(s)))</math> is a DV constraint. Then we define the sets <math>Cl(S,s,u_D)_k\subseteq\wp(V\times V)\times E(V,F_T)</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
+# <math>Cl(S,s,u_D)_0:=ECUF(H(s))</math>.
+# For all <math>s'\in S</math>, all proper substitution maps <math>u</math> and all DV constraints <math>\Delta</math>, <math>(\Delta,CUF(\tilde{u}(CUF(C(s')))))\in Cl(S,s,u_D)_k</math> whenever all of the following are true:
+:* <math>\tilde{u}(DV(s'))\subseteq\Delta</math>.
+:* <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>.
+:* For all <math>h\in H(s')</math>, some <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl(S,s,u_D)_j</math>, where <math>\tilde{u}(DV(ECUF(h)))\subseteq\Delta'\subseteq\Delta</math>.
+:* <math>\tilde{u}_D(\Delta)\subseteq\Delta^s</math>.
+We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl(S,s,u_D)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' from <math>S</math> if there exists a <math>u_D</math> and an <math>e\in Cl(S,s,u_D)</math> such that <math>\tilde{u}_D(EXP(e))=CUF(C(s))</math>.
+
+'''Lemma 24.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_D\colon V_N\setminus O(s)\to V_D</math> an injective proper substitution map. Then for all <math>(\Delta,e)\in Cl(S,s,u_D)</math>, <math>\tilde{u}_D(\Delta)\subseteq\Delta^s</math>.
+
+{{sc|Proof.}} The only case where this is not clear is when <math>(\Delta,e)\in Cl(S,s,u_D)_0</math>. But since the domain of <math>u_D</math> excludes <math>O(s)</math>, <math>\tilde{u}_D</math> acts identically on <math>ECUF(H(s))</math>. Hence the lemma follows.
+
+<!--FIXME: update from here-->
 
 '''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map with domain <math>O(s)</math> such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
 
