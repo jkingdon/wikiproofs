@@ -188,39 +188,51 @@ Then <math>D</math> is called a ''valid set of definitions'' for <math>F_D</math
 
 '''Definition.''' Let <math>e=(f,(e_1,\ldots,e_m))\in E(V,F)\setminus V</math> be an expression such that <math>f\in F_D</math> and let <math>(n,\Delta,(v_1,\ldots,v_m),e')=F^{-1}(f)</math>. Define the proper substitution map <math>u</math> by setting <math>u(v_i)=e_i</math> for <math>i=1,\ldots,m</math>. Then <math>\tilde{u}(e')</math> is called the ''unfolding'' of <math>e</math>.
 
-'''Lemma 16.''' Let <math>e_1,e_2\in E(V,F)</math>. If <math>e_2</math> is the unfolding of <math>e_1</math> then <math>\beta(e_1)=\beta(e_2)+1</math> and <math>\hat{\beta}(e_1)\geq\hat{\beta}(e_2)</math>.
+'''Lemma 16.''' Let <math>e=(f,(e_1,\ldots,e_m))\in E(V,F)\setminus V</math> be an expression such that <math>f\in F_D</math> and let <math>e'</math> be the unfolding of <math>e</math>. Then <math>K(e)=K(e')</math>.
+
+{{sc|Proof.}} By definition, there is a proper substitution map such that <math>\tilde{u}(e')=e</math>. The claim now follows from lemma 10.
+
+'''Lemma 17.''' Let <math>e_1,e_2\in E(V,F)</math>. If <math>e_2</math> is the unfolding of <math>e_1</math> then <math>\beta(e_1)=\beta(e_2)+1</math> and <math>\hat{\beta}(e_1)\geq\hat{\beta}(e_2)</math>.
 
 {{sc|Proof.}} Since <math>e_1</math> has an unfolding, it has a head functor which is a definition functor. The first claim now results from the definition of <math>\beta</math>. The second claim follows since by the definition of <math>D</math>, all apparent functors of <math>e_2</math> which are not apparent functors of <math>e_1</math> have lower depth than <math>e_1</math>.
 
 '''Definition.''' Let <math>e\in E(V,F)</math>. Then we define the ''complete unfolding'' of <math>e</math>, <math>CUF(e)</math> recursively as follows.
 # If <math>e\in V</math> then <math>CUF(e)=e</math>.
-# If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_T</math> then <math>CUF(e)=(f,(CUF(e_1),\ldots,CUF(e_m)))</math>.
+# If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_T</math> then <math>CUF(e)=(f,(CUF(e_1),\ldots,CUF(e_m)))</math> (see lemma 18 for justification of this definition).
 # If the head functor of <math>e</math> is a definition functor and <math>e'</math> is the unfolding of <math>e</math> then <math>CUF(e)=CUF(e')</math>.
-Lemma 16 ensures that the recursion in this definition terminates.
+Lemma 17 ensures that the recursion in this definition terminates.
 
-'''Lemma 17.''' Let <math>e\in E(V,F)</math>. Then all apparent functors of <math>CUF(e)</math> are term functors. In other words, <math>\hat{\beta}(e)=0</math>.
+'''Lemma 18.''' Let <math>e\in E(V,F)</math>. Then <math>K(e)=K(CUF(e))</math>.
+
+{{sc|Proof.}} If <math>e\in V</math> this is clear. If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_T</math>, then <math>K(CUF(e_i))=K(e_i)</math> for <math>i=1,\ldots,m</math> implies <math>K(CUF(e))=K((f,(CUF(e_1),\ldots,CUF(e_m))))=K(f)=K(e)</math>. If the head functor of <math>e</math> is a definition functor and <math>e'</math> is the unfolding of <math>e</math>, then <math>K(CUF(e'))=K(e')</math> and lemma 16 together imply that <math>K(CUF(e))=K(e)</math>. The whole statement now follows by induction as suggested by lemma 17.
+
+'''Lemma 19.''' Let <math>e\in E(V,F)</math>. Then all apparent functors of <math>CUF(e)</math> are term functors. In other words, <math>\hat{\beta}(e)=0</math>.
 
 {{sc|Proof.}} Due to the definition of <math>CUF</math>, <math>\beta(f)=0</math> for all apparent functors of <math>e</math>. Hence the claim follows from Lemma 15.
 
 '''Definition.''' We denote the subset of <math>E(V,F)</math> of expressions all of whose apparent functors are term functors by <math>E(V,F_T)</math>.
 
-'''Lemma 18.''' <math>CUF</math> is an [[w:idempotent|idempotent]] operation.
+'''Lemma 20.''' <math>CUF</math> is an [[w:idempotent|idempotent]] operation.
 
-{{sc|Proof.}} Let <math>e\in E(V,F_T)</math>. By Lemma 17 it is sufficient to show that <math>CUF(e)=e</math>. If <math>|e|=1</math>, this follows by direct calculation. Assume the statement proven for expressions of length smaller than <math>|e|>1</math>. Then <math>e=(f,(e_1,\ldots,e_m))</math> and <math>CUF(e)=CUF((f,(e_1,\ldots,e_m)))=(f,CUF(e_1),\ldots,CUF(e_m))=(f,(e_1,\ldots,e_m))=e</math> by induction hypothesis.
+{{sc|Proof.}} Let <math>e\in E(V,F_T)</math>. By Lemma 19 it is sufficient to show that <math>CUF(e)=e</math>. If <math>|e|=1</math>, this follows by direct calculation. Assume the statement proven for expressions of length smaller than <math>|e|>1</math>. Then <math>e=(f,(e_1,\ldots,e_m))</math> and <math>CUF(e)=CUF((f,(e_1,\ldots,e_m)))=(f,CUF(e_1),\ldots,CUF(e_m))=(f,(e_1,\ldots,e_m))=e</math> by induction hypothesis.
 
 '''Definition.''' Let <math>e\in E(V,F)</math>. Then a variable <math>v\in V</math> ''occurs'' in <math>e</math> if <math>v\in A(CUF(e))</math>. We denote the set of all variables occurring in <math>e</math> by <math>O(e)</math>.
 
-'''Lemma 19.''' Let <math>e\in E(V,F)</math>. Then <math>O(e)\setminus V_D\subseteq A(e)</math>.
+'''Lemma 21.''' Let <math>e\in E(V,F)</math>. Then <math>O(e)\setminus V_D\subseteq A(e)</math>.
 
 {{sc|Proof.}} By the definition of <math>D</math>, the only new variables an unfolding of a subexpression of <math>e</math> can incur are dummy variables.
 
 '''Definition.''' Let <math>u</math> be a proper substitution map and <math>R\subseteq V\times V</math>. Then we extend <math>\tilde{u}</math> to <math>R</math> by <math>\tilde{u}(R):=\bigcup\limits_{(v,w)\in R}O(\tilde{u}(v))\times O(\tilde{u}(w))</math>.
 
-'''Lemma 20.''' Let <math>R\subseteq V\times V</math> be a symmetric relation and <math>u</math> a proper substitution map. Then <math>\tilde{u}(R)</math> is also a symmetric relation.
+'''Lemma 22.''' Let <math>R\subseteq V\times V</math> be a symmetric relation and <math>u</math> a proper substitution map. Then <math>\tilde{u}(R)</math> is also a symmetric relation.
 
 {{sc|Proof.}} Let <math>(v,w)\in \tilde{u}(R)</math>, then there is a <math>(v',w')\in R</math> such that <math>(v,w)\in O(\tilde{u}(v'))\times O(\tilde{u}(w'))</math>. Now, <math>R</math> is symmetric, so <math>(w',v')\in R</math> and thus <math>O(\tilde{u}(w'))\times O(\tilde{u}(v'))\subseteq\tilde{u}(R)</math>. This proves the lemma.
 
 Note that the application of a proper substitution map to a DV constraint does not necessarily yield a DV constraint.
+
+'''Lemma 23.''' Let <math>u_1,u_2</math> be proper substitution maps. Then <math>u\colon V\to E(V,F)</math>, <math>u(v):=\tilde{u}_1(CUF(\tilde{u}_2(v)))</math> is also a proper substitution map with <math>CUF\circ\tilde{u}=CUF\circ\tilde{u}_1\circ CUF\circ\tilde{u}_2\circ CUF</math> on <math>E(V,F)</math> and <math>\tilde{u}=\tilde{u}_1\circ\tilde{u}_2</math> on <math>R\subseteq V\times V</math>.
+
+{{sc|Proof.}} Let <math>v\in V</math>, then we have <math>K(u(v))=K(\tilde{u}_1(CUF(\tilde{u}_2(v))))</math>, by lemma 10, <math>=K(CUF(\tilde{u}_2(v)))</math>, by lemma 18, <math>=K(\tilde{u}_2(v))</math>, again by lemma 10, <math>=K(v)</math>. By definition, <math>\tilde{u}=\tilde{u}_1\circ CUF\circ\tilde{u}_2\circ CUF</math> on <math>V</math>. If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_T</math>, and if the statement is already proven for <math>e_1,\ldots,e_m</math>, then <math>CUF(\tilde{u}(e))=(f,(CUF(\tilde{u}(e_1)),\ldots,CUF(\tilde{u}(e_m))))=(f,(CUF(\tilde{u}_1(CUF(\tilde{u}_2(CUF(e_1))))),\ldots,CUF(\tilde{u}_1(CUF(\tilde{u}_2(CUF(e_m))))))=CUF(\tilde{u}_1(CUF(\tilde{u}_2(CUF(e)))))</math>. Lastly, if the statement has already been proven for <math>CUF(e)</math>, then the statement follows by idempotence. The whole statement now follows for <math>E(V,F)</math> by induction as suggested by lemma 17. Now finally, due to the definition of an occurring variable, <math>O(CUF(\tilde{u}_2(CUF(v))))=O(\tilde{u}_2(v))</math>. This implies the statement for <math>R\subseteq V\times V</math>.
 
 '''Definition.''' Let <math>\Delta</math> be a symmetric relation on <math>V</math> and <math>e</math> an expression. Then <math>(\Delta,e)</math> is called an ''extended expression.'' For an extended expression <math>(\Delta,e)</math> we define <math>DV((\Delta,e)):=\Delta</math> and <math>EXP((\Delta,e)):=e</math>.
 
@@ -228,11 +240,11 @@ Note that the application of a proper substitution map to a DV constraint does n
 # If <math>e\in V</math> then <math>ECUF(e)=(\emptyset,e)</math>.
 # If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_T</math> then <math>ECUF(e):=(\Delta,(f,(CUF(e_1),\ldots,CUF(e_m)))</math>, where <math>\Delta=\bigcup\limits_{i=1}^mDV(ECUF(e_i))</math>.
 # If <math>e=(f,(e_1,\ldots,e_m))</math> with <math>f\in F_D</math> and <math>e'</math> is the unfolding of <math>e</math> with unfolding map <math>u</math>, then <math>ECUF(e)=(\Delta,CUF(e'))</math>, where <math>\Delta=\tilde{u}(DV(F^{-1}(f)))\cup DV(ECUF(e'))</math>.
-Again, lemma 16 guarantees that the recursion in this definition terminates.
+Again, lemma 17 guarantees that the recursion in this definition terminates.
 
-'''Lemma 21.''' Let <math>e\in E(V,F)</math>, then <math>EXP(ECUF(e))=CUF(e)\in E(V,F_T)</math>.
+'''Lemma 24.''' Let <math>e\in E(V,F)</math>, then <math>EXP(ECUF(e))=CUF(e)\in E(V,F_T)</math>.
 
-{{sc|Proof.}} This follows from the definition and lemma 17.
+{{sc|Proof.}} This follows from the definition and lemma 18.
 
 === Statements ===
 
@@ -244,7 +256,7 @@ If <math>s</math> fulfils precisely the same properties except that <math>V</mat
 
 '''Definition.''' A finite set <math>S</math> is called a ''permissible set of statements'' if all elements of <math>S</math> are statements and the restriction of the name projection <math>N</math> to <math>S</math> is injective.
 
-'''Lemma 22.''' Let <math>S</math> be a permissible set of statements. Then any <math>S'\subseteq S</math> is also a permissible set of statements.
+'''Lemma 25.''' Let <math>S</math> be a permissible set of statements. Then any <math>S'\subseteq S</math> is also a permissible set of statements.
 
 {{sc|Proof.}} The proof is similar to the proof of Lemma 2.
 
@@ -255,9 +267,9 @@ If <math>s</math> fulfils precisely the same properties except that <math>V</mat
 * <math>c':=\tilde{u}(C(s))</math>.
 We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta',h',c')</math>.
 
-'''Lemma 23.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
+'''Lemma 26.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
 
-{{sc|Proof.}} Since <math>u</math> is injective, <math>\tilde{u}(DV(s))</math> is self-avoiding and therefore a DV constraint by lemma 20. The remainder of the lemma is clear.
+{{sc|Proof.}} Since <math>u</math> is injective, <math>\tilde{u}(DV(s))</math> is self-avoiding and therefore a DV constraint by lemma 22. The remainder of the lemma is clear.
 
 '''Explanation.''' First, statements are user-defined in JHilbert using the <code>stmt</code> and <code>thm</code> commands (where the <code>thm</code> statements have first to be derived as defined below). The user writes the statements as pending statements which are subsequently anonymised by introducing new unnamed variables that replace the named ones in the pending statement. Note that by theorem 1, it is always possible to introduce new unnamed variables if necessary for the anonymisation.
 
@@ -270,17 +282,17 @@ We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s)
 :* <math>\tilde{u}_D(\Delta)\subseteq\Delta^s</math>.
 We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl(S,s,u_D)_k</math> the (preliminary definition of) ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' from <math>S</math> if there exists a <math>u_D</math> and an <math>e\in Cl(S,s,u_D)</math> such that <math>\tilde{u}_D(EXP(e))=CUF(C(s))</math>.
 
-'''Lemma 24.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_D\colon V_N\setminus O(s)\to V_D</math> an injective proper substitution map. Then for all <math>(\Delta,e)\in Cl(S,s,u_D)</math>, <math>\tilde{u}_D(\Delta)\subseteq\Delta^s</math>.
+'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_D\colon V_N\setminus O(s)\to V_D</math> an injective proper substitution map. Then for all <math>(\Delta,e)\in Cl(S,s,u_D)</math>, <math>\tilde{u}_D(\Delta)\subseteq\Delta^s</math>.
 
 {{sc|Proof.}} The only case where this is not clear is when <math>(\Delta,e)\in Cl(S,s,u_D)_0</math>. But since the domain of <math>u_D</math> excludes <math>O(s)</math>, <math>\tilde{u}_D</math> acts identically on <math>ECUF(H(s))</math>. Hence the lemma follows.
 
-'''Lemma 25.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_1,u_2\colon V_N\setminus O(s)\to V_D</math> proper substitution maps whose images coincide. Then <math>(\Delta,e)\in Cl(S,s,u_1)</math> if and only if <math>((u_2^{-1}\circ u_1)^\sim(\Delta)),(u_2^{-1}\circ u_1)^\sim(e))\in Cl(S,s,u_2)</math>.
+'''Lemma 28.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_1,u_2\colon V_N\setminus O(s)\to V_D</math> proper substitution maps whose images coincide. Then <math>(\Delta,e)\in Cl(S,s,u_1)</math> if and only if <math>((u_2^{-1}\circ u_1)^\sim(\Delta)),(u_2^{-1}\circ u_1)^\sim(e))\in Cl(S,s,u_2)</math>.
 
 {{sc|Proof.}} This follows since <math>u_1,u_2</math> map variables to variables and are injective.
 
-'''Lemma 26.''' Let <math>S</math> be a permissible set of statements and <math>s</math> a pending statement which is provable from <math>S</math> via <math>u_1\colon V_N\setminus O(s)\to V_D</math>. Then <math>s</math> is provable from <math>s</math> via any <math>u_D\colon V_N\setminus O(s)\to V_D</math> whose image coincides with <math>u_1</math>.
+'''Lemma 29.''' Let <math>S</math> be a permissible set of statements and <math>s</math> a pending statement which is provable from <math>S</math> via <math>u_1\colon V_N\setminus O(s)\to V_D</math>. Then <math>s</math> is provable from <math>s</math> via any <math>u_D\colon V_N\setminus O(s)\to V_D</math> whose image coincides with <math>u_1</math>.
 
-{{sc|Proof.}} So we have some <math>(\Delta,e)\in Cl(S,s,u_1)</math> such that <math>\tilde{u}_1(e)=CUF(C(s))</math>. Now, <math>\tilde{u}_D((u_D^{-1}\circ u_1)^\sim(e))=\tilde{u}_1(e)</math>. The statement now follows from lemma 25.
+{{sc|Proof.}} So we have some <math>(\Delta,e)\in Cl(S,s,u_1)</math> such that <math>\tilde{u}_1(e)=CUF(C(s))</math>. Now, <math>\tilde{u}_D((u_D^{-1}\circ u_1)^\sim(e))=\tilde{u}_1(e)</math>. The statement now follows from lemma 28.
 
 This lemma shows that the map <math>u_D</math> is rather immaterial as far as provability is concerned. It merely irons out some choice of named variables which serve as placeholders for dummy variables. A JHilbert user could obviate the need for different <math>u_D</math> altogether by maintaining a batch of named variables in one-to-one correspondence with dummy variables such that this batch never occurs in any statement (though in reality such bookkeeping would be rather cumbersome). Therefore we can make the following simplified definition for provability.
 
@@ -289,37 +301,15 @@ This lemma shows that the map <math>u_D</math> is rather immaterial as far as pr
 # For all <math>s'\in S</math>, all proper substitution maps <math>u</math> and all DV constraints <math>\Delta\subseteq\Delta^s</math>, <math>(\Delta,CUF(\tilde{u}(CUF(C(s')))))\in Cl_S(s)_k</math> whenever all of the following are true:
 :* <math>\tilde{u}(DV(s'))\subseteq\Delta</math>.
 :* For all <math>h\in H(s')</math>, some <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>, where <math>\tilde{u}(DV(ECUF(h)))\subseteq\Delta'\subseteq\Delta</math>.
-We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the (final definition of) ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' from <math>S</math> if there exists an <math>e\in Cl_S(s)</math> such that <math>EXP(e)=CUF(C(s))</math>.
+We call the [[w:union (set theory)|union]] <math>Cl_S(s):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the (final definition of) ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' from <math>S</math> if there exists an <math>e\in Cl_S(s)</math> such that <math>EXP(e)=CUF(C(s))</math>.
 
-'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a generalised statement and <math>u</math> a proper substitution map such that <math>\tilde{u}(CUF(s))</math> is also a generalised statement. Then if <math>s</math> is provable from <math>S</math>, so is <math>\tilde{u}(CUF(s))</math>.
+'''Lemma 30.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a generalised statement and <math>u</math> a proper substitution map such that <math>\tilde{u}(CUF(s))</math> is also a generalised statement. Then if <math>s</math> is provable from <math>S</math>, so is <math>\tilde{u}(CUF(s))</math>.
 
-{{sc|Proof.}} Let <math>s</math> be provable from <math>S</math>, then there is a <math>(\Delta,e)\in Cl_S(s)</math> such that <math>e=CUF(C(s))</math>. Assume first that <math>(\Delta,e)\in Cl_S(s)_0</math>. Then <math>(\Delta,e)\in ECUF(H(s))</math>, and hence <math>(\tilde{u}(\Delta),CUF(\tilde{u}(e)))\in ECUF(H(\tilde{u}(CUF(s))))=Cl_S(\tilde{u}(CUF(s)))_0</math>. Now let <math>k\in\mathbb{Z}_{>0}</math> and assume that <math>(\Delta',e')\in Cl_S(s)_j</math> implies <math>(\tilde{u}(\Delta'),CUF(\tilde{u}(e')))\in Cl_S(\tilde{u}(CUF(s)))_j</math> for <math>j=0,\ldots,k-1</math>. Let <math>(\Delta,e)\in Cl_S(s)_k</math>. Let <math>s'\in S</math> be the statement and <math>u'</math> be the proper substitution map giving rise to <math>(\Delta,e)</math>. Then <math>\tilde{u}'(DV(s'))\subseteq\Delta</math> and thus <math>\tilde{u}(\tilde{u}'(DV(s')))\subseteq\tilde{u}(\Delta)</math>. Furthermore, for each <math>h\in H(s')</math> there is a <math>\Delta'</math> such that <math>\tilde{u}'(DV(ECUF(h)))\subseteq\Delta'\subseteq\Delta</math> and <math>(\Delta',CUF(\tilde{u}'(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>. Hence <math>\tilde{u}(\tilde{u}'(DV(ECUF(h)))\subseteq\tilde{u}(\Delta')\subseteq\tilde{u}(\Delta)</math> and, by induction hypothesis, <math>(\tilde{u}(\Delta'),CUF(\tilde{u}(CUF(\tilde{u}'(CUF(h))))))\in\bigcup\limits_{j=0}^{k-1}Cl_S(\tilde{u}(CUF(s)))_j</math>. Since <math>\tilde{u}\circ CUF\circ\tilde{u}'</math> arises from a proper substitution map<!--FIXME: proof?-->, it follows that <math>(\tilde{u}(\Delta),CUF(\tilde{u}(e)))=(\tilde{u}(\Delta),CUF(\tilde{u}(CUF(\tilde{u}'(CUF(C(s')))))))\in Cl_S(\tilde{u}(CUF(s)))_k</math>.
+{{sc|Proof.}} Let <math>s</math> be provable from <math>S</math>, then there is a <math>(\Delta,e)\in Cl_S(s)</math> such that <math>e=CUF(C(s))</math>. Assume first that <math>(\Delta,e)\in Cl_S(s)_0</math>. Then <math>(\Delta,e)\in ECUF(H(s))</math>, and hence <math>(\tilde{u}(\Delta),CUF(\tilde{u}(e)))\in ECUF(H(\tilde{u}(CUF(s))))=Cl_S(\tilde{u}(CUF(s)))_0</math>. Now let <math>k\in\mathbb{Z}_{>0}</math> and assume that <math>(\Delta',e')\in Cl_S(s)_j</math> implies <math>(\tilde{u}(\Delta'),CUF(\tilde{u}(e')))\in Cl_S(\tilde{u}(CUF(s)))_j</math> for <math>j=0,\ldots,k-1</math>. Let <math>(\Delta,e)\in Cl_S(s)_k</math>. Let <math>s'\in S</math> be the statement and <math>u'</math> be the proper substitution map giving rise to <math>(\Delta,e)</math>. Then <math>\tilde{u}'(DV(s'))\subseteq\Delta</math> and thus <math>\tilde{u}(\tilde{u}'(DV(s')))\subseteq\tilde{u}(\Delta)</math>. Furthermore, for each <math>h\in H(s')</math> there is a <math>\Delta'</math> such that <math>\tilde{u}'(DV(ECUF(h)))\subseteq\Delta'\subseteq\Delta</math> and <math>(\Delta',CUF(\tilde{u}'(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>. Hence <math>\tilde{u}(\tilde{u}'(DV(ECUF(h)))\subseteq\tilde{u}(\Delta')\subseteq\tilde{u}(\Delta)</math> and, by induction hypothesis, <math>(\tilde{u}(\Delta'),CUF(\tilde{u}(CUF(\tilde{u}'(CUF(h))))))\in\bigcup\limits_{j=0}^{k-1}Cl_S(\tilde{u}(CUF(s)))_j</math>. Since <math>CUF\circ\tilde{u}\circ CUF\circ\tilde{u}'\circ CUF</math> arises from a proper substitution map by lemma 23 and is furthermore idempotent, it follows that <math>(\tilde{u}(\Delta),CUF(\tilde{u}(e)))=(\tilde{u}(\Delta),CUF(\tilde{u}(CUF(\tilde{u}'(CUF(C(s')))))))\in Cl_S(\tilde{u}(CUF(s)))_k</math>.
 
-'''Lemma 28.''' Let <math>S_1</math> be a permissible set of statements, <math>s_1\in S_1</math>, and set <math>S_2:=S_1\setminus\{s_1\}</math>. Assume <math>s_1</math> is an anonymisation of <math>s_2</math> such that <math>s_2</math> is provable from <math>S_2</math>. Then all pending statements <math>s</math> which are provable from <math>S_1</math> are also provable from <math>S_2</math>.
+'''Lemma 31.''' Let <math>S_1</math> be a permissible set of statements, <math>s_1\in S_1</math>, and set <math>S_2:=S_1\setminus\{s_1\}</math>. Assume <math>s_1</math> is an anonymisation of <math>s_2</math> such that <math>s_2</math> is provable from <math>S_2</math>. Then all pending statements <math>s</math> which are provable from <math>S_1</math> are also provable from <math>S_2</math>.
 
-{{sc|Proof.}} Let <math>u_A</math> be an anonymisation map which transports <math>s_2</math> to <math>s_1</math>. Furthermore, let <math>(\Delta_2,e_2)\in Cl_{S_2}(s_2)</math> be such that <math>e_2=CUF(C(s_2))</math>. Let <math>s</math> be a pending statement which is provable from <math>S_1</math>. Let <math>(\Delta,e)\in Cl_{S_1}(s)</math> be such that <math>e=CUF(C(s))</math>. Now, assume first that <math>(\Delta,e)\in Cl_{S_1}(s)_0</math>. Then <math>(\Delta,e)\in ECUF(H(s))=Cl_{S_2}(s)_0\subseteq Cl_{S_2}(s)</math>. Next, let <math>k\in\mathbb{Z}_{>0}</math> and assume that <math>\bigcup\limits_{j=0}^{k-1}\subseteq Cl_{S_2}(s)</math> and <math>(\Delta,e)\in Cl_{S_1}(s)_k</math>. Let <math>s'\in S</math> and <math>u</math> be a proper substitution map such that <math>e=CUF(\tilde{u}(CUF(C(s'))))</math>. Then <math>\Delta\subseteq\Delta^s</math>, <math>\tilde{u}(DV(s'))\subseteq\Delta</math>, and for all <math>h\in H(s')</math> there is a <math>\Delta'\subseteq\Delta</math> such that <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl_{S_1}(s)</math> and <math>\tilde{u}(DV(ECUF(h)))\subseteq\Delta'</math>. Now, <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in Cl_{S_2}(s)</math> by induction hypothesis. So if <math>s'\in S_2</math>, it follows that <math>(\Delta,e)\in Cl_{S_2}(s)</math>. Otherwise, <math>s'=s_1</math>. In this case, <math>e=\tilde{u}(\tilde{u}_A(e_2))</math>. Now, <math>\Delta_2\subseteq\Delta^{s_2}</math> and hence <math>\tilde{u}(\tilde{u}_A(\Delta_2))\subseteq\tilde{u}(\tilde{u}_A(\Delta^{s_2}))=\tilde{u}(DV(s'))\subseteq\Delta</math>.<!--FIXME: incomplete-->
-
-<!--FIXME: update from here-->
-
-'''Lemma 27.''' Let <math>S</math> be a permissible set of statements, <math>s</math> a pending statement and <math>u</math> a proper substitution map with domain <math>O(s)</math> such that <math>\tilde{u}(s)</math> is also a pending statement. Then <math>\tilde{u}(Cl_S(s))\subseteq Cl_S(\tilde{u}(s))</math>.
-
-{{sc|Proof.}} Let <math>e\in Cl_S(s)_0</math>, then <math>e</math> is the D-equivalence class of a hypothesis of <math>s</math>. Therefore, <math>\tilde{u}(e)</math> is the D-equivalence class of a hypothesis of <math>\tilde{u}(s)</math>, that is <math>\tilde{u}(e)\in Cl_S(\tilde{u}(s))_0\subseteq Cl_S(\tilde{u}(s))</math>. Now let <math>k\in\mathbb{Z}_{>0}</math> and assume that <math>\tilde{u}\left(Cl_S(0)_j\right)\subseteq Cl_S(\tilde{u}(s))_j</math> is already proven for <math>j=0,\ldots,k-1</math>. Let <math>e\in Cl_S(s)_k</math>. Assume first that there is an <math>e'\in\bigcup\limits_{j=1}^{k-1}Cl_S(s)_j</math> and an injective proper substitution map <math>u'\colon O(e)\setminus A(s)\to V\setminus A(s)</math> such that <math>\tilde{u}'(e')=e</math>. By induction hypothesis, <math>\tilde{u}(e')\in\bigcup\limits_{j=1}^{k-1}Cl_S(\tilde{u}(s))_j</math>.<!--FIXME: proof incomplete-->
-
-<!--FIXME: update stuff below-->
-
-{{sc|Proof.}} By definition, <math>\tilde{u}(Cl_S(s)_0)=Cl_S(\tilde{u}(s))_0</math>. Now let <math>k>0</math> and assume that we have already proven that <math>\tilde{u}(Cl_S(s)_l)\subseteq Cl_S(\tilde{u}(s))</math> for <math>l=0,\ldots,k-1</math>. Let <math>e\in\tilde{u}(Cl_S(s)_k)</math>. Then there is an <math>e'\in Cl_S(s)_k</math> such that <math>\tilde{u}(e')=e</math>. Let <math>s'\in S</math> be the statement and <math>u'</math> be the proper substitution map from which <math>e'</math> arises. Then <math>\tilde{u}(\tilde{u}'([H_i(s')]_D))\in Cl_S(\tilde{u}(s))</math> by induction hypothesis. Furthermore the restriction of <math>\tilde{u}'(DV(s'))</math> is a subset of <math>DV(s)</math> and thus the restriction of <math>\tilde{u}(\tilde{u}'(DV(s'))</math> is a subset of <math>\tilde{u}(DV(s))=DV(\tilde{u}(s))</math>. Therefore <math>e=\tilde{u}(e')=\tilde{u}(\tilde{u}'([Cl_S(s')]_D))\in Cl_S(\tilde{u}(s))</math>. The claim now follows from lemma 28.
-
-'''Lemma 30.''' Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement. Then for all <math>e\in Cl_S(s)</math> and all injective proper substitution maps <math>u\colon V_N\setminus A(s)\to V_N\setminus A(s)</math>, <math>\tilde{u}(e)\in Cl_S(s)</math>.
-
-'''Proof.''' Since <math>A(s)</math> is excluded from the codomain of <math>u</math>, such a substitution cannot introduce new invalid DV constraints. <math>\tilde{u}</math> acts identically on <math>Cl_S(s)_0</math> since <math>A(s)</math> is excluded from the [[w:domain of a function|domain]] of <math>u</math>. This proves the statement for all <math>e\in Cl_S(s)_0</math>. Now assume the statement proven for all <math>e\in\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math> for some <math>k>0</math>. Let <math>e\in Cl_S(s)_k</math>. Furthermore, let <math>s'\in S</math> be the statement and <math>u'</math> be the proper substitution map from which <math>e</math> arises. Now, <math>\tilde{u}([\tilde{u}'(H_i(s'))]_D)\in Cl_S(s)</math> for all <math>i=1,\ldots,NH(s')</math> by induction hypothesis. Since <math>u</math> is injective and maps named variables to named variables, <math>u\circ u'</math> is also a proper substitution map. Therefore <math>\tilde{u}(e)=\tilde{u}(\tilde{u}'([C(s')]_D))\in Cl_S(s)</math>. So by induction and lemma 28, the statement follows.
-
-'''Lemma 31.'''  Let <math>S</math> be a permissible set of statements and let <math>s</math> be a pending statement which is provable from <math>S</math>. Then <math>[C(s)]_D\in Cl_S(s)</math>.
-
-{{sc|Proof.}} Since <math>s</math> is provable from <math>S</math>, <math>C(s)</math> is V-equivalent to some <math>e\in Cl_S(s)</math>. Let <math>u</math> be the V-equivalence map. Then <math>\tilde{u}(e)=[C(s)]_D</math>. The statement now follows from lemma 30 because <math>u</math> is injective and its domain and codomain exclude <math>A(s)</math>.
-
-'''Lemma 32.''' Let <math>S_1</math> be a permissible set of statements, <math>s_1\in S_1</math> and set <math>S_2:=S_1\setminus\{s_1\}</math> (which is a permissible set of statements by lemma 25). Let <math>s_2</math> be a pending statement which is provable from <math>S_2</math> such that <math>s_1</math> is an anonymisation of <math>s_2</math>. Then all pending statements <math>s</math> which are provable from <math>S_1</math> are also provable from <math>S_2</math>.
-
-{{sc|Proof.}} For all pending statements <math>s</math>, we have <math>Cl_{S_1}(s)_0=Cl_{S_2}(s)_0\subseteq Cl_{S_2}(s)</math> by lemma 28. Now assume we have already proven that <math>\bigcup\limits_{j=0}^{k-1}Cl_{S_1}(s)_j\subseteq Cl_{S_2}(s)</math> for some <math>k>0</math>. Let <math>e\in Cl_{S_1}(s)_k</math> and let <math>s'\in S_1</math> be the statement and <math>u</math> be the proper substitution map from which <math>e</math> arises. Then <math>\tilde{u}([H_i(s')]_D)\in Cl_{S_2}(s)</math> by induction hypothesis. It is clear that if the DV constraints are fulfilled in <math>Cl_{S_1}(s)</math>, so they are in <math>Cl_{S_2}(s)</math>. So if <math>s'\in S_2</math> it follows that <math>e\in Cl_{S_2}(s)</math>. If not, then <math>s'=s_1</math>. Let <math>u_1</math> be an anonymisation map which transports <math>s_2</math> to <math>s_1</math>. Now, <math>s_2</math> is provable from <math>S_2</math>, so <math>[C(s_2)]_D\in Cl_{S_2}(s_2)</math> by lemma 31. Then <math>e=\tilde{u}(\tilde{u}_1([C(s_2)]_D))\in\tilde{u}(\tilde{u}_1(Cl_{S_2}(s_2)))</math>, by lemma 29, <math>\subseteq Cl_{S_2}(\tilde{u}(s'))\subseteq Cl_{S_2}(s)</math>. The last inclusion follows since the equivalence classes of the hypotheses of <math>\tilde{u}(s')</math> are a subset of <math>Cl_{S_2}(s)</math> by induction hypothesis. The statement now follows from lemma 28.
+{{sc|Proof.}} Let <math>u_A</math> be an anonymisation map which transports <math>s_2</math> to <math>s_1</math>. Let <math>s</math> be a pending statement which is provable from <math>S_1</math>. Let <math>(\Delta,e)\in Cl_{S_1}(s)</math> be such that <math>e=CUF(C(s))</math>. Now, assume first that <math>(\Delta,e)\in Cl_{S_1}(s)_0</math>. Then <math>(\Delta,e)\in ECUF(H(s))=Cl_{S_2}(s)_0\subseteq Cl_{S_2}(s)</math>. Next, let <math>k\in\mathbb{Z}_{>0}</math> and assume that <math>\bigcup\limits_{j=0}^{k-1}\subseteq Cl_{S_2}(s)</math> and <math>(\Delta,e)\in Cl_{S_1}(s)_k</math>. Let <math>s'\in S</math> and <math>u</math> be a proper substitution map such that <math>e=CUF(\tilde{u}(CUF(C(s'))))</math>. Then <math>\Delta\subseteq\Delta^s</math>, <math>\tilde{u}(DV(s'))\subseteq\Delta</math>, and for all <math>h\in H(s')</math> there is a <math>\Delta'\subseteq\Delta</math> such that <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl_{S_1}(s)</math> and <math>\tilde{u}(DV(ECUF(h)))\subseteq\Delta'</math>. Now, <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in Cl_{S_2}(s)</math> by induction hypothesis. So if <math>s'\in S_2</math>, it follows that <math>(\Delta,e)\in Cl_{S_2}(s)</math>. Otherwise, <math>s'=s_1</math>. In this case, <math>CUF(s)=\tilde{u}(CUF(s_1))</math> is a generalised statement. Since <math>u_A</math> is injective with domain <math>A(s_2)</math>, <math>\tilde{u}(CUF(s_1))=\tilde{u}(CUF(\tilde{u}_A(s_2)))=\tilde{u}(\tilde{u}_A(CUF(s_2)))</math>. Hence <math>s</math> is provable from <math>S_2</math> by lemma 30.
 
 Due to this lemma, we need only consider closures <math>Cl_S(s)</math> where <math>S</math> is a set of axioms, presumably [[w:logically independent|logically independent]].
 
