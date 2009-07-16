@@ -354,17 +354,33 @@ Note that we do not need <code>ax-16</code> due to <code>ax-17</code> [http://us
 
 From now on we consider some JHilbert proof module which imports only the above interface but otherwise has arbitrary valid content. In what follows we shall make frequent references to the formalisation of Metamath as done in Appendix C of the Metamath book<ref name="metamath">{{sc|N. Megill}}, The Metamath Book, http://us.metamath.org/downloads/metamath.pdf</ref>.
 
-'''Definition.''' Let <math>CN:=\{(,),\mathrm{set},\mathrm{class},\mathrm{wff},=,\in,\neg,\rightarrow,\forall,\vdash\}</math>, <math>VR:=V</math>, <math>T:=\{(t,v):v\in VR, t=K(v)\}</math> (in particular, the first component of all elementf of <math>T</math> is one of <math>\mathrm{set},\mathrm{class},\mathrm{wff}</math>), and let <math>\Gamma</math> be the set of Metamath statements representing the functors and axioms given above (except <code>cv</code>, which is unnecessary in Metamath). We shall then consider the ''Metamath formal system'' <math>\mathfrak{F}:=(CN,VR,\Gamma)</math>. We denote the Metamath universe of <math>\mathfrak{F}</math> by <math>\mathfrak{U}</math>.
+Note that the above interface serves only an exemplary purpose. Our methodology is sufficiently general to work with any valid representation of a Metamath database, for the correct meaning of "valid". We shall now describe the translation of certain JHilbert data structures to Metamath.
 
-'''Definition.''' We denote the mapping from JHilbert statements <math>s=(n,\Delta,h,e)</math> to Metamath pre-statements <math>(D,T,H,A)</math> by <math>MM</math>. If <math>h\in E(V,F_T)^*</math> and <math>e\in E(V,F_T)</math>, then <math>MM</math> maps as expected. In the general case, <math>MM</math> maps so that if <math>h=(e_1,\ldots,e_m)</math>, then <math>H=(MM(CUF(e_1)),\ldots,MM(CUF(e_m))</math>, and <math>A=MM(CUF(e))</math>. We map the DV constraints as <math>D:=MM(\Delta):=\{\{v,w\}\subseteq V:(v,w)\in\Delta\}</math>. In addition, we add the maximal dummy variable constraints <math>\{\{v,w\}:v\in V_D,w\in V\setminus\{v\}\}</math> to <math>D</math>.
+'''Definition.''' Let <math>CN:=\{(,),\mathrm{set},\mathrm{class},\mathrm{wff},=,\in,\neg,\rightarrow,\forall,\vdash\}</math>, <math>VR:=V</math> and <math>T:=\{(t,v):v\in VR, t=K(v)\}</math> (in particular, the first component of all elementf of <math>T</math> is one of <math>\mathrm{set},\mathrm{class},\mathrm{wff}</math>).
 
-'''Example.''' The reduct of <math>MM(\texttt{ax-11})</math> is <math>(\emptyset,\{(\mathrm{set},x),(\mathrm{set},y),(\mathrm{wff},\varphi)\},\emptyset,\vdash (x=y\rightarrow(\forall x\varphi\rightarrow\forall x(x=y\rightarrow\varphi))))</math>.
+'''Definition.''' We define the mapping <math>MM</math> from JHilbert expressions to Metamath expressions recursively as follows:
+# For all <math>\texttt{v}\in V</math>, <math>MM(\texttt{(cv~v)})=MM(\texttt{v})=\texttt{v}</math>.
+# For expressions <math>A,B</math> of type <code>class</code>, <math>MM(\texttt{(}A\texttt{=}B\texttt{)})=MM(A)\texttt{=}MM(B)</math>.
+# For expressions <math>A,B</math> of type <code>class</code>, <math>MM(\texttt{(}A\in B\texttt{)})=MM(A)\texttt{e.}MM(B)</math>.
+# For an expression <math>A</math> of type <code>wff</code>, <math>MM(\texttt{(}\neg A\texttt{)})=\texttt{-.}MM(A)</math>.
+# For expressions <math>A,B</math> of type <code>wff</code>, <math>MM(\texttt{(}A\rightarrow B\texttt{)})=\texttt{(}MM(A)\texttt{->}MM(B)\texttt{)}</math>.
+# For expressions <math>A,B</math> of type <code>var</code> and <code>wff</code> respectively, <math>MM(\texttt{(}\forall A B\texttt{)})=\texttt{A.}MM(A) MM(B)</math>.
+# For all <math>e\in E(V,F)</math>, set <math>MM(e)=MM(CUF(e))</math>.
+# Prepend a turnstile symbol <math>\texttt{|-}</math> if necessary.
 
-'''Lemma 33.''' The map <math>MM</math> is well-defined on <math>E(V,F)_D</math>.
+'''Definition.''' We extend <math>MM</math> to relations <math>R\subseteq V\times V</math> by <math>MM(R):=\{\{v,w\}:(v,w)\in R\wedge (w,v)\in R\}</math>.
 
-{{sc|Proof.}} This follows from lemma 18 and the fact that for all <math>e\in E(V,F)</math>, <math>CUF(e)</math> is a representative for <math>[e]_D</math>.
+'''Definition.''' We extend <math>MM</math> to map generalised JHilbert statements <math>s</math> to Metamath pre-statements <math>PS:=(D,T,H,A)</math> as follows:
+# Set <math>D:=DV(s)\cup\bigcup\limits_{h\in H(s)}DV(ECUF(h))\cup DV(ECUF(C(s))</math>.
+# Set <math>H:=CUF(H(s))</math>.
+# Set <math>A:=CUF(C(s))</math>.
+Then <math>MM(s):=PS</math>.
 
-'''Lemma 34.''' There is a unique map <math>JH</math> from Metamath expressions to <math>E(V,F_T)</math> such that for all Metamath expressions <math>E</math> which are valid with respect to <math>\mathfrak{F}</math>, <math>MM(JH(E))=E</math>, and for all <math>e\in E(V,F)_D</math>, <math>[JH(MM(e))]_D=e</math>.
+'''Definition.''' Let <math>\Gamma</math> be the set of Metamath statements representing the functors and axioms given above (except <code>cv</code>, which is unnecessary in Metamath). We shall then consider the ''Metamath formal system'' <math>\mathfrak{F}:=(CN,VR,\Gamma)</math>. We denote the Metamath universe of <math>\mathfrak{F}</math> by <math>\mathfrak{U}</math>.
+
+'''Example.''' The Metamath reduct of <math>MM(\texttt{ax-11})</math> is <math>(\emptyset,\{(\mathrm{set},x),(\mathrm{set},y),(\mathrm{wff},\varphi)\},\emptyset,\vdash (x=y\rightarrow(\forall x\varphi\rightarrow\forall x(x=y\rightarrow\varphi))))</math>.
+
+'''Lemma 32.''' There is a unique map <math>JH</math> from Metamath expressions to <math>E(V,F_T)</math> such that for all Metamath expressions <math>E</math> which are valid with respect to <math>\mathfrak{F}</math>, <math>MM(JH(E))=E</math>, and for all <math>e\in E(V,F)</math>, <math>JH(MM(e))=CUF(e)</math>.
 
 {{sc|Proof.}} We have <math>VR=V</math>, and the only JHilbert functor not appearing in <math>CN</math> is <code>cv</code>. However, whether to use <code>cv</code> or not can be determined by the relevant functor's input kinds.
 
