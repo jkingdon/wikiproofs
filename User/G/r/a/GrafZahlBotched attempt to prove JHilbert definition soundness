@@ -268,11 +268,28 @@ We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s)
 :* <math>A(\tilde{u}(v))\subseteq V_N</math> for all <math>v\in M(s')</math>.
 :* For all <math>h\in H(s')</math>, some <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl(S,s,u_D)_j</math>, where <math>\tilde{u}(DV(ECUF(h)))\subseteq\Delta'\subseteq\Delta</math>.
 :* <math>\tilde{u}_D(\Delta)\subseteq\Delta^s</math>.
-We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl(S,s,u_D)_k</math> the ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' from <math>S</math> if there exists a <math>u_D</math> and an <math>e\in Cl(S,s,u_D)</math> such that <math>\tilde{u}_D(EXP(e))=CUF(C(s))</math>.
+We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl(S,s,u_D)_k</math> the (preliminary definition of) ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' from <math>S</math> if there exists a <math>u_D</math> and an <math>e\in Cl(S,s,u_D)</math> such that <math>\tilde{u}_D(EXP(e))=CUF(C(s))</math>.
 
 '''Lemma 24.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_D\colon V_N\setminus O(s)\to V_D</math> an injective proper substitution map. Then for all <math>(\Delta,e)\in Cl(S,s,u_D)</math>, <math>\tilde{u}_D(\Delta)\subseteq\Delta^s</math>.
 
 {{sc|Proof.}} The only case where this is not clear is when <math>(\Delta,e)\in Cl(S,s,u_D)_0</math>. But since the domain of <math>u_D</math> excludes <math>O(s)</math>, <math>\tilde{u}_D</math> acts identically on <math>ECUF(H(s))</math>. Hence the lemma follows.
+
+'''Lemma 25.''' Let <math>S</math> be a permissible set of statements, <math>s</math> be a pending statement and <math>u_1,u_2\colon V_N\setminus O(s)\to V_D</math> proper substitution maps whose images coincide. Then <math>(\Delta,e)\in Cl(S,s,u_1)</math> if and only if <math>((u_2^{-1}\circ u_1)^\sim(\Delta)),(u_2^{-1}\circ u_1)^\sim(e))\in Cl(S,s,u_2)</math>.
+
+{{sc|Proof.}} This follows since <math>u_1,u_2</math> map variables to variables and are injective.
+
+'''Lemma 26.''' Let <math>S</math> be a permissible set of statements and <math>s</math> a pending statement which is provable from <math>S</math> via <math>u_1\colon V_N\setminus O(s)\to V_D</math>. Then <math>s</math> is provable from <math>s</math> via any <math>u_D\colon V_N\setminus O(s)\to V_D</math> whose image coincides with <math>u_1</math>.
+
+{{sc|Proof.}} So we have some <math>(\Delta,e)\in Cl(S,s,u_1)</math> such that <math>\tilde{u}_1(e)=CUF(C(s))</math>. Now, <math>\tilde{u}_D((u_D^{-1}\circ u_1)^\sim(e))=\tilde{u}_1(e)</math>. The statement now follows from lemma 25.
+
+This lemma shows that the map <math>u_D</math> is rather immaterial as far as provability is concerned. It merely irons out some choice of named variables which serve as placeholders for dummy variables. A JHilbert user could obviate the need for different <math>u_D</math> altogether by maintaining a batch of named variables in one-to-one correspondence with dummy variables such that this batch never occurs in any statement (though in reality such bookkeeping would be rather cumbersome). Therefore we can make the following simplified definition for provability.
+
+'''Definition.''' Let <math>S</math> be a permissible set of statements and <math>s</math> a pending statement. Assume <math>\Delta^s:=DV(s)\cup\bigcup\limits_{h\in H(s)}DV(ECUF(h))\cup DV(ECUF(C(s)))</math> is a DV constraint. Then we define the sets <math>Cl_S(s)_k\subseteq\wp(V\times V)\times E(V,F_T)</math> for <math>k\in\mathbb{Z}_{\geq 0}</math> recursively as follows.
+# <math>Cl_S(s)_0:=ECUF(H(s))</math>.
+# For all <math>s'\in S</math>, all proper substitution maps <math>u</math> and all DV constraints <math>\Delta\subseteq\Delta^s</math>, <math>(\Delta,CUF(\tilde{u}(CUF(C(s')))))\in Cl_S(s)_k</math> whenever all of the following are true:
+:* <math>\tilde{u}(DV(s'))\subseteq\Delta</math>.
+:* For all <math>h\in H(s')</math>, some <math>(\Delta',CUF(\tilde{u}(CUF(h))))\in\bigcup\limits_{j=0}^{k-1}Cl_S(s)_j</math>, where <math>\tilde{u}(DV(ECUF(h)))\subseteq\Delta'\subseteq\Delta</math>.
+We call the [[w:union (set theory)|union]] <math>Cl(S,s,u_D):=\bigcup\limits_{k\in\mathbb{Z}_{\geq 0}}Cl_S(s)_k</math> the (final definition of) ''closure'' of <math>s</math> with respect to <math>S</math> and <math>u_D</math>. The statement <math>s</math> is called ''provable'' from <math>S</math> if there exists an <math>e\in Cl_S(s)</math> such that <math>EXP(e)=CUF(C(s))</math>.
 
 <!--FIXME: update from here-->
 
