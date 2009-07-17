@@ -45,6 +45,14 @@
         text-align:center;
 }
 
+.mainpage .collaboration {
+        background:#fff5f5;
+        border:1px solid #ffd0d0;
+        table-layout:fixed;
+        vertical-align:top;
+        width:100%;
+}
+
 /**
  * Shortcut layout (if a shortcut exists)
  * float and clear are controlled by the shortcut template
