@@ -61,6 +61,7 @@
 }
 
 .mainpage .collaboration .table {
+        background:#fff5f5;
         table-layout:fixed;
         vertical-align:top;
         width:100%;
