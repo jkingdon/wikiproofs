@@ -47,7 +47,20 @@
 
 .mainpage .collaboration {
         background:#fff5f5;
-        border:1px solid #ffd0d0;
+        border:1px solid #ff5555;
+        margin:2ex 0ex 2ex 0ex;
+        padding:1ex;
+}
+
+.mainpage .collaboration .heading {
+        background:#ffd0d0;
+        border:1px solid #ff4040;
+        font-size:125%;
+        margin-bottom:1ex;
+        text-align:center;
+}
+
+.mainpage .collaboration .table {
         table-layout:fixed;
         vertical-align:top;
         width:100%;
