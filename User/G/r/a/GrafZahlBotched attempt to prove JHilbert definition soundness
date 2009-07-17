@@ -368,7 +368,7 @@ Note that the above interface serves only an exemplary purpose. Our methodology 
 # Set <math>A:=MM(C(s))</math>.
 Then <math>MM(s):=PS</math>.
 
-'''Definition.''' Let <math>\Gamma</math> be the set of Metamath statements representing the functors and axioms given above (except <code>cv</code>, which is unnecessary in Metamath). We shall then consider the ''Metamath formal system'' <math>\mathfrak{F}:=(CN,VR,\Gamma)</math>. We denote the Metamath universe of <math>\mathfrak{F}</math> by <math>\mathfrak{U}</math>.
+'''Definition.''' Let <math>\Gamma</math> be the set of Metamath statements representing the functors and axioms given above (note that <code>cv</code> is rendered as an "invisible" functor in Metamath[http://us.metamath.org/mpegif/cv.html]). We shall then consider the ''Metamath formal system'' <math>\mathfrak{F}:=(CN,VR,\Gamma)</math>. We denote the Metamath universe of <math>\mathfrak{F}</math> by <math>\mathfrak{U}</math>.
 
 '''Example.''' The Metamath reduct of <math>MM(\texttt{ax-11})</math> is <math>(\emptyset,\{(\mathrm{set},x),(\mathrm{set},y),(\mathrm{wff},\varphi)\},\emptyset,\vdash (x=y\rightarrow(\forall x\varphi\rightarrow\forall x(x=y\rightarrow\varphi))))</math>.
 
