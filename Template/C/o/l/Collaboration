@@ -1,0 +1,27 @@
+<noinclude><div class="mainpage"></noinclude><div class="collaboration">
+<div class="heading">
+'''Collaboration'''
+</div>
+{| class="table"
+|-
+! Mathematics !! Non-standard logic !! [[Wikiproofs:JHilbert|JHilbert]]
+|-
+|
+* [[:Category:Mathematics Subject Classification|MSC 2010 subject tree]]
+* [[Wikiproofs:Mathematics|Mathematics project]]
+* &hellip;
+||
+* [[Wikiproofs:Modal logic|Modal logic]]
+* [[Wikiproofs:Paraconsisten logic|Paraconsisten logic]]
+* &hellip;
+||
+* [[Wikiproofs:JHilbert specification|JHilbert specification]]
+* [[Wikiproofs:Formal description of JHilbert|Formal description of JHilbert]]
+* [[Wikiproofs:JHilbert development|JHilbert development]]
+|}</div><noinclude></div>
+
+This template is transcluded from the [[Main Page]].
+
+[[Category:Templates|Collaboration]]
+
+</noinclude>
