@@ -242,9 +242,8 @@ Again, lemma 16 guarantees that the recursion in this definition terminates.
 
 '''Definition.''' A tuple <math>s=(n,\Delta,h,e)</math> with <math>n\in N</math>, <math>\Delta</math> a DV constraint, <math>h\subseteq E(V,F)</math> a finite set, and <math>e\in E(V,F)</math> is a ''generalised statement'' if the following additional properties are fulfilled:
 * <math>A(e)\subseteq V</math> and <math>A(e')\subseteq V</math> for all <math>e'\in h</math>. In other words, <math>A(s)\subseteq V</math>, where we define <math>A(s):=A(e)\cup\bigcup A(h)</math>,
-* <math>A(\Delta)\subseteq A(s)</math>.
 We define the ''name'', <math>A(s):=n</math>, the ''DV constraints'' <math>DV(s):=\Delta</math>, the ''hypotheses'' <math>H(s):=h</math>, the ''number of hypotheses'' <math>NH(s):=|h|</math>, and the ''consequent'' <math>C(s):=e</math>. We also define the ''mandatory variables'' of <math>s</math> to be <math>M(s):=A(s)\setminus\bigcup A(h)</math> and the ''occurring variables'' <math>O(s):=O(e)\cup\bigcup O(h)</math>.
-If <math>s</math> fulfils precisely the same properties except that <math>V</math> is replaced by <math>V_U</math>, then <math>s</math> is a ''statement'', if by <math>V_N</math>, then <math>s</math> is called a ''pending statement''.
+If <math>s</math> fulfils precisely the same properties except that <math>V</math> is replaced by <math>V_N</math>, then <math>s</math> is a ''pending statement''. If <math>s</math> fulfils precisely the same properties except that <math>V</math> is replaced by <math>V_U</math> and <math>A(\Delta)\subseteq A(s)</math>, then <math>s</math> is a ''statement''.
 
 '''Definition.''' A finite set <math>S</math> is called a ''permissible set of statements'' if all elements of <math>S</math> are statements and the restriction of the name projection <math>N</math> to <math>S</math> is injective.
 
@@ -257,7 +256,7 @@ If <math>s</math> fulfils precisely the same properties except that <math>V</mat
 * <math>\Delta':=\tilde{u}(DV(s))</math>,
 * <math>h':=\tilde{u}(H(s))</math>,
 * <math>c':=\tilde{u}(C(s))</math>.
-We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta',h',c')</math>.
+We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta'_{A(s)},h',c')</math>. Note that the restriction on <math>\Delta'</math> has no effect if <math>\tilde{u}</math> is applied to <math>CUF(s)<math>.
 
 '''Lemma 25.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
 
