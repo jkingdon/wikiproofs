@@ -256,7 +256,7 @@ If <math>s</math> fulfils precisely the same properties except that <math>V</mat
 * <math>\Delta':=\tilde{u}(DV(s))</math>,
 * <math>h':=\tilde{u}(H(s))</math>,
 * <math>c':=\tilde{u}(C(s))</math>.
-We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta'_{A(s)},h',c')</math>. Note that the restriction on <math>\Delta'</math> has no effect if <math>\tilde{u}</math> is applied to <math>CUF(s)<math>.
+We extend <math>\tilde{u}</math> to <math>s</math> by setting <math>\tilde{u}(s):=s':=(n',\Delta'_{A(s)},h',c')</math>. Note that the restriction on <math>\Delta'</math> has no effect if <math>\tilde{u}</math> is applied to <math>CUF(s)</math>.
 
 '''Lemma 25.''' Let <math>s</math> be a pending statement and let <math>u\colon A(s)\to V_U</math> be an injective proper substitution map. Then <math>\tilde{u}(s)</math> is a statement. We call such a statement an ''anonymisation'' of <math>s</math>.
 
