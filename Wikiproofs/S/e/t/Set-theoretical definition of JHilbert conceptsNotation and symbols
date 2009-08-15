@@ -24,13 +24,13 @@
 |-
 | <math>A^*</math> || set of all finite sequences of elements from <math>A</math>, that is <math>A^*=\bigcup\limits_{k=0}^\infty A^k</math>
 |-
-| <math>A^{**}</math> || set of all finite sequences of elements from <math>A</math> excluding the empty sequence, that is <math>A^{**}=A^*\setminus\{\epsilon\}</math>
+| <math>A^+</math> || set of all finite sequences of elements from <math>A</math> excluding the empty sequence, that is <math>A^+=A^*\setminus\{\epsilon\}</math>
 |-
 | <math>|a|</math> || the length of the sequence <math>a</math>, i.e. <math>|a|=k</math> if <math>a=(a_1,\ldots,a_k)</math> and <math>|a|=\infty</math> if <math>a</math> is an infinite sequence
 |-
 | <math>a_i</math> || <math>i</math>-th element of the sequence <math>a</math>. <math>i</math> is an [[w:integer|integer]] with <math>1\leq i\leq|a|</math>
 |-
-| <math>a\sqcup b</math> || [[w:concatenation|concatenation]] of the sequences <math>a</math> and <math>b</math>, where at least <math>a</math> is finite. Hence, <math>a\sqcup b</math> is the unique sequence with <math>|a\sqcup b|=|a|+|b|</math> and <math>(a\sqcup b)_i</math> is <math>a_i</math> for <math>i\leq|a|</math> and <math>b_{i-|a|}</math> otherwise
+| <math>a\sqcup b</math> || [[w:concatenation|concatenation]] of the sequences <math>a</math> and <math>b</math>, where at least <math>a</math> is finite. Hence, <math>a\sqcup b</math> is the unique sequence with <math>|a\sqcup b|=|a|+|b|</math> and <math>(a\sqcup b)_i</math> is <math>a_i</math> for <math>i\leq|a|</math>, and <math>b_{i-|a|}</math> otherwise
 |}
 
 [[Category:Formal description of JHilbert|Notation and symbols]]
