@@ -1,0 +1,20 @@
+{{header
+ | title    = Formal description of JHilbert
+ | subtitle = Names
+ | left     = ←[[../Notation and symbols|Notation and symbols]]
+ | right    = [[../Chapter 2|Kinds]]→
+ | shortcut = 
+ | notes    = 
+}}
+
+== Names ==
+
+The individual components of a JHilbert [[../Chapter 9|module]] are identified by ''names''. A name is a finite, non-empty sequence of ''symbols''. We shall denote our set of available symbols by <math>\Sigma</math> and our set of names by <math>\mathcal{N}</math>, so that <math>\mathcal{N}=\Sigma^+</math>.
+
+For the purpose of this formal description, it is not necessary to specify the set of symbols <math>\Sigma</math> beyond the requirement that it must be non-empty. Further specification of <math>\Sigma</math> is the task of the [[Wikiproofs:JHilbert specification|JHilbert specification]]. The non-emptiness of <math>\Sigma</math> immediately implies
+
+'''Proposition 1.1.''' The set of names <math>\mathcal{N}</math> is infinite.
+
+In fact, for the most part of this formal description, we need only this fact. The explicit representation of names as finite sequences of symbols is only required for prefixing during [[../Chapter 12|import and export]].
+
+[[Category:Formal description of JHilbert|Names]]
