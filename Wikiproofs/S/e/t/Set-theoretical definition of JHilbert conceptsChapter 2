@@ -9,4 +9,10 @@
 
 == Kinds ==
 
+In JHilbert, mathematical thought is rendered as several ''kinds'' of [[../Chapter 6|expressions]]. What kinds, exactly, occur, is user-defined. For example, a JHilbert module on [[w:ZFC|ZFC]] set theory might need expressions for [[w:set (mathematics)|sets]], [[w:class (set theory)|classes]] and [[w:well-formed formula|well-formed formula]]s, and thus define three kinds to that effect.
+
+As there is no additional data attached to kinds, we may model the kinds permissible for an expression with a finite subset of the [[../Chapter 1|names]], <math>K\subseteq\mathcal{N}</math>.
+
+<!--FIXME: equivalence relation-->
+
 [[Category:Formal description of JHilbert|Kinds]]
