@@ -9,10 +9,12 @@
 
 == Kinds ==
 
-In JHilbert, mathematical thought is rendered as several ''kinds'' of [[../Chapter 6|expressions]]. What kinds, exactly, occur, is user-defined. For example, a JHilbert module on [[w:ZFC|ZFC]] set theory might need expressions for [[w:set (mathematics)|sets]], [[w:class (set theory)|classes]] and [[w:well-formed formula|well-formed formula]]s, and thus define three kinds to that effect.
+In JHilbert, mathematical thought is rendered as several ''kinds'' of [[../Chapter 6|expressions]]. What kinds, exactly, occur, is user-defined. For example, a JHilbert [[../Chapter 9|module]] on [[w:ZFC|ZFC]] set theory might need expressions for [[w:set (mathematics)|sets]], [[w:class (set theory)|classes]] and [[w:well-formed formula|well-formed formula]]s, and thus define three kinds to that effect.
 
 As there is no additional data attached to kinds, we may model the kinds permissible for an expression with a finite subset of the [[../Chapter 1|names]], <math>K\subseteq\mathcal{N}</math>.
 
-<!--FIXME: equivalence relation-->
+Sometimes, however, we may wish to unite several kinds, or subsume one kind under another. For example, if we want to apply the results of a JHilbert module dealing with group theory which has a kind for elements of a group to a more generic module dealing with ZFC set theory, we may want to subsume the group element kind of the first module under the set kind of the latter.
+
+<!--FIXME: equivalence relation, equivalence of notions -->
 
 [[Category:Formal description of JHilbert|Kinds]]
