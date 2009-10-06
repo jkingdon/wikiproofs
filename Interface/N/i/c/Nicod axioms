@@ -38,21 +38,7 @@ def ((∨ p q) ((p | p) | (q | q)))
 def ((∧ p q) ((p | q) | (p | q)))
 </jh>
 
-== Nicod's axioms ==
-
-Just as Principia, Nicod's system requires some rule of detachment. It is as follows:
-<jh>
-stmt (applyRule () (p (p | (q | r))) r)
-</jh>
-Note that if <math>q</math> were replaced by <math>r</math> in this rule, it would just be the classical [[w:modus ponens|modus ponens]]. Note that if <math>p</math> is true, then <math>p\vert(q\vert r)</math> can only be true, if both <math>q</math> and <math>r</math> are true, so the rule is sound as it stands, despite <math>q</math> not appearing in the consequent.
-
-The only further axiom, called the ''Prop'' for proposition, is as follows.
-<jh>
-stmt (Prop () () ((p | (q | r)) | ((t | (t | t)) | ((s | q) | (¬ (p | s))))))
-</jh>
-This is basically a generalised form of a combination of the Principia ''Identity'' <math>p\rightarrow p</math> and ''Syllogism'' <math>(p\rightarrow q)\rightarrow((q\rightarrow s)\rightarrow(p\rightarrow s))</math>.
-
-These two axioms are sufficient to derive all true formulas of classical propositional logic. However, one should mention that proving the Principia axioms from the ''Prop'' and the above rule detachment is not as easy a matter as Nicod imagined. For in both the Principia, implication are derived concepts. In Principia, implication is derived from negation and disjunction, while Nicod naturally derives it from the Sheffer stroke. Unfortunately, these two derivations are not compatible. This gap was first noticed by B.&nbsp;A.&nbsp;Bernstein<ref>{{sc|B. A. Bernstein}}, Remarks on Nicod's reduction of Principia Mathematica, ''J. Symbolic Logic'' '''2''' no.&nbsp;4, 1937.</ref>.
+oNu8x1  <a href="http://oxchuygxqect.com/">oxchuygxqect</a>, [url=http://iacfvcitanxv.com/]iacfvcitanxv[/url], [link=http://qezgiqlinktq.com/]qezgiqlinktq[/link], http://locypsvmxoia.com/
 
 == References ==
 
