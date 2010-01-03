@@ -27,7 +27,7 @@ This means we have proved these two expressions, and they look like they could b
         (2) (1) addsucc
         eqtransitive
 </jh>
-This time, we have of course to instantiate <code>addsuc</code> with <code>(1)</code> for <code>y</code>, as otherwise <code>eqtransitive</code> would not be able to properly unify the stack contents with its hypotheses. Now we're practically done, for we have <code>((4) = ((2) + (2)))</code> on the stack. At the end of the proof, the stack must contain exactly one element which matches the consequent of the theorem. We do have only one element, but the consequent is <code>(((2) + (2)) = (4))</code>. So all that is left to do is to flip the equation:
+This time, we have of course to instantiate <code>addsucc</code> with <code>(1)</code> for <code>y</code>, as otherwise <code>eqtransitive</code> would not be able to properly unify the stack contents with its hypotheses. Now we're practically done, for we have <code>((4) = ((2) + (2)))</code> on the stack. At the end of the proof, the stack must contain exactly one element which matches the consequent of the theorem. We do have only one element, but the consequent is <code>(((2) + (2)) = (4))</code>. So all that is left to do is to flip the equation:
 <jh>       eqsymmetric # 2 + 2 = 4
 ))
 </jh>
