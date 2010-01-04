@@ -13,3 +13,7 @@ __NEWSECTIONLINK__
 Please sign your post with four tildes.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 22:15, 5 June 2009 (UTC)
 
 [[Category:Wikiproofs|Tearoom]]
+
+== better error message for failed export? ==
+
+I thought I would see whether I could make any progress on finishing [[Principia Mathematica propositional logic]]. A little experimentation seemed to show that if an export fails because the page is missing a <code>thm</code> for one of the <code>stmt</code> in the interface, the error message fails to tell the user which <code>stmt</code> was unproved. Would it be easy to add this to the error message? [[User:Kingdon|Kingdon]] 23:48, 3 January 2010 (UTC)
