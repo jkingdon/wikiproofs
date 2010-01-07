@@ -19,3 +19,8 @@ Please sign your post with four tildes.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User
 I thought I would see whether I could make any progress on finishing [[Principia Mathematica propositional logic]]. A little experimentation seemed to show that if an export fails because the page is missing a <code>thm</code> for one of the <code>stmt</code> in the interface, the error message fails to tell the user which <code>stmt</code> was unproved. Would it be easy to add this to the error message? [[User:Kingdon|Kingdon]] 23:48, 3 January 2010 (UTC)
 
 :What was the error message you were getting? You may also want to try the command line version of JHilbert [http://www.mathi.uni-heidelberg.de/~alex/jhilbert/downloads.html] with different debug level settings.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 08:22, 6 January 2010 (UTC)
+
+::The easiest way to reproduce this is to go to [[Nicod's reduction of Principia Mathematica]], remove the line "thm (.Add () () (q .→ (p .∨ q)) (" (and the next three lines which go with it), and click preview. The error is:
+ export (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () . Unable to export parameter 
+ PRINCIPIA(Interface:Principia_Mathematica_propositional_logic)[]+.: Parameter mismatch: object not found
+::I would have hoped for something like "export failed: statement Add is not proven". It might turn out that downloading JHilbert and the pages in question is indeed going to be the easiest way to work, but part of what excited me about wikiproofs was the possibility of skipping that step. [[User:Kingdon|Kingdon]] 02:40, 7 January 2010 (UTC)
