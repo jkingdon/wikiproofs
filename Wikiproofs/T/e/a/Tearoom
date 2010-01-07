@@ -24,3 +24,5 @@ I thought I would see whether I could make any progress on finishing [[Principia
  export (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () . Unable to export parameter 
  PRINCIPIA(Interface:Principia_Mathematica_propositional_logic)[]+.: Parameter mismatch: object not found
 ::I would have hoped for something like "export failed: statement Add is not proven". It might turn out that downloading JHilbert and the pages in question is indeed going to be the easiest way to work, but part of what excited me about wikiproofs was the possibility of skipping that step. [[User:Kingdon|Kingdon]] 02:40, 7 January 2010 (UTC)
+
+:::Should be fixed now. The trouble with the current state of affairs is that JHilbert is the outgrowth of command line utilities and the logging/reporting facilities of JHilbert in command line mode vs. server mode are still quite conflated. I'm working on a rewrite but with all my RL stuff things are going very slowly atm.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 06:41, 7 January 2010 (UTC)
