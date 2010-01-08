@@ -9,8 +9,9 @@ Transport theorems:
 
 <jh>
 kindbind (wff .wff)
-# this isn't working: def ((.¬ p) (¬ p))
+# this isn't working: 
+#def ((.¬ p) (¬ p))
 
-#Uncomment this once it is ready:
-# export (SANDBOX Interface:Sandbox () .)
+# Uncomment this once it is ready:
+#export (SANDBOX Interface:Sandbox () .)
 </jh>
