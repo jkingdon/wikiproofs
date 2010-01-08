@@ -1,3 +1,7 @@
 == Welcome ==
 
 Hi Kingdon, welcome to Wikiproofs! Feel free to mess around a little with JHilbert. You can also download the program for local use from http://www.mathi.uni-heidelberg.de/~alex/jhilbert/. There, you can find some preliminary documentation. There is also some very preliminary concept documentation in [[:Category:JHilbert]]. Unfortunately, I've been very busy in RL, so nothing much has happened on this site the last few months. But I'm still checking for activity every few days.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 08:06, 6 January 2010 (UTC)
+
+== Proof and interface modules in user space ==
+
+Hi Kingdon, just so you know: the JHilbert parser is also enabled in the <code>User module</code> and <code>User interface</code> namespaces where you can write your private/testing stuff with more flexibility than in the sandboxes.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:25, 8 January 2010 (UTC)
