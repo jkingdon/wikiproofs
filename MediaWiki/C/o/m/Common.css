@@ -166,7 +166,7 @@
         border-collapse:collapse;
         float:right;
         margin:0.5em;
-        width:30%
+        width:30%;
 }
 
 .modules_template .heading {
@@ -189,6 +189,24 @@
         background:#f7f0f0;
         border-bottom:1px solid gray;
         border-top:2px solid gray;
+}
+
+/**
+ * [[Template:sandbox pages]]
+ */
+
+.sandbox_pages_template {
+        background:#f0f0f0;
+        border:1px solid gray;
+        border-collapse:collapse;
+        float:right;
+        margin:0.5em;
+        width:30%;
+}
+
+.sandbox_pages_template {
+        background:#e7e7e7;
+        font-size:125%;
 }
 
 /* </pre> */
