@@ -1,4 +1,14 @@
-This page allows you to carry out experiments.  Note that JHilbert behaves differently depending on whether it is in the Interface namespace or the main namespace, and is not enabled at all in the User namespace.  Hence the sandbox pages.
+{{header
+ | title    = Sandbox
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = This page allows you to carry out experiments.  Note that JHilbert behaves differently depending on whether it is in the Interface namespace or the main namespace. Hence the sandbox pages.
+
+You may also carry out your experiments in the <code>User interface</code> and <code>User module</code> namespaces.
+}}
+{{sandbox pages}}
 
 == Well-formed formulas ==
 
