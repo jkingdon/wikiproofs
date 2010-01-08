@@ -1,3 +1,15 @@
+{{header
+ | title    = Sandbox
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = This page allows you to carry out experiments.  Note that JHilbert behaves differently depending on whether it is in the Interface namespace or the main namespace. Hence the sandbox pages.
+
+You may also carry out your experiments in the <code>User interface</code> and <code>User module</code> namespaces.
+}}
+{{sandbox pages}}
+
 I'll write this sort of in the style of [[Nicod's reduction of Principia Mathematica]], with a theory at the beginning and transport theorems at the end.
 
 For convenience, I'll import the [[Interface:Nicod axioms|Nicod axioms]] rather than making another sandbox interface:
