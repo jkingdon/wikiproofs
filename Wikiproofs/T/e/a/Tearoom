@@ -28,3 +28,18 @@ I thought I would see whether I could make any progress on finishing [[Principia
 :::Should be fixed now. The trouble with the current state of affairs is that JHilbert is the outgrowth of command line utilities and the logging/reporting facilities of JHilbert in command line mode vs. server mode are still quite conflated. I'm working on a rewrite but with all my RL stuff things are going very slowly atm.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 06:41, 7 January 2010 (UTC)
 
 ::::Thanks, looks much better.  Don't get too stressed about it; there probably would have been workarounds to this problem. [[User:Kingdon|Kingdon]] 15:18, 7 January 2010 (UTC)
+
+== doubled names ==
+
+If I look at [[Interface:Nicod axioms]], the rendered page contains:
+ def (¬¬ p) (p | p))
+In case it helps, the HTML for the doubled ¬ is:
+ <nowiki><span class="beginexp">¬</span><span class="def">¬</span></nowiki>
+
+Clicking on "edit" shows only a single character:
+ def ((¬ p) (p | p))
+
+I believe this started happening within the last day or so.
+
+One other thing (which might not be related, or even a bug at all). Uncommenting both commented out lines at [[Sandbox]] shows an error
+ def (.¬.¬ p Variable not found Variable not found: (cause unknown)
