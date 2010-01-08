@@ -797,6 +797,10 @@ thm (*4.54 () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
 </jh>
 
 :''This page is still incomplete''
+:''Once it is done, the following export can be uncommented:''
+<jh>
+#export (CLASSICAL Interface:Classical_propositional_calculus () .)
+</jh>
 
 == References ==
 
