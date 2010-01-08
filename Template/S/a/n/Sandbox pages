@@ -1,0 +1,18 @@
+{| class="sandbox_pages_template"
+|-
+! class="heading" colspan="2" | Sandbox pages
+|-
+| class="entry" | [[Wikiproofs:Sandbox]] || General sandbox with no interaction with the JHilbert parser
+|-
+| class="entry" | [[Interface:Sandbox]] || Sandbox interpreted as an [[Help:interface module|interface module]] by JHilbert
+|-
+| class="entry" | [[Sandbox]] || Sandbox  interpreted as a [[Help:proof module|proof module]] by JHilbert
+|}<includeonly>
+[[Category:Sandbox pages]]</includeonly>
+<noinclude>
+== Usage ==
+
+Simply place this template near the top of the sandbox pages. Sandbox pages will be added to [[:Category:Sandbox pages]] automatically.
+
+[[Category:Templates|{{PAGENAME}}]]
+</noinclude>
