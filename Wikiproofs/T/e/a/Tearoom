@@ -43,3 +43,5 @@ I believe this started happening within the last day or so.
 
 One other thing (which might not be related, or even a bug at all). Uncommenting both commented out lines at [[Sandbox]] shows an error
  def (.¬.¬ p Variable not found Variable not found: (cause unknown)
+
+:Seems like the last update introduced some sort of bug (a <code>beginexp</code> is an opening parenthesis, nothing else). Maybe I can look into it over the weekend.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:45, 8 January 2010 (UTC)
