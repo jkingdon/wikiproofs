@@ -201,13 +201,18 @@
         border-collapse:collapse;
         float:right;
         margin:0.5em;
-        vertical-align:top;
         width:50%;
 }
 
 .sandbox_pages_template .heading {
         background:#e7e7e7;
         font-size:125%;
+}
+
+.sandbox_pages_template .entry {
+        background:#e7e7e7;
+        font-size:125%;
+        vertical-align:top;
 }
 
 /* </pre> */
