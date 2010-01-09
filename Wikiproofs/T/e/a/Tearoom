@@ -45,3 +45,5 @@ One other thing (which might not be related, or even a bug at all). Uncommenting
  def (.¬.¬ p Variable not found Variable not found: (cause unknown)
 
 :Seems like the last update introduced some sort of bug (a <code>beginexp</code> is an opening parenthesis, nothing else). Maybe I can look into it over the weekend.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:45, 8 January 2010 (UTC)
+
+::The name doubling bug is fixed now. The "variable not found" message is not a bug. You must define all variable names anew for each module: variable names are always local. This makes sense as variables usually have very simple (one or two letter) identifiers and you wouldn't want them to clash due to kind mismatches over several modules.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 14:37, 9 January 2010 (UTC)
