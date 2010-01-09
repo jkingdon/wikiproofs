@@ -5,3 +5,5 @@ Hi Kingdon, welcome to Wikiproofs! Feel free to mess around a little with JHilbe
 == Proof and interface modules in user space ==
 
 Hi Kingdon, just so you know: the JHilbert parser is also enabled in the <code>User module</code> and <code>User interface</code> namespaces where you can write your private/testing stuff with more flexibility than in the sandboxes.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:25, 8 January 2010 (UTC)
+
+:Thanks. I just tried it out and it seems to work nicely. [[User:Kingdon|Kingdon]] 19:41, 8 January 2010 (UTC)
