@@ -3,3 +3,5 @@
 I think I understand why [[Nicod's reduction of Principia Mathematica]] needs both .Taut and Taut (and likewise for all the others), based on the two different definitions of implication. On the other hand, in this module, to get it to export, I seem to face a similar problem but it is just about the names.  It seems solvable by just adding <code>thm (.True () () (⊤) (True))</code> and likewise for all the others, but before I go add that for every one, I thought I should ask whether there is an easier or better way. [[User:Kingdon|Kingdon]] 03:48, 10 January 2010 (UTC)
 
 :The dot is just an arbitrary prefix. You can choose any character sequence which would make a valid identifier instead. Plus (and that's probably what you want here) you can take the empty string as prefix by replacing <code>.</code> with <code>()</code> in your export.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 11:43, 10 January 2010 (UTC)
+
+::Yeah, thanks.  I figured that out within an hour of posting the question, but by that time I was already in bed and figured it could wait for the morning. [[User:Kingdon|Kingdon]] 13:33, 10 January 2010 (UTC)
