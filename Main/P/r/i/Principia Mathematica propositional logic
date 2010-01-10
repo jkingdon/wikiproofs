@@ -796,6 +796,19 @@ thm (*4.54 () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
 ))
 </jh>
 
+At this point we are ready to set some stuff up to line things up for the export to work:
+<jh>
+kindbind (wff .wff)
+def ((.¬ p) (¬ p))
+def ((.→ p q) (→ p q))
+def ((.∨ p q) (∨ p q))
+def ((.∧ p q) (∧ p q))
+def ((.↔ p q) (↔ p q))
+def ((.⊤) (⊤))
+def ((.⊥) (⊥))
+thm (.True () () (⊤) (True))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
