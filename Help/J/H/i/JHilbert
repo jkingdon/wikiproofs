@@ -1,0 +1,64 @@
+This page is designed to be (eventually) a full reference manual for JHilbert. If you don't have some familiarity with JHilbert, it is probably easier to start with the [[Help:Tutorial|tutorial]] and then come back here.
+
+The language in which the proofs and statements being proved are written is called JHilbert, which is also the name of the software that runs to verify the proof when you save or preview a page.  On the wiki, JHilbert statements are enclosed between <code><nowiki><jh></nowiki></code> and <code><nowiki><jh></nowiki></code> tags.
+
+JHilbert distinguishes between interfaces and modules and different commands are valid in interfaces or modules.  Interfaces live in the Interface namespace (for example, [[Interface:Classical propositional calculus]]) and modules live in the main namespace (for example, [[Principia Mathematica propositional logic]]). Interfaces contain axioms and statements to be proved; modules prove those statements. A [[w:lemma|lemma]] which is proven in a module but which is not likely to be useful in contexts other than the given proof should not be listed in any interface.
+
+Anything from <code>#</code> to the end of the line is a comment (that is, it is ignored by JHilbert).
+
+==Interfaces==
+Interfaces contain:
+
+* Parameters.
+
+* Kinds.  Each variable will be of some kind, and the kinds are declared with the <code>kind</code> statement.
+ kind (''new-kind'')
+For example, <code>kind (wff)</code> says there is a kind called <code>wff</code>.
+
+* Variables.  Variables are declared with a kind.
+ var (''kind'' ''new-variable-1'' ''new-variable-2''...)
+For example, <code>kind (wff p q r)</code> declares variables p, q and r, all wffs.
+
+* Terms.
+ term (''kind'' (''new-term'' ''argument-1-kind'' ''argument-2-kind''...))
+For example, <code>term (wff (¬ wff))</code> defines a term called ¬ of kind wff which takes one argument, which is a wff.
+
+* Definitions. 
+ def (''new-defined'' ''definition'')
+For example, 
+ def ((¬ p) (p | p))
+defines ¬ in terms of |
+
+* Statements.  Statements are either axioms (in which case there will be no modules which exports this interface, as axioms cannot be proved) or statements to be proved (in which case, some module will prove the statement and export the interface).
+ stmt (''new-statement'' (''distinct-variables'') (''hypothesis'') (''consequent''))
+For example, one version of the famous [[w:modus ponens|modus ponens]] states that from the hypotheses p and p → q, one can conclude q:
+ stmt (applyModusPonens () (p (p → q)) q)
+
+== Modules ==
+* Import statements. These represent statements to be assumed in proofs (either axioms, or statements proved elsewhere).
+ import (''identifier'' ''page'' () ())
+For example:
+ import (NICOD Interface:Nicod_axioms () ())
+
+* Variables.  Same syntax and meaning as in interfaces.
+
+* Definitions. Same syntax as in interfaces.
+
+* Proofs.
+ thm (''new-theorem'' (''distinct-variables'') (''hypotheses'') (''consequent'') (''proof''))
+
+* Kindbind.  This allows a kind to have several names, which may be necessary in conjunction with the prefix feature of the export statement.
+ kindbind (''existing-name'' ''new-name'')
+For example, if you have a kind called wff and you want .wff to refer to the same kind, specify
+ kindbind (wff .wff)
+
+* Export statements.  Once a module has proved everything it wants to, it can export those proofs to an interface.
+ export (''identifier'' ''page'' () ''prefix'')
+The ''prefix'' allows the names in the interface to differ from the name in the module (which may be necessary to avoid naming conflicts with some of the imported interfaces, for example). See [[Nicod's reduction of Principia Mathematica]] which has something of a transport layer at the end, and uses the prefix to distinguish the "regular" theorems from the ones which will be exportable. The prefix can be either a string  or () for the empty string.
+
+Other related systems, which may help you understand JHilbert (especially until this manual is a bit more complete) are:
+*[http://metamath.org/ Metamath]. Metamath is in the same general family, in the sense of having fairly explicit proofs and a simple proof verifier.  There is an automated converter to convert metamath to ghilbert.
+*[http://wiki.planetmath.org/AsteroidMeta/Ghilbert ghilbert]. Ghilbert, compared with metamath, adds a number of features most notably safe definitions (in metamath, definitions are axioms and a poorly constructed definition can render the system [[w:Inconsistent|inconsistent]]) and the ability to separate proofs into interfaces and modules. In particular, [http://wiki.planetmath.org/AsteroidMeta/Ghilbert_specification the specification] is rather close to what is described in this page.
+
+[[Category:Help]]
+[[Category:JHilbert]]
