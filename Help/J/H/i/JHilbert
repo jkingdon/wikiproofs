@@ -39,7 +39,7 @@ For example, one version of the famous [[w:modus ponens|modus ponens]] states th
  import (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
 For example:
  import (NICOD Interface:Nicod_axioms () ())
-As you can see, interfaces with no parameters are imported with empty parameter lists. The ''prefix'' allows the names in the interface to differ from the name in the module (which may be necessary to avoid naming conflicts with some of the imported interfaces, for example). See [[Nicod's reduction of Principia Mathematica]] which has something of a transport layer at the end, and uses the prefix to distinguish the "regular" theorems from the ones which will be exportable. The prefix can be either a string  or <code>()</code> for the empty string.
+As you can see, interfaces with no parameters are imported with empty parameter lists. The ''prefix'' allows the names in the interface to differ from the name in the module (which may be necessary to avoid naming conflicts with some of the imported interfaces, for example). For an example of avoiding naming conflicts, see [[Nicod's reduction of Principia Mathematica]] (which uses a prefix on the export). The prefix can be either a string or <code>()</code> for the empty string.
 
 * Variables.  Same syntax and meaning as in interfaces.
 
@@ -55,6 +55,7 @@ For example, if you have a kind called wff and you want .wff to refer to the sam
 
 * Export statements.  Once a module has proved everything it wants to, it can export those proofs to an interface.
  export (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
+See import for a description of identifier, page, parameters, and prefix.
 
 Other related systems, which may help you understand JHilbert (especially until this manual is a bit more complete) are:
 *[http://metamath.org/ Metamath]. Metamath is in the same general family, in the sense of having fairly explicit proofs and a simple proof verifier.  There is an automated converter to convert metamath to ghilbert.
