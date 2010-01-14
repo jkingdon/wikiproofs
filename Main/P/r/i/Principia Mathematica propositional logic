@@ -457,14 +457,14 @@ thm (*2.82 () () ((p ∨ (q ∨ r)) → ((p ∨ (r → s)) → (p ∨ (q ∨ s))
 </jh>
 from which we can immediately derive our new syllogism law:
 <jh>
-thm (*2.83 () () ((p → (q → r)) → ((p → (r → s)) → (p → (q → s)))) (
+thm (SyllogismInConsequent () () ((p → (q → r)) → ((p → (r → s)) → (p → (q → s)))) ( # *2.83
         (¬ p) (¬ q) r s *2.82
 ))
 
 thm (applySyllogismInConsequent () ((H1 (p → (q → r))) (H2 (p → (r → s)))) (p → (q → s)) (
         H2
         H1
-        p q r s *2.83
+        p q r s SyllogismInConsequent
         applyModusPonens
         applyModusPonens
 ))
