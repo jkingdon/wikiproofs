@@ -102,6 +102,10 @@ thm (Id () () (p → p) ( # *2.08
         p Taut
         applySyllogism
 ))
+# Another name for the same theorem:
+thm (ImplicationReflexivity () () (p → p) (
+        p Id
+))
 
 thm (TertiumNonDatur () () (p ∨ (¬ p)) ( # *2.11
         p Id
