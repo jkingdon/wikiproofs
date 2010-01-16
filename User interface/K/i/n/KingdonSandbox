@@ -20,7 +20,7 @@ stmt (Sum () () ((q → r) → ((p ∨ q) → (p ∨ r)))) # *1.6
 
 Here is the form of the associative law which Russell and Whitehead, in the discussion of their *1.5, term the "more natural" form:<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910, page 101.</ref>
 <jh>
-stmt (NaturalAssoc () () ((p ∨ (q ∨ r)) → (p ∨ (q ∨ r))))
+stmt (NaturalAssoc () () ((p ∨ (q ∨ r)) → ((p ∨ q) ∨ r)))
 </jh>
 
 == References ==
