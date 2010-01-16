@@ -1,0 +1,23 @@
+{{header
+ | title    = Principia Mathematica
+ | subtitle = associative law for disjunction without the twist
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Whitehead and Russell adopt a version of the associative law which contains a commutation, in place of the more natural form.  They make this choice because the natural form has "less deductive power".  Here we show that this is just a matter of convenience or style, and that if the associative axiom is expressed in the natural form, the resulting axioms can derive the set which Whitehead and Russell actually chose. (Alternately, we could show that there is some theorem which can be derived with the real set and not with this set).
+}}
+
+{{interfaces
+| imports = [[User interface:Kingdon/Sandbox|Principia Mathematica propositional logic with natural associative law]]
+| exports = [[Interface:Principia Mathematica propositional logic]]
+}}
+
+I note that the proof of Syllogism requires Assoc, and my naive sketch of a proof for deriving Assoc from NaturalAssoc did involve Syllogism (at least, as I wrote it out).
+<jh>
+import (NATURAL User_interface:Kingdon/Sandbox () ())
+#thm (Assoc () () ((p ∨ (q ∨ r)) → (q ∨ (p ∨ r))) ( # *1.5
+#  
+#))
+
+#export (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () ())
+</jh>
