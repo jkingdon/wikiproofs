@@ -1,0 +1,28 @@
+== Principia logical axioms without the "twist" in Assoc ==
+
+In introducing their form of the associative law for disjunction, Whitehead and Russell provide a form which includes a commutation in place of the more natural one which does not. This page is a version of those axioms with form which Whitehead and Russell term more natural in place of the one which they actually adopt.
+
+First the axioms of [[Interface:Principia Mathematica propositional logic]] other than the one in question:
+<jh>
+kind (wff)
+var (wff p q r)
+term (wff (¬ wff)) # Negation
+term (wff (∨ wff wff)) # Disjunction
+def ((→ p q) ((¬ p) ∨ q)) # Implication, *1.01
+stmt (applyModusPonens () (p (p → q)) q) # *1.1
+stmt (Taut () () ((p ∨ p) → p)) # *1.2
+stmt (Add () () (q → (p ∨ q))) # *1.3
+stmt (Perm () () ((p ∨ q) → (q ∨ p))) # *1.4
+stmt (Sum () () ((q → r) → ((p ∨ q) → (p ∨ r)))) # *1.6
+</jh>
+
+Here is the form of the associative law which Russell and Whitehead, in the discussion of their *1.5, term the "more natural" form:<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910, page 101.</ref>
+<jh>
+stmt (Assoc () () ((p ∨ (q ∨ r)) → (p ∨ (q ∨ r))))
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Classical propositional logic|Principia Mathematica Propositional Logic]]
