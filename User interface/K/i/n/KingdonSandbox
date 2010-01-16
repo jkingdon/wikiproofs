@@ -9,6 +9,8 @@ var (wff p q r)
 term (wff (¬ wff)) # Negation
 term (wff (∨ wff wff)) # Disjunction
 def ((→ p q) ((¬ p) ∨ q)) # Implication, *1.01
+def ((∧ p q) (¬ ((¬ p) ∨ (¬ q)))) # Conjunction, *3.01
+def ((↔ p q) ((p → q) ∧ (q → p))) # Biconditional, *4.01
 stmt (applyModusPonens () (p (p → q)) q) # *1.1
 stmt (Taut () () ((p ∨ p) → p)) # *1.2
 stmt (Add () () (q → (p ∨ q))) # *1.3
