@@ -634,7 +634,7 @@ thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
 === Import and export ===
 We now prove Peano's import and export principles. We begin with exportation:
 <jh>
-thm (*3.3 () () (((p ∧ q) → r) → (p → (q → r))) (
+thm (Exportation () () (((p ∧ q) → r) → (p → (q → r))) ( # *3.3
 </jh>
 To shift the bracket right, we combine transposition and the ''Comm'' axiom to get <math>((p\wedge q)\rightarrow r)\rightarrow(p\rightarrow((\neg r)\rightarrow(\neg q)))</math>:
 <jh>
@@ -651,13 +651,13 @@ What remains to do now is to install a transposition of <math>r</math> with <mat
 
 thm (export () ((H ((p ∧ q) → r))) (p → (q → r)) (
         H
-        p q r *3.3
+        p q r Exportation
         applyModusPonens
 ))
 </jh>
 Importation is simpler as the conjunction is in the consequent this time:
 <jh>
-thm (*3.31 () () ((p → (q → r)) → ((p ∧ q) → r)) (
+thm (Importation () () ((p → (q → r)) → ((p ∧ q) → r)) ( # *3.31
         (¬ p) (¬ q) r *2.31
         ((¬ p) ∨ (¬ q)) r *2.53
         applySyllogism
@@ -665,7 +665,7 @@ thm (*3.31 () () ((p → (q → r)) → ((p ∧ q) → r)) (
 
 thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
         H
-        p q r *3.31
+        p q r Importation
         applyModusPonens
 ))
 </jh>
@@ -679,6 +679,24 @@ thm (*3.33 () () (((p → q) ∧ (q → r)) → (p → r)) (
 thm (*3.34 () () (((q → r) ∧ (p → q)) → (p → r)) (
        q r p *2.05
        import
+))
+</jh>
+
+Import and export also give us another transposition theorem, *3.37 (which we prove in several steps):
+<jh>
+thm (*3.37-1 () () ((p → (q → r)) → (p → ((¬ r) → (¬ q)))) (
+        q r *2.16
+        (q → r) ((¬ r) → (¬ q)) p *2.05
+        applyModusPonens
+))
+
+thm (*3.37 () () (((p ∧ q) → r) → ((p ∧ (¬ r)) → (¬ q))) (
+        p q r Exportation
+        p q r *3.37-1
+        applySyllogism
+
+        p (¬ r) (¬ q) Importation
+        applySyllogism
 ))
 </jh>
 
@@ -812,6 +830,43 @@ thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
 ))
 </jh>
 
+The idea behind the proof of converse-of-*3.37 is quite simple: *3.37 becomes its own converse (modulo some double negation) when substituted with some negated terms.  The rest of the proof is just getting rid of the double negation.
+<jh>
+thm (converse-of-*3.37 () () (((p ∧ (¬ r)) → (¬ q)) → ((p ∧ q) → r)) (
+        p (¬ r) (¬ q) *3.37
+        # (((p ∧ (¬ r)) → (¬ q)) → ((p ∧ (¬ (¬ q))) → (¬ (¬ r))))
+
+        p (¬ (¬ q)) (¬ (¬ r)) Exportation
+        # ((p ∧ (¬ (¬ q))) → (¬ (¬ r)))) → (p → ((¬ (¬ q)) → (¬ (¬ r))))
+
+        (¬ q) (¬ r) *2.17
+        r q *2.17
+        applySyllogism
+        # ((¬ (¬ q)) → (¬ (¬ r))) → (q → r)
+
+        ((¬ (¬ q)) → (¬ (¬ r))) (q → r) p *2.05
+        applyModusPonens
+        # (p → ((¬ (¬ q)) → (¬ (¬ r)))) → (p → (q → r))
+
+        applySyllogism
+
+        p q r Importation
+        applySyllogism
+
+        applySyllogism
+))
+
+thm (*4.14 () () (((p ∧ q) → r) ↔ ((p ∧ (¬ r)) → (¬ q))) (
+        p q r *3.37
+        p r q converse-of-*3.37
+        introduceBiconditional
+))
+
+# This one is not yet proved:
+#thm (*4.15 () () (((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p))) (
+#))
+</jh>
+
 === Reflexive, symmetric, and transitive ===
 
 The biconditional has these three properties (which correspond to those defining an [[w:equivalence relation|equivalence relation]]).
@@ -863,6 +918,12 @@ Second factor:
         applySyllogism
         applySyllogismInConsequent
         applyComp
+))
+
+thm (applyBiconditionalTransitivity () ((H1 (p ↔ q)) (H2 (q ↔ r))) (p ↔ r) (
+        H1 H2 combineStatements
+        p q r BiconditionalTransitivity
+        applyModusPonens
 ))
 </jh>
 
