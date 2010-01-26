@@ -27,7 +27,9 @@ def ((⊥) (p ∧ (¬ p)))
 </jh>
 We shall now begin to derive the statements. Whitehead and Russell use a decimal numbering system of the form <math>*r</math>, where <math>r</math> is a rational number with a small number of digits after the decimal point. Unless we give theorems our own name, we shall adopt their system for easier reference. Where we do use our own names, we sometimes give the decimal reference in a JHilbert comment.
 
-== Immediate consequences from the axioms ==
+== Disjunction and implication ==
+
+=== First steps ===
 
 The [[w:modus ponens|modus ponens]] rule is an axiom of Principia Mathematica, so we don't need to prove it. The ''Perm'' axiom immediately gives rise to the [[w:logical disjunction|disjunctive]] commutativity rule:
 <jh>
@@ -143,6 +145,8 @@ thm (eliminateDoubleNegation () ((H (¬ (¬ p)))) p (
         applyModusPonens
 ))
 </jh>
+
+=== Transposition ===
 Combined with double negation, the transposition law <math>*2.03</math> we already have yields the remaining three:
 <jh>
 thm (*2.15 () () (((¬ p) → q) → ((¬ q) → p)) (
@@ -199,6 +203,8 @@ thm (eliminateTransposition () ((H ((¬ q) → (¬ p)))) (p → q) (
         applyModusPonens
 ))
 </jh>
+
+=== Disjunction introduction ===
 Next, we prove the disjunction introduction laws. Introduction from the left is just the ''Add'' axiom of principia, and a permutation yields the introduction from the right.
 <jh>
 thm (DisjuctionIntroductionLeft () () (p → (q ∨ p)) (
@@ -223,6 +229,8 @@ thm (introduceRightDisjunction () ((H p)) (p ∨ q) (
         applyModusPonens
 ))
 </jh>
+
+=== Modus ponens law ===
 Next, we prove the modus ponens law with ''Assoc'':
 <jh>
 thm (*2.25 () () (p ∨ ((p ∨ q) → q)) (
@@ -235,6 +243,8 @@ thm (ModusPonens () () (p → ((p → q) → q)) ( # *2.27
         (¬ p) q *2.25
 ))
 </jh>
+
+=== Disjunction associativity ===
 We now "repair" the extra twist in the ''Assoc'' axiom to get the actual associativity rules for disjunction:
 <jh>
 thm (*2.3 () () ((p ∨ (q ∨ r)) → (p ∨ (r ∨ q))) (
@@ -271,6 +281,8 @@ thm (groupDisjunctionRight () ((H ((p ∨ q) ∨ r))) (p ∨ (q ∨ r)) (
         applyModusPonens
 ))
 </jh>
+
+=== Expression building with disjunctions ===
 Now we prove three helpful theorems regarding expression building with disjunctions, that is, they are companions to the ''Sum'' axiom. All these proofs proceed in two steps, using a syllogism to alter the consequent of ''Sum''.
 <jh>
 thm (*2.36 () () ((q → r) → ((p ∨ q) → (r ∨ p))) (
@@ -322,6 +334,8 @@ thm (*2.38 () () ((q → r) → ((q ∨ p) → (r ∨ p))) (
         applySyllogism
 ))
 </jh>
+
+=== Implication distribution theorem (if part) ===
 Our next goal will be to prove the ''if'' part of the implication distribution theorem, <math>(p\rightarrow(q\rightarrow r))\leftrightarrow((p\rightarrow q)\rightarrow(p\rightarrow r))</math>. Given that implication is defined from disjunction and negation in Principia, it would seem more natural to use [[w:de Morgan's law|de Morgan's law]] for disjunction negation for that. However, we don't have that yet, and in fact, implication distribution is instrumental to prove the "principle of the factor" ''Fact'' below, which in turn is required for de Morgan's law. So what we shall do instead is to install equivalences such as <math>p\leftrightarrow(\neg(\neg p))</math>, <math>p\leftrightarrow p\vee p</math> and <math>p\vee q\leftrightarrow q\vee p</math> in more or less deep subexpression in a long chain of theorems until we finally arrive at the desired result. <jh>
 thm (*2.53 () () ((p ∨ q) → ((¬ p) → q)) (
 </jh>
@@ -421,7 +435,8 @@ thm (distributeAntecedent () ((H (p → (q → r)))) ((p → q) → (p → r)) (
 </jh>
 Theorem <math>*2.77</math> is now precisely the ''if'' part of the implicational distribution law.
 
-Finally, we prove a "syllogism in the consequent law", that is, <math>(p\rightarrow(q\rightarrow r))\rightarrow((p\rightarrow(r\rightarrow s))\rightarrow(p\rightarrow(q\rightarrow s)))</math>, which is useful for syllogisms depending on a common hypothesis. We first show a modus ponens law for disjunctions.
+=== Syllogism in the consequent ===
+We prove a "syllogism in the consequent law", that is, <math>(p\rightarrow(q\rightarrow r))\rightarrow((p\rightarrow(r\rightarrow s))\rightarrow(p\rightarrow(q\rightarrow s)))</math>, which is useful for syllogisms depending on a common hypothesis. We first show a modus ponens law for disjunctions.
 <jh>
 thm (*2.8 () () ((q ∨ r) → ((r → s) → (q ∨ s))) (
         q r Perm
@@ -470,6 +485,7 @@ thm (applySyllogismInConsequent () ((H1 (p → (q → r))) (H2 (p → (r → s))
 ))
 </jh>
 
+=== Implication distribution theorem (only-if part) ===
 Next we prove the ''only if'' part of the implicational distribution law (the ''if'' part of which we proved in *2.77). We start with a simple consequence of *2.53 and the converse of *2.53:
 
 <jh>
@@ -582,6 +598,8 @@ thm (NotFalse () () (¬ (⊥)) (
         p *3.24
 ))
 </jh>
+
+=== Conjunction elimination ===
 Next, we prove the conjunction elimination theorems.
 <jh>
 thm (ConjunctionEliminationRight () () ((p ∧ q) → p) ( # *3.26
@@ -612,6 +630,8 @@ thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
         applyModusPonens
 ))
 </jh>
+
+=== Import and export ===
 We now prove Peano's import and export principles. We begin with exportation:
 <jh>
 thm (*3.3 () () (((p ∧ q) → r) → (p → (q → r))) (
@@ -661,6 +681,8 @@ thm (*3.34 () () (((q → r) ∧ (p → q)) → (p → r)) (
        import
 ))
 </jh>
+
+=== Composition ===
 Next, we prove ''Comp'', the principle of composition,
 <jh>
 thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) (
@@ -678,6 +700,8 @@ thm (applyComp () ((H1 (p → q)) (H2 (p → r))) (p → (q ∧ r)) (
         applyModusPonens
 ))
 </jh>
+
+=== Principle of the factor ===
 Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
 <jh>
 thm (Fact () () ((p → q) → ((p ∧ r) → (q ∧ r))) ( # *3.45
@@ -786,7 +810,13 @@ thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
         p *2.14
         introduceBiconditional
 ))
+</jh>
 
+=== Reflexive, symmetric, and transitive ===
+
+The biconditional has these three properties (which correspond to those defining an [[w:equivalence relation|equivalence relation]]).
+
+<jh>
 thm (BiconditionalReflexivity () () (p ↔ p) ( # *4.2
         p Id
         p Id
@@ -835,6 +865,8 @@ Second factor:
         applyComp
 ))
 </jh>
+
+=== Additional biconditional theorems ===
 Another easy builder theorem:
 <jh>
 
@@ -850,6 +882,8 @@ thm (buildRightDisjunction () ((H (p ↔ q))) ((p ∨ r) ↔ (q ∨ r)) (
         applyModusPonens
 ))
 </jh>
+
+=== De Morgan's laws ===
 Since the definition of conjunction in Principia is based on [[w:De Morgan's laws|De Morgan's laws]], the laws themselves are not hard to prove.
 <jh>
 thm (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.51
@@ -864,6 +898,7 @@ thm (*4.54 () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
 ))
 </jh>
 
+=== More theorems stated using the biconditional ===
 Some more theorems where we have proved implications in both directions, but can now express them using the biconditional:
 <jh>
 thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) (
