@@ -470,6 +470,70 @@ thm (applySyllogismInConsequent () ((H1 (p → (q → r))) (H2 (p → (r → s))
 ))
 </jh>
 
+Next we prove the ''only if'' part of the implicational distribution law (the ''if'' part of which we proved in *2.77). We start with a simple consequence of *2.53 and the converse of *2.53:
+
+<jh>
+thm (*2.55 () () ((¬ p) → ((p ∨ q) → q)) (
+        p q *2.53
+        applyComm
+))
+
+thm (*2.54 () () (((¬ p) → q) → (p ∨ q)) (
+        p *2.14
+        (¬ (¬ p)) p q *2.38
+        applyModusPonens
+))
+</jh>
+
+The meat of our desired result is <code>((p ∨ q) → (p ∨ r)) → (p ∨ (q → r))</code> (*2.85). It differs only by being partly expressed in terms of disjunction instead of implication.  Each of the following thm's is just an intermediate step in proving *2.85:
+
+<jh>
+thm (*2.85-1 () () (((p ∨ q) → r) → (q → r)) (
+        q p Add
+        q (p ∨ q) r Syllogism
+        applyModusPonens
+))
+
+thm (*2.85-unnamed1 () () ((¬ p) → (((p ∨ q) → (p ∨ r)) → ((p ∨ q) → r))) (
+        p r *2.55
+        (p ∨ r) r (p ∨ q) *2.05
+        applySyllogism
+))
+
+thm (*2.85-2 () () ((¬ p) → (((p ∨ q) → (p ∨ r)) → (q → r))) (
+        p q r *2.85-unnamed1
+
+        p q r *2.85-1
+        (¬ p) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (*2.85-unnamed2 () () (((p ∨ q) → (p ∨ r)) → ((¬ p) → (q → r))) (
+        p q r *2.85-2
+        applyComm
+))
+
+thm (*2.85 () () (((p ∨ q) → (p ∨ r)) → (p ∨ (q → r))) (
+        p q r *2.85-unnamed2
+        p (q → r) *2.54
+        applySyllogism
+))
+</jh>
+
+From this follows the ''only if'' part of the implicational distribution law:
+<jh>
+thm (*2.86 () () (((p → q) → (p → r)) → (p → (q → r))) (
+        (¬ p) q r *2.85
+))
+
+thm (collectAntecedent () ((H ((p → q) → (p → r)))) (p → (q → r)) (
+        H
+        p q r *2.86
+        applyModusPonens
+))
+</jh>
+
 == Conjunction ==
 
 In this section we prove statements involving conjunction <math>p\wedge q</math>. Recall that conjunction is defined by <math>\neg((\neg p)\vee(\neg q))</math>. Our first theorem is the combination of two statements to a conjunction.
@@ -797,6 +861,15 @@ thm (*4.54 () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
         p DoubleNegation
         (¬ q) buildRightDisjunction
         buildNegation
+))
+</jh>
+
+Some more theorems where we have proved implications in both directions, but can now express them using the biconditional:
+<jh>
+thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) (
+        p q r *2.77
+        p q r *2.86
+        introduceBiconditional
 ))
 </jh>
 
