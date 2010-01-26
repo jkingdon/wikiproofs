@@ -871,6 +871,25 @@ thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r
         p q r *2.86
         introduceBiconditional
 ))
+
+thm (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))) (
+        p q *2.16
+        q p *2.17
+        introduceBiconditional
+))
+
+thm (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)) (
+        p q *2.15
+        q p *2.15
+        introduceBiconditional
+))
+
+thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))) (
+        p q *2.03
+        q p *2.03
+        introduceBiconditional
+))
+
 </jh>
 
 :''This page is still incomplete''
