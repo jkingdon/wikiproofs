@@ -892,6 +892,52 @@ thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))
 
 </jh>
 
+=== Algebraic laws for disjunction and conjunction ===
+
+Some of the theorems of the propositional calculus can be thought of as analagous to those of other [[w:Abstract algebra|algebras]], showing properties such as commutivity and associativity.  Although Whitehead and Russell think this concept was overemphasized in their day,<ref>Whitehead and Russell, p. 120</ref> they do provide theorems which represent algebraic properties.
+
+Idempotence for disjunction and conjunction are perhaps the most interesting, as they cause the biggest differences between this algebra and many other algebras:<ref>Whitehead and Russell, p. 121</ref>
+
+<jh>
+thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) ( # *4.25
+        p p Add
+        p Taut
+        introduceBiconditional
+))
+</jh>
+
+To prove conjunction idempotence, we first catch up on a few basic implication theorems we haven't needed until now:
+
+<jh>
+thm (*2.4 () () ((p ∨ (p ∨ q)) → (p ∨ q)) (
+        p p q *2.31
+</jh>
+That gives us <code>((p ∨ (p ∨ q) → ((p ∨ p) ∨ q))</code> and we just need to eliminate the extra <code>p ∨ p</code>:
+<jh>
+        p Taut
+        (p ∨ p) p q *2.38
+        applyModusPonens
+
+        applySyllogism
+))
+
+thm (*2.43 () () ((p → (p → q)) → (p → q)) (
+        (¬ p) q *2.4
+))
+</jh>
+
+<jh>
+thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
+        p p *3.2
+        p (p ∧ p) *2.43
+        applyModusPonens
+
+        p p ConjunctionEliminationRight
+
+        introduceBiconditional
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
