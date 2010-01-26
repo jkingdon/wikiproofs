@@ -896,6 +896,8 @@ thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))
 
 Some of the theorems of the propositional calculus can be thought of as analagous to those of other [[w:Abstract algebra|algebras]], showing properties such as commutivity and associativity.  Although Whitehead and Russell think this concept was overemphasized in their day,<ref>Whitehead and Russell, p. 120</ref> they do provide theorems which represent algebraic properties.
 
+==== Idempotence ====
+
 Idempotence for disjunction and conjunction are perhaps the most interesting, as they cause the biggest differences between this algebra and many other algebras:<ref>Whitehead and Russell, p. 121</ref>
 
 <jh>
@@ -924,9 +926,7 @@ That gives us <code>((p ∨ (p ∨ q) → ((p ∨ p) ∨ q))</code> and we just 
 thm (*2.43 () () ((p → (p → q)) → (p → q)) (
         (¬ p) q *2.4
 ))
-</jh>
 
-<jh>
 thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
         p p *3.2
         p (p ∧ p) *2.43
@@ -936,6 +936,20 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
 
         introduceBiconditional
 ))
+</jh>
+
+==== Associativity ====
+
+Both disjunction and conjunction are associative:
+
+<jh>
+thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) ( # 4.33
+        p q r *2.32
+        p q r *2.31
+        introduceBiconditional
+))
+
+# proof of ConjunctionAssociativity to be added later
 </jh>
 
 :''This page is still incomplete''
