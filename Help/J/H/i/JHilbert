@@ -48,6 +48,13 @@ As you can see, interfaces with no parameters are imported with empty parameter 
 * Proofs.
  thm (''new-theorem'' (''distinct-variables'') (''hypotheses'') (''consequent'') (''proof''))
 
+This represents the proof of a theorem.
+
+:* ''new-theorem'' is the name of the theorem.
+:* ''hypotheses'' will need to be present to later apply the theorem, and can be empty. Each hypothesis consists of a label followed by the hypothesis (unlike in <code>stmt</code>, in which the labels can be omitted).
+:* ''consequent'' is what is being proved.
+:* ''proof'' is a sequence of atoms.  Each atom can be the label of a hypothesis, a variable, or the name of a statement which is being applied. Hypotheses and variables are pushed onto the ''proof stack''. Applying a statement proceeds by popping from the proof stack one element for each hypothesis and variable in the statement being applied. The variables should be pushed in the order in which they first appear in the statement. These elements must match what the statement expects. The statement then pushes its consequent onto the proof stack.  At the end of the proof, the proof stack must contain one element, and it must be the consequent which is being proved.
+
 * Kindbind.  This allows a kind to have several names, which may be necessary in conjunction with the prefix feature of the export statement.
  kindbind (''existing-name'' ''new-name'')
 For example, if you have a kind called wff and you want .wff to refer to the same kind, specify
