@@ -703,7 +703,7 @@ thm (*3.37 () () (((p ∧ q) → r) → ((p ∧ (¬ r)) → (¬ q))) (
 === Composition ===
 Next, we prove ''Comp'', the principle of composition,
 <jh>
-thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) (
+thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) ( # *3.43
         q r *3.2
         q (r → (q ∧ r)) p *2.05
         applyModusPonens
