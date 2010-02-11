@@ -1232,6 +1232,29 @@ thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q 
 ))
 </jh>
 
+==== Rules ====
+It will be convenient to have these builders as rules, as well as implications:
+
+<jh>
+thm (buildConjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∧ r) ↔ (q ∧ s)) (
+        H1 H2 combineStatements
+        p q r s ConjunctionFunction
+        applyModusPonens
+))
+
+thm (buildDisjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∨ r) ↔ (q ∨ s)) (
+        H1 H2 combineStatements
+        p q r s DisjunctionFunction
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
