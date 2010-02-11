@@ -895,8 +895,35 @@ thm (*4.15-forward () () (((p ∧ q) → (¬ r)) → ((q ∧ r) → (¬ p))) (
         q r (¬ p) Importation applySyllogism
 ))
 
-#thm (*4.15 () () (((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p))) (
-#))
+thm (*4.15-2-reverse () () (((q ∧ (¬ (¬ r))) → (¬ p)) → ((p ∧ q) → (¬ r))) (
+        q p (¬ r) *4.14 eliminateBiconditionalRight
+        q p (¬ r) *4.15-1
+        applySyllogism
+))
+
+thm (*4.15-reverse () () (((q ∧ r) → (¬ p)) → ((p ∧ q) → (¬ r))) (
+        q r (¬ p) Exportation
+
+        r *2.14
+        (¬ (¬ r)) r (¬ p) Syllogism
+        applyModusPonens
+
+        (r → (¬ p)) ((¬ (¬ r)) → (¬ p)) q *2.05
+        applyModusPonens
+
+        applySyllogism
+
+        q (¬ (¬ r)) (¬ p) Importation applySyllogism
+
+        q r p *4.15-2-reverse
+        applySyllogism
+))
+
+thm (*4.15 () () (((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p))) (
+        p q r *4.15-forward
+        q r p *4.15-reverse
+        introduceBiconditional
+))
 </jh>
 
 === Reflexive, symmetric, and transitive ===
