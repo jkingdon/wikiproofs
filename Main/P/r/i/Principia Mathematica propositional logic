@@ -878,12 +878,22 @@ thm (*4.15-2 () () (((p ∧ q) → (¬ r)) → ((q ∧ (¬ (¬ r))) → (¬ p)))
         applySyllogism
 ))
 
-#thm (*4.15-forward () () (((p ∧ q) → (¬ r)) → ((q ∧ r) → (¬ p))) (
-#        p q r *4.15-2
+thm (*4.15-forward () () (((p ∧ q) → (¬ r)) → ((q ∧ r) → (¬ p))) (
+        p q r *4.15-2
 
-#        r *2.14
-        # this proof is not done
-#))
+        q (¬ (¬ r)) (¬ p) Exportation applySyllogism
+
+        r *2.12
+        r (¬ (¬ r)) (¬ p) Syllogism
+        applyModusPonens
+
+        ((¬ (¬ r)) → (¬ p)) (r → (¬ p)) q *2.05
+        applyModusPonens
+
+        applySyllogism
+
+        q r (¬ p) Importation applySyllogism
+))
 
 #thm (*4.15 () () (((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p))) (
 #))
