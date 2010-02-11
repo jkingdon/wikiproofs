@@ -794,7 +794,7 @@ thm (eliminateBiconditionalRight () ((H (p ↔ q))) (q → p) (
 </jh>
 In order to prove the negation function theorem <math>(p\leftrightarrow q)\leftrightarrow((\neg p)\leftrightarrow(\neg q))</math>, we combine the two transposition laws <math>*2.16</math> and <math>*2.17</math>:
 <jh>
-thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) (
+thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) ( # *4.11
         p q *2.16
         q p *2.16
         combineImplicationsAsConjunction
@@ -821,7 +821,34 @@ thm (buildNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
         applyModusPonens
 ))
 </jh>
-Some more easy theorems:
+
+=== Biconditionalized transposition laws ===
+We proved various transposition laws for the conditional earlier. Now we provide some for the biconditional, starting with (p ↔ (¬ q)) ↔ (q ↔ (¬ p)).  The proof is a straightforward application of the conditional transposition laws, but has to prove each direction of the biconditionals.
+<jh>
+thm (*4.12-forward () () ((p ↔ (¬ q)) → (q → (¬ p))) (
+        (p → (¬ q)) ((¬ q) → p) ConjunctionEliminationRight
+        p q *2.03 applySyllogism
+))
+
+thm (*4.12-reverse () () ((p ↔ (¬ q)) → ((¬ p) → q)) (
+        (p → (¬ q)) ((¬ q) → p) ConjunctionEliminationLeft
+        q p *2.15 applySyllogism
+))
+
+thm (*4.12 () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))) (
+        p q *4.12-forward
+        p q *4.12-reverse
+        applyComp
+
+        q p *4.12-forward
+        q p *4.12-reverse
+        applyComp
+
+        introduceBiconditional
+))
+</jh>
+
+=== Double negation ===
 <jh>
 thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
         p *2.12
@@ -829,6 +856,9 @@ thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
         introduceBiconditional
 ))
 </jh>
+
+=== Some more deduction tools ===
+The next two theorems, *4.14 and *4.15, enable making some deductions involving biconditionals and conjunctions. They are similar to *3.37 but extend it.
 
 The idea behind the proof of converse-of-*3.37 is quite simple: *3.37 becomes its own converse (modulo some double negation) when substituted with some negated terms.  The rest of the proof is just getting rid of the double negation.
 <jh>
@@ -1098,7 +1128,7 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
 Both disjunction and conjunction are associative:
 
 <jh>
-thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) ( # 4.33
+thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) ( # *4.33
         p q r *2.32
         p q r *2.31
         introduceBiconditional
