@@ -703,7 +703,7 @@ thm (*3.37 () () (((p ∧ q) → r) → ((p ∧ (¬ r)) → (¬ q))) (
 === Composition ===
 Next, we prove ''Comp'', the principle of composition,
 <jh>
-thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) (
+thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) ( # *3.43
         q r *3.2
         q (r → (q ∧ r)) p *2.05
         applyModusPonens
@@ -716,6 +716,40 @@ thm (applyComp () ((H1 (p → q)) (H2 (p → r))) (p → (q ∧ r)) (
         H1 H2 combineStatements
         p q r Comp
         applyModusPonens
+))
+</jh>
+
+=== Disjunction composition ===
+Conjunction composition has an analogue for disjunction (*3.44), which we prove in several steps:
+
+<jh>
+thm (*3.44-1 () () ((((¬ q) → r) ∧ (r → p)) → ((q → p) → p)) (
+        (¬ q) r p *3.33
+        q p *2.6
+        applySyllogism
+))
+
+thm (*3.44-2 () () (((¬ q) → r) → (((q → p) ∧ (r → p)) → p)) (
+        q r p *3.44-1
+        export
+
+        (r → p) (q → p) p Comm
+        applySyllogism
+
+        (q → p) (r → p) p Importation
+        applySyllogism
+))
+
+thm (*3.44 () () (((q → p) ∧ (r → p)) → ((q ∨ r) → p)) (
+        q r p *3.44-2
+
+        applyComm
+
+        q r *2.53
+        (q ∨ r) ((¬ q) → r) p Syllogism
+        applyModusPonens
+
+        applySyllogism
 ))
 </jh>
 
