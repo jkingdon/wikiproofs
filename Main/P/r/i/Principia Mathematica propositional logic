@@ -792,6 +792,8 @@ thm (eliminateBiconditionalRight () ((H (p ↔ q))) (q → p) (
         H eliminateLeftConjunction
 ))
 </jh>
+
+=== Negation ===
 In order to prove the negation function theorem <math>(p\leftrightarrow q)\leftrightarrow((\neg p)\leftrightarrow(\neg q))</math>, we combine the two transposition laws <math>*2.16</math> and <math>*2.17</math>:
 <jh>
 thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) ( # *4.11
@@ -814,7 +816,7 @@ Now the same again for <math>*2.17</math>:
         introduceBiconditional
 ))
 
-thm (buildNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
+thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
         H
         p q NegationFunction
         eliminateBiconditionalLeft
@@ -1044,7 +1046,7 @@ thm (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.5
 thm (*4.54 () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
         p DoubleNegation
         (¬ q) buildRightDisjunction
-        buildNegation
+        addNegation
 ))
 </jh>
 
@@ -1123,6 +1125,22 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
 ))
 </jh>
 
+==== Commutativity ====
+We already have commutativity of disjunction and conjunction, but just need to express them using the biconditional:
+<jh>
+thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) ( # *4.31
+        p q Perm
+        q p Perm
+        introduceBiconditional
+))
+
+thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) ( # *4.3
+        p q *3.22
+        q p *3.22
+        introduceBiconditional
+))
+</jh>
+
 ==== Associativity ====
 
 Both disjunction and conjunction are associative:
@@ -1134,7 +1152,18 @@ thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) ( 
         introduceBiconditional
 ))
 
-# proof of ConjunctionAssociativity to be added later
+</jh>
+ 
+The link between *4.15 (which has some implications and negations) and the conjunctions in ConjunctionAssociativity may not be apparent, but follows from the definitions of conjunction and implication.
+<jh>
+thm (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))) ( # *4.32
+        p q r *4.15
+        addNegation
+
+        (q ∧ r) p ConjunctionCommutativity
+
+        applyBiconditionalTransitivity
+))
 </jh>
 
 === Substitution and builders ===
