@@ -1786,6 +1786,53 @@ thm (extractRightConjunction () ((H (p → (q ∧ r)))) (p → r) (
 
 </jh>
 
+=== Weakenings ===
+These are just alternate names or slight variations of what we have already.
+
+<jh>
+thm (BiconditionalImplicationLeftElimination () () ((p ↔ q) → (q → p)) (
+        (p → q) (q → p) ConjunctionLeftElimination
+))
+
+thm (BiconditionalImplicationRightElimination () () ((p ↔ q) → (p → q)) (
+        (p → q) (q → p) ConjunctionRightElimination
+))
+
+thm (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))) (
+        p q BiconditionalImplicationLeftElimination
+        (¬ q) p DisjunctionCommutativity eliminateBiconditionalLeft
+        applySyllogism
+))
+
+thm (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)) (
+        p q BiconditionalImplicationRightElimination
+))
+
+thm (eliminateLeftBiconditionalImplication () ((H (p ↔ q))) (q → p) (
+        H
+        p q BiconditionalImplicationLeftElimination
+        applyModusPonens
+))
+
+thm (eliminateRightBiconditionalImplication () ((H (p ↔ q))) (p → q) (
+        H
+        p q BiconditionalImplicationRightElimination
+        applyModusPonens
+))
+
+thm (eliminateLeftBiconditionalDisjunction () ((H (p ↔ q))) (p ∨ (¬ q)) (
+        H
+        p q BiconditionalDisjunctionLeftElimination
+        applyModusPonens
+))
+
+thm (eliminateRightBiconditionalDisjunction () ((H (p ↔ q))) ((¬ p) ∨ q) (
+        H
+        p q BiconditionalDisjunctionRightElimination
+        applyModusPonens
+))
+</jh>
+
 == Disjunction elimination ==
 A disjunction implies the stronger of its two propositions.  That is, <code>((p ∨ q) ∧ (p → q)) → q</code>.
 
