@@ -2331,6 +2331,43 @@ thm (introduceBiconditionalFromDisjunctions () ((HPQ ((¬ p) ∨ q)) (HQP (p ∨
 ))
 </jh>
 
+=== Implications and disjunctions ===
+The relationship between implication and disjunction is just our definition of implication, or an easy consequence thereof.
+
+<jh>
+thm (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)) ( # *4.6
+        (p → q) BiconditionalReflexivity
+))
+
+thm (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)) ( # *4.64
+        p DoubleNegation
+        q BiconditionalReflexivity
+        buildDisjunction
+))
+
+thm (convertFromImplicationToDisjunction () ((H (p → q))) ((¬ p) ∨ q) (
+        H
+))
+
+thm (convertToImplicationFromDisjunction () ((H ((¬ p) ∨ q))) (p → q) (
+        H
+))
+
+thm (convertFromDisjunctionToImplication () ((H (p ∨ q))) ((¬ p) → q) (
+        H
+        p q DisjunctionImplication
+        eliminateRightBiconditionalImplication
+        applyModusPonens
+))
+
+thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
+        H
+        p q DisjunctionImplication
+        eliminateLeftBiconditionalImplication
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
