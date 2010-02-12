@@ -616,7 +616,7 @@ thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) (
 === Conjunction elimination ===
 Next, we prove the conjunction elimination theorems.
 <jh>
-thm (ConjunctionEliminationRight () () ((p ∧ q) → p) ( # *3.26
+thm (ConjunctionRightElimination () () ((p ∧ q) → p) ( # *3.26
         p q AntecedentIntroduction
         groupDisjunctionLeft
 </jh>
@@ -628,19 +628,19 @@ This gives us <math>((\neg p)\vee(\neg q))\vee p</math>. All we need now is a do
 
 thm (eliminateRightConjunction () ((H (p ∧ q))) p (
         H
-        p q ConjunctionEliminationRight
+        p q ConjunctionRightElimination
         applyModusPonens
 ))
 
-thm (ConjunctionEliminationLeft () () ((p ∧ q) → q) ( # *3.27
+thm (ConjunctionLeftElimination () () ((p ∧ q) → q) ( # *3.27
         p q *3.22
-        q p ConjunctionEliminationRight
+        q p ConjunctionRightElimination
         applySyllogism
 ))
 
 thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
         H
-        p q ConjunctionEliminationLeft
+        p q ConjunctionLeftElimination
         applyModusPonens
 ))
 </jh>
@@ -787,7 +787,7 @@ thm (*3.47 () () (((p → r) ∧ (q → s)) → ((p ∧ q) → (r ∧ s))) (
 </jh>
 We prove this theorem in two steps. First we use the left hand side of the antecedent to deduce <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow((p\wedge q)\rightarrow(q\wedge r))</math>:
 <jh>
-        (p → r) (q → s) ConjunctionEliminationRight
+        (p → r) (q → s) ConjunctionRightElimination
         p r q Fact
         applySyllogism
         r q *3.22
@@ -796,7 +796,7 @@ We prove this theorem in two steps. First we use the left hand side of the antec
 </jh>
 Now we do the same with the right hand side of the antecedent to get <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow((q\wedge r)\rightarrow(r\wedge s))</math>. The theorem then follows from a syllogism in the consequent.
 <jh>
-        (p → r) (q → s) ConjunctionEliminationLeft
+        (p → r) (q → s) ConjunctionLeftElimination
         q s r Fact
         applySyllogism
         s r *3.22
@@ -815,10 +815,10 @@ thm (*3.48 () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) (
 </jh>
 This theorem follows exactly as <math>*3.47</math>, except that we use the ''Sum'' type theorem <math>*2.37</math> instead of ''Fact'' and <math>*3.22</math>.
 <jh>
-        (p → r) (q → s) ConjunctionEliminationRight
+        (p → r) (q → s) ConjunctionRightElimination
         p r q *2.37
         applySyllogism
-        (p → r) (q → s) ConjunctionEliminationLeft
+        (p → r) (q → s) ConjunctionLeftElimination
         q s r *2.37
         applySyllogism
         applySyllogismInConsequent
@@ -883,12 +883,12 @@ thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
 We proved various transposition laws for the conditional earlier. Now we provide some for the biconditional, starting with (p ↔ (¬ q)) ↔ (q ↔ (¬ p)).  The proof is a straightforward application of the conditional transposition laws, but has to prove each direction of the biconditionals.
 <jh>
 thm (*4.12-forward () () ((p ↔ (¬ q)) → (q → (¬ p))) (
-        (p → (¬ q)) ((¬ q) → p) ConjunctionEliminationRight
+        (p → (¬ q)) ((¬ q) → p) ConjunctionRightElimination
         p q *2.03 applySyllogism
 ))
 
 thm (*4.12-reverse () () ((p ↔ (¬ q)) → ((¬ p) → q)) (
-        (p → (¬ q)) ((¬ q) → p) ConjunctionEliminationLeft
+        (p → (¬ q)) ((¬ q) → p) ConjunctionLeftElimination
         q p *2.15 applySyllogism
 ))
 
@@ -1040,27 +1040,27 @@ thm (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)) (
 </jh>
 First factor:
 <jh>
-        (p ↔ q) (q ↔ r) ConjunctionEliminationRight
-        (p → q) (q → p) ConjunctionEliminationRight
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionRightElimination
         applySyllogism
 </jh>
 Third factor:
 <jh>
-        (p ↔ q) (q ↔ r) ConjunctionEliminationLeft
-        (q → r) (r → q) ConjunctionEliminationRight
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionRightElimination
         applySyllogism
         applySyllogismInConsequent
 </jh>
 Fourth factor:
 <jh>
-        (p ↔ q) (q ↔ r) ConjunctionEliminationLeft
-        (q → r) (r → q) ConjunctionEliminationLeft
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionLeftElimination
         applySyllogism
 </jh>
 Second factor:
 <jh>
-        (p ↔ q) (q ↔ r) ConjunctionEliminationRight
-        (p → q) (q → p) ConjunctionEliminationLeft
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionLeftElimination
         applySyllogism
         applySyllogismInConsequent
         applyComp
@@ -1164,7 +1164,7 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
         p (p ∧ p) *2.43
         applyModusPonens
 
-        p p ConjunctionEliminationRight
+        p p ConjunctionRightElimination
 
         introduceBiconditional
 ))
@@ -1393,12 +1393,12 @@ thm (ConjunctionLeftDistribution-forward () ()
 
 thm (ConjunctionLeftDistribution-reverse () ()
   (((p ∧ q) ∨ (p ∧ r)) → (p ∧ (q ∨ r))) (
-        p q ConjunctionEliminationRight
-        p r ConjunctionEliminationRight
+        p q ConjunctionRightElimination
+        p r ConjunctionRightElimination
         composeDisjunction
 
-        p q ConjunctionEliminationLeft
-        p r ConjunctionEliminationLeft
+        p q ConjunctionLeftElimination
+        p r ConjunctionLeftElimination
         combineImplicationsAsDisjunction
 
         applyComp
@@ -1415,10 +1415,10 @@ The second distributive law, <code>(p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r
 
 <jh>
 thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q) ∧ (p ∨ r))) (
-        q r ConjunctionEliminationRight
+        q r ConjunctionRightElimination
         (q ∧ r) q p Sum applyModusPonens
 
-        q r ConjunctionEliminationLeft
+        q r ConjunctionLeftElimination
         (q ∧ r) r p Sum applyModusPonens
 
         applyComp
