@@ -1407,6 +1407,38 @@ thm (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p 
 ))
 </jh>
 
+The second distributive law, <code>(p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))</code>, has no analogue in ordinary algebra.<ref>Whitehead and Russell, p. 124</ref>
+
+<jh>
+thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q) ∧ (p ∨ r))) (
+        q r ConjunctionEliminationRight
+        (q ∧ r) q p Sum applyModusPonens
+
+        q r ConjunctionEliminationLeft
+        (q ∧ r) r p Sum applyModusPonens
+
+        applyComp
+))
+
+thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p ∨ (q ∧ r))) (
+        p q *2.53
+        p r *2.53
+        combineImplicationsAsConjunction
+
+        (¬ p) q r Comp
+        applySyllogism
+
+        p (q ∧ r) *2.54
+        applySyllogism
+))
+
+thm (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))) ( # *4.41
+        p q r DisjunctionLeftDistribution-forward
+        p q r DisjunctionLeftDistribution-reverse
+        introduceBiconditional
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
