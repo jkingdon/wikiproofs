@@ -1672,6 +1672,42 @@ thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
 ))
 </jh>
 
+== Disjunction elimination ==
+A disjunction implies the stronger of its two propositions.  That is, <code>((p ∨ q) ∧ (p → q)) → q</code>.
+
+<jh>
+thm (DisjunctionLeftElimination () () (((p ∨ q) ∧ (p → q)) → q) (
+        p q *2.62 import
+))
+</jh>
+
+We also provide a commutated version and some rules:
+
+<jh>
+thm (DisjunctionRightElimination () () (((p ∨ q) ∧ (q → p)) → p) (
+        p q DisjunctionCommutativity
+        (q → p) BiconditionalReflexivity
+        buildConjunction
+        eliminateBiconditionalLeft
+
+        q p DisjunctionLeftElimination
+
+        applySyllogism
+))
+
+thm (eliminateLeftDisjunction () ((HDIS (p ∨ q)) (HIMP (p → q))) q (
+        HDIS HIMP combineStatements
+        p q DisjunctionLeftElimination
+        applyModusPonens
+))
+
+thm (eliminateRightDisjunction () ((HDIS (p ∨ q)) (HIMP (q → p))) p (
+        HDIS HIMP combineStatements
+        p q DisjunctionRightElimination
+        applyModusPonens
+))
+</jh>
+
 == Case Elimination ==
 Proofs often show that one of several cases must apply, and then prove the desired proposition for each case. Here we provide one form of this, where there are two cases: <code>p</code> and <code>(¬ p)</code>.
 
