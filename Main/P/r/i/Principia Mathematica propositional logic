@@ -604,7 +604,7 @@ thm (NotFalse () () (¬ (⊥)) (
 </jh>
 
 === Conjunction introduction ===
-We provide an additional name for *3.2 and a commutated version.
+We provide an additional name for *3.2 and a commuted version.
 
 <jh>
 thm (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))) (
@@ -1481,7 +1481,7 @@ thm (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p 
 ))
 </jh>
 
-We also supply commutated versions of both laws and some rules:
+We also supply commuted versions of both laws and some rules:
 
 <jh>
 thm (DisjunctionRightDistribution () () (((p ∧ q) ∨ r) ↔ ((p ∨ r) ∧ (q ∨ r))) (
@@ -1846,7 +1846,7 @@ thm (DisjunctionLeftElimination () () (((p ∨ q) ∧ (p → q)) → q) (
 ))
 </jh>
 
-We also provide a commutated version and some rules:
+We also provide a commuted version and some rules:
 
 <jh>
 thm (DisjunctionRightElimination () () (((p ∨ q) ∧ (q → p)) → p) (
@@ -2317,7 +2317,7 @@ thm (BiconditionalDisjunction () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (�
         p (¬ q) *5.22
         applyBiconditionalTransitivity
 </jh>
-We now have <code>(p ↔ q) ↔ ((p ∧ (¬ (¬ q))) ∨ ((¬ q) ∧ (¬ p)))</code>, so we just need to fix the double negation and commutate the second conjunction.
+We now have <code>(p ↔ q) ↔ ((p ∧ (¬ (¬ q))) ∨ ((¬ q) ∧ (¬ p)))</code>, so we just need to fix the double negation and commute the second conjunction.
 <jh>
         p BiconditionalReflexivity
         q DoubleNegation swapBiconditional
