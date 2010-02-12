@@ -2299,6 +2299,38 @@ thm (convertToBiconditionalFromDisjunction () ((H ((p ∧ q) ∨ ((¬ p) ∧ (¬
 ))
 </jh>
 
+=== Biconditional as conjunction of two disjunctions ===
+This one follows immediately from our definitions of biconditional and implication, and commutativity.
+
+<jh>
+thm (BiconditionalConjunction () () ((p ↔ q) ↔ (((¬ p) ∨ q) ∧ (p ∨ (¬ q)))) (
+        ((¬ p) ∨ q) BiconditionalReflexivity
+        (¬ q) p DisjunctionCommutativity
+        buildConjunction
+))
+
+thm (convertFromBiconditionalToConjunction () ((H (p ↔ q))) (((¬ p) ∨ q) ∧ (p ∨ (¬ q))) (
+        H
+        p q BiconditionalConjunction
+        eliminateRightBiconditionalImplication
+        applyModusPonens
+))
+
+thm (convertToBiconditionalFromConjunction () ((H (((¬ p) ∨ q) ∧ (p ∨ (¬ q))))) (p ↔ q) (
+        H
+        p q BiconditionalConjunction
+        eliminateLeftBiconditionalImplication
+        applyModusPonens
+))
+
+thm (introduceBiconditionalFromDisjunctions () ((HPQ ((¬ p) ∨ q)) (HQP (p ∨ (¬ q)))) (p ↔ q) (
+        HPQ HQP introduceConjunction
+        p q BiconditionalConjunction
+        eliminateLeftBiconditionalImplication
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
