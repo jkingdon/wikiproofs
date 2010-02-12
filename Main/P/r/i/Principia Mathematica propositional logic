@@ -139,6 +139,12 @@ thm (*2.14 () () ((¬ (¬ p)) → p) (
         swapDisjunction
 ))
 
+thm (introduceDoubleNegation () ((H p)) (¬ (¬ p)) (
+        H
+        p *2.12
+        applyModusPonens
+))
+
 thm (eliminateDoubleNegation () ((H (¬ (¬ p)))) p (
         H
         p *2.14
