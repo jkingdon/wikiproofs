@@ -753,6 +753,13 @@ thm (*3.44 () () (((q → p) ∧ (r → p)) → ((q ∨ r) → p)) (
 ))
 </jh>
 
+thm (composeDisjunction ((HQP (q → p)) (HRP (r → p)))
+  ((q ∨ r) → p) (
+        HQP HRP combineStatements
+        q p r *3.44
+        applyModusPonens
+))
+
 === Principle of the factor ===
 Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
 <jh>
