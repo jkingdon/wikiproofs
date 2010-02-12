@@ -1439,6 +1439,90 @@ thm (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p 
 ))
 </jh>
 
+We also supply commutated versions of both laws and some rules:
+
+<jh>
+thm (DisjunctionRightDistribution () () (((p ∧ q) ∨ r) ↔ ((p ∨ r) ∧ (q ∨ r))) (
+        (p ∧ q) r DisjunctionCommutativity
+        r p q DisjunctionLeftDistribution
+        applyBiconditionalTransitivity
+
+        r p DisjunctionCommutativity
+        r q DisjunctionCommutativity
+        buildConjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (q ∧ r))) (
+        (p ∨ q) r ConjunctionCommutativity
+        r p q ConjunctionLeftDistribution
+        applyBiconditionalTransitivity
+
+        r p ConjunctionCommutativity
+        r q ConjunctionCommutativity
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (distributeLeftDisjunction () ((H (p ∨ (q ∧ r)))) ((p ∨ q) ∧ (p ∨ r)) (
+        H
+        p q r DisjunctionLeftDistribution
+        eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (collectLeftDisjunction () ((H ((p ∨ q) ∧ (p ∨ r)))) (p ∨ (q ∧ r)) (
+        H
+        p q r DisjunctionLeftDistribution
+        eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (distributeRightDisjunction () ((H ((p ∧ q) ∨ r))) ((p ∨ r) ∧ (q ∨ r)) (
+        H
+        p q r DisjunctionRightDistribution
+        eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (collectRightDisjunction () ((H ((p ∨ r) ∧ (q ∨ r)))) ((p ∧ q) ∨ r) (
+        H
+        p q r DisjunctionRightDistribution
+        eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (distributeLeftConjunction () ((H (p ∧ (q ∨ r)))) ((p ∧ q) ∨ (p ∧ r)) (
+        H
+        p q r ConjunctionLeftDistribution
+        eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (collectLeftConjunction () ((H ((p ∧ q) ∨ (p ∧ r)))) (p ∧ (q ∨ r)) (
+        H
+        p q r ConjunctionLeftDistribution
+        eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (distributeRightConjunction () ((H ((p ∨ q) ∧ r))) ((p ∧ r) ∨ (q ∧ r)) (
+        H
+        p q r ConjunctionRightDistribution
+        eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (collectRightConjunction () ((H ((p ∧ r) ∨ (q ∧ r)))) ((p ∨ q) ∧ r) (
+        H
+        p q r ConjunctionRightDistribution
+        eliminateBiconditionalRight
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
