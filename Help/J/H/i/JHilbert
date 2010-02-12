@@ -27,7 +27,7 @@ For example, <code>term (wff (¬ wff))</code> defines a term called ¬ of kind w
  def (''new-defined'' ''definition'')
 For example, 
  def ((¬ p) (p | p))
-defines ¬ in terms of |
+defines ¬ in terms of |.  A variable which appears on the right hand side but not the left hand side is called a ''dummy'' (As of early 2010, the functioning of dummies is unsafe and subject to change; see discussion at [[User:GrafZahl/Definitions in JHilbert]]).
 
 * Statements.  Statements are either axioms (in which case there will be no modules which exports this interface, as axioms cannot be proved) or statements to be proved (in which case, some module will prove the statement and export the interface).
  stmt (''new-statement'' (''distinct-variables'') (''hypothesis'') (''consequent''))
