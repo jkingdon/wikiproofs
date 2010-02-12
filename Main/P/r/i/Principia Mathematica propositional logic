@@ -1111,7 +1111,7 @@ thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r
         introduceBiconditional
 ))
 
-thm (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))) (
+thm (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))) ( # *4.1
         p q *2.16
         q p *2.17
         introduceBiconditional
