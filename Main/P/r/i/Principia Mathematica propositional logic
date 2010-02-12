@@ -1962,6 +1962,46 @@ thm (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)) (
 ))
 </jh>
 
+Along the same lines is <code>(¬ p) ↔ (p → (⊥))</code>.
+
+<jh>
+thm (NegationImplication-forward () () ((¬ p) → (p → (⊥))) (
+       p Contradiction eliminateRightBiconditionalImplication
+       export
+       applyComm
+))
+
+thm (NegationImplication-reverse () () ((p → (⊥)) → (¬ p)) (
+        p (⊥) Transposition eliminateRightBiconditionalImplication
+
+        NotFalse
+        (¬ (⊥)) (¬ p) ModusPonens
+        applyModusPonens
+
+        applySyllogism
+))
+
+thm (NegationImplication () () ((¬ p) ↔ (p → (⊥))) (
+        p NegationImplication-forward
+        p NegationImplication-reverse
+        introduceBiconditional
+))
+
+thm (convertFromNegationToImplication () ((H (¬ p))) (p → (⊥)) (
+        H
+        p NegationImplication
+        eliminateRightBiconditionalImplication
+        applyModusPonens
+))
+
+thm (convertToNegationFromImplication () ((H (p → (⊥)))) (¬ p) (
+        H
+        p NegationImplication
+        eliminateLeftBiconditionalImplication
+        applyModusPonens
+))
+</jh>
+
 == Variants of disjunction summation and conjunction multiplication ==
 We've already proved the basic DisjunctionSummation and ConjunctionMultiplication theorems.  Here we provide convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions or conjunctions.
 
