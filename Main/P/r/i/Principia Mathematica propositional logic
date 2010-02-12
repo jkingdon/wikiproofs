@@ -1251,7 +1251,7 @@ thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q 
 </jh>
 
 ==== Rules ====
-It will be convenient to have these builders as rules, as well as implications:
+Here are rules corresponding to the implications which have been proved so far:
 
 <jh>
 thm (buildConjunction () (
@@ -1269,6 +1269,37 @@ thm (buildDisjunction () (
   ((p ∨ r) ↔ (q ∨ s)) (
         H1 H2 combineStatements
         p q r s DisjunctionFunction
+        applyModusPonens
+))
+
+thm (removeNegation () ((H ((¬ p) ↔ (¬ q)))) (p ↔ q) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalRight
+        applyModusPonens
+))
+</jh>
+
+==== Implication ====
+The builder for implication is a simple consequence of the builder for disjunction together with the equivalence of <code>(¬ p) ↔ (¬ q)</code> and <code>p ↔ q</code>.
+
+<jh>
+thm (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))) (
+        p q NegationFunction
+        (r ↔ s) BiconditionalReflexivity
+        buildConjunction
+
+        eliminateBiconditionalLeft
+
+        (¬ p) (¬ q) r s DisjunctionFunction
+
+        applySyllogism
+))
+
+thm (buildImplication () ((HPQ (p ↔ q)) (HRS (r ↔ s))) 
+  ((p → r) ↔ (q → s)) (
+        HPQ HRS combineStatements
+        p q r s ImplicationFunction
         applyModusPonens
 ))
 </jh>
