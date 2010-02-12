@@ -1170,6 +1170,34 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
 ))
 </jh>
 
+Idempotence is also expressed in the following rules.
+
+<jh>
+thm (cloneAsDisjunction () ((H p)) (p ∨ p) (
+        H
+        p p Add
+        applyModusPonens
+))
+
+thm (conflateDisjunction () ((H (p ∨ p))) p (
+        H
+        p Taut
+        applyModusPonens
+))
+
+thm (cloneAsConjunction () ((H p)) (p ∧ p) (
+        H
+        p ConjunctionIdempotence eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (conflateConjunction () ((H (p ∧ p))) p (
+        H
+        p ConjunctionIdempotence eliminateBiconditionalRight
+        applyModusPonens
+))
+</jh>
+
 ==== Commutativity ====
 We already have commutativity of disjunction and conjunction, but just need to express them using the biconditional:
 <jh>
