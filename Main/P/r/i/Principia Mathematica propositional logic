@@ -207,25 +207,25 @@ thm (eliminateTransposition () ((H ((¬ q) → (¬ p)))) (p → q) (
 === Disjunction introduction ===
 Next, we prove the disjunction introduction laws. Introduction from the left is just the ''Add'' axiom of principia, and a permutation yields the introduction from the right.
 <jh>
-thm (DisjuctionIntroductionLeft () () (p → (q ∨ p)) (
+thm (DisjunctionLeftIntroduction () () (p → (q ∨ p)) (
         p q Add
 ))
 
 thm (introduceLeftDisjunction () ((H p)) (q ∨ p) (
         H
-        p q DisjuctionIntroductionLeft
+        p q DisjunctionLeftIntroduction
         applyModusPonens
 ))
 
-thm (DisjuctionIntroductionRight () () (p → (p ∨ q)) ( # *2.2
-        p q DisjuctionIntroductionLeft
+thm (DisjunctionRightIntroduction () () (p → (p ∨ q)) ( # *2.2
+        p q DisjunctionLeftIntroduction
         q p Perm
         applySyllogism
 ))
 
 thm (introduceRightDisjunction () ((H p)) (p ∨ q) (
         H
-        p q DisjuctionIntroductionRight
+        p q DisjunctionRightIntroduction
         applyModusPonens
 ))
 </jh>
