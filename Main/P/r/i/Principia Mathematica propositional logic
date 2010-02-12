@@ -1103,6 +1103,11 @@ thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))
         introduceBiconditional
 ))
 
+thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
+        p q r Importation
+        p q r Exportation
+        introduceBiconditional
+))
 </jh>
 
 === Algebraic laws for disjunction and conjunction ===
