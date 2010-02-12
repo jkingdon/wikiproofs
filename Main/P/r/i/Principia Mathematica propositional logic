@@ -805,7 +805,7 @@ Now we do the same with the right hand side of the antecedent to get <math>((p\r
         applySyllogismInConsequent
 ))
 
-thm (combineImplicationsAsConjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
+thm (conjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
         H1 H2 introduceConjunction
         p r q s ConjunctionMultiplication
         applyModusPonens
@@ -854,7 +854,7 @@ In order to prove the negation function theorem <math>(p\leftrightarrow q)\leftr
 thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) ( # *4.11
         p q *2.16
         q p *2.16
-        combineImplicationsAsConjunction
+        conjoin
 </jh>
 This gives us <math>(p\leftrightarrow q)\rightarrow((\neg q)\leftrightarrow(\neg p))</math>, the right hand side of which must be permuted:
 <jh>
@@ -865,7 +865,7 @@ Now the same again for <math>*2.17</math>:
 <jh>
         p q *2.17
         q p *2.17
-        combineImplicationsAsConjunction
+        conjoin
         (q → p) (p → q) *3.22
         applySyllogism
         introduceBiconditional
@@ -1080,7 +1080,7 @@ Another easy builder theorem:
 thm (*4.37 () () ((p ↔ q) → ((p ∨ r) ↔ (q ∨ r))) (
         p q r *2.38
         q p r *2.38
-        combineImplicationsAsConjunction
+        conjoin
 ))
 
 thm (buildRightDisjunction () ((H (p ↔ q))) ((p ∨ r) ↔ (q ∨ r)) (
@@ -1243,7 +1243,7 @@ thm (ConjunctionFunction-1 () () ((((p → q) ∧ (q → p)) ∧ ((r → s) ∧ 
         (p → q) Id
         (q → p) (r → s) (s → r) ConjunctionAssociativity
         eliminateLeftConjunction # eliminateLeftBiconditionalImplication
-        combineImplicationsAsConjunction
+        conjoin
 
         applySyllogism
 
@@ -1251,15 +1251,15 @@ thm (ConjunctionFunction-1 () () ((((p → q) ∧ (q → p)) ∧ ((r → s) ∧ 
         (q → p) (r → s) ConjunctionCommutativity
         eliminateRightConjunction # eliminateRightBiconditionalImplication
         (s → r) Id 
-        combineImplicationsAsConjunction
-        combineImplicationsAsConjunction
+        conjoin
+        conjoin
 
         applySyllogism
 
         (p → q) Id
         (r → s) (q → p) (s → r) ConjunctionAssociativity
         eliminateRightConjunction # eliminateRightBiconditionalImplication
-        combineImplicationsAsConjunction
+        conjoin
 
         applySyllogism
 
@@ -1274,7 +1274,7 @@ thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q 
         
         p q r s ConjunctionMultiplication
         q p s r ConjunctionMultiplication
-        combineImplicationsAsConjunction
+        conjoin
 
         applySyllogism
 ))
@@ -1289,7 +1289,7 @@ thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q 
         
         p q r s DisjunctionSummation
         q p s r DisjunctionSummation
-        combineImplicationsAsConjunction
+        conjoin
 
         applySyllogism
 ))
@@ -1427,7 +1427,7 @@ thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q)
 thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p ∨ (q ∧ r))) (
         p q *2.53
         p r *2.53
-        combineImplicationsAsConjunction
+        conjoin
 
         (¬ p) q r Comp
         applySyllogism
