@@ -1833,14 +1833,11 @@ thm (applyModusTollens () ((H1 (¬ q)) (H2 (p → q))) (¬ p) (
 == Variants of disjunction summation and conjunction multiplication ==
 We've already proved the basic DisjunctionSummation and ConjunctionMultiplication theorems.  Here we provide convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions or conjunctions.
 
+Two of these are just new names for the Sum axiom and the Fact theorem; the rest could either be proved from those two and commutativity, or as special cases of DisjunctionSummation and ConjunctionMultiplication.
+
 <jh>
 thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
-        r ImplicationReflexivity
-
-        r r p q DisjunctionSummation
-        export
-
-        applyModusPonens
+        p q r Sum
 ))
 
 thm (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))) (
@@ -1914,13 +1911,7 @@ thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r)))
 ))
 
 thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))) (
-        r ImplicationReflexivity
-
-        p q r r ConjunctionMultiplication
-        export
-        applyComm
-
-        applyModusPonens
+        p q r Fact
 ))
 
 thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
