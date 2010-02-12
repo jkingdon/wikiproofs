@@ -751,14 +751,14 @@ thm (*3.44 () () (((q → p) ∧ (r → p)) → ((q ∨ r) → p)) (
 
         applySyllogism
 ))
-</jh>
 
-thm (composeDisjunction ((HQP (q → p)) (HRP (r → p)))
+thm (composeDisjunction () ((HQP (q → p)) (HRP (r → p)))
   ((q ∨ r) → p) (
         HQP HRP combineStatements
         q p r *3.44
         applyModusPonens
 ))
+</jh>
 
 === Principle of the factor ===
 Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
@@ -1370,7 +1370,43 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
         applyModusPonens
 ))
 </jh>
- 
+
+=== Distributive law ===
+We prove two distributive laws.  The first one, <code>((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))</code>, is analogous to the distributive law in well-known algebras such as the real numbers, i × (j + k) = i × j + i × k (if one thinks of conjunction as being like multiplication and disjunction as being like addition).
+
+<jh>
+thm (ConjunctionLeftDistribution-forward () () 
+  ((p ∧ (q ∨ r)) → ((p ∧ q) ∨ (p ∧ r))) (
+        p q *3.2
+        p r *3.2
+        applyComp
+
+        q (p ∧ q) r (p ∧ r) *3.48
+        applySyllogism
+
+        import
+))
+
+thm (ConjunctionLeftDistribution-reverse () ()
+  (((p ∧ q) ∨ (p ∧ r)) → (p ∧ (q ∨ r))) (
+        p q ConjunctionEliminationRight
+        p r ConjunctionEliminationRight
+        composeDisjunction
+
+        p q ConjunctionEliminationLeft
+        p r ConjunctionEliminationLeft
+        combineImplicationsAsDisjunction
+
+        applyComp
+))
+
+thm (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))) ( # *4.4
+        p q r ConjunctionLeftDistribution-forward
+        p q r ConjunctionLeftDistribution-reverse
+        introduceBiconditional
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
