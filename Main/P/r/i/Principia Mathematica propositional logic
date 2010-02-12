@@ -1274,41 +1274,41 @@ If p ↔ q, then we want to be able to substitute p for q in a theorem to get a 
 The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them (ConjunctionFunction-1, which is just applying assocativity and commutativity in the usual ways), and applying ConjunctionMultiplication to each half.
 
 <jh>
-thm (ConjunctionFunction-1 () () ((((p → q) ∧ (q → p)) ∧ ((r → s) ∧ (s → r))) → (((p → q) ∧ (r → s)) ∧ ((q → p) ∧ (s → r)))) (
-        (p → q) (q → p) ((r → s) ∧ (s → r)) ConjunctionAssociativity
+thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
+        p q (r ∧ s) ConjunctionAssociativity
         eliminateRightConjunction # eliminateRightBiconditionalImplication
 
-        (p → q) Id
-        (q → p) (r → s) (s → r) ConjunctionAssociativity
+        p Id
+        q r s ConjunctionAssociativity
         eliminateLeftConjunction # eliminateLeftBiconditionalImplication
         conjoin
 
         applySyllogism
 
-        (p → q) Id
-        (q → p) (r → s) ConjunctionCommutativity
+        p Id
+        q r ConjunctionCommutativity
         eliminateRightConjunction # eliminateRightBiconditionalImplication
-        (s → r) Id 
+        s Id 
         conjoin
         conjoin
 
         applySyllogism
 
-        (p → q) Id
-        (r → s) (q → p) (s → r) ConjunctionAssociativity
+        p Id
+        r q s ConjunctionAssociativity
         eliminateRightConjunction # eliminateRightBiconditionalImplication
         conjoin
 
         applySyllogism
 
-        (p → q) (r → s) ((q → p) ∧ (s → r)) ConjunctionAssociativity
+        p r (q ∧ s) ConjunctionAssociativity
         eliminateLeftConjunction # eliminateLeftBiconditionalImplication
 
         applySyllogism
 ))
 
 thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))) ( # *4.38
-        p q r s ConjunctionFunction-1
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
         
         p q r s ConjunctionMultiplication
         q p s r ConjunctionMultiplication
@@ -1323,7 +1323,7 @@ This is just like the theorem for conjunction, except that we build on the parti
 
 <jh>
 thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))) ( # *4.39
-        p q r s ConjunctionFunction-1
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
         
         p q r s DisjunctionSummation
         q p s r DisjunctionSummation
