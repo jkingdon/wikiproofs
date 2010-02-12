@@ -824,7 +824,7 @@ This theorem follows exactly as <math>ConjunctionMultiplication</math>, except t
         applySyllogismInConsequent
 ))
 
-thm (combineImplicationsAsDisjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
+thm (disjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
         H1 H2 introduceConjunction
         p r q s DisjunctionSummation
         applyModusPonens
@@ -1399,7 +1399,7 @@ thm (ConjunctionLeftDistribution-reverse () ()
 
         p q ConjunctionLeftElimination
         p r ConjunctionLeftElimination
-        combineImplicationsAsDisjunction
+        disjoin
 
         composeConjunction
 ))
