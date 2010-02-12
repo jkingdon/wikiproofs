@@ -1076,21 +1076,6 @@ thm (buildRightDisjunction () ((H (p ↔ q))) ((p ∨ r) ↔ (q ∨ r)) (
 ))
 </jh>
 
-=== De Morgan's laws ===
-Since the definition of conjunction in Principia is based on [[w:De Morgan's laws|De Morgan's laws]], the laws themselves are not hard to prove.
-<jh>
-thm (ConjunctionNegation () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.51
-        ((¬ p) ∨ (¬ q)) DoubleNegation
-        swapBiconditional
-))
-
-thm (*4.54 () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
-        p DoubleNegation
-        (¬ q) buildRightDisjunction
-        addNegation
-))
-</jh>
-
 === More theorems stated using the biconditional ===
 Some more theorems where we have proved implications in both directions, but can now express them using the biconditional:
 <jh>
@@ -1519,6 +1504,165 @@ thm (collectRightConjunction () ((H ((p ∧ r) ∨ (q ∧ r)))) ((p ∨ q) ∧ r
         H
         p q r ConjunctionRightDistribution
         eliminateBiconditionalRight
+        applyModusPonens
+))
+</jh>
+
+=== De Morgan's laws ===
+Since the definition of conjunction in Principia is based on [[w:De Morgan's laws|De Morgan's laws]], the laws themselves are not hard to prove.
+<jh>
+thm (DeMorganPDP () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))) ( # *4.56
+        p DoubleNegation
+        q DoubleNegation
+        buildDisjunction
+        addNegation
+))
+
+thm (DeMorganPDN () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) ( # *4.54
+        p DoubleNegation
+        (¬ q) buildRightDisjunction
+        addNegation
+))
+
+thm (DeMorganNDP () () ((¬ ((¬ p) ∨ q)) ↔ (p ∧ (¬ q))) ( # *4.52
+        (¬ p) BiconditionalReflexivity
+        q DoubleNegation
+        buildDisjunction
+        addNegation
+))
+
+thm (DeMorganNDN () () ((¬ ((¬ p) ∨ (¬ q))) ↔ (p ∧ q)) ( # *4.5
+        (¬ ((¬ p) ∨ (¬ q))) BiconditionalReflexivity
+))
+
+thm (DeMorganPCP () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.51
+        ((¬ p) ∨ (¬ q)) DoubleNegation
+        swapBiconditional
+))
+
+thm (DeMorganPCN () () ((¬ (p ∧ (¬ q))) ↔ ((¬ p) ∨ q)) ( # *4.53
+        (¬ p) BiconditionalReflexivity
+        q DoubleNegation
+        buildDisjunction
+
+        ((¬ p) ∨ (¬ (¬ q))) DoubleNegation
+        applyBiconditionalTransitivity
+        swapBiconditional
+))
+
+thm (DeMorganNCP () () ((¬ ((¬ p) ∧ q)) ↔ (p ∨ (¬ q))) ( # *4.55
+        p DoubleNegation
+        (¬ q) BiconditionalReflexivity
+        buildDisjunction
+
+        ((¬ (¬ p)) ∨ (¬ q)) DoubleNegation
+        applyBiconditionalTransitivity
+        swapBiconditional
+))
+
+thm (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)) ( # *4.57
+        p DoubleNegation
+        q DoubleNegation
+        buildDisjunction
+
+        ((¬ (¬ p)) ∨ (¬ (¬ q))) DoubleNegation
+        applyBiconditionalTransitivity
+        swapBiconditional
+))
+
+thm (distributeNegationPDP () ((H (¬ (p ∨ q)))) ((¬ p) ∧ (¬ q)) (
+        H
+        p q DeMorganPDP eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (distributeNegationPDN () ((H (¬ (p ∨ (¬ q))))) ((¬ p) ∧ q) (
+        H
+        p q DeMorganPDN eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (distributeNegationNDP () ((H (¬ ((¬ p) ∨ q)))) (p ∧ (¬ q)) (
+        H
+        p q DeMorganNDP eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (distributeNegationNDN () ((H (¬ ((¬ p) ∨ (¬ q))))) (p ∧ q) (
+        H
+        p q DeMorganNDN eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (distributeNegationPCP () ((H (¬ (p ∧ q)))) ((¬ p) ∨ (¬ q)) (
+        H
+        p q DeMorganPCP eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (distributeNegationPCN () ((H (¬ (p ∧ (¬ q))))) ((¬ p) ∨ q) (
+        H
+        p q DeMorganPCN eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (distributeNegationNCP () ((H (¬ ((¬ p) ∧ q)))) (p ∨ (¬ q)) (
+        H
+        p q DeMorganNCP eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (distributeNegationNCN () ((H (¬ ((¬ p) ∧ (¬ q))))) (p ∨ q) (
+        H
+        p q DeMorganNCN eliminateBiconditionalLeft
+        applyModusPonens
+))
+
+thm (collectNegationPDP () ((H (p ∨ q))) (¬ ((¬ p) ∧ (¬ q))) (
+        H
+        p q DeMorganNCN eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (collectNegationPDN () ((H (p ∨ (¬ q)))) (¬ ((¬ p) ∧ q)) (
+        H
+        p q DeMorganNCP eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (collectNegationNDP () ((H ((¬ p) ∨ q))) (¬ (p ∧ (¬ q))) (
+        H
+        p q DeMorganPCN eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (collectNegationNDN () ((H ((¬ p) ∨ (¬ q)))) (¬ (p ∧ q)) (
+        H
+        p q DeMorganPCP eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (collectNegationPCP () ((H (p ∧ q))) (¬ ((¬ p) ∨ (¬ q))) (
+        H
+        p q DeMorganNDN eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (collectNegationPCN () ((H (p ∧ (¬ q)))) (¬ ((¬ p) ∨ q)) (
+        H
+        p q DeMorganNDP eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (collectNegationNCP () ((H ((¬ p) ∧ q))) (¬ (p ∨ (¬ q))) (
+        H
+        p q DeMorganPDN eliminateBiconditionalRight
+        applyModusPonens
+))
+
+thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
+        H
+        p q DeMorganPDP eliminateBiconditionalRight
         applyModusPonens
 ))
 </jh>
