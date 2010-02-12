@@ -1685,6 +1685,30 @@ thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
 ))
 </jh>
 
+== Modus tollens ==
+''Modus tollens'' is just a combination of ''modus ponens'' and transposition.
+
+<jh>
+thm (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)) (
+        (¬ q) BiconditionalReflexivity
+        p q Transposition
+        buildConjunction eliminateBiconditionalLeft
+
+        (¬ q) (¬ p) ModusPonens import
+
+        applySyllogism
+))
+
+thm (applyModusTollens () ((H1 (¬ q)) (H2 (p → q))) (¬ p) (
+        H1
+
+        H2
+        introduceTransposition
+
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
