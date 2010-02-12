@@ -1686,6 +1686,72 @@ thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
 ))
 </jh>
 
+=== Biconditionalized composition ===
+
+We earlier proved composition laws for disjunction and conjunction:
+ ((p → r) ∧ (q → r)) → ((p ∨ q) → r))
+ ((p → q) ∧ (p → r)) → (p → (q ∧ r))
+The converses, while less interesting, are also true, and we prove them now.
+
+<jh>
+thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)) (
+        p r q *3.44
+
+        p q DisjunctionRightIntroduction
+        p (p ∨ q) r Syllogism
+        applyModusPonens
+
+        q p DisjunctionLeftIntroduction
+        q (p ∨ q) r Syllogism
+        applyModusPonens
+
+        composeConjunction
+
+        introduceBiconditional
+))
+
+thm (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))) (
+        p q r Comp
+
+        q r ConjunctionRightElimination
+        (q ∧ r) q p *2.05
+        applyModusPonens
+
+        q r ConjunctionLeftElimination
+        (q ∧ r) r p *2.05
+        applyModusPonens
+
+        composeConjunction
+
+        introduceBiconditional
+))
+
+thm (extractLeftDisjunction () ((H ((p ∨ q) → r))) (p → r) (
+        p q DisjunctionRightIntroduction
+        H
+        applySyllogism
+))
+
+thm (extractRightDisjunction () ((H ((p ∨ q) → r))) (q → r) (
+        q p DisjunctionLeftIntroduction
+        H
+        applySyllogism
+))
+
+thm (extractLeftConjunction () ((H (p → (q ∧ r)))) (p → q) (
+        H
+        q r ConjunctionRightElimination
+        applySyllogism
+))
+
+thm (extractRightConjunction () ((H (p → (q ∧ r)))) (p → r) (
+        H
+        q r ConjunctionLeftElimination
+        applySyllogism
+))
+
+</jh>
+
 == Disjunction elimination ==
 A disjunction implies the stronger of its two propositions.  That is, <code>((p ∨ q) ∧ (p → q)) → q</code>.
 
