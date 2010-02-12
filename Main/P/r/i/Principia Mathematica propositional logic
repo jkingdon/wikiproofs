@@ -726,7 +726,7 @@ thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) ( # *3.43
         import
 ))
 
-thm (applyComp () ((H1 (p → q)) (H2 (p → r))) (p → (q ∧ r)) (
+thm (composeConjunction () ((H1 (p → q)) (H2 (p → r))) (p → (q ∧ r)) (
         H1 H2 introduceConjunction
         p q r Comp
         applyModusPonens
@@ -895,11 +895,11 @@ thm (*4.12-reverse () () ((p ↔ (¬ q)) → ((¬ p) → q)) (
 thm (*4.12 () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))) (
         p q *4.12-forward
         p q *4.12-reverse
-        applyComp
+        composeConjunction
 
         q p *4.12-forward
         q p *4.12-reverse
-        applyComp
+        composeConjunction
 
         introduceBiconditional
 ))
@@ -1063,7 +1063,7 @@ Second factor:
         (p → q) (q → p) ConjunctionLeftElimination
         applySyllogism
         applySyllogismInConsequent
-        applyComp
+        composeConjunction
 ))
 
 thm (applyBiconditionalTransitivity () ((H1 (p ↔ q)) (H2 (q ↔ r))) (p ↔ r) (
@@ -1360,7 +1360,7 @@ thm (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (
         r s p q ImplicationFunction
         applySyllogism
 
-        applyComp
+        composeConjunction
 
         (p → r) (q → s) (r → p) (s → q) 
         ConjunctionFunction
@@ -1383,7 +1383,7 @@ thm (ConjunctionLeftDistribution-forward () ()
   ((p ∧ (q ∨ r)) → ((p ∧ q) ∨ (p ∧ r))) (
         p q *3.2
         p r *3.2
-        applyComp
+        composeConjunction
 
         q (p ∧ q) r (p ∧ r) *3.48
         applySyllogism
@@ -1401,7 +1401,7 @@ thm (ConjunctionLeftDistribution-reverse () ()
         p r ConjunctionLeftElimination
         combineImplicationsAsDisjunction
 
-        applyComp
+        composeConjunction
 ))
 
 thm (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))) ( # *4.4
@@ -1421,7 +1421,7 @@ thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q)
         q r ConjunctionLeftElimination
         (q ∧ r) r p Sum applyModusPonens
 
-        applyComp
+        composeConjunction
 ))
 
 thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p ∨ (q ∧ r))) (
