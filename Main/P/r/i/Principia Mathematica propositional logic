@@ -5,12 +5,10 @@
  | right    = 
  | shortcut = 
  | notes    = The purpose of this page is to prove the statements of [[Interface:Classical propositional calculus]] from the [[Interface:Principia Mathematica propositional logic|Principia Mathematica]]<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref> axioms for propositional logic.
-
-[[Image:Zeichen 123.svg|50px]] This page is not yet done.  To help finish it, edit the page (you can see if your edits are verifying by previewing them), or go to [[Help:Contents]] if you haven't yet figured out how to edit and write proofs.
 }}
 {{interfaces
-| imports = [[Interface:Principia Mathematica propositional logic|Principia Mathematica propositional logic]]
-| exports = [[Image:Zeichen 123.svg|35px]] None yet
+| imports = [[Interface:Principia Mathematica propositional logic]]
+| exports = [[Interface:Classical propositional calculus]]
 }}
 
 <jh>
@@ -237,7 +235,7 @@ thm (introduceRightDisjunction () ((H p)) (p ∨ q) (
 </jh>
 
 === Modus ponens law ===
-Next, we prove the modus ponens law with ''Assoc'':
+Next, we prove a version of the modus ponens law with ''Assoc'':
 <jh>
 thm (*2.25 () () (p ∨ ((p ∨ q) → q)) (
         (p ∨ q) Id
@@ -245,7 +243,7 @@ thm (*2.25 () () (p ∨ ((p ∨ q) → q)) (
         applyModusPonens
 ))
 
-thm (ModusPonens () () (p → ((p → q) → q)) ( # *2.27
+thm (*2.27 () () (p → ((p → q) → q)) (
         (¬ p) q *2.25
 ))
 </jh>
@@ -1893,7 +1891,15 @@ thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
 ))
 </jh>
 
-== Modus tollens ==
+== Modus ponens and modus tollens ==
+Now that we have import, we can derive the version of the ''modus ponens'' law which [[Interface:Classical propositional calculus]] expects:
+<jh>
+thm (ModusPonens () () ((p ∧ (p → q)) → q) (
+        p q *2.27
+        import
+))
+</jh>
+
 ''Modus tollens'' is just a combination of ''modus ponens'' and transposition.
 
 <jh>
@@ -1902,7 +1908,7 @@ thm (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)) (
         p q Transposition
         buildConjunction eliminateBiconditionalLeft
 
-        (¬ q) (¬ p) ModusPonens import
+        (¬ q) (¬ p) ModusPonens
 
         applySyllogism
 ))
@@ -1975,7 +1981,7 @@ thm (NegationImplication-reverse () () ((p → (⊥)) → (¬ p)) (
         p (⊥) Transposition eliminateRightBiconditionalImplication
 
         NotFalse
-        (¬ (⊥)) (¬ p) ModusPonens
+        (¬ (⊥)) (¬ p) ModusPonens export
         applyModusPonens
 
         applySyllogism
@@ -2408,10 +2414,9 @@ thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
 ))
 </jh>
 
-:''This page is still incomplete''
-:''Once it is done, the following export can be uncommented:''
+That's it!  We're ready to export our theorems to [[Interface:Classical propositional calculus]]:
 <jh>
-#export (CLASSICAL Interface:Classical_propositional_calculus () ())
+export (CLASSICAL Interface:Classical_propositional_calculus () ())
 </jh>
 
 == References ==
