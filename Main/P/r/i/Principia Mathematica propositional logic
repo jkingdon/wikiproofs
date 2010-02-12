@@ -599,6 +599,20 @@ thm (NotFalse () () (¬ (⊥)) (
 ))
 </jh>
 
+=== Conjunction introduction ===
+We provide an additional name for *3.2 and a commutated version.
+
+<jh>
+thm (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))) (
+        p q *3.2
+))
+
+thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) (
+        q p ConjunctionRightIntroduction
+        applyComm
+))
+</jh>
+
 === Conjunction elimination ===
 Next, we prove the conjunction elimination theorems.
 <jh>
