@@ -1030,8 +1030,14 @@ thm (BiconditionalReflexivity () () (p ↔ p) ( # *4.2
         introduceBiconditional
 ))
 
-thm (BiconditionalSymmetry () () ((p ↔ q) → (q ↔ p)) ( # *4.21
+thm (BiconditionalSymmetry () () ((p ↔ q) → (q ↔ p)) (
         (p → q) (q → p) *3.22
+))
+
+thm (*4.21 () () ((p ↔ q) ↔ (q ↔ p)) (
+        p q BiconditionalSymmetry
+        q p BiconditionalSymmetry
+        introduceBiconditional
 ))
 
 thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
@@ -1099,7 +1105,7 @@ thm (buildRightDisjunction () ((H (p ↔ q))) ((p ∨ r) ↔ (q ∨ r)) (
 === More theorems stated using the biconditional ===
 Some more theorems where we have proved implications in both directions, but can now express them using the biconditional:
 <jh>
-thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) (
+thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) ( # *5.41
         p q r *2.77
         p q r *2.86
         introduceBiconditional
@@ -2095,6 +2101,187 @@ thm (convertToBiconditionalFromImplications () ((H ((p → q) ∧ (q → p)))) (
 
 thm (introduceBiconditionalFromImplications () ((HPQ (p → q)) (HQP (q → p))) (p ↔ q) (
         HPQ HQP introduceConjunction
+))
+</jh>
+
+=== Biconditional and disjunctions ===
+One way of looking at <code>p ↔ q</code> is "both p and q are true, or neither are true", or in symbols, <code>(p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))</code>.  We prove this via a fairly long string of simpler propositions.
+
+<jh>
+thm (Abs () () ((p → (¬ p)) → (¬ p)) ( # *2.01
+        (¬ p) Taut
+))
+
+thm (*4.61 () () ((¬ (p → q)) ↔ (p ∧ (¬ q))) (
+        p q DeMorganNDP
+))
+
+thm (*4.82-forward () () (((p → q) ∧ (p → (¬ q))) → (¬ p)) (
+        q *3.24
+
+        p q (¬ q) ConjunctionComposition
+        p (q ∧ (¬ q)) Transposition
+        applyBiconditionalTransitivity
+        eliminateRightBiconditionalImplication
+
+        applyComm
+
+        applyModusPonens
+))
+
+thm (*5.15 () () ((p ↔ q) ∨ (p ↔ (¬ q))) (
+        p q *4.61 eliminateRightBiconditionalImplication
+        p (¬ q) *5.1
+        applySyllogism
+
+        (p → q) (p ↔ (¬ q)) *2.54
+        applyModusPonens
+</jh>
+At this point we have <code>(p → q) ∨ (p ↔ (¬ q))</code>.  We'll come back to that, after we prove <code>(q → p) ∨ (p ↔ (¬ q))</code>:
+<jh>
+        q p *4.61 eliminateRightBiconditionalImplication
+        q (¬ p) *5.1
+        applySyllogism
+
+        q p *4.12 eliminateBiconditionalLeft
+        applySyllogism
+
+        (q → p) (p ↔ (¬ q)) *2.54
+        applyModusPonens
+</jh>
+Now we have <code>(p → q) ∨ (p ↔ (¬ q))</code> and <code>(q → p) ∨ (p ↔ (¬ q))</code> on the proof stack. It is now enough to join those with a conjunction and apply the distributive law:
+<jh>
+
+        introduceConjunction
+        collectRightDisjunction
+))
+
+thm (*5.16-1 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ p)) (
+        p q BiconditionalImplicationRightElimination
+        (p → (¬ q)) conjoinRR
+        p q *4.82-forward
+        applySyllogism
+))
+
+thm (*5.16-2 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ q)) (
+        p q BiconditionalImplicationLeftElimination
+        (p → (¬ q)) conjoinRR
+
+        q p (¬ q) ImplicationTransitivity
+        applySyllogism
+
+        q Abs
+        applySyllogism
+))
+
+thm (*5.16-3 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ ((¬ q) → p))) (
+        p q *5.16-2
+        p q *5.16-1
+        composeConjunction
+
+</jh>
+At this point we have <code>(¬ q) ∧ (¬ p)</code>, and we just need to apply DeMorgan's law and introduce double negation to get <code>(¬ ((¬ (¬ q)) ∨ p))</code>.
+<jh>
+        q p DeMorganPDP eliminateLeftBiconditionalImplication
+        applySyllogism
+
+        q DoubleNegation
+        p BiconditionalReflexivity
+        buildDisjunction
+        addNegation
+        eliminateRightBiconditionalImplication
+
+        applySyllogism
+))
+
+thm (*5.16 () () (¬ ((p ↔ q) ∧ (p ↔ (¬ q)))) (
+        p q *5.16-3
+        export
+</jh>
+We're much closer than it may appear (because jhilbert automatically applies definitions), but other than two applications of DeMorgan's law, it is just the definitions of implication and biconditional:
+ (p ↔ q) → ((p → (¬ q)) → (¬ ((¬ q) → p)))
+ (p ↔ q) → ((¬ (p → (¬ q))) ∨ (¬ ((¬ q) → p)))
+<jh>
+        (p → (¬ q)) ((¬ q) → p) DeMorganPCP
+        eliminateLeftBiconditionalImplication applySyllogism
+</jh>
+ (p ↔ q) → (¬ ((p → (¬ q)) ∧ ((¬ q) → p)))
+ (p ↔ q) → (¬ (p ↔ (¬ q)))
+ (¬ (p ↔ q)) ∨ (¬ (p ↔ (¬ q)))
+<jh>
+        collectNegationNDN
+))
+
+thm (*5.17-1 () () ((p ∨ q) ↔ ((¬ q) → p)) (
+        p q DisjunctionCommutativity
+
+        q DoubleNegation
+        p BiconditionalReflexivity
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (*5.17-2 () () ((¬ (p ∧ q)) ↔ (p → (¬ q))) (
+        p q DeMorganPCP
+))
+
+thm (*5.17 () () (((p ∨ q) ∧ (¬ (p ∧ q))) ↔ (p ↔ (¬ q))) (
+        p q *5.17-1
+        p q *5.17-2
+        buildConjunction
+
+        (¬ q) p *4.21
+
+        applyBiconditionalTransitivity
+))
+
+thm (*5.18 () () ((p ↔ q) ↔ (¬ (p ↔ (¬ q)))) (
+        p q *5.15
+        p q *5.16
+        introduceConjunction
+
+        (p ↔ q) (p ↔ (¬ q)) *5.17
+        eliminateRightBiconditionalImplication applyModusPonens
+))
+
+thm (*5.22 () () ((¬ (p ↔ q)) ↔ ((p ∧ (¬ q)) ∨ (q ∧ (¬ p)))) (
+        (p → q) (q → p) DeMorganPCP
+</jh>
+At this point we have (applying the definition of implication) <code>(¬ ((¬ p) ∨ q)) ∨ (¬ ((¬ q) ∨ p))</code> and we need (applying the definition of conjunction) <code>(¬ ((¬ p) ∨ (¬ (¬ q)))) ∨ (¬ ((¬ q) ∨ (¬ (¬ p))))</code>. So we just need to fix the double negation.
+<jh>
+
+        (¬ p) BiconditionalReflexivity
+        q DoubleNegation
+        buildDisjunction
+        addNegation
+
+        (¬ q) BiconditionalReflexivity
+        p DoubleNegation
+        buildDisjunction
+        addNegation
+
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (BiconditionalDisjunction () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))) ( # *5.23
+        p q *5.18
+        p (¬ q) *5.22
+        applyBiconditionalTransitivity
+</jh>
+We now have <code>(p ↔ q) ↔ ((p ∧ (¬ (¬ q))) ∨ ((¬ q) ∧ (¬ p)))</code>, so we just need to fix the double negation and commutate the second conjunction.
+<jh>
+        p BiconditionalReflexivity
+        q DoubleNegation swapBiconditional
+        buildConjunction
+
+        (¬ q) (¬ p) ConjunctionCommutativity
+
+        buildDisjunction
+
+        applyBiconditionalTransitivity
 ))
 </jh>
 
