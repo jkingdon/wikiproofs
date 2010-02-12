@@ -562,7 +562,7 @@ The trick is now to write <math>(\neg p)\vee(\neg q)\vee\ldots</math> as <math>p
         groupDisjunctionRight
 ))
 
-thm (combineStatements () ((H1 p) (H2 q)) (p ∧ q) ( # *3.03
+thm (introduceConjunction () ((H1 p) (H2 q)) (p ∧ q) ( # *3.03
         H2
         H1
         p q *3.2
@@ -727,7 +727,7 @@ thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) ( # *3.43
 ))
 
 thm (applyComp () ((H1 (p → q)) (H2 (p → r))) (p → (q ∧ r)) (
-        H1 H2 combineStatements
+        H1 H2 introduceConjunction
         p q r Comp
         applyModusPonens
 ))
@@ -768,7 +768,7 @@ thm (*3.44 () () (((q → p) ∧ (r → p)) → ((q ∨ r) → p)) (
 
 thm (composeDisjunction () ((HQP (q → p)) (HRP (r → p)))
   ((q ∨ r) → p) (
-        HQP HRP combineStatements
+        HQP HRP introduceConjunction
         q p r *3.44
         applyModusPonens
 ))
@@ -806,7 +806,7 @@ Now we do the same with the right hand side of the antecedent to get <math>((p\r
 ))
 
 thm (combineImplicationsAsConjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
-        H1 H2 combineStatements
+        H1 H2 introduceConjunction
         p r q s *3.47
         applyModusPonens
 ))
@@ -825,7 +825,7 @@ This theorem follows exactly as <math>*3.47</math>, except that we use the ''Sum
 ))
 
 thm (combineImplicationsAsDisjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
-        H1 H2 combineStatements
+        H1 H2 introduceConjunction
         p r q s *3.48
         applyModusPonens
 ))
@@ -836,7 +836,7 @@ thm (combineImplicationsAsDisjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∨
 In Principia, the biconditional <math>p\leftrightarrow q</math> is defined simply as <math>(p\rightarrow q)\wedge(q\rightarrow p)</math>, so our combination and elimination theorems for conjunction immediately yield the corresponding introduction and elimination rules for the biconditional.
 <jh>
 thm (introduceBiconditional () ((H1 (p → q)) (H2 (q → p))) (p ↔ q) (
-        H1 H2 combineStatements
+        H1 H2 introduceConjunction
 ))
 
 thm (eliminateBiconditionalLeft () ((H (p ↔ q))) (p → q) (
@@ -1067,7 +1067,7 @@ Second factor:
 ))
 
 thm (applyBiconditionalTransitivity () ((H1 (p ↔ q)) (H2 (q ↔ r))) (p ↔ r) (
-        H1 H2 combineStatements
+        H1 H2 introduceConjunction
         p q r BiconditionalTransitivity
         applyModusPonens
 ))
@@ -1303,7 +1303,7 @@ thm (buildConjunction () (
   (H1 (p ↔ q))
   (H2 (r ↔ s)))
   ((p ∧ r) ↔ (q ∧ s)) (
-        H1 H2 combineStatements
+        H1 H2 introduceConjunction
         p q r s ConjunctionFunction
         applyModusPonens
 ))
@@ -1312,7 +1312,7 @@ thm (buildDisjunction () (
   (H1 (p ↔ q))
   (H2 (r ↔ s)))
   ((p ∨ r) ↔ (q ∨ s)) (
-        H1 H2 combineStatements
+        H1 H2 introduceConjunction
         p q r s DisjunctionFunction
         applyModusPonens
 ))
@@ -1343,7 +1343,7 @@ thm (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q 
 
 thm (buildImplication () ((HPQ (p ↔ q)) (HRS (r ↔ s))) 
   ((p → r) ↔ (q → s)) (
-        HPQ HRS combineStatements
+        HPQ HRS introduceConjunction
         p q r s ImplicationFunction
         applyModusPonens
 ))
@@ -1369,7 +1369,7 @@ thm (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (
 ))
 
 thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q ↔ s)) (
-        HPQ HRS combineStatements
+        HPQ HRS introduceConjunction
         p q r s BiconditionalFunction
         applyModusPonens
 ))
@@ -1710,13 +1710,13 @@ thm (DisjunctionRightElimination () () (((p ∨ q) ∧ (q → p)) → p) (
 ))
 
 thm (eliminateLeftDisjunction () ((HDIS (p ∨ q)) (HIMP (p → q))) q (
-        HDIS HIMP combineStatements
+        HDIS HIMP introduceConjunction
         p q DisjunctionLeftElimination
         applyModusPonens
 ))
 
 thm (eliminateRightDisjunction () ((HDIS (p ∨ q)) (HIMP (q → p))) p (
-        HDIS HIMP combineStatements
+        HDIS HIMP introduceConjunction
         p q DisjunctionRightElimination
         applyModusPonens
 ))
@@ -1734,7 +1734,7 @@ thm (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q) (
 ))
 
 thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
-        HP HNOTP combineStatements
+        HP HNOTP introduceConjunction
         p q CaseElimination
         applyModusPonens
 ))
