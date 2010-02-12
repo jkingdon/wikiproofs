@@ -1667,6 +1667,24 @@ thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
 ))
 </jh>
 
+== Case Elimination ==
+Proofs often show that one of several cases must apply, and then prove the desired proposition for each case. Here we provide one form of this, where there are two cases: <code>p</code> and <code>(¬ p)</code>.
+
+<jh>
+# one direction of *4.83; much like *2.61
+thm (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q) (
+        p q *2.6
+        applyComm
+        import
+))
+
+thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
+        HP HNOTP combineStatements
+        p q CaseElimination
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
