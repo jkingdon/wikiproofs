@@ -2074,6 +2074,30 @@ thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
 ))
 </jh>
 
+== Relationships between connectives ==
+Here we express implication in terms of disjunction, biconditional in terms of implication, etc.
+
+=== Biconditional and implications ===
+These are all straightforward because we define the biconditional as a conjunction of two implications.
+
+<jh>
+thm (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))) (
+        (p ↔ q) BiconditionalReflexivity
+))
+
+thm (convertFromBiconditionalToImplications () ((H (p ↔ q))) ((p → q) ∧ (q → p)) (
+        H
+))
+
+thm (convertToBiconditionalFromImplications () ((H ((p → q) ∧ (q → p)))) (p ↔ q) (
+        H
+))
+
+thm (introduceBiconditionalFromImplications () ((HPQ (p → q)) (HQP (q → p))) (p ↔ q) (
+        HPQ HQP introduceConjunction
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
