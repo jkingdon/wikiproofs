@@ -1830,6 +1830,133 @@ thm (applyModusTollens () ((H1 (¬ q)) (H2 (p → q))) (¬ p) (
 ))
 </jh>
 
+== Variants of disjunction summation and conjunction multiplication ==
+We've already proved the basic DisjunctionSummation and ConjunctionMultiplication theorems.  Here we provide convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions or conjunctions.
+
+<jh>
+thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
+        r ImplicationReflexivity
+
+        r r p q DisjunctionSummation
+        export
+
+        applyModusPonens
+))
+
+thm (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))) (
+        p q r DisjunctionSummationLL
+
+        r q DisjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))) (
+        r ImplicationReflexivity
+
+        p q r r DisjunctionSummation
+        export
+        applyComm
+
+        applyModusPonens
+))
+
+thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))) (
+        p q r DisjunctionSummationRR
+
+        q r DisjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationLL
+        applyModusPonens
+))
+
+thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationLR
+        applyModusPonens
+))
+
+thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationRL
+        applyModusPonens
+))
+
+thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationRR
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))) (
+        r ImplicationReflexivity
+
+        r r p q ConjunctionMultiplication
+        export
+
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))) (
+        p q r ConjunctionMultiplicationLL
+
+        r q ConjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))) (
+        r ImplicationReflexivity
+
+        p q r r ConjunctionMultiplication
+        export
+        applyComm
+
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
+        p q r ConjunctionMultiplicationRR
+
+        q r ConjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (conjoinLL () ((H (p → q))) ((r ∧ p) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationLL
+        applyModusPonens
+))
+
+thm (conjoinLR () ((H (p → q))) ((r ∧ p) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationLR
+        applyModusPonens
+))
+
+thm (conjoinRL () ((H (p → q))) ((p ∧ r) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationRL
+        applyModusPonens
+))
+
+thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationRR
+        applyModusPonens
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
