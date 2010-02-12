@@ -1304,6 +1304,32 @@ thm (buildImplication () ((HPQ (p ↔ q)) (HRS (r ↔ s)))
 ))
 </jh>
 
+==== Biconditional ====
+To prove the biconditional builder, we need <code>((p → r) ∧ (r → p)) ↔ ((q → s) ∧ (s → q))</code>.  As this is an equivalence of conjunctions, we'll get it with the conjunction builder.  The equivalences needed to apply the conjunction builder will come from the implication builder (and conjunction commutativity in one of the two directions).
+
+<jh>
+thm (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))) (
+        p q r s ImplicationFunction
+
+        (p ↔ q) (r ↔ s) *3.22
+        r s p q ImplicationFunction
+        applySyllogism
+
+        applyComp
+
+        (p → r) (q → s) (r → p) (s → q) 
+        ConjunctionFunction
+
+        applySyllogism
+))
+
+thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q ↔ s)) (
+        HPQ HRS combineStatements
+        p q r s BiconditionalFunction
+        applyModusPonens
+))
+</jh>
+ 
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
