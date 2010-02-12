@@ -1217,6 +1217,21 @@ thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q 
 ))
 </jh>
 
+==== Disjunction ====
+This is just like the theorem for conjunction, except that we build on the partial builder theorem *3.48 instead of *3.47:
+
+<jh>
+thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))) ( # *4.39
+        p q r s ConjunctionFunction-1
+        
+        p q r s *3.48
+        q p s r *3.48
+        combineImplicationsAsConjunction
+
+        applySyllogism
+))
+</jh>
+
 :''This page is still incomplete''
 :''Once it is done, the following export can be uncommented:''
 <jh>
