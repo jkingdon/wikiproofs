@@ -2104,7 +2104,7 @@ thm (introduceBiconditionalFromImplications () ((HPQ (p → q)) (HQP (q → p)))
 ))
 </jh>
 
-=== Biconditional and disjunctions ===
+=== Biconditional as disjunction of two conjunctions ===
 One way of looking at <code>p ↔ q</code> is "both p and q are true, or neither are true", or in symbols, <code>(p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))</code>.  We prove this via a fairly long string of simpler propositions.
 
 <jh>
@@ -2282,6 +2282,20 @@ We now have <code>(p ↔ q) ↔ ((p ∧ (¬ (¬ q))) ∨ ((¬ q) ∧ (¬ p)))</c
         buildDisjunction
 
         applyBiconditionalTransitivity
+))
+
+thm (convertFromBiconditionalToDisjunction () ((H (p ↔ q))) ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))) (
+        H
+        p q BiconditionalDisjunction
+        eliminateRightBiconditionalImplication
+        applyModusPonens
+))
+
+thm (convertToBiconditionalFromDisjunction () ((H ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))))) (p ↔ q) (
+        H
+        p q BiconditionalDisjunction
+        eliminateLeftBiconditionalImplication
+        applyModusPonens
 ))
 </jh>
 
