@@ -811,7 +811,7 @@ thm (combineImplicationsAsConjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∧
         applyModusPonens
 ))
 
-thm (*3.48 () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) (
+thm (DisjunctionSummation () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) (
 </jh>
 This theorem follows exactly as <math>*3.47</math>, except that we use the ''Sum'' type theorem <math>*2.37</math> instead of ''Fact'' and <math>*3.22</math>.
 <jh>
@@ -826,7 +826,7 @@ This theorem follows exactly as <math>*3.47</math>, except that we use the ''Sum
 
 thm (combineImplicationsAsDisjunction () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
         H1 H2 introduceConjunction
-        p r q s *3.48
+        p r q s DisjunctionSummation
         applyModusPonens
 ))
 </jh>
@@ -1281,14 +1281,14 @@ thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q 
 </jh>
 
 ==== Disjunction ====
-This is just like the theorem for conjunction, except that we build on the partial builder theorem *3.48 instead of *3.47:
+This is just like the theorem for conjunction, except that we build on the partial builder theorem DisjunctionSummation instead of *3.47:
 
 <jh>
 thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))) ( # *4.39
         p q r s ConjunctionFunction-1
         
-        p q r s *3.48
-        q p s r *3.48
+        p q r s DisjunctionSummation
+        q p s r DisjunctionSummation
         combineImplicationsAsConjunction
 
         applySyllogism
@@ -1385,7 +1385,7 @@ thm (ConjunctionLeftDistribution-forward () ()
         p r *3.2
         composeConjunction
 
-        q (p ∧ q) r (p ∧ r) *3.48
+        q (p ∧ q) r (p ∧ r) DisjunctionSummation
         applySyllogism
 
         import
