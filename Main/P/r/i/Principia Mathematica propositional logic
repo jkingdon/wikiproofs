@@ -671,7 +671,7 @@ thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
 </jh>
 We can use importation to prove syllogisms in conjunction form:
 <jh>
-thm (*3.33 () () (((p → q) ∧ (q → r)) → (p → r)) (
+thm (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)) ( # *3.33
         p q r Syllogism
         import
 ))
@@ -724,7 +724,7 @@ Conjunction composition has an analogue for disjunction (*3.44), which we prove 
 
 <jh>
 thm (*3.44-1 () () ((((¬ q) → r) ∧ (r → p)) → ((q → p) → p)) (
-        (¬ q) r p *3.33
+        (¬ q) r p ImplicationTransitivity
         q p *2.6
         applySyllogism
 ))
