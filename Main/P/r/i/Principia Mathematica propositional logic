@@ -1830,6 +1830,51 @@ thm (applyModusTollens () ((H1 (¬ q)) (H2 (p → q))) (¬ p) (
 ))
 </jh>
 
+== Tautology and contradiction ==
+[[Interface:Classical propositional calculus]] gives the name Tautology to <code>(p ∨ (¬ p)) ↔ (⊤)</code> and Contradiction to <code>(p ∧ (¬ p)) ↔ (⊥)</code>.  They are somewhat more subtle than they appear (and in particular are not just trivial consequences of our definitions of ⊤ and ⊥), because the variable which appears in the definition of ⊤ or ⊥ is not the same as the one in the Tautology or Contradiction theorem.  We therefore prove them as consequences of the notion that two true statements are equivalent (*5.1) or that two false statements are equivalent (*5.21).
+
+<jh>
+thm (*3.4 () () ((p ∧ q) → (p → q)) (
+        p q ConjunctionLeftElimination
+        q p AntecedentIntroduction
+        applySyllogism
+))
+
+thm (*5.1 () () ((p ∧ q) → (p ↔ q)) (
+        p q *3.4
+
+        p q *3.22
+        q p *3.4
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)) (
+        p TertiumNonDatur
+        q TertiumNonDatur
+        introduceConjunction
+
+        (p ∨ (¬ p)) (q ∨ (¬ q)) *5.1
+        applyModusPonens
+))
+
+thm (*5.21 () () (((¬ p) ∧ (¬ q)) → (p ↔ q)) (
+        (¬ p) (¬ q) *5.1
+        p q NegationFunction eliminateBiconditionalRight
+        applySyllogism
+))
+
+thm (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)) (
+        p *3.24
+        q *3.24
+        introduceConjunction
+
+        (p ∧ (¬ p)) (q ∧ (¬ q)) *5.21
+        applyModusPonens
+))
+</jh>
+
 == Variants of disjunction summation and conjunction multiplication ==
 We've already proved the basic DisjunctionSummation and ConjunctionMultiplication theorems.  Here we provide convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions or conjunctions.
 
