@@ -11,3 +11,13 @@ Hi Kingdon, just so you know: the JHilbert parser is also enabled in the <code>U
 == Manual ==
 
 Thank you for starting a JHilbert manual!--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 20:27, 10 January 2010 (UTC)
+
+== Definitions ==
+
+Wow, you're really making great progress with [[Principia Mathematica propositional logic]]!
+
+I wanted to direct your attention to [[User:GrafZahl/Definitions in JHilbert]]. This little essay contains a suggestion of mine to weaken the JHilbert definition mechanism for the sake of simplicity. As you might or might not know, the current definition mechanism is in a bit of a sorry state, with unsoundness lurking everywhere. Maybe you have some input you'd want to share.
+
+Oh, and don't worry about your current work on propositional logic. It is neither affected by any unsoundness in the current definition mechanism, nor would the particular definitions in that proof module cease to work due to my suggested weakening.
+
+--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 23:05, 11 February 2010 (UTC)
