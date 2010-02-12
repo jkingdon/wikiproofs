@@ -10,6 +10,7 @@
 ** "Standard propositional calculus", as a toolbox for further developments. Started interface in [[Interface:Classical propositional calculus]], should be derived from Principia Mathematica or other stuff. [[/Principia number mapping]]
 * First-order logic
 
-== Drafts ==
+== Definitions ==
 
-* [[/Definition soundness of first-order logic in JHilbert]]
+* [[/Definition soundness of first-order logic in JHilbert]] (deprecated?)
+* [[/Definitions in JHilbert]]
