@@ -1,0 +1,77 @@
+== Goals of a definition mechanism ==
+
+There are two essential goals for a definition mechanism:
+# Be conservative.  Any theorem that is provable with a definition, but that does not actually use the definition, must be provable without the definition.
+# Allow arbitrary "sensible" definitions.
+
+Also, [[User:GrafZahl]] wants a definition mechanism where definitions can be automatically folded and unfolded during a proof.
+
+I (and perhaps Raph Levien) would like it to be possible to automatically translate proofs to and from equivalent metamath theories; this argues against automatic definition unfolding, and in favor of a system that looks a lot like metamath, where there is a single statement df-FOO and all folding and unfolding is done (directly or indirectly) by applying this statement.  (The essential difference is that with a conservative definition mechanism, df-FOO would be a theorem rather than an axiom.)
+
+== Proposed specification of a definition mechanism ==
+
+Here I will give a specification of definitions from the user's and implementor's point of view, as an amendment to [[Help:JHilbert]].
+
+There are two new statements, <code>vkind</code> and <code>def-thm</code>.  Also, the spec for the <code>def</code> statement has changed to require that variables appearing on the left also appear on the right.
+
+The <code>vkind</code> statement declares a "variable kind".
+ vkind (''new-kind'')
+There are two differences between a variable kind and a normal kind.  First, in every pair of disjoint variables in a disjoint variable declaration, at least one of the variables must be in a variable kind.  Second, no term constructor or definition can have a variable kind as a result.  (So the only terms whose kind is a variable kind are variables.)
+
+(In a translation of set.mm, set would be a variable kind, class and wff would be normal kinds.  Note that the concept of a variable kind is essentially the same as an atom-sort in formalizations of nominal logic.)
+
+The <code>def</code> statement creates a new definition.
+ def (''new-defined'' ''definition'')
+For example, 
+ def ((¬ p) (p | p))
+defines ¬ in terms of |.  A variable which appears on the right hand side but not the left hand side is called a ''dummy''.  Every variable that appears on the left hand side must also appear on the right.
+
+The <code>def-thm</code> statement is the only way to actually use a definition.
+ def-thm (''label'' (''distinct-variables'') (''hypothesis'') (''consequent'') ''defn-name'' ''orig-label'')
+This creates a new theorem (with ''label'', ''distinct-variables'', ''hypothesis'', and ''consequent'' as in <code>stmt</code>).  This new theorem is the same as ''orig-label'', except for possible foldings and unfoldings of the definition ''defn-name''.
+
+The process of checking a <code>def-thm</code> statement is slightly involved.  First we define the level of a use of a definition.  For a definition <code>foo</code>, the <code>foo</code>-level of any term that does not mention <code>foo</code> is 0.  The <code>foo</code>-level of <code>(bar A B C ...)</code> (where <code>bar</code> is any term constructor other than <code>foo</code>) is the maximum of the levels of A, B, C... .  The <code>foo</code>-level of <code>(foo A B C ...)</code> is one more than the maximum of the levels of A, B, C... .
+
+Next we define the <code>foo</code>-unfolding of a statement.  Let N be the maximal level at which <code>foo</code> appears within the statement.  Let M be the number of dummy variables in <code>foo</code>'s definition.  Create N*M new variables.  Add all possible disjoint variable conditions involving the new variables.  (If the new variable is of variable kind, then it is disjoint from all other variables in the statement (new or old); if the new variable is not of variable kind, then it is disjoint from all variable-kind variables in the statement (new or old).)  Unfold each instance of <code>foo</code> in the statement; for an instance at level K, use the corresponding set of M dummy variables you just created.  If a statement uses a definition <code>bar</code> that directly or indirectly refers to <code>foo</code>, then it has no <code>foo</code>-unfolding.
+
+To check a <code>def-thm</code> statement over the definition <code>foo</code>, compute the <code>foo</code>-unfolding of the original and new statements.  Verify that there is a variable substitution that takes the original statement to the new statement, while respecting disjoint variable constraints.
+
+=== Examples ===
+
+I will use set.mm syntax here.
+
+First, consider a sensible definition.  set.mm has an axiom <code>df-v</code>, <code>V = { x | x = x }</code>.  Our goal is to prove this as a theorem instead of an axiom.  To do so, we define <code>V</code> to be <code>{ x | x = x }</code>.  We then prove <code>{ y | y = y } = { x | x = x }</code>; from this theorem, we can use <code>def-thm</code> over <code>V</code> to deduce that <code>V = { x | x = x }</code>.  Note that we could not start from <code>{ x | x = x } = { x | x = x }</code> and use <code>def-thm</code> to deduce <code>V = { x | x = x }</code>; the unfolding of the latter is something like <code>{ dummy_V_x_1 | dummy_V_x_1 = dummy_V_x_1 } = { x | x = x }</code>, which is not a substitution instance of <code>{ x | x = x } = { x | x = x }</code>.  (From <code>{ x | x = x } = { x | x = x }</code> it would be possible to deduce <code>V = V</code>.)
+
+Next, consider a non-sensible definition.  Suppose you define <code>bad</code> to be <code>A</code> (a dummy class metavariable), with the goal of proving <code>bad = A</code> and deriving an inconsistency.  But to use <code>def-thm</code> to derive <code>bad = A</code>, you would have to start from a theorem <code>B = A</code>.
+
+== Sketch of the ideas behind a proof of conservativity ==
+
+The basic idea of a proof of conservativity is to show that any proof is still valid if you replace every statement in the proof by its complete unfolding with respect to all definitions.  The tricky case is to verify that if statement2 is a substitution instance of statement1 (respecting disjoint variable conditions), then complete_unfolding(statement2) is a substitution instance of complete_unfolding(statement1) (respecting disjoint variable conditions).
+
+(To compute the complete unfolding of a statement, compute its unfolding with respect to every definition in turn, most recent definition first.)
+
+I'll just mention a few details in such a proof, explaining some of the restrictions I gave above.
+
+If definitions are just abbreviations, then there are extra variables running around that are not tracked by the disjoint variables mechanism.  For instance, if you had a disjoint variable pair A,B, then you should not be allowed to substitute <code>V</code> (which is an abbreviation for <code>{ dummy_V_x_1 | dummy_V_x_1 = dummy_V_x_1 }</code>) for both A and B, since then A and B would share the variable <code>dummy_V_x_1</code>.  However, A and B are not of variable kind, so no disjoint variable pair A,B can exist.  (If you tried to declare A,B of variable kind, by translating set.mm with class as a vkind, then you could not define V or class comprehension at all, since no definition or term constructor can have a vkind result.)
+
+It is probably necessary that folding or unfolding one definition does not change the level of another definition.  This is the reason for the restriction that every variable on the left-hand side of a definition must also appear on the right; otherwise, you could define <code>(foo A)</code> to be <code>V</code>, and then unfolding <code>foo</code> in <code>(bar (foo (bar V)))</code> would change the outer <code>bar</code> from level 2 to level 1.
+
+Consider a definition <code>complement A</code> to <code>{ x | -. x e. A }</code>.  Then <code>complement A</code> is an abbreviation for <code>{ dummy_complement_x_1 | -. dummy_complement_x_1 e. A }</code>; if this appears in some statement, and you substitute <code>complement B</code> for <code>A</code>, then you need to get <code>{ dummy_complement_x_2 | -. dummy_complement_x_2 e. { dummy_complement_x_1 | -. dummy_complement_x_1 e. B } }</code>.  That is, when you substitute <code>{ dummy_complement_x_1 | -. dummy_complement_x_1 e. B }</code> for <code>A</code>, you need to simultaneously substitute <code>dummy_complement_x_2</code> for <code>dummy_complement_x_1</code>.  This is always possible.
+
+== Discussion ==
+
+This is a variant of GHilbert's definition mechanism, as described at the bottom of http://wiki.planetmath.org/AsteroidMeta/Ghilbert_specification .  Unfortunately, if I'm understanding it correctly, the proposed GHilbert mechanism is unsound.  (It needs to have the concept of levels, and it doesn't.)  Here's an example.
+
+Define <code>P. x ph</code> to be <code>E. z [ z / x ] ph</code>.  You can prove that <code>P. x ph</code> is equivalent to <code>E. x ph</code>, so you can prove that <code>P. x P. y -. x = y</code> (there are at least two elements in the universe).  Unfortunately, you can also prove <code>-. P. x P. y -. x = y</code>, because that's the GHilbert-folding of <code>-. E. z [ z / x ] E. z [ z / y ] -. x = y</code>, which is equivalent to <code>-. E. z E. z -. z = z</code>, which is equivalent to <code>-. E. z -. z = z</code>, which is certainly true.
+
+Here are some variants on my proposal.
+
+Variant 1: You could make the definition of <code>def-thm</code> much simpler by requiring, for instance, that the definition appears only once, and only in the new theorem.  (This would let you get rid of the whole concept of levels.)  I believe this would suffice for providing conservative versions of all of set.mm's definitions (except possibly for biimplication).  I prefer the powerful version of <code>def-thm</code>, for two reasons.  First, you would still need levels in the proof of conservativity, so the simpler version wouldn't actually simplify the spec much if you consider the proof to be part of the spec.  Second, with the powerful version of <code>def-thm</code>, it is easy to see that the metalogic is complete with respect to the intended semantics of definitions; with a weaker <code>def-thm</code>, it might be that the definition metalogic is only complete for sufficiently powerful object logics.  (For instance, some object logics might not have a notion of equality or biimplication, and I can't convince myself that a weak <code>def-thm</code> would be complete for such a logic.)
+
+Variant 2: The <code>vkind</code> statement and the concept of variable kinds could be eliminated if the normal proof machinery were changed to consider dummy variables in definitions.  That makes the proof checker much more complicated to describe; I think that the spec is overall simpler by adding <code>vkind</code> instead.
+
+Variant 3: The restriction that variables on the left of a definition must also appear on the right could be removed if each definition tracked which arguments actually appeared in the complete unfolding of the definition, and this information was used in a revised definition of level.
+
+Variant 4: Definitions without dummy variables are much simpler.  There could be essentially two different definition mechanisms, with more flexibility when there are no dummy variables.  For example, such definitions could be folded and unfolded automatically during proof.  Or (a much smaller change from my proposal) the restriction that if a statement mentions <code>bar</code>, and the definition of <code>bar</code> mentions <code>foo</code>, then the statement has no <code>foo</code>-unfolding could be removed in the case where <code>foo</code> has no dummy variables.
+
+Any comments on this proposal would be greatly appreciated! [[User:CarlWitty|CarlWitty]] 19:37, 12 February 2010 (UTC)
