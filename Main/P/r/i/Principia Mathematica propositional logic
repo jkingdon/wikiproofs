@@ -817,7 +817,7 @@ thm (conjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
 
 thm (DisjunctionSummation () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) ( # *3.48
 </jh>
-This theorem follows exactly as <math>ConjunctionMultiplication</math>, except that we use the ''Sum'' type theorem <math>*2.37</math> instead of ''Fact'' and <math>*3.22</math>.
+This theorem follows exactly as <code>ConjunctionMultiplication</code>, except that we use the ''Sum'' type theorem <math>*2.37</math> instead of ''Fact'' and <math>*3.22</math>.
 <jh>
         (p → r) (q → s) ConjunctionRightElimination
         p r q *2.37
@@ -884,7 +884,7 @@ thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
 </jh>
 
 === Biconditionalized transposition laws ===
-We proved various transposition laws for the conditional earlier. Now we provide some for the biconditional, starting with (p ↔ (¬ q)) ↔ (q ↔ (¬ p)).  The proof is a straightforward application of the conditional transposition laws, but has to prove each direction of the biconditionals.
+We proved various transposition laws for the conditional earlier. Now we provide some for the biconditional, starting with <code>(p ↔ (¬ q)) ↔ (q ↔ (¬ p))</code>.  The proof is a straightforward application of the conditional transposition laws, but has to prove each direction of the biconditionals.
 <jh>
 thm (*4.12-forward () () ((p ↔ (¬ q)) → (q → (¬ p))) (
         (p → (¬ q)) ((¬ q) → p) ConjunctionRightElimination
@@ -954,7 +954,7 @@ thm (*4.14 () () (((p ∧ q) → r) ↔ ((p ∧ (¬ r)) → (¬ q))) (
 ))
 </jh>
 
-The next theorem, <code>(((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p)))</code>, is similar.  Until we have built up more of the biconditional machinery, it will be easier to prove each implication separately.  The proof is a straightforward substitution together with a commutation of the initial p ∧ q. As with the previous proof, most of the length of the proof consists of building up formulas to handle things like removing deeply nested double negation, a process which will get (somewhat) easier later.
+The next theorem, <code>(((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p)))</code>, is similar.  Until we have built up more of the biconditional machinery, it will be easier to prove each implication separately.  The proof is a straightforward substitution together with a commutation of the initial <code>p ∧ q</code>. As with the previous proof, most of the length of the proof consists of building up formulas to handle things like removing deeply nested double negation, a process which will get (somewhat) easier later.
 
 <jh>
 thm (*4.15-1 () () (((p ∧ q) → r) → ((q ∧ p) → r)) (
@@ -1268,10 +1268,10 @@ thm (groupConjunctionLeft () ((H (p ∧ (q ∧ r)))) ((p ∧ q) ∧ r) (
 </jh>
 
 === Substitution and builders ===
-If p ↔ q, then we want to be able to substitute p for q in a theorem to get a new theorem.<ref>Whitehead and Russell, page 120</ref>  The mechanism which we are working towards, in [[Interface:Classical propositional calculus]], is provided by <code>addNegation</code>, <code>removeNegation</code>, <code>buildImplication</code>, <code>buildDisjunction</code>, <code>buildConjunction</code>, and <code>buildBiconditional</code>. Those rules do not eliminate the need for a proof to build up the expressions embodying the substitution, but they reduce the process of constructing such a proof to a familiar (if perhaps tedious) pattern. We proved <code>addNegation</code> already, and we're now ready for <code>buildConjunction</code> and <code>buildDisjunction</code>.
+If <math>p\leftrightarrow q</math>, then we want to be able to substitute <math>p</math> for <math>q</math> in a theorem to get a new theorem.<ref>Whitehead and Russell, page 120</ref>  The mechanism which we are working towards, in [[Interface:Classical propositional calculus]], is provided by <code>addNegation</code>, <code>removeNegation</code>, <code>buildImplication</code>, <code>buildDisjunction</code>, <code>buildConjunction</code>, and <code>buildBiconditional</code>. Those rules do not eliminate the need for a proof to build up the expressions embodying the substitution, but they reduce the process of constructing such a proof to a familiar (if perhaps tedious) pattern. We proved <code>addNegation</code> already, and we're now ready for <code>buildConjunction</code> and <code>buildDisjunction</code>.
 
 ==== Conjunction ====
-The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them (ConjunctionFunction-1, which is just applying assocativity and commutativity in the usual ways), and applying ConjunctionMultiplication to each half.
+The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them (<code>ConjunctionFunction-1</code>, which is just applying assocativity and commutativity in the usual ways), and applying ConjunctionMultiplication to each half.
 
 <jh>
 thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
@@ -1414,7 +1414,7 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
 </jh>
 
 === Distributive law ===
-We prove two distributive laws.  The first one, <code>((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))</code>, is analogous to the distributive law in well-known algebras such as the real numbers, i × (j + k) = i × j + i × k (if one thinks of conjunction as being like multiplication and disjunction as being like addition).
+We prove two distributive laws.  The first one, <code>((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))</code>, is analogous to the distributive law in well-known algebras such as the real numbers, <math>i\cdot(j+k)=i\cdot j+i\cdot k</math> (if one thinks of conjunction as being like multiplication and disjunction as being like addition).
 
 <jh>
 thm (ConjunctionLeftDistribution-forward () () 
