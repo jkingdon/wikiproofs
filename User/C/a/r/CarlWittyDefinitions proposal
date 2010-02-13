@@ -75,3 +75,28 @@ Variant 3: The restriction that variables on the left of a definition must also 
 Variant 4: Definitions without dummy variables are much simpler.  There could be essentially two different definition mechanisms, with more flexibility when there are no dummy variables.  For example, such definitions could be folded and unfolded automatically during proof.  Or (a much smaller change from my proposal) the restriction that if a statement mentions <code>bar</code>, and the definition of <code>bar</code> mentions <code>foo</code>, then the statement has no <code>foo</code>-unfolding could be removed in the case where <code>foo</code> has no dummy variables.
 
 Any comments on this proposal would be greatly appreciated! [[User:CarlWitty|CarlWitty]] 19:37, 12 February 2010 (UTC)
+
+:I think this is a fine proposal, which could be implemented alongside my own (your variant 4), eliminating my <code>dstmt</code> proposal in favour of <code>def-thm</code> (you would still have a companion keyword <code>def-stmt</code> or something, so that you can have definitions in interfaces to import them elsewhere). This would also be an actual improvement over the way <code>set.mm</code> handles definitions.
+:The <code>vkind</code> mechanism is quite clever and your weakened dv capabilities are still sufficient to implement something like <code>set.mm</code>. Actually, it makes me wonder whether <code>set.mm</code> has definitions with a dummy that is not a <code>set</code> variable. The question remains whether the weakened dv mechanism would already make JHilbert weaker than metamath in general. Would it be sufficient to enact this restriction on dv constraints only for <code>def-thm</code>s and the <code>orig-label</code> they reference?
+:The creation of <math>N\cdot M</math> extra variables together with enough dv constraints looks a bit daunting efficiency-wise, but in most cases the level would be 1, I guess, and the number of dummy variables should not be too high as well.
+:I don't like your variant 3 too much as it creates bureaucracy that is rarely needed. Are there actual cases where extra variables in the definiendum make sense?
+:One note about the original Ghilbert. Ghilbert used definitions in only a very restrictive way. Definitions were only ever applied to the final result on the proof stack, and even then, only folding, not unfolding, would occur. So, yes, you could prove wrong statements, but the wrongness would always be buried in ununfoldable definitions, causing weirdness and confusion, but no actual harm (I think). For example, you could do stuff like
+<pre>
+import (PROP pax/prop () "")
+import (ZFC zfc/set_mm_ax (PROP) "")
+
+var (wff ph)
+var (set x)
+
+def ((foo) (-> ph (A. x ph)))
+
+thm (bar ((ph x)) () (foo) (
+        ph x ax-17
+))
+
+thm (baz () () (foo) (
+        bar
+))
+</pre>
+:This proves a theorem <code>baz</code> without dv constraints whose consequent is <code>foo</code>, which is defined to be <code>(-> ph (A. x ph))</code>, seemingly proving a wrong theorem with the consequent of <code>ax-17</code> without the necessary constraints. But since <code>foo</code> never gets unfolded, nothing actually bad has happened.
+:--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 13:29, 13 February 2010 (UTC)
