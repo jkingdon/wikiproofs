@@ -1278,7 +1278,9 @@ thm (groupConjunctionLeft () ((H (p ∧ (q ∧ r)))) ((p ∧ q) ∧ r) (
 If <math>p\leftrightarrow q</math>, then we want to be able to substitute <math>p</math> for <math>q</math> in a theorem to get a new theorem.<ref>Whitehead and Russell, page 120</ref>  The mechanism which we are working towards, in [[Interface:Classical propositional calculus]], is provided by <code>addNegation</code>, <code>removeNegation</code>, <code>buildImplication</code>, <code>buildDisjunction</code>, <code>buildConjunction</code>, and <code>buildBiconditional</code>. Those rules do not eliminate the need for a proof to build up the expressions embodying the substitution, but they reduce the process of constructing such a proof to a familiar (if perhaps tedious) pattern. We already proved <code>addNegation</code> and <code>removeNegation</code>, and we're now ready to prove the rest.
 
 ==== Conjunction ====
-The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them (<code>ConjunctionFunction-1</code>, which is just applying assocativity and commutativity in the usual ways), and applying ConjunctionMultiplication to each half.
+The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them using associativity and commutativity, and applying ConjunctionMultiplication to each half.
+
+First, the rearrangement we need is <code>ConjunctionFunction-1</code>, known as <code>an4</code> in metamath.<ref>an4 in set.mm version of January 9, 2009, [http://metamath.org/ metamath.org]</ref>
 
 <jh>
 thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
