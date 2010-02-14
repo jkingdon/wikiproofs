@@ -1410,6 +1410,149 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
 ))
 </jh>
 
+=== Unidirectional builders ===
+The builders which we just proved start with biconditionals.  If we only have implications, there is a similar set of builders (which, of course, only provide implications, not biconditionals, in the consequent).  Here we summarize the ones we have already proved, and prove a few more.
+
+==== Negation ====
+The Transposition theorem, <code>(p → q) ↔ ((¬ q) → (¬ p))</code>, is a unidirectional negation builder.
+
+==== Disjunction ====
+The DisjunctionSummation theorem, <code>((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))</code>, is the general form of the unidirectional disjunction builder.
+
+Here we add convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions.
+
+One of them is just a new name for the Sum axiom; the rest could either be proved from Sum and commutativity, or as special cases of DisjunctionSummation.
+
+<jh>
+thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
+        p q r Sum
+))
+
+thm (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))) (
+        p q r DisjunctionSummationLL
+
+        r q DisjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))) (
+        r ImplicationReflexivity
+
+        p q r r DisjunctionSummation
+        export
+        applyComm
+
+        applyModusPonens
+))
+
+thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))) (
+        p q r DisjunctionSummationRR
+
+        q r DisjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationLL
+        applyModusPonens
+))
+
+thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationLR
+        applyModusPonens
+))
+
+thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationRL
+        applyModusPonens
+))
+
+thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationRR
+        applyModusPonens
+))
+</jh>
+
+==== Conjunction ====
+The ConjunctionMultiplication theorem, <code>((p → r) ∧ (q → s)) → ((p ∧ q) → (r ∧ s))</code>, is the general form of the unidirectional disjunction builder.
+
+Here we add convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the conjunctions.
+
+ConjunctionMultiplicationRR is just a new name for the Fact theorem; the rest could either be proved from Fact and commutativity, or as special cases of ConjunctionMultiplication.
+
+<jh>
+thm (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))) (
+        r ImplicationReflexivity
+
+        r r p q ConjunctionMultiplication
+        export
+
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))) (
+        p q r ConjunctionMultiplicationLL
+
+        r q ConjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))) (
+        p q r Fact
+))
+
+thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
+        p q r ConjunctionMultiplicationRR
+
+        q r ConjunctionCommutativity eliminateBiconditionalLeft
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (conjoinLL () ((H (p → q))) ((r ∧ p) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationLL
+        applyModusPonens
+))
+
+thm (conjoinLR () ((H (p → q))) ((r ∧ p) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationLR
+        applyModusPonens
+))
+
+thm (conjoinRL () ((H (p → q))) ((p ∧ r) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationRL
+        applyModusPonens
+))
+
+thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationRR
+        applyModusPonens
+))
+</jh>
+
+==== Implication ====
+The first two unidirectional implication builders came early on, <code>*2.05</code> and <code>*2.06</code> (<code>Syllogism</code>).
+
+The general unidirection implication builder would be <code>((p → q) ∧ (r → s)) → ((q → r) → (p → s))</code>.
+
+==== Biconditional ====
+The general unidirection implication builder would be <code>((p → q) ∧ (r → s)) → ((p ↔ r) → (q ↔ s))</code>.
+
 === Distributive laws ===
 We prove two distributive laws.  The first one, <code>((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))</code>, is analogous to the distributive law in well-known algebras such as the real numbers, <math>i\cdot(j+k)=i\cdot j+i\cdot k</math> (if one thinks of conjunction as being like multiplication and disjunction as being like addition).
 
@@ -2003,124 +2146,6 @@ thm (convertToNegationFromImplication () ((H (p → (⊥)))) (¬ p) (
         H
         p NegationImplication
         eliminateLeftBiconditionalImplication
-        applyModusPonens
-))
-</jh>
-
-== Variants of disjunction summation and conjunction multiplication ==
-We've already proved the basic DisjunctionSummation and ConjunctionMultiplication theorems.  Here we provide convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions or conjunctions.
-
-Two of these are just new names for the Sum axiom and the Fact theorem; the rest could either be proved from those two and commutativity, or as special cases of DisjunctionSummation and ConjunctionMultiplication.
-
-<jh>
-thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
-        p q r Sum
-))
-
-thm (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))) (
-        p q r DisjunctionSummationLL
-
-        r q DisjunctionCommutativity eliminateBiconditionalLeft
-        (p → q) introduceAntecedent
-
-        applySyllogismInConsequent
-))
-
-thm (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))) (
-        r ImplicationReflexivity
-
-        p q r r DisjunctionSummation
-        export
-        applyComm
-
-        applyModusPonens
-))
-
-thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))) (
-        p q r DisjunctionSummationRR
-
-        q r DisjunctionCommutativity eliminateBiconditionalLeft
-        (p → q) introduceAntecedent
-
-        applySyllogismInConsequent
-))
-
-thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
-        H
-        p q r DisjunctionSummationLL
-        applyModusPonens
-))
-
-thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
-        H
-        p q r DisjunctionSummationLR
-        applyModusPonens
-))
-
-thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
-        H
-        p q r DisjunctionSummationRL
-        applyModusPonens
-))
-
-thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
-        H
-        p q r DisjunctionSummationRR
-        applyModusPonens
-))
-
-thm (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))) (
-        r ImplicationReflexivity
-
-        r r p q ConjunctionMultiplication
-        export
-
-        applyModusPonens
-))
-
-thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))) (
-        p q r ConjunctionMultiplicationLL
-
-        r q ConjunctionCommutativity eliminateBiconditionalLeft
-        (p → q) introduceAntecedent
-
-        applySyllogismInConsequent
-))
-
-thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))) (
-        p q r Fact
-))
-
-thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
-        p q r ConjunctionMultiplicationRR
-
-        q r ConjunctionCommutativity eliminateBiconditionalLeft
-        (p → q) introduceAntecedent
-
-        applySyllogismInConsequent
-))
-
-thm (conjoinLL () ((H (p → q))) ((r ∧ p) → (r ∧ q)) (
-        H
-        p q r ConjunctionMultiplicationLL
-        applyModusPonens
-))
-
-thm (conjoinLR () ((H (p → q))) ((r ∧ p) → (q ∧ r)) (
-        H
-        p q r ConjunctionMultiplicationLR
-        applyModusPonens
-))
-
-thm (conjoinRL () ((H (p → q))) ((p ∧ r) → (r ∧ q)) (
-        H
-        p q r ConjunctionMultiplicationRL
-        applyModusPonens
-))
-
-thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
-        H
-        p q r ConjunctionMultiplicationRR
         applyModusPonens
 ))
 </jh>
