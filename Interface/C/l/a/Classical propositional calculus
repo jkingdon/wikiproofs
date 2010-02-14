@@ -79,8 +79,9 @@ Introduction of an [[w:antecedent (logic)|antecedent]]. Whitehead and Russell ca
 <jh>
 stmt (AntecedentIntroduction () () (p → (q → p)))
 </jh>
-[[w:Syllogism|Syllogism]]:
+[[w:Syllogism|Syllogism]] can be stated in several ways, of which we provide two.  The first one is probably the easiest to understand, although they are equivalent (see import/export below if that isn't obvious to you).
 <jh>
+stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
 stmt (Syllogism () () ((p → q) → ((q → r) → (p → r))))
 </jh>
 Syllogism can also applied to formulas with a common antecedent:
@@ -142,10 +143,6 @@ stmt (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)))
 
 === Other statements containing negation, implication, disjunction and conjunction ===
 
-Implication is [[w:transitive relation|transitive]]:
-<jh>
-stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
-</jh>
 Although there is no associativity law for implication, we have the following importation/exportation principle due to [[w:Guiseppe Peano|Guiseppe Peano]]:
 <jh>
 stmt (Importation () () ((p → (q → r)) → ((p ∧ q) → r)))
@@ -220,6 +217,8 @@ stmt (TertiumNonDatur () () (p ∨ (¬ p)))
 ==== Weakenings ====
 
 A biconditional makes a strong statement. Often, we only need a weaker statement. For introductions, see the section on [[#Truth function interdependencies|truth function interdependencies]].
+
+The naming convention here is that when we think of <code>p ↔ q</code> as consisting of two implications, we call <code>p → q</code> the ''left'' one and <code>q → p</code> the ''right'' one.
 <jh>
 stmt (BiconditionalImplicationLeftElimination () () ((p ↔ q) → (q → p)))
 stmt (BiconditionalImplicationRightElimination () () ((p ↔ q) → (p → q)))
