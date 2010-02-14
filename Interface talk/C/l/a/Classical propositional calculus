@@ -1,0 +1,10 @@
+== unidirectional builders ==
+
+Part of the reason why I added a section called Unidirectional builders to [[Principia Mathematica propositional logic]] is that some of them seem to be missing from [[Interface:Classical propositional calculus]]. Some are used a lot in the proofs in that module, as late as ConjunctionComposition. If there is a more powerful mechanism which replaces them, I didn't see it. The ones which are particularly used are *2.05, *2.06, and the typical usage could be expressed in the following rules:
+
+ stmt (addCommonAntecedent () ((q → r)) ((p → q) → (p → r))) # rule form of *2.05
+ stmt (addCommonConsequent () ((p → q)) ((q → r) → (p → r))) # rule form of *2.06
+
+The contrast between these rules and applySyllogism should make it clear that they are functioning as builders, and calling them Syllogism is actually kind of confusing (at least, it was for me at first). I suppose I'd add *2.05 and *2.06 as CommonAntecedentAddition and CommonConsequentAddition (and get rid of Syllogism by that name, as ImplicationTransitivity is what most people think of as syllogism). Metamath's set.mm calls these rules "Inference adding common antecedents in an implication" (imim2i) and "Inference adding common consequents in an implication, thereby interchanging the original antecedent and consequent" (imim1i), so my proposed names seem plausible.
+
+I also find that my general unidirection builder for implication is in set.mm as imim12i. Based on set.mm it seems like it gets some usage but not as much as imim1i or imim2i. We could always add it later if we miss it. [[User:Kingdon|Kingdon]] 03:42, 14 February 2010 (UTC)
