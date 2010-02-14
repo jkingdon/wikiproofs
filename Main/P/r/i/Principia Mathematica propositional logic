@@ -1732,7 +1732,8 @@ We earlier proved composition laws for disjunction and conjunction:
 The converses, while less interesting, are also true, and we prove them now.
 
 <jh>
-thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)) (
+thm (DisjunctionComposition () () 
+  (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)) ( # *4.77
         p r q *3.44
 
         p q DisjunctionRightIntroduction
@@ -1748,7 +1749,8 @@ thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → 
         introduceBiconditional
 ))
 
-thm (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))) (
+thm (ConjunctionComposition () () 
+  (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))) ( # *4.76
         p q r Comp
 
         q r ConjunctionRightElimination
