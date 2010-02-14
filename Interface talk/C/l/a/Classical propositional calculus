@@ -20,3 +20,13 @@ I'm not sure the case for adding any of these is strong, but I thought I'd menti
 * <code>(⊤ ∧ p) ↔ p</code> and <code>(⊥ ∨ p) ↔ p</code>. I was scribbing on a piece of paper and thought I might have use for these, but I'm not sure I was even handling dummy variables right, or how often it would come up. Sounds quite safe to put this off until there is a more pressing need.
 
 In general, my first instinct is to err on the side of waiting and seeing, especially until we have a bit more experience. [[User:Kingdon|Kingdon]] 04:26, 14 February 2010 (UTC)
+
+== Name of eliminateLeftBiconditionalImplication and friends ==
+
+I have two big gripes with the name: 
+
+* The left/right nomenclature. We currently explain it this way: "The naming convention here is that when we think of p ↔ q as consisting of two implications, we call p → q the left one and q → p the right one." but I think "forward" and "reverse" would probably be clearer. Left and right could just as easily be thought of as the way the arrow is pointing (which would be the opposite meaning from the current one).
+
+* It is way too long for something which is used constantly.  set.mm has a bunch of theorems which are modus ponens for the forward implication, modus ponens for the reverse implication, etc, etc, but I am kind of hoping that if we give eliminateLeftBiconditionalImplication a shorter name, we can avoid the need for lots of theorems of that sort.
+
+Therefore, I'm thinking "forward" and "reverse" to replace eliminateRightBiconditionalImplication and eliminateLeftBiconditionalImplication, respectively. I'm not as worried about extreme conciseness for BiconditionalImplicationRightElimination and BiconditionalImplicationLeftElimination, so something like BiconditionalImplicationForward and BiconditionalImplicationReverse would be OK with me. I know that naming rules after nouns rather than verbs goes against the grain, and I normally try to resist the urge to make everything short, but I'm taking what feels like a slightly extreme measure to try to avoid proliferation of theorems (either for inferences, as mentioned above, or for both directions of a theorem which we also have in the biconditional). [[User:Kingdon|Kingdon]] 04:37, 14 February 2010 (UTC)
