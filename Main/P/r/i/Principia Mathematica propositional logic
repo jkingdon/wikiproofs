@@ -2051,9 +2051,8 @@ thm (ModusPonens () () ((p ∧ (p → q)) → q) (
 
 <jh>
 thm (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)) (
-        (¬ q) BiconditionalReflexivity
-        p q Transposition
-        buildConjunction eliminateBiconditionalLeft
+        p q Transposition eliminateBiconditionalLeft
+        (¬ q) conjoinLL
 
         (¬ q) (¬ p) ModusPonens
 
