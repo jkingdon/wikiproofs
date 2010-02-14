@@ -881,6 +881,13 @@ thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
         eliminateBiconditionalLeft
         applyModusPonens
 ))
+
+thm (removeNegation () ((H ((¬ p) ↔ (¬ q)))) (p ↔ q) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalRight
+        applyModusPonens
+))
 </jh>
 
 === Biconditionalized transposition laws ===
@@ -1268,7 +1275,7 @@ thm (groupConjunctionLeft () ((H (p ∧ (q ∧ r)))) ((p ∧ q) ∧ r) (
 </jh>
 
 === Substitution and builders ===
-If <math>p\leftrightarrow q</math>, then we want to be able to substitute <math>p</math> for <math>q</math> in a theorem to get a new theorem.<ref>Whitehead and Russell, page 120</ref>  The mechanism which we are working towards, in [[Interface:Classical propositional calculus]], is provided by <code>addNegation</code>, <code>removeNegation</code>, <code>buildImplication</code>, <code>buildDisjunction</code>, <code>buildConjunction</code>, and <code>buildBiconditional</code>. Those rules do not eliminate the need for a proof to build up the expressions embodying the substitution, but they reduce the process of constructing such a proof to a familiar (if perhaps tedious) pattern. We proved <code>addNegation</code> already, and we're now ready for <code>buildConjunction</code> and <code>buildDisjunction</code>.
+If <math>p\leftrightarrow q</math>, then we want to be able to substitute <math>p</math> for <math>q</math> in a theorem to get a new theorem.<ref>Whitehead and Russell, page 120</ref>  The mechanism which we are working towards, in [[Interface:Classical propositional calculus]], is provided by <code>addNegation</code>, <code>removeNegation</code>, <code>buildImplication</code>, <code>buildDisjunction</code>, <code>buildConjunction</code>, and <code>buildBiconditional</code>. Those rules do not eliminate the need for a proof to build up the expressions embodying the substitution, but they reduce the process of constructing such a proof to a familiar (if perhaps tedious) pattern. We already proved <code>addNegation</code> and <code>removeNegation</code>, and we're now ready to prove the rest.
 
 ==== Conjunction ====
 The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them (<code>ConjunctionFunction-1</code>, which is just applying assocativity and commutativity in the usual ways), and applying ConjunctionMultiplication to each half.
@@ -1316,6 +1323,15 @@ thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q 
 
         applySyllogism
 ))
+
+thm (buildConjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∧ r) ↔ (q ∧ s)) (
+        H1 H2 introduceConjunction
+        p q r s ConjunctionFunction
+        applyModusPonens
+))
 </jh>
 
 ==== Disjunction ====
@@ -1331,20 +1347,6 @@ thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q 
 
         applySyllogism
 ))
-</jh>
-
-==== Rules ====
-Here are rules corresponding to the implications which have been proved so far:
-
-<jh>
-thm (buildConjunction () (
-  (H1 (p ↔ q))
-  (H2 (r ↔ s)))
-  ((p ∧ r) ↔ (q ∧ s)) (
-        H1 H2 introduceConjunction
-        p q r s ConjunctionFunction
-        applyModusPonens
-))
 
 thm (buildDisjunction () (
   (H1 (p ↔ q))
@@ -1352,13 +1354,6 @@ thm (buildDisjunction () (
   ((p ∨ r) ↔ (q ∨ s)) (
         H1 H2 introduceConjunction
         p q r s DisjunctionFunction
-        applyModusPonens
-))
-
-thm (removeNegation () ((H ((¬ p) ↔ (¬ q)))) (p ↔ q) (
-        H
-        p q NegationFunction
-        eliminateBiconditionalRight
         applyModusPonens
 ))
 </jh>
