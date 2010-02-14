@@ -77,9 +77,31 @@ Variant 4: Definitions without dummy variables are much simpler.  There could be
 Any comments on this proposal would be greatly appreciated! [[User:CarlWitty|CarlWitty]] 19:37, 12 February 2010 (UTC)
 
 :I think this is a fine proposal, which could be implemented alongside my own (your variant 4), eliminating my <code>dstmt</code> proposal in favour of <code>def-thm</code> (you would still have a companion keyword <code>def-stmt</code> or something, so that you can have definitions in interfaces to import them elsewhere). This would also be an actual improvement over the way <code>set.mm</code> handles definitions.
+
+::I'm curious what you think about the "interoperability with metamath" reason to avoid automatic definition folding/unfolding.  Are you interested in being able to automatically translate JHilbert theories into metamath theories?
+
 :The <code>vkind</code> mechanism is quite clever and your weakened dv capabilities are still sufficient to implement something like <code>set.mm</code>. Actually, it makes me wonder whether <code>set.mm</code> has definitions with a dummy that is not a <code>set</code> variable. The question remains whether the weakened dv mechanism would already make JHilbert weaker than metamath in general. Would it be sufficient to enact this restriction on dv constraints only for <code>def-thm</code>s and the <code>orig-label</code> they reference?
+
+::I don't recall any such definitions in set.mm, but if you wanted to define ⊤ or ⊥ in the propositional part of set.mm you would need to use a dummy wff variable (since the propositional part has no atomic formulas).
+
+::Limiting the restriction to <code>def-thm</code> and ''orig-label'' is insufficient, at least with a semantics anything like I suggest.  The important lemma is that each folded substitution instance corresponds to an unfolded substitution instance, and that has to be true at every step in every proof.  And that lemma would be false if you were ever allowed to substitute V for both A and B, when A and B were disjoint.
+
+::It's a bit tricky to talk about one metamath variant being weaker than another, since in any reasonable variant, you can construct a theory that will recognize any recursively enumerable language.  But I do know of one somewhat plausible kind of formalization where some one-step proofs in metamath would require multi-step proofs with the vkind restriction: abstraction over binding contexts.
+
+::Consider the Common Lisp <code>let</code> construct.  In <code>(let ((v1 T1) (v2 T2)) body)</code>, both v1 and v2 are bound in body, but neither is bound in T1 or T2.  In JHilbert, you could formalize this with something like <code>(let (vcons v1 (vcons v2 (vnil))) (tcons T1 (tcons T2 (tnil))) body)</code> (note that this swaps the structure of the binding list, to be a pair of lists instead of a list of pairs).  Then you could have an axiom something like <code>(= (let V* T* B) B)</code>, if B is disjoint from T*.  In other words, you are packaging up an arbitrary number of disjoint variable constraints into a single disjoint variable constraint.
+
+::To regain this power, it suffices to allow term constructors (but still not definitions) with vkind results, as long as the arguments are also vkind.  Then in the above formalization, you would have one vkind var, and another vkind var-list, where var-list has vcons and vnil term constructors.  (The important thing is that the complete unfolding of any vkind term must not have any dummy variables; you could also allow a restricted class of vkind definitions and still keep this property, but it makes the spec more complicated for a fairly limited benefit.)
+
 :The creation of <math>N\cdot M</math> extra variables together with enough dv constraints looks a bit daunting efficiency-wise, but in most cases the level would be 1, I guess, and the number of dummy variables should not be too high as well.
+
+::In a set.mm-style theory, where there is one <code>def-thm</code> per definition which is used only to create a ''df-'' theorem, then N is always 1 and M will usually be 0 or 1.
+
 :I don't like your variant 3 too much as it creates bureaucracy that is rarely needed. Are there actual cases where extra variables in the definiendum make sense?
+
+::Well, there can't be a technical reason for extra variables in the definiendum, because it would be straightforward to automatically remove any such variables.  I suppose there could be an aesthetic reason.  For instance, you could have a generic development of fields, where a field is represented as an addition function and a multiplication function.  And you could say that every operation on field values should be defined using the definition mechanism, and should take the field addition and field multiplication as its first two arguments.  Then you could run into trouble with operations that only used the addition function but not the multiplication function.  But this is a very contrived case.
+
+::(I don't like variant 3 either, which is why it's relegated to variant status instead of being in the main proposal.)
+
 :One note about the original Ghilbert. Ghilbert used definitions in only a very restrictive way. Definitions were only ever applied to the final result on the proof stack, and even then, only folding, not unfolding, would occur. So, yes, you could prove wrong statements, but the wrongness would always be buried in ununfoldable definitions, causing weirdness and confusion, but no actual harm (I think). For example, you could do stuff like
 <pre>
 import (PROP pax/prop () "")
@@ -100,3 +122,7 @@ thm (baz () () (foo) (
 </pre>
 :This proves a theorem <code>baz</code> without dv constraints whose consequent is <code>foo</code>, which is defined to be <code>(-> ph (A. x ph))</code>, seemingly proving a wrong theorem with the consequent of <code>ax-17</code> without the necessary constraints. But since <code>foo</code> never gets unfolded, nothing actually bad has happened.
 :--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 13:29, 13 February 2010 (UTC)
+
+::Well, if I'm right, I gave a way to prove both a formula and its negation, which means the theory is inconsistent and can prove anything 
+
+::Note that my proposal would also let you prove <code>(foo)</code> (with no explicit disjoint variable constraints).  This is safe because all dummy variables are disjoint from all other variables, so the required disjoint-variable constraints would appear again if you ever unfolded <code>(foo)</code>. [[User:CarlWitty|CarlWitty]] 18:09, 13 February 2010 (UTC)
