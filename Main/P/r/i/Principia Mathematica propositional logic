@@ -1413,7 +1413,7 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
 ))
 </jh>
 
-=== Distributive law ===
+=== Distributive laws ===
 We prove two distributive laws.  The first one, <code>((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))</code>, is analogous to the distributive law in well-known algebras such as the real numbers, <math>i\cdot(j+k)=i\cdot j+i\cdot k</math> (if one thinks of conjunction as being like multiplication and disjunction as being like addition).
 
 <jh>
