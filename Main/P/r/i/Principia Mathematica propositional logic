@@ -37,6 +37,16 @@ thm (swapDisjunction () ((H (p ∨ q))) (q ∨ p) (
         applyModusPonens
 ))
 </jh>
+
+Likewise it will be convenient to have the ''Sum'' axiom as a rule:
+<jh>
+thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
+        H
+        p q r Sum
+        applyModusPonens
+))
+</jh>
+
 Since Principia Mathematica defines implication, <math>p\rightarrow q</math>, as <math>(\neg p)\vee q</math>, the ''Add'' axiom yields the introduction of an antecedent (Whitehead and Russell call it "Simplification").
 <jh>
 thm (AntecedentIntroduction () () (p → (q → p)) ( # *2.02
@@ -126,9 +136,10 @@ thm (*2.12 () () (p → (¬ (¬ p))) (
 
 thm (*2.13 () () (p ∨ (¬ (¬ (¬ p)))) (
         p TertiumNonDatur
+
         (¬ p) *2.12
-        (¬ p) (¬ (¬ (¬ p))) p Sum
-        applyModusPonens
+        p disjoinLL
+
         applyModusPonens
 ))
 
@@ -253,8 +264,8 @@ We now "repair" the extra twist in the ''Assoc'' axiom to get the actual associa
 <jh>
 thm (*2.3 () () ((p ∨ (q ∨ r)) → (p ∨ (r ∨ q))) (
         q r Perm
-        (q ∨ r) (r ∨ q) p Sum
-        applyModusPonens
+
+        p disjoinLL
 ))
 
 thm (*2.31 () () ((p ∨ (q ∨ r)) → ((p ∨ q) ∨ r)) (
@@ -356,8 +367,8 @@ thm (*2.6 () () (((¬ p) → q) → ((p → q) → q)) (
 This gives us already the result, except that the last <math>q</math> has been duplicated, <math>q\vee q</math>. We remove the duplicate using the ''Taut'' axiom.
 <jh>
         q Taut
-        (q ∨ q) q (¬ ((¬ p) ∨ q)) Sum
-        applyModusPonens
+        (¬ ((¬ p) ∨ q)) disjoinLL
+
         applySyllogism
 ))
 
@@ -1421,7 +1432,7 @@ The DisjunctionSummation theorem, <code>((p → r) ∧ (q → s)) → ((p ∨ q)
 
 Here we add convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions.
 
-One of them is just a new name for the Sum axiom; the rest could either be proved from Sum and commutativity, or as special cases of DisjunctionSummation.
+DisjunctionSummationLL is just a new name for the Sum axiom; the rest could either be proved from Sum and commutativity, or as special cases of DisjunctionSummation.
 
 <jh>
 thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
@@ -1454,12 +1465,6 @@ thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))) (
         (p → q) introduceAntecedent
 
         applySyllogismInConsequent
-))
-
-thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
-        H
-        p q r DisjunctionSummationLL
-        applyModusPonens
 ))
 
 thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
@@ -1594,10 +1599,10 @@ The second distributive law, <code>(p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r
 <jh>
 thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q) ∧ (p ∨ r))) (
         q r ConjunctionRightElimination
-        (q ∧ r) q p Sum applyModusPonens
+        p disjoinLL
 
         q r ConjunctionLeftElimination
-        (q ∧ r) r p Sum applyModusPonens
+        p disjoinLL
 
         composeConjunction
 ))
