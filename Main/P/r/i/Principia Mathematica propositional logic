@@ -1533,7 +1533,7 @@ The first two unidirectional implication builders came early on, <code>*2.05</co
 The general unidirection implication builder would be <code>((p → q) ∧ (r → s)) → ((q → r) → (p → s))</code>.
 
 ==== Biconditional ====
-The general unidirection implication builder would be <code>((p → q) ∧ (r → s)) → ((p ↔ r) → (q ↔ s))</code>.
+There is no unidirectional builder for the biconditional.
 
 === Distributive laws ===
 We prove two distributive laws.  The first one, <code>((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))</code>, is analogous to the distributive law in well-known algebras such as the real numbers, <math>i\cdot(j+k)=i\cdot j+i\cdot k</math> (if one thinks of conjunction as being like multiplication and disjunction as being like addition).
