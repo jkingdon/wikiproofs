@@ -8,3 +8,15 @@ Part of the reason why I added a section called Unidirectional builders to [[Pri
 The contrast between these rules and applySyllogism should make it clear that they are functioning as builders, and calling them Syllogism is actually kind of confusing (at least, it was for me at first). I suppose I'd add *2.05 and *2.06 as CommonAntecedentAddition and CommonConsequentAddition (and get rid of Syllogism by that name, as ImplicationTransitivity is what most people think of as syllogism). Metamath's set.mm calls these rules "Inference adding common antecedents in an implication" (imim2i) and "Inference adding common consequents in an implication, thereby interchanging the original antecedent and consequent" (imim1i), so my proposed names seem plausible.
 
 I also find that my general unidirection builder for implication is in set.mm as imim12i. Based on set.mm it seems like it gets some usage but not as much as imim1i or imim2i. We could always add it later if we miss it. [[User:Kingdon|Kingdon]] 03:42, 14 February 2010 (UTC)
+
+== Things I thought of adding ==
+
+I'm not sure the case for adding any of these is strong, but I thought I'd mention them.
+
+*applyComm from [[Principia Mathematica propositional logic]].  Of course you can import, then apply ConjunctionCommutativity and the implication builder (once), and then export, but that can seem like a lot of work.  The case for this is weakened by the fact that it seems to be used only a handful of times in set.mm (where it is pm2.04) and fewer times than I realized in [[Principia Mathematica propositional logic]]. We can see whether the four-step process mentioned above becomes common before worrying about this.
+
+* Proposition *5.1. Whitehead and Russell put this in a list of theorems used "very frequently". set.mm says about 13 usages (it is pm5.1). Its friend, *5.21, and some variants in set.mm (theorems whose names start with pm5.21) seem to get used a bit more, but I didn't look closely at the variants (probably more like separate theorems than applications of *5.21).
+
+* <code>(⊤ ∧ p) ↔ p</code> and <code>(⊥ ∨ p) ↔ p</code>. I was scribbing on a piece of paper and thought I might have use for these, but I'm not sure I was even handling dummy variables right, or how often it would come up. Sounds quite safe to put this off until there is a more pressing need.
+
+In general, my first instinct is to err on the side of waiting and seeing, especially until we have a bit more experience. [[User:Kingdon|Kingdon]] 04:26, 14 February 2010 (UTC)
