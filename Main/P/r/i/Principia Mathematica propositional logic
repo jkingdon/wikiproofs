@@ -300,7 +300,7 @@ thm (groupDisjunctionRight () ((H ((p ∨ q) ∨ r))) (p ∨ (q ∨ r)) (
 === Expression building with disjunctions ===
 Now we prove three helpful theorems regarding expression building with disjunctions, that is, they are companions to the ''Sum'' axiom. All these proofs proceed in two steps, using a syllogism to alter the consequent of ''Sum''.
 <jh>
-thm (*2.36 () () ((q → r) → ((p ∨ q) → (r ∨ p))) (
+thm (DisjunctionSummationLR () () ((q → r) → ((p ∨ q) → (r ∨ p))) ( # *2.36
 </jh>
 As first step, we simply take the ''Sum'' axiom,
 <jh>
@@ -317,7 +317,7 @@ so that the result follows via a syllogism:
         applySyllogism
 ))
 
-thm (*2.37 () () ((q → r) → ((q ∨ p) → (p ∨ r))) (
+thm (DisjunctionSummationRL () () ((q → r) → ((q ∨ p) → (p ∨ r))) ( # *2.37
 </jh>
 As first step, we take the ''Sum'' axiom with transposed consequent, that is <math>(q\rightarrow r)\rightarrow((\neg(p\vee r))\rightarrow(\neg(p\vee q)))</math>,
 <jh>
@@ -339,14 +339,35 @@ Combining these two steps, the result follows by transposing the consequent back
         applySyllogism
 ))
 </jh>
-Finally, <math>*2.38</math> follows directly from <math>*2.37</math> in the same way.
+Finally, <code>DisjunctionSummationRR</code> follows directly from <code>DisjunctionSummationRL</code> in the same way.
 <jh>
-thm (*2.38 () () ((q → r) → ((q ∨ p) → (r ∨ p))) (
-        q r p *2.37
+thm (DisjunctionSummationRR () () ((q → r) → ((q ∨ p) → (r ∨ p))) ( # *2.38
+        q r p DisjunctionSummationRL
         p r Perm
         (p ∨ r) (r ∨ p) (q ∨ p) *2.05
         applyModusPonens
         applySyllogism
+))
+</jh>
+
+The rule forms of all three are:
+<jh>
+thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationLR
+        applyModusPonens
+))
+
+thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationRL
+        applyModusPonens
+))
+
+thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationRR
+        applyModusPonens
 ))
 </jh>
 
@@ -357,12 +378,11 @@ thm (*2.53 () () ((p ∨ q) → ((¬ p) → q)) (
 That is, we make <math>(p\vee q)\rightarrow((\neg(\neg p))\vee q)</math> from <math>p\rightarrow(\neg(\neg q))</math>.
 <jh>
         p *2.12
-        p (¬ (¬ p)) q *2.38
-        applyModusPonens
+        q disjoinRR
 ))
 
 thm (*2.6 () () (((¬ p) → q) → ((p → q) → q)) (
-        (¬ p) q q *2.38
+        (¬ p) q q DisjunctionSummationRR
 </jh>
 This gives us already the result, except that the last <math>q</math> has been duplicated, <math>q\vee q</math>. We remove the duplicate using the ''Taut'' axiom.
 <jh>
@@ -385,7 +405,7 @@ thm (*2.621 () () ((p → q) → ((p ∨ q) → q)) (
 
 thm (*2.73 () () ((p → q) → (((p ∨ q) ∨ r) → (q ∨ r))) (
         p q *2.621
-        (p ∨ q) q r *2.38
+        (p ∨ q) q r DisjunctionSummationRR
         applySyllogism
 ))
 
@@ -406,8 +426,7 @@ and prove the permutation <math>((p\vee q)\vee r)\rightarrow((q\vee p)\vee r)</m
 We can now install this permutation as an antecedent through a transposition. Then the theorem follows through a syllogism.
 <jh>
         introduceTransposition
-        (¬ ((q ∨ p) ∨ r)) (¬ ((p ∨ q) ∨ r)) (p ∨ r) *2.38
-        applyModusPonens
+        (p ∨ r) disjoinRR
         applySyllogism
 ))
 
@@ -428,8 +447,8 @@ so we get <math>(p\vee q)\rightarrow(((p\vee(\neg q))\vee r)\rightarrow(p\vee r)
 <jh>
         p (¬ q) r *2.31
         introduceTransposition
-        (¬ ((p ∨ (¬ q)) ∨ r)) (¬ (p ∨ ((¬ q) ∨ r))) (p ∨ r) *2.38
-        applyModusPonens
+        (p ∨ r) disjoinRR
+
         applySyllogism
 ))
 
@@ -460,7 +479,7 @@ thm (*2.8 () () ((q ∨ r) → ((r → s) → (q ∨ s))) (
 </jh>
 This gives us <math>(q\vee r)\rightarrow((\neg r)\rightarrow q)</math>. The theorem follows now by a summation:
 <jh>
-        (¬ r) q s *2.38
+        (¬ r) q s DisjunctionSummationRR
         applySyllogism
 ))
 </jh>
@@ -511,8 +530,7 @@ thm (*2.55 () () ((¬ p) → ((p ∨ q) → q)) (
 
 thm (*2.54 () () (((¬ p) → q) → (p ∨ q)) (
         p *2.14
-        (¬ (¬ p)) p q *2.38
-        applyModusPonens
+        q disjoinRR
 ))
 </jh>
 
@@ -828,13 +846,13 @@ thm (conjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
 
 thm (DisjunctionSummation () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) ( # *3.48
 </jh>
-This theorem follows exactly as <code>ConjunctionMultiplication</code>, except that we use the ''Sum'' type theorem <math>*2.37</math> instead of ''Fact'' and <math>*3.22</math>.
+This theorem follows exactly as <code>ConjunctionMultiplication</code>, except that we use the ''Sum'' type theorem <code>DisjunctionSummationRL</code> instead of ''Fact'' and <math>*3.22</math>.
 <jh>
         (p → r) (q → s) ConjunctionRightElimination
-        p r q *2.37
+        p r q DisjunctionSummationRL
         applySyllogism
         (p → r) (q → s) ConjunctionLeftElimination
-        q s r *2.37
+        q s r DisjunctionSummationRL
         applySyllogism
         applySyllogismInConsequent
 ))
@@ -1114,8 +1132,8 @@ Another easy builder theorem:
 <jh>
 
 thm (*4.37 () () ((p ↔ q) → ((p ∨ r) ↔ (q ∨ r))) (
-        p q r *2.38
-        q p r *2.38
+        p q r DisjunctionSummationRR
+        q p r DisjunctionSummationRR
         conjoin
 ))
 
@@ -1185,8 +1203,7 @@ thm (*2.4 () () ((p ∨ (p ∨ q)) → (p ∨ q)) (
 That gives us <code>((p ∨ (p ∨ q) → ((p ∨ p) ∨ q))</code> and we just need to eliminate the extra <code>p ∨ p</code>:
 <jh>
         p Taut
-        (p ∨ p) p q *2.38
-        applyModusPonens
+        q disjoinRR
 
         applySyllogism
 ))
@@ -1433,64 +1450,16 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
 The builders which we just proved start with biconditionals.  If we only have implications, there is a similar set of builders (which, of course, only provide implications, not biconditionals, in the consequent).  Here we summarize the ones we have already proved, and prove a few more.
 
 ==== Negation ====
-The Transposition theorem, <code>(p → q) ↔ ((¬ q) → (¬ p))</code>, is a unidirectional negation builder.
+The <code>Transposition</code> theorem, <code>(p → q) ↔ ((¬ q) → (¬ p))</code>, is a unidirectional negation builder.
 
 ==== Disjunction ====
-The DisjunctionSummation theorem, <code>((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))</code>, is the general form of the unidirectional disjunction builder.
+The <code>DisjunctionSummation</code> theorem, <code>((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))</code>, is the general form of the unidirectional disjunction builder.
 
-Here we add convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions.
-
-DisjunctionSummationLL is just a new name for the Sum axiom; the rest could either be proved from Sum and commutativity, or as special cases of DisjunctionSummation.
+We also provide convenience theorems for cases in which one of the implications is simply <code>r → r</code>, and where there might be a commutation in one of the disjunctions.  All of these are already proved (<code>DisjunctionSummationLR</code>, <code>disjoinLR</code>, and so on), so the only thing we need to do here is provide DisjunctionSummationLL as a new name for the Sum axiom.
 
 <jh>
 thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
         p q r Sum
-))
-
-thm (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))) (
-        p q r DisjunctionSummationLL
-
-        r q DisjunctionCommutativity eliminateRightBiconditionalImplication
-        (p → q) introduceAntecedent
-
-        applySyllogismInConsequent
-))
-
-thm (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))) (
-        r ImplicationReflexivity
-
-        p q r r DisjunctionSummation
-        export
-        applyComm
-
-        applyModusPonens
-))
-
-thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))) (
-        p q r DisjunctionSummationRR
-
-        q r DisjunctionCommutativity eliminateRightBiconditionalImplication
-        (p → q) introduceAntecedent
-
-        applySyllogismInConsequent
-))
-
-thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
-        H
-        p q r DisjunctionSummationLR
-        applyModusPonens
-))
-
-thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
-        H
-        p q r DisjunctionSummationRL
-        applyModusPonens
-))
-
-thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
-        H
-        p q r DisjunctionSummationRR
-        applyModusPonens
 ))
 </jh>
 
