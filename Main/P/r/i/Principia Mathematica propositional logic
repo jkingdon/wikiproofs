@@ -1299,7 +1299,7 @@ If <math>p\leftrightarrow q</math>, then we want to be able to substitute <math>
 ==== Conjunction ====
 The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them using associativity and commutativity, and applying ConjunctionMultiplication to each half.
 
-First, the rearrangement we need is <code>ConjunctionFunction-1</code>, known as <code>an4</code> in metamath.<ref>an4 in set.mm version of January 9, 2009, [http://metamath.org/ metamath.org]</ref>
+First, the rearrangement we need is <code>ConjunctionFunction-1</code>, known as <code>an4</code> in metamath.<ref>an4 in set.mm version of January 9, 2009, [http://us.metamath.org/mpegif/an4.html metamath.org]</ref>
 
 <jh>
 thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
