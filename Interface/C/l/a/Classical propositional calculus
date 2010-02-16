@@ -83,7 +83,7 @@ stmt (AntecedentIntroduction () () (p → (q → p)))
 <jh>
 stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
 </jh>
-Syllogism can also applied to formulas with a common antecedent:
+Syllogism can also applied to formulas with a common antecedent. Other formulas with a common antecedent can be built up using rules such as <code>conjoin</code>, <code>addCommonAntecedent</code>, ''etc'', but we provide this one for convenience:
 <jh>
 stmt (SyllogismInConsequent () () ((p → (q → r)) → ((p → (r → s)) → (p → (q → s)))))
 </jh>
