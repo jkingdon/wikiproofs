@@ -79,10 +79,9 @@ Introduction of an [[w:antecedent (logic)|antecedent]]. Whitehead and Russell ca
 <jh>
 stmt (AntecedentIntroduction () () (p → (q → p)))
 </jh>
-[[w:Syllogism|Syllogism]] can be stated in several ways, of which we provide two.  The first one is probably the easiest to understand, although they are equivalent (see import/export below if that isn't obvious to you).
+[[w:Syllogism|Syllogism]] can be stated in several ways, but this is probably the most familiar:
 <jh>
 stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
-stmt (Syllogism () () ((p → q) → ((q → r) → (p → r))))
 </jh>
 Syllogism can also applied to formulas with a common antecedent:
 <jh>
@@ -192,6 +191,11 @@ stmt (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))
 stmt (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))))
 stmt (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))))
 stmt (ConjunctionMultiplication () () (((p → q) ∧ (r → s)) → ((p ∧ r) → (q ∧ s))))
+</jh>
+Adding a common antecedent to an implication, or adding a common consequent and reversing the direction of the implication:
+<jh>
+stmt (CommonAntecedentAddition () () ((q → r) → ((p → q) → (p → r))))
+stmt (CommonConsequentAddition () () ((p → q) → ((q → r) → (p → r))))
 </jh>
 
 === Biconditional ===
@@ -354,6 +358,8 @@ stmt (conjoinLR () ((p → q)) ((r ∧ p) → (q ∧ r)))
 stmt (conjoinRL () ((p → q)) ((p ∧ r) → (r ∧ q)))
 stmt (conjoinRR () ((p → q)) ((p ∧ r) → (q ∧ r)))
 stmt (conjoin () ((p → q) (r → s)) ((p ∧ r) → (q ∧ s)))
+stmt (addCommonAntecedent () ((q → r)) ((p → q) → (p → r)))
+stmt (addCommonConsequent () ((p → q)) ((q → r) → (p → r)))
 </jh>
 Biconditional:
 <jh>
