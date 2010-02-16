@@ -15,6 +15,8 @@ I also find that my general unidirection builder for implication is in set.mm as
 
 :--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:59, 15 February 2010 (UTC)
 
+::Done. Based on the number of usages in [[Principia Mathematica propositional logic]], these are indeed needed often.  As for imim12i, looking at its metamath proof confirms what I suspected: that this one amounts to just one application of each of the other two, plus a syllogism.  So we can wait on that one unless it seems to be common. [[User:Kingdon|Kingdon]] 20:53, 15 February 2010 (UTC)
+
 == Things I thought of adding ==
 
 I'm not sure the case for adding any of these is strong, but I thought I'd mention them.
