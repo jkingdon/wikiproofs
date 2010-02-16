@@ -9,6 +9,12 @@ The contrast between these rules and applySyllogism should make it clear that th
 
 I also find that my general unidirection builder for implication is in set.mm as imim12i. Based on set.mm it seems like it gets some usage but not as much as imim1i or imim2i. We could always add it later if we miss it. [[User:Kingdon|Kingdon]] 03:42, 14 February 2010 (UTC)
 
+:I didn't even think of unidirectional builders. So, sure, why not. Especially if we suspect we need them quite often.
+
+:(I'll comment on your other remarks later when I have more time.)
+
+:--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:59, 15 February 2010 (UTC)
+
 == Things I thought of adding ==
 
 I'm not sure the case for adding any of these is strong, but I thought I'd mention them.
