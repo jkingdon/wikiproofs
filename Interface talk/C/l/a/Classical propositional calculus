@@ -11,7 +11,7 @@ I also find that my general unidirection builder for implication is in set.mm as
 
 :I didn't even think of unidirectional builders. So, sure, why not. Especially if we suspect we need them quite often.
 
-:(I'll comment on your other remarks later when I have more time.)
+:<s>(I'll comment on your other remarks later when I have more time.)</s> 
 
 :--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:59, 15 February 2010 (UTC)
 
@@ -29,6 +29,8 @@ I'm not sure the case for adding any of these is strong, but I thought I'd menti
 
 In general, my first instinct is to err on the side of waiting and seeing, especially until we have a bit more experience. [[User:Kingdon|Kingdon]] 04:26, 14 February 2010 (UTC)
 
+:Basically, I just went along and put stuff into the interface I thought would be needed, and other stuff which seemed nice to have for the sake of completeness. I never did a usage analysis of set.mm. So if set.mm usage suggests that something should be in, then by all means, we should put it in. Generally, we need to weigh the benefit of having shorter proofs in modules importing this interface against the extra work of proving new statements in modules exporting it. I suspect there will never be many modules exporting this interface. In order to show that some other propositional calculus can prove the statements of classical propositional calculus, you'd more likely export the principia mathematica axioms, as they are only a handful and [[Principia Mathematica propositional logic]] already exports this module. So I'd say when we already know that something will be useful for us later, we can put it in now. For the rest, waiting and seeing may indeed be the best strategy.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 23:08, 15 February 2010 (UTC)
+
 == Name of eliminateLeftBiconditionalImplication and friends ==
 
 I have two big gripes with the name: 
@@ -39,8 +41,12 @@ I have two big gripes with the name:
 
 Therefore, I'm thinking "forward" and "reverse" to replace eliminateRightBiconditionalImplication and eliminateLeftBiconditionalImplication, respectively. I'm not as worried about extreme conciseness for BiconditionalImplicationRightElimination and BiconditionalImplicationLeftElimination, so something like BiconditionalImplicationForward and BiconditionalImplicationReverse would be OK with me. I know that naming rules after nouns rather than verbs goes against the grain, and I normally try to resist the urge to make everything short, but I'm taking what feels like a slightly extreme measure to try to avoid proliferation of theorems (either for inferences, as mentioned above, or for both directions of a theorem which we also have in the biconditional). [[User:Kingdon|Kingdon]] 04:37, 14 February 2010 (UTC)
 
+:Hmm, the names were actually meant to refer to the eliminated arrows. Obviously, I got it mixed up. About the name length in general, I must say that the extremely short names in set.mm always stumped me a little. Hence I chose longer names, similar to naming schemes in software APIs. But I must also admit that I usually avail myself of an external editor (which has an autocompletion feature) for writing longer wiki texts. So let's try to find some middle ground, especially for the most often used rules. In this specific case, what do you think of <code>eliminateBiconditionalForward</code> and <code>eliminateBiconditionalReverse</code>? It seems to me that the words "forward" and "reverse" already imply that an implication will result.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 23:08, 15 February 2010 (UTC)
+
 == Is everything here needed, especially BiconditionalConjunction? ==
 
 Some of the theorems here I don't quite get.  I'll mostly pick on BiconditionalConjunction.  This looks to me like it is lacking motivation (unlike BiconditionalDisjunction which has a nice relationship with exclusive or and the like), and would be easy to replace with the combination of BiconditionalImplication and ImplicationDisjunction if needed.  I didn't find BiconditionalConjunction in set.mm. This affects the above named theorem and the rules convertFromBiconditionalToConjunction, convertToBiconditionalFromConjunction, and introduceBiconditionalFromDisjunctions.
 
 A few others which might also be subject to further discussion/investigation are SyllogismInConsequent (assuming we get CommonAntecedentAddition, discussed above), DisjunctionLeftElimination (a lot like CaseElimination), and the five similar ones of Tautology, Contradiction, NegationImplication, True and NotFalse (I'm kind of guessing we need/want some of this set, or even others like Abs or *3.24, but I'm not sure which ones). [[User:Kingdon|Kingdon]] 05:02, 14 February 2010 (UTC)
+
+:What I intended with <code>BiconditionalConjunction</code> and the like was to display some interrelations of the truth functions. Think Boolean algebra. Whether they are actually used it not so important in this case. I really think we should have those, and maybe even more. But not necessarily in this interface. I'd be content with moving them to some extra page. As for <code>DisjunctionLeftElimination</code>, I think we can live without it as case elimination is indeed the more common proof method. <code>Tautology</code> and the like probably belong on the same page with <code>BiconditionalConjunction</code>. I'm not sure right now about <code>SyllogismInConsequent</code> (it's late and I'm tired). <code>addCommonAntecedent</code> weakens the hypothesis and is therefore not always applicable, so we need the more tedious <code>CommonAntecedentAddition</code> to build an instance of <code>SyllogismInConsequent</code>. But maybe we don't need such an instance very often.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 23:08, 15 February 2010 (UTC)
