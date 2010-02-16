@@ -153,12 +153,10 @@ Two famous implication elimination principles, [[w:Modus ponens|Modus ponens]] a
 stmt (ModusPonens () () ((p ∧ (p → q)) → q))
 stmt (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)))
 </jh>
-Introduction and elimination principles for disjunction:
+Introduction principle for disjunction:
 <jh>
 stmt (DisjunctionLeftIntroduction () () (p → (q ∨ p)))
 stmt (DisjunctionRightIntroduction () () (p → (p ∨ q)))
-stmt (DisjunctionLeftElimination () () (((p ∨ q) ∧ (p → q)) → q))
-stmt (DisjunctionRightElimination () () (((p ∨ q) ∧ (q → p)) → p))
 </jh>
 Introduction and elimination principles for conjunction:
 <jh>
@@ -336,8 +334,6 @@ stmt (applyModusPonens () (p (p → q)) q)
 stmt (applyModusTollens () ((¬ q) (p → q)) (¬ p))
 stmt (introduceLeftDisjunction () (p) (q ∨ p))
 stmt (introduceRightDisjunction () (p) (p ∨ q))
-stmt (eliminateLeftDisjunction () ((p ∨ q) (p → q)) q)
-stmt (eliminateRightDisjunction () ((p ∨ q) (q → p)) p)
 stmt (introduceConjunction () (p q) (p ∧ q))
 stmt (eliminateLeftConjunction () ((p ∧ q)) q)
 stmt (eliminateRightConjunction () ((p ∧ q)) p)
