@@ -85,22 +85,34 @@ thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
         applyModusPonens
 ))
 </jh>
-This theorem enables us to prove ''Syllogism'' from the ''Sum'' axiom:
+This theorem enables us to prove two forms of the syllogism from the ''Sum'' axiom.  The rule applySyllogism expresses the syllogism nature of these theorems (we have two implications and derive a third).  But they also can be used to build up more complicated formulas, a pattern which is expressed by the <code>addCommonAntecedent</code> and <code>addCommonConsequent</code> rules, in which we just have one implication and derive a more involved formula.
 <jh>
-thm (*2.05 () () ((q → r) → ((p → q) → (p → r))) (
+thm (CommonAntecedentAddition () () ((q → r) → ((p → q) → (p → r))) ( # *2.05
         q r (¬ p) Sum
 ))
 
-thm (Syllogism () () ((p → q) → ((q → r) → (p → r))) ( # *2.06
-        q r p *2.05
+thm (addCommonAntecedent () ((H (q → r))) ((p → q) → (p → r)) (
+        H
+        q r p CommonAntecedentAddition
+        applyModusPonens
+))
+
+thm (CommonConsequentAddition () () ((p → q) → ((q → r) → (p → r))) ( # *2.06
+        q r p CommonAntecedentAddition
         (q → r) (p → q) (p → r) Comm
+        applyModusPonens
+))
+
+thm (addCommonConsequent () ((H (p → q))) ((q → r) → (p → r)) (
+        H
+        p q r CommonConsequentAddition
         applyModusPonens
 ))
 
 thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
         H2
         H1
-        p q r Syllogism
+        p q r CommonConsequentAddition
         applyModusPonens
         applyModusPonens
 ))
@@ -166,8 +178,7 @@ Combined with double negation, the transposition law <math>*2.03</math> we alrea
 <jh>
 thm (*2.15 () () (((¬ p) → q) → ((¬ q) → p)) (
         q *2.12
-        q (¬ (¬ q)) (¬ p) *2.05
-        applyModusPonens
+        (¬ p) addCommonAntecedent
 </jh>
 We now have <math>((\neg p)\rightarrow q)\rightarrow((\neg p)\rightarrow(\neg(\neg q)))</math>. We transpose the consequent using our transposition law <math>*2.03</math>
 <jh>
@@ -177,8 +188,7 @@ We now have <math>((\neg p)\rightarrow q)\rightarrow((\neg p)\rightarrow(\neg(\n
 to get <math>((\neg p)\rightarrow q)\rightarrow((\neg q)\rightarrow(\neg(\neg p)))</math>. All that remains to do now is to eliminate the double negation.
 <jh>
         p *2.14
-        (¬ (¬ p)) p (¬ q) *2.05
-        applyModusPonens
+        (¬ q) addCommonAntecedent
         applySyllogism
 ))
 
@@ -192,8 +202,7 @@ The proofs of the next two theorems work similar but are actually easier due to 
 <jh>
 thm (*2.16 () () ((p → q) → ((¬ q) → (¬ p))) (
         q *2.12
-        q (¬ (¬ q)) p *2.05
-        applyModusPonens
+        p addCommonAntecedent
         p (¬ q) *2.03
         applySyllogism
 ))
@@ -207,8 +216,7 @@ thm (introduceTransposition () ((H (p → q))) ((¬ q) → (¬ p)) (
 thm (*2.17 () () (((¬ q) → (¬ p)) → (p → q)) (
         (¬ q) p *2.03
         q *2.14
-        (¬ (¬ q)) q p *2.05
-        applyModusPonens
+        p addCommonAntecedent
         applySyllogism
 ))
 
@@ -309,8 +317,7 @@ As first step, we simply take the ''Sum'' axiom,
 and prove <math>((p\vee q)\rightarrow(p\vee r))\rightarrow((p\vee q)\rightarrow(r\vee p))</math> as second step,
 <jh>
         p r Perm
-        (p ∨ r) (r ∨ p) (p ∨ q) *2.05
-        applyModusPonens
+        (p ∨ q) addCommonAntecedent
 </jh>
 so that the result follows via a syllogism:
 <jh>
@@ -329,8 +336,7 @@ As second step, we prove <math>((\neg(p\vee r))\rightarrow(\neg(p\vee q)))\right
 <jh>
         q p Perm
         introduceTransposition
-        (¬ (p ∨ q)) (¬ (q ∨ p)) (¬ (p ∨ r)) *2.05
-        applyModusPonens
+        (¬ (p ∨ r)) addCommonAntecedent
 </jh>
 Combining these two steps, the result follows by transposing the consequent back.
 <jh>
@@ -344,8 +350,7 @@ Finally, <code>DisjunctionSummationRR</code> follows directly from <code>Disjunc
 thm (DisjunctionSummationRR () () ((q → r) → ((q ∨ p) → (r ∨ p))) ( # *2.38
         q r p DisjunctionSummationRL
         p r Perm
-        (p ∨ r) (r ∨ p) (q ∨ p) *2.05
-        applyModusPonens
+        (q ∨ p) addCommonAntecedent
         applySyllogism
 ))
 </jh>
@@ -539,13 +544,12 @@ The meat of our desired result is <code>((p ∨ q) → (p ∨ r)) → (p ∨ (q 
 <jh>
 thm (*2.85-1 () () (((p ∨ q) → r) → (q → r)) (
         q p Add
-        q (p ∨ q) r Syllogism
-        applyModusPonens
+        r addCommonConsequent
 ))
 
 thm (*2.85-unnamed1 () () ((¬ p) → (((p ∨ q) → (p ∨ r)) → ((p ∨ q) → r))) (
         p r *2.55
-        (p ∨ r) r (p ∨ q) *2.05
+        (p ∨ r) r (p ∨ q) CommonAntecedentAddition
         applySyllogism
 ))
 
@@ -719,12 +723,12 @@ thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
 We can use importation to prove syllogisms in conjunction form:
 <jh>
 thm (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)) ( # *3.33
-        p q r Syllogism
+        p q r CommonConsequentAddition
         import
 ))
 
 thm (*3.34 () () (((q → r) ∧ (p → q)) → (p → r)) (
-       q r p *2.05
+       q r p CommonAntecedentAddition
        import
 ))
 </jh>
@@ -733,8 +737,7 @@ Import and export also give us another transposition theorem, *3.37 (which we pr
 <jh>
 thm (*3.37-1 () () ((p → (q → r)) → (p → ((¬ r) → (¬ q)))) (
         q r *2.16
-        (q → r) ((¬ r) → (¬ q)) p *2.05
-        applyModusPonens
+        p addCommonAntecedent
 ))
 
 thm (*3.37 () () (((p ∧ q) → r) → ((p ∧ (¬ r)) → (¬ q))) (
@@ -752,8 +755,7 @@ Next, we prove ''Comp'', the principle of composition,
 <jh>
 thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) ( # *3.43
         q r *3.2
-        q (r → (q ∧ r)) p *2.05
-        applyModusPonens
+        p addCommonAntecedent
         p r (q ∧ r) *2.77
         applySyllogism
         import
@@ -793,8 +795,7 @@ thm (*3.44 () () (((q → p) ∧ (r → p)) → ((q ∨ r) → p)) (
         applyComm
 
         q r *2.53
-        (q ∨ r) ((¬ q) → r) p Syllogism
-        applyModusPonens
+        p addCommonConsequent
 
         applySyllogism
 ))
@@ -811,7 +812,7 @@ thm (composeDisjunction () ((HQP (q → p)) (HRP (r → p)))
 Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
 <jh>
 thm (Fact () () ((p → q) → ((p ∧ r) → (q ∧ r))) ( # *3.45
-        p q (¬ r) Syllogism
+        p q (¬ r) CommonConsequentAddition
         (q → (¬ r)) (p → (¬ r)) *2.16
         applySyllogism
 ))
@@ -979,8 +980,7 @@ thm (converse-of-*3.37 () () (((p ∧ (¬ r)) → (¬ q)) → ((p ∧ q) → r))
         applySyllogism
         # ((¬ (¬ q)) → (¬ (¬ r))) → (q → r)
 
-        ((¬ (¬ q)) → (¬ (¬ r))) (q → r) p *2.05
-        applyModusPonens
+        p addCommonAntecedent
         # (p → ((¬ (¬ q)) → (¬ (¬ r)))) → (p → (q → r))
 
         applySyllogism
@@ -1003,8 +1003,7 @@ The next theorem, <code>(((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p)))</cod
 <jh>
 thm (*4.15-1 () () (((p ∧ q) → r) → ((q ∧ p) → r)) (
         q p *3.22
-        (q ∧ p) (p ∧ q) r Syllogism
-        applyModusPonens
+        r addCommonConsequent
 ))
 
 thm (*4.15-2 () () (((p ∧ q) → (¬ r)) → ((q ∧ (¬ (¬ r))) → (¬ p))) (
@@ -1019,11 +1018,9 @@ thm (*4.15-forward () () (((p ∧ q) → (¬ r)) → ((q ∧ r) → (¬ p))) (
         q (¬ (¬ r)) (¬ p) Exportation applySyllogism
 
         r *2.12
-        r (¬ (¬ r)) (¬ p) Syllogism
-        applyModusPonens
+        (¬ p) addCommonConsequent
 
-        ((¬ (¬ r)) → (¬ p)) (r → (¬ p)) q *2.05
-        applyModusPonens
+        q addCommonAntecedent
 
         applySyllogism
 
@@ -1040,11 +1037,9 @@ thm (*4.15-reverse () () (((q ∧ r) → (¬ p)) → ((p ∧ q) → (¬ r))) (
         q r (¬ p) Exportation
 
         r *2.14
-        (¬ (¬ r)) r (¬ p) Syllogism
-        applyModusPonens
+        (¬ p) addCommonConsequent
 
-        (r → (¬ p)) ((¬ (¬ r)) → (¬ p)) q *2.05
-        applyModusPonens
+        q addCommonAntecedent
 
         applySyllogism
 
@@ -1316,7 +1311,7 @@ If <math>p\leftrightarrow q</math>, then we want to be able to substitute <math>
 ==== Conjunction ====
 The proof proceeds by expanding <code>(p ↔ q) ∧ (r ↔ s)</code> into four implications, rearranging them using associativity and commutativity, and applying ConjunctionMultiplication to each half.
 
-First, the rearrangement we need is <code>ConjunctionFunction-1</code>, known as <code>an4</code> in metamath.<ref>an4 in set.mm version of January 9, 2009, [http://us.metamath.org/mpeuni/an4.html metamath.org]</ref>
+First, the rearrangement we need is <code>ConjunctionFunction-1</code>, known as <code>an4</code> in metamath.<ref>an4 in set.mm, [http://us.metamath.org/mpeuni/an4.html metamath.org], accessed February 15, 2010</ref>
 
 <jh>
 thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
@@ -1528,9 +1523,9 @@ thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
 </jh>
 
 ==== Implication ====
-The first two unidirectional implication builders came early on, <code>*2.05</code> and <code>*2.06</code> (<code>Syllogism</code>).
+The first two unidirectional implication builders came early on, <code>CommonAntecedentAddition</code> and <code>CommonConsequentAddition</code>.
 
-The general unidirection implication builder would be <code>((p → q) ∧ (r → s)) → ((q → r) → (p → s))</code>.
+The general unidirection implication builder would be <code>((p → q) ∧ (r → s)) → ((q → r) → (p → s))</code>.<ref>imim12i in set.mm, [http://us.metamath.org/mpeuni/imim12i.html metamath.org], accessed February 15, 2010</ref>
 
 ==== Biconditional ====
 There is no unidirectional builder for the biconditional.
@@ -1859,12 +1854,10 @@ thm (DisjunctionComposition () ()
         p r q *3.44
 
         p q DisjunctionRightIntroduction
-        p (p ∨ q) r Syllogism
-        applyModusPonens
+        r addCommonConsequent
 
         q p DisjunctionLeftIntroduction
-        q (p ∨ q) r Syllogism
-        applyModusPonens
+        r addCommonConsequent
 
         composeConjunction
 
@@ -1876,12 +1869,10 @@ thm (ConjunctionComposition () ()
         p q r Comp
 
         q r ConjunctionRightElimination
-        (q ∧ r) q p *2.05
-        applyModusPonens
+        p addCommonAntecedent
 
         q r ConjunctionLeftElimination
-        (q ∧ r) r p *2.05
-        applyModusPonens
+        p addCommonAntecedent
 
         composeConjunction
 
