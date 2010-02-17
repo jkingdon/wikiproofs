@@ -9,7 +9,8 @@ Anything from <code>#</code> to the end of the line is a comment (that is, it is
 ==Interfaces==
 Interfaces contain:
 
-* Parameters.
+* Parameters.  This is a way to import kinds, terms, definitions and statements from another interface.  It has much the same meaning as the import statement in a module, and the same syntax except that it starts with <code>param</code> instead of <code>import</code>.
+ param (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'') 
 
 * Kinds.  Each variable will be of some kind, and the kinds are declared with the <code>kind</code> statement.
  kind (''new-kind'')
