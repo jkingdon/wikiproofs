@@ -1,0 +1,77 @@
+{{header
+ | title    = Axioms of first-order logic
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Predicate logic builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. More specifically, the kind of predicate logic we define here is known as first-order logic, which is a common basis for theories such as set theory or arithmetic.
+
+The axioms as usually stated make heavy use of concepts like substituting one variable or constant for another, [[w:free variables|free variables]] and [[w:bound variables|bound variables]].  JHilbert instead is built on the substitution mechanism which is built in and always available, and the ''distinct variables'' which provide the way to restrict what kinds of substitution are acceptable. The axioms also rely on equality in places to replace concepts of free and bound variables. This technique does cause the axioms to look different than they do in many texts; the axioms as presented here are adapted from metamath (which in turn got many of the ideas from a 1965 paper by Tarski).
+}}
+
+== Formulas, objects, and universal quantification ==
+We build on [[Interface:Classical propositional calculus]]:
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+By convention we use φ, ψ, χ, and θ to represent formulas (also known as ''well-formed formulas'' or wff's).
+<jh>
+var (wff φ ψ χ θ)
+</jh>
+
+We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is a valid object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
+
+<jh>
+kind (object)
+var (object x y z)
+</jh>
+
+We extend the available formulas with [[w:Universal quantification|universal quantification]]:
+<jh>
+term (wff (∀ object wff))
+</jh>
+
+== Axioms ==
+<jh>
+stmt (QuantifiedImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) )
+stmt (QuantifiedNegation () () ( (¬ (∀ x φ)) → (∀ x (¬ (∀ x φ))) ) )
+stmt (QuantifierCommutation () () ( (∀ x (∀ y φ)) → (∀ y (∀ x φ)) ) )
+</jh>
+
+[[w:Generalization (logic)|Generalization]]:
+<jh>
+stmt (Generalization ((x φ)) () (φ → (∀ x φ)))
+stmt (generalize () (φ) (∀ x φ))
+</jh>
+
+We introduce equality and provide our first equality axiom, a version of the transitive law for equality:
+<jh>
+term (wff (= object object))
+stmt (AxiomEquality () () ( (x = y) → ( (x = z) → (y = z) ) ) )
+</jh>
+
+The <code>Existence</code> axiom asserts that there is at least one object:
+<jh>
+stmt (Existence () () (¬ (∀ x (¬ (x = y)))) )
+stmt (QuantifierSubstitution () () ((∀ x (x = y)) → (∀ y (y = x))) )
+stmt (VariableSubstitution () () ( (x = y) → ( (∀ y φ) → (∀ x ((x = y) → φ)) ) ) )
+</jh>
+
+This axiom says that if <code>z</code> is not equal to either <code>x</code> or <code>y</code>, then <code>z</code> does not affect the truth of <code>x = y</code>, so it is OK to add <code>∀ z</code> to the start of <code>x = y</code>.
+<jh>
+stmt (QuantifierIntroduction () () ( 
+  (¬ (∀ z (z = x))) 
+  → ( (¬ (∀ z (z = y))) 
+      → ( (x = y) → (∀ z (x = y)) ) ) )
+)
+</jh>
+
+There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic).
+
+Although a usable theory of predicate logic will generally have at least one more quantifier (∃ for "there exists"), it can be defined in terms of ∀, so we have avoided it in the above axioms and do not need to define it here.
+
+== External links ==
+*[[w:First-order logic]]
+
+[[Category:Predicate logic]]
