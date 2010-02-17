@@ -11,7 +11,7 @@
 
 === Mathematical content ===
 
-We currently have some propositional logic, such as [[Nicod's reduction of Principia Mathematica]]. A generic "user-friendly" propositional logic module is still missing. The obvious next step would be first-order logic.
+We have [[Interface:Classical propositional calculus]] and a proof of it from axioms. The obvious next step is [[:Category:Predicate logic|first-order logic]].
 
 === Non-mathematical content ===
 
