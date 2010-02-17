@@ -80,17 +80,25 @@ Any comments on this proposal would be greatly appreciated! [[User:CarlWitty|Car
 
 ::I'm curious what you think about the "interoperability with metamath" reason to avoid automatic definition folding/unfolding.  Are you interested in being able to automatically translate JHilbert theories into metamath theories?
 
+:::Yes, inasmuch as it facilitates a soundness proof for JHilbert (if metamath is sound, and JHilbert code can always be translated to working metamath code, then JHilbert is sound, too).
+
 :The <code>vkind</code> mechanism is quite clever and your weakened dv capabilities are still sufficient to implement something like <code>set.mm</code>. Actually, it makes me wonder whether <code>set.mm</code> has definitions with a dummy that is not a <code>set</code> variable. The question remains whether the weakened dv mechanism would already make JHilbert weaker than metamath in general. Would it be sufficient to enact this restriction on dv constraints only for <code>def-thm</code>s and the <code>orig-label</code> they reference?
 
 ::I don't recall any such definitions in set.mm, but if you wanted to define ⊤ or ⊥ in the propositional part of set.mm you would need to use a dummy wff variable (since the propositional part has no atomic formulas).
 
-::Limiting the restriction to <code>def-thm</code> and ''orig-label'' is insufficient, at least with a semantics anything like I suggest.  The important lemma is that each folded substitution instance corresponds to an unfolded substitution instance, and that has to be true at every step in every proof.  And that lemma would be false if you were ever allowed to substitute V for both A and B, when A and B were disjoint.
+:::If I were doing that in metamath, I'd just go <code>df-⊤ $a |- ⊤ $.</code> and <code>df-⊥ $a |- -. ⊥ $.</code> (pseudocode as metamath does not know Unicode) because there definitions are just axioms anyway. But then, I see no reason why your way shouldn't work.
+
+::Limiting the restriction to <code>def-thm</code> and ''orig-label'' is insufficient, at least with a semantics anything like I suggest.  The important lemma is that each folded substitution instance corresponds to an unfolded substitution instance, and that has to be true at every step in every proof. And that lemma would be false if you were ever allowed to substitute V for both A and B, when A and B were disjoint.
+
+:::But V is really constant, so it ''should'' be allowed to replace both A and B with V. Even for nonconstant V (say, <code>(V some_variable)</code>) you should be allowed to substitute <code>(V X)</code> and <code>(V Y)</code> for A and B, respectively, if X and Y are disjoint, as the definition should remain immutable under any legal substitution of dummy variables. I see your point now of course. If you have <code>(foo A B)</code> and make <code>(foo V V)</code> and then <code>(foo {x|x=x} {x|x=x})</code>, then you've violated the constraint. I have no qualms about the global restriction as long as it causes us no problems. It just seems weird from a philosophical standpoint. This has something to do with the fact that <code>(foo {x|x=x} {x|x=x})</code> is really the same as <code>(foo {x|x=x} {y|y=y})</code> where x and y have been declared to be disjoint. Optimistically, the answer may turn out to be that limiting the restriction creates an onus on the user to declare extra disjoint variable constraints (which require a limited restriction in turn) which would not have been needed ever with the global restriction. In other words: the global restriction may remove user inconvenience without really reducing strength. Which would be great, of course.
 
 ::It's a bit tricky to talk about one metamath variant being weaker than another, since in any reasonable variant, you can construct a theory that will recognize any recursively enumerable language.  But I do know of one somewhat plausible kind of formalization where some one-step proofs in metamath would require multi-step proofs with the vkind restriction: abstraction over binding contexts.
 
 ::Consider the Common Lisp <code>let</code> construct.  In <code>(let ((v1 T1) (v2 T2)) body)</code>, both v1 and v2 are bound in body, but neither is bound in T1 or T2.  In JHilbert, you could formalize this with something like <code>(let (vcons v1 (vcons v2 (vnil))) (tcons T1 (tcons T2 (tnil))) body)</code> (note that this swaps the structure of the binding list, to be a pair of lists instead of a list of pairs).  Then you could have an axiom something like <code>(= (let V* T* B) B)</code>, if B is disjoint from T*.  In other words, you are packaging up an arbitrary number of disjoint variable constraints into a single disjoint variable constraint.
 
 ::To regain this power, it suffices to allow term constructors (but still not definitions) with vkind results, as long as the arguments are also vkind.  Then in the above formalization, you would have one vkind var, and another vkind var-list, where var-list has vcons and vnil term constructors.  (The important thing is that the complete unfolding of any vkind term must not have any dummy variables; you could also allow a restricted class of vkind definitions and still keep this property, but it makes the spec more complicated for a fairly limited benefit.)
+
+:::For sake of simplicity, I think we should keep the spec as simple as possible. Of course, we'll need to see how this affects the soundness proof.
 
 :The creation of <math>N\cdot M</math> extra variables together with enough dv constraints looks a bit daunting efficiency-wise, but in most cases the level would be 1, I guess, and the number of dummy variables should not be too high as well.
 
@@ -126,3 +134,5 @@ thm (baz () () (foo) (
 ::Well, if I'm right, I gave a way to prove both a formula and its negation, which means the theory is inconsistent and can prove anything 
 
 ::Note that my proposal would also let you prove <code>(foo)</code> (with no explicit disjoint variable constraints).  This is safe because all dummy variables are disjoint from all other variables, so the required disjoint-variable constraints would appear again if you ever unfolded <code>(foo)</code>. [[User:CarlWitty|CarlWitty]] 18:09, 13 February 2010 (UTC)
+
+:::I haven't had the time to check this yet. Is there a metamath proof for the lemmas anywhere?--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 19:00, 16 February 2010 (UTC)
