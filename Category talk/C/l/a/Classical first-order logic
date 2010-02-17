@@ -1,0 +1,7 @@
+== Predicate logic vs. first order logic ==
+
+Predicate logic is not the same as first order logic. First order logic is a subset of predicate logic where you may quantify only over individuals in your universe of discourse. For example, in set theory, where your universe of discourse is the class of all sets, you may quantify over variables of type <code>set</code>, but not of type <code>class</code>. Hence, it's a first order theory. Wikipedia has an [[w:Second-order logic|example]] of a second-order predicate logic, with the real numbers as universe of discourse. Another predicate logic is [[w:higher-order logic|higher-order logic]] where you have a hierarchy of predicates with higher-order predicates taking lower-order predicates as arguments, with the possibility of quantifying over predicates.
+
+Maybe it's best we rename this category to [[:Category:First-order logic]] or even, in accordance with the MSC naming scheme, [[:Category:Classical first-order logic]]. We can then put the higher-order stuff in a different category, [[:Category:Higher-order logic and type theory]] say, and place a '''03B15''' MSC marker on it.
+
+--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:30, 17 February 2010 (UTC)
