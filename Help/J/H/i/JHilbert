@@ -34,6 +34,9 @@ defines ¬ in terms of |.  A variable which appears on the right hand side but n
  stmt (''new-statement'' (''distinct-variables'') (''hypothesis'') (''consequent''))
 For example, one version of the famous [[w:modus ponens|modus ponens]] states that from the hypotheses p and p → q, one can conclude q:
  stmt (applyModusPonens () (p (p → q)) q)
+:*Distinct variables.  The distinct variables are a list of pairs of variables, for example:
+ ((φ x) (x y))
+::means that φ is distinct from x and x is distinct from y. The order of variables in each pair is not significant. The meaning of a distinct variable constraint is that anything substituted for the one variable must not contain any variables in common with the substitution for the other variable. For example, given the constraints above, if z = w is substituted for φ, and z is substituted for x, the first constraint would be violated.
 
 == Modules ==
 * Import statements. These represent kinds, terms, definitions and statements (either axioms, or statements proved elsewhere) to be assumed in proofs.
