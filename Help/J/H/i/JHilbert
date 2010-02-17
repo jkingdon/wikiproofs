@@ -37,7 +37,11 @@ For example, one version of the famous [[w:modus ponens|modus ponens]] states th
  stmt (applyModusPonens () (p (p → q)) q)
 :*Distinct variables.  The distinct variables are a list of pairs of variables, for example:
  ((φ x) (x y))
-::means that φ is distinct from x and x is distinct from y. The order of variables in each pair is not significant. The meaning of a distinct variable constraint is that anything substituted for the one variable must not contain any variables in common with the substitution for the other variable. For example, given the constraints above, if z = w is substituted for φ, and z is substituted for x, the first constraint would be violated.
+::means that φ is distinct from x and x is distinct from y. The order of variables in each pair is not significant. The meaning of a distinct variable constraint is that anything substituted for the one variable must not contain any variables in common with the substitution for the other variable. For example, given the constraints above, if z = w is substituted for φ, and z is substituted for x, the first constraint would be violated. On the other hand, it is permissible to substitute some constant <code>(const)</code> for both <code>x</code> and <code>y</code> above, as constants do not contain variables at all. <!--Note: this could become obsolete in the future, when both x and y are vkind variables and cannot be substituted at all--> It is also possible to specify distinct variables in triples, quadruples, etc. JHilbert will then automatically generate the pairs as all mutually distinct combinations. For example, the constraint
+ ((φ x y))
+::is equivalent to
+ ((φ x) (φ y) (x y))
+::This can save a lot of typing in some cases.
 
 == Modules ==
 * Import statements. These represent kinds, terms, definitions and statements (either axioms, or statements proved elsewhere) to be assumed in proofs.
