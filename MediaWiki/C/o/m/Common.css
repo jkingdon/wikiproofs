@@ -213,4 +213,21 @@
         vertical-align:top;
 }
 
+/**
+ * [[Template:Wikipedia]]
+ */
+
+.wikipedia_template {
+        background:#f7f7f7;
+        border:1px solid #aaa;
+        clear:right;
+        float:right;
+        margin:0ex 0em 1ex 1em;
+        width:25em;
+}
+
+.wikipedia_template .logo {
+        float:left;
+}
+
 /* </pre> */
