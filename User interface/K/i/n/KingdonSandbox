@@ -43,5 +43,3 @@ Equality is reflexive, symmetry, and transitive.
 term (wff (= object object))
 stmt (EqualityReflexivity () () (x = x))
 </jh>
-
-[[Category:Predicate logic]]
