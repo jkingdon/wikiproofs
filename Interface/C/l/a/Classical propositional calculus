@@ -21,6 +21,10 @@ We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] a
 kind (wff)
 var (wff p q r s)
 </jh>
+Some authors just use the term ''formula'' instead of ''wff'', so we define <code>formula</code> to be an alias of <code>wff</code>
+<jh>
+kindbind (wff formula)
+</jh>
 
 == Logical connectives ==
 
