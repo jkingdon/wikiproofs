@@ -43,7 +43,12 @@ For example, one version of the famous [[w:modus ponens|modus ponens]] states th
  import (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
 For example:
  import (NICOD Interface:Nicod_axioms () ())
-As you can see, interfaces with no parameters are imported with empty parameter lists. The ''prefix'' allows the names in the interface to differ from the name in the module (which may be necessary to avoid naming conflicts with some of the imported interfaces, for example). For an example of avoiding naming conflicts, see [[Nicod's reduction of Principia Mathematica]] (which uses a prefix on the export). The prefix can be either a string or <code>()</code> for the empty string.
+As you can see, interfaces with no parameters are imported with empty parameter lists. If the interface being imported has parameters, you need to first import the interfaces to be used as parameters, and then supply their identifiers as ''parameter1'' and so on.  For example:
+ import (CLASSICAL Interface:Classical_propositional_calculus () ())
+ import (PRINCIPIA Interface:Axioms_of_first-order_logic (CLASSICAL) ())
+where the second interface expects Interface:Classical_propositional_calculus as its only parameter.
+
+The ''prefix'' allows the names in the interface to differ from the name in the module (which may be necessary to avoid naming conflicts with some of the imported interfaces, for example). For an example of avoiding naming conflicts, see [[Nicod's reduction of Principia Mathematica]] (which uses a prefix on the export). The prefix can be either a string or <code>()</code> for the empty string.
 
 * Variables.  Same syntax and meaning as in interfaces.
 
