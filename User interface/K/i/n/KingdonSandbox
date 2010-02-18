@@ -42,66 +42,6 @@ Equality is reflexive, symmetry, and transitive.
 <jh>
 term (wff (= object object))
 stmt (EqualityReflexivity () () (x = x))
-stmt (EqualitySymmetry () () ((x = y) ↔ (y = x)))
-stmt (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)))
 </jh>
-
-== Relationship between universal and existential quantification ==
-
-<jh>
-stmt (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))))
-stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
-</jh>
-
-== Builders ==
-As with propositional calculus, we need to build up formulas explicitly, and these rules let us do it:
-<jh>
-stmt (addForAll () ((φ ↔ ψ)) ((∀ x φ) ↔ (∀ x ψ)))
-stmt (addThereExists () ((φ ↔ ψ)) ((∀ x φ) ↔ (∀ x ψ)))
-</jh>
-
-== Order ==
-The order of adjacent quantifiers of the same type can be exchanged:
-<jh>
-stmt (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))))
-stmt (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))))
-</jh>
-
-∃ followed by ∀ can be switched:
-<jh>
-stmt (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))))
-</jh>
-
-but the converse is only possible in special cases:
-<jh>
-stmt (ForAllThereExistsImplicationCommutation ((x y) (ψ x) (φ y)) ()
-  ((∃ x (∀ y (φ → ψ))) ↔ (∀ y (∃ x (φ → ψ))))
-)
-</jh>
-
-== Combining quantified statements ==
-Quantifiers of the same variable can sometimes be combined or split:
-<jh>
-stmt (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))))
-stmt (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))))
-stmt (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))))
-</jh>
-
-== Generalization and specialization ==
-We can remove a universal quantifier:
-<jh>
-stmt (Specialization () () ((∀ x φ) → φ))
-</jh>
-
-The converse is sometimes possible, but only with some restrictions. Either the variable does not occur in the formula, or the formula is unconditionally true:
-<jh>
-stmt (Generalization ((x φ)) () (φ → (∀ x φ)))
-stmt (generalize () (φ) (∀ x φ))
-</jh>
-
-There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, ∈ (is an element of), for set theory, or S (successor) or + (addition) for Peano arithmetic).
-
-== What else? ==
-This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
 
 [[Category:Predicate logic]]
