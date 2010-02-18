@@ -23,7 +23,7 @@ import (PRINCIPIA Interface:Axioms_of_first-order_logic (CLASSICAL) ())
 As usual, φ, ψ, χ, and θ are formulas and x, y, and z are objects:
 
 <jh>
-var (wff φ ψ χ θ)
+var (formula φ ψ χ θ)
 var (object x y z)
 </jh>
 
@@ -34,7 +34,7 @@ We start with reflexivity.  The first two theorems are intermediate steps:
 
 <jh>
 thm (EqualityReflexivity-1 () () ((x = y) → (y = y)) (
-        (x = y) ConjunctionIdempotence eliminateRightBiconditionalImplication
+        (x = y) ConjunctionIdempotence eliminateBiconditionalReverse
 
         x y y AxiomEquality
         import
@@ -76,7 +76,7 @@ thm (applyNestedModusPonens ()
         H2
         import
 
-        ψ φ ConjunctionCommutativity eliminateRightBiconditionalImplication
+        ψ φ ConjunctionCommutativity eliminateBiconditionalReverse
         χ addCommonConsequent
         applyModusPonens
 
