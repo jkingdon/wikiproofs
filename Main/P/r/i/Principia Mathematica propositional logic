@@ -869,11 +869,11 @@ thm (disjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
 
 In Principia, the biconditional <math>p\leftrightarrow q</math> is defined simply as <math>(p\rightarrow q)\wedge(q\rightarrow p)</math>, so our combination and elimination theorems for conjunction immediately yield the corresponding introduction and elimination rules for the biconditional.
 <jh>
-thm (BiconditionalImplicationLeftElimination () () ((p ↔ q) → (q → p)) (
+thm (BiconditionalForwardElimination () () ((p ↔ q) → (q → p)) (
         (p → q) (q → p) ConjunctionLeftElimination
 ))
 
-thm (BiconditionalImplicationRightElimination () () ((p ↔ q) → (p → q)) (
+thm (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)) (
         (p → q) (q → p) ConjunctionRightElimination
 ))
 
@@ -881,11 +881,11 @@ thm (introduceBiconditional () ((H1 (p → q)) (H2 (q → p))) (p ↔ q) (
         H1 H2 introduceConjunction
 ))
 
-thm (eliminateLeftBiconditionalImplication () ((H (p ↔ q))) (q → p) (
+thm (eliminateBiconditionalForward () ((H (p ↔ q))) (q → p) (
         H eliminateLeftConjunction
 ))
 
-thm (eliminateRightBiconditionalImplication () ((H (p ↔ q))) (p → q) (
+thm (eliminateBiconditionalReverse () ((H (p ↔ q))) (p → q) (
         H eliminateRightConjunction
 ))
 </jh>
@@ -916,14 +916,14 @@ Now the same again for <math>*2.17</math>:
 thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
         H
         p q NegationFunction
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (removeNegation () ((H ((¬ p) ↔ (¬ q)))) (p ↔ q) (
         H
         p q NegationFunction
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -932,12 +932,12 @@ thm (removeNegation () ((H ((¬ p) ↔ (¬ q)))) (p ↔ q) (
 We proved various transposition laws for the conditional earlier. Now we provide some for the biconditional, starting with <code>(p ↔ (¬ q)) ↔ (q ↔ (¬ p))</code>.  The proof is a straightforward application of the conditional transposition laws, but has to prove each direction of the biconditionals.
 <jh>
 thm (*4.12-forward () () ((p ↔ (¬ q)) → (q → (¬ p))) (
-        p (¬ q) BiconditionalImplicationRightElimination
+        p (¬ q) BiconditionalReverseElimination
         p q *2.03 applySyllogism
 ))
 
 thm (*4.12-reverse () () ((p ↔ (¬ q)) → ((¬ p) → q)) (
-        p (¬ q) BiconditionalImplicationLeftElimination
+        p (¬ q) BiconditionalForwardElimination
         q p *2.15 applySyllogism
 ))
 
@@ -1008,7 +1008,7 @@ thm (*4.15-1 () () (((p ∧ q) → r) → ((q ∧ p) → r)) (
 
 thm (*4.15-2 () () (((p ∧ q) → (¬ r)) → ((q ∧ (¬ (¬ r))) → (¬ p))) (
         p q (¬ r) *4.15-1
-        q p (¬ r) *4.14 eliminateRightBiconditionalImplication
+        q p (¬ r) *4.14 eliminateBiconditionalReverse
         applySyllogism
 ))
 
@@ -1028,7 +1028,7 @@ thm (*4.15-forward () () (((p ∧ q) → (¬ r)) → ((q ∧ r) → (¬ p))) (
 ))
 
 thm (*4.15-2-reverse () () (((q ∧ (¬ (¬ r))) → (¬ p)) → ((p ∧ q) → (¬ r))) (
-        q p (¬ r) *4.14 eliminateLeftBiconditionalImplication
+        q p (¬ r) *4.14 eliminateBiconditionalForward
         q p (¬ r) *4.15-1
         applySyllogism
 ))
@@ -1235,13 +1235,13 @@ thm (conflateDisjunction () ((H (p ∨ p))) p (
 
 thm (cloneAsConjunction () ((H p)) (p ∧ p) (
         H
-        p ConjunctionIdempotence eliminateRightBiconditionalImplication
+        p ConjunctionIdempotence eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (conflateConjunction () ((H (p ∧ p))) p (
         H
-        p ConjunctionIdempotence eliminateLeftBiconditionalImplication
+        p ConjunctionIdempotence eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -1293,14 +1293,14 @@ We already provided rules for associating disjunctions; here are the correspondi
 thm (groupConjunctionRight () ((H ((p ∧ q) ∧ r))) (p ∧ (q ∧ r)) (
         H
         p q r ConjunctionAssociativity
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (groupConjunctionLeft () ((H (p ∧ (q ∧ r)))) ((p ∧ q) ∧ r) (
         H
         p q r ConjunctionAssociativity
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -1316,18 +1316,18 @@ First, the rearrangement we need is <code>ConjunctionFunction-1</code>, known as
 <jh>
 thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
         p q (r ∧ s) ConjunctionAssociativity
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
 
         p Id
         q r s ConjunctionAssociativity
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         conjoin
 
         applySyllogism
 
         p Id
         q r ConjunctionCommutativity
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         s Id 
         conjoin
         conjoin
@@ -1336,13 +1336,13 @@ thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (
 
         p Id
         r q s ConjunctionAssociativity
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         conjoin
 
         applySyllogism
 
         p r (q ∧ s) ConjunctionAssociativity
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
 
         applySyllogism
 ))
@@ -1400,7 +1400,7 @@ thm (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q 
         (r ↔ s) BiconditionalReflexivity
         buildConjunction
 
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
 
         (¬ p) (¬ q) r s DisjunctionFunction
 
@@ -1478,7 +1478,7 @@ thm (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q)))
 thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))) (
         p q r ConjunctionMultiplicationLL
 
-        r q ConjunctionCommutativity eliminateRightBiconditionalImplication
+        r q ConjunctionCommutativity eliminateBiconditionalReverse
         (p → q) introduceAntecedent
 
         applySyllogismInConsequent
@@ -1491,7 +1491,7 @@ thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r)))
 thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
         p q r ConjunctionMultiplicationRR
 
-        q r ConjunctionCommutativity eliminateRightBiconditionalImplication
+        q r ConjunctionCommutativity eliminateBiconditionalReverse
         (p → q) introduceAntecedent
 
         applySyllogismInConsequent
@@ -1628,56 +1628,56 @@ thm (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (q
 thm (distributeLeftDisjunction () ((H (p ∨ (q ∧ r)))) ((p ∨ q) ∧ (p ∨ r)) (
         H
         p q r DisjunctionLeftDistribution
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (collectLeftDisjunction () ((H ((p ∨ q) ∧ (p ∨ r)))) (p ∨ (q ∧ r)) (
         H
         p q r DisjunctionLeftDistribution
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (distributeRightDisjunction () ((H ((p ∧ q) ∨ r))) ((p ∨ r) ∧ (q ∨ r)) (
         H
         p q r DisjunctionRightDistribution
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (collectRightDisjunction () ((H ((p ∨ r) ∧ (q ∨ r)))) ((p ∧ q) ∨ r) (
         H
         p q r DisjunctionRightDistribution
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (distributeLeftConjunction () ((H (p ∧ (q ∨ r)))) ((p ∧ q) ∨ (p ∧ r)) (
         H
         p q r ConjunctionLeftDistribution
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (collectLeftConjunction () ((H ((p ∧ q) ∨ (p ∧ r)))) (p ∧ (q ∨ r)) (
         H
         p q r ConjunctionLeftDistribution
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (distributeRightConjunction () ((H ((p ∨ q) ∧ r))) ((p ∧ r) ∨ (q ∧ r)) (
         H
         p q r ConjunctionRightDistribution
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (collectRightConjunction () ((H ((p ∧ r) ∨ (q ∧ r)))) ((p ∨ q) ∧ r) (
         H
         p q r ConjunctionRightDistribution
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -1746,97 +1746,97 @@ thm (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)) ( # *4.57
 
 thm (distributeNegationPDP () ((H (¬ (p ∨ q)))) ((¬ p) ∧ (¬ q)) (
         H
-        p q DeMorganPDP eliminateRightBiconditionalImplication
+        p q DeMorganPDP eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (distributeNegationPDN () ((H (¬ (p ∨ (¬ q))))) ((¬ p) ∧ q) (
         H
-        p q DeMorganPDN eliminateRightBiconditionalImplication
+        p q DeMorganPDN eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (distributeNegationNDP () ((H (¬ ((¬ p) ∨ q)))) (p ∧ (¬ q)) (
         H
-        p q DeMorganNDP eliminateRightBiconditionalImplication
+        p q DeMorganNDP eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (distributeNegationNDN () ((H (¬ ((¬ p) ∨ (¬ q))))) (p ∧ q) (
         H
-        p q DeMorganNDN eliminateRightBiconditionalImplication
+        p q DeMorganNDN eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (distributeNegationPCP () ((H (¬ (p ∧ q)))) ((¬ p) ∨ (¬ q)) (
         H
-        p q DeMorganPCP eliminateRightBiconditionalImplication
+        p q DeMorganPCP eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (distributeNegationPCN () ((H (¬ (p ∧ (¬ q))))) ((¬ p) ∨ q) (
         H
-        p q DeMorganPCN eliminateRightBiconditionalImplication
+        p q DeMorganPCN eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (distributeNegationNCP () ((H (¬ ((¬ p) ∧ q)))) (p ∨ (¬ q)) (
         H
-        p q DeMorganNCP eliminateRightBiconditionalImplication
+        p q DeMorganNCP eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (distributeNegationNCN () ((H (¬ ((¬ p) ∧ (¬ q))))) (p ∨ q) (
         H
-        p q DeMorganNCN eliminateRightBiconditionalImplication
+        p q DeMorganNCN eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (collectNegationPDP () ((H (p ∨ q))) (¬ ((¬ p) ∧ (¬ q))) (
         H
-        p q DeMorganNCN eliminateLeftBiconditionalImplication
+        p q DeMorganNCN eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (collectNegationPDN () ((H (p ∨ (¬ q)))) (¬ ((¬ p) ∧ q)) (
         H
-        p q DeMorganNCP eliminateLeftBiconditionalImplication
+        p q DeMorganNCP eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (collectNegationNDP () ((H ((¬ p) ∨ q))) (¬ (p ∧ (¬ q))) (
         H
-        p q DeMorganPCN eliminateLeftBiconditionalImplication
+        p q DeMorganPCN eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (collectNegationNDN () ((H ((¬ p) ∨ (¬ q)))) (¬ (p ∧ q)) (
         H
-        p q DeMorganPCP eliminateLeftBiconditionalImplication
+        p q DeMorganPCP eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (collectNegationPCP () ((H (p ∧ q))) (¬ ((¬ p) ∨ (¬ q))) (
         H
-        p q DeMorganNDN eliminateLeftBiconditionalImplication
+        p q DeMorganNDN eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (collectNegationPCN () ((H (p ∧ (¬ q)))) (¬ ((¬ p) ∨ q)) (
         H
-        p q DeMorganNDP eliminateLeftBiconditionalImplication
+        p q DeMorganNDP eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (collectNegationNCP () ((H ((¬ p) ∧ q))) (¬ (p ∨ (¬ q))) (
         H
-        p q DeMorganPDN eliminateLeftBiconditionalImplication
+        p q DeMorganPDN eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
         H
-        p q DeMorganPDP eliminateLeftBiconditionalImplication
+        p q DeMorganPDP eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -1910,13 +1910,13 @@ We've already dealt with weakening the biconditional to an implication. This sec
 
 <jh>
 thm (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))) (
-        p q BiconditionalImplicationLeftElimination
-        (¬ q) p DisjunctionCommutativity eliminateRightBiconditionalImplication
+        p q BiconditionalForwardElimination
+        (¬ q) p DisjunctionCommutativity eliminateBiconditionalReverse
         applySyllogism
 ))
 
 thm (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)) (
-        p q BiconditionalImplicationRightElimination
+        p q BiconditionalReverseElimination
 ))
 
 thm (eliminateLeftBiconditionalDisjunction () ((H (p ↔ q))) (p ∨ (¬ q)) (
@@ -1963,7 +1963,7 @@ thm (ModusPonens () () ((p ∧ (p → q)) → q) (
 
 <jh>
 thm (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)) (
-        p q Transposition eliminateRightBiconditionalImplication
+        p q Transposition eliminateBiconditionalReverse
         (¬ q) conjoinLL
 
         (¬ q) (¬ p) ModusPonens
@@ -2012,7 +2012,7 @@ thm (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)) (
 
 thm (*5.21 () () (((¬ p) ∧ (¬ q)) → (p ↔ q)) (
         (¬ p) (¬ q) *5.1
-        p q NegationFunction eliminateLeftBiconditionalImplication
+        p q NegationFunction eliminateBiconditionalForward
         applySyllogism
 ))
 
@@ -2030,13 +2030,13 @@ Along the same lines is <code>(¬ p) ↔ (p → (⊥))</code>.
 
 <jh>
 thm (NegationImplication-forward () () ((¬ p) → (p → (⊥))) (
-       p Contradiction eliminateRightBiconditionalImplication
+       p Contradiction eliminateBiconditionalReverse
        export
        applyComm
 ))
 
 thm (NegationImplication-reverse () () ((p → (⊥)) → (¬ p)) (
-        p (⊥) Transposition eliminateRightBiconditionalImplication
+        p (⊥) Transposition eliminateBiconditionalReverse
 
         NotFalse
         (¬ (⊥)) (¬ p) ModusPonens export
@@ -2054,14 +2054,14 @@ thm (NegationImplication () () ((¬ p) ↔ (p → (⊥))) (
 thm (convertFromNegationToImplication () ((H (¬ p))) (p → (⊥)) (
         H
         p NegationImplication
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (convertToNegationFromImplication () ((H (p → (⊥)))) (¬ p) (
         H
         p NegationImplication
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -2108,7 +2108,7 @@ thm (*4.82-forward () () (((p → q) ∧ (p → (¬ q))) → (¬ p)) (
         p q (¬ q) ConjunctionComposition
         p (q ∧ (¬ q)) Transposition
         applyBiconditionalTransitivity
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
 
         applyComm
 
@@ -2116,7 +2116,7 @@ thm (*4.82-forward () () (((p → q) ∧ (p → (¬ q))) → (¬ p)) (
 ))
 
 thm (*5.15 () () ((p ↔ q) ∨ (p ↔ (¬ q))) (
-        p q *4.61 eliminateRightBiconditionalImplication
+        p q *4.61 eliminateBiconditionalReverse
         p (¬ q) *5.1
         applySyllogism
 
@@ -2125,11 +2125,11 @@ thm (*5.15 () () ((p ↔ q) ∨ (p ↔ (¬ q))) (
 </jh>
 At this point we have <code>(p → q) ∨ (p ↔ (¬ q))</code>.  We'll come back to that, after we prove <code>(q → p) ∨ (p ↔ (¬ q))</code>:
 <jh>
-        q p *4.61 eliminateRightBiconditionalImplication
+        q p *4.61 eliminateBiconditionalReverse
         q (¬ p) *5.1
         applySyllogism
 
-        q p *4.12 eliminateRightBiconditionalImplication
+        q p *4.12 eliminateBiconditionalReverse
         applySyllogism
 
         (q → p) (p ↔ (¬ q)) *2.54
@@ -2143,14 +2143,14 @@ Now we have <code>(p → q) ∨ (p ↔ (¬ q))</code> and <code>(q → p) ∨ (p
 ))
 
 thm (*5.16-1 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ p)) (
-        p q BiconditionalImplicationRightElimination
+        p q BiconditionalReverseElimination
         (p → (¬ q)) conjoinRR
         p q *4.82-forward
         applySyllogism
 ))
 
 thm (*5.16-2 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ q)) (
-        p q BiconditionalImplicationLeftElimination
+        p q BiconditionalForwardElimination
         (p → (¬ q)) conjoinRR
 
         q p (¬ q) ImplicationTransitivity
@@ -2168,14 +2168,14 @@ thm (*5.16-3 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ ((¬ q) → p))) (
 </jh>
 At this point we have <code>(¬ q) ∧ (¬ p)</code>, and we just need to apply DeMorgan's law and introduce double negation to get <code>(¬ ((¬ (¬ q)) ∨ p))</code>.
 <jh>
-        q p DeMorganPDP eliminateLeftBiconditionalImplication
+        q p DeMorganPDP eliminateBiconditionalForward
         applySyllogism
 
         q DoubleNegation
         p BiconditionalReflexivity
         buildDisjunction
         addNegation
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
 
         applySyllogism
 ))
@@ -2189,7 +2189,7 @@ We're much closer than it may appear (because jhilbert automatically applies def
  (p ↔ q) → ((¬ (p → (¬ q))) ∨ (¬ ((¬ q) → p)))
 <jh>
         (p → (¬ q)) ((¬ q) → p) DeMorganPCP
-        eliminateLeftBiconditionalImplication applySyllogism
+        eliminateBiconditionalForward applySyllogism
 </jh>
  (p ↔ q) → (¬ ((p → (¬ q)) ∧ ((¬ q) → p)))
  (p ↔ q) → (¬ (p ↔ (¬ q)))
@@ -2231,7 +2231,7 @@ thm (*5.18 () () ((p ↔ q) ↔ (¬ (p ↔ (¬ q)))) (
         introduceConjunction
 
         (p ↔ q) (p ↔ (¬ q)) *5.17
-        eliminateRightBiconditionalImplication applyModusPonens
+        eliminateBiconditionalReverse applyModusPonens
 ))
 
 thm (*5.22 () () ((¬ (p ↔ q)) ↔ ((p ∧ (¬ q)) ∨ (q ∧ (¬ p)))) (
@@ -2276,14 +2276,14 @@ We now have <code>(p ↔ q) ↔ ((p ∧ (¬ (¬ q))) ∨ ((¬ q) ∧ (¬ p)))</c
 thm (convertFromBiconditionalToDisjunction () ((H (p ↔ q))) ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))) (
         H
         p q BiconditionalDisjunction
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (convertToBiconditionalFromDisjunction () ((H ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))))) (p ↔ q) (
         H
         p q BiconditionalDisjunction
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -2301,21 +2301,21 @@ thm (BiconditionalConjunction () () ((p ↔ q) ↔ (((¬ p) ∨ q) ∧ (p ∨ (�
 thm (convertFromBiconditionalToConjunction () ((H (p ↔ q))) (((¬ p) ∨ q) ∧ (p ∨ (¬ q))) (
         H
         p q BiconditionalConjunction
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (convertToBiconditionalFromConjunction () ((H (((¬ p) ∨ q) ∧ (p ∨ (¬ q))))) (p ↔ q) (
         H
         p q BiconditionalConjunction
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 
 thm (introduceBiconditionalFromDisjunctions () ((HPQ ((¬ p) ∨ q)) (HQP (p ∨ (¬ q)))) (p ↔ q) (
         HPQ HQP introduceConjunction
         p q BiconditionalConjunction
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -2345,14 +2345,14 @@ thm (convertToImplicationFromDisjunction () ((H ((¬ p) ∨ q))) (p → q) (
 thm (convertFromDisjunctionToImplication () ((H (p ∨ q))) ((¬ p) → q) (
         H
         p q DisjunctionImplication
-        eliminateRightBiconditionalImplication
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 
 thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
         H
         p q DisjunctionImplication
-        eliminateLeftBiconditionalImplication
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
