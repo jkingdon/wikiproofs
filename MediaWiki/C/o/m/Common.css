@@ -222,12 +222,16 @@
         border:1px solid #aaa;
         clear:right;
         float:right;
-        margin:0ex 0em 1ex 1em;
-        width:25em;
+        font-size:small;
+        margin:0ex 0em 1ex 0.5em;
+        padding:5px;
+        width:15em;
 }
 
-.wikipedia_template .logo {
+.wikipedia_template .icon {
         float:left;
+        padding-right:0.5em;
+        padding-top:1ex;
 }
 
 /* </pre> */
