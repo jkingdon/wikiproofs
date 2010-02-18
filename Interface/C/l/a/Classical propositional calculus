@@ -224,10 +224,14 @@ stmt (TertiumNonDatur () () (p ∨ (¬ p)))
 
 A biconditional makes a strong statement. Often, we only need a weaker statement. For introductions, see the section on [[#Truth function interdependencies|truth function interdependencies]].
 
-The naming convention here is that when we think of <code>p ↔ q</code> as consisting of two implications, we call <code>p → q</code> the ''left'' one and <code>q → p</code> the ''right'' one.
+The naming convention here is that when we think of <code>p ↔ q</code> as consisting of two implications, we call <code>p → q</code> the ''forward'' one and <code>q → p</code> the ''reverse'' one.
 <jh>
-stmt (BiconditionalImplicationLeftElimination () () ((p ↔ q) → (q → p)))
-stmt (BiconditionalImplicationRightElimination () () ((p ↔ q) → (p → q)))
+stmt (BiconditionalForwardElimination () () ((p ↔ q) → (q → p)))
+stmt (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)))
+</jh>
+
+When we think of a biconditional as two disjunctions, an intuitive naming convention is more elusive, but we currently call <code>(¬ p) ∨ q</code> the ''left'' one and <code>p ∨ (¬ q)</code> the ''right'' one.
+<jh>
 stmt (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))))
 stmt (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)))
 </jh>
@@ -365,8 +369,8 @@ Biconditional:
 <jh>
 stmt (swapBiconditional () ((p ↔ q)) (q ↔ p))
 stmt (applyBiconditionalTransitivity () ((p ↔ q) (q ↔ r)) (p ↔ r))
-stmt (eliminateLeftBiconditionalImplication () ((p ↔ q)) (q → p))
-stmt (eliminateRightBiconditionalImplication () ((p ↔ q)) (p → q))
+stmt (eliminateBiconditionalForward () ((p ↔ q)) (q → p))
+stmt (eliminateBiconditionalReverse () ((p ↔ q)) (p → q))
 stmt (eliminateLeftBiconditionalDisjunction () ((p ↔ q)) (p ∨ (¬ q)))
 stmt (eliminateRightBiconditionalDisjunction () ((p ↔ q)) ((¬ p) ∨ q))
 stmt (addNegation () ((p ↔ q)) ((¬ p) ↔ (¬ q)))
