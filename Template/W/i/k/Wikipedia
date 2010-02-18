@@ -1,0 +1,17 @@
+<div class="wikipedia_template">
+<span class="icon">[[Image:Wikipedia-logo.png|40px|none|Wikipedia icon]]</span>
+Get more information from the Wikipedia article '''[[w:{{{1|{{PAGENAME}}}}}|{{{2|{{{1|{{PAGENAME}}}}}}}}]]'''.
+</div><noinclude>
+== Usage ==
+Use this template to inform users that the [[w:Wikipedia|Wikipedia]] encyclopædia has an article on the page you're using the template on, or a related article. You can use this template in three ways:
+<pre>{{wikipedia}}</pre>
+will link to the Wikipedia article with the current page name: {{wikipedia}}
+
+<pre>{{wikipedia|name}}</pre>
+will link to the Wikipedia article named <code>name</code> instead: {{wikipedia|name}}
+
+<pre>{{wikipedia|name|text}}</pre>
+will link to the Wikipedia article named <code>name</code> and display the text <code>text</code>: {{wikipedia|name|text}}
+
+[[Category:Templates|{{PAGENAME}}]]
+</noinclude>
