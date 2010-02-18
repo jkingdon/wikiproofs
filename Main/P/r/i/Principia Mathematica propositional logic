@@ -2221,7 +2221,10 @@ thm (*5.17 () () (((p ∨ q) ∧ (¬ (p ∧ q))) ↔ (p ↔ (¬ q))) (
 
         applyBiconditionalTransitivity
 ))
+</jh>
 
+One way to see <code>*5.18</code> is as a relationship between the biconditional and the [[w:exclusive or|exclusive or]].  One way to express an exclusive or is <code>p ↔ (¬ q)</code>, and seen this way, <code>*5.18</code> states that the biconditional is the negation of the exclusive or:
+<jh>
 thm (*5.18 () () ((p ↔ q) ↔ (¬ (p ↔ (¬ q)))) (
         p q *5.15
         p q *5.16
