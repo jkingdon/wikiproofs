@@ -2357,7 +2357,7 @@ thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
 ))
 </jh>
 
-That's it!  We're ready to export our theorems to [[Interface:Classical propositional calculus]]. Note that this interface also uses the alias <code>formula</code> for <code>wff</code>s.
+That's it!  We're ready to export our theorems to [[Interface:Classical propositional calculus]]. That interface also requires us to define the alias <code>formula</code> for <code>wff</code>s.
 <jh>
 kindbind (wff formula)
 export (CLASSICAL Interface:Classical_propositional_calculus () ())
