@@ -260,7 +260,7 @@ thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
 ))
 </jh>
 
-== Relationship between universal and existential quantification ==
+== Existential quantification ==
 The axioms are written in terms of just the universal quantifier ∀. We define the existential quantifier ∃ in terms of it:
 
 <jh>
@@ -280,6 +280,25 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
 
 thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
         φ DoubleNegation
+        x buildForAll
+        addNegation
+))
+</jh>
+
+=== Builders ===
+
+The builders for ∃ follow from the builders for ∀:
+<jh>
+thm (addThereExists () ((H (φ → ψ))) ((∃ x φ) → (∃ x ψ)) (
+        H
+        introduceTransposition
+        x addForAll
+        introduceTransposition
+))
+
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        H
+        addNegation
         x buildForAll
         addNegation
 ))
