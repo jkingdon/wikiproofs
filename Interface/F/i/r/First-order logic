@@ -76,6 +76,21 @@ Quantifiers of the same variable can sometimes be combined or split:
 stmt (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))))
 stmt (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))))
 stmt (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))))
+stmt (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))))
+</jh>
+
+We also provide rules for the above theorems:
+<jh>
+stmt (distributeForAllConjunction () ((∀ x (φ ∧ ψ))) ((∀ x φ) ∧ (∀ x ψ)))
+stmt (collectForAllConjunction () ((∀ x φ) (∀ x ψ)) (∀ x (φ ∧ ψ)))
+
+stmt (distributeThereExistsDisjunction () ((∃ x (φ ∨ ψ)))  ((∃ x φ) ∨ (∃ x ψ)))
+stmt (collectThereExistsDisjunction () (((∃ x φ) ∨ (∃ x ψ))) (∃ x (φ ∨ ψ)))
+
+stmt (distributeThereExistsImplication () ((∃ x (φ → ψ))) ((∀ x φ) → (∃ x ψ)))
+stmt (collectThereExistsImplication () (((∀ x φ) → (∃ x ψ))) (∃ x (φ → ψ)))
+
+stmt (distributeForAllImplication () ((∀ x (φ → ψ))) ((∀ x φ) → (∀ x ψ)))
 </jh>
 
 == Generalization and specialization ==
