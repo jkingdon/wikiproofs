@@ -187,6 +187,22 @@ thm (Specialization ((x y) (y φ)) () ((∀ x φ) → φ) (
 </jh>
 
 == Builder for ∀ ==
+From <code>φ → ψ</code> we want to be able to get  <code>∀xφ → ∀xψ</code>.  The easier part of this is geting the quantifier onto the antecedent:<ref>[http://us.metamath.org/mpeuni/a4s.html a4s] in metamath's set.mm, accessed February 18, 2010</ref>
+
+<jh>
+thm (a4s () ((H (φ → ψ))) ((∀ x φ) → ψ) (
+        x φ Specialization
+        H
+        applySyllogism
+))
+</jh>
+
+We get the quantifier onto the consequent via this lemma:
+<jh>
+#thm (ax5o () () (∀x(∀xφ → ψ) → (∀xφ → ∀xψ)) (
+#))
+</jh>
+
 <jh>
 #thm (addForAll () (φ ↔ ψ) (∀xφ ↔ ∀xψ) (
 #...19.20i in metamath set.mm
