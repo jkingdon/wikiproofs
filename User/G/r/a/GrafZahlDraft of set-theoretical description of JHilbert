@@ -1,0 +1,46 @@
+{{header
+ | title    = Set-theoretical description of JHilbert
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = In this draft, I will try to express the core concepts of JHilbert in informal, set-theoretical language, hopefully in less convoluted form than in the [[User:GrafZahl/Botched attempt to prove JHilbert definition soundness|previous botched attempt]]. I shall also include the [[User:GrafZahl/Definitions in JHilbert|proposed degradation]] of definitions to mere abbreviations (with no dummy variables) as well as the [[User:CarlWitty/Definitions proposal|new definitions scheme]] proposed by [[User:CarlWitty]]. However, I will not include a description of the modularity features of JHilbert (import, export, param, and kindbind) at this point.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:59, 18 February 2010 (UTC)
+}}
+
+:''[[Image:Zeichen 123.svg|50px|none]] Work in progress''
+
+== Introduction ==
+
+JHilbert is a Java application based on Ghilbert, which in turn is based on metamath. It allows the collaborative formal verification of proofs. JHilbert has a command line mode, and a server mode (which drives this wiki), making it an application of already medium complexity. Being what it is, however, the small kernel of core concepts, the logic that drives the proof machinery, is of crucial importance. It is only these core concepts, notably without the collaboration features (modularisation) and I/O system, which shall be formally described in this essay in informal, set-theoretical language. (By "formally" I mean that I use actual mathematics for the description, by "informal" I mean that I don't intend to verify the description with a proof verifier, interesting a project as it would be.)
+
+There has been an earlier attempt to describe these core concepts and prove their soundness. Aside from containing some errors, it was at times unnecessarily complicated. I shall attempt to do away with such cruft this time.
+
+== Acknowledgements ==
+
+There are lots of people to acknowledge, most notably Normal Megill for creating metamath, Raph Levien for creating Ghilbert and for discussing the definition mechanism with me, Mel L. o'Cat for discussions during the time JHilbert was made, Carl Witty for the new definition mechanism, and Kingdon for prolonged interest in JHilbert. Bug me if I forgot someone.
+
+== Formal systems ==
+
+== Notation ==
+
+== Objects and names ==
+
+== Kinds ==
+
+== Variables ==
+
+== Functors ==
+
+== Expressions ==
+
+== Abbreviations ==
+
+== Disjoint variable constraints ==
+
+== Statements ==
+
+== Definitions ==
+
+== Proofs ==
+
+== Translation to metamath ==
