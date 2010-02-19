@@ -7,7 +7,7 @@
  | notes    = A collection of articles describing JHilbert formally and describing its relation to other systems.
 }}
 
-* [[Wikiproofs:Set-theoretical definition of JHilbert concepts|Set-theoretical definition of JHilbert concepts]]: This page should contain a [[w:set theory|set-theoretical]] description of JHilbert concepts such as [[Help:kinds|kinds]], [[Help:variables|variables]], [[Help:DV constraints|DV constraints]], [[Help:functors|functors]], [[Help:expressions|expressions]], [[Help:definitions|definitions]], [[Help:statements|statements]] and the like. Some of this work has already been done in [[Wikiproofs:JHilbert definition soundness]].
+* [[Wikiproofs:Set-theoretical definition of JHilbert concepts|Set-theoretical definition of JHilbert concepts]]: This page should contain a [[w:set theory|set-theoretical]] description of JHilbert concepts such as [[Help:kinds|kinds]], [[Help:variables|variables]], [[Help:DV constraints|DV constraints]], [[Help:functors|functors]], [[Help:expressions|expressions]], [[Help:definitions|definitions]], [[Help:statements|statements]] and the like.
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:JHilbert]]
