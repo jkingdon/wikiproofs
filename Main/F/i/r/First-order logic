@@ -13,6 +13,8 @@
 | exports = eventually [[Interface:First-order logic]]
 }}
 
+Many of the proofs on this page are adapted from metamath's set.mm, and theorems may be named after set.mm.  However, since set.mm names do change over time, do not count on this correspondence to be exact.
+
 We start with the [[Interface:Classical propositional calculus|theorems of propositional logic]] and [[Interface:Axioms of first-order logic]]:
 
 <jh>
@@ -276,9 +278,11 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
         applyBiconditionalTransitivity
 ))
 
-# Think we need addForAll for this
-#thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
-#))
+thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
+        φ DoubleNegation
+        x buildForAll
+        addNegation
+))
 </jh>
 
 This page is not yet done.  When it is, the following export to [[Interface:First-order logic]] can be uncommented:
