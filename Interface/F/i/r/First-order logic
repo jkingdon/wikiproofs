@@ -45,10 +45,13 @@ stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
 </jh>
 
 == Builders ==
-As with propositional calculus, we need to build up formulas explicitly, and these rules let us do it:
+As with propositional calculus, we need to build up formulas explicitly, and these rules let us do it.  We provide them for both quantifiers, for implication and the biconditional.
 <jh>
-stmt (addForAll () ((φ ↔ ψ)) ((∀ x φ) ↔ (∀ x ψ)))
-stmt (addThereExists () ((φ ↔ ψ)) ((∃ x φ) ↔ (∃ x ψ)))
+stmt (addForAll () ((φ → ψ)) ((∀ x φ) → (∀ x ψ)))
+stmt (addThereExists () ((φ → ψ)) ((∃ x φ) → (∃ x ψ)))
+
+stmt (buildForAll () ((φ ↔ ψ)) ((∀ x φ) ↔ (∀ x ψ)))
+stmt (buildThereExists () ((φ ↔ ψ)) ((∃ x φ) ↔ (∃ x ψ)))
 </jh>
 
 == Order ==
