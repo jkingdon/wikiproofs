@@ -186,8 +186,35 @@ thm (Specialization ((x y) (y φ)) () ((∀ x φ) → φ) (
 ))
 </jh>
 
+== Doubling ∀ ==
+
+If we have a universal quantifier, it doesn't change anything to apply it twice.  That is, <code>(∀ x φ) → (∀ x (∀ x φ))</code>
+
+<jh>
+thm (ForAllDoubling-negation-lemma () () 
+  ((∀ x (¬ (∀ x (¬ (∀ x φ))))) → (∀ x (∀ x φ))) (
+        x φ QuantifiedNegation
+        transposeWithNegatedAntecedent
+
+        x generalize
+
+        distributeForAllImplication
+))
+
+thm (ForAllDoubling () () ((∀ x φ) → (∀ x (∀ x φ))) (
+        x (¬ (∀ x φ)) Specialization
+        transposeWithNegatedConsequent
+
+        x (¬ (∀ x φ)) QuantifiedNegation
+        applySyllogism
+
+        x φ ForAllDoubling-negation-lemma
+        applySyllogism
+))
+</jh>
+
 == Builder for ∀ ==
-From <code>φ → ψ</code> we want to be able to get  <code>∀xφ → ∀xψ</code>.  The easier part of this is geting the quantifier onto the antecedent:<ref>[http://us.metamath.org/mpeuni/a4s.html a4s] in metamath's set.mm, accessed February 18, 2010</ref>
+From <code>φ → ψ</code> we want to be able to get <code>(∀ x φ) → (∀ x ψ)</code>.  The easier part of this is geting the quantifier onto the antecedent:<ref>[http://us.metamath.org/mpeuni/a4s.html a4s] in metamath's set.mm, accessed February 18, 2010</ref>
 
 <jh>
 thm (a4s () ((H (φ → ψ))) ((∀ x φ) → ψ) (
@@ -199,14 +226,36 @@ thm (a4s () ((H (φ → ψ))) ((∀ x φ) → ψ) (
 
 We get the quantifier onto the consequent via this lemma:
 <jh>
-#thm (ax5o () () (∀x(∀xφ → ψ) → (∀xφ → ∀xψ)) (
-#))
+
+thm (ax5o () () ((∀ x ((∀ x φ) → ψ)) → ((∀ x φ) → (∀ x ψ))) (
+        x (∀ x φ) ψ QuantifiedImplication
+
+        x φ ForAllDoubling
+        (∀ x ψ) addCommonConsequent
+
+        applySyllogism
+))
 </jh>
 
+Then our builder for implication is:<ref>[http://us.metamath.org/mpeuni/19.20i.html 19.20i] in metamath's set.mm, accessed February 18, 2010</ref>
 <jh>
-#thm (addForAll () (φ ↔ ψ) (∀xφ ↔ ∀xψ) (
-#...19.20i in metamath set.mm
-#))
+thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
+        H x a4s
+
+        x generalize
+        x φ ψ ax5o
+
+        applyModusPonens
+))
+</jh>
+
+The builder for the biconditional follows trivially:
+<jh>
+thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
+        H eliminateBiconditionalReverse x addForAll
+        H eliminateBiconditionalForward x addForAll
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 == Relationship between universal and existential quantification ==
