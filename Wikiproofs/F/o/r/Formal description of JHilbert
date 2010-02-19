@@ -8,7 +8,6 @@
 }}
 
 * [[Wikiproofs:Set-theoretical definition of JHilbert concepts|Set-theoretical definition of JHilbert concepts]]: This page should contain a [[w:set theory|set-theoretical]] description of JHilbert concepts such as [[Help:kinds|kinds]], [[Help:variables|variables]], [[Help:DV constraints|DV constraints]], [[Help:functors|functors]], [[Help:expressions|expressions]], [[Help:definitions|definitions]], [[Help:statements|statements]] and the like. Some of this work has already been done in [[Wikiproofs:JHilbert definition soundness]].
-* [[Wikiproofs:JHilbert definition soundness|JHilbert definition soundness]]: A proof that despite [[Help:definitions|definitions]] being handled separately from [[Help:statements|statements]], the JHilbert system is equivalent to Metamath.
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:JHilbert]]
