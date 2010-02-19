@@ -591,7 +591,7 @@ thm (collectAntecedent () ((H ((p → q) → (p → r)))) (p → (q → r)) (
 
 In this section we prove statements involving conjunction <math>p\wedge q</math>. Recall that conjunction is defined by <math>\neg((\neg p)\vee(\neg q))</math>. Our first theorem is the combination of two statements to a conjunction.
 <jh>
-thm (*3.2 () () (p → (q → (p ∧ q))) (
+thm (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))) ( # *3.2
         ((¬ p) ∨ (¬ q)) TertiumNonDatur
 </jh>
 The trick is now to write <math>(\neg p)\vee(\neg q)\vee\ldots</math> as <math>p\rightarrow(q\rightarrow\ldots)</math>:
@@ -602,11 +602,21 @@ The trick is now to write <math>(\neg p)\vee(\neg q)\vee\ldots</math> as <math>p
 thm (introduceConjunction () ((H1 p) (H2 q)) (p ∧ q) ( # *3.03
         H2
         H1
-        p q *3.2
+        p q ConjunctionRightIntroduction
         applyModusPonens
         applyModusPonens
 ))
 </jh>
+
+We also provide a commuted version:
+
+<jh>
+thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) ( # *3.21
+        q p ConjunctionRightIntroduction
+        applyComm
+))
+</jh>
+
 We can prove the commutative law for conjunction from ''Perm'' using transpositions:
 <jh>
 thm (*3.22 () () ((p ∧ q) → (q ∧ p)) (
@@ -633,20 +643,6 @@ thm (*3.24 () () (¬ (p ∧ (¬ p))) (
 
 thm (NotFalse () () (¬ (⊥)) (
         p *3.24
-))
-</jh>
-
-=== Conjunction introduction ===
-We provide an additional name for *3.2 and a commuted version.
-
-<jh>
-thm (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))) (
-        p q *3.2
-))
-
-thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) (
-        q p ConjunctionRightIntroduction
-        applyComm
 ))
 </jh>
 
@@ -754,7 +750,7 @@ thm (*3.37 () () (((p ∧ q) → r) → ((p ∧ (¬ r)) → (¬ q))) (
 Next, we prove ''Comp'', the principle of composition,
 <jh>
 thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) ( # *3.43
-        q r *3.2
+        q r ConjunctionRightIntroduction
         p addCommonAntecedent
         p r (q ∧ r) *2.77
         applySyllogism
@@ -1208,7 +1204,7 @@ thm (*2.43 () () ((p → (p → q)) → (p → q)) (
 ))
 
 thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
-        p p *3.2
+        p p ConjunctionRightIntroduction
         p (p ∧ p) *2.43
         applyModusPonens
 
@@ -1536,8 +1532,8 @@ We prove two distributive laws.  The first one, <code>((p ∧ (q ∨ r)) ↔ ((p
 <jh>
 thm (ConjunctionLeftDistribution-forward () () 
   ((p ∧ (q ∨ r)) → ((p ∧ q) ∨ (p ∧ r))) (
-        p q *3.2
-        p r *3.2
+        p q ConjunctionRightIntroduction
+        p r ConjunctionRightIntroduction
         composeConjunction
 
         q (p ∧ q) r (p ∧ r) DisjunctionSummation
@@ -1953,7 +1949,7 @@ thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
 == Modus ponens and modus tollens ==
 Now that we have import, we can derive the version of the ''modus ponens'' law which [[Interface:Classical propositional calculus]] expects:
 <jh>
-thm (ModusPonens () () ((p ∧ (p → q)) → q) (
+thm (ModusPonens () () ((p ∧ (p → q)) → q) ( # *3.35
         p q *2.27
         import
 ))
