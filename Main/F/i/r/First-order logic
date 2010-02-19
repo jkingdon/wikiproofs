@@ -27,6 +27,22 @@ var (formula φ ψ χ θ)
 var (object x y z)
 </jh>
 
+== ForAllImplication ==
+
+The ∀ quantifier can be distributed across an implication. This is one of our axioms, so we just provide an additional name and a rule:
+
+<jh>
+thm (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))) (
+        x φ ψ QuantifiedImplication
+))
+
+thm (distributeForAllImplication () ((H (∀ x (φ → ψ)))) ((∀ x φ) → (∀ x ψ)) (
+        H
+        x φ ψ QuantifiedImplication
+        applyModusPonens
+))
+</jh>
+
 == Equality is reflexive and symmetric ==
 The basic facts about equality are that it is reflexive, symmetric and transitive. Instead of supposing these as axioms, we have a single axiom which implies them (when combined with some of the other axioms).
 
@@ -98,14 +114,76 @@ thm (EqualitySymmetry () () ((x = y) ↔ (y = x)) (
 </jh>
 
 == Specification ==
-We can remove a universal quantifier.
+We can remove a universal quantifier. This is sometimes taken as an axiom but here we prove it from the other axioms via a number of intermediate steps.<ref>[http://us.metamath.org/mpeuni/ax4.html ax4] in metamath's set.mm, accessed February 18, 2010</ref>
 
 <jh>
-#thm (Specialization () () ((∀ x φ) → φ) (
-#        y x Existence
-#        (¬ ((∀ x φ) → φ)) y Generalization
-#        ... to be continue (ax4 in metamath set.mm)
-#))
+thm (Specialization-18 ((y φ)) () ((y = x) → ((¬ φ) → (∀ x ((x = y) → (¬ φ))))) (
+        y x EqualitySymmetry eliminateBiconditionalReverse
+        x y (¬ φ) VariableSubstitution
+        applySyllogism
+
+        (¬ φ) y Generalization
+        (∀ x ((x = y) → (¬ φ))) addCommonConsequent
+        applySyllogism
+))
+
+thm (Specialization-22 () () ((∀ x ((x = y) → (¬ φ))) → (∀ x (φ → (¬ (x = y))))) (
+        (x = y) φ TranspositionWithNegatedConsequent
+        eliminateBiconditionalReverse
+
+        x generalize
+
+        distributeForAllImplication
+))
+
+thm (Specialization-a () () ((∀ x (φ → (¬ (x = y)))) → (¬ (∀ x φ))) (
+        x φ (¬ (x = y)) ForAllImplication
+
+        x y Existence
+        (∀ x φ) (∀ x (¬ (x = y))) Transposition eliminateBiconditionalReverse
+        applyNestedModusPonens
+
+        applySyllogism
+))
+
+thm (Specialization-30 ((y φ)) () ((¬ ((∀ x φ) → φ)) → (¬ (y = x))) (
+        y x φ Specialization-18
+        import
+
+        x y φ Specialization-22
+        applySyllogism
+
+        x φ y Specialization-a
+        applySyllogism
+        export
+
+        (∀ x φ) φ Transposition eliminateBiconditionalForward
+        applySyllogism
+
+        introduceTransposition
+))
+
+thm (Specialization-33 ((y φ)) () 
+  ((∀ y (¬ ((∀ x φ) → φ))) → (∀ y (¬ (y = x)))) (
+        x φ y Specialization-30
+        y generalize
+        distributeForAllImplication
+))
+</jh>
+
+As before, the distinct variable constraints don't get exported, as they all contain <code>y</code>.
+<jh>
+thm (Specialization ((x y) (y φ)) () ((∀ x φ) → φ) (
+        y x Existence
+
+        (¬ ((∀ x φ) → φ)) y Generalization
+        y x φ Specialization-33
+        applySyllogism
+
+        applyModusTollens
+
+        eliminateDoubleNegation
+))
 </jh>
 
 == Builder for ∀ ==
@@ -142,5 +220,8 @@ This page is not yet done.  When it is, the following export to [[Interface:Firs
 <jh>
 #export (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 </jh>
+
+== References ==
+<references/>
 
 [[Category:Classical first-order logic]]
