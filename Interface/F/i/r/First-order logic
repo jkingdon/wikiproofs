@@ -48,7 +48,7 @@ stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
 As with propositional calculus, we need to build up formulas explicitly, and these rules let us do it:
 <jh>
 stmt (addForAll () ((φ ↔ ψ)) ((∀ x φ) ↔ (∀ x ψ)))
-stmt (addThereExists () ((φ ↔ ψ)) ((∀ x φ) ↔ (∀ x ψ)))
+stmt (addThereExists () ((φ ↔ ψ)) ((∃ x φ) ↔ (∃ x ψ)))
 </jh>
 
 == Order ==
