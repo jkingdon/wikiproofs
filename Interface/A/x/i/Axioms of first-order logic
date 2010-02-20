@@ -15,9 +15,9 @@ We build on [[Interface:Classical propositional calculus]]:
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
 </jh>
 
-By convention we use φ, ψ, χ, and θ to represent formulas (also known as ''well-formed formulas'' or wff's).
+By convention we use φ, ψ, χ, and θ to represent formulas:
 <jh>
-var (wff φ ψ χ θ)
+var (formula φ ψ χ θ)
 </jh>
 
 We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is a valid object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
@@ -29,7 +29,7 @@ var (object x y z)
 
 We extend the available formulas with [[w:Universal quantification|universal quantification]]:
 <jh>
-term (wff (∀ object wff))
+term (formula (∀ object formula))
 </jh>
 
 == Axioms ==
@@ -47,7 +47,7 @@ stmt (generalize () (φ) (∀ x φ))
 
 We introduce equality and provide our first equality axiom, a version of the transitive law for equality:
 <jh>
-term (wff (= object object))
+term (formula (= object object))
 stmt (AxiomEquality () () ( (x = y) → ( (x = z) → (y = z) ) ) )
 </jh>
 
