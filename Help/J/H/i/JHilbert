@@ -78,10 +78,6 @@ For example, if you have a kind called wff and you want .wff to refer to the sam
  export (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
 See import for a description of identifier, page, parameters, and prefix.
 
-Other related systems, which may help you understand JHilbert (especially until this manual is a bit more complete) are:
-*[http://metamath.org/ Metamath]. Metamath is in the same general family, in the sense of having fairly explicit proofs and a simple proof verifier.  There is an automated converter to convert metamath to ghilbert.
-*[http://wiki.planetmath.org/AsteroidMeta/Ghilbert ghilbert]. Ghilbert, compared with metamath, adds a number of features most notably safe definitions (in metamath, definitions are axioms and a poorly constructed definition can render the system [[w:Inconsistent|inconsistent]]) and the ability to separate proofs into interfaces and modules. In particular, [http://wiki.planetmath.org/AsteroidMeta/Ghilbert_specification the specification] is rather close to what is described in this page.
-
 == Troubleshooting ==
 :''Some of the contents of this section may be specific to the wiki, as opposed to JHilbert run in other ways''
 
@@ -94,6 +90,17 @@ This can be a transient error (try just hitting "Preview" again, if you see it w
  Not all bytes could be written.
 
 This generally means there is another more informative error somewhere else on the page.
+
+== External links ==
+
+There's another partial JHilbert manual at:
+*[http://www.mathi.uni-heidelberg.de/~alex/jhilbert/commands.html Quick rundown of the JHilbert syntax]
+
+Other related systems, which may help you understand JHilbert (especially until this manual is a bit more complete) are:
+
+*[http://metamath.org/ Metamath]. Metamath is in the same general family, in the sense of having fairly explicit proofs and a simple proof verifier.  There is an automated converter to convert metamath to ghilbert.
+
+*[http://wiki.planetmath.org/AsteroidMeta/Ghilbert ghilbert]. Ghilbert, compared with metamath, adds a number of features most notably safe definitions (in metamath, definitions are axioms and a poorly constructed definition can render the system [[w:Inconsistent|inconsistent]]) and the ability to separate proofs into interfaces and modules. In particular, [http://wiki.planetmath.org/AsteroidMeta/Ghilbert_specification the specification] is rather close to what is described in this page.
 
 [[Category:Help]]
 [[Category:JHilbert]]
