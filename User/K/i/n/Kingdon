@@ -1,8 +1,6 @@
 ==Experimental pages==
 *[[Interface:Sandbox]]
 *[[Sandbox]]
-*[[User interface:Kingdon/Classical propositional calculus]]
-*[[User module:Kingdon/Principia Mathematica propositional logic]]
 *[[User interface:Kingdon/Sandbox]]
 *[[User module:Kingdon/Sandbox]]
 
@@ -35,3 +33,7 @@ When I get to Peano arithmetic, here are some sample theorems:
     z = 0 → (x < y → x · z < y · z)
  9. Inequalities can be added: (w ≤ x ∧ y ≤ z) → w + y ≤ x + z
  10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
+
+== Pages ready to delete ==
+*[[User interface:Kingdon/Classical propositional calculus]]
+*[[User module:Kingdon/Principia Mathematica propositional logic]]
