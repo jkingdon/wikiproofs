@@ -403,6 +403,36 @@ thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ 
 ))
 </jh>
 
+== There-exists across an implication ==
+
+This is another proof which mostly consists of the definition of ∃ and propositional calculus.
+
+<jh>
+thm (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))) (
+        φ ψ ImplicationDisjunction
+        addNegation
+        φ ψ DeMorganNDP
+        applyBiconditionalTransitivity
+</jh>
+So far, we have transformed <code>¬ (φ → ψ)</code> into <code>φ ∧ (¬ ψ)</code> which is now ripe for applying <code>ForAllConjunction</code> 
+<jh>
+        x buildForAll
+
+        x φ (¬ ψ) ForAllConjunction
+        applyBiconditionalTransitivity
+
+        addNegation
+</jh>
+We're almost there.  The left hand side has been gradually built up into <code>(∃ x (φ → ψ))</code>. The right hand side is <code>(¬ ((∀ x φ) ∧ (∀ x (¬ ψ))))</code>, which just needs DeMorgan's law and transformation from disjunction to implication to become <code>((∀ x φ) → (∃ x ψ))</code>
+<jh>
+        (∀ x φ) (∀ x (¬ ψ)) DeMorganPCP
+        applyBiconditionalTransitivity
+
+        (∀ x φ) (¬ (∀ x (¬ ψ))) ImplicationDisjunction swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 This page is not yet done.  When it is, the following export to [[Interface:First-order logic]] can be uncommented:
 <jh>
