@@ -372,6 +372,27 @@ thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ)
 ))
 </jh>
 
+=== There-exists across a disjunction ===
+
+This one follows from <code>ForAllConjunction</code> via DeMorgan's law and a little bit of negation rearranging.
+<jh>
+thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))) (
+        φ ψ DeMorganPDP
+        x buildForAll
+
+        x (¬ φ) (¬ ψ) ForAllConjunction
+        applyBiconditionalTransitivity
+
+        (∀ x (¬ φ)) (∀ x (¬ ψ)) DeMorganNDN swapBiconditional
+        applyBiconditionalTransitivity
+
+        addNegation
+
+        ((∃ x φ) ∨ (∃ x ψ)) DoubleNegation swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 This page is not yet done.  When it is, the following export to [[Interface:First-order logic]] can be uncommented:
 <jh>
