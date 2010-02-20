@@ -19,13 +19,39 @@ There has been an earlier attempt to describe these core concepts and prove thei
 
 There are lots of people to acknowledge, most notably Normal Megill for creating metamath, Raph Levien for creating Ghilbert and for discussing the definition mechanism with me, Mel L. o'Cat for discussions during the time JHilbert was made, Carl Witty for the new definition mechanism, and Kingdon for prolonged interest in JHilbert. Bug me if I forgot someone.
 
+== Notation ==
+
+As the title suggests, we shall use [[w:set theory|set theory]] to describe JHilbert concepts. You should have elementary familiarity with set theory before reading this document. The notation used by us is explained in the following table.
+
+{| border="1"
+! Notation !! Explanation
+|-
+| <math>\emptyset</math> || the [[w:empty set|empty set]]
+|-
+| <math>(a,b)</math> || [[w:ordered pair|ordered pair]] of elements <math>a</math> and <math>b</math>
+|-
+| <math>(a,b,c)</math> || ordered [[w:triple|triple]] or 3-[[w:tuple|tuple]] of elements <math>a</math>, <math>b</math> and <math>c</math>
+|-
+| <math>(a,b,c,d)</math> || You get the idea
+|-
+| <math>A\cup B</math> || The [[w:union (set theory)|union]] of the sets <math>A</math> and <math>B</math>
+|-
+| <math>A\cap B</math> || The [[w:intersection (set theory)|intersection]] of the sets <math>A</math> and <math>B</math>
+|}
+
 == Formal systems ==
 
-== Notation ==
+The four basic concepts of JHilbert are ''kinds'', ''variables'', ''functors'' and ''statements''. When JHilbert reads source code, it keeps track of these in the form of a ''formal system'' <math>\mathfrak{F}</math>, whose set-theoretical representation will be given here by <math>\mathcal{F}=(KIND,VAR,FUNC,STAT)</math>. Here, the sets <math>KIND</math>, <math>VAR</math>, <math>FUNC</math>, and <math>STAT</math> stand for the currently defined kinds, variables, functors, and statements, respectively. Each time the user defines a new one of these objects, the respective set is increased by one new member in the set-theoretical representation. In the following sections, we shall define the set-theoretical nature of the objects that go into these sets. Initially, all four sets start out empty, that is <math>\mathcal{F}=(\emptyset,\emptyset,\emptyset,\emptyset)</math>.
 
 == Objects and names ==
 
+In the following sections, we shall define the set-theoretical objects that may go into the sets <math>KIND</math>, <math>VAR</math>, <math>FUNC</math>, and <math>STAT</math> as certain [[w:tuple|tuple]]s. The first element of such a tuple will always be a ''name''. This document does not elaborate on the precise nature a name might have. In a JHilbert implementation they would be [[w:Unicode|Unicode]] identifiers. We merely remark that we assume all of our objects to have mutually distinct names. Hence, names serve as sure distinctors where two objects are structurally identical but must be different nevertheless. A typical example would be two different variables of the same kind.
+
 == Kinds ==
+
+Kinds, the elements of <math>KIND</math>, are just names. They are assigned additional data by the fact that we assume the set <math>KIND</math> to be a disjoint union <math>KIND=SKIND\cup VKIND</math> ("disjoint union" means <math>SKIND\cap VKIND=\emptyset</math>), where <math>SKIND</math> is the set of ''substitutable kinds'', while <math>VKIND</math> is the set of ''pure variable kinds''. The difference between those two kinds of kinds will become apparent in the sections on functors and expressions.
+
+In JHilbert, the <code>kindbind</code> command allows to define equivalence classes among kinds. As this is a feature of the modularity system, we shall omit its set-theoretical representation here and merely remark that a substitutable kind and a pure variable kind can never be equivalent.
 
 == Variables ==
 
