@@ -8,8 +8,6 @@
 
 == First order logic theorem numbers in metamath's set.mm ==
 
-* ForAllCommutation: [http://us.metamath.org/mpeuni/alcom.html alcom]
-* ThereExistsCommutation: [http://us.metamath.org/mpeuni/excom.html excom]
 * ThereExistsForAllCommutation: [http://us.metamath.org/mpeuni/19.12.html 19.12]
 * ForAllThereExistsImplicationCommutation: [http://us.metamath.org/mpeuni/19.12vv.html 19.12vv]
 
