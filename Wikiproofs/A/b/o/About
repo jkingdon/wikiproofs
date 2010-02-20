@@ -13,7 +13,7 @@ The goal of Wikiproofs is to collect both formal and informal proofs of all impo
 
 == Hilbert's program ==
 
-It was the [[w:Hilbert's program|idea]] of mathematician [[w:David Hilbert|David Hilbert]] to formalise as much as possible of the body of extant mathematics. In fact, he proposed to formalise ''all'' exiting theories based on a set of universal axioms and then prove [[w:soundness|soundness]] and [[w:Completeness#Logical_completeness|completeness]]. This was later proved to be impossible by [[w:Kurt Gödel|Kurt Gödel]]. Nevertheless, Wikiproofs strives to implement those parts of Hilbert's program which are possible and interesting.
+It was the [[w:Hilbert's program|idea]] of mathematician [[w:David Hilbert|David Hilbert]] to formalise as much as possible of the body of extant mathematics. In fact, he proposed to formalise ''all'' existing theories based on a set of universal axioms and then prove [[w:soundness|soundness]] and [[w:Completeness#Logical_completeness|completeness]]. This was later proved to be impossible by [[w:Kurt Gödel|Kurt Gödel]]. Nevertheless, Wikiproofs strives to implement those parts of Hilbert's program which are possible and interesting.
 
 == The JHilbert proof verifier ==
 
