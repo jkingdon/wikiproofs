@@ -19,7 +19,7 @@ We start with the [[Interface:Classical propositional calculus|theorems of propo
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
-import (PRINCIPIA Interface:Axioms_of_first-order_logic (CLASSICAL) ())
+import (AXIOMS Interface:Axioms_of_first-order_logic (CLASSICAL) ())
 </jh>
 
 As usual, φ, ψ, χ, and θ are formulas and x, y, and z are objects:
