@@ -304,6 +304,39 @@ thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
 ))
 </jh>
 
+== Quantifier order ==
+Being able to swap the order of two ∀ quantifiers is an axiom, so we just need to biconditionalize it:
+
+<jh>
+thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
+        x y φ QuantifierCommutation
+        y x φ QuantifierCommutation
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+The corresponding theorem for ∃ follows from it.  It may be easier to follow the proof below if you remember that 
+ <code>(∃ x (∃ y φ))</code>
+is equivalent to 
+ <code>(¬ (∀ x (¬ (¬ (∀ y (¬ φ))))))</code>
+
+<jh>
+thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
+        (∀ y (¬ φ)) DoubleNegation swapBiconditional
+        x buildForAll
+
+        x y (¬ φ) ForAllCommutation
+        applyBiconditionalTransitivity
+
+        (∀ x (¬ φ)) DoubleNegation
+        y buildForAll
+        applyBiconditionalTransitivity
+
+        addNegation
+))
+</jh>
+
+== Export ==
 This page is not yet done.  When it is, the following export to [[Interface:First-order logic]] can be uncommented:
 <jh>
 #export (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
