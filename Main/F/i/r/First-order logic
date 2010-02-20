@@ -336,6 +336,42 @@ thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
 ))
 </jh>
 
+== Combining quantified statements ==
+
+=== For-all across a Conjunction ===
+The ability to combine or split ∀ across a conjunction follows from <code>ForAllImplication</code> and some propositional logic.<ref>[http://us.metamath.org/mpeuni/19.26.html 19.26] in metamath's set.mm, accessed February 19, 2010</ref> We prove the forward and reverse implications separately.
+
+<jh>
+thm (ForAllConjunctionSplitting () () ((∀ x (φ ∧ ψ)) → ((∀ x φ) ∧ (∀ x ψ))) (
+        φ ψ ConjunctionRightElimination
+        x generalize
+        distributeForAllImplication
+
+        φ ψ ConjunctionLeftElimination
+        x generalize
+        distributeForAllImplication
+
+        composeConjunction
+))
+
+thm (ForAllConjunctionCombining () () (((∀ x φ) ∧ (∀ x ψ)) → (∀ x (φ ∧ ψ))) (
+        φ ψ ConjunctionRightIntroduction
+        x generalize
+        distributeForAllImplication
+
+        x ψ (φ ∧ ψ) ForAllImplication
+        applySyllogism
+
+        import
+))
+
+thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))) (
+        x φ ψ ForAllConjunctionSplitting
+        x φ ψ ForAllConjunctionCombining
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 This page is not yet done.  When it is, the following export to [[Interface:First-order logic]] can be uncommented:
 <jh>
