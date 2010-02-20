@@ -6,14 +6,12 @@
 *[[User interface:Kingdon/Sandbox]]
 *[[User module:Kingdon/Sandbox]]
 
-== First order logic theorem numbers in metamath's set.mm ==
+== First order logic todos ==
 
 * ThereExistsForAllCommutation: [http://us.metamath.org/mpeuni/19.12.html 19.12]
 * ForAllThereExistsImplicationCommutation: [http://us.metamath.org/mpeuni/19.12vv.html 19.12vv]
 
-* ForAllConjunction: 19.26; *10.22 of [WhiteheadRussell] p. 119
-* ThereExistsDisjunction: [http://us.metamath.org/mpeuni/19.43.html 19.43]
-* ThereExistsImplication: [http://us.metamath.org/mpeuni/19.35.html 19.35]
+* Will need substitution to state Peano's induction axiom in a readable way (see [http://us.metamath.org/mpeuni/findes.html findes])
 
 === Others? ===
 [http://us.metamath.org/mpeuni/19.29.html 19.29] [http://us.metamath.org/mpeuni/19.8a.html 19.8a]
