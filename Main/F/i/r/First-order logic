@@ -45,7 +45,7 @@ thm (distributeForAllImplication () ((H (∀ x (φ → ψ)))) ((∀ x φ) → (�
 ))
 </jh>
 
-== Equality is reflexive and symmetric ==
+== Equality is reflexive, symmetric, and transitive ==
 The basic facts about equality are that it is reflexive, symmetric and transitive. Instead of supposing these as axioms, we have a single axiom which implies them (when combined with some of the other axioms).
 
 We start with reflexivity.  The first two theorems are intermediate steps:
@@ -112,6 +112,16 @@ thm (EqualitySymmetry () () ((x = y) ↔ (y = x)) (
         x y EqualitySymmetryImplication
         y x EqualitySymmetryImplication
         introduceBiconditionalFromImplications
+))
+</jh>
+
+Transitivity is now just a rearangement of our equality axiom:
+<jh>
+thm (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)) (
+        x y EqualitySymmetryImplication
+        y x z AxiomEquality
+        applySyllogism
+        import
 ))
 </jh>
 
