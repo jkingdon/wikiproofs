@@ -315,7 +315,7 @@ thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
 </jh>
 
 === Adding existential quantifier ===
-We can add ∃ to the start of a formula:
+We can add ∃ to the start of a formula:<ref>[http://us.metamath.org/mpeuni/19.8a.html 19.8a] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
 thm (19.8a () () (φ → (∃ x φ)) (
         x (¬ φ) Specialization
