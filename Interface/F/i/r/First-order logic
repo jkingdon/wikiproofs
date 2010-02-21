@@ -156,10 +156,29 @@ If a variable is not free in any of the parts of a formula it is not free in the
 
 <jh>
 stmt (negateNotFree () ((x is-not-free-in φ)) (x is-not-free-in (¬ φ)))
+
 stmt (implicationNotFree () 
   ((x is-not-free-in φ) (x is-not-free-in ψ))
   (x is-not-free-in (φ → ψ))
 )
+
+stmt (disjunctionNotFree () 
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ ∨ ψ)))
+
+stmt (conjunctionNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ ∧ ψ)))
+
+stmt (biconditionalNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ ↔ ψ)))
+</jh>
+
+And we supply a builder for <code>is-not-free-in</code>:
+
+<jh>
+stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)))
 </jh>
 
 == What else? ==
