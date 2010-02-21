@@ -15,15 +15,15 @@ When interfaces with one or more <code>param</code> commands in them are importe
 
 * Kinds.  Each variable will be of some kind, and the kinds are declared with the <code>kind</code> statement.
  kind (''new-kind'')
-For example, <code>kind (wff)</code> says there is a kind called <code>wff</code>.
+For example, <code>kind (formula)</code> says there is a kind called <code>formula</code>.
 
 * Variables.  Variables are declared with a kind.
  var (''kind'' ''new-variable-1'' ''new-variable-2''...)
-For example, <code>var (wff p q r)</code> declares variables p, q and r, all wffs.
+For example, <code>var (formula p q r)</code> declares variables p, q and r, all formulas.
 
 * Terms.
  term (''kind'' (''new-term'' ''argument-1-kind'' ''argument-2-kind''...))
-For example, <code>term (wff (¬ wff))</code> defines a term called ¬ of kind wff which takes one argument, which is a wff.
+For example, <code>term (formula (¬ formula))</code> defines a term called ¬ of kind formula which takes one argument, which is a formula.  In the definition, the name of the term has to be on the left, but when invoked the name of the term can be in any position.  This is generally done to make the notation look more like [[w:Infix notation|infix]] notation (for example, <code>(p ∧ q)</code> instead of <code>(∧ p q)</code>), but the term name is recognizing by being a term name, not by position.  In fact, even <code>(p q ∧)</code> would be legal and mean the same thing.
 
 * Definitions. 
  def (''new-defined'' ''definition'')
@@ -71,8 +71,8 @@ This represents the proof of a theorem.
 
 * Kindbind.  This allows a kind to have several names, which may be necessary in conjunction with the prefix feature of the export statement.
  kindbind (''existing-name'' ''new-name'')
-For example, if you have a kind called wff and you want .wff to refer to the same kind, specify
- kindbind (wff .wff)
+For example, if you have a kind called formula and you want .formula to refer to the same kind, specify
+ kindbind (formula .formula)
 
 * Export statements.  Once a module has proved everything it wants to, it can export those proofs to an interface.
  export (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
