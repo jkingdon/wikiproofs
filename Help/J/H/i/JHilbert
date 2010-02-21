@@ -23,7 +23,7 @@ For example, <code>var (formula p q r)</code> declares variables p, q and r, all
 
 * Terms.
  term (''kind'' (''new-term'' ''argument-1-kind'' ''argument-2-kind''...))
-For example, <code>term (formula (¬ formula))</code> defines a term called ¬ of kind formula which takes one argument, which is a formula.  In the definition, the name of the term has to be on the left, but when invoked the name of the term can be in any position.  This is generally done to make the notation look more like [[w:Infix notation|infix]] notation (for example, <code>(p ∧ q)</code> instead of <code>(∧ p q)</code>), but the term name is recognizing by being a term name, not by position.  In fact, even <code>(p q ∧)</code> would be legal and mean the same thing.
+For example, <code>term (formula (¬ formula))</code> defines a term called ¬ of kind formula which takes one argument, which is a formula.  In the definition, the name of the term has to be on the left, but when invoked the name of the term can be in any position.  This is generally done to make the notation look more like [[w:Infix notation|infix]] notation (for example, <code>(p ∧ q)</code> instead of <code>(∧ p q)</code>), but the term name is recognized by being a term name, not by position.  In fact, even <code>(p q ∧)</code> would be legal and mean the same thing. Nevertheless, terms and variables have different namespaces and if an ambiguity arises, JHilbert will take the first valid term name and try to construct an expression, whether successfully or not.
 
 * Definitions. 
  def (''new-defined'' ''definition'')
