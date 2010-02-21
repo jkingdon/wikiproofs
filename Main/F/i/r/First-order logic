@@ -433,6 +433,113 @@ We're almost there.  The left hand side has been gradually built up into <code>(
 ))
 </jh>
 
+== Negation ==
+This relationship between quantification and negation is sometimes taken as an axiom instead of our <code>QuantifiedNegation</code>, but we prove it here:<ref>[http://us.metamath.org/mpeuni/ax6o.html ax6o] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (ax6o () () ((¬ (∀ x (¬ (∀ x φ)))) → φ) (
+        x φ QuantifiedNegation
+        transposeWithNegatedAntecedent
+
+        x φ Specialization
+
+        applySyllogism
+))
+</jh>
+
+== Free variables ==
+The conventional treatment of [[w:free variable|free variables]] is syntactic; variables are defined as free depending on where they occur in a formula relative to the quantifiers over that variable. JHilbert (following metamath before it) does not contain the ability to analyze formulas this way, and we instead define free variables based on whether generalization is possible:
+
+<jh>
+def ((is-not-free-in x φ) (φ → (∀ x φ)))
+</jh>
+
+With this definition, our first two results just restate axioms or theorems we already have. The first one can be thought of as saying that a variable is not free in an expression in which it does not occur:
+
+<jh>
+thm (DistinctToNotFree ((x φ)) () (x is-not-free-in φ) (
+        φ x Generalization
+))
+</jh>
+
+And the second states that a universal quantifier makes the variable not free (that is, the variable is ''bound'' by a quantifier):<ref>[http://us.metamath.org/mpeuni/hba1.html hba1] in metamath's set.mm, accessed February 20, 2010. In case your font doesn't make it clear, this is hba followed by the number 1.</ref>
+<jh>
+thm (BoundForAllNotFree () () (x is-not-free-in (∀ x φ)) (
+        x φ ForAllDoubling
+))
+</jh>
+
+There's another result for universal quantifiers, this one about adding a quantifier for a (possibly) different variable:<ref>[http://us.metamath.org/mpeuni/hbal.html hbal] in metamath's set.mm, accessed February 20, 2010.  In case your font doesn't make it clear, this is hba followed by the lowercase letter l.</ref>
+<jh>
+thm (addForAllNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (∀ y φ)) (
+        H
+        y addForAll
+
+        y x φ ForAllCommutation eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Next, if a variable is not free in <code>φ</code>, it is not free in <code>(¬ φ)</code>. We first prove an implication version:<ref>[http://us.metamath.org/mpeuni/hbnt.html hbnt] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (NegationNotFree () () ((∀ x (x is-not-free-in φ)) → (x is-not-free-in (¬ φ))) (
+        φ (∀ x φ) Transposition eliminateBiconditionalReverse
+        x generalize
+        distributeForAllImplication
+
+        x (¬ (∀ x φ)) (¬ φ) ForAllImplication
+        applySyllogism
+
+</jh>
+At this point we have <code>(∀x(φ → ∀xφ) → (∀x ¬ ∀xφ → ∀x ¬ φ))</code>. Together with <code>(¬ φ → ∀x ¬ ∀xφ)</code> (which is the transposition of <code>ax6o</code>), we will get our desired result of <code>(∀x(φ → ∀xφ) → (¬ φ → ∀x ¬ φ))</code>.
+<jh>
+        x φ ax6o
+        transposeWithNegatedAntecedent
+
+        (∀ x (¬ φ)) addCommonConsequent
+
+        applySyllogism
+))
+</jh>
+
+The rule form does not need the extra quantifier:<ref>[http://us.metamath.org/mpeuni/hbn.html hbn] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (negateNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (¬ φ)) (
+        H
+        x generalize
+
+        x φ NegationNotFree
+
+        applyModusPonens
+))
+</jh>
+
+Having negation makes it easy to prove the analogue to <code>addForAllNotFree</code> for ∃:<ref>[http://us.metamath.org/mpeuni/hbex.html hbex] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (addThereExistsNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (∃ y φ)) (
+        H
+        negateNotFree
+        y addForAllNotFree
+        negateNotFree
+))
+</jh>
+
+== Quantifier order: ∃x∀y to ∀y∃x ==
+We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.
+<jh>
+thm (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))) (
+        y φ BoundForAllNotFree
+        x addThereExistsNotFree
+</jh>
+At this point we have (expanding the definition of <code>is-not-free-in</code>) <code>(∃ x (∀ y φ)) → (∀ y (∃ x (∀ y φ)))</code>.  We just need to get rid of the inner ∀ on the right hand side:
+<jh>
+        y φ Specialization
+        x addThereExists
+        y addForAll
+
+        applySyllogism
+))
+</jh>
+
 == Export ==
 This page is not yet done.  When it is, the following export to [[Interface:First-order logic]] can be uncommented:
 <jh>
