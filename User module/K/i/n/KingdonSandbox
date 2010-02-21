@@ -8,4 +8,8 @@ var (formula p q)
 thm (foo () ((H (p ∧ q))) (∧ p q) (
         H
 ))
+
+thm (bar () ((H (∧ p q))) (((p ¬) (q ¬) ∨) ¬) (
+        H collectNegationPCP
+))
 </jh>
