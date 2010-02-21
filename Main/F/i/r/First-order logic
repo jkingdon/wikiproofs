@@ -572,8 +572,13 @@ thm (negateNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (¬ φ)) (
 ))
 </jh>
 
-Having negation makes it easy to prove the analogue to <code>addForAllNotFree</code> for ∃:<ref>[http://us.metamath.org/mpeuni/hbex.html hbex] in metamath's set.mm, accessed February 20, 2010</ref>
+Having negation makes it easy to prove the analogues to <code>BoundForAllNotFree</code> and <code>addForAllNotFree</code> for ∃:<ref>[http://us.metamath.org/mpeuni/hbex.html hbex] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
+thm (BoundThereExistsNotFree () () (x is-not-free-in (∃ x φ)) (
+        x (¬ φ) BoundForAllNotFree
+        negateNotFree
+))
+
 thm (addThereExistsNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (∃ y φ)) (
         H
         negateNotFree
