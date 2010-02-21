@@ -45,7 +45,7 @@ stmt (Generalization ((x φ)) () (φ → (∀ x φ)))
 stmt (generalize () (φ) (∀ x φ))
 </jh>
 
-We introduce equality and provide our first equality axiom, a version of the transitive law for equality:
+We introduce equality and provide our main equality axiom, a version of the transitive law for equality:
 <jh>
 term (formula (= object object))
 stmt (AxiomEquality () () ( (x = y) → ( (x = z) → (y = z) ) ) )
