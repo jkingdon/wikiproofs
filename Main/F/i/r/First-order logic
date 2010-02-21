@@ -125,7 +125,7 @@ thm (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)) (
 ))
 </jh>
 
-== Specification ==
+== Specialization ==
 We can remove a universal quantifier. This is sometimes taken as an axiom but here we prove it from the other axioms via a number of intermediate steps.<ref>[http://us.metamath.org/mpeuni/ax4.html ax4] in metamath's set.mm, accessed February 18, 2010</ref>
 
 <jh>
@@ -314,6 +314,15 @@ thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
 ))
 </jh>
 
+=== Adding existential quantifier ===
+We can add ∃ to the start of a formula:
+<jh>
+thm (19.8a () () (φ → (∃ x φ)) (
+        x (¬ φ) Specialization
+        transposeWithNegatedConsequent
+))
+</jh>
+
 == Quantifier order ==
 Being able to swap the order of two ∀ quantifiers is an axiom, so we just need to biconditionalize it:
 
@@ -465,7 +474,7 @@ thm (TheoremNotFree () ((H φ)) (x is-not-free-in φ) (
 Our next two results just restate axioms or theorems we already have. The first one can be thought of as saying that a variable is not free in an expression in which it does not occur:
 
 <jh>
-thm (DistinctToNotFree ((x φ)) () (x is-not-free-in φ) (
+thm (DistinctNotFree ((x φ)) () (x is-not-free-in φ) (
         φ x Generalization
 ))
 </jh>
@@ -532,6 +541,108 @@ thm (addThereExistsNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (∃
 ))
 </jh>
 
+=== Implications ===
+
+We prove a variety of results concerning free variables and implications.
+<jh>
+thm (19.21ai () ((HFREE (x is-not-free-in φ)) (HIMP (φ → ψ))) (φ → (∀ x ψ)) (
+        HFREE
+
+        HIMP
+        x addForAll
+
+        applySyllogism
+))
+</jh>
+
+If a variable is not free in either of two propositions, it is not free in the implication of the two:<ref>[http://us.metamath.org/mpeuni/hbim.html hbim] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (principia*2.21 () () ((¬ φ) → (φ → ψ)) (
+        (¬ φ) ψ DisjunctionRightIntroduction
+        φ ψ ImplicationDisjunction eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (implicationNotFree () 
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ → ψ)) (
+</jh>
+Implication to disjunction we'll need at the end of the proof:
+<jh>
+        φ ψ ImplicationDisjunction eliminateBiconditionalReverse
+</jh>
+The first part of the proof is to derive <code>(¬ φ) → (∀ x (φ → ψ))</code>:
+<jh>
+        HPHI
+        negateNotFree
+        φ ψ principia*2.21
+        19.21ai
+</jh>
+The second part of the proof is to derive <code>ψ → (∀ x (φ → ψ))</code>:
+<jh>
+        HPSI
+        ψ φ AntecedentIntroduction
+        19.21ai
+</jh>
+Now we combine the two parts:
+<jh>
+        composeDisjunction
+        applySyllogism
+))
+</jh>
+
+The forward direction of the next theorem just combines a few of our previous results.<ref>[http://us.metamath.org/mpeuni/19.21.html 19.21] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (19.21 () ((H (x is-not-free-in φ))) ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
+        x φ ψ ForAllImplication
+        H (∀ x ψ) addCommonConsequent
+        applySyllogism
+
+</jh>
+The reverse direction is slightly more novel.
+<jh>
+        H
+        x ψ BoundForAllNotFree
+        implicationNotFree
+</jh>
+That gives us <code>(x is-not-free-in (φ → (∀ x ψ)))</code>
+<jh>
+        x ψ Specialization
+        φ addCommonAntecedent
+        x addForAll
+
+        applySyllogism
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+Quantifying with ∃ over a variable which is not free in a formula has no effect:<ref>[http://us.metamath.org/mpeuni/19.9.html 19.9] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (19.9 () ((H (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
+        H
+        negateNotFree
+        transposeWithNegatedAntecedent
+
+        φ x 19.8a
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+The next theorem is kind of like 19.21 but it concerns existential quantification over a variable which is not free in the consequent (19.21 was universal quantification over a variable not free in the antecedent).<ref>[http://us.metamath.org/mpeuni/19.36.html 19.36] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (19.36 () ((H (x is-not-free-in ψ))) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)) (
+        x φ ψ ThereExistsImplication
+
+        (∀ x φ) BiconditionalReflexivity
+        H 19.9
+        buildImplication
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Quantifier order: ∃x∀y to ∀y∃x ==
 We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.
 <jh>
@@ -546,6 +657,39 @@ At this point we have (expanding the definition of <code>is-not-free-in</code>) 
         y addForAll
 
         applySyllogism
+))
+</jh>
+
+== Quantifier order: ∀y∃x to ∃x∀y (sometimes) ==
+We also prove one case in which ∀y∃x can be switched to ∃x∀y, but it is subject to various discrete variable constraints.
+
+<jh>
+thm (ForAllThereExistsImplicationCommutation ((x y) (ψ x) (φ y)) ()
+  ((∃ x (∀ y (φ → ψ))) ↔ (∀ y (∃ x (φ → ψ)))) (
+        y φ DistinctNotFree
+        ψ 19.21
+
+        x buildThereExists
+</jh>
+The left hand side is now <code>(∃ x (∀ y (φ → ψ)))</code>.  We will be transforming the right hand side through a series of equivalences.  So far we have <code>(∃ x (φ → (∀ y ψ))))</code>.
+<jh>
+        x (∀ y ψ) DistinctNotFree
+        φ 19.36
+        applyBiconditionalTransitivity
+</jh>
+That gets us to <code>(∀ x φ) → (∀ y ψ)</code>
+<jh>
+        y (∀ x φ) DistinctNotFree
+        ψ 19.21 swapBiconditional
+        applyBiconditionalTransitivity
+</jh>
+which gives us <code>(∀ y ((∀ x φ) → ψ))</code>
+<jh>
+        x ψ DistinctNotFree
+        φ 19.36 swapBiconditional
+        y buildForAll
+
+        applyBiconditionalTransitivity
 ))
 </jh>
 
