@@ -1,45 +1,30 @@
-{{header
- | title    = First-order logic
- | subtitle = 
- | left     = 
- | right    = 
- | shortcut = 
- | notes    = This interface collects important theorems from first-order logic, which builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use first-order logic, without proving anything new within it.
+We start with the [[Interface:Classical propositional calculus|theorems of propositional logic]] and [[Interface:Axioms of first-order logic]]:
 
-Statements can be added if necessary, but then the exporting modules have to be updated accordingly.
-}}
-{{modules
-| parameters = [[Interface:Classical propositional calculus]]
-| importedby = None yet
-| exportedby = None yet
-}}
-== Formulas, objects, and quantification ==
-We build on [[Interface:Classical propositional calculus]]:
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (AXIOMS Interface:Axioms_of_first-order_logic (CLASSICAL) ())
 </jh>
 
-By convention we use φ, ψ, χ, and θ to represent formulas (also known as ''well-formed formulas'' or wff's).
-<jh>
-var (wff φ ψ χ θ)
-</jh>
-
-We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is a valid object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
+As usual, φ, ψ, χ, and θ are formulas and x, y, and z are objects:
 
 <jh>
-kind (object)
+var (formula φ ψ χ θ)
 var (object x y z)
 </jh>
 
-We extend the available formulas with [[w:Universal quantification|universal quantification]] and [[w:Existential quantification|existential quantification]]:
+== Substitution ==
+
+Also within the realm of first-order logic is being able to substitute one variable for another.  For example, [[w:mathematical induction|induction]] could be expressed with a notation along the lines of:
+ (φ(0) ∧ (φ(k) → φ(k + 1))) → (∀ n φ(n))
+or
+ ([0 / x] φ ∧ (φ → [k + 1 / x] φ) → (∀ x φ)
+
+In some formulations of predicate logic, substitution is performed syntactically and the rules governing it are expressed in English or a meta-theory.  In JHilbert, changing from one variable to another is done with equality (most of which remains behind the scenes thanks to the following theorems).
+
+We first define the <code>subst</code> term:
+
 <jh>
-term (wff (∀ object wff))
-term (wff (∃ object wff))
+term (formula (subst object object formula))
 </jh>
 
-== Equality ==
-Equality is reflexive, symmetry, and transitive.
-<jh>
-term (wff (= object object))
-stmt (EqualityReflexivity () () (x = x))
-</jh>
+so for example <code>(subst y x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>y</code>. In more convention notation this would <code>[y / x] p</code>.
