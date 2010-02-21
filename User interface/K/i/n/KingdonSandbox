@@ -14,10 +14,11 @@ var (object x y z)
 
 == Substitution ==
 
-Also within the realm of first-order logic is being able to substitute one variable for another.  For example, [[w:mathematical induction|induction]] could be expressed with a notation along the lines of:
+Also within the realm of first-order logic is being able to substitute one variable for another.  For example, most formulations of [[w:mathematical induction|induction]] involve some kind of substitution.  Two sample (non-JHilbert) notations might be:
  (φ(0) ∧ (φ(k) → φ(k + 1))) → (∀ n φ(n))
 or
- ([0 / x] φ ∧ (φ → [k + 1 / x] φ) → (∀ x φ)
+ ([0 / n] φ ∧ (φ → [k + 1 / n] φ) → (∀ n φ)
+And in either case the idea is to specify the same formula φ with either <code>0</code>, <code>k</code>, or <code>k + 1</code> in the place of <code>n</code>.
 
 In some formulations of predicate logic, substitution is performed syntactically and the rules governing it are expressed in English or a meta-theory.  In JHilbert, changing from one variable to another is done with equality (most of which remains behind the scenes thanks to the following theorems).
 
@@ -27,4 +28,4 @@ We first define the <code>subst</code> term:
 term (formula (subst object object formula))
 </jh>
 
-so for example <code>(subst y x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>y</code>. In more convention notation this would <code>[y / x] p</code>.
+so for example <code>(subst y x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>y</code>. In more conventional notation this would <code>[y / x] p</code>.
