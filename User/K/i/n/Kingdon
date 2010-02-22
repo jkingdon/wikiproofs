@@ -15,10 +15,12 @@
 :*[http://us.metamath.org/mpeuni/sbf.html sbf]
 :*[http://us.metamath.org/mpeuni/hbs1f.html hbs1f]
 :*[http://us.metamath.org/mpeuni/sbt.html sbt]
-:*[http://us.metamath.org/mpeuni/equsb1.html equsb1]
 :*[http://us.metamath.org/mpeuni/sbie.html sbie]
 :*[http://us.metamath.org/mpeuni/hbsb2a.html hbsb2a]
 :*[http://us.metamath.org/mpeuni/sbco2.html sbco2]
+
+Key to, e.g., base case in induction:
+:*[http://us.metamath.org/mpeuni/equsb1.html equsb1]
 
 Move substitution across connectives:
 :*[http://us.metamath.org/mpeuni/sbn.html sbn], [http://us.metamath.org/mpeuni/sbim.html sbim], [http://us.metamath.org/mpeuni/sbor.html sbor], [http://us.metamath.org/mpeuni/sban.html sban], [http://us.metamath.org/mpeuni/sbbi.html sbbi]
@@ -26,6 +28,13 @@ Move substitution across connectives:
 Builders:
 :*[http://us.metamath.org/mpeuni/sbimi.html sbimi]
 :*[http://us.metamath.org/mpeuni/sbbii.html sbbii]
+
+=== More moving formulas where quantified variable is not free ===
+*These two on wikipedia list of identities: [http://us.metamath.org/mpeuni/19.42.html 19.42] [http://us.metamath.org/mpeuni/19.32.html 19.32]
+*These two similar: [http://us.metamath.org/mpeuni/19.28.html 19.28] [http://us.metamath.org/mpeuni/19.45.html 19.45]
+
+=== Equality ===
+* builder for =: [http://us.metamath.org/mpeuni/eqeq12.html eqeq12]
 
 === Others? ===
 [http://us.metamath.org/mpeuni/19.29.html 19.29]
