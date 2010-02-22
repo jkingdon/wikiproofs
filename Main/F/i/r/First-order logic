@@ -587,6 +587,16 @@ thm (addThereExistsNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (∃
 ))
 </jh>
 
+The following builder is analogous to our builders for other formulas:
+
+<jh>
+thm (buildNotFree () ((H (φ ↔ ψ))) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)) (
+        H
+        H x buildForAll
+        buildImplication
+))
+</jh>
+
 === Implications ===
 
 We prove a variety of results concerning free variables and implications.
@@ -634,6 +644,55 @@ Now we combine the two parts:
 <jh>
         composeDisjunction
         applySyllogism
+))
+</jh>
+
+The same is true of the other connectives:
+<jh>
+thm (disjunctionNotFree () 
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ∨ ψ)) (
+        HPHI negateNotFree
+        HPSI
+        implicationNotFree
+</jh>
+We've shown <code>(x is-not-free-in ((¬ φ) → ψ))</code>. Now we just need to convert the implication to the equivalent disjunction
+<jh>
+
+        φ ψ DisjunctionImplication
+        x buildNotFree
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (conjunctionNotFree ()
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ∧ ψ)) (
+        HPHI negateNotFree
+        HPSI negateNotFree
+        disjunctionNotFree
+        negateNotFree
+
+        φ ψ DeMorganNDN
+        x buildNotFree
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (biconditionalNotFree ()
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ↔ ψ)) (
+        HPHI HPSI implicationNotFree
+        HPSI HPHI implicationNotFree
+        conjunctionNotFree
+
+        φ ψ BiconditionalImplication
+        x buildNotFree
+
+        eliminateBiconditionalForward
+        applyModusPonens
 ))
 </jh>
 
