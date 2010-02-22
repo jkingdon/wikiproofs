@@ -323,6 +323,24 @@ thm (19.8a () () (φ → (∃ x φ)) (
 ))
 </jh>
 
+=== Another for-all distribution law ===
+
+If we have an implication quantified by ∀, we've already shown that <code>(∀ x φ) → (∀ x ψ)</code> follows. It also will sometimes be useful to know that alternately <code>(∃ x φ) → (∃ x ψ)</code> does.<ref>[http://us.metamath.org/mpeuni/19.22.html 19.22] in metamath's set.mm, accessed February 21, 2010</ref>
+<jh>
+thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))) (
+        φ ψ Transposition
+        x buildForAll
+
+        eliminateBiconditionalReverse
+        x (¬ ψ) (¬ φ) ForAllImplication
+        applySyllogism
+
+        (∀ x (¬ ψ)) (∀ x (¬ φ)) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == Quantifier order ==
 Being able to swap the order of two ∀ quantifiers is an axiom, so we just need to biconditionalize it:
 
@@ -712,7 +730,7 @@ thm (ThereExistsAddRemove () ((H (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
 ))
 </jh>
 
-The same is true of ∀:
+The same is true of ∀:<ref>[http://us.metamath.org/mpeuni/19.3.html 19.3] in metamath's set.mm, accessed February 21, 2010</ref>
 <jh>
 thm (ForAllAddRemove () ((H (x is-not-free-in φ))) ((∀ x φ) ↔ φ) (
         x φ Specialization
@@ -723,6 +741,9 @@ thm (ForAllAddRemove () ((H (x is-not-free-in φ))) ((∀ x φ) ↔ φ) (
 
 === Moving formulas in and out of quantification ===
 
+The results in this section all have to do with being able to move around formulas relative to quantifiers, given that the quantified variable is not free in the formula being moved.
+
+==== Implication ====
 The forward direction of the next theorem just combines a few of our previous results.<ref>[http://us.metamath.org/mpeuni/19.21.html 19.21] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
 thm (ForAllImplicationAntecedentMovement () ((H (x is-not-free-in φ))) ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
@@ -749,7 +770,54 @@ That gives us <code>(x is-not-free-in (φ → (∀ x ψ)))</code>
 ))
 </jh>
 
-The next theorem is kind of like <code>ForAllImplicationAntecedentMovement</code> but it concerns existential quantification over a variable which is not free in the consequent.<ref>[http://us.metamath.org/mpeuni/19.36.html 19.36] in metamath's set.mm, accessed February 20, 2010</ref>
+The corresponding theorem for ∃ is similar:<ref>[http://us.metamath.org/mpeuni/19.37.html 19.37] in metamath's set.mm, accessed February 20, 2010</ref>
+<jh>
+thm (ThereExistsImplicationAntecedentMovement () ((H (x is-not-free-in φ))) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
+        x φ ψ ThereExistsImplication
+
+        H ForAllAddRemove
+        (∃ x ψ) BiconditionalReflexivity
+        buildImplication
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The two theorems which involve moving the consequent result in changing ∃ to ∀ or vice versa. We name them after the quantifier which appears on the combined half of the equivalence. We'll first prove the for-all one.<ref>[http://us.metamath.org/mpeuni/19.23.html 19.23] in metamath's set.mm, accessed February 21, 2010</ref>
+<jh>
+thm (ForAllImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)) (
+</jh>
+For the forward direction we first distribute to <code>(∃ x φ) → (∃ x ψ)</code> and then remove the quantifier on <code>ψ</code>.
+<jh>
+        x φ ψ ForAllImplicationThereExists
+        H ThereExistsAddRemove eliminateBiconditionalReverse
+        (∃ x φ) addCommonAntecedent
+        applySyllogism
+</jh>
+The reverse direction is somewhat more complicated.  We start by proving <code>(x is-not-free-in ((∃ x φ) → ψ))</code>:
+<jh>
+        x φ BoundThereExistsNotFree
+        H
+        implicationNotFree
+</jh>
+Then we show that <code>((∃ x φ) → ψ) → (φ → ψ)</code>
+<jh>
+        φ x 19.8a
+        ψ addCommonConsequent
+
+</jh>
+Because x is not free in the antecedent, we can conclude <code>((∃ x φ) → ψ) → (∀ x (φ → ψ))</code>:
+<jh>
+        19.21ai
+
+</jh>
+Now we just need to combine the forward and reverse implications:
+<jh>
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+And closing out this section is the corresponding result for ∃:<ref>[http://us.metamath.org/mpeuni/19.36.html 19.36] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
 thm (ThereExistsImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)) (
         x φ ψ ThereExistsImplication
