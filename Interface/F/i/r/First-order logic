@@ -181,6 +181,24 @@ And we supply a builder for <code>is-not-free-in</code>:
 stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)))
 </jh>
 
+=== Adding or removing quantifiers ===
+If a variable is not free in a formula, it is legitimate to add or remove quantifiers from that formula:
+<jh>
+stmt (ForAllAddRemove () ((x is-not-free-in φ)) ((∀ x φ) ↔ φ))
+stmt (ThereExistsAddRemove () ((x is-not-free-in φ)) ((∃ x φ) ↔ φ))
+</jh>
+
+=== Moving formulas in and out of quantification ===
+The results in this section all have to do with being able to move around formulas relative to quantifiers, given that the quantified variable is not free in the formula being moved.
+
+==== Implication ====
+<jh>
+stmt (ForAllImplicationAntecedentMovement () ((x is-not-free-in φ)) ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))))
+stmt (ThereExistsImplicationAntecedentMovement () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
+stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)))
+stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
+</jh>
+
 == What else? ==
 This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
 
