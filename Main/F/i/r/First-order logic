@@ -831,7 +831,7 @@ thm (ThereExistsImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((�
 </jh>
 
 == Quantifier order: ∃x∀y to ∀y∃x ==
-We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.
+We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.<ref>[http://us.metamath.org/mpeuni/19.12.html 19.12] in metamath's set.mm, accessed February 22, 2010</ref>
 <jh>
 thm (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))) (
         y φ BoundForAllNotFree
@@ -848,7 +848,7 @@ At this point we have (expanding the definition of <code>is-not-free-in</code>) 
 </jh>
 
 == Quantifier order: ∀y∃x to ∃x∀y (sometimes) ==
-We also prove one case in which ∀y∃x can be switched to ∃x∀y, but it is subject to various discrete variable constraints.
+We also prove one case in which ∀y∃x can be switched to ∃x∀y, but it is subject to various discrete variable constraints.<ref>[http://us.metamath.org/mpeuni/19.12vv.html 19.12vv] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (ForAllThereExistsImplicationCommutation ((x y) (ψ x) (φ y)) ()
@@ -877,6 +877,68 @@ which gives us <code>(∀ y ((∀ x φ) → ψ))</code>
         y buildForAll
 
         applyBiconditionalTransitivity
+))
+</jh>
+
+== Quantifiers and equality ==
+Here we prove a number of results involving equality and quantifiers.  Many of them will pave the way for results involving explicit (<code>subst</code>) substitution.
+
+=== ax9o ===
+First is a variant of the <code>Existence</code> axiom:<ref>[http://us.metamath.org/mpeuni/ax9o.html ax9o] in metamath's set.mm, accessed February 22, 2010</ref>
+
+<jh>
+thm (ax9o () () ((∀ x ((x = y) → (∀ x φ))) → φ) (
+        x (x = y) (∀ x φ) ForAllImplicationThereExists
+</jh>
+This gives us <code>∀x(x = y → ∀xφ) → (∃x x = y → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = y</code> is just the <code>Existence</code> axiom, and can therefore be removed:
+<jh>
+        x y Existence
+        (∃ x (x = y)) (∃ x (∀ x φ)) ModusPonens
+        export
+        applyModusPonens
+
+        applySyllogism
+</jh>
+Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
+<jh>
+        x φ ax6o
+        applySyllogism
+))
+</jh>
+
+=== A quantified statement which starts with a proposition ===
+It is common for a quantifier to be followed by some kind of condition.  For example "for every ε > 0, (¬ ψ)" or "there exists a δ > 0 such that ψ".  Despite the similar wording, the former is formalized as <code>∀ε ((ε > 0) → (¬ ψ))</code> (with an implication) and the latter is formalized as <code>∃ δ ((δ > 0) ∧ ψ)</code> (with a conjunction).  The first theorem in this section expresses this relationship:
+
+<jh>
+thm (alinexa () () ((∀ x (φ → (¬ ψ))) ↔ (¬ (∃ x (φ ∧ ψ)))) (
+        φ (¬ ψ) ImplicationDisjunction
+        φ ψ DeMorganPCP swapBiconditional
+        applyBiconditionalTransitivity
+
+        x buildForAll
+</jh>
+That gives us <code>∀x(φ → ¬ ψ) ↔ ∀x ¬ (φ ∧ ψ)</code>.  Now we just need to apply <code>NotThereExists</code> to the right hand side:
+<jh>
+        x (φ ∧ ψ) NotThereExists swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The second theorem is a special case which will be useful in dealing with substitution:
+<jh>
+thm (transposeBiconditionalWithNegatedRight () ((H (φ ↔ (¬ ψ)))) (ψ ↔ (¬ φ)) (
+        H eliminateBiconditionalReverse
+        transposeWithNegatedConsequent
+
+        H eliminateBiconditionalForward
+        transposeWithNegatedAntecedent
+
+        introduceBiconditionalFromImplications
+))
+
+thm (equs3 () () ((∃ x ((x = y) ∧ φ)) ↔ (¬ (∀ x ((x = y) → (¬ φ))))) (
+        x (x = y) φ alinexa
+        transposeBiconditionalWithNegatedRight
 ))
 </jh>
 
