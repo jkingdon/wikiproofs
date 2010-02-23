@@ -45,12 +45,10 @@ In general, stretch from 19.12 (currently at [http://us.metamath.org/mpeuni/mmth
 [http://us.metamath.org/mpeuni/eeanv.html eeanv]
 
 == Peano arithmetic ==
-=== Axioms ===
-Current thinking is that the induction axiom would be expressed something like:
- ((subst 0 n φ) ∧ (φ → (subst (suc n) n φ))) → (∀ n φ)
-
 === Theorems ===
 Here are some sample theorems:
+
+* a · 1 = a
 
  1. Addition is commutative: x + y = y + x
  2. Addition is associative: x + (y + z) = (x + y) + z
