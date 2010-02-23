@@ -59,9 +59,9 @@ term (nat (+ nat nat))
 stmt (AdditiveIdentity () () ((n + (0)) = n))
 stmt (Addition () () ((n + (succ m)) = (succ (n + m))))
 
-term (nat (⋅ nat nat))
-stmt (MultiplicativeZero () () ((n ⋅ (0)) = (0)))
-stmt (Multiplication () () ((n ⋅ (succ m)) = (n + (n ⋅ m))))
+term (nat (· nat nat))
+stmt (MultiplicativeZero () () ((n · (0)) = (0)))
+stmt (Multiplication () () ((n · (succ m)) = (n + (n · m))))
 </jh>
 
 [[Category:Elementary number theory|{{PAGENAME}}]]
