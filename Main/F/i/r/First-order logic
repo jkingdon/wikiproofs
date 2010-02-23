@@ -87,11 +87,11 @@ thm (EqualityReflexivity ((x y)) () (y = y) (
 The proof of symmetry follows much more easily from reflexivity and the equality axiom. Most of what we need to do is just propositional logic.
 <jh>
 thm (applyNestedModusPonens () 
-  ((H1 ψ) (H2 (φ → (ψ → χ))))
+  ((HIMP (φ → (ψ → χ))) (H ψ))
   (φ → χ) (
-        H2
+        HIMP
 
-        H1
+        H
         ψ χ ModusPonens
         export
         applyModusPonens
@@ -100,8 +100,8 @@ thm (applyNestedModusPonens ()
 ))
 
 thm (EqualitySymmetryImplication () () ((x = y) → (y = x)) (
-        x EqualityReflexivity
         x y x AxiomEquality
+        x EqualityReflexivity
         applyNestedModusPonens
 ))
 
@@ -148,8 +148,8 @@ thm (Specialization-22 () () ((∀ x ((x = y) → (¬ φ))) → (∀ x (φ → (
 thm (Specialization-a () () ((∀ x (φ → (¬ (x = y)))) → (¬ (∀ x φ))) (
         x φ (¬ (x = y)) ForAllImplication
 
-        x y Existence
         (∀ x φ) (∀ x (¬ (x = y))) Transposition eliminateBiconditionalReverse
+        x y Existence
         applyNestedModusPonens
 
         applySyllogism
