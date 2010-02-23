@@ -21,13 +21,41 @@ thm (buildSubstFromEquality ()
         applyModusPonens
 ))
 
-#thm (b () () ((n = (0)) → ((n = (0)) ↔ ((0) = (0))))
+thm (deadEnd () () ((n = (0)) → ((n = (0)) ↔ ((0) = (0)))) (
+        (0) EqualityReflexivity
+        ((0) = (0)) (n = (0)) ConjunctionLeftIntroduction
+        applyModusPonens
 
-#thm (a () () ((n = (0)) → ((n = (0)) ↔ ((0) = (0))))
+        n (0) (0) (0) EqualityBuilder
 
-#thm (BaseCase () () (subst (0) n (((0) + n) = n)) (
-#        (0) AdditiveIdentity
-#))
+        applySyllogism
+))
+
+thm (b () () ((n = (0)) → (((0) + n) = ((0) + (0)))) (
+        (0) EqualityReflexivity
+        ((0) = (0)) (n = (0)) ConjunctionRightIntroduction
+        applyModusPonens
+
+        (0) (0) n (0) AdditionBuilder
+
+        applySyllogism
+))
+
+thm (a () () ((n = (0)) → ((((0) + n) = n) ↔ (((0) + (0)) = (0)))) (
+        n b
+        (n = (0)) ImplicationReflexivity
+        composeConjunction
+
+        ((0) + n) ((0) + (0)) n (0) EqualityBuilder
+        applySyllogism
+))
+
+thm (BaseCase () () (subst (0) n (((0) + n) = n)) (
+        (0) AdditiveIdentity
+        n (((0) + (0)) = (0)) DistinctNotFree
+        n a
+        buildSubstFromEquality
+))
 
 #thm (Sample () () (((0) + n) = n) (
 #))
