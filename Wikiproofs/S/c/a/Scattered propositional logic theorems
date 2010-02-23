@@ -13,5 +13,6 @@ From [[First-order logic]]:
 * applyNestedModusPonens
 * principia*2.21
 * transposeBiconditionalWithNegatedRight
+* joinConsequents
 
 [[Category:Wikiproofs]]
