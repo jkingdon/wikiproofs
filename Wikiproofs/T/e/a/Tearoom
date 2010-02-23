@@ -49,3 +49,15 @@ One other thing (which might not be related, or even a bug at all). Uncommenting
 ::The name doubling bug is fixed now. The "variable not found" message is not a bug. You must define all variable names anew for each module: variable names are always local. This makes sense as variables usually have very simple (one or two letter) identifiers and you wouldn't want them to clash due to kind mismatches over several modules.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 14:37, 9 January 2010 (UTC)
 
 :::Ah, thanks for noticing that.  The only connection between the two is that the doubling bug affected the text of the error message (the existence of the message was, as you point out, unrelated). [[User:Kingdon|Kingdon]] 02:08, 10 January 2010 (UTC)
+
+== Similar-looking characters ==
+
+When copying formulas from other web sites, one is sometimes nailed by similar-looking characters. The two which have come up so far are:
+
+* metamath uses ⋀ (U+22C0 N-ARY LOGICAL AND) for its ordinary conjunction character, we use ∧ (U+2227 LOGICAL AND).  It is easy to make the case that metamath is just wrong on this one, and at least in my font the two are moderately different from each other.
+
+* We use ⋅ (U+22C5 DOT OPERATOR) for multiplication (at least, that's the one at the bottom of the edit screen). On wikipedia, at least on [[w:Peano arithmetic]], they use · (U+00B7 MIDDLE DOT). These look extremely similar, and I don't really see how we can expect contributors to try to keep them straight.
+
+Is there a mediawiki feature to map all U+00B7 to U+22C5? I'm thinking of the feature of [http://eo.wikipedia.org eo.wikipedia.org] which maps "cx" to "ĉ" (U+0109 LATIN SMALL LETTER C WITH CIRCUMFLEX) although I'm not sure that particular behavior is exactly what we want (I haven't gotten desperate enough to actually read any mediawiki documentation, so I have no idea how many choices there are).
+
+It turns out to be pretty handy to copy-paste short formulas from one website to another, and modulo some parentheses and such it tends to work fairly well (even with ↔, ∀, ∃, etc), except for the problem characters above. [[User:Kingdon|Kingdon]] 02:37, 23 February 2010 (UTC)
