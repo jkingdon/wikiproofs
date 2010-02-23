@@ -1030,6 +1030,20 @@ thm (sb2 () () ((∀ x ((x = y) → φ)) → (subst y x φ)) (
 ))
 </jh>
 
+=== Substitution applied to an equality ===
+Our first theorem states that if we have an equality of two objects, and we substitute one for the other, the result is true.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1] in metamath's set.mm, accessed February 22, 2010</ref>
+
+<jh>
+thm (SubstitutionEquality () () (subst y x (x = y)) (
+        (x = y) ImplicationReflexivity
+        x generalize
+
+        x y (x = y) sb2
+
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 We've now proved all the theorems in [[Interface:First-order logic]], so we export them.
 <jh>
