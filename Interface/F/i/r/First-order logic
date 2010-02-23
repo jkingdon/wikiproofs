@@ -199,6 +199,19 @@ stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ
 stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
 </jh>
 
+== Substitution ==
+Having a formula which substitutes one variable for another greatly increases the readability of many theorems.  For example, a statement of [[w:mathematical induction|induction]] will generally apply the same formula with <code>0</code>, <code>k</code>, <code>k + 1</code>, or <code>n</code>.
+
+This kind of substitution is known as ''proper substitution'' as there are some rules about what kinds of substitution are valid. The following theorems enable making proper substitutions.
+
+We first define the <code>subst</code> term:
+
+<jh>
+term (formula (subst object object formula))
+</jh>
+
+so for example <code>(subst y x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>y</code>. In more conventional notation this would be <code>[y / x] φ</code>.
+
 == What else? ==
 This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
 
