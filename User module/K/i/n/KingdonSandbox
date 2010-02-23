@@ -1,15 +1,35 @@
-We start with the [[Interface:Classical propositional calculus|theorems of propositional logic]]
+This page is to help me figure out how induction might work (in terms of the substitution).
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
 
-var (formula p q)
+var (formula p q φ ψ)
+var (object x y)
+var (nat n m)
 
-thm (foo () ((H (p ∧ q))) (∧ p q) (
-        H
+thm (buildSubstFromEquality ()
+  ((HPSI ψ) (HFREE (x is-not-free-in ψ)) (HEQ ((x = y) → (φ ↔ ψ))) )
+  (subst y x φ) (
+        HPSI
+
+        HFREE HEQ sbie
+        eliminateBiconditionalForward
+
+        applyModusPonens
 ))
 
-thm (bar () ((H (∧ p q))) (((p ¬) (q ¬) ∨) ¬) (
-        H collectNegationPCP
-))
+#thm (b () () ((n = (0)) → ((n = (0)) ↔ ((0) = (0))))
+
+#thm (a () () ((n = (0)) → ((n = (0)) ↔ ((0) = (0))))
+
+#thm (BaseCase () () (subst (0) n (((0) + n) = n)) (
+#        (0) AdditiveIdentity
+#))
+
+#thm (Sample () () (((0) + n) = n) (
+#))
+
 </jh>
