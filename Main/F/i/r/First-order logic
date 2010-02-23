@@ -89,17 +89,14 @@ The proof of symmetry follows much more easily from reflexivity and the equality
 thm (applyNestedModusPonens () 
   ((H1 ψ) (H2 (φ → (ψ → χ))))
   (φ → χ) (
-        H1
-
         H2
-        import
 
-        ψ φ ConjunctionCommutativity eliminateBiconditionalReverse
-        χ addCommonConsequent
-        applyModusPonens
-
+        H1
+        ψ χ ModusPonens
         export
         applyModusPonens
+
+        applySyllogism
 ))
 
 thm (EqualitySymmetryImplication () () ((x = y) → (y = x)) (
