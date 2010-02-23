@@ -890,11 +890,7 @@ thm (ax9o () () ((∀ x ((x = y) → (∀ x φ))) → φ) (
 This gives us <code>∀x(x = y → ∀xφ) → (∃x x = y → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = y</code> is just the <code>Existence</code> axiom, and can therefore be removed:
 <jh>
         x y Existence
-        (∃ x (x = y)) (∃ x (∀ x φ)) ModusPonens
-        export
-        applyModusPonens
-
-        applySyllogism
+        applyNestedModusPonens
 </jh>
 Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
 <jh>
