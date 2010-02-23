@@ -222,6 +222,19 @@ thm (ForAllDoubling () () ((∀ x φ) → (∀ x (∀ x φ))) (
 ))
 </jh>
 
+=== a5i ===
+A consequence is a variant of <code>QuantifiedImplication</code>:
+<jh>
+thm (a5i () ((H ((∀ x φ) → ψ))) ((∀ x φ) → (∀ x ψ)) (
+        x φ ForAllDoubling
+
+        H x generalize
+        distributeForAllImplication
+
+        applySyllogism
+))
+</jh>
+
 == Builder for ∀ ==
 From <code>φ → ψ</code> we want to be able to get <code>(∀ x φ) → (∀ x ψ)</code>.  The easier part of this is geting the quantifier onto the antecedent:<ref>[http://us.metamath.org/mpeuni/a4s.html a4s] in metamath's set.mm, accessed February 18, 2010</ref>
 
@@ -900,7 +913,7 @@ Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
 </jh>
 
 === A quantified statement which starts with a proposition ===
-It is common for a quantifier to be followed by some kind of condition.  For example "for every ε > 0, (¬ ψ)" or "there exists a δ > 0 such that ψ".  Despite the similar wording, the former is formalized as <code>∀ε ((ε > 0) → (¬ ψ))</code> (with an implication) and the latter is formalized as <code>∃ δ ((δ > 0) ∧ ψ)</code> (with a conjunction).  The first theorem in this section expresses this relationship:
+It is common for a quantifier to be followed by some kind of condition.  For example "for every ε > 0, (¬ ψ)" or "there exists a δ > 0 such that ψ".  Despite the similar wording, the former is formalized as <code>∀ε ((ε > 0) → (¬ ψ))</code> (with an implication) and the latter is formalized as <code>∃ δ ((δ > 0) ∧ ψ)</code> (with a conjunction).  The first theorem in this section expresses this relationship:<ref>[http://us.metamath.org/mpeuni/alinexa.html alinexa] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (alinexa () () ((∀ x (φ → (¬ ψ))) ↔ (¬ (∃ x (φ ∧ ψ)))) (
@@ -917,7 +930,8 @@ That gives us <code>∀x(φ → ¬ ψ) ↔ ∀x ¬ (φ ∧ ψ)</code>.  Now we j
 ))
 </jh>
 
-The second theorem is a special case which will be useful in dealing with substitution:
+The second theorem is a special case which will be useful in dealing with substitution:<ref>[http://us.metamath.org/mpeuni/equs3.html equs3] in metamath's set.mm, accessed February 22, 2010</ref>
+
 <jh>
 thm (transposeBiconditionalWithNegatedRight () ((H (φ ↔ (¬ ψ)))) (ψ ↔ (¬ φ)) (
         H eliminateBiconditionalReverse
@@ -932,6 +946,87 @@ thm (transposeBiconditionalWithNegatedRight () ((H (φ ↔ (¬ ψ)))) (ψ ↔ (�
 thm (equs3 () () ((∃ x ((x = y) ∧ φ)) ↔ (¬ (∀ x ((x = y) → (¬ φ))))) (
         x (x = y) φ alinexa
         transposeBiconditionalWithNegatedRight
+))
+</jh>
+
+== Substitution ==
+We now move to substitution via <code>subst</code>.
+
+In some formulations of predicate logic, this kind of substitution (known as ''proper substitution'' as there are some rules about what kinds of substitution are valid) is performed syntactically and the rules governing it are expressed in English or a meta-theory.  JHilbert does not have a feature to do syntactic proper substitution, but we are able to build up equivalent mechanisms from equality. The theorems in [[Interface:First-order logic]] could be proven from either the syntactic definition or ours.
+
+=== Definition ===
+Our definition of substitution is somewhat complicated, mainly in order to handle the case in which y and x are not distinct.<ref>[http://us.metamath.org/mpeuni/df-sb.html df-sb] in metamath's set.mm, accessed February 22, 2010</ref>
+
+<jh>
+def ((subst y x φ) (((x = y) → φ) ∧ (∃ x ((x = y) ∧ φ))))
+</jh>
+
+=== Proving substitution from (∀ x ((x = y) → φ)) ===
+Given the definition we have adopted, our first order of business is making it a bit easier to prove a substitution formula.<ref>[http://us.metamath.org/mpeuni/sb2.html sb2] in metamath's set.mm, accessed February 22, 2010</ref>
+
+First, a propositional logic theorem:<ref>[http://us.metamath.org/mpeuni/jc.html jc] in metamath's set.mm, accessed February 22, 2010</ref>
+<jh>
+thm (joinConsequents ()
+  ((H1 (φ → ψ)) (H2 (φ → χ)))
+  (φ → (¬ (ψ → (¬ χ)))) (
+        H1 H2 composeConjunction
+        ψ χ DeMorganNDN eliminateBiconditionalForward
+        applySyllogism
+
+        ψ (¬ χ) ImplicationDisjunction
+        addNegation
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+</jh>
+
+The following lemma is half of the result we are working towards:<ref>[http://us.metamath.org/mpeuni/equs4.html equs4] in metamath's set.mm, accessed February 22, 2010</ref>
+
+<jh>
+thm (equs4 () () ((∀ x ((x = y) → φ)) → (∃ x ((x = y) ∧ φ))) (
+        (∀ x ((x = y) → φ)) (x = y) ConjunctionLeftElimination
+
+        x ((x = y) → φ) Specialization
+        import
+
+        joinConsequents
+</jh>
+That gives us <code>((∀ x ((x = y) → φ)) ∧ x = y) → (¬ ((x = y) → (¬ φ)))</code>. We transform the consequent to <code>(¬ (∀ x ((x = y) → (¬ φ))))</code>:
+<jh>
+        x ((x = y) → (¬ φ)) Specialization
+        introduceTransposition
+        applySyllogism
+</jh>
+And then we add <code>∀x</code> to the front of that consequent:
+<jh>
+        x ((x = y) → (¬ φ)) BoundForAllNotFree
+        negateNotFree
+        applySyllogism
+</jh>
+We export and add one more ∀x:
+<jh>
+        export
+        a5i
+</jh>
+which gives us <code>(∀x(x = y → φ) → ∀x(x = y → ∀x ¬ ∀x(x = y → ¬ φ)))</code>.  The consequent of that is just what we need to apply ax9o:
+<jh>
+        x y (¬ (∀ x ((x = y) → (¬ φ)))) ax9o
+        applySyllogism
+</jh>
+so we have simplified the consequent to <code>¬ ∀x(x = y → ¬ φ))</code>. We merely apply <code>equs3</code> to that and we're done.
+<jh>
+        x y φ equs3 eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+Now we're ready for our first theorem to help us prove a substituted formula:
+<jh>
+thm (sb2 () () ((∀ x ((x = y) → φ)) → (subst y x φ)) (
+        x ((x = y) → φ) Specialization
+        x y φ equs4
+        composeConjunction
 ))
 </jh>
 
