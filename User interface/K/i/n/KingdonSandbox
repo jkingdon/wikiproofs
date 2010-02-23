@@ -1,31 +1,19 @@
-We start with the [[Interface:Classical propositional calculus|theorems of propositional logic]] and [[Interface:Axioms of first-order logic]]:
+This is an interface to hold the various substitution results, so I can play with them and figure out what should go into [[Interface:First-order logic]].
 
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
-param (AXIOMS Interface:Axioms_of_first-order_logic (CLASSICAL) ())
-</jh>
+param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 
-As usual, φ, ψ, χ, and θ are formulas and x, y, and z are objects:
-
-<jh>
 var (formula φ ψ χ θ)
-var (object x y z)
+var (object x y z n m k)
+
+stmt (SubstitutionEquality () () (subst y x (x = y)))
+
+stmt (sbie () 
+  ((x is-not-free-in ψ) ((x = y) → (φ ↔ ψ)))
+  ((subst y x φ) ↔ ψ)
+)
+
+# To add: various builders and other theorems about subst
 </jh>
-
-== Substitution ==
-
-Also within the realm of first-order logic is being able to substitute one variable for another.  For example, most formulations of [[w:mathematical induction|induction]] involve some kind of substitution.  Two sample (non-JHilbert) notations might be:
- (φ(0) ∧ (φ(k) → φ(k + 1))) → (∀ n φ(n))
-or
- ([0 / n] φ ∧ (φ → [k + 1 / n] φ) → (∀ n φ)
-And in either case the idea is to specify the same formula φ with either <code>0</code>, <code>k</code>, or <code>k + 1</code> in the place of <code>n</code>.
-
-In some formulations of predicate logic, substitution is performed syntactically and the rules governing it are expressed in English or a meta-theory.  In JHilbert, changing from one variable to another is done with equality (most of which remains behind the scenes thanks to the following theorems).
-
-We first define the <code>subst</code> term:
-
-<jh>
-term (formula (subst object object formula))
-</jh>
-
-so for example <code>(subst y x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>y</code>. In more conventional notation this would <code>[y / x] p</code>.
