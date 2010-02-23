@@ -61,3 +61,5 @@ When copying formulas from other web sites, one is sometimes nailed by similar-l
 Is there a mediawiki feature to map all U+00B7 to U+22C5? I'm thinking of the feature of [http://eo.wikipedia.org eo.wikipedia.org] which maps "cx" to "ĉ" (U+0109 LATIN SMALL LETTER C WITH CIRCUMFLEX) although I'm not sure that particular behavior is exactly what we want (I haven't gotten desperate enough to actually read any mediawiki documentation, so I have no idea how many choices there are).
 
 It turns out to be pretty handy to copy-paste short formulas from one website to another, and modulo some parentheses and such it tends to work fairly well (even with ↔, ∀, ∃, etc), except for the problem characters above. [[User:Kingdon|Kingdon]] 02:37, 23 February 2010 (UTC)
+
+:Metamath also uses U+00B7 MIDDLE DOT (for example in [http://us.metamath.org/mpeuni/sqr2irr.html sqr2irr]).  Perhaps the solution to that one is just to switch. Dunno. [[User:Kingdon|Kingdon]] 02:48, 23 February 2010 (UTC)
