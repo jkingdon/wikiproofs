@@ -29,5 +29,5 @@ stmt (followImplication () ((subst y x φ) (φ → ψ)) (subst y x ψ)) # conseq
 
 stmt (buildSubstitutedAddition () ((subst y x (n0 = n1)) (subst y x (m0 = m1))) (subst y x ((n0 + m0) = (n1 + m1))))
 # buildSubstitutedAddition is a consequence of AdditionBuilder and followImplication, I think
-
+stmt (buildSubstitutedEquality () ((subst y x (x0 = x1)) (subst y x (y0 = y1))) (subst y x ((x0 = y0) ↔ (x1 = y1))))
 </jh>
