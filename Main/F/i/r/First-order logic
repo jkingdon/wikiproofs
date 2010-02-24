@@ -90,17 +90,24 @@ thm (EqualityReflexivity ((x y)) () (y = y) (
 
 The proof of symmetry follows much more easily from reflexivity and the equality axiom. Most of what we need to do is just propositional logic.
 <jh>
+thm (applyComm () ((H (φ → (ψ → χ)))) (ψ → (φ → χ)) (
+        H 
+        import
+
+        ψ φ ConjunctionCommutativity eliminateBiconditionalReverse
+        χ addCommonConsequent
+
+        applyModusPonens
+        export
+))
+
 thm (applyNestedModusPonens () 
   ((HIMP (φ → (ψ → χ))) (H ψ))
   (φ → χ) (
-        HIMP
-
         H
-        ψ χ ModusPonens
-        export
+        HIMP
+        applyComm
         applyModusPonens
-
-        applySyllogism
 ))
 
 thm (EqualitySymmetryImplication () () ((x = y) → (y = x)) (
@@ -365,6 +372,12 @@ thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) →
         (∀ x (¬ ψ)) (∀ x (¬ φ)) Transposition
         eliminateBiconditionalReverse
         applySyllogism
+))
+
+thm (distributeForAllImplicationToThereExists () ((H (∀ x (φ → ψ)))) ((∃ x φ) → (∃ x ψ)) (
+        H
+        x φ ψ ForAllImplicationThereExists
+        applyModusPonens
 ))
 </jh>
 
@@ -1047,6 +1060,15 @@ thm (sb2 () () ((∀ x ((x = y) → φ)) → (subst y x φ)) (
 ))
 </jh>
 
+=== Substitution implies ∃x(x = y ∧ φ) ===
+
+Although being able to prove a formula involving <code>subst</code> is our first order of business, some of the theorems below also do the reverse. Here is a lemma to help turn <code>subst</code> into something else (it is just extracting half of the definition):<ref>[http://us.metamath.org/mpeuni/sb1.html sb1] in metamath's set.mm, accessed February 24, 2010</ref>
+<jh>
+thm (sb1 () () ((subst y x φ) → (∃ x ((x = y) ∧ φ))) (
+        ((x = y) → φ) (∃ x ((x = y) ∧ φ)) ConjunctionLeftElimination
+))
+</jh>
+
 === Substitution applied to an equality ===
 This theorem is basically just equality reflexivity, except that one side has been substituted with the object on the other side.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1] in metamath's set.mm, accessed February 22, 2010</ref>
 
@@ -1062,7 +1084,7 @@ thm (SubstitutionEquality () () (subst y x (x = y)) (
 </jh>
 
 === Substitution of a theorem remains a theorem ===
-If we have a theorem, we can add a variable substitution onto it.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1] in metamath's set.mm, accessed February 24, 2010</ref>  This will be useful in building up expressions which contain <code>subst</code>.
+If we have a theorem, we can add a variable substitution onto it.<ref>[http://us.metamath.org/mpeuni/sbt.html sbt] in metamath's set.mm, accessed February 24, 2010</ref>  This will be useful in building up expressions which contain <code>subst</code>.
 <jh>
 thm (introduceSubst () ((H φ)) (subst y x φ) (
         H
@@ -1070,6 +1092,97 @@ thm (introduceSubst () ((H φ)) (subst y x φ) (
         x generalize
 
         x y φ sb2
+
+        applyModusPonens
+))
+</jh>
+
+== Convert from implicit substitution ==
+A statement of the form <code>x = y → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code> can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>y</code>. It also provides one of the ways to construct a statement using <code>subst</code>.
+
+We break up the proof into several steps:
+
+<jh>
+thm (sbie-1 () ((H ((x = y) → (φ ↔ ψ)))) (((x = y) ∧ φ) → ψ) (
+        H
+        φ ψ BiconditionalReverseElimination
+        applySyllogism
+        import
+))
+
+thm (sbie-2 () ((H (((x = y) ∧ φ) → ψ))) ((subst y x φ) → (∃ x ψ)) (
+        y x φ sb1
+
+        H
+        x generalize
+        distributeForAllImplicationToThereExists
+
+        applySyllogism
+))
+
+thm (sbie-forward ()
+  ((HFREE (x is-not-free-in ψ))
+   (HEQ ((x = y) → (φ ↔ ψ)))
+  )
+  ((subst y x φ) → ψ) (
+        HEQ
+        sbie-1
+        sbie-2
+
+        HFREE
+        ThereExistsAddRemove
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (sbie-reverse ()
+  ((HFREE (x is-not-free-in ψ))
+   (HEQ ((x = y) → (φ ↔ ψ)))
+  )
+  (ψ → (subst y x φ)) (
+</jh>
+The first line we'll use at the very end.
+<jh>
+        HFREE
+
+        HEQ
+        φ ψ BiconditionalForwardElimination
+        applySyllogism
+
+        applyComm
+</jh>
+We now have <code>ψ → (x = y → φ)</code>.  The antecedent of that is almost <code>(∀ x ((x = y) → φ))</code>, which is what we'll need for <code>sb2</code>.
+<jh>
+
+        x generalize
+        distributeForAllImplication
+
+        x y φ sb2
+        applySyllogism
+</jh>
+That gives us <code>((∀ x ψ) → (subst y x φ))</code>; we just need to remove the initial quantifier.
+<jh>
+
+        applySyllogism
+))
+
+thm (sbie () 
+  ((HFREE (x is-not-free-in ψ))
+   (HEQ ((x = y) → (φ ↔ ψ)))
+  )
+  ((subst y x φ) ↔ ψ) (
+        HFREE HEQ sbie-forward
+        HFREE HEQ sbie-reverse
+        introduceBiconditionalFromImplications
+))
+
+thm (buildSubstFromEquality ()
+  ((HPSI ψ) (HFREE (x is-not-free-in ψ)) (HEQ ((x = y) → (φ ↔ ψ))) )
+  (subst y x φ) (
+        HPSI
+
+        HFREE HEQ sbie
+        eliminateBiconditionalForward
 
         applyModusPonens
 ))
