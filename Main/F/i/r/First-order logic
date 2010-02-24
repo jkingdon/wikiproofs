@@ -26,7 +26,7 @@ As usual, φ, ψ, χ, and θ are formulas and x, y, and z are objects:
 
 <jh>
 var (formula φ ψ χ θ)
-var (object x y z)
+var (object x y z x0 x1 y0 y1)
 </jh>
 
 == ForAllImplication ==
@@ -45,9 +45,11 @@ thm (distributeForAllImplication () ((H (∀ x (φ → ψ)))) ((∀ x φ) → (�
 ))
 </jh>
 
-== Equality is reflexive, symmetric, and transitive ==
+== Equality ==
+
 The basic facts about equality are that it is reflexive, symmetric and transitive. Instead of supposing these as axioms, we have a single axiom which implies them (when combined with some of the other axioms).
 
+=== Reflexivity ===
 We start with reflexivity.  The first two theorems are intermediate steps:
 
 <jh>
@@ -84,6 +86,8 @@ thm (EqualityReflexivity ((x y)) () (y = y) (
 ))
 </jh>
 
+=== Symmetry ===
+
 The proof of symmetry follows much more easily from reflexivity and the equality axiom. Most of what we need to do is just propositional logic.
 <jh>
 thm (applyNestedModusPonens () 
@@ -112,6 +116,7 @@ thm (EqualitySymmetry () () ((x = y) ↔ (y = x)) (
 ))
 </jh>
 
+=== Transitivity ===
 Transitivity is now just a rearangement of our equality axiom:
 <jh>
 thm (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)) (
@@ -119,6 +124,18 @@ thm (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)) (
         y x z AxiomEquality
         applySyllogism
         import
+))
+</jh>
+
+=== Rule for EqualityBuilder ===
+<code>EqualityBuilder</code> is an axiom, and we provide a rule version as well:
+<jh>
+thm (buildEquality () ((HX (x0 = x1)) (HY (y0 = y1))) ((x0 = y0) ↔ (x1 = y1)) (
+        HX
+        HY
+        introduceConjunction
+        x0 x1 y0 y1 EqualityBuilder
+        applyModusPonens
 ))
 </jh>
 
