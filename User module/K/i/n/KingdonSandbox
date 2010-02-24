@@ -21,17 +21,7 @@ thm (buildSubstFromEquality ()
         applyModusPonens
 ))
 
-thm (deadEnd () () ((n = (0)) → ((n = (0)) ↔ ((0) = (0)))) (
-        (0) EqualityReflexivity
-        ((0) = (0)) (n = (0)) ConjunctionLeftIntroduction
-        applyModusPonens
-
-        n (0) (0) (0) EqualityBuilder
-
-        applySyllogism
-))
-
-thm (b () () ((n = (0)) → (((0) + n) = ((0) + (0)))) (
+thm (ViaSbieStepOne () () ((n = (0)) → (((0) + n) = ((0) + (0)))) (
         (0) EqualityReflexivity
         ((0) = (0)) (n = (0)) ConjunctionRightIntroduction
         applyModusPonens
@@ -41,8 +31,8 @@ thm (b () () ((n = (0)) → (((0) + n) = ((0) + (0)))) (
         applySyllogism
 ))
 
-thm (a () () ((n = (0)) → ((((0) + n) = n) ↔ (((0) + (0)) = (0)))) (
-        n b
+thm (ViaSbieStepTwo () () ((n = (0)) → ((((0) + n) = n) ↔ (((0) + (0)) = (0)))) (
+        n ViaSbieStepOne
         (n = (0)) ImplicationReflexivity
         composeConjunction
 
@@ -50,12 +40,31 @@ thm (a () () ((n = (0)) → ((((0) + n) = n) ↔ (((0) + (0)) = (0)))) (
         applySyllogism
 ))
 
-thm (BaseCase () () (subst (0) n (((0) + n) = n)) (
+thm (BaseCaseViaSbie () () (subst (0) n (((0) + n) = n)) (
         (0) AdditiveIdentity
         n (((0) + (0)) = (0)) DistinctNotFree
-        n a
+        n ViaSbieStepTwo
         buildSubstFromEquality
 ))
+
+thm (ViaFollowImplicationStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
+        (0) n SubstitutionEquality
+
+        n ViaSbieStepOne
+        followImplication
+))
+
+thm (ViaBuilderStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
+        (0) EqualityReflexivity
+        (0) n sbt
+
+        (0) n SubstitutionEquality
+
+        buildSubstitutedAddition
+))
+
+#thm (ViaBuilderStepTwo () () (subst (0) n ((((0) + n) = n) ↔ (((0) + (0)) = (0)))) (
+#))
 
 #thm (Sample () () (((0) + n) = n) (
 #))
