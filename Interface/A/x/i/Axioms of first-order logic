@@ -6,7 +6,7 @@
  | shortcut = 
  | notes    = Predicate logic builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. More specifically, the kind of predicate logic we define here is known as first-order logic, which is a common basis for theories such as set theory or arithmetic.
 
-The axioms of first-order logic are usually stated in terms of substitution of one variable or constant for another, [[w:free variable|free variables]] and [[w:bound variable|bound variables]]. JHilbert or metamath do not have the ability to perform this kind of substitution or recognize free variables syntactically, so the version of the axioms here is not based on those concepts. JHilbert does have distinct variable constraints, although whether to use them in this context is somewhat a matter of taste; the metamath archive contains versions of many of these axioms either with distinct variable constraints or with other conditions which also make them correct. The axioms as presented here are adapted from metamath (which in turn got many of the ideas from a 1965 paper by Tarski).
+The axioms of first-order logic are usually stated in terms of substitution of one variable or constant for another, [[w:free variable|free variables]] and [[w:bound variable|bound variables]]. JHilbert or metamath do not have the ability to perform this kind of substitution or recognize free variables syntactically, so the version of the axioms here is not based on those concepts. JHilbert does have distinct variable constraints, although whether to use them in this context is somewhat a matter of taste; the metamath archive contains versions of many of these axioms either with distinct variable constraints or with other conditions which also make them correct. The axioms as presented here are adapted from metamath (which in turn got many of the ideas from a 1965 paper by Tarski).<ref>[http://us.metamath.org/mpeuni/mmset.html#pcaxioms Predicate calculus], accessed February 24, 2010</ref>
 }}
 
 == Formulas, objects, and universal quantification ==
@@ -24,7 +24,7 @@ We use the term ''object'' to refer to something which is subject to quantificat
 
 <jh>
 kind (object)
-var (object x y z)
+var (object x y z x0 x1 y0 y1)
 </jh>
 
 We extend the available formulas with [[w:Universal quantification|universal quantification]]:
@@ -67,9 +67,15 @@ stmt (QuantifierIntroduction () () (
 )
 </jh>
 
-There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic).
+There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic). Here we provide such an axiom for equals itself. In metamath's set.mm, this is proved from the axioms of set theory,<ref>[http://us.metamath.org/mpeuni/eqeq12.html eqeq12], [http://us.metamath.org/mpeuni/df-cleq.html df-cleq], and [http://us.metamath.org/mpeuni/ax-ext.html ax-ext], accessed February 24, 2010</ref> but we want our first-order logic axioms usable in non-set-theory contexts.
+<jh>
+stmt (EqualityBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 = y0) ↔ (x1 = y1))))
+</jh>
 
 Although a usable theory of predicate logic will generally have at least one more quantifier (∃ for "there exists"), it can be defined in terms of ∀, so we have avoided it in the above axioms and do not need to define it here.
+
+== References ==
+<references/>
 
 == External links ==
 *[[w:First-order logic]]
