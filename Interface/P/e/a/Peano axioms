@@ -33,7 +33,7 @@ term (nat (0))
 
 There is a successor operation:
 <jh>
-term (nat (succ object))
+term (nat (succ nat))
 </jh>
 
 Zero is not the successor of any number:
