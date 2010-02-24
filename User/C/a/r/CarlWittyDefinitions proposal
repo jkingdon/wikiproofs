@@ -98,7 +98,11 @@ Any comments on this proposal would be greatly appreciated! [[User:CarlWitty|Car
 
 ::::The restriction certainly does not reduce strength in a "normal" axiomatization of first-order or higher-order logic; there would be no reason to have a term constructor with vkind result, or to have a disjoint variable restriction between variables of non-vkind kinds, in such a system.  The only question is whether there might be exotic uses of disjoint variables, like formalizing more complicated binding structures (like the case of Common Lisp let described below), or using disjoint variables as a trick to formalize some other construct that really isn't a binding construct at all.
 
+:::::Well, there are some axiomatisations metamath (and hence JHilbert) is not capable of formalising without packing quite a lot of metalogic into the expressions. Multi-stacked calculi are an example. For those, we'd need an extension or an additional layer which hides the metalogic anyway. We can do the same in cases of "misuse" of the DV constraints. So I'd say we go with the restriction for now and cross any other bridges when we come to them.
+
 ::::Also: you definitely need something like the vkind restriction to keep you from defining <code>(constx)</code> to be <code>x</code>.  If this definition is allowed, then you can treat <code>(constx)</code> as a spare variable that's not subject to disjoint variable constraints.  (Or, I guess, you could allow the definition and then track <code>(constx)</code> as if it were a variable when looking at disjoint variables.  But that's pretty annoying.)
+
+:::::Yes, that's a particularly annoying instance of the Ghilbert-type definition weirdness. Technically, <code>(constx)</code> is not a variable. But to the user it ''looks'' as one, which can be just as bad.
 
 ::It's a bit tricky to talk about one metamath variant being weaker than another, since in any reasonable variant, you can construct a theory that will recognize any recursively enumerable language.  But I do know of one somewhat plausible kind of formalization where some one-step proofs in metamath would require multi-step proofs with the vkind restriction: abstraction over binding contexts.
 
@@ -146,3 +150,5 @@ thm (baz () () (foo) (
 :::I haven't had the time to check this yet. Is there a metamath proof for the lemmas anywhere?--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 19:00, 16 February 2010 (UTC)
 
 ::::Thanks for prodding me to take another look at this.  As I described above, my counterexample is wrong, and I haven't been able to find an actual counterexample for the GHilbert definition mechanism (augmented with vkind; GHilbert definitions without vkind are definitely unsound, by defining <code>(constx)</code> to be <code>x</code>). [[User:CarlWitty|CarlWitty]] 19:50, 20 February 2010 (UTC)
+
+:::::Technically, it's not unsound because <code>(constx)</code> is not a variable (see above). It just looks terribly unsound and should therefore not be allowed.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 11:19, 24 February 2010 (UTC)
