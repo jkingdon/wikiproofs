@@ -10,8 +10,8 @@ Statements can be added if necessary, but then the exporting modules have to be 
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus]]
-| importedby = None yet
-| exportedby = None yet
+| importedby = [[Interface:Peano axioms]]
+| exportedby = [[First-order logic]]
 }}
 == Formulas, objects, and quantification ==
 We build on [[Interface:Classical propositional calculus]]:
