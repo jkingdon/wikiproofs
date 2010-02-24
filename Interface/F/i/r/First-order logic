@@ -28,7 +28,7 @@ We use the term ''object'' to refer to something which is subject to quantificat
 
 <jh>
 kind (object)
-var (object x y z)
+var (object x y z x0 x1 y0 y1)
 </jh>
 
 We extend the available formulas with [[w:Universal quantification|universal quantification]] and [[w:Existential quantification|existential quantification]]:
@@ -117,7 +117,11 @@ stmt (EqualitySymmetry () () ((x = y) ↔ (y = x)))
 stmt (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)))
 </jh>
 
-There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, ∈ (is an element of), for set theory, or S (successor) or + (addition) for Peano arithmetic).
+There is also the principle of "equals can be substituted for equals". In our system, this is done via builders, and here we provide one for equals itself. Theories which build on first-order logic will provide builders for additional expressions such as <code>∈</code> (is an element of) for set theory or <code>+</code> (addition) for Peano arithmetic.
+<jh>
+stmt (EqualityBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 = y0) ↔ (x1 = y1))))
+stmt (buildEquality () ((x0 = x1) (y0 = y1)) ((x0 = y0) ↔ (x1 = y1)))
+</jh>
 
 == Free variables ==
 The conventional treatment of [[w:free variable|free variables]] is syntactic; variables are defined as free depending on where they occur in a formula relative to the quantifiers over that variable. Our concept of free variable is similar (and can be used in applying first-order logic in exactly the same way), although we do provide one additional way to consider a variable "free" which would not be present in most systems.
