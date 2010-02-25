@@ -35,3 +35,7 @@ Oh, and don't worry about your current work on propositional logic. It is neithe
 == Dummies, definitions and all that ==
 
 Thanks for your dummies example (normal dummies in this case) and your continued work in general. You've probably realised that there are efforts under way to change the dummy/definition mechanism of JHilbert/Ghilbert in fundamental ways, and your work is slowly approaching realms where this stuff starts to really matter. Now, until the changes are actually implemented, I expect one or two months to pass ''at the very least''. That's probably an insanely optimistic estimate. The thing is that once the new version goes online, some modules might require non-trivial changes (added proof steps) in order to still verify. That's very unfortunate, but obviously you don't want functionality which leads to unsoundness in your proof verifier, and right now I don't see a way to salvage the current very convenient definition mechanism.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:22, 25 February 2010 (UTC)
+
+== New featured page ==
+
+Hi, I've started the blurb for the next featured page at [[Template:Featured/Draft]]. Maybe you can edit it a little&hellip; Feel free to choose a better image if you find one. Be careful with EU copyright restrictions, however (70 years pma vs. the US "pre-1923" rule). In particular, photographs of Whitehead or Russell are probably still copyrighted.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:54, 25 February 2010 (UTC)
