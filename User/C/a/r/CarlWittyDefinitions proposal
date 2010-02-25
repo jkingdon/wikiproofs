@@ -154,3 +154,5 @@ thm (baz () () (foo) (
 :::::Technically, it's not unsound because <code>(constx)</code> is not a variable (see above). It just looks terribly unsound and should therefore not be allowed.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 11:19, 24 February 2010 (UTC)
 
 ::::::No, this time I double-checked... it really is unsound.  See [[User:CarlWitty/bad-const-defn.mm]] for a metamath proof of <code>|- ph</code> (that is, a proof of anything whatsoever) from such a definition. [[User:CarlWitty|CarlWitty]] 17:39, 24 February 2010 (UTC)
+
+:::::::You are right. See [[User:GrafZahl/unsound-def.gh]]. Just folding <code>ax-17</code> to <code>badth</code> does not work because of the constraint violation. But you can simply instantiate <code>ax-17</code> with <code>(constx)</code> instead of <code>x</code>. D'oh. BTW, Raph added the link [http://sites.google.com/a/ghilbert.org/ghilbert/documents/definitions] to [[User:GrafZahl/Definitions in JHilbert]], which seems to contain a further idea for safe definitions. I've yet to read it properly, though.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:34, 25 February 2010 (UTC)
