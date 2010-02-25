@@ -91,6 +91,10 @@ This can be a transient error (try just hitting "Preview" again, if you see it w
 
 This generally means there is another more informative error somewhere else on the page.
 
+ Attempt to prove result by illegal dummy assignment
+
+This means that the statement left on the proof stack at the end of the proof has the same arrangement of terms as what you are trying to prove, but the variables don't line up. It can be something as mundane as proving <code>x = y</code> when what you need is <code>y = x</code> (see [[Illegal dummy assignment example]]).
+
 == External links ==
 
 There's another partial JHilbert manual at:
