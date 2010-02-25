@@ -152,3 +152,5 @@ thm (baz () () (foo) (
 ::::Thanks for prodding me to take another look at this.  As I described above, my counterexample is wrong, and I haven't been able to find an actual counterexample for the GHilbert definition mechanism (augmented with vkind; GHilbert definitions without vkind are definitely unsound, by defining <code>(constx)</code> to be <code>x</code>). [[User:CarlWitty|CarlWitty]] 19:50, 20 February 2010 (UTC)
 
 :::::Technically, it's not unsound because <code>(constx)</code> is not a variable (see above). It just looks terribly unsound and should therefore not be allowed.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 11:19, 24 February 2010 (UTC)
+
+::::::No, this time I double-checked... it really is unsound.  See [[User:CarlWitty/bad-const-defn.mm]] for a metamath proof of <code>|- ph</code> (that is, a proof of anything whatsoever) from such a definition. [[User:CarlWitty|CarlWitty]] 17:39, 24 February 2010 (UTC)
