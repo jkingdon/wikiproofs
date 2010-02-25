@@ -9,7 +9,6 @@
 [[First-order logic]], [[Interface:First-order logic]]
 
 * Not sure whether these are the most salient subst theorems, but some interesting-looking ones are:
-:*[http://us.metamath.org/mpeuni/sbequ12.html sbequ12]
 :*[http://us.metamath.org/mpeuni/stdpc4.html stdpc4]
 :*[http://us.metamath.org/mpeuni/sbequ.html sbequ]
 :*[http://us.metamath.org/mpeuni/sbcom2.html sbcom2]
@@ -19,25 +18,20 @@
 :*[http://us.metamath.org/mpeuni/hbsb2a.html hbsb2a]
 :*[http://us.metamath.org/mpeuni/sbco2.html sbco2]
 
-We have SubstitutionEquality which is used a lot in building formulas.
+To add to [[Interface:First-order logic]]:
+:We have SubstitutionEquality which is used a lot in building formulas.
+:*[http://us.metamath.org/mpeuni/sbt.html sbt]
+:*[http://us.metamath.org/mpeuni/sbie.html sbie]
+:Builders: addSubst, buildSubst
 
 Move substitution across connectives:
 :*[http://us.metamath.org/mpeuni/sbn.html sbn], [http://us.metamath.org/mpeuni/sbim.html sbim], [http://us.metamath.org/mpeuni/sbor.html sbor], [http://us.metamath.org/mpeuni/sban.html sban], [http://us.metamath.org/mpeuni/sbbi.html sbbi]
 
-Builders:
-:*[http://us.metamath.org/mpeuni/sbimi.html sbimi]
-:*[http://us.metamath.org/mpeuni/sbbii.html sbbii]
-
-Both of these came up in my experimentation so far:
-:*[http://us.metamath.org/mpeuni/sbt.html sbt]
-:*[http://us.metamath.org/mpeuni/sbie.html sbie]
+Needed in proof of sbn: [http://us.metamath.org/mpeuni/sbequ12.html sbequ12] [http://us.metamath.org/mpeuni/sb4.html sb4]
 
 === More moving formulas where quantified variable is not free ===
 *These two on wikipedia list of identities: [http://us.metamath.org/mpeuni/19.42.html 19.42] [http://us.metamath.org/mpeuni/19.32.html 19.32]
 *These two similar: [http://us.metamath.org/mpeuni/19.28.html 19.28] [http://us.metamath.org/mpeuni/19.45.html 19.45]
-
-=== Equality ===
-* builder for =: [http://us.metamath.org/mpeuni/eqeq12.html eqeq12]
 
 === Others? ===
 [http://us.metamath.org/mpeuni/19.29.html 19.29]
