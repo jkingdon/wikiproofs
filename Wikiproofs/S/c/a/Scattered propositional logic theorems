@@ -10,7 +10,7 @@ This is a list of propositional logic theorems which are proved outside [[:Categ
 
 From [[First-order logic]]:
 
-* applyNestedModusPonens
+* applyComm and applyNestedModusPonens (the former might obviate the need for the latter)
 * principia*2.21
 * transposeBiconditionalWithNegatedRight
 * joinConsequents
