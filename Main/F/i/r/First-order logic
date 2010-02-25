@@ -1048,7 +1048,7 @@ thm (sb2 () () ((∀ x ((x = y) → φ)) → (subst y x φ)) (
 </jh>
 
 === Substitution applied to an equality ===
-Our first theorem states that if we have an equality of two objects, and we substitute one for the other, the result is true.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1] in metamath's set.mm, accessed February 22, 2010</ref>
+This theorem is basically just equality reflexivity, except that one side has been substituted with the object on the other side.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (SubstitutionEquality () () (subst y x (x = y)) (
@@ -1056,6 +1056,20 @@ thm (SubstitutionEquality () () (subst y x (x = y)) (
         x generalize
 
         x y (x = y) sb2
+
+        applyModusPonens
+))
+</jh>
+
+=== Substitution of a theorem remains a theorem ===
+If we have a theorem, we can add a variable substitution onto it.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1] in metamath's set.mm, accessed February 24, 2010</ref>  This will be useful in building up expressions which contain <code>subst</code>.
+<jh>
+thm (introduceSubst () ((H φ)) (subst y x φ) (
+        H
+        (x = y) introduceAntecedent
+        x generalize
+
+        x y φ sb2
 
         applyModusPonens
 ))
