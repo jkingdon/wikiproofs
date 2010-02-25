@@ -134,9 +134,73 @@ thm (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)) (
 ))
 </jh>
 
-=== Rule for EqualityBuilder ===
-<code>EqualityBuilder</code> is an axiom, and we provide a rule version as well:
+=== EqualityBuilder ===
+<code>EqualityBuilder</code> can be derived from transitivity.  We start with a special case:
+
 <jh>
+thm (EqualityBuilderRR () () ((x0 = x1) → ((x0 = y) ↔ (x1 = y))) (
+</jh>
+The proof has two halves, each of which is proved by transitivity and an export.
+The forward implication, <code>x0 = x1 → (x0 = y → x1 = y)</code>, also involves switching the order of the opening equality.
+<jh>
+        x0 x1 EqualitySymmetry
+        eliminateBiconditionalReverse
+
+        x1 x0 y EqualityTransitivity
+        export
+
+        applySyllogism
+
+</jh>
+The reverse implication, <code>x0 = x1 → (x1 = y → x0 = y)</code>, is even simpler:
+<jh>
+        x0 x1 y EqualityTransitivity
+        export
+
+</jh>
+We then combine the two directions:
+<jh>
+        composeConjunction
+
+        (x0 = y) (x1 = y) BiconditionalImplication eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+We provide an analogous result with the order of the equalities changed, <code>EqualityBuilderLL</code>.
+<jh>
+thm (commute2 () () (((x0 = y0) ↔ (x1 = y1)) → ((y0 = x0) ↔ (y1 = x1))) (
+        x0 y0 EqualitySymmetry
+        x1 y1 EqualitySymmetry
+        buildBiconditional
+        eliminateBiconditionalReverse
+))
+
+thm (EqualityBuilderLL () () ((x0 = x1) → ((y = x0) ↔ (y = x1))) (
+        x0 x1 y EqualityBuilderRR
+        x0 y x1 y commute2
+        applySyllogism
+))
+</jh>
+
+Combining <code>EqualityBuilderLL</code> and <code>EqualityBuilderRR</code> gives us the full builder.
+
+<jh>
+thm (EqualityBuilder-thm () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 = y0) ↔ (x1 = y1))) (
+        (x0 = x1) (y0 = y1) ConjunctionRightElimination
+        x0 x1 y0 EqualityBuilderRR
+        applySyllogism
+
+        (x0 = x1) (y0 = y1) ConjunctionLeftElimination
+        y0 y1 x1 EqualityBuilderLL
+        applySyllogism
+
+        composeConjunction
+
+        (x0 = y0) (x1 = y0) (x1 = y1) BiconditionalTransitivity
+        applySyllogism
+))
+
 thm (buildEquality () ((HX (x0 = x1)) (HY (y0 = y1))) ((x0 = y0) ↔ (x1 = y1)) (
         HX
         HY
