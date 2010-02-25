@@ -1011,7 +1011,7 @@ thm (joinConsequents ()
 ))
 </jh>
 
-The following lemma is half of the result we are working towards:<ref>[http://us.metamath.org/mpeuni/equs4.html equs4] in metamath's set.mm, accessed February 22, 2010</ref>
+The following lemma's consequent is half of the definition of <code>subst</code>:<ref>[http://us.metamath.org/mpeuni/equs4.html equs4] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (equs4 () () ((∀ x ((x = y) → φ)) → (∃ x ((x = y) ∧ φ))) (
