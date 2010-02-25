@@ -14,6 +14,7 @@
 
 * [[/Botched attempt to prove JHilbert definition soundness]]
 * [[/Definitions in JHilbert]]
+* [[/unsound-def.gh]] demonstration of unsoundness in Ghilbert with the old definition mechanism as suggested by [[User:CarlWitty/bad-const-defn.mm]]. As of Feb&nbsp;2010, Raph is developing a new, conservative definition mechanism.
 
 == Formal system ==
 
