@@ -20,7 +20,7 @@ By convention we use φ, ψ, χ, and θ to represent formulas:
 var (formula φ ψ χ θ)
 </jh>
 
-We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is a valid object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
+We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is an object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
 
 <jh>
 kind (object)
