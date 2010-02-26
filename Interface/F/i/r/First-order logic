@@ -214,7 +214,32 @@ We first define the <code>subst</code> term:
 term (formula (subst object object formula))
 </jh>
 
-so for example <code>(subst y x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>y</code>. In more conventional notation this would be <code>[y / x] φ</code>.
+so for example <code>(subst y x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>y</code>. In more conventional notation this would be <code>[y / x] φ</code> (or, using a common but potentially ambiguous notation, changing <code>φ(x)</code> to <code>φ(y)</code>).
+
+=== Building up expressions involving subst ===
+
+The first theorem is equality reflexivity, except that one side has been substituted with the object on the other side.
+<jh>
+stmt (SubstitutionEquality () () (subst y x (x = y)))
+</jh>
+
+If we have a theorem, we can add a variable substitution onto it.
+<jh>
+stmt (introduceSubst () (φ) (subst y x φ))
+</jh>
+
+A statement of the form <code>x = y → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>y</code>.
+<jh>
+stmt (buildSubstFromEquality ()
+  ( ψ (x is-not-free-in ψ) ((x = y) → (φ ↔ ψ)) )
+  (subst y x φ))
+</jh>
+
+We can add <code>subst</code> to both sides of an implication or a biconditional.
+<jh>
+stmt (addSubst () ((φ → ψ)) ((subst y x φ) → (subst y x ψ)))
+stmt (buildSubst () ((φ ↔ ψ)) ((subst y x φ) ↔ (subst y x ψ)))
+</jh>
 
 == What else? ==
 This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
