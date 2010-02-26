@@ -1,3 +1,5 @@
 == Welcome ==
 
 Hi Raph, and welcome on the Wiki. Thanks for your link. I'll read it properly soon.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:40, 25 February 2010 (UTC)
+
+:Thanks. I'm going over some of this stuff, and realizing that getting the definition mechanism right is very tricky. My proposal is fairly similar to [[User:CarlWitty/Definitions proposal|Carl's proposal]], but I hope even simpler (without the levels, and with, I hope, improved usability from not having to do (cv x), and not having to do a stack of hb*'s to satisfy the "not free in constraints", or have separate "v" variants for the cases when it's syntactic). It's also making me realize, of course, that a fully spec of the new Ghilbert is sorely needed, so I've started poking away at that. [[User:Raph|Raph]] 17:13, 25 February 2010 (UTC)
