@@ -3,3 +3,10 @@
 Hi Raph, and welcome on the Wiki. Thanks for your link. I'll read it properly soon.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:40, 25 February 2010 (UTC)
 
 :Thanks. I'm going over some of this stuff, and realizing that getting the definition mechanism right is very tricky. My proposal is fairly similar to [[User:CarlWitty/Definitions proposal|Carl's proposal]], but I hope even simpler (without the levels, and with, I hope, improved usability from not having to do (cv x), and not having to do a stack of hb*'s to satisfy the "not free in constraints", or have separate "v" variants for the cases when it's syntactic). It's also making me realize, of course, that a fully spec of the new Ghilbert is sorely needed, so I've started poking away at that. [[User:Raph|Raph]] 17:13, 25 February 2010 (UTC)
+
+== Thanks ==
+
+Nice to see you here and I'm glad to see you're thinking about things like how definitions work (so I don't have to). 
+
+Your presence already had one concrete good effect; I was looking through the stuff you linked to, browsed [http://levien.com/garden/ghnew/peano/peano_thms.gh], and found I had made a rather silly mistake (in not noticing that eqeq12, or EqualityBuilder as we call it on [[Interface:First-order logic]] can be proved from equality transitivity, rather than from set theory as set.mm does).
+I'm also pleased to see that I apparently had correctly concluded that addeq12 and muleq12 have to be axioms. [[User:Kingdon|Kingdon]] 03:23, 26 February 2010 (UTC)
