@@ -21,7 +21,7 @@
 Move substitution across connectives:
 :*[http://us.metamath.org/mpeuni/sbn.html sbn], [http://us.metamath.org/mpeuni/sbim.html sbim], [http://us.metamath.org/mpeuni/sbor.html sbor], [http://us.metamath.org/mpeuni/sban.html sban], [http://us.metamath.org/mpeuni/sbbi.html sbbi]
 
-Needed in proof of sbn: [http://us.metamath.org/mpeuni/sbequ12.html sbequ12] [http://us.metamath.org/mpeuni/sb4.html sb4]
+Needed in proof of sbn: [http://us.metamath.org/mpeuni/sb4.html sb4]
 
 === More moving formulas where quantified variable is not free ===
 *These two on wikipedia list of identities: [http://us.metamath.org/mpeuni/19.42.html 19.42] [http://us.metamath.org/mpeuni/19.32.html 19.32]
