@@ -60,7 +60,3 @@ Here are some sample theorems:
  10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
 
 * Multiplication is commutative and associative
-
-:Many (but not all) of these are proved in (new) Ghilbert. See [http://levien.com/garden/ghnew/peano/] for the source, but keep in mind I haven't yet pushed the batch or interactive verifier that will accept these. Right now, params to interfaces don't work, so I've had to hand-hack the interface files.
-
-:So, my questions are: Is there some way to gateway these Ghilbert proofs so that they can be imported here? (Or vice versa, for that matter). Is there some place I can jump in and contribute a theorem or two to get started (maybe first-order predicate logic)? [[User:Raph|Raph]] 02:56, 26 February 2010 (UTC)
