@@ -71,10 +71,7 @@ stmt (QuantifierIntroduction () () (
 )
 </jh>
 
-There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic). Here we provide such an axiom for equals itself. In metamath's set.mm, this is proved from the axioms of set theory,<ref>[http://us.metamath.org/mpeuni/eqeq12.html eqeq12], [http://us.metamath.org/mpeuni/df-cleq.html df-cleq], and [http://us.metamath.org/mpeuni/ax-ext.html ax-ext], accessed February 24, 2010</ref> but we want our first-order logic axioms usable in non-set-theory contexts.
-<jh>
-stmt (EqualityBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 = y0) ↔ (x1 = y1))))
-</jh>
+There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic). Such a statement for equals itself, <code>(x0 = x1 ∧ y0 = y1) → (x0 = y0 ↔ x1 = y1)</code>, can be proved from the above axioms, so an additional axiom is not needed here.
 
 == References ==
 <references/>
