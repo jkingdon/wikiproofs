@@ -1,3 +1,6 @@
+{{header
+ | notes = This page collects theorems which strictly belong to propositional logic but are missing from [[:Category:Classical propositional logic]], most notably [[Interface:Classical propositional calculus]].
+}}
 This is a list of propositional logic theorems which are proved outside [[:Category:Classical propositional logic]]. There are a number of ways of reacting to this situation:
 
 # This theorem is only used one place (and perhaps is unlikely to be needed anywhere else), but it does make this particular proof more clear, so don't worry about it.
