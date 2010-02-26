@@ -1,0 +1,13 @@
+Greetings all!
+
+My name is Raph Levien. I've been playing with Metamath and Ghilbert for a [http://www.advogato.org/person/raph/diary/238.html|long time]. Lately life has been pretty busy and finding time has been a problem, but I'm very happy to see continued interest.
+
+One consequence of not having much time and energy is that the sources and documentation for Ghilbert are fairly incomplete and fragmentary. I'll be working on that, trying to put together a reasonable set of documentation and a usable release of the tools. In the meantime, the dedicated reader can find more at these resources:
+
+* [http://sites.google.com/a/ghilbert.org/ghilbert/ Ghilbert site] - contains official documentation and related materials.
+* [http://wiki.planetmath.org/AsteroidMeta/Ghilbert AsteroidMeta Ghilbert page]
+* [http://levien.com/garden/ghnew batch verifier source] - but still incomplete
+
+Where is the best place to host discussion of Ghilbert? There's a [http://groups.google.com/group/metamath Google group] that is one possibility. I'm open to ideas though.
+
+Part of the dream of Ghilbert is to work well with other theorem proving environments. It would be great if proofs could move back and forth easily between Ghilbert and JHilbert. Could [http://neil.fraser.name/writing/sync/|differential synchronization] with transforms work as a way of keeping two repositories in sync?
