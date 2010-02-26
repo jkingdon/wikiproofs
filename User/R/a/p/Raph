@@ -10,4 +10,4 @@ One consequence of not having much time and energy is that the sources and docum
 
 Where is the best place to host discussion of Ghilbert? There's a [http://groups.google.com/group/metamath Google group] that is one possibility. I'm open to ideas though.
 
-Part of the dream of Ghilbert is to work well with other theorem proving environments. It would be great if proofs could move back and forth easily between Ghilbert and JHilbert. Could [http://neil.fraser.name/writing/sync/|differential synchronization] with transforms work as a way of keeping two repositories in sync?
+Part of the dream of Ghilbert is to work well with other theorem proving environments. It would be great if proofs could move back and forth easily between Ghilbert and JHilbert. Could [http://neil.fraser.name/writing/sync/ differential synchronization] with transforms work as a way of keeping two repositories in sync?
