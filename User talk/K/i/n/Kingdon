@@ -43,3 +43,13 @@ Thanks for your dummies example (normal dummies in this case) and your continued
 Hi, I've started the blurb for the next featured page at [[Template:Featured/Draft]]. Maybe you can edit it a little&hellip; Feel free to choose a better image if you find one. Be careful with EU copyright restrictions, however (70 years pma vs. the US "pre-1923" rule). In particular, photographs of Whitehead or Russell are probably still copyrighted.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:54, 25 February 2010 (UTC)
 
 :Well, I made a stab at a blurb, although feel free to revise if you can think of anything more interesting or otherwise better to say. [[User:Kingdon|Kingdon]] 01:58, 26 February 2010 (UTC)
+
+== Peano arithmetic theorems ==
+
+(moved from [[User:Kingdon]], next to the list of theorems to prove in Peano arithmetic).
+
+:Many (but not all) of these are proved in (new) Ghilbert. See [http://levien.com/garden/ghnew/peano/] for the source, but keep in mind I haven't yet pushed the batch or interactive verifier that will accept these. Right now, params to interfaces don't work, so I've had to hand-hack the interface files.
+
+:So, my questions are: Is there some way to gateway these Ghilbert proofs so that they can be imported here? (Or vice versa, for that matter). Is there some place I can jump in and contribute a theorem or two to get started (maybe first-order predicate logic)? [[User:Raph|Raph]] 02:56, 26 February 2010 (UTC)
+
+::Definitely would love to have you jump in and give it a whirl.  First-order logic is what I've been working on lately, and you can see what we have so far in [[:Category:Classical_first-order_logic]].  Feel free to [[w:WP:BOLD|be bold]]; my own personal list of what seems most important is at [[User:Kingdon]] but your ideas of what might be useful are probably as good as mine. My current focus is: (1) getting a few more subst theorems (my experiments, for example [[User interface:Kingdon/Sandbox]] and [[User module:Kingdon/Sandbox]] have led me to think that subst-style induction might work out nicer than finds-style, although I'm not completely convinced on the point), and probably (2) start proving some of the Peano theorems (for one thing this is a way of finding out what is missing in the first-order logic). [[User:Kingdon|Kingdon]] 03:44, 26 February 2010 (UTC)
