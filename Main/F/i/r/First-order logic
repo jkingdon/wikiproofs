@@ -134,7 +134,7 @@ thm (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)) (
 ))
 </jh>
 
-=== EqualityBuilder ===
+=== Builder ===
 <code>EqualityBuilder</code> can be derived from transitivity.  We start with a special case:
 
 <jh>
@@ -186,7 +186,7 @@ thm (EqualityBuilderLL () () ((x0 = x1) → ((y = x0) ↔ (y = x1))) (
 Combining <code>EqualityBuilderLL</code> and <code>EqualityBuilderRR</code> gives us the full builder.
 
 <jh>
-thm (EqualityBuilder-thm () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 = y0) ↔ (x1 = y1))) (
+thm (EqualityBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 = y0) ↔ (x1 = y1))) (
         (x0 = x1) (y0 = y1) ConjunctionRightElimination
         x0 x1 y0 EqualityBuilderRR
         applySyllogism
