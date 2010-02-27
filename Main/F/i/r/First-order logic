@@ -934,6 +934,21 @@ thm (ThereExistsImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((�
 ))
 </jh>
 
+We're not quite done, there are similar theorems moving disjunctions and conjuncts. To move a disjunct out of ∀:<ref>[http://us.metamath.org/mpeuni/19.32.html 19.32]</ref>
+
+<jh>
+thm (ForAllDisjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∨ ψ)) ↔ (φ ∨ (∀ x ψ))) (
+        φ ψ DisjunctionImplication x buildForAll
+
+        H negateNotFree
+        ψ ForAllImplicationAntecedentMovement applyBiconditionalTransitivity
+
+        φ (∀ x ψ) DisjunctionImplication swapBiconditional applyBiconditionalTransitivity
+))
+</jh>
+
+
+
 == Quantifier order: ∃x∀y to ∀y∃x ==
 We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.<ref>[http://us.metamath.org/mpeuni/19.12.html 19.12] in metamath's set.mm, accessed February 22, 2010</ref>
 <jh>
