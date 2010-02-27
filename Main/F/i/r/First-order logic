@@ -1252,6 +1252,48 @@ thm (buildSubstFromEquality ()
 ))
 </jh>
 
+=== sbequ12 ===
+Another relationship between <code>subst</code> and equality is <code>x = y → (φ ↔ [y / x]φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12] in metamath's set.mm, accessed February 26, 2010</ref>  We prove each direction of the biconditional separately.
+<jh>
+thm (sbequ1 () () ((x = y) → (φ → (subst y x φ))) (
+</jh>
+The proof is going to show that <code>x = y ∧ φ</code> implies <code>(subst y x φ)</code>. We show this for the two halves of the definition of <code>subst</code>. The first half of the <code>subst</code> definition is <code>x = y → φ</code>:
+<jh>
+        (x = y) φ ConjunctionLeftElimination
+        φ (x = y) AntecedentIntroduction
+        applySyllogism
+</jh>
+The other half is <code>∃x(x = y ∧ φ)</code>:
+<jh>
+        ((x = y) ∧ φ) x 19.8a
+</jh>
+Now we combine the two:
+<jh>
+        composeConjunction
+        export
+))
+</jh>
+
+The other direction is also simple:
+<jh>
+thm (sbequ2 () () ((x = y) → ((subst y x φ) → φ)) (
+        ((x = y) → φ) (∃ x ((x = y) ∧ φ)) ConjunctionRightElimination
+        applyComm
+))
+</jh>
+
+We now combine the two to get <code>sbequ12</code>:
+<jh>
+thm (sbequ12 () () ((x = y) → (φ ↔ (subst y x φ))) (
+        x y φ sbequ1
+        x y φ sbequ2
+        composeConjunction
+
+        φ (subst y x φ) BiconditionalImplication eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 === Implication builder ===
 Analogous to our other implication builders, this theorem takes an implication and lets us add <code>subst</code> to both sides.<ref>[http://us.metamath.org/mpeuni/sbimi.html sbimi] in metamath's set.mm, accessed February 24, 2010</ref>
 <jh>
