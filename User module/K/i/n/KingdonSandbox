@@ -10,17 +10,6 @@ var (formula p q φ ψ)
 var (object x y)
 var (nat n m)
 
-thm (buildSubstFromEquality ()
-  ((HPSI ψ) (HFREE (x is-not-free-in ψ)) (HEQ ((x = y) → (φ ↔ ψ))) )
-  (subst y x φ) (
-        HPSI
-
-        HFREE HEQ sbie
-        eliminateBiconditionalForward
-
-        applyModusPonens
-))
-
 thm (ViaSbieStepOne () () ((n = (0)) → (((0) + n) = ((0) + (0)))) (
         (0) EqualityReflexivity
         ((0) = (0)) (n = (0)) ConjunctionRightIntroduction
