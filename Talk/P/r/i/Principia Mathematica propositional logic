@@ -26,3 +26,5 @@ I also have perhaps less noble reasons for disliking TeX formulas: they don't lo
 Eventually, we're likely to run into issues with harder-to-typeset syntax (integrals and so on), so I doubt we can or should avoid TeX entirely, but that doesn't affect this page.
 
 Summary: I'm not sure what the right answer is, but thought I should at least bring up the subject. [[User:Kingdon|Kingdon]] 16:50, 26 February 2010 (UTC)
+
+:There are a few ways of dealing with this. The most common is to use jsmath, which is evolving into [http://www.mathjax.org/ MathJax]. What I'm doing on Ghilbert is much more radical - I'm writing my own JavaScript code to display, and interactively edit, math. [[User:Raph|Raph]] 20:25, 26 February 2010 (UTC)
