@@ -12,3 +12,9 @@ Nice to see you here and I'm glad to see you're thinking about things like how d
 
 Your presence already had one concrete good effect; I was looking through the stuff you linked to, browsed [http://levien.com/garden/ghnew/peano/peano_thms.gh], and found I had made a rather silly mistake (in not noticing that eqeq12, or EqualityBuilder as we call it on [[Interface:First-order logic]] can be proved from equality transitivity, rather than from set theory as set.mm does).
 I'm also pleased to see that I apparently had correctly concluded that addeq12 and muleq12 have to be axioms. [[User:Kingdon|Kingdon]] 03:23, 26 February 2010 (UTC)
+
+== Feeling like a newbie ==
+
+I started trying to prove [http://us.metamath.org/mpegif/19.32.html 19.32] as a warmup (choosing the long name ForAllDisjunctionMovement), but found myself getting stuck fairly quickly. When I do the edit-entire-page / preview cycle, the error messages are too uninformative, and the cycle is clunky.
+
+I _think_ that what I want to do is download a local copy, and use the latest jhilbert jar to verify. What I can't figure out easily is how to get the .jh and .jhi files I need. I could of course do it manually by choosing only the content inside &lt;jh&gt; tags, but this doesn't seem quite right. What am I missing? [[User:Raph|Raph]] 22:46, 26 February 2010 (UTC)
