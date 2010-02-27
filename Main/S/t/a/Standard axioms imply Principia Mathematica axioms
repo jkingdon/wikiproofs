@@ -1,0 +1,254 @@
+{{interfaces
+| imports = [[Interface:Standard axioms of propositional calculus]]
+| exports = [[Interface:Principia Mathematica propositional logic|Principia Mathematica propositional logic]]
+}}
+The standard axioms of propositional calculus are one of the more widely used axiomizations of propositional logic. Here we show that the standard axioms imply the Principia axioms. In [[Propositional calculus implies standard axioms]] we show the converse. Therefore, the two axiomizations are equivalent.
+
+The axioms are defined in [[Interface:Standard axioms of propositional calculus]], which we import straight away.
+<jh>
+import (STANDARD Interface:Standard_axioms_of_propositional_calculus () ())
+</jh>
+
+We also define some variables:
+<jh>
+var (formula p q r)
+</jh>
+
+The standard axioms are built on implication and negation (with the other three connectives defined in terms of those), whereas the ''Principia'' axioms are built on disjunction and negation. Because [[Interface:Principia Mathematica propositional logic]] defines all five, we need to define the three connectives which aren't defined already:
+<jh>
+def ((∨ p q) ((¬ p) → q)) # Disjunction
+def ((∧ p q) (¬ ((¬ p) ∨ (¬ q)))) # Conjunction
+def ((↔ p q) ((p → q) ∧ (q → p))) # Biconditional
+</jh>
+
+Some of the results here are named according to their names in ''Principia'', which uses a decimal numbering system of the form <math>*r</math>, where <math>r</math> is a rational number with a small number of digits after the decimal point.  The proofs are mostly taken from metamath but are not cited individually.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
+
+== The add axiom ==
+Given our definition of disjunction, the ''Add'' axiom we are trying to prove is only a negation away from the ''Simp'' axiom that we start with:
+<jh>
+thm (Add () () (p → (q ∨ p)) (
+        p (¬ q) Simp
+))
+</jh>
+
+== A few rules, syllogism, and Id ==
+
+It will be convenient to have the ''Frege'' axiom as a rule:
+<jh>
+thm (distributeAntecedent () ((H (p → (q → r)))) ((p → q) → (p → r)) (
+        H
+        p q r Frege
+        applyModusPonens
+))
+</jh>
+
+Next we derive the syllogism, which allows us to combine several implications.
+<jh>
+thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
+        H1
+
+</jh>
+First we turn <code>q → r</code> into <code>p → (q → r)</code>:
+<jh>
+        H2
+        (q → r) p Simp
+        applyModusPonens
+
+</jh>
+Then we turn that into <code>(p → q) → (p → r)</code>:
+<jh>
+        distributeAntecedent
+
+</jh>
+Now we can apply modus ponens to get our desired result:
+<jh>
+        applyModusPonens
+))
+</jh>
+
+Any proposition implies itself:
+<jh>
+thm (Id () () (p → p) (
+        p p Simp
+
+        p (p → p) Simp
+        p (p → p) p Frege
+        applyModusPonens
+
+        applyModusPonens
+))
+</jh>
+
+A consequence is that we can absorb a redundant antecedent:
+<jh>
+thm (apply*2.43 () ((H (p → (p → q)))) (p → q) (
+        p Id
+
+        H
+        distributeAntecedent
+
+        applyModusPonens
+))
+</jh>
+
+== Two results involving a proposition and its negation ==
+From a proposition and its negation, we can derive anything:
+<jh>
+thm (*2.21 () () ((¬ p) → (p → q)) (
+        (¬ p) (¬ q) Simp
+        q p Transp
+        applySyllogism
+))
+</jh>
+
+One form of proof by contradiction.  If assuming the negation of p implies p, then the original assumption (<code>¬ p</code>) must be incorrect.
+<jh>
+thm (*2.18 () () (((¬ p) → p) → p) (
+        p (¬ ((¬ p) → p)) *2.21
+        distributeAntecedent
+
+        p ((¬ p) → p) Transp
+        applySyllogism
+
+        apply*2.43
+))
+</jh>
+
+Restating this using our definition of disjunction gives the ''Taut'' axiom:
+<jh>
+thm (Taut () () ((p ∨ p) → p) (
+        p *2.18
+))
+</jh>
+
+== Double negation ==
+Removing double negation does not change the meaning:
+<jh>
+thm (*2.14 () () ((¬ (¬ p)) → p) (
+        (¬ p) p *2.21
+        p *2.18
+        applySyllogism
+))
+</jh>
+
+Neither does adding it:
+<jh>
+thm (*2.12 () () (p → (¬ (¬ p))) (
+        (¬ p) *2.14
+        (¬ (¬ p)) p Transp
+        applyModusPonens
+))
+</jh>
+
+== More common operations with implications ==
+Given a nested implication we often want to exchange the two antecedents:
+<jh>
+thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
+        q p Simp
+
+        H
+        distributeAntecedent
+
+        applySyllogism
+))
+</jh>
+
+If we have an implication, adding a common term to the antecedent and the consequent yields a new theorem:
+<jh>
+thm (CommonAntecedentAddition () () ((p → q) → ((r → p) → (r → q))) (
+        (p → q) r Simp
+        r p q Frege
+        applySyllogism
+))
+
+thm (addCommonAntecedent () ((H (p → q))) ((r → p) → (r → q)) (
+        H
+        (p → q) r Simp
+        applyModusPonens
+
+        distributeAntecedent
+))
+</jh>
+
+The analogous operation adding consequents swaps the initial antecedent and consequent:
+<jh>
+thm (addCommonConsequent () ((H (p → q))) ((q → r) → (p → r)) (
+        H
+
+        q r p CommonAntecedentAddition
+        applyComm
+
+        applyModusPonens
+))
+</jh>
+
+Adding antecedents is very close to the ''Sum'' axiom we are trying to prove:
+<jh>
+thm (Sum () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
+        p q (¬ r) CommonAntecedentAddition
+))
+</jh>
+
+We return to swapping the order of antecedents and prove a theorem form of <code>applyComm</code>.
+<jh>
+thm (Comm () () ((p → (q → r)) → (q → (p → r))) (
+        p q r Frege
+
+        q p Simp
+        (p → r) addCommonConsequent
+
+        applySyllogism
+))
+</jh>
+
+Given the definition of disjunction, this is simply the ''Assoc'' axiom we are trying to prove:
+<jh>
+thm (Assoc () () ((p ∨ (q ∨ r)) → (q ∨ (p ∨ r))) (
+        (¬ p) (¬ q) r Comm
+))
+</jh>
+
+== Transpose with negated antecedent ==
+The <code>addCommonAntecedent</code> rule and double negation allow us to deduce a second form of transposition, this one with negated antecedents:
+<jh>
+thm (*2.15 () () (((¬ p) → q) → ((¬ q) → p)) (
+        q *2.12
+        (¬ p) addCommonAntecedent
+
+        p (¬ q) Transp
+        applySyllogism
+))
+</jh>
+
+Given our definition of disjunction, this amounts to saying that disjunction is commutative, which is one of the ''Principia'' axioms we need to prove:
+<jh>
+thm (Perm () () ((p ∨ q) → (q ∨ p)) (
+        p q *2.15
+))
+</jh>
+
+== Reconciling definitions of implication and disjunction ==
+This completes the proof of the ''Principia'' axioms. We're not quite done, though.
+
+Here, we define <code>p ∨ q</code> as <code>(¬ p) → q</code>.  The interface we are trying to export to treats disjunction as fundamental, and defines <code>→ p q</code> as <code>(¬ p) ∨ q</code>.  These two definitions are not the same, so we need to fix up the discrepency with a little double negation elimination.
+
+First of all, everything except disjunction and implication are the same in the two:
+<jh>
+kindbind (formula Principia.wff)
+def ((Principia.∧ p q) (¬ ((¬ p) ∨ (¬ q)))) # Conjunction
+def ((Principia.↔ p q) ((p → q) ∧ (q → p))) # Biconditional
+def ((Principia.¬ p) (¬ p)) # Negation
+</jh>
+
+... This page is not quite done.  When it is, we can uncomment the following export:
+
+We can now export the [[Interface:Principia Mathematica propositional logic]]:
+<jh>
+#export (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () Principia.)
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Classical propositional logic]]
