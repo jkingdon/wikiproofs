@@ -1,0 +1,58 @@
+{{header
+ | title    = Standard axioms of propositional calculus
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The standard axioms of propositional calculus are one of the more widely used axiomizations of propositional logic.
+}}
+{{modules
+| parameters = ''none''
+| importedby = [[Standard axioms imply Principia Mathematica axioms]]
+| exportedby = [[Propositional calculus implies standard axioms]]
+}}
+
+The standard axioms of propositional calculus are those used by metamath, Hamilton's 1988 ''Logic for Mathematicians'', and Margaris's 1967 ''First Order Mathematical Logic''. They were stated in their current form by Lukasiewicz around 1930 (building on earlier work by Frege), and consist of three axioms and one inference rule.<ref name="ax-1">[http://us.metamath.org/mpeuni/ax-1.html ax-1] in metamath's set.mm, accessed February 26, 2010</ref>
+
+These axioms are equivalent to other axiomizations of propositional calculus such as [[Interface:Principia Mathematica propositional logic|Principia Mathematica's]].
+
+The only kind that we need to define is for formulas (called by some authors [[w:well-formed formula|well-formed formula]]s):
+<jh>
+kind (formula)
+var (formula p q r)
+</jh>
+
+Of the standard five [[w:logical connective|logical connective]]s of classical propositional logic, only [[w:implication|implication]] (<math>\rightarrow</math>-symbol) and [[w:negation|negation]] (<math>\neg</math>-symbol) are needed to state the axioms.  The other three can be defined in terms of those two.
+
+<jh>
+term (formula (¬ formula)) # Negation
+term (formula (→ formula formula)) # Implication
+</jh>
+
+The first axiom is ''Simp'', for the principle of simplification (following the name given to it by ''Principia'').<ref name="ax-1"/>
+
+<jh>
+stmt (Simp () () (p → (q → p)))
+</jh>
+
+The second axiom is known as ''Frege'' or antecedent distribution.<ref>[http://us.metamath.org/mpeuni/ax-2.html ax-2] in metamath's set.mm, accessed February 26, 2010</ref>
+
+<jh>
+stmt (Frege () () ((p → (q → r)) → ((p → q) → (p → r))))
+</jh>
+
+The third axiom is the principle of transposition or ''Transp''.<ref>[http://us.metamath.org/mpeuni/ax-3.html ax-3] in metamath's set.mm, accessed February 26, 2010</ref>
+
+<jh>
+stmt (Transp () () (((¬ p) → (¬ q)) → (q → p)))
+</jh>
+
+The inference rule is [[w:modus ponens|modus ponens]].
+<jh>
+stmt (applyModusPonens () (p (p → q)) q)
+</jh>
+
+== References ==
+<references />
+
+[[Category:Classical propositional logic|Standard axioms]]
