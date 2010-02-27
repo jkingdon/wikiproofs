@@ -16,3 +16,13 @@ The proof of converse-of-*3.37 is supposed to just be the proof from page 122 of
 :--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:47, 26 January 2010 (UTC)
 
 ::OK, that helps.  Thanks for pointing out those particular rules in [[Interface:Classical propositional calculus]] (I thought they'd probably be the way to go, but am glad to see that confirmed). I'll either see whether I can prove them soon, or stick with the ad hoc and somewhat convoluted proofs (which I realize are par for the course at the start of such a theory - part of why I'm trying to stick fairly closely to Whitehead and Russell, as they have already put considerable effort into figuring out what order to prove things in). As for "best" proofs, I would say go for clarity rather than length as such (of course, shorter is often - not always - clearer).  This is somewhat subjective, I agree, but if I write any proofs which can be improved on, I hope that you or anyone else who joins in will [[w:WP:BOLD|be bold]] in clearing out cobwebs. [[User:Kingdon|Kingdon]] 20:35, 26 January 2010 (UTC)
+
+== Whether to use TeX (&lt;math&gt;) formulas ==
+
+The biggest problem with TeX formulas is that they are converted to bitmaps on the server side, and therefore don't scale up especially well (in most browsers, you should be able to reproduce this by hitting the zoom in key a few times). My current browser (Firefox 3.5.8 on Linux) will even sometimes put a black border at the edge of the image (which I was only able to reproduce at [[w:First-order_logic|wikipedia]], not on wikiproofs), although this depends on the zoom level and I'm not sure how widespread or consistent it is.  And of course a bitmap can't be copy/pasted or searched for.
+
+I also have perhaps less noble reasons for disliking TeX formulas: they don't look as nice in the edit window and I never have learned all the TeX names for characters.
+
+Eventually, we're likely to run into issues with harder-to-typeset syntax (integrals and so on), so I doubt we can or should avoid TeX entirely, but that doesn't affect this page.
+
+Summary: I'm not sure what the right answer is, but thought I should at least bring up the subject. [[User:Kingdon|Kingdon]] 16:50, 26 February 2010 (UTC)
