@@ -8,7 +8,7 @@
 }}
 {{modules
 | parameters = ''none''
-| importedby = ''none''
+| importedby = [[Principia Mathematica propositional logic]]
 | exportedby = [[Nicod's reduction of Principia Mathematica]]
 }}
 
