@@ -1,0 +1,41 @@
+In [[Standard axioms imply Principia Mathematica axioms]] we show that the [[Interface:Standard axioms of propositional calculus]] imply the ''Principia'' axioms.  Here we show that the Principia axioms imply the standard ones.
+
+{{interfaces
+| imports = [[Interface:Classical propositional calculus]]
+| exports = [[Interface:Standard axioms of propositional calculus|Standard axioms]]
+}}
+
+In order to avoid duplicating a lot of the work in [[Principia Mathematica propositional logic]], we'll just import [[Interface:Classical propositional calculus]].  Since [[Principia Mathematica propositional logic]] proves that interface from the ''Principia'' axioms, this is equivalent to importing the ''Principia'' axioms. It does mean that the below proofs are expressed in the somewhat more generic language of [[Interface:Classical propositional calculus]] (for example, the equivalence of <code>(→ p q)</code> and <code>((¬ p) ∨ q)</code> is not an automatically applied definition, but a statement which we'd be able to apply explicitly if we needed it).
+
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+var (formula p q r)
+</jh>
+
+The first axiom, ''Simp'', is called <code>AntecedentIntroduction</code> in [[Interface:Classical propositional calculus]].
+<jh>
+thm (Simp () () (p → (q → p)) (
+        p q AntecedentIntroduction
+))
+</jh>
+
+The second axiom, ''Frege'', is one direction of <code>AntecedentDistribution</code> from [[Interface:Classical propositional calculus]].
+
+<jh>
+thm (Frege () () ((p → (q → r)) → ((p → q) → (p → r))) (
+        p q r AntecedentDistribution eliminateBiconditionalReverse
+))
+</jh>
+
+The third axiom, ''Transp'', is one direction of <code>Transposition</code> from [[Interface:Classical propositional calculus]].
+<jh>
+thm (Transp () () (((¬ p) → (¬ q)) → (q → p)) (
+        q p Transposition eliminateBiconditionalForward
+))
+</jh>
+
+The inference rule, <code>applyModusPonens</code>, is the same in the two sets of axioms (and has the same name), so we don't need to do anything.
+
+<jh>
+export (STANDARD Interface:Standard_axioms_of_propositional_calculus () ())
+</jh>
