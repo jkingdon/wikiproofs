@@ -45,7 +45,7 @@ thm (ViaFollowImplicationStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
 
 thm (ViaBuilderStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
         (0) EqualityReflexivity
-        (0) n sbt
+        (0) n introduceSubst
 
         (0) n SubstitutionEquality
 
