@@ -8,16 +8,6 @@ param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 var (formula φ ψ χ θ)
 var (object x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
 
-stmt (sbie () 
-  ((x is-not-free-in ψ) ((x = y) → (φ ↔ ψ)))
-  ((subst y x φ) ↔ ψ)
-)
-
-stmt (sbt ()
-  (φ)
-  (subst y x φ)
-)
-
 stmt (reverseModusPonensInsideSubst ()
   ((subst y x (φ ↔ ψ))
    ψ
