@@ -14,11 +14,9 @@ We also define some variables:
 var (formula p q r)
 </jh>
 
-The standard axioms are built on implication and negation (with the other three connectives defined in terms of those), whereas the ''Principia'' axioms are built on disjunction and negation. Because [[Interface:Principia Mathematica propositional logic]] defines all five, we need to define the three connectives which aren't defined already:
+The standard axioms are built on implication and negation (with the other three connectives defined in terms of those), whereas the ''Principia'' axioms are built on disjunction and negation.
 <jh>
 def ((∨ p q) ((¬ p) → q)) # Disjunction
-def ((∧ p q) (¬ ((¬ p) ∨ (¬ q)))) # Conjunction
-def ((↔ p q) ((p → q) ∧ (q → p))) # Biconditional
 </jh>
 
 Some of the results here are named according to their names in ''Principia'', which uses a decimal numbering system of the form <math>*r</math>, where <math>r</math> is a rational number with a small number of digits after the decimal point.  The proofs are mostly taken from metamath but are not cited individually.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
@@ -124,7 +122,7 @@ thm (Taut () () ((p ∨ p) → p) (
 == Double negation ==
 Removing double negation does not change the meaning:
 <jh>
-thm (*2.14 () () ((¬ (¬ p)) → p) (
+thm (DoubleNegationRemoval () () ((¬ (¬ p)) → p) (
         (¬ p) p *2.21
         p *2.18
         applySyllogism
@@ -133,8 +131,8 @@ thm (*2.14 () () ((¬ (¬ p)) → p) (
 
 Neither does adding it:
 <jh>
-thm (*2.12 () () (p → (¬ (¬ p))) (
-        (¬ p) *2.14
+thm (DoubleNegationAddition () () (p → (¬ (¬ p))) (
+        (¬ p) DoubleNegationRemoval
         (¬ (¬ p)) p Transp
         applyModusPonens
 ))
@@ -212,7 +210,7 @@ thm (Assoc () () ((p ∨ (q ∨ r)) → (q ∨ (p ∨ r))) (
 The <code>addCommonAntecedent</code> rule and double negation allow us to deduce a second form of transposition, this one with negated antecedents:
 <jh>
 thm (*2.15 () () (((¬ p) → q) → ((¬ q) → p)) (
-        q *2.12
+        q DoubleNegationAddition
         (¬ p) addCommonAntecedent
 
         p (¬ q) Transp
@@ -232,19 +230,103 @@ This completes the proof of the ''Principia'' axioms. We're not quite done, thou
 
 Here, we define <code>p ∨ q</code> as <code>(¬ p) → q</code>.  The interface we are trying to export to treats disjunction as fundamental, and defines <code>→ p q</code> as <code>(¬ p) ∨ q</code>.  These two definitions are not the same, so we need to fix up the discrepency with a little double negation elimination.
 
-First of all, everything except disjunction and implication are the same in the two:
+We define the Principia negation and disjunction to be the same as their counterparts from this file.
 <jh>
 kindbind (formula Principia.wff)
-def ((Principia.∧ p q) (¬ ((¬ p) ∨ (¬ q)))) # Conjunction
-def ((Principia.↔ p q) ((p → q) ∧ (q → p))) # Biconditional
-def ((Principia.¬ p) (¬ p)) # Negation
+def ((Principia.¬ p) (¬ p))
+def ((Principia.∨ p q) (p ∨ q))
+</jh>
+We define implication according to the ''Principia'' definition, which if expanded would work out to <code>(¬ (¬ p)) → q</code>.
+<jh>
+def ((Principia.→ p q) ((¬ p) ∨ q))
 </jh>
 
-... This page is not quite done.  When it is, we can uncomment the following export:
+The other two connectives do not figure in either set of axioms, but [[Interface:Principia Mathematica propositional logic]] defines them, so we need to provide definitions:
+<jh>
+def ((Principia.∧ p q) (¬ ((¬ p) ∨ (¬ q)))) # Conjunction
+def ((Principia.↔ p q) ((p Principia.→ q) Principia.∧ (q Principia.→ p))) # Biconditional
+</jh>
+
+Now we need to express the axioms in terms of <code>Principia.→</code> rather than just <code>→</code>. The easiest way to do this will be to define some theorems and rules for moving between the two:
+<jh>
+thm (ToPrincipia () () ((p → q) → (p Principia.→ q)) (
+        p DoubleNegationRemoval
+        q addCommonConsequent
+))
+
+thm (FromPrincipia () () ((p Principia.→ q) → (p → q)) (
+        p DoubleNegationAddition
+        q addCommonConsequent
+))
+
+thm (dePrincipiize () ((H (p Principia.→ q))) (p → q) (
+        H
+        p q FromPrincipia
+        applyModusPonens
+))
+
+thm (principiize () ((H (p → q))) (p Principia.→ q) (
+        H
+        p q ToPrincipia
+        applyModusPonens
+))
+</jh>
+
+All Principia axioms except ''Sum'' use implication only as their head symbol, so the theorems we just proved can be applied directly:
+<jh>
+thm (Principia.applyModusPonens () ((H1 p) (H2 (p Principia.→ q))) q (
+        H1
+
+        H2
+        dePrincipiize
+
+        applyModusPonens
+))
+
+thm (Principia.Taut () () ((p ∨ p) Principia.→ p) (
+        p Taut
+        principiize
+))
+
+thm (Principia.Add () () (q Principia.→ (p ∨ q)) (
+        q p Add
+        principiize
+))
+
+thm (Principia.Perm () () ((p ∨ q) Principia.→ (q ∨ p)) (
+        p q Perm
+        principiize
+))
+
+thm (Principia.Assoc () () ((p ∨ (q ∨ r)) Principia.→ (q ∨ (p ∨ r))) (
+        p q r Assoc
+        principiize
+))
+</jh>
+For ''Sum'' it is slightly more difficult, as implication appears three times:
+<jh>
+thm (Principia.Sum () () ((q Principia.→ r) Principia.→ ((p ∨ q) Principia.→ (p ∨ r))) (
+</jh>
+First, we transport the leftmost implication using a syllogism:
+<jh>
+        q r FromPrincipia
+        q r p Sum
+        applySyllogism
+</jh>
+Next, we transport the rightmost implication:
+<jh>
+        (p ∨ q) (p ∨ r) ToPrincipia
+        applySyllogism
+</jh>
+And finally, we transport the heading implication:
+<jh>
+        principiize
+))
+</jh>
 
 We can now export the [[Interface:Principia Mathematica propositional logic]]:
 <jh>
-#export (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () Principia.)
+export (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () Principia.)
 </jh>
 
 == References ==
