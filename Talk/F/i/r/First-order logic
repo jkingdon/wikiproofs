@@ -1,0 +1,8 @@
+I'm not convinced you need [http://us.metamath.org/mpegif/df-sb.html df-sb]. My own development is to define [http://us.metamath.org/mpegif/df-sbc.html df-sbc] instead. Metamath does this through class abstraction, but I think the following definition is just as good, and more general:
+
+<pre>
+stmt (df-subst () ()
+  (<-> ([/] A x ph) (E. z (/\ (= z A) (E. x (/\ (= x z) ph))))))
+</pre>
+
+It's based on [http://us.metamath.org/mpegif/sbc5.html sbc5] but has extra magic to isolate the variable substituted so it doesn't need to be disjoint from the substitution. Anyway, just my 2¢. [[User:Raph|Raph]] 05:30, 28 February 2010 (UTC)
