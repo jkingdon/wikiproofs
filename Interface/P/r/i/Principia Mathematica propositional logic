@@ -9,7 +9,9 @@
 {{modules
 | parameters = ''none''
 | importedby = [[Principia Mathematica propositional logic]]
-| exportedby = [[Nicod's reduction of Principia Mathematica]]
+| exportedby = 
+[[Nicod's reduction of Principia Mathematica]]<br />
+[[Standard axioms imply Principia Mathematica axioms]]
 }}
 
 
