@@ -22,7 +22,7 @@ param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 The kind <code>object</code>, defined in first-order logic, represents a natural number:
 <jh>
 kindbind (object nat)
-var (nat n m)
+var (nat n m n0 n1 m0 m1)
 </jh>
 
 There is a number zero:
@@ -41,9 +41,9 @@ Zero is not the successor of any number:
 stmt (ZeroNotSuccessor () () (¬ ((0) = (succ n))))
 </jh>
 
-Each number is the successor of only one number:
+By making the following axiom a biconditional, we express two ideas. The first is that equals can be substituted for equals (this is often a generic rule of first order logic, but JHilbert requires us to provide it for each term). The second idea, specific to the successor operation, is that each number is the successor of only one number.
 <jh>
-stmt (Successor () () (((succ m) = (succ n)) → (m = n)))
+stmt (Successor () () (((succ m) = (succ n)) ↔ (m = n)))
 </jh>
 
 [[w:mathematical induction|Induction]]:
@@ -52,7 +52,7 @@ var (formula φ)
 stmt (Induction () () (((subst (0) n φ) ∧ (φ → (subst (succ n) n φ))) → (∀ n φ)))
 </jh>
 
-We also supply axioms for addition and multiplication.
+We also supply the usual axioms for addition and multiplication:
 
 <jh>
 term (nat (+ nat nat))
@@ -62,6 +62,12 @@ stmt (Addition () () ((n + (succ m)) = (succ (n + m))))
 term (nat (· nat nat))
 stmt (MultiplicativeZero () () ((n · (0)) = (0)))
 stmt (Multiplication () () ((n · (succ m)) = (n + (n · m))))
+</jh>
+
+and the principle that equals can be substituted for equals, in the context of addition and multiplication:
+<jh>
+stmt (AdditionBuilder () () (((n0 = n1) ∧ (m0 = m1)) → ((n0 + m0) = (n1 + m1))))
+stmt (MultiplicationBuilder () () (((n0 = n1) ∧ (m0 = m1)) → ((n0 · m0) = (n1 · m1))))
 </jh>
 
 [[Category:Elementary number theory|{{PAGENAME}}]]
