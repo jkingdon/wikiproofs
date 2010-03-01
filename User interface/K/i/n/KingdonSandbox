@@ -9,13 +9,6 @@ var (formula φ ψ χ θ)
 var (object x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
 
 stmt (buildAddition () ((n0 = n1) (m0 = m1)) ((n0 + m0) = (n1 + m1)))
-stmt (AdditionBuilder () () (((n0 = n1) ∧ (m0 = m1)) → ((n0 + m0) = (n1 + m1))))
-
-stmt (followImplication () ((subst y x φ) (φ → ψ)) (subst y x ψ)) # consequence of sbimi
-
-stmt (buildSubstitutedAddition () ((subst y x (n0 = n1)) (subst y x (m0 = m1))) (subst y x ((n0 + m0) = (n1 + m1))))
-# buildSubstitutedAddition is a consequence of AdditionBuilder and followImplication, I think
-stmt (buildSubstitutedEquality () ((subst y x (x0 = x1)) (subst y x (y0 = y1))) (subst y x ((x0 = y0) ↔ (x1 = y1))))
 
 stmt (applySubstitutedEqualitySymmetry ()
   ((subst y x (z = w)))
