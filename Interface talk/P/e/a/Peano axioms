@@ -1,0 +1,31 @@
+== Induction axiom ==
+
+I think it needs to be:
+
+<pre>
+stmt (Induction () () (((subst (0) n φ) ∧ (∀ n (φ → (subst (succ n) n φ)))) → (∀ n φ)))
+</pre>
+
+Without the additional ∀ n, the antecedent is too weak - it could be true for some n and not others, but the axiom would still imply that the consequent is true for all n.
+
+You _can_ make succ work even when the binding variable is not disjoint from the variable being substituted in. You'll need a defintion similar to the one I mentioned in [[Talk:First-order_logic]]. Then, in order to actually prove something like ((subst (succ n) n (0 ≤ n)) ↔ (0 ≤ (succ n))), instead of a single invocation of [http://us.metamath.org/mpegif/sbcie.html sbcie], you'd need something a little stronger. The relevant theorem is not in set.mm that I know, but in old Ghilbert [http://levien.com/garden/ghilbert/pax/peano-thms.gh pax/peano-thms.gh] is:
+
+<pre>
+# A good theorem for making substitutions when the variable and substitution
+# are not disjoint.
+thm (mksbc3 ((T x y) (A y) (ps x) (ch y) (ph y))
+  ((hyp1 (istype T))
+   (hyp2 (-> (/\ (: (cv x) T) (: (cv y) T)) (-> (= T (cv x) (cv y)) (<-> ph ps))))
+   (hyp3 (-> (/\ (: (cv y) T) (: A T)) (-> (= T (cv y) A) (<-> ps ch)))))
+  (-> (: A T) (<-> ([:=] x T A ph) ch))
+  (
+   hyp1 A y x ph sbcco
+     hyp1 hyp1 hyp2 mksbc2 A bisbc
+     hyp1 hyp3 mksbc2 bitrd
+   bitr3d
+))
+</pre>
+
+This is a bit painful, but I plan on fully automating invocations of these trivial theorems.
+
+Hope this helps! [[User:Raph|Raph]] 04:43, 1 March 2010 (UTC)
