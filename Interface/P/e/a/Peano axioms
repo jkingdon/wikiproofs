@@ -22,7 +22,7 @@ param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 The kind <code>object</code>, defined in first-order logic, represents a natural number:
 <jh>
 kindbind (object nat)
-var (nat n m n0 n1 m0 m1)
+var (nat k n m n0 n1 m0 m1)
 </jh>
 
 There is a number zero:
@@ -49,7 +49,7 @@ stmt (Successor () () (((succ m) = (succ n)) ↔ (m = n)))
 [[w:mathematical induction|Induction]]:
 <jh>
 var (formula φ)
-stmt (Induction () () (((subst (0) n φ) ∧ (φ → (subst (succ n) n φ))) → (∀ n φ)))
+stmt (Induction () () (((subst (0) n φ) ∧ ((subst k n φ) → (subst (succ k) n φ))) → (∀ n φ)))
 </jh>
 
 We also supply the usual axioms for addition and multiplication:
