@@ -7,9 +7,13 @@ import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
 
 var (formula p q φ ψ)
-var (object x y)
 var (nat n m)
+</jh>
 
+== Via sbie ==
+This builds up implicit substitution and converts it to subst at the end.
+
+<jh>
 thm (ViaSbieStepOne () () ((n = (0)) → (((0) + n) = ((0) + (0)))) (
         (0) EqualityReflexivity
         ((0) = (0)) (n = (0)) ConjunctionRightIntroduction
@@ -35,14 +39,45 @@ thm (BaseCaseViaSbie () () (subst (0) n (((0) + n) = n)) (
         n ViaSbieStepTwo
         buildSubstFromEquality
 ))
+</jh>
 
+=== via follow implication ===
+Slight variant of the previous.
+
+<jh>
 thm (ViaFollowImplicationStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
         (0) n SubstitutionEquality
 
         n ViaSbieStepOne
         followImplication
 ))
+</jh>
 
+== Via builders ==
+
+=== Some first order logic theorems ===
+These, or something like them, probably should be in [[Interface:First-order logic]], once we have a clearer grasp on what will be most helpful.
+<jh>
+var (object x y)
+thm (reverseModusPonensInsideSubst-x ()
+  ((HEQ (subst y x (φ ↔ ψ)))
+   (H2 ψ)
+  )
+  (subst y x φ) (
+        H2
+        y x introduceSubst
+
+        HEQ
+        y x φ ψ SubstBiconditional eliminateBiconditionalReverse
+        applyModusPonens
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Base case ===
+<jh>
 thm (ViaBuilderStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
         (0) EqualityReflexivity
         (0) n introduceSubst
