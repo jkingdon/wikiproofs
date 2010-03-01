@@ -18,9 +18,6 @@
 :*[http://us.metamath.org/mpeuni/hbsb2a.html hbsb2a]
 :*[http://us.metamath.org/mpeuni/sbco2.html sbco2]
 
-Move substitution across connectives:
-:*[http://us.metamath.org/mpeuni/sbn.html sbn], [http://us.metamath.org/mpeuni/sbim.html sbim], [http://us.metamath.org/mpeuni/sbor.html sbor], [http://us.metamath.org/mpeuni/sban.html sban], [http://us.metamath.org/mpeuni/sbbi.html sbbi]
-
 Needed in proof of sbn:
 *[http://us.metamath.org/mpeuni/sb4.html sb4]
 :*[http://us.metamath.org/mpeuni/equs5.html equs5]
