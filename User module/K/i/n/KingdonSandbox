@@ -8,7 +8,7 @@ import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 #import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
 
 var (formula p q φ ψ)
-var (nat n m n0 n1 m0 m1)
+var (nat k n m n0 n1 m0 m1)
 </jh>
 
 == Some first order logic theorems ==
@@ -159,6 +159,11 @@ thm (BaseCaseViaBuilder () () (subst (0) n (((0) + n) = n)) (
         n ViaBuilderStepTwo
         (0) AdditiveIdentity
         reverseModusPonensInsideSubst
+))
+
+# Not sure what this is telling us, but it sure looks strange:
+thm (Paradox1 () () (subst (succ n) n (n = (succ n))) (
+        (succ n) n SubstitutionEquality
 ))
 
 #thm (Sample () () (((0) + n) = n) (
