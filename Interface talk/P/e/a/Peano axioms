@@ -29,3 +29,5 @@ thm (mksbc3 ((T x y) (A y) (ps x) (ch y) (ph y))
 This is a bit painful, but I plan on fully automating invocations of these trivial theorems.
 
 Hope this helps! [[User:Raph|Raph]] 04:43, 1 March 2010 (UTC)
+
+:I'll take your word for it on the ∀, as my intuition isn't (yet at least) very good on free variables and such; I've added it. As for <code>(subst (succ n) n φ)</code> versus <code>(subst (succ k) n φ)</code>, I'm all for just a single invocation of sbcie, at least for now. We can always switch later (or provide both, one way or another). [[User:Kingdon|Kingdon]] 14:20, 1 March 2010 (UTC)
