@@ -8,14 +8,6 @@ param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 var (formula φ ψ χ θ)
 var (object x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
 
-stmt (reverseModusPonensInsideSubst ()
-  ((subst y x (φ ↔ ψ))
-   ψ
-  )
-  (subst y x φ)
-)
-# This is a consequence of sbt and sbbi
-
 stmt (buildAddition () ((n0 = n1) (m0 = m1)) ((n0 + m0) = (n1 + m1)))
 stmt (AdditionBuilder () () (((n0 = n1) ∧ (m0 = m1)) → ((n0 + m0) = (n1 + m1))))
 
