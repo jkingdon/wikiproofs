@@ -1,5 +1,5 @@
 This page is to help me figure out how induction might work (in terms of the substitution).
-[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]].
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]].
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
@@ -173,18 +173,19 @@ thm (Paradox1 () () (subst (succ n) n (n = (succ n))) (
 
 </jh>
 
-== Finds ==
+== Induction5 ==
 Here we provide a new induction theorem, <code>Induction5</code>.  It has five hypotheses, which despite the large number turns out to be easier to handle than expressing base cases and induction steps via <code>subst</code>. The first three hypotheses handle the substitution machinery.  The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
 
- var (formula φ0 φk φSk)
+<jh>
+var (formula φ0 φk φSk)
 
- thm (buildSubst1 ((x ψ))
-  ((HEQ ((x = y) → (φ ↔ ψ))) )
-  ((subst y x φ) ↔ ψ) (
-        .... to be provided
- ))
- 
- thm (Induction5 ()
+# thm (buildSubst1 ((x ψ))
+#  ((HEQ ((x = y) → (φ ↔ ψ))) )
+#  ((subst y x φ) ↔ ψ) (
+#        .... to be provided
+# ))
+
+thm (Induction5 ((φ0 n) (φk n) (φSk n) (φ k))
   ((HSUB0 ((n = (0)) → (φ ↔ φ0)))
    (HSUBK ((n = k) → (φ ↔ φk)))
    (HSUBSK ((n = (succ k)) → (φ ↔ φSk)))
@@ -192,5 +193,120 @@ Here we provide a new induction theorem, <code>Induction5</code>.  It has five h
    (HIND (φk → φSk))
   )
   (∀ n φ) (
-        .... proof is fairly straightforward, from buildSubst1        
- ))
+</jh>
+The main difference between this and <code>Induction</code> is that the latter uses <code>subst</code> and we use implicit substitutions. The theorem linking the two is <code>substEquality</code>. We first show the base case, <code>(subst (0) n φ)</code>.
+<jh>
+        HBASE
+        HSUB0 substEquality eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+The induction step is similar.
+<jh>
+        HSUBK substEquality eliminateBiconditionalReverse
+        HIND
+        applySyllogism
+        HSUBSK substEquality eliminateBiconditionalForward
+        applySyllogism
+        k generalize
+</jh>
+Now we combine the two and apply <code>Induction</code>.
+<jh>
+        introduceConjunction
+        n φ k Induction
+        applyModusPonens
+))
+</jh>
+
+=== Convenience theorems/rules (first-order logic) ===
+<jh>
+thm (specialize () ((H (∀ x φ))) φ (
+        H
+        x φ Specialization
+        applyModusPonens
+))
+
+thm (swapEquality () ((H (x = y))) (y = x) (
+        H
+        x y EqualitySymmetry eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (buildEqualityRR () ((H (x0 = x1))) ((x0 = y) ↔ (x1 = y)) (
+        H
+        y EqualityReflexivity
+        introduceConjunction
+
+        x0 x1 y y EqualityBuilder
+
+        applyModusPonens
+))
+</jh>
+
+=== Convenience builders (arithmetic) ===
+<jh>
+thm (AdditionBuilderLL () () ((m0 = m1) → ((n + m0) = (n + m1))) (
+        n EqualityReflexivity
+        (n = n) (m0 = m1) ConjunctionRightIntroduction
+        applyModusPonens
+
+        n n m0 m1 AdditionBuilder
+        applySyllogism
+))
+
+thm (buildAddition () ((HN (n0 = n1)) (HM (m0 = m1))) ((n0 + m0) = (n1 + m1)) (
+        HN
+        HM
+        introduceConjunction
+        n0 n1 m0 m1 AdditionBuilder
+        applyModusPonens
+))
+</jh>
+
+=== Sample via Induction5 ===
+<jh>
+thm (Sample ((n k)) () (((0) + n) = n) (
+</jh>
+The substitution for the base case is <code>n = 0 → (0 + n = n ↔ 0 + 0 = 0)</code>.
+<jh>
+        n (0) (0) AdditionBuilderLL
+        (n = (0)) ImplicationReflexivity
+        composeConjunction
+        ((0) + n) ((0) + (0)) n (0) EqualityBuilder
+        applySyllogism
+</jh>
+The substitution for the induction step antecedent is <code>n = k → (0 + n = n ↔ 0 + k = k)</code>.
+<jh>
+        n k (0) AdditionBuilderLL
+        (n = k) ImplicationReflexivity
+        composeConjunction
+        ((0) + n) ((0) + k) n k EqualityBuilder
+        applySyllogism
+</jh>
+The substitution for the induction step antecedent is similar.
+<jh>
+        n (succ k) (0) AdditionBuilderLL
+        (n = (succ k)) ImplicationReflexivity
+        composeConjunction
+        ((0) + n) ((0) + (succ k)) n (succ k) EqualityBuilder
+        applySyllogism
+</jh>
+The base case, <code>0 + 0 = 0</code>, follows from the AdditiveIdentity axiom.
+<jh>
+        (0) AdditiveIdentity
+</jh>
+The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Addition axiom.
+<jh>
+        ((0) + k) k Successor eliminateBiconditionalForward
+
+        (0) k Addition swapEquality
+        (succ k) buildEqualityRR eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction5
+</jh>
+Now, we remove the ∀n which Induction5 provides.
+<jh>
+        specialize
+))
+</jh>
