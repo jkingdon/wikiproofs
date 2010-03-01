@@ -1,13 +1,96 @@
 This page is to help me figure out how induction might work (in terms of the substitution).
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]].
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
-import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
+#import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
 
 var (formula p q φ ψ)
-var (nat n m)
+var (nat n m n0 n1 m0 m1)
+</jh>
+
+== Some first order logic theorems ==
+These, or something like them, probably should be in [[Interface:First-order logic]], once we have a clearer grasp on what will be most helpful.
+<jh>
+var (object x y x0 y0 x1 y1)
+thm (distributeSubstImplication () ((H (subst y x (φ → ψ)))) ((subst y x φ) → (subst y x ψ)) (
+        H
+        y x φ ψ SubstImplication eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeSubstBiconditional () ((H (subst y x (φ ↔ ψ)))) ((subst y x φ) ↔ (subst y x ψ)) (
+        H
+        y x φ ψ SubstBiconditional eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (introduceSubstConjunction () ((HPHI (subst y x φ)) (HPSI (subst y x ψ))) (subst y x (φ ∧ ψ)) (
+        HPHI
+        HPSI
+        introduceConjunction
+
+        y x φ ψ SubstConjunction eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (buildSubstitutedEquality () 
+  ((HX (subst y x (x0 = x1))) (HY (subst y x (y0 = y1))))
+  (subst y x ((x0 = y0) ↔ (x1 = y1))) (
+        HX HY introduceSubstConjunction
+
+        x0 x1 y0 y1 EqualityBuilder
+        y x introduceSubst
+        distributeSubstImplication
+
+        applyModusPonens
+))
+
+thm (followImplication () ((H1 (subst y x φ)) (H2 (φ → ψ))) (subst y x ψ) (
+        H1
+
+        H2
+        y x introduceSubst
+        distributeSubstImplication
+
+        applyModusPonens
+))
+
+thm (reverseModusPonensInsideSubst ()
+  ((HEQ (subst y x (φ ↔ ψ)))
+   (H2 ψ)
+  )
+  (subst y x φ) (
+        H2
+        y x introduceSubst
+
+        HEQ
+        y x φ ψ SubstBiconditional eliminateBiconditionalReverse
+        applyModusPonens
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Arithmetic-specific ===
+<jh>
+thm (buildSubstitutedAddition ()
+  ((HN (subst y x (n0 = n1)))
+   (HM (subst y x (m0 = m1))))
+  (subst y x ((n0 + m0) = (n1 + m1))) (
+        HN
+        HM
+        introduceSubstConjunction
+
+        n0 n1 m0 m1 AdditionBuilder
+        y x introduceSubst
+        distributeSubstImplication
+
+        applyModusPonens
+))
 </jh>
 
 == Via sbie ==
@@ -54,27 +137,6 @@ thm (ViaFollowImplicationStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
 </jh>
 
 == Via builders ==
-
-=== Some first order logic theorems ===
-These, or something like them, probably should be in [[Interface:First-order logic]], once we have a clearer grasp on what will be most helpful.
-<jh>
-var (object x y)
-thm (reverseModusPonensInsideSubst ()
-  ((HEQ (subst y x (φ ↔ ψ)))
-   (H2 ψ)
-  )
-  (subst y x φ) (
-        H2
-        y x introduceSubst
-
-        HEQ
-        y x φ ψ SubstBiconditional eliminateBiconditionalReverse
-        applyModusPonens
-
-        eliminateBiconditionalForward
-        applyModusPonens
-))
-</jh>
 
 === Base case ===
 <jh>
