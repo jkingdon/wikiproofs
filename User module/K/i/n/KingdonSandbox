@@ -59,7 +59,7 @@ thm (ViaFollowImplicationStepOne () () (subst (0) n (((0) + n) = ((0) + (0)))) (
 These, or something like them, probably should be in [[Interface:First-order logic]], once we have a clearer grasp on what will be most helpful.
 <jh>
 var (object x y)
-thm (reverseModusPonensInsideSubst-x ()
+thm (reverseModusPonensInsideSubst ()
   ((HEQ (subst y x (φ ↔ ψ)))
    (H2 ψ)
   )
