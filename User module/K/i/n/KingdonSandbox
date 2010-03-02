@@ -12,17 +12,6 @@ var (object x y x0 y0 x1 y1)
 var (nat k n m n0 n1 m0 m1)
 </jh>
 
-== subst without distinctness ==
-
-<jh>
-# This looks shocking if you think of subst as substituting into any term.
-# But it only substitutes for objects, so the n in (succ n) is not subject
-# to substitution.
-thm (Paradox1 () () (subst (succ n) n (n = (succ n))) (
-        (succ n) n SubstitutionEquality
-))
-</jh>
-
 === Convenience theorems/rules (first-order logic) ===
 <jh>
 thm (specialize () ((H (∀ x φ))) φ (
