@@ -282,7 +282,7 @@ The substitution for the induction step antecedent is <code>n = k → (0 + n = n
         ((0) + n) ((0) + k) n k EqualityBuilder
         applySyllogism
 </jh>
-The substitution for the induction step antecedent is similar.
+The substitution for the induction step consequent is similar.
 <jh>
         n (succ k) (0) AdditionBuilderLL
         (n = (succ k)) ImplicationReflexivity
