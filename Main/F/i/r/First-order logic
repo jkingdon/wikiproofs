@@ -121,6 +121,12 @@ thm (EqualitySymmetry () () ((x = y) ↔ (y = x)) (
         y x EqualitySymmetryImplication
         introduceBiconditionalFromImplications
 ))
+
+thm (swapEquality () ((H (x = y))) (y = x) (
+        H
+        x y EqualitySymmetry eliminateBiconditionalReverse
+        applyModusPonens
+))
 </jh>
 
 === Transitivity ===
@@ -131,6 +137,14 @@ thm (EqualityTransitivity () () (((x = y) ∧ (y = z)) → (x = z)) (
         y x z AxiomEquality
         applySyllogism
         import
+))
+
+thm (applyEqualityTransitivity () ((H1 (x = y)) (H2 (y = z))) (x = z) (
+        H1
+        H2
+        introduceConjunction
+        x y z EqualityTransitivity
+        applyModusPonens
 ))
 </jh>
 
@@ -208,6 +222,26 @@ thm (buildEquality () ((HX (x0 = x1)) (HY (y0 = y1))) ((x0 = y0) ↔ (x1 = y1)) 
         x0 x1 y0 y1 EqualityBuilder
         applyModusPonens
 ))
+
+thm (buildEqualityRR () ((H (x0 = x1))) ((x0 = y) ↔ (x1 = y)) (
+        H
+        y EqualityReflexivity
+        introduceConjunction
+
+        x0 x1 y y EqualityBuilder
+
+        applyModusPonens
+))
+
+thm (buildEqualityLL () ((H (y0 = y1))) ((x = y0) ↔ (x = y1)) (
+        x EqualityReflexivity
+        H
+        introduceConjunction
+
+        x x y0 y1 EqualityBuilder
+
+        applyModusPonens
+))
 </jh>
 
 == Specialization ==
@@ -280,6 +314,12 @@ thm (Specialization ((x y) (y φ)) () ((∀ x φ) → φ) (
         applyModusTollens
 
         eliminateDoubleNegation
+))
+
+thm (specialize () ((H (∀ x φ))) φ (
+        H
+        x φ Specialization
+        applyModusPonens
 ))
 </jh>
 
