@@ -241,20 +241,7 @@ stmt (addSubst () ((φ → ψ)) ((subst y x φ) → (subst y x ψ)))
 stmt (buildSubst () ((φ ↔ ψ)) ((subst y x φ) ↔ (subst y x ψ)))
 </jh>
 
-We can move <code>subst</code> across logical connectives:<ref>[http://us.metamath.org/mpeuni/sbn.html sbn], [http://us.metamath.org/mpeuni/sbor.html sbor], [http://us.metamath.org/mpeuni/sban.html sban], [http://us.metamath.org/mpeuni/sbim.html sbim], and [http://us.metamath.org/mpeuni/sbbi.html sbbi] in metamath's set.mm, accessed February 28, 2010</ref>
-
-<jh>
-stmt (SubstNegation () () ((subst y x (¬ φ)) ↔ (¬ (subst y x φ))))
-stmt (SubstDisjunction () () ((subst y x (φ ∨ ψ)) ↔ ((subst y x φ) ∨ (subst y x ψ))))
-stmt (SubstConjunction () () ((subst y x (φ ∧ ψ)) ↔ ((subst y x φ) ∧ (subst y x ψ))))
-stmt (SubstImplication () () ((subst y x (φ → ψ)) ↔ ((subst y x φ) → (subst y x ψ))))
-stmt (SubstBiconditional () () ((subst y x (φ ↔ ψ)) ↔ ((subst y x φ) ↔ (subst y x ψ))))
-</jh>
-
 == What else? ==
 This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
-
-== References ==
-<references/>
 
 [[Category:Classical first-order logic|{{PAGENAME}}]]
