@@ -12,8 +12,4 @@ stmt (applySubstitutedEqualitySymmetry ()
   ((subst y x (z = w)))
   (subst y x (w = z))
 )
-
-stmt (substEquality ((x ψ))
-  (((x = y) → (φ ↔ ψ)) )
-  ((subst y x φ) ↔ ψ))
 </jh>
