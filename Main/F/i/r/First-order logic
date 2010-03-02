@@ -1343,11 +1343,9 @@ thm (buildSubst () ((H (φ ↔ ψ))) ((subst y x φ) ↔ (subst y x ψ)) (
 </jh>
 
 == Export ==
-This page is not yet done.  When it is, we can uncomment the following export:
-
 We've now proved all the theorems in [[Interface:First-order logic]], so we export them.
 <jh>
-#export (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+export (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 </jh>
 
 == References ==
