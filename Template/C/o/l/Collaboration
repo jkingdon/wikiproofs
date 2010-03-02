@@ -4,20 +4,20 @@
 </div>
 {| class="table"
 |-
-! Mathematics !! Non-standard logic !! [[Wikiproofs:JHilbert|JHilbert]]
+! Content !! Verifier documentation and development !! Specification
 |-
 |
-* [[:Category:Mathematics Subject Classification|MSC 2010 subject tree]]
-* [[Wikiproofs:Mathematics|Mathematics project]]
+* [[Project:Logic|Logic project]]
+* [[Project:Mathematics|Mathematics project]]
 * &hellip;
 ||
-* [[Wikiproofs:Modal logic|Modal logic]]
-* [[Wikiproofs:Paraconsistent logic|Paraconsistent logic]]
+* [[Help:JHilbert|JHilbert help]]
+* [[Wikiproofs:JHilbert development|JHilbert development]]
 * &hellip;
 ||
 * [[Wikiproofs:JHilbert specification|JHilbert specification]]
 * [[Wikiproofs:Formal description of JHilbert|Formal description of JHilbert]]
-* [[Wikiproofs:JHilbert development|JHilbert development]]
+* [[Wikiproofs:JHilbert definition soundness|Definition soundness in JHilbert]]
 |}</div><noinclude></div>
 
 This template is transcluded from the [[Main Page]].
