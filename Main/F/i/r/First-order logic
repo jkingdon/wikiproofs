@@ -1254,15 +1254,12 @@ thm (sbie ()
         introduceBiconditionalFromImplications
 ))
 
-thm (buildSubstFromEquality ()
-  ((HPSI ψ) (HFREE (x is-not-free-in ψ)) (HEQ ((x = y) → (φ ↔ ψ))) )
-  (subst y x φ) (
-        HPSI
-
-        HFREE HEQ sbie
-        eliminateBiconditionalForward
-
-        applyModusPonens
+thm (makeSubstExplicit ((x ψ))
+  ((H ((x = y) → (φ ↔ ψ))))
+  ((subst y x φ) ↔ ψ) (
+        x ψ DistinctNotFree
+        H
+        sbie
 ))
 </jh>
 
