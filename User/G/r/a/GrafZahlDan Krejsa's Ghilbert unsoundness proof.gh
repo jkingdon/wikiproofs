@@ -1,0 +1,141 @@
+<pre>
+# This is a 2007 e-Mail from Dan Krejsa to Raph and Norm proving definition unsoundness in GHilbert.
+# Many thanks go to Raph for providing me with this communication. I took the liberty to add hash
+# marks, so this page can be directly fed to Ghilbert. I also scrubbed the e-Mail addresses.
+# -- GrafZahl
+
+
+#From: *Dan Krejsa*
+#Date: Sat, Jan 20, 2007 at 12:04 PM
+#To: raph, nm
+#
+#Hi,
+#
+#Well, here's the proof:
+#
+######################################################
+
+import (PROP pax/prop () "")
+import (SET_MM_AX zfc/set_mm_ax (PROP) "")
+
+var (wff ph ps ch)
+var (set w x y z)
+var (class A B)
+
+import (SET_MM zfc/set_mm (PROP SET_MM_AX) "")
+
+# One has to resort to the truly ugly:
+
+def ((ugh) x)
+
+thm (ugly () () (-> (= (cv y) (cv (ugh)))
+                        (A. (ugh) (= (cv y) (cv (ugh)))))
+       ((= (cv y) (cv (ugh))) (ugh) ax-17))
+
+# Well, it seems like a cheat to use dtru to establish this alpha-conversion
+# lemma, but I'll use dtru later to get a contradiction, so why not:
+thm (lem1 ((x y)) () (-> (A. x (= (cv y) (cv x)))
+                              (A. z (= (cv y) (cv z))))
+   (
+       x y dtru
+         (cv x) (cv y) eqcom x albii biimpr
+       mto
+       (A. x (= (cv y) (cv x))) (A. z (= (cv y) (cv z))) pm2.21
+       ax-mp
+   ))
+
+thm (lem2 () () (-> (= (cv y) (cv (ugh)))
+                   (A. z (= (cv y) (cv z))))
+   (
+       y ugly
+       (ugh) y z lem1
+       syl
+   ))
+
+thm (19.40i () ((1 (E. x (/\ ph ps)))) (/\ (E. x ph) (E. x ps))
+   (
+       1 x ph ps 19.40 ax-mp
+   ))
+
+thm (lem3 () () (E. y (A. z (= (cv y) (cv z))))
+   (
+       y (ugh) a9e
+         y z lem2
+         y ax-gen
+           y (= (cv y) (cv (ugh))) (A. z (= (cv y) (cv z))) exintr
+         ax-mp
+       ax-mp
+       19.40i
+       pm3.27i
+   ))
+
+thm (lem4 ((y z)) () (/\ (E. y (A. z (= (cv y) (cv z))))
+                        (-. (E. y (A. z (= (cv y) (cv z))))))
+   (
+       y z lem3
+       z y dtru
+         (cv z) (cv y) eqcom z albii biimpr
+       mto
+       y ax-gen
+         y (A. z (= (cv y) (cv z))) alnex
+       mpbi
+     pm3.2i
+   ))
+
+thm (uglycontra () () (/\ ph (-. ph))
+   (
+       y z lem4 pm3.26i
+       y z lem4 pm3.27i
+       (/\ ph (-. ph)) pm2.21i
+       ax-mp
+   ))
+
+######################################################
+
+#The problem, of course, is not with set_mm, but with Ghilbert's
+#definition system.  For this particular case, one could fix
+#things by requiring that the RHS of a definition be a term
+#proper, not just a variable; this would outlaw definitions
+#like
+#
+# def ((ugh) x)
+#
+#or even
+#
+# def ((ident x) x)
+#
+#That might be a good idea in any case, since it doesn't
+#seem quite safe to allow definition expansion to change the
+#syntactic class of a definition term; terms are, after all,
+#treated differently than variables.
+#
+#However, I think that fundamentally, the issue here
+#is more that with the current rules, Ghilbert allows the
+#use of definition terms for which the definition expansion
+#contains dummy variables, where the meaning of the expansion
+#is not independent of the choice of the dummy variable.
+#That is, it allows immediate use of definition terms which
+#have not been proven 'well defined'.  This allows the
+#unexpanded definition term to circumvent distinct variables
+#conditions which would otherwise apply to the not-really-dummy
+#variables in the expansion.
+#
+#I think we may have to consider allowing interface files
+#to provide some way of indicating how to show definition
+#terms of a particular kind are 'well defined' within the
+#theory, and requiring proof of well-definedness as determined
+#by the interface file before allowing unrestricted use of
+#a definition term introduced in a proof file.
+#
+#One other thing; I would like to consider disallowing
+#definitions like
+#
+#def ((dropit ph ps) (-> ps ps))
+#
+#where the RHS does not contain all the definition argument
+#variables.  I don't think this is theoretically essential,
+#but allowing such definitions introduces conceptual complexity,
+#and such definitions are probably not very useful.
+#
+#- Dan
+</pre>
