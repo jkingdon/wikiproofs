@@ -12,31 +12,6 @@ var (object x y x0 y0 x1 y1)
 var (nat k n m n0 n1 m0 m1)
 </jh>
 
-=== Convenience theorems/rules (first-order logic) ===
-<jh>
-thm (specialize () ((H (∀ x φ))) φ (
-        H
-        x φ Specialization
-        applyModusPonens
-))
-
-thm (swapEquality () ((H (x = y))) (y = x) (
-        H
-        x y EqualitySymmetry eliminateBiconditionalReverse
-        applyModusPonens
-))
-
-thm (buildEqualityRR () ((H (x0 = x1))) ((x0 = y) ↔ (x1 = y)) (
-        H
-        y EqualityReflexivity
-        introduceConjunction
-
-        x0 x1 y y EqualityBuilder
-
-        applyModusPonens
-))
-</jh>
-
 === Convenience builders (arithmetic) ===
 <jh>
 thm (AdditionBuilderLL () () ((m0 = m1) → ((n + m0) = (n + m1))) (
@@ -78,18 +53,18 @@ thm (Induction5 ((φ0 n) (φk n) (φSk n) (φ k))
   )
   φ (
 </jh>
-The main difference between this and <code>Induction</code> is that the latter uses <code>subst</code> and we use implicit substitutions. The theorem linking the two is <code>substEquality</code>. We first show the base case, <code>(subst (0) n φ)</code>.
+The main difference between this and <code>Induction</code> is that the latter uses <code>subst</code> and we use implicit substitutions. The theorem linking the two is <code>makeSubstExplicit</code>. We first show the base case, <code>(subst (0) n φ)</code>.
 <jh>
         HBASE
-        HSUB0 substEquality eliminateBiconditionalForward
+        HSUB0 makeSubstExplicit eliminateBiconditionalForward
         applyModusPonens
 </jh>
 The induction step is similar.
 <jh>
-        HSUBK substEquality eliminateBiconditionalReverse
+        HSUBK makeSubstExplicit eliminateBiconditionalReverse
         HIND
         applySyllogism
-        HSUBSK substEquality eliminateBiconditionalForward
+        HSUBSK makeSubstExplicit eliminateBiconditionalForward
         applySyllogism
         k generalize
 </jh>
