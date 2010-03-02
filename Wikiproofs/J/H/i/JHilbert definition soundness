@@ -1,1 +1,26 @@
-#REDIRECT [[User:GrafZahl/Botched attempt to prove JHilbert definition soundness]]
+{{header
+ | title    = Definition soundness in JHilbert and related systems
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = This page attempts to serve as a link hub to the various proposals and discussions concerning safe definitions in JHilbert, Ghilbert and possibly other related systems.
+}}
+
+In [http://us.metamath.org metamath]'s <code>set.mm</code>, definitions are just axioms. Ghilbert and later JHilbert strove to provide a definition mechanism capable of ending the "pollution" of the axiom space in metamath. Unfortunately, initial attempts failed. The main problem is the handling of dummy variables (i.e., variables that appear in the definiens but not in the definiendum) in combination with disjoint variable constraints, or free and bound variables.
+
+== Failed attempts ==
+
+:''This section is still incomplete.''
+
+* The old Ghilbert had a definition mechanism in which definitions were folded (the definiens replaced by the definiendum) at the end of each proof. This leads to unsoundness because term functors are treated differently from variables. It appears that Dan Krejsa [[User:GrafZahl/Dan Krejsa's Ghilbert unsoundness proof.gh|was the first to notice this]].
+
+== Current proposals ==
+
+:''This section is still incomplete.''
+
+* &hellip;
+* Raph's new Ghilbert proposal: [http://sites.google.com/a/ghilbert.org/ghilbert/documents/definitions]
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Wikiproofs]]
