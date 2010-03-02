@@ -1,0 +1,121 @@
+This page covers basic arithmetic, starting from [[Interface:Peano axioms]] and proceeding as far as all the familiar laws of arithmetic: commutative, associative, distributive, etc.  At least for now, it stops before proceeding into number theory (divisibility, primes, etc).
+
+We import the relevant interfaces and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+
+var (formula φ)
+var (nat k n m n0 n1 m0 m1)
+</jh>
+
+== Builders ==
+We provide rules and variants for the builder axioms.
+<jh>
+thm (AdditionBuilderLL () () ((m0 = m1) → ((n + m0) = (n + m1))) (
+        n EqualityReflexivity
+        (n = n) (m0 = m1) ConjunctionRightIntroduction
+        applyModusPonens
+
+        n n m0 m1 AdditionBuilder
+        applySyllogism
+))
+
+thm (buildAddition () ((HN (n0 = n1)) (HM (m0 = m1))) ((n0 + m0) = (n1 + m1)) (
+        HN
+        HM
+        introduceConjunction
+        n0 n1 m0 m1 AdditionBuilder
+        applyModusPonens
+))
+</jh>
+
+== Induction5 ==
+Here we provide a new induction theorem, <code>Induction5</code>.  It has five hypotheses, which despite the large number turns out to be easier to handle than expressing base cases and induction steps via <code>subst</code>. The first three hypotheses handle the substitution machinery.  The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
+
+<jh>
+var (formula φ0 φk φSk)
+
+thm (Induction5 ((φ0 n) (φk n) (φSk n) (φ k))
+  ((HSUB0 ((n = (0)) → (φ ↔ φ0)))
+   (HSUBK ((n = k) → (φ ↔ φk)))
+   (HSUBSK ((n = (succ k)) → (φ ↔ φSk)))
+   (HBASE φ0)
+   (HIND (φk → φSk))
+  )
+  φ (
+</jh>
+The main difference between this and <code>Induction</code> is that the latter uses <code>subst</code> and we use implicit substitutions. The theorem linking the two is <code>makeSubstExplicit</code>. We first show the base case, <code>(subst (0) n φ)</code>.
+<jh>
+        HBASE
+        HSUB0 makeSubstExplicit eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+The induction step is similar.
+<jh>
+        HSUBK makeSubstExplicit eliminateBiconditionalReverse
+        HIND
+        applySyllogism
+        HSUBSK makeSubstExplicit eliminateBiconditionalForward
+        applySyllogism
+        k generalize
+</jh>
+Now we combine the two and apply <code>Induction</code>.
+<jh>
+        introduceConjunction
+        n φ k Induction
+        applyModusPonens
+
+        specialize
+))
+</jh>
+
+=== Commuted version of the AdditiveIdentity axiom ===
+The first step towards proving that addition is commutative will be a commuted version of the AdditiveIdentity axiom. We proceed by induction.
+
+<jh>
+thm (AdditiveIdentityLeft ((n k)) () (((0) + n) = n) (
+</jh>
+The substitution for the base case is <code>n = 0 → (0 + n = n ↔ 0 + 0 = 0)</code>.
+<jh>
+        n (0) (0) AdditionBuilderLL
+        (n = (0)) ImplicationReflexivity
+        composeConjunction
+        ((0) + n) ((0) + (0)) n (0) EqualityBuilder
+        applySyllogism
+</jh>
+The substitution for the induction step antecedent is <code>n = k → (0 + n = n ↔ 0 + k = k)</code>.
+<jh>
+        n k (0) AdditionBuilderLL
+        (n = k) ImplicationReflexivity
+        composeConjunction
+        ((0) + n) ((0) + k) n k EqualityBuilder
+        applySyllogism
+</jh>
+The substitution for the induction step consequent is similar.
+<jh>
+        n (succ k) (0) AdditionBuilderLL
+        (n = (succ k)) ImplicationReflexivity
+        composeConjunction
+        ((0) + n) ((0) + (succ k)) n (succ k) EqualityBuilder
+        applySyllogism
+</jh>
+The base case, <code>0 + 0 = 0</code>, follows from the AdditiveIdentity axiom.
+<jh>
+        (0) AdditiveIdentity
+</jh>
+The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Addition axiom.
+<jh>
+        ((0) + k) k Successor eliminateBiconditionalForward
+
+        (0) k Addition swapEquality
+        (succ k) buildEqualityRR eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction5
+))
+</jh>
+
+[[Category:Elementary number theory|{{PAGENAME}}]]
