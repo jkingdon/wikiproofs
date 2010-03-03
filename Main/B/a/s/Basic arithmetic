@@ -7,8 +7,10 @@ import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 
 var (formula φ)
-var (nat k n m n0 n1 m0 m1)
+var (nat k n m n0 n1 m0 m1 a b c)
 </jh>
+
+Many of the proofs in this file are based on versions from Raph Levien.<ref>[http://levien.com/garden/ghnew/peano/ Peano], accessed March 2, 2010</ref>
 
 == Builders ==
 We provide rules and variants for the builder axioms.
@@ -36,6 +38,18 @@ thm (buildAddition () ((HN (n0 = n1)) (HM (m0 = m1))) ((n0 + m0) = (n1 + m1)) (
         HM
         introduceConjunction
         n0 n1 m0 m1 AdditionBuilder
+        applyModusPonens
+))
+
+thm (buildAdditionLL () ((HM (m0 = m1))) ((n + m0) = (n + m1)) (
+        HM
+        m0 m1 n AdditionBuilderLL
+        applyModusPonens
+))
+
+thm (buildAdditionRR () ((HN (n0 = n1))) ((n0 + m) = (n1 + m)) (
+        HN
+        n0 n1 m AdditionBuilderRR
         applyModusPonens
 ))
 
@@ -298,6 +312,80 @@ The induction step, <code>k + m = m + k → Sk + m = m + Sk</code> follows from 
         k m AdditionCommuted swapEquality
         m k Addition swapEquality
         buildEquality eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction6
+))
+</jh>
+
+== Addition is associative ==
+<jh>
+thm (AdditionAssociativity ((subk a) (subk b) (subk c) (subk k) (k b) (k c)) ()
+  (((a + b) + c) = (a + (b + c))) (
+</jh>
+The proof proceeds by induction on <code>a</code>. The substitution for the base case is <code>subk = 0 → (subk + b) + c = subk + (b + c) ↔ (0 + b) + c = 0 + (b + c)</code>:
+<jh>
+        subk (0) b AdditionBuilderRR
+        (subk + b) ((0) + b) c AdditionBuilderRR
+        applySyllogism
+
+        subk (0) (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        subk k b AdditionBuilderRR
+        (subk + b) (k + b) c AdditionBuilderRR
+        applySyllogism
+
+        subk k (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        subk (succ k) b AdditionBuilderRR
+        (subk + b) ((succ k) + b) c AdditionBuilderRR
+        applySyllogism
+
+        subk (succ k) (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        subk a b AdditionBuilderRR
+        (subk + b) (a + b) c AdditionBuilderRR
+        applySyllogism
+
+        subk a (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Each side of the base case, <code>(0 + b) + c = 0 + (b + c)</code>, is equal to <code>b + c</code> by <code>AdditiveIdentityLeft</code>.
+<jh>
+        b AdditiveIdentityLeft
+        c buildAdditionRR
+
+        (b + c) AdditiveIdentityLeft
+        swapEquality
+
+        applyEqualityTransitivity
+</jh>
+To prove <code>(Sk + b) + c = Sk + (b + c)</code> from <code>(k + b) + c = k + (b + c)</code>, take the successor of both sides and apply <code>AdditionCommuted</code>, twice to the left side and once to the right side.
+<jh>
+        ((k + b) + c) (k + (b + c)) Successor eliminateBiconditionalForward
+
+        k b AdditionCommuted
+        c buildAdditionRR
+        (k + b) c AdditionCommuted
+        applyEqualityTransitivity
+
+        k (b + c) AdditionCommuted
+
+        buildEquality eliminateBiconditionalForward
 
         applySyllogism
 
