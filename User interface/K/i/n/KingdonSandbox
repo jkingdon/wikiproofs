@@ -12,4 +12,10 @@ stmt (applySubstitutedEqualitySymmetry ()
   ((subst y x (z = w)))
   (subst y x (w = z))
 )
+
+stmt (vtocl ((y x) (ψ x))
+  (((x = y) → (φ ↔ ψ))
+   φ)
+  ψ
+)
 </jh>
