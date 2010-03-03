@@ -64,6 +64,44 @@ thm (removeSuccessor () ((H ((succ n) = (succ m)))) (n = m) (
         n m Successor eliminateBiconditionalReverse
         applyModusPonens
 ))
+
+thm (MultiplicationBuilderLL () () ((m0 = m1) → ((n · m0) = (n · m1))) (
+        n EqualityReflexivity
+        (n = n) (m0 = m1) ConjunctionRightIntroduction
+        applyModusPonens
+
+        n n m0 m1 MultiplicationBuilder
+        applySyllogism
+))
+
+thm (MultiplicationBuilderRR () () ((n0 = n1) → ((n0 · m) = (n1 · m))) (
+        m EqualityReflexivity
+        (m = m) (n0 = n1) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        n0 n1 m m MultiplicationBuilder
+        applySyllogism
+))
+
+thm (buildMultiplication () ((HN (n0 = n1)) (HM (m0 = m1))) ((n0 · m0) = (n1 · m1)) (
+        HN
+        HM
+        introduceConjunction
+        n0 n1 m0 m1 MultiplicationBuilder
+        applyModusPonens
+))
+
+thm (buildMultiplicationLL () ((HM (m0 = m1))) ((n · m0) = (n · m1)) (
+        HM
+        m0 m1 n MultiplicationBuilderLL
+        applyModusPonens
+))
+
+thm (buildMultiplicationRR () ((HN (n0 = n1))) ((n0 · m) = (n1 · m)) (
+        HN
+        n0 n1 m MultiplicationBuilderRR
+        applyModusPonens
+))
 </jh>
 
 Proofs using induction tend to make particularly heavy use of this one:
@@ -392,5 +430,59 @@ To prove <code>(Sk + b) + c = Sk + (b + c)</code> from <code>(k + b) + c = k + (
         Induction6
 ))
 </jh>
+
+== Multiplication is commutative ==
+The proof that multiplication is commutative is analogous to the proof that addition is commutative. It starts with proving commuted versions of the two multiplication axioms by induction, and then using those results to prove <code>n · m = m · n</code> by induction.
+
+=== Commuted version of the MultiplicativeZero axiom ===
+
+<jh>
+thm (MultiplicativeZeroLeft ((n k)) () (((0) · n) = (0)) (
+</jh>
+The proof proceeds by induction on <code>n</code>. The substitution for the base case is <code>n = 0 → (0 · n = 0 ↔ 0 · 0 = 0)</code>:
+<jh>
+        n (0) (0) MultiplicationBuilderLL
+        (0) EqualityReflexivity
+        (n = (0)) introduceAntecedent
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        n k (0) MultiplicationBuilderLL
+        (0) EqualityReflexivity
+        (n = k) introduceAntecedent
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        n (succ k) (0) MultiplicationBuilderLL
+        (0) EqualityReflexivity
+        (n = (succ k)) introduceAntecedent
+        buildEqualityInConsequent
+</jh>
+The base case is <code>0 · 0 = 0</code>, which follows from the <code>MultiplicativeZero</code> axiom.
+<jh>
+        (0) MultiplicativeZero
+</jh>
+The induction step is proved as follows:
+ 0 · k = 0 → 0 + 0 · k = 0 + 0 (adding 0 to both sides)
+ 0 + 0 · k = 0 · Sk (by Multiplication axiom)
+ 0 + 0 = 0 (by AdditiveIdentity axiom)
+ 0 · k = 0 → 0 · Sk = 0 (combining the above steps)
+<jh>
+        ((0) · k) (0) (0) AdditionBuilderLL
+
+        (0) k Multiplication swapEquality
+        (0) AdditiveIdentity
+        buildEquality eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction5
+))
+</jh>
+
+== References ==
+<references/>
 
 [[Category:Elementary number theory|{{PAGENAME}}]]
