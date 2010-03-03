@@ -175,44 +175,55 @@ The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Add
 === Commuted version of the Addition axiom ===
 The proof is by induction on <code>m</code>.
 
-[[Image:Zeichen 123.svg|50px]] The distinct variable constraint between n and m is temporary, until we update the proof to use Induction6 which avoids the need for it.
 <jh>
-thm (AdditionCommuted ((n k) (m k) (n m)) () (((succ n) + m) = (succ (n + m))) (
+thm (AdditionCommuted ((subk n) (subk m) (subk k) (k n)) () (((succ n) + m) = (succ (n + m))) (
 </jh>
-The substitution for the base case is <code>m = 0 → (Sn + m = S(n + m) ↔ Sn + 0 = S(n + 0))</code>.
+The substitution for the base case is <code>subk = 0 → (Sn + subk = S(n + subk) ↔ Sn + 0 = S(n + 0))</code>.
 <jh>
-        m (0) (succ n) AdditionBuilderLL
+        subk (0) (succ n) AdditionBuilderLL
 
-        m (0) n AdditionBuilderLL
-        (n + m) (n + (0)) Successor eliminateBiconditionalForward
+        subk (0) n AdditionBuilderLL
+        (n + subk) (n + (0)) Successor eliminateBiconditionalForward
         applySyllogism
 
         composeConjunction
-        ((succ n) + m) ((succ n) + (0)) (succ (n + m)) (succ (n + (0))) EqualityBuilder
+        ((succ n) + subk) ((succ n) + (0)) (succ (n + subk)) (succ (n + (0))) EqualityBuilder
         applySyllogism
 </jh>
 Substitution for the induction step antecedent:
 <jh>
-        m k (succ n) AdditionBuilderLL
+        subk k (succ n) AdditionBuilderLL
 
-        m k n AdditionBuilderLL
-        (n + m) (n + k) Successor eliminateBiconditionalForward
+        subk k n AdditionBuilderLL
+        (n + subk) (n + k) Successor eliminateBiconditionalForward
         applySyllogism
 
         composeConjunction
-        ((succ n) + m) ((succ n) + k) (succ (n + m)) (succ (n + k)) EqualityBuilder
+        ((succ n) + subk) ((succ n) + k) (succ (n + subk)) (succ (n + k)) EqualityBuilder
         applySyllogism
 </jh>
 Substitution for the induction step consequent:
 <jh>
-        m (succ k) (succ n) AdditionBuilderLL
+        subk (succ k) (succ n) AdditionBuilderLL
 
-        m (succ k) n AdditionBuilderLL
-        (n + m) (n + (succ k)) Successor eliminateBiconditionalForward
+        subk (succ k) n AdditionBuilderLL
+        (n + subk) (n + (succ k)) Successor eliminateBiconditionalForward
         applySyllogism
 
         composeConjunction
-        ((succ n) + m) ((succ n) + (succ k)) (succ (n + m)) (succ (n + (succ k))) EqualityBuilder
+        ((succ n) + subk) ((succ n) + (succ k)) (succ (n + subk)) (succ (n + (succ k))) EqualityBuilder
+        applySyllogism
+</jh>
+Substitution for the result:
+<jh>
+        subk m (succ n) AdditionBuilderLL
+
+        subk m n AdditionBuilderLL
+        (n + subk) (n + m) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+        ((succ n) + subk) ((succ n) + m) (succ (n + subk)) (succ (n + m)) EqualityBuilder
         applySyllogism
 </jh>
 The base case is <code>Sn + 0 = S(n + 0)</code>. The <code>AdditiveIdentity</code> axiom implies that each side is equal to <code>Sn</code>.
@@ -235,7 +246,7 @@ The induction step is <code>Sn + k = S(n + k) → Sn + Sk = S(n + Sk)</code>. We
 
         applySyllogism
 
-        Induction5
+        Induction6
 ))
 </jh>
 
