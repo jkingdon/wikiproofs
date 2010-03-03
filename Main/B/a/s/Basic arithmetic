@@ -95,6 +95,33 @@ Now we combine the two and apply <code>Induction</code>.
 ))
 </jh>
 
+=== Induction6 ===
+Having presented <code>Induction5</code>, there's an admission to make: it isn't quite enough for most situations.  The reason is that the discrete variable constraints on n (for example, <code>(φ0 n)</code>) are a bit too onerous. For example, suppose we are trying to prove <code>Sm + n = S(m + n)</code> by induction on <code>n</code>. Then <code>φ0</code> would be <code>Sm + 0 = S(m + 0)</code>.  This only passes the constraint <code>(φ0 n)</code> if <code>m</code> is distinct from <code>n</code>, which is not a condition we want to impose.
+
+The solution is <code>Induction6</code>, which adds one more substitution, to separate the result from the variables used in the proof.  The naming conventions in the following are: <code>n</code> still is the variable which will appear in the final result, <code>k</code> is the variable which appears in the induction step, and <code>subk</code> is a variable which is used only in substitutions (the limitation of <code>Induction5</code> happens because it combines this one with <code>n</code>).
+
+<jh>
+var (formula φn)
+var (nat subk)
+
+thm (Induction6 ((subk n) (φ0 subk) (φk subk) (φSk subk) (φn subk) (φ k))
+  ((HSUB0 ((subk = (0)) → (φ ↔ φ0)))
+   (HSUBK ((subk = k) → (φ ↔ φk)))
+   (HSUBSK ((subk = (succ k)) → (φ ↔ φSk)))
+   (HSUBA ((subk = n) → (φ ↔ φn)))
+   (HBASE φ0)
+   (HIND (φk → φSk))
+  )
+  φn (
+        HSUB0 HSUBK HSUBSK HBASE HIND Induction5
+        n subk introduceSubst
+
+        HSUBA makeSubstExplicit eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
 == Addition is commutative ==
 The proof that <code>n + m = m + n</code> will be by induction, but we first prove two results which will underpin the base case and induction step.
 
@@ -148,7 +175,7 @@ The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Add
 === Commuted version of the Addition axiom ===
 The proof is by induction on <code>m</code>.
 
-[[Image:Zeichen 123.svg|50px]] The distinct variable constraint between n and m is temporary, until we have a variant of Induction5 which avoids the need for it.
+[[Image:Zeichen 123.svg|50px]] The distinct variable constraint between n and m is temporary, until we update the proof to use Induction6 which avoids the need for it.
 <jh>
 thm (AdditionCommuted ((n k) (m k) (n m)) () (((succ n) + m) = (succ (n + m))) (
 </jh>
