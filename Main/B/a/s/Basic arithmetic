@@ -1,4 +1,6 @@
-This page covers basic arithmetic, starting from [[Interface:Peano axioms]] and proceeding as far as all the familiar laws of arithmetic: commutative, associative, distributive, etc.  At least for now, it stops before continuing into number theory (divisibility, primes, etc).
+{{header
+ | notes = This page covers basic arithmetic, starting from [[Interface:Peano axioms]] and proceeding as far as all the familiar laws of arithmetic: commutative, associative, distributive, etc.  At least for now, it stops before continuing into number theory (divisibility, primes, etc).
+}}
 
 We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic]], and [[Interface:Peano axioms]] and define some variables:
 <jh>
