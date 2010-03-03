@@ -1,4 +1,6 @@
-In [[Standard axioms imply Principia Mathematica axioms]] we show that the [[Interface:Standard axioms of propositional calculus]] imply the ''Principia'' axioms.  Here we show that the Principia axioms imply the standard ones.
+{{header
+ | notes = In [[Standard axioms imply Principia Mathematica axioms]] we show that the [[Interface:Standard axioms of propositional calculus]] imply the ''Principia'' axioms.  Here we show that the Principia axioms imply the standard ones.
+}}
 
 {{interfaces
 | imports = [[Interface:Classical propositional calculus]]
