@@ -1,6 +1,6 @@
-This page covers basic arithmetic, starting from [[Interface:Peano axioms]] and proceeding as far as all the familiar laws of arithmetic: commutative, associative, distributive, etc.  At least for now, it stops before proceeding into number theory (divisibility, primes, etc).
+This page covers basic arithmetic, starting from [[Interface:Peano axioms]] and proceeding as far as all the familiar laws of arithmetic: commutative, associative, distributive, etc.  At least for now, it stops before continuing into number theory (divisibility, primes, etc).
 
-We import the relevant interfaces and define some variables:
+We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic]], and [[Interface:Peano axioms]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
@@ -22,6 +22,15 @@ thm (AdditionBuilderLL () () ((m0 = m1) → ((n + m0) = (n + m1))) (
         applySyllogism
 ))
 
+thm (AdditionBuilderRR () () ((n0 = n1) → ((n0 + m) = (n1 + m))) (
+        m EqualityReflexivity
+        (m = m) (n0 = n1) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        n0 n1 m m AdditionBuilder
+        applySyllogism
+))
+
 thm (buildAddition () ((HN (n0 = n1)) (HM (m0 = m1))) ((n0 + m0) = (n1 + m1)) (
         HN
         HM
@@ -29,10 +38,25 @@ thm (buildAddition () ((HN (n0 = n1)) (HM (m0 = m1))) ((n0 + m0) = (n1 + m1)) (
         n0 n1 m0 m1 AdditionBuilder
         applyModusPonens
 ))
+
+thm (addSuccessor () ((H (n = m))) ((succ n) = (succ m)) (
+        H
+        n m Successor eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (removeSuccessor () ((H ((succ n) = (succ m)))) (n = m) (
+        H
+        n m Successor eliminateBiconditionalReverse
+        applyModusPonens
+))
 </jh>
 
-== Induction5 ==
-Here we provide a new induction theorem, <code>Induction5</code>.  It has five hypotheses, which despite the large number turns out to be easier to handle than expressing base cases and induction steps via <code>subst</code>. The first three hypotheses handle the substitution machinery.  The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
+== Induction ==
+Here we present some induction theorems.
+
+=== Induction5 ===
+This version has five hypotheses, which despite the large number turns out to be easier to handle than expressing base cases and induction steps via <code>subst</code>. The first three hypotheses handle the substitution machinery.  The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
 
 <jh>
 var (formula φ0 φk φSk)
@@ -70,6 +94,9 @@ Now we combine the two and apply <code>Induction</code>.
         specialize
 ))
 </jh>
+
+== Addition is commutative ==
+The proof that <code>n + m = m + n</code> will be by induction, but we first prove two results which will underpin the base case and induction step.
 
 === Commuted version of the AdditiveIdentity axiom ===
 The first step towards proving that addition is commutative will be a commuted version of the AdditiveIdentity axiom. We proceed by induction.
@@ -111,6 +138,73 @@ The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Add
 
         (0) k Addition swapEquality
         (succ k) buildEqualityRR eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction5
+))
+</jh>
+
+=== Commuted version of the Addition axiom ===
+The proof is by induction on <code>m</code>.
+
+[[Image:Zeichen 123.svg|50px]] The distinct variable constraint between n and m is temporary, until we have a variant of Induction5 which avoids the need for it.
+<jh>
+thm (AdditionCommuted ((n k) (m k) (n m)) () (((succ n) + m) = (succ (n + m))) (
+</jh>
+The substitution for the base case is <code>m = 0 → (Sn + m = S(n + m) ↔ Sn + 0 = S(n + 0))</code>.
+<jh>
+        m (0) (succ n) AdditionBuilderLL
+
+        m (0) n AdditionBuilderLL
+        (n + m) (n + (0)) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+        ((succ n) + m) ((succ n) + (0)) (succ (n + m)) (succ (n + (0))) EqualityBuilder
+        applySyllogism
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        m k (succ n) AdditionBuilderLL
+
+        m k n AdditionBuilderLL
+        (n + m) (n + k) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+        ((succ n) + m) ((succ n) + k) (succ (n + m)) (succ (n + k)) EqualityBuilder
+        applySyllogism
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        m (succ k) (succ n) AdditionBuilderLL
+
+        m (succ k) n AdditionBuilderLL
+        (n + m) (n + (succ k)) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+        ((succ n) + m) ((succ n) + (succ k)) (succ (n + m)) (succ (n + (succ k))) EqualityBuilder
+        applySyllogism
+</jh>
+The base case is <code>Sn + 0 = S(n + 0)</code>. The <code>AdditiveIdentity</code> axiom implies that each side is equal to <code>Sn</code>.
+<jh>
+        (succ n) AdditiveIdentity
+
+        n AdditiveIdentity
+        addSuccessor
+        swapEquality
+
+        applyEqualityTransitivity
+</jh>
+The induction step is <code>Sn + k = S(n + k) → Sn + Sk = S(n + Sk)</code>. We prove this by starting with the antecedent and taking the successor of both sides, to get <code>S(Sn + k) = S(S(n + k))</code>.  Applying the <code>Addition</code> axiom to each of the two additions gets us <code>Sn + Sk = S(n + Sk)</code>, which is what we need.
+<jh>
+        ((succ n) + k) (succ (n + k)) Successor eliminateBiconditionalForward
+
+        (succ n) k Addition swapEquality
+        n k Addition addSuccessor swapEquality
+        buildEquality eliminateBiconditionalReverse
 
         applySyllogism
 
