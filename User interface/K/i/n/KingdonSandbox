@@ -18,4 +18,15 @@ stmt (vtocl ((y x) (ψ x))
    φ)
   ψ
 )
+
+var (formula φ0 φk φSk)
+stmt (Induction5 ((φ0 n) (φk n) (φSk n) (φ k))
+  (((n = (0)) → (φ ↔ φ0))
+   ((n = k) → (φ ↔ φk))
+   ((n = (succ k)) → (φ ↔ φSk))
+   φ0
+   (φk → φSk)
+  )
+  φ
+)
 </jh>
