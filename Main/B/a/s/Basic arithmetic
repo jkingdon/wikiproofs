@@ -52,6 +52,18 @@ thm (removeSuccessor () ((H ((succ n) = (succ m)))) (n = m) (
 ))
 </jh>
 
+Proofs using induction tend to make particularly heavy use of this one:
+<jh>
+thm (buildEqualityInConsequent ()
+  ((HN (φ → (n0 = n1)))
+   (HM (φ → (m0 = m1))))
+  (φ → ((n0 = m0) ↔ (n1 = m1))) (
+        HN HM composeConjunction
+        n0 n1 m0 m1 EqualityBuilder
+        applySyllogism
+))
+</jh>
+
 == Induction ==
 Here we present some induction theorems.
 
@@ -135,25 +147,19 @@ The substitution for the base case is <code>n = 0 → (0 + n = n ↔ 0 + 0 = 0)<
 <jh>
         n (0) (0) AdditionBuilderLL
         (n = (0)) ImplicationReflexivity
-        composeConjunction
-        ((0) + n) ((0) + (0)) n (0) EqualityBuilder
-        applySyllogism
+        buildEqualityInConsequent
 </jh>
 The substitution for the induction step antecedent is <code>n = k → (0 + n = n ↔ 0 + k = k)</code>.
 <jh>
         n k (0) AdditionBuilderLL
         (n = k) ImplicationReflexivity
-        composeConjunction
-        ((0) + n) ((0) + k) n k EqualityBuilder
-        applySyllogism
+        buildEqualityInConsequent
 </jh>
 The substitution for the induction step consequent is similar.
 <jh>
         n (succ k) (0) AdditionBuilderLL
         (n = (succ k)) ImplicationReflexivity
-        composeConjunction
-        ((0) + n) ((0) + (succ k)) n (succ k) EqualityBuilder
-        applySyllogism
+        buildEqualityInConsequent
 </jh>
 The base case, <code>0 + 0 = 0</code>, follows from the AdditiveIdentity axiom.
 <jh>
@@ -172,11 +178,19 @@ The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Add
 ))
 </jh>
 
+Now that we have a <code>AdditiveIdentityLeft</code>, we'll also add <code>AdditiveIdentityRight</code> as a new name for the <code>AdditiveIdentity</code> axiom:
+<jh>
+thm (AdditiveIdentityRight () () ((n + (0)) = n) (
+        n AdditiveIdentity
+))
+</jh>
+
 === Commuted version of the Addition axiom ===
 The proof is by induction on <code>m</code>.
 
 <jh>
-thm (AdditionCommuted ((subk n) (subk m) (subk k) (k n)) () (((succ n) + m) = (succ (n + m))) (
+thm (AdditionCommuted ((subk n) (subk m) (subk k) (k n)) () 
+  (((succ n) + m) = (succ (n + m))) (
 </jh>
 The substitution for the base case is <code>subk = 0 → (Sn + subk = S(n + subk) ↔ Sn + 0 = S(n + 0))</code>.
 <jh>
@@ -186,9 +200,7 @@ The substitution for the base case is <code>subk = 0 → (Sn + subk = S(n + subk
         (n + subk) (n + (0)) Successor eliminateBiconditionalForward
         applySyllogism
 
-        composeConjunction
-        ((succ n) + subk) ((succ n) + (0)) (succ (n + subk)) (succ (n + (0))) EqualityBuilder
-        applySyllogism
+        buildEqualityInConsequent
 </jh>
 Substitution for the induction step antecedent:
 <jh>
@@ -198,9 +210,7 @@ Substitution for the induction step antecedent:
         (n + subk) (n + k) Successor eliminateBiconditionalForward
         applySyllogism
 
-        composeConjunction
-        ((succ n) + subk) ((succ n) + k) (succ (n + subk)) (succ (n + k)) EqualityBuilder
-        applySyllogism
+        buildEqualityInConsequent
 </jh>
 Substitution for the induction step consequent:
 <jh>
@@ -210,9 +220,7 @@ Substitution for the induction step consequent:
         (n + subk) (n + (succ k)) Successor eliminateBiconditionalForward
         applySyllogism
 
-        composeConjunction
-        ((succ n) + subk) ((succ n) + (succ k)) (succ (n + subk)) (succ (n + (succ k))) EqualityBuilder
-        applySyllogism
+        buildEqualityInConsequent
 </jh>
 Substitution for the result:
 <jh>
@@ -222,9 +230,7 @@ Substitution for the result:
         (n + subk) (n + m) Successor eliminateBiconditionalForward
         applySyllogism
 
-        composeConjunction
-        ((succ n) + subk) ((succ n) + m) (succ (n + subk)) (succ (n + m)) EqualityBuilder
-        applySyllogism
+        buildEqualityInConsequent
 </jh>
 The base case is <code>Sn + 0 = S(n + 0)</code>. The <code>AdditiveIdentity</code> axiom implies that each side is equal to <code>Sn</code>.
 <jh>
@@ -242,6 +248,55 @@ The induction step is <code>Sn + k = S(n + k) → Sn + Sk = S(n + Sk)</code>. We
 
         (succ n) k Addition swapEquality
         n k Addition addSuccessor swapEquality
+        buildEquality eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction6
+))
+</jh>
+
+=== Proof that addition is commutative ===
+We prove <code>n + m = m + n</code> by induction on <code>n</code>.
+<jh>
+thm (AdditionCommutativity ((subk n) (subk m) (subk k) (k m)) () ((n + m) = (m + n)) (
+</jh>
+The substitution for the base case is <code>subk = 0 → subk + m = m + subk ↔ 0 + m = m + 0</code>.
+<jh>
+        subk (0) m AdditionBuilderRR
+        subk (0) m AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        subk k m AdditionBuilderRR
+        subk k m AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        subk (succ k) m AdditionBuilderRR
+        subk (succ k) m AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        subk n m AdditionBuilderRR
+        subk n m AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+The base case, <code>0 + m = m + 0</code> follows from right and left identity.
+<jh>
+        m AdditiveIdentityLeft
+        m AdditiveIdentityRight swapEquality
+        applyEqualityTransitivity
+</jh>
+The induction step, <code>k + m = m + k → Sk + m = m + Sk</code> follows from the regular and commuted versions of the <code>Addition</code> axiom.
+<jh>
+        (k + m) (m + k) Successor eliminateBiconditionalForward
+
+        k m AdditionCommuted swapEquality
+        m k Addition swapEquality
         buildEquality eliminateBiconditionalReverse
 
         applySyllogism
