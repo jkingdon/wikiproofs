@@ -1,0 +1,15 @@
+<small>— ''The previous unsigned comment was made by'' [[User:{{{2|{{{1}}}}}}|{{{2|{{{1}}}}}}]] ([[User talk:{{{2|{{{1}}}}}}|talk]]) {{#if:{{{2|}}}|{{{1|}}}}}.</small><noinclude>
+
+This template can be used to indicate the author of a comment when said author has forgotten to sign with three or four tildes (<code><nowiki>~~~</nowiki></code> or <code><nowiki>~~~~</nowiki></code>).
+
+For example, using
+<pre>{{unsigned|timestamp|username}}</pre>
+produces: {{unsigned|timestamp|username}}. This form is quite practical as the template parameters can be copied and pasted directly from the page history.
+
+The following short form is also possible:
+<pre>{{unsigned|username}}</pre>
+produces just {{unsigned|username}}.
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Templates]]
+</noinclude>
