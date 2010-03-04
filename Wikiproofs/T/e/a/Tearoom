@@ -99,4 +99,10 @@ Also, I realize I don't understand enough about the kind system in JHilbert to k
 
 In old Ghilbert, all such syntactical productions need to have explicit s-expression counterparts. Thus, you saw an awful lot of (cv x) for variables that appear in class contexts. The idea was that such things would go away when presenting theorems in the typeset syntax, but it was still awkward and painful to deal with. Thus, getting rid of that was one of the explicit motivations to switch from distinct variables to free variables in the new Ghilbert (thus, the new distinction between var and tvar, for binding and term variables respectively).
 
-So, does JHilbert do implicit coercion from one kind to another? If so, how is it controlled to make sure it's sound? If not, I'm pretty sure there's some serious wrongness going on in the first order logic area here.
+So, does JHilbert do implicit coercion from one kind to another? If so, how is it controlled to make sure it's sound? If not, I'm pretty sure there's some serious wrongness going on in the first order logic area here. {{unsigned|17:53, 3 March 2010|Raph}}
+
+:In JHilbert "coercion" (one form of <code>kindbind</code>) is mutual, meaning that in effect, there is only one kind with two or more names. (I'm pretty sure the old Ghilbert already had this functionality.) In particular, you should not bind <code>set</code> and <code>class</code> as then, all classes would be sets (which means you still need <code>term (class (cv set))</code> or a similar construct).
+
+:You can use <code>kindbind</code> in two ways. The first one is to create a new name for an already existing kind. The second one, available in interfaces only, is to declare two already existing kinds imported via <code>param</code> to be equivalent. Of course, both can be dangerous in their way. The first one in a purely semantic manner: if you declare <code>nat</code> to be another name for <code>object</code> and your universe of discourse is not actually the natural numbers, you'll confuse the hell out of your users. The second one can break things badly if you bind things together that don't belong together, such as <code>formula</code> and <code>object</code>. That's why it's only available in interfaces.
+
+:--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:56, 3 March 2010 (UTC)
