@@ -34,7 +34,7 @@ kind (variable)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
-A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion:
+A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected).
 <jh>
 term (object (value variable))
 </jh>
