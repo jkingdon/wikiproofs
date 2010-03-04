@@ -11,17 +11,18 @@ In [http://us.metamath.org metamath]'s <code>set.mm</code>, definitions are just
 
 == Failed attempts ==
 
-:''This section is still incomplete.''
+* The old Ghilbert had a definition mechanism in which definitions were folded (the definiens replaced by the definiendum) at the end of each proof. This leads to unsoundness because term functors are treated differently from variables. It appears that Dan Krejsa [[User:GrafZahl/Dan Krejsa's Ghilbert unsoundness proof.gh|was the first to notice this]]. Later, Carl Witty provided a [[User:CarlWitty/bad-const-defn.mm|method to expose unsoundness]] in Ghilbert expressed in metamath, which was later adapted to Ghilbert syntax in [[User:GrafZahl/unsound-def.gh]].
 
-* The old Ghilbert had a definition mechanism in which definitions were folded (the definiens replaced by the definiendum) at the end of each proof. This leads to unsoundness because term functors are treated differently from variables. It appears that Dan Krejsa [[User:GrafZahl/Dan Krejsa's Ghilbert unsoundness proof.gh|was the first to notice this]].
+* JHilbert was initially intended to provide a much more flexible definition mechanism. Definitions were treated as abbreviations applied automatically. However, in combination with dummy variables, this opened quite some cans of worms and an [[User:GrafZahl/Botched attempt to prove JHilbert definition soundness|attempt to prove definition soundness]] ultimately failed.
 
 == Current proposals ==
 
-:''This section is still incomplete.''
+* [[User:GrafZahl|GrafZahl]] proposed to [[User:GrafZahl/Definitions in JHilbert|reduce the strength]] of the definition mechanism, so that only true abbreviations (identical set of apparent variables in definiens and definiendum) are allowed. Thus, the set of apparent variables in a proof is never altered through the expansions of definitions. Such an abbreviation mechanism is only applicable in a limited number of situations, though, because very many first-order definitions require dummy variables. However, such a mechanism would be sufficient to overcome bootstrap difficulties with certain sequential calculi, such as the Nicod system.
 
-* &hellip;
-* Raph's new Ghilbert proposal: [http://sites.google.com/a/ghilbert.org/ghilbert/documents/definitions]
-* [[User:CarlWitty/Definitions_proposal]]
+There are some further proposals which are somewhat orthogonal to the above one in that they might be implemented independently of abbreviations. They propose non-automatic definitions as a replacement of the metamath definition axioms.
+
+* [[User:CarlWitty/Definitions_proposal|Carl Witty's proposal]] suggests the splitting of ''kinds'' into pure variable kinds and kinds of variables which may be substituted for more complex expressions. Term functors may only be of the latter kind, while disjoint variable pairs must always include at least one variable of the former type of kind.
+* [[User:Raph|Raph]]'s new Ghilbert proposal [http://sites.google.com/a/ghilbert.org/ghilbert/home] ([http://sites.google.com/a/ghilbert.org/ghilbert/documents/definitions] in particular) suggests the introduction of two types of ''variables'' (instead of kinds as in Carl's proposal): binding variables and term variables. In this proposal, Ghilbert would know about the freeness of variables through user-provided information in the <code>term</code> command.
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Wikiproofs]]
