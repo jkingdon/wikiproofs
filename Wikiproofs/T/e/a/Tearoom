@@ -114,3 +114,5 @@ So, does JHilbert do implicit coercion from one kind to another? If so, how is i
 ::Also, nowhere in the interfaces or proof files referenced above did I find any actual invocation of kindbind. From what I can tell, the term was defined with one vector of kind args, and instantiated with another. [[User:Raph|Raph]] 19:24, 3 March 2010 (UTC)
 
 :::I also answered this at [[Talk:First-order logic]] (a few days ago), but the kindbind is in [[Interface:Peano axioms]] (which is imported by [[Basic arithmetic]]). [[User:Kingdon|Kingdon]] 19:36, 3 March 2010 (UTC)
+
+::::Ah, sorry to have missed the response there (I do try to follow Recent Changes but sometimes miss things). I'm 99% sure that kindbind is invalid, that your axiomatization of Peano is unsound, and that in particular I can prove the above nonsensical theorem. I'd be happy to be convinced otherwise, but my strong sense is that it needs to be fixed, and I'm not at all sure how to do it in the JHilbert world without adding explicit (cv x) terms. [[User:Raph|Raph]] 19:47, 3 March 2010 (UTC)
