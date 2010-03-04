@@ -106,7 +106,7 @@ thm (buildMultiplicationRR () ((HN (n0 = n1))) ((n0 · m) = (n1 · m)) (
 ))
 </jh>
 
-Proofs using induction tend to make particularly heavy use of this one:
+Proofs using induction, when they build up their substitutions, make heavy use of builders in consequents:
 <jh>
 thm (buildEqualityInConsequent ()
   ((HN (φ → (n0 = n1)))
@@ -114,6 +114,15 @@ thm (buildEqualityInConsequent ()
   (φ → ((n0 = m0) ↔ (n1 = m1))) (
         HN HM composeConjunction
         n0 n1 m0 m1 EqualityBuilder
+        applySyllogism
+))
+
+thm (buildAdditionInConsequent ()
+  ((HN (φ → (n0 = n1)))
+   (HM (φ → (m0 = m1))))
+  (φ → ((n0 + m0) = (n1 + m1))) (
+        HN HM composeConjunction
+        n0 n1 m0 m1 AdditionBuilder
         applySyllogism
 ))
 </jh>
@@ -481,6 +490,132 @@ The induction step is proved as follows:
         applySyllogism
 
         Induction5
+))
+</jh>
+
+=== Commuted version of the Multiplication axiom ===
+Here we prove <code>Sn · m = n · m + m</code>. We break apart some parts of the proof into separate lemmas.
+
+<jh>
+thm (MultiplicationCommuted-left () () ((((succ n) · k) + (succ n)) = ((succ n) · (succ k))) (
+        ((succ n) · k) (succ n) AdditionCommutativity
+        (succ n) k Multiplication swapEquality
+        applyEqualityTransitivity
+))
+
+thm (MultiplicationCommuted-right () () 
+  ((((n · k) + k) + (succ n)) = ((n · (succ k)) + (succ k))) (
+</jh>
+First we transform <code>n · k + k + Sn</code> to S(n · k + k + n):
+<jh>
+        ((n · k) + k) n Addition
+</jh>
+Now we swap the last <code>k</code> and <code>n</code> to get <code>S(n · k + n + k)</code>.  This is basically just <code>AdditionCommutativity</code>, but there's quite a bit of rearranging and building:
+<jh>
+        (n · k) k n AdditionAssociativity
+        k n AdditionCommutativity (n · k) buildAdditionLL
+        applyEqualityTransitivity
+
+        (n · k) n k AdditionAssociativity swapEquality
+        applyEqualityTransitivity
+        addSuccessor
+
+        applyEqualityTransitivity
+</jh>
+We now apply <code>Addition</code> to turn that into <code>n · k + n + Sk</code>
+<jh>
+        ((n · k) + n) k Addition swapEquality
+        applyEqualityTransitivity
+</jh>
+And <code>Multiplication</code> to get <code>n · Sk + Sk</code>
+<jh>
+        (n · k) n AdditionCommutativity
+        n k Multiplication swapEquality
+        applyEqualityTransitivity
+
+        (succ k) buildAdditionRR
+
+        applyEqualityTransitivity
+))
+
+thm (MultiplicationCommuted-step () () 
+  ((((succ n) · k) = ((n · k) + k)) → (((succ n) · (succ k)) = ((n · (succ k)) + (succ k)))) (
+</jh>
+Induction step: We get started by adding <code>Sn</code> to the right side of our induction step antecedant: <code>Sn · k = n · k + k → Sn · k + Sn = n · k + k + Sn</code>.
+<jh>
+        ((succ n) · k) ((n · k) + k) (succ n) AdditionBuilderRR
+</jh>
+We transform <code>Sn · k + Sn</code> into <code>Sn · Sk</code>:
+<jh>
+        n k MultiplicationCommuted-left
+</jh>
+Now we turn <code>n · k + k + Sn</code> into <code>n · Sk + Sk</code>:
+<jh>
+        n k MultiplicationCommuted-right
+</jh>
+Now we just need to reassemble the entire induction step implication:
+<jh>
+        buildEquality eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (MultiplicationCommuted ((subk n) (subk m) (subk k) (k n)) () 
+  (((succ n) · m) = ((n · m) + m)) (
+</jh>
+The proof is by induction on <code>m</code>. The substitution for the base case is <code>subk = 0 → (Sn · subk = n · subk + subk ↔ Sn · 0 = n · 0 + 0)</code>.
+<jh>
+        subk (0) (succ n) MultiplicationBuilderLL
+
+        subk (0) n MultiplicationBuilderLL
+        (subk = (0)) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        subk k (succ n) MultiplicationBuilderLL
+
+        subk k n MultiplicationBuilderLL
+        (subk = k) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        subk (succ k) (succ n) MultiplicationBuilderLL
+
+        subk (succ k) n MultiplicationBuilderLL
+        (subk = (succ k)) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        subk m (succ n) MultiplicationBuilderLL
+
+        subk m n MultiplicationBuilderLL
+        (subk = m) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+The base case is <code>Sn · 0 = n · 0 + 0</code>.
+<jh>
+        (succ n) MultiplicativeZero
+        n MultiplicativeZero swapEquality
+        applyEqualityTransitivity
+
+        (n · (0)) AdditiveIdentityRight swapEquality
+        applyEqualityTransitivity
+</jh>
+Induction step:
+<jh>
+        n k MultiplicationCommuted-step
+
+        Induction6
 ))
 </jh>
 
