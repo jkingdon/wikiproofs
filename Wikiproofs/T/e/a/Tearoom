@@ -73,3 +73,28 @@ It turns out to be pretty handy to copy-paste short formulas from one website to
 == Add ≠ to edit tools ==
 
 I propose to add ≠ (U+2260 NOT EQUAL TO) to [[MediaWiki:Edittools]], just to the right of ∃. [[User:Kingdon|Kingdon]] 16:46, 3 March 2010 (UTC)
+
+== Kind verification and coercion ==
+
+I'm concerned about something and want to make sure it gets attention.
+
+In [[Interface:First-order_logic]], subst is introduced, then in [[First-order_logic]] defined:
+
+<pre>
+term (formula (subst object object formula))
+def ((subst y x φ) (((x = y) → φ) ∧ (∃ x ((x = y) ∧ φ))))
+</pre>
+
+But in [[Basic_arithmetic]] it is being invoked quite a bit with terms of kind "nat", rather than "object".
+
+Is kind verification not working? If not, I think there is serious risk of unsoundness.
+
+Also, I realize I don't understand enough about the kind system in JHilbert to know whether terms of one kind can be implicitly coerced into another. In set.mm, then answer is "yes," due to this rule:
+
+<pre>
+  cv $a class x $.
+</pre>
+
+In old Ghilbert, all such syntactical productions need to have explicit s-expression counterparts. Thus, you saw an awful lot of (cv x) for variables that appear in class contexts. The idea was that such things would go away when presenting theorems in the typeset syntax, but it was still awkward and painful to deal with. Thus, getting rid of that was one of the explicit motivations to switch from distinct variables to free variables in the new Ghilbert (thus, the new distinction between var and tvar, for binding and term variables respectively).
+
+So, does JHilbert do implicit coercion from one kind to another? If so, how is it controlled to make sure it's sound? If not, I'm pretty sure there's some serious wrongness going on in the first order logic area here.
