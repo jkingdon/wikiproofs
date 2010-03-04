@@ -47,4 +47,4 @@ OK, it's discussion time!--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl
 
 I just did a reasonably detailed writeup of the new definition mechanism in Ghilbert: [http://sites.google.com/a/ghilbert.org/ghilbert/documents/definitions]. Hopefully this will add to the discussion here. I _do_ believe that it's possible to reconcile soundness (and reasonable simplicity) with enough power and expressiveness that the definition mechanism won't get seriously in the way of doing mathematical work. Btw, feel free to ask me for edit permissions over there if you want them. It's still nowhere nearly fully set up yet, but one must start somewhere. [[User:Raph|Raph]] 08:38, 25 February 2010 (UTC)
 
-[[Category:JHilbert]]
+[[Category:JHilbert|Definitions in JHilbert]]
