@@ -24,13 +24,27 @@ We use the term ''object'' to refer to something which is subject to quantificat
 
 <jh>
 kind (object)
-var (object x y z x0 x1 y0 y1)
+var (object s t u s0 s1 t0 t1)
 </jh>
+
+A ''variable'' is something we can quantify over.
+
+<jh>
+kind (variable)
+var (variable x y z x0 x1 y0 y1)
+</jh>
+
+A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion:
+<jh>
+term (object (value variable))
+</jh>
+
+The reverse is not possible.  Examples of objects which are not variables might be <code>s + t</code> for Peano arithmetic, or <code>s ∪ t</code> for set theory.
 
 == Quantification ==
 We extend the available formulas with [[w:Universal quantification|universal quantification]]:
 <jh>
-term (formula (∀ object formula))
+term (formula (∀ variable formula))
 
 stmt (QuantifiedImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) )
 stmt (QuantifiedNegation () () ( (¬ (∀ x φ)) → (∀ x (¬ (∀ x φ))) ) )
@@ -50,24 +64,24 @@ Although a usable theory of predicate logic will generally have at least one mor
 We introduce equality and provide our first equality axiom, a version of the transitive law for equality:
 <jh>
 term (formula (= object object))
-stmt (AxiomEquality () () ( (x = y) → ( (x = z) → (y = z) ) ) )
+stmt (AxiomEquality () () ( (s = t) → ( (s = u) → (t = u) ) ) )
 </jh>
 
 The next four axioms combine equality and quantification.
 
 The <code>Existence</code> axiom asserts that there is at least one object:
 <jh>
-stmt (Existence () () (¬ (∀ x (¬ (x = y)))) )
-stmt (QuantifierSubstitution () () ((∀ x (x = y)) → (∀ y (y = x))) )
-stmt (VariableSubstitution () () ( (x = y) → ( (∀ y φ) → (∀ x ((x = y) → φ)) ) ) )
+stmt (Existence () () (¬ (∀ x (¬ ((value x) = s)))) )
+stmt (QuantifierSubstitution () () ((∀ x ((value x) = (value y))) → (∀ y ((value y) = (value x)))) )
+stmt (VariableSubstitution () () ( ((value x) = (value y)) → ( (∀ y φ) → (∀ x (((value x) = (value y)) → φ)) ) ) )
 </jh>
 
-The <code>QuantifierIntroduction</code> axiom says that if <code>z</code> is not equal to either <code>x</code> or <code>y</code>, then <code>z</code> does not affect the truth of <code>x = y</code>, so it is OK to add <code>∀ z</code> to the start of <code>x = y</code>.
+The <code>QuantifierIntroduction</code> axiom says that if <code>z</code> is not equal to either <code>s</code> or <code>t</code>, then <code>z</code> does not affect the truth of <code>s = t</code>, so it is OK to add <code>∀ z</code> to the start of <code>x = y</code>.
 <jh>
 stmt (QuantifierIntroduction () () ( 
-  (¬ (∀ z (z = x))) 
-  → ( (¬ (∀ z (z = y))) 
-      → ( (x = y) → (∀ z (x = y)) ) ) )
+  (¬ (∀ z ((value z) = s))) 
+  → ( (¬ (∀ z ((value z) = t))) 
+      → ( (s = t) → (∀ z (s = t)) ) ) )
 )
 </jh>
 
