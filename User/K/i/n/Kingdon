@@ -46,12 +46,13 @@ Here are some sample theorems:
 
 * a · 1 = a
 * Multiplication is commutative and associative
+From Hirst & Hirst:
  3. Multiplication is distributive over addition: x · (y + z) = x · y + x · z
  4. Strict inequality is transitive: x < y → (y < z → x < z)
  5. Inequality is preserved by addition: x ≤ y → x + z ≤ y + z
  6. Strict inequality is preserved by addition: x < y → x + z < y + z
  7. Inequality is preserved by multiplication: x ≤ y → x · z ≤ y · z
  8. Strict inequality is preserved by nonzero multiplication:
-    z = 0 → (x < y → x · z < y · z)
+    z ≠ 0 → (x < y → x · z < y · z)
  9. Inequalities can be added: (w ≤ x ∧ y ≤ z) → w + y ≤ x + z
  10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
