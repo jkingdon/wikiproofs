@@ -4,11 +4,11 @@ This template can be used to indicate the author of a comment when said author h
 
 For example, using
 <pre>{{unsigned|timestamp|username}}</pre>
-produces: {{unsigned|timestamp|username}}. This form is quite practical as the template parameters can be copied and pasted directly from the page history.
+produces: {{unsigned|timestamp|username}} This form is quite practical as the template parameters can be copied and pasted directly from the page history.
 
 The following short form is also possible:
 <pre>{{unsigned|username}}</pre>
-produces just {{unsigned|username}}.
+produces just {{unsigned|username}}
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Templates]]
