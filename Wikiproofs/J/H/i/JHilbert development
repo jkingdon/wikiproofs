@@ -1,0 +1,31 @@
+{{header
+ | notes = This page is for discussing the actual implementation of JHilbert, as opposed to its [[Wikiproofs:JHilbert specification|specification]] or [[Wikiproofs:Formal description of JHilbert|formal description]].
+}}
+
+== Plan of action ==
+
+The current JHilbert implementation is in a bit of a sad state for the following reasons:
+* Broken definition mechanism.
+* Ugly output (no fancy typesetting, no Lemmon output, etc.).
+* Ugly input (the dreaded infix hack, very constrained grammar).
+* Conflated. It started out as a command line application, and then the Wiki/multithread/network support was brutally hacked into it.
+* Divergence from Ghilbert. This was in part voluntary. But since Ghilbert is currently being redesigned, now would be a good time for some convergence attempts.
+So a refactoring is in order, which will probably mean rewriting JHilbert in large parts. Ideally, all of the above issues should be addressed. This suggests the following TODO list:
+# Decide on a new definition/abbreviation mechanism.
+# Prove soundness of the new mechanism.
+# Implement the new mechanism.
+# Fix all the other stuff ;)
+
+=== Hilbert C kernel ===
+
+The issues above seem to fall into two categories: the stuff that affects the metalogical heart of JHilbert (definitions/abbreviations) and the other stuff (typesetting, charset stuff, etc.). Now, this may sound heretical, but I propose to separate the metalogical heart from everything else. This way, the metalogic behind JHilbert (and possibly variants) could be integrated in the most diverse kinds of software: command line tools, Wiki backends, web applications, maybe even circuit verification software. It seems reasonable to write the, let's call it "Hilbert kernel" in ISO C, for it's fast, portable, and integrable with many other programming languages (insanely enough, this seems even to be true for [http://cluecc.sourceforge.net/ JavaScript]). This kernel would only contain the metalogical core principles and would thus be easy to test. In particular, this kernel would provide an API that is
+* In/Output-agnostic: no-side-effects functions, all in/output is made by the frontend.
+* Charset agnostic: name comparison and hashing is user provided.
+* Storage agnostic: all data structures are created, manipulated and queried in-memory.
+* Multithread-friendly: while ISO C does not know threads, the API can be specified in a thread-friendly way. For example, a module object might have a "finished" flag. In unfinished state, the module object cannot be used for param, import, and export. In finished state, it can be used so, but becomes essentially read-only. One cannot go back from finished to unfinished state.
+The kernel could be compiled into a library, like <code>libhilbert.so</code>, or simply be included into some other project as a bunch of C files.
+
+--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 17:58, 5 March 2010 (UTC)
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:JHilbert]]
