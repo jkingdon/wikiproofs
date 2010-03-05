@@ -1,0 +1,14 @@
+{{header
+ | notes = This page provides information about [[mw:Manual:Administrators|administrators]].
+}}
+
+Administrators are users with extended rights, among them:
+* Capability to edit protected pages, most notably [[Mediawiki:Edittools]], [[Mediawiki:Common.css]] and the [[Main Page]].
+* Blocking spammers/vandals. However, Wikiproofs sees very little spam/vandalism (as of March 2010).
+
+See [[Special:ListAdmins]] for a list of administrators.
+
+Since Wikiproofs is currently a private scientific project, administrator access is granted and revoked at the sole discretion of the site operator.
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Wikiproofs]]
