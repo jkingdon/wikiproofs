@@ -1,3 +1,4 @@
+== df-sb ==
 I'm not convinced you need [http://us.metamath.org/mpegif/df-sb.html df-sb]. My own development is to define [http://us.metamath.org/mpegif/df-sbc.html df-sbc] instead. Metamath does this through class abstraction, but I think the following definition is just as good, and more general:
 
 <pre>
@@ -16,3 +17,7 @@ It's based on [http://us.metamath.org/mpegif/sbc5.html sbc5] but has extra magic
 ::I dug through what you've got, and see some other serious problems. In [[Interface:First-order_logic]], you've got subst defined as "term (formula (subst object object formula))", where I think "object" is the kind corresponding to binding variables, but in Paradox1 (and other legitimate uses of subst) you're using nat instead. In Metamath and Ghilbert, this would be a kind mismatch, which would be an error. Is JHilbert not currently doing kind checking? If not, it's a serious unsoundness. [[User:Raph|Raph]] 05:11, 1 March 2010 (UTC)
 
 :::The kinds object and nat are synonyms: see "kindbind (object nat)" in [[Interface:Peano axioms]]. I try to use object (variables x, y, z, etc) when I'm proving a generic first-order logic theorem and nat (variables n, m, k, etc) when it is something specific to arithmetic, but that is just a matter of style; it doesn't affect the meaning. [[User:Kingdon|Kingdon]] 13:17, 1 March 2010 (UTC)
+
+The above definition now makes more sense to me.  Translated to the current notation, it would be:
+ def ((subst s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
+[[User:Kingdon|Kingdon]] 22:35, 4 March 2010 (UTC)
