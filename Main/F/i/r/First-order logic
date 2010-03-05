@@ -1107,7 +1107,7 @@ We now move to substitution via <code>subst</code>.
 In some formulations of predicate logic, this kind of substitution (known as ''proper substitution'' as there are some rules about what kinds of substitution are valid) is performed syntactically and the rules governing it are expressed in English or a meta-theory.  JHilbert does not have a feature to do syntactic proper substitution, but we are able to build up equivalent mechanisms from equality. The theorems in [[Interface:First-order logic]] could be proven from either the syntactic definition or ours.
 
 === Definition ===
-Our definition of substitution is somewhat complicated, mainly in order to handle the case in which s and x are not distinct.<ref>[http://us.metamath.org/mpeuni/df-sb.html df-sb] in metamath's set.mm, accessed February 22, 2010</ref>
+Our definition of substitution is somewhat complicated, in a (possibly unsuccessful) attempt to handle the case in which s and x are not distinct.<ref>The definition was supposed to be a version of [http://us.metamath.org/mpeuni/df-sb.html df-sb] in metamath's set.mm, accessed February 22, 2010, but it changes <code>s</code> from a <code>variable</code> to an <code>object</code>; what is actually at issue here is closer to [http://us.metamath.org/mpeuni/wsbc.html wsbc] which in set.mm is not defined by df-sb.</ref>
 
 <jh>
 def ((subst s x φ) ((((value x) = s) → φ) ∧ (∃ x (((value x) = s) ∧ φ))))
