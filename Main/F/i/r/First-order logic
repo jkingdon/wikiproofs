@@ -54,17 +54,17 @@ The basic facts about equality are that it is reflexive, symmetric and transitiv
 We start with reflexivity.  The first two theorems are intermediate steps:
 
 <jh>
-thm (EqualityReflexivity-1 () () (((value x) = t) → (t = t)) (
-        ((value x) = t) ConjunctionIdempotence eliminateBiconditionalReverse
+thm (EqualityReflexivity-1 () () ((s = t) → (t = t)) (
+        (s = t) ConjunctionIdempotence eliminateBiconditionalReverse
 
-        (value x) t t AxiomEquality
+        s t t AxiomEquality
         import
 
         applySyllogism
 ))
 
 thm (EqualityReflexivity-2 () () ((∀ x (¬ (t = t))) → (∀ x (¬ ((value x) = t)))) (
-        x t EqualityReflexivity-1
+        (value x) t EqualityReflexivity-1
         introduceTransposition
         x generalize
 
