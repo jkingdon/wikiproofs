@@ -7,7 +7,7 @@
 | exports = [[Interface:Standard axioms of propositional calculus|Standard axioms]]
 }}
 
-In order to avoid duplicating a lot of the work in [[Principia Mathematica propositional logic]], we'll just import [[Interface:Classical propositional calculus]].  Since [[Principia Mathematica propositional logic]] proves that interface from the ''Principia'' axioms, this is equivalent to importing the ''Principia'' axioms. It does mean that the below proofs are expressed in the somewhat more generic language of [[Interface:Classical propositional calculus]] (for example, the equivalence of <code>(→ p q)</code> and <code>((¬ p) ∨ q)</code> is not an automatically applied definition, but a statement which we'd be able to apply explicitly if we needed it).
+In order to avoid duplicating a lot of the work in [[Principia Mathematica propositional logic]], we'll just import [[Interface:Classical propositional calculus]].  Since [[Principia Mathematica propositional logic]] proves that interface from the ''Principia'' axioms, this is equivalent to importing the ''Principia'' axioms.
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
