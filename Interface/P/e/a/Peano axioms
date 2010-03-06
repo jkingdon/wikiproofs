@@ -52,8 +52,9 @@ stmt (Successor () () (((succ b) = (succ a)) ↔ (b = a)))
 <jh>
 var (formula φ)
 stmt (Induction () () 
-  (((subst (0) n φ) ∧ (∀ k ((subst (value k) n φ) → 
-    (subst (succ (value k)) n φ)))) → (∀ n φ)))
+  (((subst (0) n φ) ∧ 
+    (∀ k ((subst (value k) n φ) → (subst (succ (value k)) n φ)))) 
+   → (∀ n φ)))
 </jh>
 
 We also supply the usual axioms for addition and multiplication:
