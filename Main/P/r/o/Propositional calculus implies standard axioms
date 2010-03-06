@@ -41,3 +41,5 @@ The inference rule, <code>applyModusPonens</code>, is the same in the two sets o
 <jh>
 export (STANDARD Interface:Standard_axioms_of_propositional_calculus () ())
 </jh>
+
+[[Category:Classical propositional logic]]
