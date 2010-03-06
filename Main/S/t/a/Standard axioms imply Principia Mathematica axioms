@@ -21,7 +21,7 @@ The standard axioms are built on implication and negation (with the other three 
 def ((∨ p q) ((¬ p) → q)) # Disjunction
 </jh>
 
-Some of the results here are named according to their names in ''Principia'', which uses a decimal numbering system of the form <math>*r</math>, where <math>r</math> is a rational number with a small number of digits after the decimal point.  The proofs are mostly taken from metamath but are not cited individually.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
+Some of the results here are named according to their names in ''Principia'', which uses a decimal numbering system of the form *''r'', where ''r'' is a rational number with a small number of digits after the decimal point.  The proofs are mostly taken from metamath but are not cited individually.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
 
 == The add axiom ==
 Given our definition of disjunction, the ''Add'' axiom we are trying to prove is only a negation away from the ''Simp'' axiom that we start with:
