@@ -508,6 +508,14 @@ The induction step is proved as follows:
 ))
 </jh>
 
+For parallelism, we also give an additional name to the <code>MultiplicativeZero</code> axiom:
+
+<jh>
+thm (MultiplicativeZeroRight () () ((a · (0)) = (0)) (
+        a MultiplicativeZero
+))
+</jh>
+
 === Commuted version of the Multiplication axiom ===
 Here we prove <code>Sa · b = a · b + b</code>. We break apart some parts of the proof into separate lemmas.
 
@@ -632,6 +640,68 @@ The base case is <code>Sa · 0 = a · 0 + 0</code>.
 Induction step:
 <jh>
         a (value k) MultiplicationCommuted-step
+
+        Induction6
+))
+</jh>
+
+=== Proof that multiplication is commutative ===
+
+The proof is by induction on <code>a</code>.
+<jh>
+thm (MultiplicationCommutativity ((n a) (n b) (n k) (k b)) () 
+  ((a · b) = (b · a)) (
+</jh>
+The substitution for the base case is <code>n = 0 → (n · b = b · n ↔ 0 · b = b · 0)</code>:
+<jh>
+        (value n) (0) b MultiplicationBuilderRR
+        (value n) (0) b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) b MultiplicationBuilderRR
+        (value n) (value k) b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) b MultiplicationBuilderRR
+        (value n) (succ (value k)) b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a b MultiplicationBuilderRR
+        (value n) a b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+The base case is <code>0 · b = b · 0</code>, and follows from left and right zeros, which we have already proved:
+<jh>
+        b MultiplicativeZeroLeft
+        b MultiplicativeZeroRight swapEquality
+        applyEqualityTransitivity
+</jh>
+Induction step.  Starting with <code>k · b = b · k</code> we add b to both sides:
+<jh>
+        ((value k) · b) (b · (value k)) b AdditionBuilderLL
+
+</jh>
+Then we note that <code>b + k · b = Sk · b</code>:
+<jh>
+        b ((value k) · b) AdditionCommutativity
+        (value k) b MultiplicationCommuted swapEquality
+        applyEqualityTransitivity
+</jh>
+And <code>b + b · k = b · Sk</code>:
+<jh>
+        b (value k) Multiplication swapEquality
+</jh>
+Now we combine these, to get <code>k · b = b · k → Sk · b = b · Sk</code>.
+<jh>
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
 
         Induction6
 ))
