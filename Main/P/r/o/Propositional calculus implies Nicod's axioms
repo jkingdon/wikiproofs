@@ -5,7 +5,7 @@ In 1916, [[w:Jean Nicod|Jean Nicod]] endeavoured to reduce the propositional cal
 | exports = [[Interface:Nicod axioms|Nicod axioms]]
 }}
 
-In order to avoid duplicating a lot of the work in [[Principia Mathematica propositional logic]], we'll just import [[Interface:Classical propositional calculus]].  Since [[Principia Mathematica propositional logic]] proves that interface from the ''Principia'' axioms, this is equivalent to importing the ''Principia'' axioms. It does mean that some of the below proofs are expressed in the somewhat more generic language of [[Interface:Classical propositional calculus]] (for example, the equivalence of <code>(→ p q)</code> and <code>((¬ p) ∨ q)</code> is not an automatically applied definition, but a statement which we apply explicitly).
+In order to avoid duplicating a lot of the work in [[Principia Mathematica propositional logic]], we'll just import [[Interface:Classical propositional calculus]].  Since [[Principia Mathematica propositional logic]] proves that interface from the ''Principia'' axioms, this is equivalent to importing the ''Principia'' axioms. It does mean that the proofs below are expressed in the somewhat more generic language of [[Interface:Classical propositional calculus]] (for example, the equivalence of <code>(→ p q)</code> and <code>((¬ p) ∨ q)</code> is not an automatically applied definition, but a statement which we apply explicitly).
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
