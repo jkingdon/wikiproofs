@@ -10,7 +10,7 @@ import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 
 var (formula φ)
 var (variable k n)
-var (nat a b c a0 a1 b0 b1)
+var (nat a b c d a0 a1 b0 b1)
 </jh>
 
 Many of the proofs in this file are based on versions from Raph Levien.<ref>[http://levien.com/garden/ghnew/peano/ Peano], accessed March 2, 2010</ref>
@@ -698,6 +698,228 @@ And <code>b + b · k = b · Sk</code>:
         b (value k) Multiplication swapEquality
 </jh>
 Now we combine these, to get <code>k · b = b · k → Sk · b = b · Sk</code>.
+<jh>
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Induction6
+))
+</jh>
+
+== Rearrangement ==
+Although there are a wide varieties of ways that a term could be rearranged by commutativity and associativity, the following rearrangement turns out to be one of the common ones:
+<jh>
+thm (Addition4 () () (((a + b) + (c + d)) = ((a + c) + (b + d))) (
+        a b (c + d) AdditionAssociativity
+
+        b c d AdditionAssociativity swapEquality
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        b c AdditionCommutativity
+        d buildAdditionRR
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        c b d AdditionAssociativity
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        a c (b + d) AdditionAssociativity swapEquality
+        applyEqualityTransitivity
+))
+</jh>
+
+== Multiplication distributes over addition ==
+<jh>
+thm (LeftDistribution ((n a) (n b) (n c) (n k) (k b) (k c)) ()
+  ((a · (b + c)) = ((a · b) + (a · c))) (
+</jh>
+The proof is by induction on <code>a</code>. The substitution for the base case is <code>n = 0 → (n · (b + c) = n · b + n · c ↔ 0 · (b + c) = 0 · b + 0 · c)</code>.
+<jh>
+        (value n) (0) (b + c) MultiplicationBuilderRR
+
+        (value n) (0) b MultiplicationBuilderRR
+        (value n) (0) c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) ((0) · b) ((value n) · c) ((0) · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction case antecedent:
+<jh>
+        (value n) (value k) (b + c) MultiplicationBuilderRR
+
+        (value n) (value k) b MultiplicationBuilderRR
+        (value n) (value k) c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) ((value k) · b) ((value n) · c) ((value k) · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction case consequent:
+<jh>
+        (value n) (succ (value k)) (b + c) MultiplicationBuilderRR
+
+        (value n) (succ (value k)) b MultiplicationBuilderRR
+        (value n) (succ (value k)) c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) ((succ (value k)) · b) 
+          ((value n) · c) ((succ (value k)) · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a (b + c) MultiplicationBuilderRR
+
+        (value n) a b MultiplicationBuilderRR
+        (value n) a c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) (a · b) ((value n) · c) (a · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+The base case is <code>0 · (b + c) = 0 · b + 0 · c</code>.
+<jh>
+        (b + c) MultiplicativeZeroLeft
+
+        b MultiplicativeZeroLeft
+        c MultiplicativeZeroLeft
+        buildAddition
+        (0) AdditiveIdentity
+        applyEqualityTransitivity
+        swapEquality
+
+        applyEqualityTransitivity
+</jh>
+Now the induction step. We start with <code>k · (b + c) = k · b + k · c</code> and add (b + c) to the right of both sides:
+<jh>
+        ((value k) · (b + c)) (((value k) · b) + ((value k) · c)) (b + c) AdditionBuilderRR
+</jh>
+The left side is handled by observing that <code>k · (b + c) + (b + c) = Sk · (b + c)</code>:
+<jh>
+        (value k) (b + c) MultiplicationCommuted swapEquality
+</jh>
+For the right side, <code>k · b + k · c + (b + c)</code>, we rearrange the terms and apply MultiplicationCommuted twice, to get <code>Sk · b + Sk · c</code>.
+<jh>
+        ((value k) · b) ((value k) · c) b c Addition4
+
+        (value k) b MultiplicationCommuted swapEquality
+        (value k) c MultiplicationCommuted swapEquality
+        buildAddition
+
+        applyEqualityTransitivity
+</jh>
+Now we combine these, to get the induction step.
+<jh>
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Induction6
+))
+</jh>
+
+It will be convenient to also have a commuted version of this:
+
+<jh>
+thm (RightDistribution () ()
+  (((a + b) · c) = ((a · c) + (b · c))) (
+        (a + b) c MultiplicationCommutativity
+
+        c a b LeftDistribution
+        applyEqualityTransitivity
+
+        c a MultiplicationCommutativity
+        c b MultiplicationCommutativity
+        buildAddition
+        applyEqualityTransitivity
+))
+</jh>
+
+== Multiplication is associative ==
+
+<jh>
+thm (MultiplicationAssociativity ((n a) (n b) (n c) (n k) (k b) (k c)) ()
+  (((a · b) · c) = (a · (b · c))) (
+</jh>
+The proof is by induction on <code>a</code>. The substitution for the base case is <code>n = 0 → ((n · b) · c = n · (b · c) ↔ (0 · b) · c = 0 · (b · c))</code>.
+<jh>
+        (value n) (0) b MultiplicationBuilderRR
+        ((value n) · b) ((0) · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) (0) (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) b MultiplicationBuilderRR
+        ((value n) · b) ((value k) · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) (value k) (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) b MultiplicationBuilderRR
+        ((value n) · b) ((succ (value k)) · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) (succ (value k)) (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a b MultiplicationBuilderRR
+        ((value n) · b) (a · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) a (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+The base case is <code>(0 · b) · c = 0 · (b · c))</code>
+<jh>
+        b MultiplicativeZeroLeft
+        c buildMultiplicationRR
+        c MultiplicativeZeroLeft
+        applyEqualityTransitivity
+
+        (b · c) MultiplicativeZeroLeft
+
+        swapEquality
+        applyEqualityTransitivity
+</jh>
+For the induction step, we take <code>(k · b) · c = k · (b · c))</code> and add <code>b · c</code> to both sides:
+<jh>
+        (((value k) · b) · c) ((value k) · (b · c)) (b · c) AdditionBuilderRR
+</jh>
+To the left side, <code>(k · b) · c + (b · c)</code>, we first collect the <code>c</code> using distributivity:
+<jh>
+        ((value k) · b) b c RightDistribution swapEquality
+</jh>
+That gives us <code>(k · b + b) · c</code> so we just need to turn it into <code>(Sk · b) · c</code>:
+<jh>
+        (value k) b MultiplicationCommuted swapEquality
+        c buildMultiplicationRR
+        applyEqualityTransitivity
+</jh>
+The right side, <code>k · (b · c) + b · c</code>, is even easier:
+<jh>
+        (value k) (b · c) MultiplicationCommuted swapEquality
+</jh>
+Now we combine these, to get the induction step.
 <jh>
         buildEquality
         eliminateBiconditionalReverse
