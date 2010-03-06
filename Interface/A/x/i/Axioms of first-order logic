@@ -20,7 +20,7 @@ By convention we use φ, ψ, χ, and θ to represent formulas:
 var (formula φ ψ χ θ)
 </jh>
 
-We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is an object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
+We use the word ''object'' to refer to something which is subject to equality (or, indirectly, via <code>variable</code>, quantification). We define a kind called <code>object</code>, which corresponds to a [[w:First-order_logic#Terms|term]] in more conventional terminology. Theories built on first-order logic, like [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[Interface:Peano axioms|Peano arithmetic]], will define additional kinds of terms such as <code>+</code> (addition) or <code>∪</code> (union).
 
 <jh>
 kind (object)
