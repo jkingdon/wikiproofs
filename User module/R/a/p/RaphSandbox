@@ -1,0 +1,27 @@
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+
+var (formula φ ψ χ)
+var (variable x y)
+var (object s t)
+
+thm (exbid ((φ x))
+  ((H (φ → (ψ ↔ χ))))
+  (φ → (∃ x (ψ ↔ χ))) (
+        
+))
+
+def ((subst2 s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
+</jh>
+
+This is like dfsbcq in set.mm, or sbcq in peano_thms.gh.
+
+<jh>
+thm (substEquality () ()
+  ((s = t) → ((subst2 s x φ) ↔ (subst2 t x φ))) (
+        s t (value y) EqualityBuilderLL
+        (∃ x (((value x) = (value y)) ∧ φ)) conjoinRR
+        y exbid
+))
+</jh>
