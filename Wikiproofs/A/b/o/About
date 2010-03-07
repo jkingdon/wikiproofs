@@ -1,7 +1,7 @@
 {{header
  | title    = About Wikiproofs
  | subtitle = 
- | left     = 
+ | left     = ←[[Main Page|Back to main page]]
  | right    = 
  | shortcut = [[WP:ABOUT]]
  | notes    = A short outline of Wikiproofs.
@@ -32,5 +32,6 @@ Without David Hilbert, Norman Megill and Raph Levien, the Wikiproofs project wou
 * [[WP:SCOPE|Project scope]]
 * [[WP:PORTAL|Community portal]]
 * [[WP:TEA|Central place of discussion]]
+* [http://www.wikiproofs.de/dumps/ Daily XML dumps of Wikiproofs contents]
 
 [[Category:Wikiproofs|About]]
