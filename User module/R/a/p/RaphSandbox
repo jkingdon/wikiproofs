@@ -1,15 +1,53 @@
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+import (SANDBOX User_interface:Raph/Sandbox (CLASSICAL FIRSTORDER) ())
 
-var (formula φ ψ χ)
+var (formula φ ψ χ θ)
 var (variable x y)
 var (object s t)
 
-thm (exbid ((φ x))
+
+thm (19.18 () ()
+  ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))) (
+        φ ψ BiconditionalReverseElimination x addForAll
+        x φ ψ ForAllImplicationThereExists applySyllogism
+
+        φ ψ BiconditionalForwardElimination x addForAll
+        x ψ φ ForAllImplicationThereExists applySyllogism
+
+        composeConjunction
+        (∃ x φ) (∃ x ψ) BiconditionalImplication
+        eliminateBiconditionalForward applySyllogism
+))
+
+thm (19.21aiv ((φ x))
+  ((H (φ → ψ)))
+  (φ → (∀ x ψ)) (
+        x φ DistinctNotFree ForAllAddRemove eliminateBiconditionalForward
+        H x addForAll applySyllogism
+))
+
+thm (exbidv ((φ x))
   ((H (φ → (ψ ↔ χ))))
-  (φ → (∃ x (ψ ↔ χ))) (
-        
+  (φ → ((∃ x ψ) ↔ (∃ x χ))) (
+        H x 19.21aiv x ψ χ 19.18 applySyllogism
+))
+
+thm (mpan2 ()
+  ((H1 ψ) (H2 ((φ ∧ ψ) → χ)))
+  (φ → χ) (
+        H1 ψ φ ConjunctionCommutativity eliminateBiconditionalReverse
+        H2 applySyllogism export applyModusPonens
+))
+
+thm (anbi1d ()
+  ((H (φ → (ψ ↔ χ))))
+  (φ → ((ψ ∧ θ) ↔ (χ ∧ θ))) (
+        H
+        θ BiconditionalReflexivity
+        ψ χ θ θ ConjunctionFunction mpan2
+        applySyllogism
 ))
 
 def ((subst2 s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
@@ -18,10 +56,12 @@ def ((subst2 s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y))
 This is like dfsbcq in set.mm, or sbcq in peano_thms.gh.
 
 <jh>
-thm (substEquality () ()
+thm (substEquality ((s y) (t y)) ()
   ((s = t) → ((subst2 s x φ) ↔ (subst2 t x φ))) (
         s t (value y) EqualityBuilderLL
-        (∃ x (((value x) = (value y)) ∧ φ)) conjoinRR
-        y exbid
+        (∃ x (((value x) = (value y)) ∧ φ)) anbi1d
+        y exbidv
 ))
 </jh>
+
+Whew! Feel free move this into the main proof line, including folding and renaming the set.mm theorems referenced. [[User:Raph|Raph]] 10:59, 7 March 2010 (UTC)
