@@ -42,11 +42,7 @@ In general, stretch from 19.12 (currently at [http://us.metamath.org/mpeuni/mmth
 
 == Peano arithmetic ==
 === Theorems ===
-Here are some sample theorems:
-
-* a · 1 = a
-* Multiplication is commutative and associative
-From Hirst &amp; Hirst:
+Sample theorems from Hirst &amp; Hirst:
  3. Multiplication is distributive over addition: x · (y + z) = x · y + x · z
  4. Strict inequality is transitive: x < y → (y < z → x < z)
  5. Inequality is preserved by addition: x ≤ y → x + z ≤ y + z
