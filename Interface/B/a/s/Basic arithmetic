@@ -102,6 +102,15 @@ There is a constant called <code>1</code>:
 term (nat (1))
 </jh>
 
+It serves as a multiplicative identity:
+
+<jh>
+stmt (MultiplicativeIdentityRight () ()
+  ((a · (1)) = a))
+stmt (MultiplicativeIdentityLeft () ()
+  (((1) · a) = a))
+</jh>
+
 == Induction ==
 There are a number of ways to state [[w:mathematical induction|induction]].
 
