@@ -968,7 +968,7 @@ thm (MultiplicativeIdentityLeft () ()
 
 == Adding one and successor ==
 
-To export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorem there is stated in terms of <code>k + 1</code> (as that file does not feature the successor operation).
+Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorem there is stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
 
 <jh>
 thm (SuccessorAddsOne () () ((a + (1)) = (succ a)) (
