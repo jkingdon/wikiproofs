@@ -175,17 +175,17 @@ Now we combine the two and apply <code>Induction</code>.
 ))
 </jh>
 
-=== Induction6 ===
+=== Induction6S ===
 Having presented <code>Induction5</code>, there's an admission to make: it isn't quite enough.  There are two reasons.  The first is that the discrete variable constraints on n (for example, <code>(φ0 n)</code>) are a bit too onerous. For example, suppose we are trying to prove <code>Sm + n = S(m + n)</code> by induction on <code>n</code>. Then <code>φ0</code> would be <code>Sm + 0 = S(m + 0)</code>.  This only passes the constraint <code>(φ0 n)</code> if <code>m</code> is distinct from <code>n</code>, which is not a condition we want to impose.
 
 The second reason is that <code>n</code> in <code>Induction5</code> is a <code>variable</code>, rather than an <code>object</code>. Because the quantifiers and substitution are only needed during the proof, not at the end, this is an unnecessary restriction.
 
-The solution is <code>Induction6</code>, which adds one more substitution, to separate the result from the variables used in the proof.  The naming conventions in the following are: <code>a</code> is the variable which will appear in the final result, <code>k</code> is the variable which appears in the induction step, and <code>n</code> is a variable which is used only in substitutions (the limitation of <code>Induction5</code> happens because it combines this one with what corresponds to <code>a</code> here).
+The solution is <code>Induction6S</code>, which adds one more substitution, to separate the result from the variables used in the proof.  The naming conventions in the following are: <code>a</code> is the variable which will appear in the final result, <code>k</code> is the variable which appears in the induction step, and <code>n</code> is a variable which is used only in substitutions (the limitation of <code>Induction5</code> happens because it combines this one with what corresponds to <code>a</code> here).
 
 <jh>
 var (formula φa)
 
-thm (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k))
+thm (Induction6S ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k))
   ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
    (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
    (HSUBSK (((value n) = (succ (value k))) → (φ ↔ φSk)))
@@ -249,7 +249,7 @@ The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Add
 
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -327,7 +327,7 @@ The induction step is <code>Sa + k = S(a + k) → Sa + Sk = S(a + Sk)</code>. We
 
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -376,7 +376,7 @@ The induction step, <code>k + b = b + k → Sk + b = b + Sk</code> follows from 
 
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -450,7 +450,7 @@ To prove <code>(Sk + b) + c = Sk + (b + c)</code> from <code>(k + b) + c = k + (
 
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -508,7 +508,7 @@ The induction step is proved as follows:
 
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -645,7 +645,7 @@ Induction step:
 <jh>
         a (value k) MultiplicationCommuted-step
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -707,7 +707,7 @@ Now we combine these, to get <code>k · b = b · k → Sk · b = b · Sk</code>.
         eliminateBiconditionalReverse
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -826,7 +826,7 @@ Now we combine these, to get the induction step.
         eliminateBiconditionalReverse
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
 </jh>
 
@@ -929,8 +929,57 @@ Now we combine these, to get the induction step.
         eliminateBiconditionalReverse
         applySyllogism
 
-        Induction6
+        Induction6S
 ))
+</jh>
+
+== One ==
+One is the successor of zero:
+
+<jh>
+def ((1) (succ (0)))
+</jh>
+
+== Adding one and successor ==
+
+To export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorem there is stated in terms of <code>k + 1</code> (as that file does not feature the successor operation).
+
+<jh>
+thm (SuccessorAddsOne () () ((a + (1)) = (succ a)) (
+        a (0) Addition
+
+        a AdditiveIdentityRight
+        addSuccessor
+
+        applyEqualityTransitivity
+))
+
+thm (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k))
+  ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
+   (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
+   (HSUBSK (((value n) = ((value k) + (1))) → (φ ↔ φSk)))
+   (HSUBA (((value n) = a) → (φ ↔ φa)))
+   (HBASE φ0)
+   (HIND (φk → φSk))
+  )
+  φa (
+        HSUB0 HSUBK
+
+        (value k) SuccessorAddsOne
+        (value n) buildEqualityLL
+        eliminateBiconditionalForward
+        HSUBSK
+        applySyllogism
+
+        HSUBA HBASE HIND
+        Induction6S
+))
+</jh>
+
+== Export ==
+
+<jh>
+export (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
