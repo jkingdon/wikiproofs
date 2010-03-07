@@ -157,6 +157,43 @@ In other words, let's take a really close look at the divergences between Ghilbe
 
 ::::Hope this helps, and I'm happy to keep discussing, even as my spec-writing goes slowly. -- [[User:Raph|Raph]] 20:13, 5 March 2010 (UTC)
 
+:::::OK, let's see if I get freeness straight. Let x be a binding variable and let E be an expression. If E is x, then x is free in E. If E is <code>(foo E1 E2 &hellip; En)</code>, then ''all'' occurrences of x in E are free if there is a <math>k\in\{1,2,\ldots,n\}</math> such that x occurs free in Ek ''and'' the declaration of the term foo, say <code>term (bar (foo A1 A2 &hellip; An) &hellip)</code> has <code>(Ak x)</code> as additional clause. In any other case, ''no'' occurrence of x is free in E. Is that correct? Does x have to be in the parameter list for foo? I guess not, so you can say <code>term (wff (/\ ph ps) (x ph) (x ps))</code>. But what if I have a theory which has only wff variables (propositional calculus) which I want to use later to build set theory on top of it? Can I introduce freeness later?
+
+:::::About parsing. The nice thing about the kind/var/term commands is that with only slight alterations you can use them to define complex context-free grammars. For example, you might say something like
+<pre>
+kind (wff)
+kind (nat)
+kind (set)
+var (nat $n$ $m$)
+var (set $S$ $T$)
+term (nateq wff (nat $=$ nat))
+term (seteq wff (set $=$ set))
+</pre>
+:::::(I abused the $ sign as delimiter for terminals here, so $ would have to be disallowed in expressions and identifiers). From that, the following grammar would be made:
+<pre>
+start:
+    expression
+
+expression:
+    wff
+    nat
+    set
+
+wff:
+    nat = nat
+    set = set
+
+nat:
+    n
+    m
+
+set:
+    S
+    T
+</pre>
+:::::That's an unambiguous grammar with terminals n, m, S, T and =. The syntax tree created by the parser corresponds to an S-expression (fro example, <code>n=m</code> would become <code>(nateq n m)</code>). More complex grammars may no longer be unambiguous, but with this scheme, validity is never a problem as each grammar rule (except the start←expression rule) corresponds to precisely one command. For more complex terminals, you'd also need another parser before the Earley stage to break up the input string into terminals. A very simple regular grammar would be sufficient here (codable by hand). Disambiguation would be enforced by disallowing whitespace in terminals and forcing the user to insert whitespace where a terminal ambuguity would appear.
+:::::--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 11:59, 7 March 2010 (UTC)
+
 == object and variable now split ==
 
 I've now split <code>object</code> in two everywhere.  I'd especially appreciate review of [[Interface:Axioms of first-order logic]] and [[Interface:Peano axioms]], because axioms don't have to be proved, and thus don't have that check on errors.  I took the approach of using <code>object</code> everywhere there wasn't a quantifier or substitution involved.  Some axiomizations use <code>variable</code> some of those places, and then the <code>object</code> versions could be proved from those by substitution. Oh, and the naming. I picked <code>variable</code> for the thing which quantification or substitution applies to, <code>object</code> for the thing which goes in an expression (such as on either side of equals), and <code>value</code> for the explicit conversion between the two. While I'm kind of pleased with this set, other names for variable could be quantifiable, substitutable, placeholder, etc, and other names for value could be toObject, $ (by analogy with programming languages like shell or make in which $ means a variable), etc. [[User:Kingdon|Kingdon]] 17:30, 4 March 2010 (UTC)
