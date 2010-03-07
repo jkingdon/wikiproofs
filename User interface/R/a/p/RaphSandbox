@@ -1,0 +1,10 @@
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+#param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+
+var (formula φ ψ χ)
+var (variable x y z)
+
+stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
+</jh>
