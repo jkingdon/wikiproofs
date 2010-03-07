@@ -14,8 +14,10 @@ This is a list of propositional logic theorems which are proved outside [[:Categ
 From [[First-order logic]]:
 
 * applyComm and applyNestedModusPonens (the former might obviate the need for the latter)
+* also along those lines: mpan2
 * principia*2.21
 * transposeBiconditionalWithNegatedRight
 * joinConsequents
+* anbi1d
 
 [[Category:Wikiproofs]]
