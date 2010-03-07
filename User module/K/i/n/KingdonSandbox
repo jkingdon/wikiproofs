@@ -1,18 +1,45 @@
-[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]].
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]].
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
-import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
-import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
+#import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+#import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
+import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 
 var (formula p q φ ψ)
-var (variable x y x0 y0 x1 y1)
-var (nat k n m n0 n1 m0 m1)
+var (variable x y x0 y0 x1 y1 k n)
 
 var (nat a b c)
 
-thm (Paradox1 () () (subst (succ (value x)) x ((value x) = (succ (value x)))) (
-        (succ (value x)) x SubstitutionEquality
-))
+#thm (Paradox1 () () (subst (succ (value x)) x ((value x) = (succ (value x)))) (
+#        (succ (value x)) x SubstitutionEquality
+#))
+</jh>
+
+== Inequality ==
+We define an order on natural numbers:
+
+<jh>
+def ((≤ a b) (∃ n ((a + (value n)) = b)))
+</jh>
+
+<jh>
+#thm (ZeroSmallest () () ((0) ≤ a) (
+#        a AdditiveIdentityLeft
+#))
+</jh>
+
+Here's roughly where this is going next:
+ n = b → (0 + n = b ↔ 0 + b = b)
+ (subst b n (0 + n = b)) ↔ 0 + b = b
+The missing theorem from [[Interface:First-order logic]] is <code>(subst s x φ) → (∃ x φ)</code>
+
+We'll show that it has the [[w:Total order|expected properties of an order]].
+
+    If a ≤ b and b ≤ a then a = b (antisymmetry);
+    If a ≤ b and b ≤ c then a ≤ c (transitivity);
+    a ≤ b or b ≤ a (totality). 
+(probably reflexivity too, although that is a consequence of totality)
+
 </jh>
