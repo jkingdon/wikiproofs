@@ -9,12 +9,38 @@ import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 
 var (formula p q φ ψ)
 var (variable x y x0 y0 x1 y1 k n)
+var (object s t u)
 
 var (nat a b c)
 
 #thm (Paradox1 () () (subst (succ (value x)) x ((value x) = (succ (value x)))) (
 #        (succ (value x)) x SubstitutionEquality
 #))
+</jh>
+
+=== Convert from implicit substitution ===
+:''not sure how close this is, but stash it here until I have time to look it over''
+
+A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. It also provides one of the ways to construct a statement using <code>subst</code>.
+
+<jh>
+thm (sbie2 () 
+  ((HFREE (x is-not-free-in ψ))
+   (HEQ (((value x) = s) → (φ ↔ ψ)))
+  )
+  ((subst s x φ) ↔ ψ) (
+</jh>
+We start with the hypothesis <code>x = s → (φ ↔ ψ)</code>, and turn that into <code>(y = s ∧ x = y) → (φ ↔ ψ)</code>:
+<jh>
+        ((value y) = s) ((value x) = (value y)) ConjunctionCommutativity eliminateBiconditionalReverse
+        (value x) (value y) s EqualityTransitivity
+        applySyllogism
+
+        HEQ
+        applySyllogism
+</jh>
+<jh>
+))
 </jh>
 
 == Inequality ==
