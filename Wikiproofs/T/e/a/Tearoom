@@ -191,7 +191,7 @@ set:
     S
     T
 </pre>
-:::::That's an unambiguous grammar with terminals n, m, S, T and =. The syntax tree created by the parser corresponds to an S-expression (fro example, <code>n=m</code> would become <code>(nateq n m)</code>). More complex grammars may no longer be unambiguous, but with this scheme, validity is never a problem as each grammar rule (except the start←expression rule) corresponds to precisely one command. For more complex terminals, you'd also need another parser before the Earley stage to break up the input string into terminals. A very simple regular grammar would be sufficient here (codable by hand). Disambiguation would be enforced by disallowing whitespace in terminals and forcing the user to insert whitespace where a terminal ambuguity would appear.
+:::::That's an unambiguous grammar with terminals n, m, S, T and =. The syntax tree created by the parser corresponds to an S-expression (for example, <code>n=m</code> would become <code>(nateq n m)</code>). More complex grammars may no longer be unambiguous, but with this scheme, validity is never a problem as each grammar rule (except the start←expression rule) corresponds to precisely one command. For more complex terminals, you'd also need another parser before the Earley stage to break up the input string into terminals. A very simple regular grammar would be sufficient here (codable by hand). Disambiguation would be enforced by disallowing whitespace in terminals and forcing the user to insert whitespace where a terminal ambuguity would appear.
 :::::--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 11:59, 7 March 2010 (UTC)
 
 == object and variable now split ==
