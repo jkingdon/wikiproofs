@@ -17,7 +17,7 @@ There has been an earlier attempt to describe these core concepts and prove thei
 
 == Acknowledgements ==
 
-There are lots of people to acknowledge, most notably Normal Megill for creating metamath, Raph Levien for creating Ghilbert and for discussing the definition mechanism with me, Mel L. o'Cat for discussions during the time JHilbert was made, Carl Witty for the new definition mechanism, and Kingdon for prolonged interest in JHilbert. Bug me if I forgot someone.
+There are lots of people to acknowledge, most notably Normal Megill for creating metamath, Raph Levien for creating Ghilbert and for discussing the definition mechanism with me, Mel L. O'Cat for discussions during the time JHilbert was made, Carl Witty for the new definition mechanism, and Kingdon for prolonged interest in JHilbert. Bug me if I forgot someone.
 
 == Notation ==
 
@@ -43,6 +43,8 @@ As the title suggests, we shall use [[w:set theory|set theory]] to describe JHil
 | <math>(a,b,c,d)</math> || You get the idea
 |-
 | <math>|s|</math> || The length of the sequence <math>s</math>. For example, if <math>s=(a_1,\ldots,a_n)</math> then <math>|s|=n</math>. In particular, <math>|()|=0</math>.
+|-
+| <math>s\sqcup t</math> || The [[w:concatenation|concatenation]] of the sequences <math>s</math> and <math>t</math>. For example, if <math>s=(a_1,\ldots,a_n)</math> and <math>t=(b_1,\ldots,b_m)</math>, then <math>s\sqcup t=(a_1,\ldots,a_n,b_1,\ldots,b_m)</math>. In particular, <math>|s\sqcup t|)|s|+|t|</math>.
 |-
 | <math>a\in A</math> || <math>a</math> is an element of the set <math>A</math>
 |-
@@ -80,6 +82,17 @@ The set <math>FUNC</math> decomposes into three disjoint subsets <math>FUNC=TERM
 The elements of <math>TERM</math> are called the ''term functors''. They are triples <math>(N,R,K)</math> where <math>N</math> is a name, <math>R\in SKIND</math> is the result kind and <math>K=(K_1,\ldots,K_n)</math> is a finite, possibly empty, sequence of kinds, that is <math>K_i\in KIND</math>, <math>i=1,\ldots,n</math>. The place count is then given by <math>n=|K|</math>, the length of the sequence <math>K</math>.
 
 == Expressions ==
+
+Expressions are a derived concept. Set-theoretically, every expression is a finite sequence of elements from <math>VAR\cup FUNC</math>. However, the converse is not true. We shall now describe [[w:recursive definition|recursively]] which of these finite sequences are expressions. Alongside, we shall define the ''kind'' of each expression.
+# Each sequence which consists of only a single variable is an expression. The kind of the expression equals the kind of the variable.
+# Each sequence which is a concatenation <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> where <math>f</math> is a functor, <math>n</math> is the place count of <math>f</math> and <math>e_1,\ldots,e_n</math> are expressions such that the kind of the <math>k</math>-th expression matches the <math>k</math>-th input kind of <math>f</math>, for all <math>k=1,\ldots,n</math>, is an expression. The kind of the expression is the result kind of <math>f</math>.
+# Nothing else is an expression, or the kind of an expression.
+
+We denote the set of all expressions by <math>EXP</math>. Note that <math>EXP</math> depends on <math>\mathcal{F}</math>. Unlike the previously encountered set, <math>EXP</math> may be (and usually is) an infinite set. Also note that the only way the kind of an expression can be a pure variable kind is the expression consisting of a single variable with pure variable kind.
+
+'''Proposition.''' The set <math>EXP</math> is ''prefix-free'', that is, if <math>e\in EXP</math> and <math>s</math> is any finite non-empty sequence of elements from <math>VAR\cup FUNC</math>, then <math>e\sqcup s\notin EXP</math>. Furthermore, the decomposition of an expression according to 2. of the definition is unique.
+
+''Proof.'' By definition, there are no empty expressions, and any expression of length greater than one starts with a functor. Hence, the claims are true for expressions of length exactly one, as such expressions are either variables or constant functors with place count zero. Let <math>e</math> be an expression of length greater than one. Assume the claims to be true for shorter expressions. Let <math>s</math> be a finite sequence of elements from <math>VAR\cup FUNC</math> such that <math>\tilde{e}:=e\sqcup s</math> is an expression. Let <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> be a decomposition of <math>e</math>, and let <math>(\tilde{f})\sqcup\tilde{e}_1\sqcup\ldots\sqcup\tilde{e}_{\tilde{n}}</math> be a decomposition of <math>\tilde{e}</math>, both as suggested by the definition. Clearly, <math>f=\tilde{f}</math>. Therefore, <math>n=\tilde{n}</math> to match the place count. Now, <math>\tilde{e}_1</math> cannot be shorter than <math>e_1</math>, or else it would be a prefix for <math>e_1</math>, in violation of the induction hypothesis. Likewise, <math>e_1</math> cannot be shorter than <math>\tilde{e}_1</math>. Therefore, <math>e_1=\tilde{e}_1</math>. Now, <math>e_2</math> and <math>\tilde{e}_2</math>, if they exist, have the same starting point. Hence, by the same argument, <math>e_2=\tilde{e}_2</math>, and so on, <math>e_k=\tilde{e}_k</math> for all <math>k=1,\ldots,n</math>. Therefore, <math>e=\tilde{e}</math> and thus <math>s=()</math>. Hence, by induction, <math>e</math> is not a prefix, and its decomposition is unique.
 
 == Abbreviations ==
 
