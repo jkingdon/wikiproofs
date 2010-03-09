@@ -1384,7 +1384,7 @@ thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
 </jh>
 
 == Substitution (fixed) ==
-This definition of subst should work right:
+This definition of subst should work right:<ref>It resembles [http://us.metamath.org/mpeuni/dfsb7.html dfsb7] in metamath's set.mm, accessed March 8, 2010, except that <code>s</code> (the replacement) is an <code>object</code> rather than a <code>variable</code>.</ref>
 <jh>
 def ((subst2 s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
 </jh>
