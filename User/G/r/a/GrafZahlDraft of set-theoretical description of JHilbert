@@ -26,31 +26,37 @@ As the title suggests, we shall use [[w:set theory|set theory]] to describe JHil
 {| border="1"
 ! Notation !! Explanation
 |-
-| <math>\emptyset</math> || The [[w:empty set|empty set]]
+| <math>\emptyset</math> || The [[w:empty set|empty set]].
 |-
-| <math>\mathbb{N}</math> || The set of positive [[w:integer|integer]]s <math>\{1,2,3,\ldots\}</math>
+| <math>\mathbb{N}</math> || The set of positive [[w:integer|integer]]s <math>\{1,2,3,\ldots\}</math>.
 |-
-| <math>\mathbb{N}_0</math> || The set of non-negative integers <math>\{0,1,2,3,\ldots\}</math>
+| <math>\mathbb{N}_0</math> || The set of non-negative integers <math>\{0,1,2,3,\ldots\}</math>.
 |-
-| <math>()</math> || The empty [[w:sequence|sequence]]
+| <math>f\colon A\to B</math> || A [[w:map (mathematics)|map]] with [[w:domain of a function|domain]] <math>A</math> and [[w:codomain|codomain]] <math>B</math>.
+|-
+| <math>f(A)</math> || The [[w:image (mathematics)|image]] of the set <math>A</math> under the map <math>f</math>.
+|-
+| <math>()</math> || The empty [[w:sequence|sequence]].
 |-
 | <math>(a)</math> || The sequence containing only the element <math>a</math>.
 |-
-| <math>(a,b)</math> || [[w:Ordered pair|ordered pair]] of elements <math>a</math> and <math>b</math>
+| <math>(a,b)</math> || [[w:Ordered pair|ordered pair]] of elements <math>a</math> and <math>b</math>.
 |-
-| <math>(a,b,c)</math> || Ordered [[w:triple|triple]] or 3-[[w:tuple|tuple]] of elements <math>a</math>, <math>b</math> and <math>c</math>
+| <math>(a,b,c)</math> || Ordered [[w:triple|triple]] or 3-[[w:tuple|tuple]] of elements <math>a</math>, <math>b</math> and <math>c</math>.
 |-
-| <math>(a,b,c,d)</math> || You get the idea
+| <math>(a,b,c,d)</math> || You get the idea.
+|-
+| <math>s_i</math> || the <math>i</math>-th element of the sequence <math>s</math>,
 |-
 | <math>|s|</math> || The length of the sequence <math>s</math>. For example, if <math>s=(a_1,\ldots,a_n)</math> then <math>|s|=n</math>. In particular, <math>|()|=0</math>.
 |-
 | <math>s\sqcup t</math> || The [[w:concatenation|concatenation]] of the sequences <math>s</math> and <math>t</math>. For example, if <math>s=(a_1,\ldots,a_n)</math> and <math>t=(b_1,\ldots,b_m)</math>, then <math>s\sqcup t=(a_1,\ldots,a_n,b_1,\ldots,b_m)</math>. In particular, <math>|s\sqcup t|)|s|+|t|</math>.
 |-
-| <math>a\in A</math> || <math>a</math> is an element of the set <math>A</math>
+| <math>a\in A</math> || <math>a</math> is an element of the set <math>A</math>.
 |-
-| <math>A\cup B</math> || The [[w:union (set theory)|union]] of the sets <math>A</math> and <math>B</math>
+| <math>A\cup B</math> || The [[w:union (set theory)|union]] of the sets <math>A</math> and <math>B</math>.
 |-
-| <math>A\cap B</math> || The [[w:intersection (set theory)|intersection]] of the sets <math>A</math> and <math>B</math>
+| <math>A\cap B</math> || The [[w:intersection (set theory)|intersection]] of the sets <math>A</math> and <math>B</math>.
 |}
 
 == Formal systems ==
@@ -69,7 +75,7 @@ In JHilbert, the <code>kindbind</code> command allows to define equivalence clas
 
 == Variables ==
 
-Variables, the elements of <math>VAR</math> are defined as tuples <math>(N,K)</math> where <math>N</math> is a name and <math>K\in KIND</math>.
+Variables, the elements of <math>VAR</math> are defined as tuples <math>(N,K)</math> where <math>N</math> is a name and <math>K\in KIND</math>. The decomposition of kinds into substitutable kinds and pure variable kinds induces a disjoint decomposition <math>VAR=SVAR\cup PVAR</math>, where <math>SVAR</math> is the set of variables of substitutable kind, and <math>PVAR</math> is the set of variable of pure variable kind.
 
 == Functors ==
 
@@ -95,7 +101,14 @@ If <math>e\in EXP</math>, then we call a variable <math>v</math> appearing in <m
 
 '''Proposition.''' The set <math>EXP</math> is ''prefix-free'', that is, if <math>e\in EXP</math> and <math>s</math> is any finite non-empty sequence of elements from <math>VAR\cup FUNC</math>, then <math>e\sqcup s\notin EXP</math>. Furthermore, the decomposition of an expression according to 2. of the definition is unique.
 
-''Proof.'' By definition, there are no empty expressions, and any expression of length greater than one starts with a functor. Hence, the claims are true for expressions of length exactly one, as such expressions are either variables or constant functors with place count zero. Let <math>e</math> be an expression of length greater than one. Assume the claims to be true for shorter expressions. Let <math>s</math> be a finite sequence of elements from <math>VAR\cup FUNC</math> such that <math>\tilde{e}:=e\sqcup s</math> is an expression. Let <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> be a decomposition of <math>e</math>, and let <math>(\tilde{f})\sqcup\tilde{e}_1\sqcup\ldots\sqcup\tilde{e}_{\tilde{n}}</math> be a decomposition of <math>\tilde{e}</math>, both as suggested by the definition. Clearly, <math>f=\tilde{f}</math>. Therefore, <math>n=\tilde{n}</math> to match the place count. Now, <math>\tilde{e}_1</math> cannot be shorter than <math>e_1</math>, or else it would be a prefix for <math>e_1</math>, in violation of the induction hypothesis. Likewise, <math>e_1</math> cannot be shorter than <math>\tilde{e}_1</math>. Therefore, <math>e_1=\tilde{e}_1</math>. Now, <math>e_2</math> and <math>\tilde{e}_2</math>, if they exist, have the same starting point. Hence, by the same argument, <math>e_2=\tilde{e}_2</math>, and so on, <math>e_k=\tilde{e}_k</math> for all <math>k=1,\ldots,n</math>. Therefore, <math>e=\tilde{e}</math> and thus <math>s=()</math>. Hence, by induction, <math>e</math> is not a prefix, and its decomposition is unique.
+''Proof.'' By definition, there are no empty expressions, and any expression of length greater than one starts with a functor. Hence, the claims are true for expressions of length exactly one, as such expressions are either variables or constant functors with place count zero. Let <math>e</math> be an expression of length greater than one. Assume the claims to be true for shorter expressions. Let <math>s</math> be a finite sequence of elements from <math>VAR\cup FUNC</math> such that <math>\tilde{e}:=e\sqcup s</math> is an expression. Let <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> be a decomposition of <math>e</math>, and let <math>(\tilde{f})\sqcup\tilde{e}_1\sqcup\ldots\sqcup\tilde{e}_{\tilde{n}}</math> be a decomposition of <math>\tilde{e}</math>, both as suggested by the definition. Clearly, <math>f=\tilde{f}</math>. Therefore, <math>n=\tilde{n}</math> to match the place count. Now, <math>\tilde{e}_1</math> cannot be shorter than <math>e_1</math>, or else it would be a prefix for <math>e_1</math>, in violation of the induction hypothesis. Likewise, <math>e_1</math> cannot be shorter than <math>\tilde{e}_1</math>. Therefore, <math>e_1=\tilde{e}_1</math>. Now, <math>e_2</math> and <math>\tilde{e}_2</math>, if they exist, have the same starting point. Hence, by the same argument, <math>e_2=\tilde{e}_2</math>, and so on, <math>e_k=\tilde{e}_k</math> for all <math>k=1,\ldots,n</math>. Therefore, <math>e=\tilde{e}</math> and thus <math>s=()</math>. Hence, by induction, <math>e</math> is not a prefix, and its decomposition is unique. '''Q.E.D.'''
+
+A map <math>f\colon VAR\to EXP</math> is called a ''proper substitution map'' if the kind of <math>v</math> and <math>f(v)</math> are equal for all <math>v\in VAR</math>. Note that this implies <math>f(PVAR)\subseteq PVAR^1</math>, that is, pure variable kind variables are mapped to expressions consisting only of a pure variable kind variable. Also note that we can extend any partial map from <math>VAR</math> to <math>EXP</math> to a total map by setting <math>f(v):=(v)</math> for all <math>v\in VAR</math> outside the domain of <math>f</math>.
+
+Let <math>e\in EXP</math> and let <math>f\colon VAR\to EXP</math> be a proper substitution map. We can then recursively define the ''proper substitution'' <math>f(e)</math> as follows:
+# <math>f(e)=(f(v))</math> if <math>e=(v)</math>.
+# <math>f(e)=(f)\sqcup f(e_1)\sqcup\ldots\sqcup f(e_n)</math> if <math>e=(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math>.
+Due to the above proposition, <math>f(e)</math> is well-defined. It is easy to see that <math>f(e)\in EXP</math>.
 
 == Abbreviations ==
 
