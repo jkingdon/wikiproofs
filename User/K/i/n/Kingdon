@@ -52,3 +52,14 @@ Sample theorems from Hirst & Hirst:
     z ≠ 0 → (x < y → x · z < y · z)
  9. Inequalities can be added: (w ≤ x ∧ y ≤ z) → w + y ≤ x + z
  10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
+
+Some definitions:
+
+* x < y ↔ x ≤ y ∧ x ≠ y
+* x > y ↔ y < x
+* x ≥ y ↔ y ≤ x
+
+More theorems:
+
+* x ≠ 0 ↔ x > 0
+* x ≥ 0
