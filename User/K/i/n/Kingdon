@@ -28,6 +28,15 @@ Needed in proof of sbn:
 :::::*[http://us.metamath.org/mpeuni/19.23adv.html 19.23adv]
 ::::::*[http://us.metamath.org/mpeuni/19.23ad.html 19.23ad]
 
+Needed in proof of sb56:
+*[http://us.metamath.org/mpeuni/ax11v.html ax11v] (but prove this from DistinctNotFree and VariableSubstitution)
+*[http://us.metamath.org/mpeuni/equsex.html equsex] (but change y to s, I think)
+:*ConjunctionImplication and ImplicationConjunction, might as well. *4.63
+:*[http://us.metamath.org/mpeuni/equsal.html equsal] (but change y to s, I think)
+::*[http://us.metamath.org/mpeuni/pm5.74i.html *5.74] from Principia
+::*[http://us.metamath.org/mpeuni/a5i.html a5i]? (derive from Specialization and QuantifiedImplication and generalize)
+
+
 === More moving formulas where quantified variable is not free ===
 *This one on wikipedia list of identities: [http://us.metamath.org/mpeuni/19.42.html 19.42]
 *These two similar: [http://us.metamath.org/mpeuni/19.28.html 19.28] [http://us.metamath.org/mpeuni/19.45.html 19.45]
