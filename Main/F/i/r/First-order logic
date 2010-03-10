@@ -1102,7 +1102,7 @@ thm (equs3 () ()
 </jh>
 
 === Implicit substitution and ∀ ===
-A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. Here we relate such a statement to <code>∀x(x = s → φ)</code> (which is one of the formulas we'll be using in manipulating substitutions).<ref>[http://us.metamath.org/mpeuni/equsal.html equsal] in metamath's set.mm, accessed February 22, 2010</ref>
+A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. Here we relate such a statement to <code>∀x(x = s → φ)</code> (which is one of the formulas we'll be using in manipulating substitutions).<ref>[http://us.metamath.org/mpeuni/equsal.html equsal] in metamath's set.mm, accessed March 9, 2010</ref>
 
 First, a propositional logic theorem:<ref>*5.74 from A. Whitehead, B. Russell, Principia Mathematica, Cambridge University Press, 1910.</ref>
 <jh>
@@ -1190,6 +1190,61 @@ Now we just need to combine the forward and reverse directions.
 <jh>
         introduceBiconditionalFromImplications
 
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Implicit substitution and ∃ ===
+There is a similar result with ∃.<ref>[http://us.metamath.org/mpeuni/equsex.html equsex] in metamath's set.mm, accessed March 9, 2010, with <code>s</code> (the replacement) changed from a <code>variable</code> to an <code>object</code></ref>
+
+We first provide a bit more propositional logic:
+<jh>
+thm (ConjunctionImplication () () ((φ ∧ ψ) ↔ (¬ (φ → (¬ ψ)))) (
+        φ ψ DeMorganNDN swapBiconditional
+
+        φ (¬ ψ) ImplicationDisjunction swapBiconditional
+        addNegation
+
+        applyBiconditionalTransitivity
+))
+
+thm (ImplicationConjunction () () ((φ → ψ) ↔ (¬ (φ ∧ (¬ ψ)))) (
+        φ ψ ImplicationDisjunction
+
+        φ ψ DeMorganPCN swapBiconditional
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Our implicit substitution theorem is:
+<jh>
+thm (SubstImplicitThereExists () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
+  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
+</jh>
+The proof basically consists of massaging negations to derive this result from the corresponding one for ∀. We start by working from the left side of our desired result, <code>∃x (x = s ∧ φ)</code>
+<jh>
+        ((value x) = s) φ ConjunctionImplication
+        x buildThereExists
+</jh>
+That transforms it to <code>∃x ¬ (x = y → ¬ φ))</code>. We move the negation in front of the quantifier,
+<jh>
+        x (((value x) = s) → (¬ φ)) NotForAll swapBiconditional
+        applyBiconditionalTransitivity
+</jh>
+which gives us <code>¬ ∀x(x = y → ¬ φ))</code>. That <code>∀x(x = y → ¬ φ)</code> is equivalent to <code>¬ ψ</code> follows from <code>HEQ</code> and <code>SubstImplicitForAll</code>.
+<jh>
+        HFREE negateNotFree
+
+        HEQ
+        φ ψ NegationFunction eliminateBiconditionalReverse
+        applySyllogism
+
+        SubstImplicitForAll
+</jh>
+So we just need to move around the negations and assemble the result:
+<jh>
+        transposeBiconditionalWithNegatedRight swapBiconditional
         applyBiconditionalTransitivity
 ))
 </jh>
