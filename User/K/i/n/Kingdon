@@ -22,19 +22,20 @@ Needed in proof of sbn:
 *[http://us.metamath.org/mpeuni/sb4.html sb4]
 :*[http://us.metamath.org/mpeuni/equs5.html equs5]
 ::*[http://us.metamath.org/mpeuni/ax11o.html ax11o]
-:::*[http://us.metamath.org/mpeuni/ax11v2.html ax11v2]
+:::*[http://us.metamath.org/mpeuni/ax11a2.html ax11a2]
 ::::*[http://us.metamath.org/mpeuni/ax11v2.html ax11v2]
 :::::*[http://us.metamath.org/mpeuni/dveeq2.html dveeq2]
 :::::*[http://us.metamath.org/mpeuni/19.23adv.html 19.23adv]
 ::::::*[http://us.metamath.org/mpeuni/19.23ad.html 19.23ad]
 
 Needed in proof of sb56:
-*[http://us.metamath.org/mpeuni/ax11v.html ax11v] (but prove this from DistinctNotFree and VariableSubstitution)
-*[http://us.metamath.org/mpeuni/equsex.html equsex] (but change y to s, I think)
-:*ConjunctionImplication and ImplicationConjunction, might as well. *4.63
-:*[http://us.metamath.org/mpeuni/equsal.html equsal] (but change y to s, I think)
-::*[http://us.metamath.org/mpeuni/pm5.74i.html *5.74] from Principia
-::*[http://us.metamath.org/mpeuni/a5i.html a5i]? (derive from Specialization and QuantifiedImplication and generalize)
+*[http://us.metamath.org/mpeuni/ax11v.html ax11v]
+:*[http://us.metamath.org/mpeuni/ax-16.html ax-16]
+:*[http://us.metamath.org/mpeuni/ax11o.html ax11o] (see above)
+
+intro for sb56:
+--- Two ways to express substitution when variables are distinct ---
+In the previous two sections, we have seen that <code>∃x(x = s ∧ φ)</code> and <code>∀x(x = s → φ)</code> behave similarly.  In fact, as long as <code>x</code> and <code>s</code> are distinct, they are completely equivalent.
 
 
 === More moving formulas where quantified variable is not free ===
