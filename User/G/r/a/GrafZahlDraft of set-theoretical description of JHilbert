@@ -103,14 +103,23 @@ If <math>e\in EXP</math>, then we call a variable <math>v</math> appearing in <m
 
 ''Proof.'' By definition, there are no empty expressions, and any expression of length greater than one starts with a functor. Hence, the claims are true for expressions of length exactly one, as such expressions are either variables or constant functors with place count zero. Let <math>e</math> be an expression of length greater than one. Assume the claims to be true for shorter expressions. Let <math>s</math> be a finite sequence of elements from <math>VAR\cup FUNC</math> such that <math>\tilde{e}:=e\sqcup s</math> is an expression. Let <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> be a decomposition of <math>e</math>, and let <math>(\tilde{f})\sqcup\tilde{e}_1\sqcup\ldots\sqcup\tilde{e}_{\tilde{n}}</math> be a decomposition of <math>\tilde{e}</math>, both as suggested by the definition. Clearly, <math>f=\tilde{f}</math>. Therefore, <math>n=\tilde{n}</math> to match the place count. Now, <math>\tilde{e}_1</math> cannot be shorter than <math>e_1</math>, or else it would be a prefix for <math>e_1</math>, in violation of the induction hypothesis. Likewise, <math>e_1</math> cannot be shorter than <math>\tilde{e}_1</math>. Therefore, <math>e_1=\tilde{e}_1</math>. Now, <math>e_2</math> and <math>\tilde{e}_2</math>, if they exist, have the same starting point. Hence, by the same argument, <math>e_2=\tilde{e}_2</math>, and so on, <math>e_k=\tilde{e}_k</math> for all <math>k=1,\ldots,n</math>. Therefore, <math>e=\tilde{e}</math> and thus <math>s=()</math>. Hence, by induction, <math>e</math> is not a prefix, and its decomposition is unique. '''Q.E.D.'''
 
-A map <math>f\colon VAR\to EXP</math> is called a ''proper substitution map'' if the kind of <math>v</math> and <math>f(v)</math> are equal for all <math>v\in VAR</math>. Note that this implies <math>f(PVAR)\subseteq PVAR^1</math>, that is, pure variable kind variables are mapped to expressions consisting only of a pure variable kind variable. Also note that we can extend any partial map from <math>VAR</math> to <math>EXP</math> to a total map by setting <math>f(v):=(v)</math> for all <math>v\in VAR</math> outside the domain of <math>f</math>.
+A map <math>s\colon VAR\to EXP</math> is called a ''proper substitution map'' if the kind of <math>v</math> and <math>s(v)</math> are equal for all <math>v\in VAR</math>. Note that this implies <math>s(PVAR)\subseteq PVAR^1</math>, that is, pure variable kind variables are mapped to expressions consisting only of a pure variable kind variable. Also note that we can extend any partial map from <math>VAR</math> to <math>EXP</math> to a total map by setting <math>s(v):=(v)</math> for all <math>v\in VAR</math> outside the domain of <math>s</math>.
 
-Let <math>e\in EXP</math> and let <math>f\colon VAR\to EXP</math> be a proper substitution map. We can then recursively define the ''proper substitution'' <math>f(e)</math> as follows:
-# <math>f(e)=(f(v))</math> if <math>e=(v)</math>.
-# <math>f(e)=(f)\sqcup f(e_1)\sqcup\ldots\sqcup f(e_n)</math> if <math>e=(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math>.
-Due to the above proposition, <math>f(e)</math> is well-defined. It is easy to see that <math>f(e)\in EXP</math>.
+Let <math>e\in EXP</math> and let <math>s\colon VAR\to EXP</math> be a proper substitution map. We can then recursively define the ''proper substitution'' <math>s(e)</math> as follows:
+# <math>s(e)=(s(v))</math> if <math>e=(v)</math>.
+# <math>s(e)=(s)\sqcup s(e_1)\sqcup\ldots\sqcup s(e_n)</math> if <math>e=(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math>.
+Due to the above proposition, <math>s(e)</math> is well-defined. It is easy to see that <math>s(e)\in EXP</math>.
 
 == Abbreviations ==
+
+Abbreviations, the members of the set <math>ABBREV</math> are special functors which can be used in an expression to abbreviate or otherwise re-express another expression. Set-theoretically, they take the form <math>(N,l,e)</math> where <math>N</math> is a name, <math>l</math> is a finite (possibly empty) sequence of variables and <math>e</math> is an expression, called the ''definiens'', which starts with a functor and whose apparent variables are precisely the elements of <math>l</math>. Some further restrictions are necessary on the definition. In order to avoid cyclic abbreviations, we make the following recursive definition:
+# A tuple <math>(N,l,e)</math> as above is said to have depth <math>1</math> if the starting functor of <math>e</math> has depth <math>0</math>.
+# A tuple <math>(N,l,e)</math> as above is said to have depth <math>n</math> if the starting functor of <math>e</math> has depth </math>n-1</math>.
+We allow only such <math>(N,l,e)</math> as abbreviations that have a depth defined as above.
+
+The place count of a definition <math>(N,l,e)</math> is given by <math>|l|</math>, and its input kinds are the kinds of the variables <math>l_1,\ldots,l_{|l|}</math>. Its result kind is the kind of <math>e</math>. Note that since <math>e</math> starts with a functor, this is always a substitutable kind.
+
+Let <math>f:=(N,l,e)\in ABBREV</math> have place count <math>n</math>, and let <math>e_1,\ldots,e_n\in EXP</math> such that <math>\tilde{e}:=f\sqcup e_1\sqcup\ldots\sqcup e_n\in EXP</math>. Define <math>s\colon VAR\to EXP</math> by setting <math>s(l_1):=e_1,\ldots,s(l_n):=e_n</math>, and <math>s(v)=(v)</math> otherwise. It is easy to see that this is a proper substitution map. We call <math>\tilde{e}</math> an ''abbreviation'' for <math>s(e)</math>
 
 == Disjoint variable constraints ==
 
