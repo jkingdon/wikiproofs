@@ -1594,6 +1594,26 @@ thm (SubstBuilderReplacement ((s y) (t y)) ()
 ))
 </jh>
 
+=== Substitution of a theorem remains a theorem ===
+If we have a theorem, we can add a variable substitution onto it.
+
+<jh>
+thm (introduceSubst2 () ((H φ)) (subst2 s x φ) (
+        H
+        ((value x) = (value y)) introduceAntecedent
+        x generalize
+
+        x (value y) φ equs4
+        applyModusPonens
+
+        ((value y) = s) introduceAntecedent
+        y generalize
+
+        y s (∃ x (((value x) = (value y)) ∧ φ)) equs4
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 We've now proved all the theorems in [[Interface:First-order logic]], so we export them.
 <jh>
