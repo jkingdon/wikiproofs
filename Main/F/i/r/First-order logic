@@ -606,6 +606,26 @@ thm (collectThereExistsDisjunction () ((H ((∃ x φ) ∨ (∃ x ψ)))) (∃ x (
 
 </jh>
 
+=== For-all across a biconditional ===
+Distributing <code>∀</code> across an implication also works for the biconditional.  The proof is just expanding the biconditional into conjunctions and implications and distribution of <code>∀</code> across the conjunctions and implications.
+<jh>
+thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))) (
+        φ ψ BiconditionalImplication eliminateBiconditionalReverse
+        x addForAll
+
+        x (φ → ψ) (ψ → φ) ForAllConjunction eliminateBiconditionalReverse
+        applySyllogism
+
+        x φ ψ ForAllImplication
+        x ψ φ ForAllImplication
+        conjoin
+        applySyllogism
+
+        (∀ x φ) (∀ x ψ) BiconditionalImplication eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 === There-exists across an implication ===
 
 This is another proof which mostly consists of the definition of ∃ and propositional calculus.
@@ -1152,13 +1172,11 @@ thm (distributeImplicationOverBiconditional () ((H (φ → (ψ ↔ χ)))) ((φ �
 
 And our implicit substitution theorem:
 <jh>
-thm (SubstImplicitForAll () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
-  ((∀ x (((value x) = s) → φ)) ↔ ψ) (
+thm (ImplicitSubstitutionForAll () ((HFREE (x is-not-free-in ψ))) 
+  ((∀ x (((value x) = s) → (φ ↔ ψ))) → ((∀ x (((value x) = s) → φ)) ↔ ψ)) (
 </jh>
 Starting with <code>x = s → (φ ↔ ψ)</code>, we first add <code>∀x</code> in front of the <code>ψ</code>:
 <jh>
-        HEQ
-
         HFREE
         ForAllAddRemove swapBiconditional
 
@@ -1166,14 +1184,20 @@ Starting with <code>x = s → (φ ↔ ψ)</code>, we first add <code>∀x</code>
 
         applyModusPonens
 
+        ((value x) = s) addCommonAntecedent
+</jh>
+We now distribute the implication over the biconditional to get <code>(x = s → φ) ↔ (x = s → ∀xψ)</code>.
+<jh>
+        ((value x) = s) φ (∀ x ψ) ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
         applySyllogism
 </jh>
-We now distribute the implication over the biconditional to get <code>(x = s → φ) ↔ (x = s → ∀xψ)</code>, and add ∀x to the front of each side of the biconditional.
+The entire formula we have at this point is <code>(x = s → (φ ↔ ψ)) → ((x = s → φ) ↔ (x = s → ∀xψ))</code>.  We will add <code>∀x</code> to the start of each of the three parts.
 <jh>
-        distributeImplicationOverBiconditional
-        x buildForAll
+        x addForAll
+        x (((value x) = s) → φ) (((value x) = s) → (∀ x ψ)) ForAllBiconditional
+        applySyllogism
 </jh>
-The left side, <code>∀x(x = s → φ)</code>, is the left side of our result.
+The left side of that consequent, <code>∀x(x = s → φ)</code>, is the left side of our desired consequent.
 
 We will show that the right side, <code>∀x(x = s → ∀xψ)</code>, is equivalent to <code>ψ</code>. The forward direction is just <code>ax9o</code>:
 <jh>
@@ -1186,11 +1210,33 @@ The reverse direction is introducing an antecedent and messing around with quant
         a5i
         applySyllogism
 </jh>
-Now we just need to combine the forward and reverse directions.
+Now we just need to combine the forward and reverse directions,
 <jh>
         introduceBiconditionalFromImplications
+</jh>
+and reassemble our result.
+<jh>
+        (∀ x (((value x) = s) → φ)) (∀ x (((value x) = s) → (∀ x ψ))) ψ BiconditionalTransitivity
+        export
+        applyComm
+        applyModusPonens
 
-        applyBiconditionalTransitivity
+        applySyllogism
+))
+</jh>
+
+Here's a rule form of basically the same theorem:
+
+<jh>
+thm (SubstImplicitForAll () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
+  ((∀ x (((value x) = s) → φ)) ↔ ψ) (
+        HEQ
+        x generalize
+
+        HFREE
+        s φ ImplicitSubstitutionForAll
+
+        applyModusPonens
 ))
 </jh>
 
