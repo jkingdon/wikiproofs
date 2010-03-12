@@ -60,6 +60,51 @@ Now we add <code>∃x</code> to the front and move it past the <code>y = s</code
 ))
 </jh>
 
+=== Convert from implicit substitution ===
+:''Mistaken attempt #2: this one has a distinct variable constraint on x and s, to get the quantifier on x past y = s (sigh)''
+A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>.
+
+<jh>
+thm (convertImplicitToSubst2 () 
+  ((HFREE (x is-not-free-in ψ))
+   (HEQ (((value x) = s) → (φ ↔ ψ)))
+  )
+  ((subst2 s x φ) ↔ ψ) (
+</jh>
+The proof will basically consist of two applications of <code>ImplicitSubstitutionThereExists</code>.
+
+First we rewrite <code>x = s → (φ ↔ ψ)</code> as <code>y = s → (x = y → (φ ↔ ψ))</code>
+<jh>
+        ((value y) = s) ((value x) = (value y)) ConjunctionCommutativity eliminateBiconditionalReverse
+        (value x) (value y) s EqualityTransitivity
+        applySyllogism
+
+        HEQ
+        applySyllogism
+
+        export
+</jh>
+Now we add ∀x to the consequent:
+<jh>
+        x generalize
+        x ((value y) = s) DistinctNotFree
+        moveAntecedentOutOfForAll
+</jh>
+The first application of <code>ImplicitSubstitutionThereExists</code> turns <code>∀x(x = y → (φ ↔ ψ))</code> into <code>(∃x x = y ∧ φ) ↔ ψ</code>:
+<jh>
+        y ψ DistinctNotFree
+        ImplicitSubstitutionThereExists
+))
+
+thm (makeSubst2Explicit ((x ψ))
+  ((H (((value x) = s) → (φ ↔ ψ))))
+  ((subst s x φ) ↔ ψ) (
+        x ψ DistinctNotFree
+        H
+        convertImplicitToSubst2
+))
+</jh>
+
 == Inequality ==
 We define an order on natural numbers:
 
