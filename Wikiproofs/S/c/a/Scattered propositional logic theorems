@@ -16,7 +16,7 @@ From [[First-order logic]]:
 * applyComm and applyNestedModusPonens (the former might obviate the need for the latter)
 * also along those lines: mpan2
 * principia*2.21
-* transposeBiconditionalWithNegatedRight
+* BiconditionalTranspositionWithNegatedRight, transposeBiconditionalWithNegatedRight (this is almost surely in Principia)
 * joinConsequents
 * anbi1d
 * ImplicationDistributionOverBiconditional, distributeImplicationOverBiconditional (probably really is a missing theorem; at least it is in Principia and is not easy to derive from what we have already)
