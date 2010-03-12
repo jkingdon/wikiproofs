@@ -935,6 +935,16 @@ That gives us <code>(x is-not-free-in (φ → (∀ x ψ)))</code>
 
         introduceBiconditionalFromImplications
 ))
+
+thm (moveAntecedentOutOfForAll () ((H (∀ x (φ → ψ))) (HFREE (x is-not-free-in φ))) (φ → (∀ x ψ)) (
+        H
+
+        HFREE
+        ψ ForAllImplicationAntecedentMovement
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
 </jh>
 
 The corresponding theorem for ∃ is similar:<ref>[http://us.metamath.org/mpeuni/19.37.html 19.37] in metamath's set.mm, accessed February 20, 2010</ref>
@@ -1104,14 +1114,22 @@ That gives us <code>∀x(φ → ¬ ψ) ↔ ∀x ¬ (φ ∧ ψ)</code>.  Now we j
 The second theorem is a special case which will be useful in dealing with substitution:<ref>[http://us.metamath.org/mpeuni/equs3.html equs3] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
+thm (BiconditionalTranspositionWithNegatedRight () () ((φ ↔ (¬ ψ)) ↔ (ψ ↔ (¬ φ))) (
+        φ (¬ ψ) BiconditionalImplication
+
+        φ ψ TranspositionWithNegatedConsequent
+        ψ φ TranspositionWithNegatedAntecedent
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        ψ (¬ φ) BiconditionalImplication swapBiconditional
+        applyBiconditionalTransitivity
+))
+
 thm (transposeBiconditionalWithNegatedRight () ((H (φ ↔ (¬ ψ)))) (ψ ↔ (¬ φ)) (
-        H eliminateBiconditionalReverse
-        transposeWithNegatedConsequent
-
-        H eliminateBiconditionalForward
-        transposeWithNegatedAntecedent
-
-        introduceBiconditionalFromImplications
+        H
+        φ ψ BiconditionalTranspositionWithNegatedRight eliminateBiconditionalReverse
+        applyModusPonens
 ))
 
 thm (equs3 () () 
@@ -1265,33 +1283,67 @@ thm (ImplicationConjunction () () ((φ → ψ) ↔ (¬ (φ ∧ (¬ ψ)))) (
 
 Our implicit substitution theorem is:
 <jh>
+thm (ImplicitSubstitutionThereExists () ((HFREE (x is-not-free-in ψ))) 
+  ((∀ x (((value x) = s) → (φ ↔ ψ))) → ((∃ x (((value x) = s) ∧ φ)) ↔ ψ)) (
+</jh>
+The proof basically consists of massaging negations to derive this result from the corresponding one for ∀. We start by showing that <code>∀x (x = s → (φ ↔ ψ))</code> implies that <code>∀x(x = s → ¬ φ)</code> is equivalent to <code>¬ ψ</code>.
+<jh>
+        φ ψ NegationFunction eliminateBiconditionalReverse
+        ((value x) = s) addCommonAntecedent
+        x addForAll
+
+        HFREE
+        negateNotFree
+        s (¬ φ) ImplicitSubstitutionForAll
+
+        applySyllogism
+</jh>
+Now we need to show that <code>∀x(x = s → ¬ φ) ↔ (¬ ψ)</code> implies <code>∃x(x = s ∧ φ) ↔ ψ</code>. We first turn the former into <code>ψ ↔ (¬ ∀x(x = s → ¬ φ))</code>:
+<jh>
+        (∀ x (((value x) = s) → (¬ φ))) ψ BiconditionalTranspositionWithNegatedRight
+</jh>
+We stick <code>ψ ↔ ψ</code> on the proof stack for later use,
+<jh>
+        ψ BiconditionalReflexivity
+</jh>
+and work just with <code>¬ ∀x(x = s → ¬ φ)</code> for now. We move the negation past the quantifier to get <code>∃x ¬ (x = s → ¬ φ)</code>:
+<jh>
+        x (((value x) = s) → (¬ φ)) NotForAll
+</jh>
+Now we turn the negations and implication into a conjunction:
+<jh>
+        ((value x) = s) φ ConjunctionImplication swapBiconditional
+        x buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+Bringing back two statements we left on the proof stack, we assemble the formula that <code>∀x(x = s → ¬ φ) ↔ (¬ ψ)</code> is equivalent to <code>ψ ↔ ∃x(x = s ∧ φ)</code>,
+<jh>
+        buildBiconditional
+        applyBiconditionalTransitivity
+</jh>
+flip the order to get <code>∃x(x = s ∧ φ) ↔ ψ</code>,
+<jh>
+        eliminateBiconditionalReverse
+        ψ (∃ x (((value x) = s) ∧ φ)) BiconditionalSymmetry
+        applySyllogism
+</jh>
+and combine this with the first part of the proof.
+<jh>
+        applySyllogism
+))
+</jh>
+
+The rule form is:
+<jh>
 thm (SubstImplicitThereExists () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
   ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
-</jh>
-The proof basically consists of massaging negations to derive this result from the corresponding one for ∀. We start by working from the left side of our desired result, <code>∃x (x = s ∧ φ)</code>
-<jh>
-        ((value x) = s) φ ConjunctionImplication
-        x buildThereExists
-</jh>
-That transforms it to <code>∃x ¬ (x = y → ¬ φ))</code>. We move the negation in front of the quantifier,
-<jh>
-        x (((value x) = s) → (¬ φ)) NotForAll swapBiconditional
-        applyBiconditionalTransitivity
-</jh>
-which gives us <code>¬ ∀x(x = y → ¬ φ))</code>. That <code>∀x(x = y → ¬ φ)</code> is equivalent to <code>¬ ψ</code> follows from <code>HEQ</code> and <code>SubstImplicitForAll</code>.
-<jh>
-        HFREE negateNotFree
-
         HEQ
-        φ ψ NegationFunction eliminateBiconditionalReverse
-        applySyllogism
+        x generalize
 
-        SubstImplicitForAll
-</jh>
-So we just need to move around the negations and assemble the result:
-<jh>
-        transposeBiconditionalWithNegatedRight swapBiconditional
-        applyBiconditionalTransitivity
+        HFREE
+        s φ ImplicitSubstitutionThereExists
+
+        applyModusPonens
 ))
 </jh>
 
