@@ -243,11 +243,6 @@ so for example <code>(subst s x φ)</code> can be thought of as a copy of <code>
 
 === Building up expressions involving subst ===
 
-The first theorem is equality reflexivity, except that one side has been substituted with the object on the other side.
-<jh>
-stmt (SubstitutionEquality () () (subst s x ((value x) = s)))
-</jh>
-
 If we have a theorem, we can add a variable substitution onto it.
 <jh>
 stmt (introduceSubst () (φ) (subst s x φ))
