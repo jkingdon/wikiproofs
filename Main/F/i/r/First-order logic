@@ -1712,6 +1712,45 @@ thm (introduceSubst2 () ((H φ)) (subst2 s x φ) (
 ))
 </jh>
 
+=== Proving there-exists ===
+One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.  In [[w:Intuitionistic logic|constructive logic]] any formula <code>∃xφ</code> can be proved this way (because of the [[w:Existence property|existence property]]), but even in classical (non-constructive) logic this is one of the most common ways of proving <code>∃xφ</code>.
+
+In our notation, this idea is expressed via <code>subst2</code>:
+<jh>
+thm (ThereExistsIntroduction ((y φ) (y x)) () ((subst2 s x φ) → (∃ x φ)) (
+</jh>
+The proof takes the definition of <code>subst2</code>, <code>(∃ y (y = s ∧ (∃ x (x = y ∧ φ))))</code> and pares it down by eliminating the parts we don't need.
+
+We start with <code>(y = s ∧ ∃ x (x = y ∧ φ)) → ∃ x (x = y ∧ φ)</code>
+<jh>
+        ((value y) = s) (∃ x (((value x) = (value y)) ∧ φ)) ConjunctionLeftElimination
+
+</jh>
+and <code>∃ x (x = y ∧ φ) → ∃ x φ</code>:
+<jh>
+        ((value x) = (value y)) φ ConjunctionLeftElimination
+        x addThereExists
+</jh>
+which by syllogism gives us <code>(y = s ∧ ∃ x (x = y ∧ φ)) → ∃ x φ</code>
+<jh>
+        applySyllogism
+</jh>
+We add <code>∃ y</code> to both sides and simplify <code>∃ y ∃ x φ</code> to <code>∃ x φ</code>:
+<jh>
+        y addThereExists
+
+        y (∃ x φ) DistinctNotFree
+        ThereExistsAddRemove eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (introduceThereExists () ((H (subst2 s x φ))) (∃ x φ) (
+        H
+        s x φ ThereExistsIntroduction
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 We've now proved all the theorems in [[Interface:First-order logic]], so we export them.
 <jh>
