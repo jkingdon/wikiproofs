@@ -12,7 +12,7 @@
 | exportedby = [[Propositional calculus implies standard axioms]]
 }}
 
-The standard axioms of propositional calculus are those used by metamath, Hamilton's 1988 ''Logic for Mathematicians'', and Margaris's 1967 ''First Order Mathematical Logic''. They were stated in their current form by Lukasiewicz around 1930 (building on earlier work by Frege), and consist of three axioms and one inference rule.<ref name="ax-1">[http://us.metamath.org/mpeuni/ax-1.html ax-1] in metamath's set.mm, accessed February 26, 2010</ref>
+The standard axioms of propositional calculus are those used by metamath, Hamilton's 1988 ''Logic for Mathematicians'', and Margaris's 1967 ''First Order Mathematical Logic''. They were stated in their current form by [[w:Jan Łukasiewicz|Łukasiewicz]] around 1930 (building on earlier work by Frege), and consist of three axioms and one inference rule.<ref name="ax-1">[http://us.metamath.org/mpeuni/ax-1.html ax-1] in metamath's set.mm, accessed February 26, 2010</ref>
 
 These axioms are equivalent to other axiomizations of propositional calculus such as [[Interface:Principia Mathematica propositional logic|Principia Mathematica's]].
 
