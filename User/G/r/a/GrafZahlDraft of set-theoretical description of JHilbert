@@ -79,14 +79,13 @@ Variables, the elements of <math>VAR</math> are defined as tuples <math>(N,K)</m
 
 == Functors ==
 
-Functors are the elements of <math>FUNC</math>. Together with the variables, they will be used to build complex expressions in the next section. Functors are abstractly characterised by the following properties:
+Functors are the elements of <math>FUNC</math>. Together with the variables, they will be used to build complex expressions in the next section. We assume <math>FUNC</math> to be totally ordered. The order of functors corresponds to the order in which they are defined in JHilbert. This total order is later used to prevent cyclic definitions and abbreviations. In this context, we speak of a functor coming ''before'' or ''after'' another. The functors themselves are abstractly characterised by the following properties:
 * A ''result kind'' <math>R\in SKIND</math>. Note that <math>R\in VKIND</math> is not allowed.
 * A ''place count'' <math>n\in\mathbb{N}_0</math>. It describes the number of "parameters" a functor takes.
 * <math>n</math> ''input kinds'' <math>K_1,\ldots,K_n\in KIND</math>. Note that here, both substitutable and pure variable kinds are permitted. If <math>n=0</math>, the functor has no input kinds at all and is ''constant''.
-* A ''depth'' <math>d\in\mathbb{N}_0</math>. The depth is a device to prevent cyclic or infinitely recursive definitions or abbreviations.
 The set <math>FUNC</math> decomposes into three mutually disjoint subsets <math>FUNC=TERM\cup ABBREV\cup DEF</math>, the elements of each of which will have a different set-theoretical representation, but all elements will have the above abstract properties. In this section, we will only explain the set-theoretical representation of the elements of <math>TERM</math>, leaving <math>ABBREV</math> and <math>DEF</math> for the sections on abbreviations and definitions, respectively.
 
-The elements of <math>TERM</math> are called the ''term functors''. They are triples <math>(N,R,K)</math> where <math>N</math> is a name, <math>R\in SKIND</math> is the result kind and <math>K=(K_1,\ldots,K_n)</math> is a finite, possibly empty, sequence of kinds, that is <math>K_i\in KIND</math>, <math>i=1,\ldots,n</math>. The place count is then given by <math>n=|K|</math>, the length of the sequence <math>K</math>. Finally, we set the depth of all term functors to zero.
+The elements of <math>TERM</math> are called the ''term functors''. They are triples <math>(N,R,K)</math> where <math>N</math> is a name, <math>R\in SKIND</math> is the result kind and <math>K=(K_1,\ldots,K_n)</math> is a finite, possibly empty, sequence of kinds, that is <math>K_i\in KIND</math>, <math>i=1,\ldots,n</math>. The place count is then given by <math>n=|K|</math>, the length of the sequence <math>K</math>.
 
 == Expressions ==
 
@@ -95,7 +94,7 @@ Expressions are a derived concept. Set-theoretically, every expression is a fini
 # Each sequence which is a concatenation <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> where <math>f</math> is a functor, <math>n</math> is the place count of <math>f</math> and <math>e_1,\ldots,e_n</math> are expressions such that the kind of the <math>k</math>-th expression matches the <math>k</math>-th input kind of <math>f</math>, for all <math>k=1,\ldots,n</math>, is an expression. The kind of the expression is the result kind of <math>f</math>.
 # Nothing else is an expression, or the kind of an expression.
 
-We denote the set of all expressions by <math>EXP</math>. Note that <math>EXP</math> depends on <math>\mathcal{F}</math>. Unlike the previously encountered set, <math>EXP</math> may be (and usually is) an infinite set. Also note that the only way the kind of an expression can be a pure variable kind is the expression consisting of a single variable with pure variable kind.
+We denote the set of all expressions by <math>EXP</math>. Note that <math>EXP</math> depends on <math>\mathcal{F}</math>. Unlike the previously encountered sets, <math>EXP</math> may be (and usually is) an infinite set. Also note that the only way the kind of an expression can be a pure variable kind is the expression consisting of a single variable with pure variable kind.
 
 If <math>e\in EXP</math>, then we call a variable <math>v</math> appearing in <math>e</math> an ''apparent variable'' of <math>e</math>.
 
@@ -107,19 +106,24 @@ A map <math>s\colon VAR\to EXP</math> is called a ''proper substitution map'' if
 
 Let <math>e\in EXP</math> and let <math>s\colon VAR\to EXP</math> be a proper substitution map. We can then recursively define the ''proper substitution'' <math>s(e)</math> as follows:
 # <math>s(e)=(s(v))</math> if <math>e=(v)</math>.
-# <math>s(e)=(s)\sqcup s(e_1)\sqcup\ldots\sqcup s(e_n)</math> if <math>e=(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math>.
+# <math>s(e)=(f)\sqcup s(e_1)\sqcup\ldots\sqcup s(e_n)</math> if <math>e=(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math>.
 Due to the above proposition, <math>s(e)</math> is well-defined. It is easy to see that <math>s(e)\in EXP</math>.
 
 == Abbreviations ==
 
-Abbreviations, the members of the set <math>ABBREV</math> are special functors which can be used in an expression to abbreviate or otherwise re-express another expression. Set-theoretically, they take the form <math>(N,l,e)</math> where <math>N</math> is a name, <math>l</math> is a finite (possibly empty) sequence of variables and <math>e</math> is an expression, called the ''definiens'', which starts with a functor and whose apparent variables are precisely the elements of <math>l</math>. Some further restrictions are necessary on the definition. In order to avoid cyclic abbreviations, we make the following recursive definition:
-# A tuple <math>(N,l,e)</math> as above is said to have depth <math>1</math> if the starting functor of <math>e</math> has depth <math>0</math>.
-# A tuple <math>(N,l,e)</math> as above is said to have depth <math>n</math> if the starting functor of <math>e</math> has depth </math>n-1</math>.
-We allow only such <math>(N,l,e)</math> as abbreviations that have a depth defined as above.
+Abbreviation functors, the members of the set <math>ABBREV</math> are special functors which can be used in an expression to abbreviate or otherwise re-express another expression. Set-theoretically, they take the form <math>(N,l,e)</math> where <math>N</math> is a name, <math>l</math> is a finite (possibly empty) sequence of variables and <math>e</math> is an expression, called the ''definiens'', which starts with a functor and whose apparent variables are precisely the elements of <math>l</math>. Furthermore, all functors occurring in <math>e</math> must come before <math>(N,l,e)</math>. The place count of a definition <math>(N,l,e)</math> is given by <math>|l|</math>, and its input kinds are the kinds of the variables <math>l_1,\ldots,l_{|l|}</math>. Its result kind is the kind of <math>e</math>. Note that since <math>e</math> starts with a functor, this is always a substitutable kind.
+We now recursively define the ''depth'' of a functor recursively as a non-negative integer:
+# A functor has depth <math>0</math> if it is not an abbreviation functor.
+# A an abbreviation functor has depth <math>n</math> if the starting functor of its definiens has depth </math>n-1</math>.
+These definitions establish a relation between an abbreviation functor and the starting functor of its definiens. This gives rise to chains of functors. The elements of these chains are enumerated by their depth. Chains may overlap, but they form a forest (union of trees), in particular the maximum depth element of a chain never overlaps with anything else. The union of these chains form a [[w:partial order|partial order]] which is compatible (that is, a subset of) the total order on the functors.
 
-The place count of a definition <math>(N,l,e)</math> is given by <math>|l|</math>, and its input kinds are the kinds of the variables <math>l_1,\ldots,l_{|l|}</math>. Its result kind is the kind of <math>e</math>. Note that since <math>e</math> starts with a functor, this is always a substitutable kind.
+Let <math>f:=(N,l,e)\in ABBREV</math> have place count <math>n</math>, and let <math>e_1,\ldots,e_n\in EXP</math> such that <math>\tilde{e}:=f\sqcup e_1\sqcup\ldots\sqcup e_n\in EXP</math>. Define <math>s\colon VAR\to EXP</math> by setting <math>s(l_1):=e_1,\ldots,s(l_n):=e_n</math>, and <math>s(v)=(v)</math> otherwise. It is easy to see that this is a proper substitution map. We now define recursively when an expression is the ''abbreviation'' of another.
+# For all <math>e,s,\tilde{e}</math> as above, <math>\tilde{e}</math> is an abbreviation of <math>s(e)</math>.
+# Let <math>e,s,\tilde{e}</math> be as above. Assume <math>e'</math> contains <math>\tilde{e}</math> as a subexpression. Let <math>e''</math> be <math>e'</math>, with one or more occurrences of <math>\tilde{e}</math> replaced by <math>s(e)</math>. Then <math>e'</math> is an abbreviation of <math>e''</math>.
+# Let <math>e</math> be an abbreviation of <math>e'</math> and let <math>e'</math> be an abbreviation of <math>e''</math>, then <math>e</math> is an abbreviation of <math>e''</math>.
+This relation defines a partial order on <math>EXP</math>. Furthermore, each element of <math>EXP</math> either does not contain any abbreviation functors, or is the abbreviation of a unique such expression. For assume <math>e</math> contains an abbreviation functor. Pick all such functors with maximal depth in <math>e</math> and replace each of their corresponding expressions with expressions they are abbreviations of. The expression thus gained only contains functors which come before that functor. Hence, after a finite number of steps, the functors in the expression will all have depth zero. Uniqueness follows since the chains form a tree. We call this unique expression the ''total unfolding'' of the original expression.
 
-Let <math>f:=(N,l,e)\in ABBREV</math> have place count <math>n</math>, and let <math>e_1,\ldots,e_n\in EXP</math> such that <math>\tilde{e}:=f\sqcup e_1\sqcup\ldots\sqcup e_n\in EXP</math>. Define <math>s\colon VAR\to EXP</math> by setting <math>s(l_1):=e_1,\ldots,s(l_n):=e_n</math>, and <math>s(v)=(v)</math> otherwise. It is easy to see that this is a proper substitution map. We call <math>\tilde{e}</math> an ''abbreviation'' for <math>s(e)</math>
+Let <math>e_1,e_2\in EXP</math> and let <math>e_1',e_2'</math> be their total unfoldings. We call <math>e_2</math> a ''specialisation'' of <math>e_1</math> if there is a proper substitution map <math>s</math> such that <math>s(e_1')=e_2'</math>.
 
 == Disjoint variable constraints ==
 
