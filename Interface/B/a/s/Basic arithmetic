@@ -122,7 +122,7 @@ var (variable k n)
 
 var (formula φ0 φk φSk φa)
 
-stmt (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k))
+stmt (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
   ((((value n) = (0)) → (φ ↔ φ0))
    (((value n) = (value k)) → (φ ↔ φk))
    (((value n) = ((value k) + (1))) → (φ ↔ φSk))
