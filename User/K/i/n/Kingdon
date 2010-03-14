@@ -39,9 +39,6 @@ intro for sb56:
 --- Two ways to express substitution when variables are distinct ---
 In the previous two sections, we have seen that <code>∃x(x = s ∧ φ)</code> and <code>∀x(x = s → φ)</code> behave similarly.  In fact, as long as <code>x</code> and <code>s</code> are distinct, they are completely equivalent.
 
-=== proving ∃xφ ===
-Possibly interesting note on constructivism: "To prove ExB(x) constructively, you must provide a particular value of x such that B(x) is true".
-[http://www.ltn.lv/~podnieks/mlog/ml1.htm]
 
 === More moving formulas where quantified variable is not free ===
 *This one on wikipedia list of identities: [http://us.metamath.org/mpeuni/19.42.html 19.42]
