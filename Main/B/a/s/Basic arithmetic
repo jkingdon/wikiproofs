@@ -966,6 +966,48 @@ thm (MultiplicativeIdentityLeft () ()
 ))
 </jh>
 
+== Inequality ==
+We define an order on natural numbers:
+
+<jh>
+def ((≤ a b) (∃ n ((a + (value n)) = b)))
+</jh>
+
+Every number is greater than or equal to zero:
+<jh>
+thm (ZeroSmallest ((n a)) () ((0) ≤ a) (
+</jh>
+To prove this inequality, we need to find a number ''n'' such that <code>0 + ''n'' = a</code>. The number <code>a</code> does this.
+<jh>
+        a AdditiveIdentityLeft
+</jh>
+The rest is substitution machinery. We start with <code>n = a → (0 + n = a ↔ 0 + a = a)</code>:
+<jh>
+        (value n) a (0) AdditionBuilderLL
+
+        a EqualityReflexivity
+        ((value n) = a) introduceAntecedent
+
+        composeConjunction
+
+        ((0) + (value n)) ((0) + a) a a EqualityBuilder
+        applySyllogism
+</jh>
+We turn that into <code>(subst a n (0 + n = a)) ↔ 0 + a = a</code>:
+<jh>
+        makeSubstExplicit
+</jh>
+Which gives us <code>(subst a n (0 + n = a))</code>.
+<jh>
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+That in turn implies <code>∃ n 0 + n = a</code>, which is <code>0 ≤ a</code> by the definition of <code>≤</code>.
+<jh>
+        introduceThereExists
+))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorem there is stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
