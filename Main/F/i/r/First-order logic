@@ -1111,7 +1111,7 @@ That gives us <code>∀x(φ → ¬ ψ) ↔ ∀x ¬ (φ ∧ ψ)</code>.  Now we j
 ))
 </jh>
 
-The second theorem is a special case which will be useful in dealing with substitution:<ref>[http://us.metamath.org/mpeuni/equs3.html equs3] in metamath's set.mm, accessed February 22, 2010</ref>
+The second theorem, <code>equs3</code>, is a special case which will be useful in dealing with substitution:<ref>[http://us.metamath.org/mpeuni/equs3.html equs3] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (BiconditionalTranspositionWithNegatedRight () () ((φ ↔ (¬ ψ)) ↔ (ψ ↔ (¬ φ))) (
@@ -1347,19 +1347,18 @@ thm (SubstImplicitThereExists () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x)
 ))
 </jh>
 
-== Substitution ==
-We now move to substitution via <code>subst</code>.
+== Substitution of variables ==
+We now move to proper substitution via <code>substVariable</code>.
 
-In some formulations of predicate logic, this kind of substitution (known as ''proper substitution'' as there are some rules about what kinds of substitution are valid) is performed syntactically and the rules governing it are expressed in English or a meta-theory.  JHilbert does not have a feature to do syntactic proper substitution, but we are able to build up equivalent mechanisms from equality. The theorems in [[Interface:First-order logic]] could be proven from either the syntactic definition or ours.
+This section only covers the case where we substitute one variable for another, not where we substitute an object for a variable. The latter is more general and is treated in the next section, on <code>subst</code>. In fact this section, on <code>substVariable</code>, will probably be dropped unless some of the results end up being useful in contexts such as proving theorems for the more general <code>subst</code>.
 
 === Definition ===
-Our definition of substitution is somewhat complicated, in a (possibly unsuccessful) attempt to handle the case in which s and x are not distinct.<ref>The definition was supposed to be a version of [http://us.metamath.org/mpeuni/df-sb.html df-sb] in metamath's set.mm, accessed February 22, 2010, but it changes <code>s</code> from a <code>variable</code> to an <code>object</code>; what is actually at issue here is closer to [http://us.metamath.org/mpeuni/wsbc.html wsbc] which in set.mm is not defined by df-sb.</ref>
-
+Our definition of <code>substVariable</code> is somewhat complicated, mainly in order to handle the case in which y and x are not distinct.<ref>[http://us.metamath.org/mpeuni/df-sb.html df-sb] in metamath's set.mm, accessed February 22, 2010</ref>
 <jh>
-def ((subst s x φ) ((((value x) = s) → φ) ∧ (∃ x (((value x) = s) ∧ φ))))
+def ((substVariable y x φ) ((((value x) = (value y)) → φ) ∧ (∃ x (((value x) = (value y)) ∧ φ))))
 </jh>
 
-=== Proving substitution from (∀ x ((x = s) → φ)) ===
+=== Proving substitution from (∀ x ((x = y) → φ)) ===
 Given the definition we have adopted, our first order of business is making it a bit easier to prove a substitution formula.<ref>[http://us.metamath.org/mpeuni/sb2.html sb2] in metamath's set.mm, accessed February 22, 2010</ref>
 
 First, a propositional logic theorem:<ref>[http://us.metamath.org/mpeuni/jc.html jc] in metamath's set.mm, accessed February 22, 2010</ref>
@@ -1379,7 +1378,7 @@ thm (joinConsequents ()
 ))
 </jh>
 
-The following lemma's consequent is half of the definition of <code>subst</code>:<ref>[http://us.metamath.org/mpeuni/equs4.html equs4] in metamath's set.mm, accessed February 22, 2010</ref>
+The following lemma's consequent is half of the definition of <code>substVariable</code>:<ref>[http://us.metamath.org/mpeuni/equs4.html equs4] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (equs4 () () ((∀ x (((value x) = s) → φ)) → (∃ x (((value x) = s) ∧ φ))) (
@@ -1421,19 +1420,19 @@ so we have simplified the consequent to <code>¬ ∀x(x = y → ¬ φ))</code>. 
 
 Now we're ready for our first theorem to help us prove a substituted formula:
 <jh>
-thm (sb2 () () ((∀ x (((value x) = s) → φ)) → (subst s x φ)) (
-        x (((value x) = s) → φ) Specialization
-        x s φ equs4
+thm (sb2 () () ((∀ x (((value x) = (value y)) → φ)) → (substVariable y x φ)) (
+        x (((value x) = (value y)) → φ) Specialization
+        x (value y) φ equs4
         composeConjunction
 ))
 </jh>
 
-=== Substitution implies ∃x(x = s ∧ φ) ===
+=== Substitution implies ∃x(x = y ∧ φ) ===
 
 Although being able to prove a formula involving <code>subst</code> is our first order of business, some of the theorems below also do the reverse. Here is a lemma to help turn <code>subst</code> into something else (it is just extracting half of the definition):<ref>[http://us.metamath.org/mpeuni/sb1.html sb1] in metamath's set.mm, accessed February 24, 2010</ref>
 <jh>
-thm (sb1 () () ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
-        (((value x) = s) → φ) (∃ x (((value x) = s) ∧ φ)) ConjunctionLeftElimination
+thm (sb1 () () ((substVariable y x φ) → (∃ x (((value x) = (value y)) ∧ φ))) (
+        (((value x) = (value y)) → φ) (∃ x (((value x) = (value y)) ∧ φ)) ConjunctionLeftElimination
 ))
 </jh>
 
@@ -1441,45 +1440,45 @@ thm (sb1 () () ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
 This theorem is basically just equality reflexivity, except that one side has been substituted with the object on the other side.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
-thm (SubstitutionEquality () () (subst s x ((value x) = s)) (
-        ((value x) = s) ImplicationReflexivity
+thm (SubstitutionEquality () () (substVariable y x ((value x) = (value y))) (
+        ((value x) = (value y)) ImplicationReflexivity
         x generalize
 
-        x s ((value x) = s) sb2
+        x y ((value x) = (value y)) sb2
 
         applyModusPonens
 ))
 </jh>
 
 === Substitution of a theorem remains a theorem ===
-If we have a theorem, we can add a variable substitution onto it.<ref>[http://us.metamath.org/mpeuni/sbt.html sbt] in metamath's set.mm, accessed February 24, 2010</ref>  This will be useful in building up expressions which contain <code>subst</code>.
+If we have a theorem, we can add a variable substitution onto it.<ref>[http://us.metamath.org/mpeuni/sbt.html sbt] in metamath's set.mm, accessed February 24, 2010</ref>
 <jh>
-thm (introduceSubst () ((H φ)) (subst s x φ) (
+thm (introduceSubstVariable () ((H φ)) (substVariable y x φ) (
         H
-        ((value x) = s) introduceAntecedent
+        ((value x) = (value y)) introduceAntecedent
         x generalize
 
-        x s φ sb2
+        x y φ sb2
 
         applyModusPonens
 ))
 </jh>
 
 === Convert from implicit substitution ===
-A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. It also provides one of the ways to construct a statement using <code>subst</code>.<ref>[http://us.metamath.org/mpeuni/sbie.html sbie] in metamath's set.mm, accessed February 24, 2010</ref>
+A statement of the form <code>x = y → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>y</code>. It also provides one of the ways to construct a statement using <code>subst</code>.<ref>[http://us.metamath.org/mpeuni/sbie.html sbie] in metamath's set.mm, accessed February 24, 2010</ref>
 
 We break up the proof into several steps:
 
 <jh>
-thm (sbie-1 () ((H (((value x) = s) → (φ ↔ ψ)))) ((((value x) = s) ∧ φ) → ψ) (
+thm (sbie-1 () ((H (((value x) = (value y)) → (φ ↔ ψ)))) ((((value x) = (value y)) ∧ φ) → ψ) (
         H
         φ ψ BiconditionalReverseElimination
         applySyllogism
         import
 ))
 
-thm (sbie-2 () ((H ((((value x) = s) ∧ φ) → ψ))) ((subst s x φ) → (∃ x ψ)) (
-        s x φ sb1
+thm (sbie-2 () ((H ((((value x) = (value y)) ∧ φ) → ψ))) ((substVariable y x φ) → (∃ x ψ)) (
+        y x φ sb1
 
         H
         x generalize
@@ -1490,9 +1489,9 @@ thm (sbie-2 () ((H ((((value x) = s) ∧ φ) → ψ))) ((subst s x φ) → (∃ 
 
 thm (sbie-forward ()
   ((HFREE (x is-not-free-in ψ))
-   (HEQ (((value x) = s) → (φ ↔ ψ)))
+   (HEQ (((value x) = (value y)) → (φ ↔ ψ)))
   )
-  ((subst s x φ) → ψ) (
+  ((substVariable y x φ) → ψ) (
         HEQ
         sbie-1
         sbie-2
@@ -1505,9 +1504,9 @@ thm (sbie-forward ()
 
 thm (sbie-reverse ()
   ((HFREE (x is-not-free-in ψ))
-   (HEQ (((value x) = s) → (φ ↔ ψ)))
+   (HEQ (((value x) = (value y)) → (φ ↔ ψ)))
   )
-  (ψ → (subst s x φ)) (
+  (ψ → (substVariable y x φ)) (
 </jh>
 The first line we'll use at the very end.
 <jh>
@@ -1519,13 +1518,13 @@ The first line we'll use at the very end.
 
         applyComm
 </jh>
-We now have <code>ψ → (x = s → φ)</code>.  The antecedent of that is almost <code>(∀ x ((x = s) → φ))</code>, which is what we'll need for <code>sb2</code>.
+We now have <code>ψ → (x = y → φ)</code>.  The antecedent of that is almost <code>(∀ x ((x = y) → φ))</code>, which is what we'll need for <code>sb2</code>.
 <jh>
 
         x generalize
         distributeForAllImplication
 
-        x s φ sb2
+        x y φ sb2
         applySyllogism
 </jh>
 That gives us <code>((∀ x ψ) → (subst y x φ))</code>; we just need to remove the initial quantifier.
@@ -1536,17 +1535,17 @@ That gives us <code>((∀ x ψ) → (subst y x φ))</code>; we just need to remo
 
 thm (sbie () 
   ((HFREE (x is-not-free-in ψ))
-   (HEQ (((value x) = s) → (φ ↔ ψ)))
+   (HEQ (((value x) = (value y)) → (φ ↔ ψ)))
   )
-  ((subst s x φ) ↔ ψ) (
+  ((substVariable y x φ) ↔ ψ) (
         HFREE HEQ sbie-forward
         HFREE HEQ sbie-reverse
         introduceBiconditionalFromImplications
 ))
 
-thm (makeSubstExplicit ((x ψ))
-  ((H (((value x) = s) → (φ ↔ ψ))))
-  ((subst s x φ) ↔ ψ) (
+thm (makeSubstVariableExplicit ((x ψ))
+  ((H (((value x) = (value y)) → (φ ↔ ψ))))
+  ((substVariable y x φ) ↔ ψ) (
         x ψ DistinctNotFree
         H
         sbie
@@ -1554,19 +1553,19 @@ thm (makeSubstExplicit ((x ψ))
 </jh>
 
 === sbequ12 ===
-Another relationship between <code>subst</code> and equality is <code>x = s → (φ ↔ [s / x]φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12] in metamath's set.mm, accessed February 26, 2010</ref>  We prove each direction of the biconditional separately.
+Another relationship between <code>substVariable</code> and equality is <code>x = y → (φ ↔ [y / x]φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12] in metamath's set.mm, accessed February 26, 2010</ref>  We prove each direction of the biconditional separately.
 <jh>
-thm (sbequ1 () () (((value x) = s) → (φ → (subst s x φ))) (
+thm (sbequ1 () () (((value x) = (value y)) → (φ → (substVariable y x φ))) (
 </jh>
-The proof is going to show that <code>x = s ∧ φ</code> implies <code>(subst s x φ)</code>. We show this for the two halves of the definition of <code>subst</code>. The first half of the <code>subst</code> definition is <code>x = s → φ</code>:
+The proof is going to show that <code>x = y ∧ φ</code> implies <code>(substVariable y x φ)</code>. We show this for the two halves of the definition of <code>substVariable</code>. The first half of the <code>subst</code> definition is <code>x = y → φ</code>:
 <jh>
-        ((value x) = s) φ ConjunctionLeftElimination
-        φ ((value x) = s) AntecedentIntroduction
+        ((value x) = (value y)) φ ConjunctionLeftElimination
+        φ ((value x) = (value y)) AntecedentIntroduction
         applySyllogism
 </jh>
-The other half is <code>∃x(x = s ∧ φ)</code>:
+The other half is <code>∃x(x = y ∧ φ)</code>:
 <jh>
-        (((value x) = s) ∧ φ) x 19.8a
+        (((value x) = (value y)) ∧ φ) x 19.8a
 </jh>
 Now we combine the two:
 <jh>
@@ -1577,36 +1576,36 @@ Now we combine the two:
 
 The other direction is also simple:
 <jh>
-thm (sbequ2 () () (((value x) = s) → ((subst s x φ) → φ)) (
-        (((value x) = s) → φ) (∃ x (((value x) = s) ∧ φ)) ConjunctionRightElimination
+thm (sbequ2 () () (((value x) = (value y)) → ((substVariable y x φ) → φ)) (
+        (((value x) = (value y)) → φ) (∃ x (((value x) = (value y)) ∧ φ)) ConjunctionRightElimination
         applyComm
 ))
 </jh>
 
 We now combine the two to get <code>sbequ12</code>:
 <jh>
-thm (sbequ12 () () (((value x) = s) → (φ ↔ (subst s x φ))) (
-        x s φ sbequ1
-        x s φ sbequ2
+thm (sbequ12 () () (((value x) = (value y)) → (φ ↔ (substVariable y x φ))) (
+        x y φ sbequ1
+        x y φ sbequ2
         composeConjunction
 
-        φ (subst s x φ) BiconditionalImplication eliminateBiconditionalForward
+        φ (substVariable y x φ) BiconditionalImplication eliminateBiconditionalForward
         applySyllogism
 ))
 </jh>
 
 === Implication builder ===
-Analogous to our other implication builders, this theorem takes an implication and lets us add <code>subst</code> to both sides.<ref>[http://us.metamath.org/mpeuni/sbimi.html sbimi] in metamath's set.mm, accessed February 24, 2010</ref>
+Analogous to our other implication builders, this theorem takes an implication and lets us add <code>substVariable</code> to both sides.<ref>[http://us.metamath.org/mpeuni/sbimi.html sbimi] in metamath's set.mm, accessed February 24, 2010</ref>
 <jh>
-thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
+thm (addSubstVariable  () ((H (φ → ψ))) ((substVariable y x φ) → (substVariable y x ψ)) (
 </jh>
-The left half of the conjunction defining <code>subst</code> is <code>x = s → φ</code>.  So we first show that the one for <code>φ</code> implies the one for <code>ψ</code>:
+The left half of the conjunction defining <code>substVariable</code> is <code>x = y → φ</code>.  So we first show that the one for <code>φ</code> implies the one for <code>ψ</code>:
 <jh>
-        H ((value x) = s) addCommonAntecedent
+        H ((value x) = (value y)) addCommonAntecedent
 </jh>
-The right half of the conjunction defining <code>subst</code> is <code>∃x(x = s ∧ φ)</code>.  Showing the relevant implication is only slightly more difficult:
+The right half of the conjunction defining <code>subst</code> is <code>∃x(x = y ∧ φ)</code>.  Showing the relevant implication is only slightly more difficult:
 <jh>
-        H ((value x) = s) conjoinLL
+        H ((value x) = (value y)) conjoinLL
         x generalize
         distributeForAllImplicationToThereExists
 </jh>
@@ -1620,26 +1619,30 @@ We now combine the two halves:
 The builder for the biconditional is very similar to the implication builder.  It could be proved much the way we proved the implication builder, but we derive it from the implication builder.<ref>[http://us.metamath.org/mpeuni/sbbii.html sbbii] in metamath's set.mm, accessed February 24, 2010</ref>
 
 <jh>
-thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
+thm (buildSubstVariable () ((H (φ ↔ ψ))) ((substVariable y x φ) ↔ (substVariable y x ψ)) (
         H eliminateBiconditionalReverse
-        s x addSubst
+        y x addSubstVariable 
         H eliminateBiconditionalForward
-        s x addSubst
+        y x addSubstVariable 
         introduceBiconditionalFromImplications
 ))
 </jh>
 
-== Substitution (fixed) ==
-This definition of subst should work right:<ref>It resembles [http://us.metamath.org/mpeuni/dfsb7.html dfsb7] in metamath's set.mm, accessed March 8, 2010, except that <code>s</code> (the replacement) is an <code>object</code> rather than a <code>variable</code>.</ref>
+== Substitution of objects ==
+We now turn to substitution of an object for a variable.
+
+In some formulations of predicate logic, this kind of substitution (known as ''proper substitution'' as there are some rules about what kinds of substitution are valid) is performed syntactically and the rules governing it are expressed in English or a meta-theory.  JHilbert does not have a feature to do syntactic proper substitution, but we are able to build up equivalent mechanisms from equality. The theorems in [[Interface:First-order logic]] could be proven from either the syntactic definition or ours.
+
+We define a formula <code>(subst s x φ)</code> which means, roughly, that <code>φ</code> is true if ocurrences of <code>x</code> are replaced by <code>s</code> ("roughly" because we have not tried to define proper substitution precisely). The definition contains a dummy variable <code>y</code> to give the expected results if <code>x</code> and <code>s</code> are not distinct.<ref>It resembles [http://us.metamath.org/mpeuni/dfsb7.html dfsb7] in metamath's set.mm, accessed March 8, 2010, except that <code>s</code> (the replacement) is an <code>object</code> rather than a <code>variable</code>.</ref>
 <jh>
-def ((subst2 s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
+def ((subst s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
 </jh>
 
 === Builders ===
-We can build up formulas based on equivalences or equalities of the the substituted proposition or the replacement (that is, <code>φ</code> or <code>s</code> in <code>(subst2 s x φ)</code>, respectively).
+We can build up formulas based on equivalences or equalities of the the substituted proposition or the replacement (that is, <code>φ</code> or <code>s</code> in <code>(subst s x φ)</code>, respectively).
 
 ==== Based on replacement ====
-In this section we will prove <code>s = t → ((subst2 s x φ) ↔ (subst2 t x φ))</code>. This is like dfsbcq in set.mm.<ref>[http://us.metamath.org/mpeuni/dfsbcq.html dfsbcq] in metamath's set.mm, accessed March 7, 2010</ref>
+In this section we will prove <code>s = t → ((subst s x φ) ↔ (subst t x φ))</code>. This is like dfsbcq in set.mm.<ref>[http://us.metamath.org/mpeuni/dfsbcq.html dfsbcq] in metamath's set.mm, accessed March 7, 2010</ref>
 
 <jh>
 thm (19.18 () ()
@@ -1685,7 +1688,7 @@ thm (anbi1d ()
 ))
 
 thm (SubstBuilderReplacement ((s y) (t y)) ()
-  ((s = t) → ((subst2 s x φ) ↔ (subst2 t x φ))) (
+  ((s = t) → ((subst s x φ) ↔ (subst t x φ))) (
         s t (value y) EqualityBuilderLL
         (∃ x (((value x) = (value y)) ∧ φ)) anbi1d
         y exbidv
@@ -1696,7 +1699,7 @@ thm (SubstBuilderReplacement ((s y) (t y)) ()
 If we have a theorem, we can add a variable substitution onto it.
 
 <jh>
-thm (introduceSubst2 () ((H φ)) (subst2 s x φ) (
+thm (introduceSubst () ((H φ)) (subst s x φ) (
         H
         ((value x) = (value y)) introduceAntecedent
         x generalize
@@ -1713,13 +1716,13 @@ thm (introduceSubst2 () ((H φ)) (subst2 s x φ) (
 </jh>
 
 === Proving there-exists ===
-One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.  In [[w:Intuitionistic logic|constructive logic]] any formula <code>∃xφ</code> can be proved this way (because of the [[w:Existence property|existence property]]), but even in classical (non-constructive) logic this is one of the most common ways of proving <code>∃xφ</code>.
+One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.  In [[w:Intuitionistic logic|constructive logic]] any theorem <code>∃xφ</code> can be proved this way (because of the [[w:Existence property|existence property]]), but even in classical (non-constructive) logic this is one of the most common ways of proving <code>∃xφ</code>.
 
-In our notation, this idea is expressed via <code>subst2</code>:
+In our notation, this idea is expressed via <code>subst</code>:
 <jh>
-thm (ThereExistsIntroduction ((y φ) (y x)) () ((subst2 s x φ) → (∃ x φ)) (
+thm (ThereExistsIntroduction ((y φ) (y x)) () ((subst s x φ) → (∃ x φ)) (
 </jh>
-The proof takes the definition of <code>subst2</code>, <code>(∃ y (y = s ∧ (∃ x (x = y ∧ φ))))</code> and pares it down by eliminating the parts we don't need.
+The proof takes the definition of <code>subst</code>, <code>(∃ y (y = s ∧ (∃ x (x = y ∧ φ))))</code> and pares it down by eliminating the parts we don't need.
 
 We start with <code>(y = s ∧ ∃ x (x = y ∧ φ)) → ∃ x (x = y ∧ φ)</code>
 <jh>
@@ -1744,7 +1747,7 @@ We add <code>∃ y</code> to both sides and simplify <code>∃ y ∃ x φ</code>
         applySyllogism
 ))
 
-thm (introduceThereExists () ((H (subst2 s x φ))) (∃ x φ) (
+thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
         H
         s x φ ThereExistsIntroduction
         applyModusPonens
@@ -1754,14 +1757,14 @@ thm (introduceThereExists () ((H (subst2 s x φ))) (∃ x φ) (
 === Convert from implicit substitution ===
 A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>.
 
-Although the distinct variable constraint between <code>x</code> and <code>s</code> should not be necessary (if we wanted to require that <code>x</code> and <code>s</code> are distinct we could have a simpler definition of <code>subst2</code>), even the version with the constraint can be useful.
+Although the distinct variable constraint between <code>x</code> and <code>s</code> should not be necessary (if we wanted to require that <code>x</code> and <code>s</code> are distinct we could have a simpler definition of <code>subst</code>), even the version with the constraint can be useful.
 
 <jh>
-thm (convertImplicitToSubst2 ((x s) (y ψ) (x y)) 
+thm (convertImplicitToSubst ((x s) (y ψ) (x y)) 
   ((HFREE (x is-not-free-in ψ))
    (HEQ (((value x) = s) → (φ ↔ ψ)))
   )
-  ((subst2 s x φ) ↔ ψ) (
+  ((subst s x φ) ↔ ψ) (
 </jh>
 The proof will basically consist of two applications of <code>ImplicitSubstitutionThereExists</code>.
 
@@ -1799,19 +1802,19 @@ We then apply <code>ImplicitSubstitutionThereExists</code> again to get <code>�
         applyModusPonens
 ))
 
-thm (makeSubst2Explicit ((x s) (x ψ))
+thm (makeSubstExplicit ((x s) (x ψ))
   ((H (((value x) = s) → (φ ↔ ψ))))
-  ((subst2 s x φ) ↔ ψ) (
+  ((subst s x φ) ↔ ψ) (
         x ψ DistinctNotFree
         H
-        convertImplicitToSubst2
+        convertImplicitToSubst
 ))
 </jh>
 
 === Implication builder ===
 Analogous to our other implication builders, this theorem takes an implication and lets us add <code>subst</code> to both sides. The proof is just a straightforward application of the existing builders for conjunction and ∃.
 <jh>
-thm (addSubst2 () ((H (φ → ψ))) ((subst2 s x φ) → (subst2 s x ψ)) (
+thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
         H
         ((value x) = (value y)) conjoinLL
         x addThereExists
@@ -1824,11 +1827,11 @@ thm (addSubst2 () ((H (φ → ψ))) ((subst2 s x φ) → (subst2 s x ψ)) (
 The builder for the biconditional is very similar to the implication builder.  It could be proved much the way we proved the implication builder, but we derive it from the implication builder.<ref>Similar to [http://us.metamath.org/mpeuni/sbbii.html sbbii] in metamath's set.mm, accessed February 24, 2010, except that <code>s</code> is an <code>object</code> not a <code>variable</code></ref>
 
 <jh>
-thm (buildSubst2 () ((H (φ ↔ ψ))) ((subst2 s x φ) ↔ (subst2 s x ψ)) (
+thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
         H eliminateBiconditionalReverse
-        s x addSubst2
+        s x addSubst
         H eliminateBiconditionalForward
-        s x addSubst2
+        s x addSubst
         introduceBiconditionalFromImplications
 ))
 </jh>
