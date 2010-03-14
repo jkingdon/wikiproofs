@@ -1808,6 +1808,31 @@ thm (makeSubst2Explicit ((x s) (x ψ))
 ))
 </jh>
 
+=== Implication builder ===
+Analogous to our other implication builders, this theorem takes an implication and lets us add <code>subst</code> to both sides. The proof is just a straightforward application of the existing builders for conjunction and ∃.
+<jh>
+thm (addSubst2 () ((H (φ → ψ))) ((subst2 s x φ) → (subst2 s x ψ)) (
+        H
+        ((value x) = (value y)) conjoinLL
+        x addThereExists
+        ((value y) = s) conjoinLL
+        y addThereExists
+))
+</jh>
+
+=== Biconditional builder ===
+The builder for the biconditional is very similar to the implication builder.  It could be proved much the way we proved the implication builder, but we derive it from the implication builder.<ref>Similar to [http://us.metamath.org/mpeuni/sbbii.html sbbii] in metamath's set.mm, accessed February 24, 2010, except that <code>s</code> is an <code>object</code> not a <code>variable</code></ref>
+
+<jh>
+thm (buildSubst2 () ((H (φ ↔ ψ))) ((subst2 s x φ) ↔ (subst2 s x ψ)) (
+        H eliminateBiconditionalReverse
+        s x addSubst2
+        H eliminateBiconditionalForward
+        s x addSubst2
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 We've now proved all the theorems in [[Interface:First-order logic]], so we export them.
 <jh>
