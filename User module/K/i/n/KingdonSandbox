@@ -12,35 +12,4 @@ var (variable x y x0 y0 x1 y1 k n)
 var (object s t u)
 
 var (nat a b c)
-
-#thm (Paradox1 () () (subst (succ (value x)) x ((value x) = (succ (value x)))) (
-#        (succ (value x)) x SubstitutionEquality
-#))
-</jh>
-
-== Inequality ==
-We define an order on natural numbers:
-
-<jh>
-def ((≤ a b) (∃ n ((a + (value n)) = b)))
-</jh>
-
-<jh>
-#thm (ZeroSmallest () () ((0) ≤ a) (
-#        a AdditiveIdentityLeft
-#))
-</jh>
-
-Here's roughly where this is going next:
- n = b → (0 + n = b ↔ 0 + b = b)
- (subst b n (0 + n = b)) ↔ 0 + b = b
-The missing theorem from [[Interface:First-order logic]] is <code>(subst s x φ) → (∃ x φ)</code>
-
-We'll show that it has the [[w:Total order|expected properties of an order]].
-
-    If a ≤ b and b ≤ a then a = b (antisymmetry);
-    If a ≤ b and b ≤ c then a ≤ c (transitivity);
-    a ≤ b or b ≤ a (totality). 
-(probably reflexivity too, although that is a consequence of totality)
-
 </jh>
