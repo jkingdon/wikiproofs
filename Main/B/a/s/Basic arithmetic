@@ -141,7 +141,7 @@ This version has five hypotheses, which despite the large number turns out to be
 <jh>
 var (formula φ0 φk φSk)
 
-thm (Induction5 ((φ0 n) (φk n) (φSk n) (φ k))
+thm (Induction5 ((φ0 n) (φk n) (φSk n) (φ k) (n k))
   ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
    (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
    (HSUBSK (((value n) = (succ (value k))) → (φ ↔ φSk)))
@@ -185,7 +185,7 @@ The solution is <code>Induction6S</code>, which adds one more substitution, to s
 <jh>
 var (formula φa)
 
-thm (Induction6S ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k))
+thm (Induction6S ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
   ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
    (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
    (HSUBSK (((value n) = (succ (value k))) → (φ ↔ φSk)))
@@ -980,7 +980,7 @@ thm (SuccessorAddsOne () () ((a + (1)) = (succ a)) (
         applyEqualityTransitivity
 ))
 
-thm (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k))
+thm (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
   ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
    (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
    (HSUBSK (((value n) = ((value k) + (1))) → (φ ↔ φSk)))
