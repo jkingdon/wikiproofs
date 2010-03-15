@@ -1,11 +1,17 @@
-This is an interface to hold the various substitution results, so I can play with them and figure out what should go into [[Interface:First-order logic]].
+This is an interface to hold various results, e.g. potential axioms, proofs which aren't currently exported, or proofs which I think I can prove, but haven't yet.
 
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]].
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
 param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 
 var (formula φ ψ χ θ)
-var (object x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
+var (variable x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
+var (object s t u)
 
+stmt (sbc56 ((x s)) () ((∃ x (((value x) = s) ∧ φ)) ↔ (∀ x (((value x) = s) → φ))) )
+
+stmt (equs3 () () 
+  ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))) )
 </jh>
