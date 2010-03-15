@@ -82,3 +82,5 @@ Any objections to getting rid of the Importation and Exportation theorems (in fa
 Our general policy, in most of the file, is to supply only the biconditional, and expect that many times it will be followed by eliminateBiconditionalForward or eliminateBiconditionalReverse.
 
 Of course the rules "import" and "export" would remain. [[User:Kingdon|Kingdon]] 14:10, 15 March 2010 (UTC)
+
+:No objections. I mean, it's bound to happen very often that a proof step involving a biconditional will be followed by one of the eliminators, but it's such a trivial step that it shouldn't be a nuisance.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 17:45, 15 March 2010 (UTC)
