@@ -252,7 +252,7 @@ We can remove a universal quantifier. This is sometimes taken as an axiom but he
 thm (Specialization-18 ((x y)) () 
   (((value y) = (value x)) → ((¬ φ) → (∀ x (((value x) = (value y)) → (¬ φ))))) (
         (value y) (value x) EqualitySymmetry eliminateBiconditionalReverse
-        x y (¬ φ) VariableSubstitutionDistinct
+        x y (¬ φ) VariableSubstitution
         applySyllogism
 ))
 
