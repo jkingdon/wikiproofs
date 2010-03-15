@@ -74,3 +74,11 @@ OK, I probably should stop this level of nit-picking when there are bigger fish 
 :I defined <code>formula</code> as an alias for <code>wff</code>. There is a small drawback: all exports now need to define the same alias. But hopefully there won't be many exports.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:34, 18 February 2010 (UTC)
 
 ::Sounds like a good compromise. Thanks. [[User:Kingdon|Kingdon]] 12:43, 18 February 2010 (UTC)
+
+== Get rid of Importation and Exportation? ==
+
+Any objections to getting rid of the Importation and Exportation theorems (in favor of Transportation, the biconditionalized version)?
+
+Our general policy, in most of the file, is to supply only the biconditional, and expect that many times it will be followed by eliminateBiconditionalForward or eliminateBiconditionalReverse.
+
+Of course the rules "import" and "export" would remain. [[User:Kingdon|Kingdon]] 14:10, 15 March 2010 (UTC)
