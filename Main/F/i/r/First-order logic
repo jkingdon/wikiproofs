@@ -249,14 +249,10 @@ thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
 We can remove a universal quantifier. This is sometimes taken as an axiom but here we prove it from the other axioms via a number of intermediate steps.<ref>[http://us.metamath.org/mpeuni/ax4.html ax4] in metamath's set.mm, accessed February 18, 2010</ref>
 
 <jh>
-thm (Specialization-18 ((y φ)) () 
+thm (Specialization-18 ((x y)) () 
   (((value y) = (value x)) → ((¬ φ) → (∀ x (((value x) = (value y)) → (¬ φ))))) (
         (value y) (value x) EqualitySymmetry eliminateBiconditionalReverse
-        x y (¬ φ) VariableSubstitution
-        applySyllogism
-
-        (¬ φ) y Generalization
-        (∀ x (((value x) = (value y)) → (¬ φ))) addCommonConsequent
+        x y (¬ φ) VariableSubstitutionDistinct
         applySyllogism
 ))
 
@@ -280,7 +276,7 @@ thm (Specialization-a () () ((∀ x (φ → (¬ ((value x) = (value y))))) → (
         applySyllogism
 ))
 
-thm (Specialization-30 ((y φ)) () ((¬ ((∀ x φ) → φ)) → (¬ ((value y) = (value x)))) (
+thm (Specialization-30 ((x y)) () ((¬ ((∀ x φ) → φ)) → (¬ ((value y) = (value x)))) (
         y x φ Specialization-18
         import
 
@@ -297,7 +293,7 @@ thm (Specialization-30 ((y φ)) () ((¬ ((∀ x φ) → φ)) → (¬ ((value y) 
         introduceTransposition
 ))
 
-thm (Specialization-33 ((y φ)) () 
+thm (Specialization-33 ((x y)) () 
   ((∀ y (¬ ((∀ x φ) → φ))) → (∀ y (¬ ((value y) = (value x))))) (
         x φ y Specialization-30
         y generalize
