@@ -941,6 +941,18 @@ thm (moveAntecedentOutOfForAll () ((H (∀ x (φ → ψ))) (HFREE (x is-not-free
 
         applyModusPonens
 ))
+
+thm (moveAntecedentIntoForAll () 
+  ((H (φ → (∀ x ψ))) (HFREE (x is-not-free-in φ))) 
+  (∀ x (φ → ψ)) (
+        H
+
+        HFREE
+        ψ ForAllImplicationAntecedentMovement
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
 </jh>
 
 The corresponding theorem for ∃ is similar:<ref>[http://us.metamath.org/mpeuni/19.37.html 19.37] in metamath's set.mm, accessed February 20, 2010</ref>
