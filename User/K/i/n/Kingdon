@@ -53,12 +53,32 @@ That gives us <code>ψ → (φ → (χ → θ))</code>. We need one more invocat
 </jh>
 
 <jh>
-thm (ObjectSubstitution ((x s)) () 
+thm (ObjectSubstitution ((x s) (x y)) () 
   (((value x) = s) → (φ → (∀ x (((value x) = s) → φ)))) (
 </jh>
-The general idea of the proof is to introduce a variable y that can function in the VariableSubstitution axiom. <code>x = s</code> can be derived from <code>y = s ∧ x = y</code>.
+The general idea of the proof is to "substitute" <code>s</code> for <code>y</code> using a formula of the form <code>y = s → (''a formula with s in it'' ↔ ''much the same formula, but with y'')</code>.
 
-We start by invoking VariableSubstitution and then sprinkling around a few <code>y = s</code>
+More specifically, we start by building that formula, <code>y = s → ((x = s → (φ → ∀ x (x = s → φ))) ↔ (x = y → (φ → ∀ x (x = y → φ))))
+<jh>
+        φ BiconditionalReflexivity
+
+        (value y) s EqualitySymmetry eliminateBiconditionalReverse
+
+        (value y) s (value x) EqualityBuilderLL
+
+        φ BiconditionalReflexivity
+        ImplicationFunction
+        applyBiconditionalTransitivity
+
+        x buildForAll
+
+        buildImplication
+
+
+
+
+</jh>
+Everything below here is probably a dead end, but retained for the moment just in case.
 <jh>
         x y VariableSubstitution
         ((value y) = s) introduceAntecedent
@@ -66,7 +86,19 @@ We start by invoking VariableSubstitution and then sprinkling around a few <code
         ((value y) = s) introduceAntecedent
 </jh>
 We now have <code>y = s → (x = y → (φ → (y = s → ∀ x (x = y → φ))))</code>.
+
+Looking at the <code>y = s → ∀ x (x = y → φ)</code> portion, we move the <code>y = s</code> inside the quantifier:
 <jh>
+        x ((value y) = s) DistinctNotFree
+        (∀ x (((value x) = (value y)) → φ)) ForAllImplicationAntecedentMovement eliminateBiconditionalForward
+</jh>
+Now we massage <code>y = s → (x = y → φ)</code> into <code>x = s → φ</code>.
+<jh>
+        ((value y) = s) ((value x) = (value y)) φ Transportation eliminateBiconditionalReverse
+        ((value y) = s) ((value x) = (value y)) ConjunctionCommutativity eliminateBiconditionalReverse
+        applySyllogism
+
+        (value x) (value y) s EqualityTransitivity
 ))
 </jh>
 
