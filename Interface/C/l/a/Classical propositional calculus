@@ -148,8 +148,6 @@ stmt (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)))
 
 Although there is no associativity law for implication, we have the following importation/exportation principle due to [[w:Guiseppe Peano|Guiseppe Peano]]:
 <jh>
-stmt (Importation () () ((p → (q → r)) → ((p ∧ q) → r)))
-stmt (Exportation () () (((p ∧ q) → r) → (p → (q → r))))
 stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
 </jh>
 Two famous implication elimination principles, [[w:Modus ponens|Modus ponens]] and [[w:modus tollens|modus tollens]]:
