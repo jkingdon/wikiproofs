@@ -1029,6 +1029,19 @@ thm (ForAllDisjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∨ ψ
 ))
 </jh>
 
+To move a disjunct out of ∃:<ref>[http://us.metamath.org/mpeuni/19.45.html 19.45] in metamath's set.mm, accessed March 17, 2010</ref>
+
+<jh>
+thm (ThereExistsDisjunctionMovement () ((H (x is-not-free-in φ))) ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        φ ψ DisjunctionImplication x buildThereExists
+
+        H negateNotFree
+        ψ ThereExistsImplicationAntecedentMovement applyBiconditionalTransitivity
+
+        φ (∃ x ψ) DisjunctionImplication swapBiconditional applyBiconditionalTransitivity
+))
+</jh>
+
 == Quantifier order: ∃x∀y to ∀y∃x ==
 We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.<ref>[http://us.metamath.org/mpeuni/19.12.html 19.12] in metamath's set.mm, accessed February 22, 2010</ref>
 <jh>
