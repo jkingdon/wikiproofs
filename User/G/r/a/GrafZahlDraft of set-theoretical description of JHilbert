@@ -127,11 +127,15 @@ Let <math>e_1,e_2\in EXP</math> and let <math>e_1',e_2'</math> be their total un
 
 == Disjoint variable constraints ==
 
-A ''disjoint variable constraint'' is a tuple <math>(v_1,v_2)</math> with <math>v_1,v_2\in VAR</math>, <math>v_1\neq v_2</math>, and <math>v_1</math> is a variable with pure variable kind.
+A ''disjoint variable constraint'' is a tuple <math>(v_1,v_2)</math> with <math>v_1\in PVAR</math>,<math>v_2\in VAR</math> and <math>v_1\neq v_2</math>.
 
 Note that since <math>VAR</math> is a finite set, any set of disjoint variable constraints is necessarily also finite.
 
 == Statements ==
+
+Statements, the elements of <math>STAT</math>, are defined as quadruples <math>(N,D,H,e)</math>, where <math>N</math> is a name, <math>H</math> is a finite (possibly empty) sequence of expressions (the ''hypotheses''), <math>e</math> is an expression (the ''consequent'') and <math>D</math> is a set of disjoint variable constraints with the extra restriction that all variables appearing in the tuples of <math>D</math> are apparent variables of the consequent or of one of the hypotheses.
+
+We call a quadruple <math>(N,D,H,e)</math> a ''pre-statement'' if it fulfils the above definition except possibly the apparent variable restriction on <math>D</math>.
 
 == Definitions ==
 
