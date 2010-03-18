@@ -1016,7 +1016,7 @@ thm (ThereExistsImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((�
 </jh>
 
 === Disjunction ===
-There are similar theorems moving disjunctions and conjuncts. To move a disjunct out of ∀:<ref>[http://us.metamath.org/mpeuni/19.32.html 19.32] in metamath's set.mm, accessed February 26, 2010</ref>
+There are similar theorems moving disjunctions and conjuncts. To move a disjunct in or out of ∀:<ref>[http://us.metamath.org/mpeuni/19.32.html 19.32] in metamath's set.mm, accessed February 26, 2010</ref>
 
 <jh>
 thm (ForAllDisjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∨ ψ)) ↔ (φ ∨ (∀ x ψ))) (
@@ -1029,7 +1029,7 @@ thm (ForAllDisjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∨ ψ
 ))
 </jh>
 
-To move a disjunct out of ∃:<ref>[http://us.metamath.org/mpeuni/19.45.html 19.45] in metamath's set.mm, accessed March 17, 2010</ref>
+To move a disjunct in or out of ∃:<ref>[http://us.metamath.org/mpeuni/19.45.html 19.45] in metamath's set.mm, accessed March 17, 2010</ref>
 
 <jh>
 thm (ThereExistsDisjunctionMovement () ((H (x is-not-free-in φ))) ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
@@ -1039,6 +1039,22 @@ thm (ThereExistsDisjunctionMovement () ((H (x is-not-free-in φ))) ((∃ x (φ �
         ψ ThereExistsImplicationAntecedentMovement applyBiconditionalTransitivity
 
         φ (∃ x ψ) DisjunctionImplication swapBiconditional applyBiconditionalTransitivity
+))
+</jh>
+
+=== Conjunction ===
+The theorems for conjunctions are similar. For ∀:<ref>[http://us.metamath.org/mpeuni/19.28.html 19.28] in metamath's set.mm, accessed March 18, 2010</ref>
+
+<jh>
+thm (ForAllConjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∧ ψ)) ↔ (φ ∧ (∀ x ψ))) (
+        x φ ψ ForAllConjunction
+
+        H
+        ForAllAddRemove
+        (∀ x ψ) BiconditionalReflexivity
+        buildConjunction
+
+        applyBiconditionalTransitivity
 ))
 </jh>
 
