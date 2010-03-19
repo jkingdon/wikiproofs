@@ -1015,7 +1015,7 @@ thm (ThereExistsImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((�
 ))
 </jh>
 
-=== Disjunction ===
+==== Disjunction ====
 There are similar theorems moving disjunctions and conjuncts. To move a disjunct in or out of ∀:<ref>[http://us.metamath.org/mpeuni/19.32.html 19.32] in metamath's set.mm, accessed February 26, 2010</ref>
 
 <jh>
@@ -1042,7 +1042,7 @@ thm (ThereExistsDisjunctionMovement () ((H (x is-not-free-in φ))) ((∃ x (φ �
 ))
 </jh>
 
-=== Conjunction ===
+==== Conjunction ====
 The theorems for conjunctions are similar. For ∀:<ref>[http://us.metamath.org/mpeuni/19.28.html 19.28] in metamath's set.mm, accessed March 18, 2010</ref>
 
 <jh>
