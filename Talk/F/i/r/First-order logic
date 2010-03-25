@@ -21,3 +21,5 @@ It's based on [http://us.metamath.org/mpegif/sbc5.html sbc5] but has extra magic
 The above definition now makes more sense to me.  Translated to the current notation, it would be:
  def ((subst s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
 [[User:Kingdon|Kingdon]] 22:35, 4 March 2010 (UTC)
+
+Just a heads-up: I developed a set of similar substitution theorems in ghilbert. (see [http://code.google.com/p/ghilbert/source/browse/trunk/peano/peano_thms.gh peano_thms.gh]). Many of these you've already done, but you may find that some proofs can be significantly shortened or simplified with the approach I've taken: the key theorem is ceqsex, then everything follows straightforwardly. This includes the proof of sbcco, which I don't think you have yet (although it's possible I just missed it). [[User:Raph|Raph]] 18:48, 24 March 2010 (UTC)
