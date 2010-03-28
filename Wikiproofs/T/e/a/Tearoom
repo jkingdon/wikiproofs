@@ -246,3 +246,13 @@ different languages.
 p.s. you can email me in the future at k900f73 via yahoo. 
 
 [[User:Mellocat|Mellocat]] 18:13, 27 March 2010 (UTC)Mellocat 27-Mar-2010
+
+:Good to see you here!
+
+:I have to say, I'm a little confused by the distinction between abstract and concrete grammar. To me, the meaningful distinction is between the low-level grammar, which is (hopefully) pretty easy to parse and unambiguous, and the presentation layer that may sit above it, which is designed to be much closer to traditional mathematics. In some cases, the low-level grammar makes some concessions towards being more readable (i.e. both JHilbert and Metamath use infix), but in other cases not. Perhaps your distinction is more relevant in HOL, where there is both an accessible internal representation (using mk_abs to construct a lambda abstraction, for example) and a more palatable printed syntax used in virtually all communication with the user, still ASCII-based though.
+
+:Further, in presentation you can do quite a bit more than just grammar. For one, you can use 2-d layout, like <math>\Sigma_{i=1}^\infty</math> or <math>e^{i\pi}</math>. It's possible to imagine a number of different input methods that would generate these types of results,  You can also tweak the spacing to make operator precedence more visually distinct (as I have done for the math typesetting in my interactive app, as well as the experiments generating PDF).
+
+:I think the big confusion for me is: what do you expect to be stored in files? You can't store the full 2D graphical representation, so perhaps there's an intermediate grammar, something with Unicode and maybe markup <code>"e&lt;sup>iπ&lt;/sup>"</code>, for example. Or another possibility (pretty much what I'm doing so far) is to store everything in the low-level representation, and do the presentation on-the-fly. 
+
+:Anyway, these are just some random thoughts. Nice to have you as part of the conversation, and hope to see you around more. [[User:Raph|Raph]] 00:58, 28 March 2010 (UTC)
