@@ -201,3 +201,48 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 :I did a quick review. The object/variable split seems entirely fine to me, and I also agree with the naming choice - among other things, it's consistent with Ghilbert, which uses "var" for your variable and "num" for your "nat" (I'm perfectly willing to also use "nat" and am not sure why I chose "num" instead). That said, your definition of "subst" is still slightly faulty. In particular, <code>(subst (succ (value n)) n φ)</code> is always false. I'm not sure this actually causes unsoundness, though. My intuition is telling me that the induction rule is valid when k and n are distinct, and in the special case where they're not distinct, there's no way to satisfy the antecedent, so it's safe. My intuition is also telling me that the faulty definition is going to make it impossible to prove some of the other theorems about substitution, such as composition. In particular, [http://us.metamath.org/mpegif/sbccog.html sbccog] should prove [S x/y][y/x]φ ↔ [S x/x]φ, and that's not true under your definition. This might not be especially urgent to fix, though, as I think the changes should be relatively local to first order logic - the theorems you do export and rely on should all still be valid under the new definition. [[User:Raph|Raph]] 19:17, 4 March 2010 (UTC)
 
 ::Thanks. As for subst, it does look fishy although I'm not sure either what the effects are. Probably just lack of power, rather than unsoundness, since unsoundness could only happen if we hit one of the loopholes in definition safety (I don't think so, as I see no dummy variables), or if the Induction axiom turns out to specify something other than what it thinks it does (slightly more likely). Perhaps the simplest solution is the definition you posted to [[Talk:First-order logic]] a while ago. The only thing we're using subst for right now is introduceSubst and makeSubstExplicit, and I don't currently (anymore) have any plans to do anything more ambitious with it. [[User:Kingdon|Kingdon]] 22:37, 4 March 2010 (UTC)
+
+== Abstract versus Concrete Grammars ==
+
+Hi Grafzahl and friends...
+
+I finally found your note at http://wiki.planetmath.org/AsteroidMeta/ocat
+Thanks for the heads up! I have busied myself during the last 14 months
+with earning my keep, and frankly, a bit of a rest up from my mmj2 exertions.
+Going forward I am undecided about where to focus my programming energies,
+but there are aspects of Metamath-related work that interest me. I think
+some of these may be relevant to your J/Ghilbert work, though I do not
+presume to know anything more than I have already coded and tested in mmj2 :-)
+
+One primary topic concerns the grammars -- i.e. syntax and presentation,
+on input, output and internal. By "abstract" I mean the "normal" form
+used internally after unambiguous parsing into tree form. "Concrete"
+refers to external forms, which for example, may include redundant parentheses.
+An example of concrete is 'a + b + c' and 'a + (b + c)' being equivalent 
+to '(( a + b) + c)' (which is the abstract form) -- noting that '(a + (b + c))'
+may be equal to '((a + b) + c) but that is something that must be proved
+or given as a "law" or axiom. 
+
+What we see in Metamath is that the abstract (internal) grammar/syntax is
+identical to the concrete grammar/syntax. Metamath cannot tolerate 
+redundant parentheses, and even if it could somehow ignore them in
+specific cases there is no defined mechanism for translating between
+abstract and concrete grammatical forms; a 'concrete' parse tree would
+require a different proof than an equivalent 'abstract' parse tree, absent
+a grammatical translator.
+
+So, for ease of use we would like to see abstract and concrete grammars
+available. Concrete syntax(es) statements would be parse and then
+translated to abstract form for processing by the proof engine(s), and
+then a reverse translation(s) would be performed for presentation output.
+
+In addition, it might be very useful to develop a grammar generator
+which would accept as input the typical sort of operator hierarchy
+table and output context free grammars -- both abstract and concrete.
+
+Finally, symbol translation tables could be developed to map between
+different languages. 
+
+p.s. you can email me in the future at k900f73 via yahoo. 
+
+[[User:Mellocat|Mellocat]] 18:13, 27 March 2010 (UTC)Mellocat 27-Mar-2010
