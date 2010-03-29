@@ -202,7 +202,7 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 
 ::Thanks. As for subst, it does look fishy although I'm not sure either what the effects are. Probably just lack of power, rather than unsoundness, since unsoundness could only happen if we hit one of the loopholes in definition safety (I don't think so, as I see no dummy variables), or if the Induction axiom turns out to specify something other than what it thinks it does (slightly more likely). Perhaps the simplest solution is the definition you posted to [[Talk:First-order logic]] a while ago. The only thing we're using subst for right now is introduceSubst and makeSubstExplicit, and I don't currently (anymore) have any plans to do anything more ambitious with it. [[User:Kingdon|Kingdon]] 22:37, 4 March 2010 (UTC)
 
-== Abstract versus Concrete Grammars ==
+== Abstract versus Concrete Syntax ==
 
 Hi Grafzahl and friends...
 
@@ -256,3 +256,15 @@ p.s. you can email me in the future at k900f73 via yahoo.
 :I think the big confusion for me is: what do you expect to be stored in files? You can't store the full 2D graphical representation, so perhaps there's an intermediate grammar, something with Unicode and maybe markup <code>"e<sup>iπ</sup>"</code>, for example. Or another possibility (pretty much what I'm doing so far) is to store everything in the low-level representation, and do the presentation on-the-fly. 
 
 :Anyway, these are just some random thoughts. Nice to have you as part of the conversation, and hope to see you around more. [[User:Raph|Raph]] 00:58, 28 March 2010 (UTC)
+
+:: Hi. I should have said "syntax" instead of "grammar", perhaps. 
+
+:: This link has a discussion of abstract vs. concrete: http://nat.truemesh.com/archives/000531.html
+
+:: The important quality for syntaxes is that the parse tree is unambiguous to the intended audience, whether a human or a program. Internally the abstract syntax is boiled down to, say, for '->', just the name/code of implication and the names/codes of the two operands, in a specific order. Externally there may be multiple input and output syntaxes, just so long as their meaning is unambiguous. Redundant parentheses may be present, or as you mention, the output syntax may be MathML, Tex, or whatever. There is a necessary transformation from/to abstract and concrete, and there is a necessary rendering layer for concrete syntax representations, as well as an input parser for each time language/data must be input, validated and converted into syntax trees in memory. 
+
+:: What is stored in the file/database is up for discussion. I would probably want to be able to store the specifications for abstract and concrete syntaxes separately from the math content. Like "normal form" in database design. That facilitates gathering math content from different sources and sharing without having to modify program code.
+
+:: This all sounds laborious and cruel, but going back and making changes later is worse.
+
+[[User:Mellocat|Mellocat]] 14:19, 28 March 2010 (UTC)Mellocat
