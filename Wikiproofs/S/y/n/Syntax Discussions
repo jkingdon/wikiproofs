@@ -1,0 +1,9 @@
+(Typed quickly on my phone, feel free toc lean up. This continues syntax discussions in tearoom).
+
+I agree with much of what mellocat has written, particularly that it makes sense to store presentation information separately from low level proofs.
+
+I'd go even fiurther, though, and say that while it is essential for the low level layer to be unambiguous, it is not actually necessary for the presentation layer to be. Ordinary mathematical notation is quite ambiguous in a number of ways, most notoriously "...", which is said to mean "guess what goes here."
+
+One reason to separate presentation is that the same underlying operation will have different representations depending on context. Thus, a development of functions in set theory (a la Takeuti and Zaring) will represent function application as "(F ` A)", where in most applications it should be written F(A), or, maybem, sin x.
+
+[[User:Raph|Raph]] 17:50, 28 March 2010 (UTC) (unfinished)
