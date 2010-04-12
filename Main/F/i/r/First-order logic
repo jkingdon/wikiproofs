@@ -1730,6 +1730,13 @@ thm (SubstBuilderReplacement ((s y) (t y)) ()
         (∃ x (((value x) = (value y)) ∧ φ)) anbi1d
         y exbidv
 ))
+
+thm (buildSubstReplacement () ((H (s = t))) 
+  ((subst s x φ) ↔ (subst t x φ)) (
+        H
+        s t x φ SubstBuilderReplacement
+        applyModusPonens
+))
 </jh>
 
 ==== Implication builder ====
