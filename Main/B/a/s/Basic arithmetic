@@ -1010,7 +1010,7 @@ That in turn implies <code>∃ n 0 + n = a</code>, which is <code>0 ≤ a</code>
 
 == Adding one and successor ==
 
-Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorem there is stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
+Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
 
 <jh>
 thm (SuccessorAddsOne () () ((a + (1)) = (succ a)) (
@@ -1041,6 +1041,52 @@ thm (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
 
         HSUBA HBASE HIND
         Induction6S
+))
+</jh>
+
+Changing <code>succ k</code> to <code>k + 1</code> in the <code>subst</code>-based form of induction is a simple application of builders. We apply the builders via several lemmas:
+
+<jh>
+thm (InductionSubst-1 () ()
+  ((subst ((value k) + (1)) n φ) ↔ (subst (succ (value k)) n φ)) (
+        (value k) SuccessorAddsOne
+        n φ buildSubstReplacement
+))
+
+thm (InductionSubst-2 () ()
+  ((∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ))) ↔
+   (∀ k ((subst (value k) n φ) → (subst (succ (value k)) n φ)))) (
+        (subst (value k) n φ) BiconditionalReflexivity
+        k n φ InductionSubst-1
+        buildImplication
+        k buildForAll
+))
+
+thm (InductionSubst-3 () ()
+  ((((subst (0) n φ) ∧ 
+     (∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ)))) 
+    → (∀ n φ)) ↔
+  (((subst (0) n φ) ∧ 
+     (∀ k ((subst (value k) n φ) → (subst (succ (value k)) n φ)))) 
+    → (∀ n φ))) (
+        (subst (0) n φ) BiconditionalReflexivity
+        k n φ InductionSubst-2
+        buildConjunction
+
+        (∀ n φ) BiconditionalReflexivity
+        buildImplication
+))
+
+thm (InductionSubst () () 
+  (((subst (0) n φ) ∧ 
+    (∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ)))) 
+   → (∀ n φ)) (
+        n φ k Induction
+
+        n φ k InductionSubst-3
+        eliminateBiconditionalForward
+
+        applyModusPonens
 ))
 </jh>
 
