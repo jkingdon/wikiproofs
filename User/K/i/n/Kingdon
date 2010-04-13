@@ -143,6 +143,8 @@ We'll show that it has the [[w:Total order|expected properties of an order]].
 * a ≤ b or b ≤ a (totality). 
 * (probably reflexivity too, although that is a consequence of totality)
 
+Probably can base some of these on [http://code.google.com/p/ghilbert/source/browse/trunk/peano/peano_thms.gh peano_thms.gh]
+
 == More axiomizations of propositional logic ==
 Reducing the Principia axioms from 5 to 4 (unless I missed something, the change is to omit Assoc and change Add from <code>q → (p ∨ q)</code> to <code>q → (q ∨ p)</code>).  This is the axiomization used by [http://qedeq.org/0_03_11/doc/math/qedeq_logic_v1_en.pdf Elements of Mathematical Logic], Michael Meyling, August 2, 2008.
 
