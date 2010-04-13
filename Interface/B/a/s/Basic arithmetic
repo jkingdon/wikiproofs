@@ -114,12 +114,20 @@ stmt (MultiplicativeIdentityLeft () ()
 == Induction ==
 There are a number of ways to state [[w:mathematical induction|induction]].
 
-This one has six hypotheses, which despite the large number turns out to be easier to handle than expressing base cases and induction steps via subst. The first four hypotheses handle the substitution machinery. The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
-
+This one is via <code>subst</code>:
 <jh>
 var (formula φ)
 var (variable k n)
 
+stmt (InductionSubst () () 
+  (((subst (0) n φ) ∧ 
+    (∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ)))) 
+   → (∀ n φ)))
+</jh>
+
+This one has six hypotheses, which despite the large number turns out to be easier to handle than <code>InductionSubst</code>. The first four hypotheses handle the substitution machinery. The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
+
+<jh>
 var (formula φ0 φk φSk φa)
 
 stmt (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
