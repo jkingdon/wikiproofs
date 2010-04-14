@@ -126,6 +126,8 @@ Sample theorems from Hirst &amp; Hirst:
  9. Inequalities can be added: (w ≤ x ∧ y ≤ z) → w + y ≤ x + z
  10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
 
+No zero divisors: a · b = 0 → (a = 0 ∨ b = 0)
+
 Some definitions:
 
 * x < y ↔ x ≤ y ∧ x ≠ y
