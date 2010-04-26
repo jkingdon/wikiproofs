@@ -204,6 +204,8 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 
 :Hi, the Existence axiom <code>stmt (Existence () () (¬ (∀ x (¬ ((value x) = s)))) )</code> seems to say there is a variable equal to every object, or in metamath language, that there is a set equal to every class.  But that is false, see for instance the theorem [http://us.metamath.org/mpegif/vnex.html vnex].--[[User:DanKrejsa|DanKrejsa]] 02:53, 26 April 2010 (UTC)
 
+::What it says is that for each object there is a variable equal to that object. Which is still false, of course. Let's fix it and see what else breaks&hellip;[[Image:SMirC-devil.svg|15px]] --[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 17:16, 26 April 2010 (UTC)
+
 == Abstract versus Concrete Syntax ==
 
 Hi Grafzahl and friends...
