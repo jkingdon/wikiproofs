@@ -202,6 +202,8 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 
 ::Thanks. As for subst, it does look fishy although I'm not sure either what the effects are. Probably just lack of power, rather than unsoundness, since unsoundness could only happen if we hit one of the loopholes in definition safety (I don't think so, as I see no dummy variables), or if the Induction axiom turns out to specify something other than what it thinks it does (slightly more likely). Perhaps the simplest solution is the definition you posted to [[Talk:First-order logic]] a while ago. The only thing we're using subst for right now is introduceSubst and makeSubstExplicit, and I don't currently (anymore) have any plans to do anything more ambitious with it. [[User:Kingdon|Kingdon]] 22:37, 4 March 2010 (UTC)
 
+:Hi, the Existence axiom <code>stmt (Existence () () (¬ (∀ x (¬ ((value x) = s)))) )</code> seems to say there is a variable equal to every object, or in metamath language, that there is a set equal to every class.  But that is false, see for instance the theorem 'vnex'.
+
 == Abstract versus Concrete Syntax ==
 
 Hi Grafzahl and friends...
