@@ -13,3 +13,10 @@ stmt (SubstBiconditional () () ((subst y x (φ ↔ ψ)) ↔ ((subst y x φ) ↔ 
 </jh>
 
 [[User:Kingdon|Kingdon]] 19:17, 1 March 2010 (UTC)
+
+== First-order logic without equality ==
+
+In an email, [[User:GrafZahl]] asks me whether we should have first-order logic without equality.  Although one of the nice things about the module/interface system is that differing theories can coexist on the wiki, first-order logic without equality presents at least two problems:
+#It is not nearly as widely used as first-order logic with equality for purposes like being the basis for set theory, arithmetic, etc.
+#JHilbert, metamath, and GHilbert are not currently able to handle it. First-order logic without equality still has proper substitution, but we don't currently have any way of defining proper substitution in any way other than in terms of equality.
+The second is a show-stopper; the first is just an estimate of how important it is to address this. [[User:Kingdon|Kingdon]] 14:08, 27 April 2010 (UTC)
