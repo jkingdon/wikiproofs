@@ -206,6 +206,8 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 
 ::What it says is that for each object there is a variable equal to that object. Which is still false, of course. Let's fix it and see what else breaks&hellip;[[Image:SMirC-devil.svg|15px]] --[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 17:16, 26 April 2010 (UTC)
 
+:::What breaks, for instance, is <code>EqualityReflexivity</code> in [[First-order logic]]. IMO <code>EqualityReflexivity</code> does not belong there, at least not without saying more about the objects. Something like <code>x = x</code>, on the other hand, could be proven from other axioms. I'll drop [[User:Kingdon|Kingdon]] a note.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 17:37, 26 April 2010 (UTC)
+
 == Abstract versus Concrete Syntax ==
 
 Hi Grafzahl and friends...
