@@ -71,7 +71,7 @@ The next four axioms combine equality and quantification.
 
 The <code>Existence</code> axiom asserts that there is at least one object:
 <jh>
-stmt (Existence () () (¬ (∀ x (¬ ((value x) = s)))) )
+stmt (Existence () () (¬ (∀ x (¬ ((value x) = (value y))))) )
 stmt (QuantifierSubstitution () () ((∀ x ((value x) = (value y))) → (∀ y ((value y) = (value x)))) )
 </jh>
 
