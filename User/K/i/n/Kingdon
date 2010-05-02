@@ -147,7 +147,7 @@ We'll show that it has the [[w:Total order|expected properties of an order]].
 Probably can base some of these on [http://code.google.com/p/ghilbert/source/browse/trunk/peano/peano_thms.gh peano_thms.gh]
 
 === Basic arithmetic ===
-[[Interface:Basic arithmetic]] does not currently have anything which needs to be proved with the ZeroNotSuccessor axiom (in fact, I'm pretty sure that modular arithmetic can model it). We should have one or more such. There is no largest number (e.g. <code>¬ ∃N ∀a a < N</code>)? Something about lack of cycles (can't keep adding one and get back where you started)?
+[[Interface:Basic arithmetic]] does not currently have anything which needs to be proved with the ZeroNotSuccessor axiom (in fact, I'm pretty sure that modular arithmetic can model it). We should have one or more such. There is no largest number (e.g. <code>¬ ∃N ∀a a < N</code>)? Something about lack of cycles (can't keep adding one and get back where you started)? The total order properties would seem to suffice, and are more natural (the above are not aesthetically appealing, as they just restate ZeroNotSuccessor and are not, on the face of it, useful in algebra and the like).
 
 == More axiomizations of propositional logic ==
 Reducing the Principia axioms from 5 to 4 (unless I missed something, the change is to omit Assoc and change Add from <code>q → (p ∨ q)</code> to <code>q → (q ∨ p)</code>).  This is the axiomization used by [http://qedeq.org/0_03_11/doc/math/qedeq_logic_v1_en.pdf Elements of Mathematical Logic], Michael Meyling, August 2, 2008.
