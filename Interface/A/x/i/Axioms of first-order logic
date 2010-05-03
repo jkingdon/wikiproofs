@@ -61,13 +61,19 @@ Although a usable theory of predicate logic will generally have at least one mor
 
 == Equality ==
 
-We introduce equality and provide our first equality axiom, a version of the transitive law for equality:
+=== Reflexive, symmetry, and transitive ===
+
+We introduce equality, which is reflexive, symmetry, and transitive.  For simplicity, we simply adopt these three properties as axioms, rather than a smaller set of axioms which imply them.
+
 <jh>
 term (formula (= object object))
-stmt (AxiomEquality () () ( (s = t) → ( (s = u) → (t = u) ) ) )
+
+stmt (EqualityReflexivity () () (s = s))
+stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
+stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
 </jh>
 
-The next four axioms combine equality and quantification.
+=== Axioms combining equality and quantification ===
 
 The <code>Existence</code> axiom asserts that there is at least one object:
 <jh>
