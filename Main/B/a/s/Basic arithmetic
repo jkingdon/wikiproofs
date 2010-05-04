@@ -454,6 +454,104 @@ To prove <code>(Sk + b) + c = Sk + (b + c)</code> from <code>(k + b) + c = k + (
 ))
 </jh>
 
+== Addition cancellation ==
+The converse of <code>AdditionBuilderRR</code>, <code>a + c = b + c → a = b</code>, also holds.
+
+Before proving it, we fill a few holes in our propositional logic builders (one of which we'll need here):
+<jh>
+var (formula p q r)
+thm (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ r) ↔ (q ↔ r))) (
+</jh>
+We first derive <code>(p ↔ q) → ((p ↔ q) ∧ (r ↔ r))</code>:
+<jh>
+        r BiconditionalReflexivity
+        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+</jh>
+Then we just need to apply <code>BiconditionalFunction</code>:
+<jh>
+        p q r r BiconditionalFunction
+        applySyllogism
+))
+
+</jh>
+This one is just the same, but based on <code>ImplicationFunction</code>:
+<jh>
+thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → r) ↔ (q → r))) (
+        r BiconditionalReflexivity
+        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        p q r r ImplicationFunction
+        applySyllogism
+))
+</jh>
+
+The substitution for our addition cancellation induction is worth breaking out into a lemma:
+<jh>
+var (object sub)
+thm (AdditionCancellationRight-substitution () () (
+  ((value n) = sub) → (
+    (((a + (value n)) = (b + (value n))) → (a = b)) ↔ 
+    (((a + sub) = (b + sub)) → (a = b))
+  )) (
+        (value n) sub a AdditionBuilderLL
+        (value n) sub b AdditionBuilderLL
+        buildEqualityInConsequent
+
+        ((a + (value n)) = (b + (value n)))
+          ((a + sub) = (b + sub))
+          (a = b) ImplicationBuilderRR
+
+        applySyllogism
+))
+</jh>
+
+Now we can prove our addition cancellation theorem:
+<jh>
+thm (AdditionCancellationRight ((n a) (n b) (n c) (n k) (k a) (k b)) () (((a + c) = (b + c)) → (a = b)) (
+</jh>
+We proceed by induction on <code>c</code>.
+
+Here are the substitutions:
+<jh>
+        n (0) a b AdditionCancellationRight-substitution
+        n (value k) a b AdditionCancellationRight-substitution
+        n (succ (value k)) a b AdditionCancellationRight-substitution
+        n c a b AdditionCancellationRight-substitution
+</jh>
+The base case is <code>a + 0 = b + 0 → a = b</code>.
+<jh>
+        a AdditiveIdentityRight
+        b AdditiveIdentityRight
+        buildEquality
+        eliminateBiconditionalReverse
+</jh>
+The induction step is that <code>a + k = b + k → a = b</code> implies <code>a + Sk = b + Sk → a = b</code>. Starting with <code>a + Sk = b + Sk</code> we first move the successor operation to the start of each side: <code>S(a + k) = S(b + k)</code>.
+<jh>
+        a (value k) Addition
+        b (value k) Addition
+        buildEquality eliminateBiconditionalReverse
+</jh>
+Next we drop the successor operation from both sides:
+<jh>
+        (a + (value k)) (b + (value k)) Successor eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+So far we have <code>a + Sk = b + Sk → a + k = b + k</code>.  We just need to add <code>a = b</code> as a common consequent, and we have our induction step.
+<jh>
+        (a = b) addCommonConsequent
+
+        Induction6S
+))
+
+thm (cancelAdditionRight () ((H ((a + c) = (b + c)))) (a = b) (
+        H
+        a c b AdditionCancellationRight
+        applyModusPonens
+))
+</jh>
+
 == Multiplication is commutative ==
 The proof that multiplication is commutative is analogous to the proof that addition is commutative. It starts with proving commuted versions of the two multiplication axioms by induction, and then using those results to prove <code>n · m = m · n</code> by induction.
 
