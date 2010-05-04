@@ -212,6 +212,8 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 
 :::::In email, GrafZahl contrasts metamath's [http://us.metamath.org/mpeuni/eqid.html eqid] which is for objects (classes, in that context) and is proved in terms of set theory, with [http://us.metamath.org/mpeuni/equid.html equid] which is proved in terms of logic and is only for variables. [[User:Kingdon|Kingdon]] 14:31, 27 April 2010 (UTC)
 
+:::::I have now made reflexivity, symmetry and transitivity axioms, at least for now. If this causes problems, speak up.  The next thing to blow up is ImplicitSubstitutionForAll (similar to equsal in metamath's set.mm). [[User:Kingdon|Kingdon]] 18:49, 3 May 2010 (UTC)
+
 == Abstract versus Concrete Syntax ==
 
 Hi Grafzahl and friends...
