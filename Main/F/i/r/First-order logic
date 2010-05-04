@@ -46,50 +46,8 @@ thm (distributeForAllImplication () ((H (∀ x (φ → ψ)))) ((∀ x φ) → (�
 ))
 </jh>
 
-== Equality ==
+== A bit of propositional logic ==
 
-The basic facts about equality are that it is reflexive, symmetric and transitive. Instead of supposing these as axioms, we have a single axiom which implies them (when combined with some of the other axioms).
-
-=== Reflexivity ===
-We start with reflexivity.  The first two theorems are intermediate steps:
-
-<jh>
-thm (EqualityReflexivity-1 () () ((s = t) → (t = t)) (
-        (s = t) ConjunctionIdempotence eliminateBiconditionalReverse
-
-        s t t AxiomEquality
-        import
-
-        applySyllogism
-))
-
-thm (EqualityReflexivity-2 () () ((∀ x (¬ (t = t))) → (∀ x (¬ ((value x) = t)))) (
-        (value x) t EqualityReflexivity-1
-        introduceTransposition
-        x generalize
-
-        x (¬ (t = t)) (¬ ((value x) = t)) QuantifiedImplication
-        applyModusPonens
-))
-</jh>
-
-The proof of reflexivity involves adding an extra variable <code>x</code>. We need to specify that this variable is distinct from <code>t</code>, but this doesn't affect the generality of the result. The variable <code>x</code> only appears in the proof, not in the theorem, and so the distinct variable constraint only needs to appear here, not in the statement of the theorem in [[Interface:First-order logic]].
-<jh>
-thm (EqualityReflexivity ((x t)) () (t = t) (
-        x t Existence
-
-        (¬ (t = t)) x Generalization
-        x t EqualityReflexivity-2
-        applySyllogism
-
-        applyModusTollens
-        eliminateDoubleNegation
-))
-</jh>
-
-=== Symmetry ===
-
-The proof of symmetry follows much more easily from reflexivity and the equality axiom. Most of what we need to do is just propositional logic.
 <jh>
 thm (applyComm () ((H (φ → (ψ → χ)))) (ψ → (φ → χ)) (
         H
@@ -110,34 +68,17 @@ thm (applyNestedModusPonens ()
         applyComm
         applyModusPonens
 ))
+</jh>
 
-thm (EqualitySymmetryImplication () () ((s = t) → (t = s)) (
-        s t s AxiomEquality
-        s EqualityReflexivity
-        applyNestedModusPonens
-))
+== Equality ==
 
-thm (EqualitySymmetry () () ((s = t) ↔ (t = s)) (
-        s t EqualitySymmetryImplication
-        t s EqualitySymmetryImplication
-        introduceBiconditionalFromImplications
-))
+The basic facts about equality are that it is reflexive, symmetric and transitive. Since we have axioms for those properties, we just add a few rules:
 
+<jh>
 thm (swapEquality () ((H (s = t))) (t = s) (
         H
         s t EqualitySymmetry eliminateBiconditionalReverse
         applyModusPonens
-))
-</jh>
-
-=== Transitivity ===
-Transitivity is now just a rearangement of our equality axiom:
-<jh>
-thm (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)) (
-        s t EqualitySymmetryImplication
-        t s u AxiomEquality
-        applySyllogism
-        import
 ))
 
 thm (applyEqualityTransitivity () ((H1 (s = t)) (H2 (t = u))) (s = u) (
@@ -270,7 +211,7 @@ thm (Specialization-a () () ((∀ x (φ → (¬ ((value x) = (value y))))) → (
         x φ (¬ ((value x) = (value y))) ForAllImplication
 
         (∀ x φ) (∀ x (¬ ((value x) = (value y)))) Transposition eliminateBiconditionalReverse
-        x (value y) Existence
+        x y Existence
         applyNestedModusPonens
 
         applySyllogism
@@ -301,10 +242,10 @@ thm (Specialization-33 ((x y)) ()
 ))
 </jh>
 
-As before, the distinct variable constraints don't get exported, as they all contain <code>y</code>.
+The proof of reflexivity involves adding an extra variable <code>y</code>. We need to specify that this variable is distinct from <code>x</code> and <code>φ</code>, but this doesn't affect the generality of the result. The variable <code>y</code> only appears in the proof, not in the theorem, and so the distinct variable constraint only needs to appear here, not in the statement of the theorem in [[Interface:First-order logic]].
 <jh>
 thm (Specialization ((x y) (y φ)) () ((∀ x φ) → φ) (
-        y (value x) Existence
+        y x Existence
 
         (¬ ((∀ x φ) → φ)) y Generalization
         y x φ Specialization-33
@@ -1115,12 +1056,12 @@ Here we prove a number of results involving equality and quantifiers.  Many of t
 First is a variant of the <code>Existence</code> axiom:<ref>[http://us.metamath.org/mpeuni/ax9o.html ax9o] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
-thm (ax9o () () ((∀ x (((value x) = s) → (∀ x φ))) → φ) (
-        x ((value x) = s) (∀ x φ) ForAllImplicationThereExists
+thm (ax9o () () ((∀ x (((value x) = (value y)) → (∀ x φ))) → φ) (
+        x ((value x) = (value y)) (∀ x φ) ForAllImplicationThereExists
 </jh>
-This gives us <code>∀x(x = s → ∀xφ) → (∃x x = s → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = s</code> is just the <code>Existence</code> axiom, and can therefore be removed:
+This gives us <code>∀x(x = y → ∀xφ) → (∃x x = y → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = y</code> is just the <code>Existence</code> axiom, and can therefore be removed:
 <jh>
-        x s Existence
+        x y Existence
         applyNestedModusPonens
 </jh>
 Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
