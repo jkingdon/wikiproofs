@@ -87,7 +87,7 @@ stmt (VariableSubstitution ((x y)) ()
   (((value x) = (value y)) → (φ → (∀ x (((value x) = (value y)) → φ)))) )
 </jh>
 
-The <code>QuantifierIntroduction</code> axiom is related to <code>Generalization</code> in that it adds a universal quantifier to a proposition (in this case, <code>s = t</code>). In fact, if <code>z</code> were distinct from <code>s</code> and <code>t</code>, <code>s = t → ∀ z s = t</code> would follow. The antecedents here, however, are weaker. The proposition <code>¬ ∀ z z = s</code> allows <code>z</code> to appear in <code>s</code>, but just requires that <code>z</code> is not always equal to <code>s</code>.
+The <code>QuantifierIntroduction</code> axiom is related to <code>Generalization</code> in that it adds a universal quantifier to a proposition (in this case, <code>s = t</code>). In fact, if <code>z</code> were distinct from <code>s</code> and <code>t</code>, <code>Generalization</code> would give us <code>s = t → ∀ z s = t</code>. The antecedents here, however, are weaker. The proposition <code>¬ ∀ z z = s</code> allows <code>z</code> to appear in <code>s</code>, but just requires that <code>z</code> is not always equal to <code>s</code>.
 <jh>
 stmt (QuantifierIntroduction () () ( 
   (¬ (∀ z ((value z) = s))) 
