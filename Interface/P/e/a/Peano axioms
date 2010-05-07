@@ -8,7 +8,7 @@
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic]]
-| importedby = None yet.
+| importedby = [[Basic arithmetic]]
 | exportedby = None yet.
 }}
 
