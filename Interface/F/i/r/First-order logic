@@ -290,6 +290,9 @@ stmt (applyNestedModusPonens ()
   (φ → χ))
 stmt (applyComm () ((φ → (ψ → χ))) (ψ → (φ → χ)))
 stmt (BiconditionalTranspositionWithNegatedRight () () ((φ ↔ (¬ ψ)) ↔ (ψ ↔ (¬ φ))))
+stmt (joinConsequents ()
+  ((φ → ψ) (φ → χ))
+  (φ → (¬ (ψ → (¬ χ)))))
 </jh>
 
 == What else? ==
