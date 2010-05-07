@@ -274,6 +274,16 @@ stmt (ThereExistsIntroduction () () ((subst s x φ) → (∃ x φ)))
 stmt (introduceThereExists () ((subst s x φ)) (∃ x φ))
 </jh>
 
+== Propositional logic ==
+These surely belong elsewhere, but are here for the moment.
+
+<jh>
+stmt (applyNestedModusPonens () 
+  ((φ → (ψ → χ))
+   ψ)
+  (φ → χ))
+</jh>
+
 == What else? ==
 This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
 
