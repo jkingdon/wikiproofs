@@ -1166,80 +1166,8 @@ thm (distributeImplicationOverBiconditional () ((H (φ → (ψ ↔ χ)))) ((φ �
 ))
 </jh>
 
-And our implicit substitution theorem:
-<jh>
-thm (ImplicitSubstitutionForAll () ((HFREE (x is-not-free-in ψ))) 
-  ((∀ x (((value x) = s) → (φ ↔ ψ))) → ((∀ x (((value x) = s) → φ)) ↔ ψ)) (
-</jh>
-Starting with <code>x = s → (φ ↔ ψ)</code>, we first add <code>∀x</code> in front of the <code>ψ</code>:
-<jh>
-        HFREE
-        ForAllAddRemove swapBiconditional
-
-        φ ψ (∀ x ψ) BiconditionalTransitivity export applyComm
-
-        applyModusPonens
-
-        ((value x) = s) addCommonAntecedent
-</jh>
-We now distribute the implication over the biconditional to get <code>(x = s → φ) ↔ (x = s → ∀xψ)</code>.
-<jh>
-        ((value x) = s) φ (∀ x ψ) ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
-        applySyllogism
-</jh>
-The entire formula we have at this point is <code>(x = s → (φ ↔ ψ)) → ((x = s → φ) ↔ (x = s → ∀xψ))</code>.  We will add <code>∀x</code> to the start of each of the three parts.
-<jh>
-        x addForAll
-        x (((value x) = s) → φ) (((value x) = s) → (∀ x ψ)) ForAllBiconditional
-        applySyllogism
-</jh>
-The left side of that consequent, <code>∀x(x = s → φ)</code>, is the left side of our desired consequent.
-
-We will show that the right side, <code>∀x(x = s → ∀xψ)</code>, is equivalent to <code>ψ</code>. The forward direction is just <code>ax9o</code>:
-<jh>
-        x s ψ ax9o
-</jh>
-The reverse direction is introducing an antecedent and messing around with quantifiers:
-<jh>
-        HFREE
-        (∀ x ψ) ((value x) = s) AntecedentIntroduction
-        a5i
-        applySyllogism
-</jh>
-Now we just need to combine the forward and reverse directions,
-<jh>
-        introduceBiconditionalFromImplications
-</jh>
-and reassemble our result.
-<jh>
-        (∀ x (((value x) = s) → φ)) (∀ x (((value x) = s) → (∀ x ψ))) ψ BiconditionalTransitivity
-        export
-        applyComm
-        applyModusPonens
-
-        applySyllogism
-))
-</jh>
-
-Here's a rule form of basically the same theorem:
-
-<jh>
-thm (SubstImplicitForAll () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
-  ((∀ x (((value x) = s) → φ)) ↔ ψ) (
-        HEQ
-        x generalize
-
-        HFREE
-        s φ ImplicitSubstitutionForAll
-
-        applyModusPonens
-))
-</jh>
-
-=== Implicit substitution and ∃ ===
-There is a similar result with ∃.<ref>[http://us.metamath.org/mpeuni/equsex.html equsex] in metamath's set.mm, accessed March 9, 2010, with <code>s</code> (the replacement) changed from a <code>variable</code> to an <code>object</code></ref>
-
-We first provide a bit more propositional logic:
+=== Propositional logic digression: conjunction and implication ===
+Although we don't need these right now, for future reference here's a bit more propositional logic:
 <jh>
 thm (ConjunctionImplication () () ((φ ∧ ψ) ↔ (¬ (φ → (¬ ψ)))) (
         φ ψ DeMorganNDN swapBiconditional
@@ -1256,72 +1184,6 @@ thm (ImplicationConjunction () () ((φ → ψ) ↔ (¬ (φ ∧ (¬ ψ)))) (
         φ ψ DeMorganPCN swapBiconditional
 
         applyBiconditionalTransitivity
-))
-</jh>
-
-Our implicit substitution theorem is:
-<jh>
-thm (ImplicitSubstitutionThereExists () ((HFREE (x is-not-free-in ψ))) 
-  ((∀ x (((value x) = s) → (φ ↔ ψ))) → ((∃ x (((value x) = s) ∧ φ)) ↔ ψ)) (
-</jh>
-The proof basically consists of massaging negations to derive this result from the corresponding one for ∀. We start by showing that <code>∀x (x = s → (φ ↔ ψ))</code> implies that <code>∀x(x = s → ¬ φ)</code> is equivalent to <code>¬ ψ</code>.
-<jh>
-        φ ψ NegationFunction eliminateBiconditionalReverse
-        ((value x) = s) addCommonAntecedent
-        x addForAll
-
-        HFREE
-        negateNotFree
-        s (¬ φ) ImplicitSubstitutionForAll
-
-        applySyllogism
-</jh>
-Now we need to show that <code>∀x(x = s → ¬ φ) ↔ (¬ ψ)</code> implies <code>∃x(x = s ∧ φ) ↔ ψ</code>. We first turn the former into <code>ψ ↔ (¬ ∀x(x = s → ¬ φ))</code>:
-<jh>
-        (∀ x (((value x) = s) → (¬ φ))) ψ BiconditionalTranspositionWithNegatedRight
-</jh>
-We stick <code>ψ ↔ ψ</code> on the proof stack for later use,
-<jh>
-        ψ BiconditionalReflexivity
-</jh>
-and work just with <code>¬ ∀x(x = s → ¬ φ)</code> for now. We move the negation past the quantifier to get <code>∃x ¬ (x = s → ¬ φ)</code>:
-<jh>
-        x (((value x) = s) → (¬ φ)) NotForAll
-</jh>
-Now we turn the negations and implication into a conjunction:
-<jh>
-        ((value x) = s) φ ConjunctionImplication swapBiconditional
-        x buildThereExists
-        applyBiconditionalTransitivity
-</jh>
-Bringing back two statements we left on the proof stack, we assemble the formula that <code>∀x(x = s → ¬ φ) ↔ (¬ ψ)</code> is equivalent to <code>ψ ↔ ∃x(x = s ∧ φ)</code>,
-<jh>
-        buildBiconditional
-        applyBiconditionalTransitivity
-</jh>
-flip the order to get <code>∃x(x = s ∧ φ) ↔ ψ</code>,
-<jh>
-        eliminateBiconditionalReverse
-        ψ (∃ x (((value x) = s) ∧ φ)) BiconditionalSymmetry
-        applySyllogism
-</jh>
-and combine this with the first part of the proof.
-<jh>
-        applySyllogism
-))
-</jh>
-
-The rule form is:
-<jh>
-thm (SubstImplicitThereExists () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
-  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
-        HEQ
-        x generalize
-
-        HFREE
-        s φ ImplicitSubstitutionThereExists
-
-        applyModusPonens
 ))
 </jh>
 
@@ -1359,23 +1221,23 @@ thm (joinConsequents ()
 The following lemma's consequent is half of the definition of <code>substVariable</code>:<ref>[http://us.metamath.org/mpeuni/equs4.html equs4] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
-thm (equs4 () () ((∀ x (((value x) = s) → φ)) → (∃ x (((value x) = s) ∧ φ))) (
-        (∀ x (((value x) = s) → φ)) ((value x) = s) ConjunctionLeftElimination
+thm (equs4 () () ((∀ x (((value x) = (value y)) → φ)) → (∃ x (((value x) = (value y)) ∧ φ))) (
+        (∀ x (((value x) = (value y)) → φ)) ((value x) = (value y)) ConjunctionLeftElimination
 
-        x (((value x) = s) → φ) Specialization
+        x (((value x) = (value y)) → φ) Specialization
         import
 
         joinConsequents
 </jh>
 That gives us <code>((∀ x ((x = y) → φ)) ∧ x = y) → (¬ ((x = y) → (¬ φ)))</code>. We transform the consequent to <code>(¬ (∀ x ((x = y) → (¬ φ))))</code>:
 <jh>
-        x (((value x) = s) → (¬ φ)) Specialization
+        x (((value x) = (value y)) → (¬ φ)) Specialization
         introduceTransposition
         applySyllogism
 </jh>
 And then we add <code>∀x</code> to the front of that consequent:
 <jh>
-        x (((value x) = s) → (¬ φ)) BoundForAllNotFree
+        x (((value x) = (value y)) → (¬ φ)) BoundForAllNotFree
         negateNotFree
         applySyllogism
 </jh>
@@ -1384,14 +1246,14 @@ We export and add one more ∀x:
         export
         a5i
 </jh>
-which gives us <code>(∀x(x = s → φ) → ∀x(x = s → ∀x ¬ ∀x(x = s → ¬ φ)))</code>.  The consequent of that is just what we need to apply ax9o:
+which gives us <code>(∀x(x = y → φ) → ∀x(x = y → ∀x ¬ ∀x(x = y → ¬ φ)))</code>.  The consequent of that is just what we need to apply ax9o:
 <jh>
-        x s (¬ (∀ x (((value x) = s) → (¬ φ)))) ax9o
+        x y (¬ (∀ x (((value x) = (value y)) → (¬ φ)))) ax9o
         applySyllogism
 </jh>
 so we have simplified the consequent to <code>¬ ∀x(x = y → ¬ φ))</code>. We merely apply <code>equs3</code> to that and we're done.
 <jh>
-        x s φ equs3 eliminateBiconditionalForward
+        x (value y) φ equs3 eliminateBiconditionalForward
         applySyllogism
 ))
 </jh>
@@ -1400,7 +1262,7 @@ Now we're ready for our first theorem to help us prove a substituted formula:
 <jh>
 thm (sb2 () () ((∀ x (((value x) = (value y)) → φ)) → (substVariable y x φ)) (
         x (((value x) = (value y)) → φ) Specialization
-        x (value y) φ equs4
+        x y φ equs4
         composeConjunction
 ))
 </jh>
@@ -1705,26 +1567,6 @@ thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
 ))
 </jh>
 
-=== Substitution of a theorem remains a theorem ===
-If we have a theorem, we can add a variable substitution onto it.
-
-<jh>
-thm (introduceSubst () ((H φ)) (subst s x φ) (
-        H
-        ((value x) = (value y)) introduceAntecedent
-        x generalize
-
-        x (value y) φ equs4
-        applyModusPonens
-
-        ((value y) = s) introduceAntecedent
-        y generalize
-
-        y s (∃ x (((value x) = (value y)) ∧ φ)) equs4
-        applyModusPonens
-))
-</jh>
-
 === Proving there-exists ===
 One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.  In [[w:Intuitionistic logic|constructive logic]] any theorem <code>∃xφ</code> can be proved this way (because of the [[w:Existence property|existence property]]), but even in classical (non-constructive) logic this is one of the most common ways of proving <code>∃xφ</code>.
 
@@ -1761,63 +1603,6 @@ thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
         H
         s x φ ThereExistsIntroduction
         applyModusPonens
-))
-</jh>
-
-=== Convert from implicit substitution ===
-A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>.
-
-Although the distinct variable constraint between <code>x</code> and <code>s</code> should not be necessary (if we wanted to require that <code>x</code> and <code>s</code> are distinct we could have a simpler definition of <code>subst</code>), even the version with the constraint can be useful.
-
-<jh>
-thm (convertImplicitToSubst ((x s) (y ψ) (x y)) 
-  ((HFREE (x is-not-free-in ψ))
-   (HEQ (((value x) = s) → (φ ↔ ψ)))
-  )
-  ((subst s x φ) ↔ ψ) (
-</jh>
-The proof will basically consist of two applications of <code>ImplicitSubstitutionThereExists</code>.
-
-First we rewrite <code>x = s → (φ ↔ ψ)</code> as <code>y = s → (x = y → (φ ↔ ψ))</code>
-<jh>
-        ((value y) = s) ((value x) = (value y)) ConjunctionCommutativity eliminateBiconditionalReverse
-        (value x) (value y) s EqualityTransitivity
-        applySyllogism
-
-        HEQ
-        applySyllogism
-
-        export
-</jh>
-Now we add ∀x to the consequent:
-<jh>
-        x generalize
-        x ((value y) = s) DistinctNotFree
-        moveAntecedentOutOfForAll
-</jh>
-The first application of <code>ImplicitSubstitutionThereExists</code> turns <code>∀x(x = y → (φ ↔ ψ))</code> into <code>(∃x x = y ∧ φ) ↔ ψ</code>:
-<jh>
-        HFREE
-        (value y) φ ImplicitSubstitutionThereExists
-</jh>
-Combining these results gets <code>y = s → ((∃x x = y ∧ φ) ↔ ψ)</code>:
-<jh>
-        applySyllogism
-</jh>
-We then apply <code>ImplicitSubstitutionThereExists</code> again to get <code>∃ y (y = s ∧ (∃x x = y ∧ φ)) ↔ ψ)</code>, which is our desired result.
-<jh>
-        y generalize
-        y ψ DistinctNotFree
-        s (∃ x (((value x) = (value y)) ∧ φ)) ImplicitSubstitutionThereExists
-        applyModusPonens
-))
-
-thm (makeSubstExplicit ((x s) (x ψ))
-  ((H (((value x) = s) → (φ ↔ ψ))))
-  ((subst s x φ) ↔ ψ) (
-        x ψ DistinctNotFree
-        H
-        convertImplicitToSubst
 ))
 </jh>
 
