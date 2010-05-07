@@ -115,6 +115,11 @@ stmt (collectThereExistsImplication () (((∀ x φ) → (∃ x ψ))) (∃ x (φ 
 stmt (distributeForAllImplication () ((∀ x (φ → ψ))) ((∀ x φ) → (∀ x ψ)))
 </jh>
 
+=== Biconditional ===
+<jh>
+stmt (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))))
+</jh>
+
 === Other kinds of splits ===
 <jh>
 stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
