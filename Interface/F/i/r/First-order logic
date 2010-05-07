@@ -280,6 +280,12 @@ stmt (ThereExistsIntroduction () () ((subst s x φ) → (∃ x φ)))
 stmt (introduceThereExists () ((subst s x φ)) (∃ x φ))
 </jh>
 
+=== Other theorems related to substitution ===
+<jh>
+stmt (equs3 () () 
+  ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))))
+</jh>
+
 == Propositional logic ==
 These surely belong elsewhere, but are here for the moment.
 
