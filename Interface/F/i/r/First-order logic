@@ -58,6 +58,11 @@ stmt (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))))
 stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
 </jh>
 
+== A relationship between quantification and negation ==
+<jh>
+stmt (ax6o () () ((¬ (∀ x (¬ (∀ x φ)))) → φ))
+</jh>
+
 == Builders for quantifiers ==
 As with propositional calculus, we need to build up formulas explicitly, and these rules let us do it.  We provide them for both quantifiers, for implication and the biconditional.
 <jh>
@@ -108,6 +113,11 @@ stmt (distributeThereExistsImplication () ((∃ x (φ → ψ))) ((∀ x φ) → 
 stmt (collectThereExistsImplication () (((∀ x φ) → (∃ x ψ))) (∃ x (φ → ψ)))
 
 stmt (distributeForAllImplication () ((∀ x (φ → ψ))) ((∀ x φ) → (∀ x ψ)))
+</jh>
+
+=== Other kinds of splits ===
+<jh>
+stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
 </jh>
 
 == Generalization and specialization ==
