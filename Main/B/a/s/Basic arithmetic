@@ -6,10 +6,10 @@
 | exports = [[Interface:Basic arithmetic]]
 }}
 
-We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic]], and [[Interface:Peano axioms]] and define some variables:
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Peano axioms|Peano axioms]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
-import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 
 var (formula φ)
