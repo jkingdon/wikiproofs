@@ -282,6 +282,7 @@ stmt (applyNestedModusPonens ()
   ((φ → (ψ → χ))
    ψ)
   (φ → χ))
+stmt (applyComm () ((φ → (ψ → χ))) (ψ → (φ → χ)))
 </jh>
 
 == What else? ==
