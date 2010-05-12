@@ -214,6 +214,8 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 
 :::::I have now made reflexivity, symmetry and transitivity axioms, at least for now. If this causes problems, speak up.  The next thing to blow up is ImplicitSubstitutionForAll (similar to equsal in metamath's set.mm). [[User:Kingdon|Kingdon]] 18:49, 3 May 2010 (UTC)
 
+::::::OK, I think I've figured it out.The way that quantification, sets, and classes work in set.mm is just different from the way it works in Raph's peano_thms.gh (as shown by the extra hypothesis in vtocl; more discussion at [[Interface:Axiom of quantifiability]]). Raph's way is probably better for Peano arithmetic and ZF set theory, although some other set theories might find it too constraining.  I've separated them into different pages, although at least for the present I plan to build on top of [[Interface:First-order logic with quantifiability]] rather than [[Interface:First-order logic]]. Feedback would be most welcome (in particular, I just made up the name "axiom of quantifiability" and don't really know whether there is something similar in the literature). [[User:Kingdon|Kingdon]] 22:30, 11 May 2010 (UTC)
+
 == Abstract versus Concrete Syntax ==
 
 Hi Grafzahl and friends...
