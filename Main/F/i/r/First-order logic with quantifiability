@@ -383,7 +383,7 @@ Bringing back two statements we left on the proof stack, we assemble the formula
 flip the order to get <code>∃x(x = s ∧ φ) ↔ ψ</code>,
 <jh>
         eliminateBiconditionalReverse
-        ψ (∃ x (((value x) = s) ∧ φ)) BiconditionalSymmetry
+        ψ (∃ x (((value x) = s) ∧ φ)) BiconditionalSymmetry eliminateBiconditionalReverse
         applySyllogism
 </jh>
 and combine this with the first part of the proof.
