@@ -244,42 +244,6 @@ stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ
 stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
 </jh>
 
-== Substitution ==
-Having a formula which substitutes one variable for another greatly increases the readability of many theorems.  For example, a statement of [[w:mathematical induction|induction]] will generally apply the same formula with <code>0</code>, <code>k</code>, <code>k + 1</code>, or <code>n</code>.
-
-This kind of substitution is known as ''proper substitution'' as there are some rules about what kinds of substitution are valid. The following theorems enable making proper substitutions.
-
-We first define the <code>subst</code> term:
-
-<jh>
-term (formula (subst object variable formula))
-</jh>
-
-so for example <code>(subst s x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>s</code>. In more conventional notation this would be <code>[s / x] φ</code> (or, using a common but potentially ambiguous notation, changing <code>φ(x)</code> to <code>φ(s)</code>).
-
-=== Building up expressions involving subst ===
-
-From an equality, we can build an equivalence of substitutions:
-<jh>
-stmt (SubstBuilderReplacement () ()
-  ((s = t) → ((subst s x φ) ↔ (subst t x φ))))
-stmt (buildSubstReplacement () ((s = t))
-  ((subst s x φ) ↔ (subst t x φ)))
-</jh>
-
-We can add <code>subst</code> to both sides of an implication or a biconditional.
-<jh>
-stmt (addSubst () ((φ → ψ)) ((subst s x φ) → (subst s x ψ)))
-stmt (buildSubst () ((φ ↔ ψ)) ((subst s x φ) ↔ (subst s x ψ)))
-</jh>
-
-=== Turning substitution into there-exists ===
-One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
-<jh>
-stmt (ThereExistsIntroduction () () ((subst s x φ) → (∃ x φ)))
-stmt (introduceThereExists () ((subst s x φ)) (∃ x φ))
-</jh>
-
 === Other theorems related to substitution ===
 <jh>
 stmt (equs3 () () 
