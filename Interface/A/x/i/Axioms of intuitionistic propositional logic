@@ -84,4 +84,4 @@ From a contradiction, anything follows:
 stmt (ContradictionImpliesAnthing () () (p → ((¬ p) → q))) # *2.24 in Principia
 </jh>
 
-[[Category:Subsystems of classical logic]]
+[[Category:Subsystems of classical logic|{{PAGENAME}}]]
