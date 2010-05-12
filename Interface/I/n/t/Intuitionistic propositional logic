@@ -1,0 +1,263 @@
+{{header
+ | title    = Intuitionistic propositional logic
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = [[w:Intuitionistic logic|Intuitionistic logic]] is a subset of [[Interface:Classical propositional calculus]] (subset in the sense that every theorem of intuitionistic logic is also a theorem of classical logic). It differs in omitting the [[w:law of the excluded middle]]. This interface collects theorems of intuitionistic logic, with a particular emphasis on constrasting it with classical logic.
+}}
+{{modules
+| parameters = ''None''
+| importedby = none yet
+| exportedby = [[Intuitionistic propositional logic]]
+}}
+
+[[Image:Zeichen 123.svg|50px]] This page is not yet done.  In particular, parts are copied from [[Interface:Classical propositional calculus]] and although I've tried to find things which don't hold here (or where I'm not sure), I might have missed some.  Until we prove everything here, we won't be sure.
+
+== Well-formed formulas ==
+
+We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.
+<jh>
+kind (formula)
+var (formula p q r s)
+</jh>
+
+== Logical connectives ==
+
+There are five standard [[w:logical connective|logical connective]]s in the propositional calculus, [[w:negation|negation]],
+<jh>
+term (formula (¬ formula))
+</jh>
+[[w:material conditional|implication]],
+<jh>
+term (formula (→ formula formula))
+</jh>
+[[w:logical disjunction|disjunction]],
+<jh>
+term (formula (∨ formula formula))
+</jh>
+[[w:logical conjunction|conjunction]],
+<jh>
+term (formula (∧ formula formula))
+</jh>
+and, finally, the [[w:logical biconditional|biconditional]],
+<jh>
+term (formula (↔ formula formula))
+</jh>
+In addition, one can also consider the constant formulas (or [[w:nullary#Nullary|nullary]] connectives) "the true",
+<jh>
+term (formula (⊤))
+</jh>
+and "the false",
+<jh>
+term (formula (⊥))
+</jh>
+
+== Simple statements ==
+
+Here are the statements which do not require any hypotheses.
+
+=== Constant statements ===
+
+(TODO: do True and NotFalse from [[Interface:Classical propositional calculus]] hold?)
+
+=== Negation and implication ===
+
+Double negation can be introduced but not eliminated.
+[[w:double negative elimination|Double negation]]:
+<jh>
+stmt (DoubleNegation () () (p → (¬ (¬ p))))
+</jh>
+Implication is [[w:reflexive relation|reflexive]]. Sometimes, this is called "Identity" or "Tautology".
+<jh>
+stmt (ImplicationReflexivity () () (p → p))
+</jh>
+Introduction of an [[w:antecedent (logic)|antecedent]]. Whitehead and Russell call this "Simplification"<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref>:
+<jh>
+stmt (AntecedentIntroduction () () (p → (q → p)))
+</jh>
+[[w:Syllogism|Syllogism]] can be stated in several ways, but this is probably the most familiar: (TODO: is this correct? does import/export hold?)
+<jh>
+stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
+</jh>
+If the [[w:consequent|consequent]] of an implication is an implication itself, its antecedent can be distributed over antecedent and consequent of the consequent, and vice versa.
+<jh>
+stmt (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))))
+</jh>
+[[w:Transposition_(logic)|Transposition]] does not hold. (TODO: are any of the variants true in one direction?)
+
+=== Disjunction and conjunction ===
+
+[[w:Idempotence|Idempotence]]:
+<jh>
+stmt (DisjunctionIdempotence () () (p ↔ (p ∨ p)))
+stmt (ConjunctionIdempotence () () (p ↔ (p ∧ p)))
+</jh>
+
+[[w:Associativity|Associativity]]:
+<jh>
+stmt (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))))
+stmt (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))))
+</jh>
+
+[[w:Commutativity|Commutativity]]:
+<jh>
+stmt (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)))
+stmt (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)))
+</jh>
+
+[[w:Distributivity|Distributivity]]:
+<jh>
+stmt (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))))
+stmt (DisjunctionRightDistribution () () (((p ∧ q) ∨ r) ↔ ((p ∨ r) ∧ (q ∨ r))))
+stmt (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))))
+stmt (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (q ∧ r))))
+</jh>
+
+=== De Morgan's laws ===
+
+[[w:De Morgan's laws|De Morgan's laws]] do not hold, in general, but some of them are available, often as implications rather than biconditionals. (TODO: Are there others worth mentioning? Come up with a suitable naming scheme).
+<jh>
+stmt (DeMorgan1 () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))))
+stmt (DeMorgan2 () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
+stmt (DeMorgan3 () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))))
+stmt (DeMorgan4 () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))))
+</jh>
+
+=== Other statements containing negation, implication, disjunction and conjunction ===
+
+Although there is no associativity law for implication, we have the following importation/exportation principle due to [[w:Guiseppe Peano|Guiseppe Peano]]: (TODO: is this correct?)
+<jh>
+stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
+</jh>
+[[w:Modus ponens|Modus ponens]] holds but of course [[w:modus tollens|modus tollens]] does not.
+<jh>
+stmt (ModusPonens () () ((p ∧ (p → q)) → q))
+</jh>
+Introduction principle for disjunction:
+<jh>
+stmt (DisjunctionLeftIntroduction () () (p → (q ∨ p)))
+stmt (DisjunctionRightIntroduction () () (p → (p ∨ q)))
+</jh>
+Introduction and elimination principles for conjunction: (TODO: Some of these are intuitionist axioms; the rest are theorems, right?).
+<jh>
+stmt (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))))
+stmt (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))))
+stmt (ConjunctionLeftElimination () () ((p ∧ q) → q))
+stmt (ConjunctionRightElimination () () ((p ∧ q) → p))
+</jh>
+Case by case elimination: (TODO: this probably doesn't hold)
+<jh>
+stmt (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q))
+</jh>
+Composition for disjunction and conjunction: (TODO: DisjunctionComposition is an intuitionistic axiom; does ConjunctionComposition hold?)
+<jh>
+stmt (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)))
+stmt (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))))
+</jh>
+Summation for disjunction. We use the suffixes <code>LL</code>, <code>LR</code>, <code>RL</code> and <code>RR</code> to indicate if the summands were added to the left or the right of antecedent or consequent, respectively. (TODO: do these hold?)
+<jh>
+stmt (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))))
+stmt (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))))
+stmt (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))))
+stmt (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))))
+stmt (DisjunctionSummation () () (((p → q) ∧ (r → s)) → ((p ∨ r) → (q ∨ s))))
+</jh>
+Multiplication for conjunction, with the same suffixes as above. (TODO: do these hold?)
+<jh>
+stmt (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))))
+stmt (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))))
+stmt (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))))
+stmt (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))))
+stmt (ConjunctionMultiplication () () (((p → q) ∧ (r → s)) → ((p ∧ r) → (q ∧ s))))
+</jh>
+Adding a common antecedent to an implication, or adding a common consequent and reversing the direction of the implication: (TODO: do these hold?)
+<jh>
+stmt (CommonAntecedentAddition () () ((q → r) → ((p → q) → (p → r))))
+stmt (CommonConsequentAddition () () ((p → q) → ((q → r) → (p → r))))
+</jh>
+
+=== Biconditional ===
+
+==== Equivalence relation ====
+
+The biconditional simply creates an [[w:equivalence relation|equivalence relation]] among well-formed formulas: (TODO: These hold here, right?)
+<jh>
+stmt (BiconditionalReflexivity () () (p ↔ p))
+stmt (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)))
+stmt (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)))
+</jh>
+The TertiumNonDatur (law of excluded middle) does not hold, nor does Tautology from [[Interface:Classical propositional calculus]], but Contradiction does. (TODO: right?)
+<jh>
+stmt (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)))
+</jh>
+
+==== Weakenings ====
+
+A biconditional makes a strong statement. Often, we only need a weaker statement. For introductions, see the section on [[#Truth function interdependencies|truth function interdependencies]].
+
+The naming convention here is that when we think of <code>p ↔ q</code> as consisting of two implications, we call <code>p → q</code> the ''forward'' one and <code>q → p</code> the ''reverse'' one.
+<jh>
+stmt (BiconditionalForwardElimination () () ((p ↔ q) → (q → p)))
+stmt (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)))
+</jh>
+
+When we think of a biconditional as two disjunctions, an intuitive naming convention is more elusive, but we currently call <code>(¬ p) ∨ q</code> the ''left'' one and <code>p ∨ (¬ q)</code> the ''right'' one. (TODO: make sure these are written correctly for the weaker intuitionist relationship between → and ∨)
+<jh>
+stmt (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))))
+stmt (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)))
+</jh>
+
+==== Truth functions ====
+
+The logical connectives are functions on the equivalence classes of true and false formulas. That is, if <math>p_1,\ldots,p_n</math> and <math>q_1,\ldots,q_n</math> are formulas such that <math>p_i</math> and <math>q_i</math> are in the same equivalence class for <math>i=1,\ldots,n</math>, then an <math>n</math>-ary logical connective will send both groups of formulas to the same equivalence class. We express this for our truth functions: (TODO: if we don't have something like this, it will be hard to build formulas, but need to check that these hold).
+<jh>
+stmt (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))))
+stmt (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
+stmt (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
+stmt (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
+stmt (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
+</jh>
+Note that only negation has <code>↔</code> as its leading connective because it is the only truth function  which is [[w:injective|injective]]
+
+==== Truth function interdependencies ====
+
+The truth functions are not always independent of each other. We have already seen that in De Morgan's laws. Here are the remaining important interdependencies:
+Biconditional as bidirectional implication: (TODO: I think this one still works, and in fact can be the definition of the biconditional in some intuitionistic axiomizations).
+<jh>
+stmt (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))))
+</jh>
+Biconditional as disjunction of the two equivalence classes: (TODO: check on this)
+<jh>
+stmt (BiconditionalDisjunction () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))))
+</jh>
+Biconditional as conjunction: (TODO: check on this)
+<jh>
+stmt (BiconditionalConjunction () () ((p ↔ q) ↔ (((¬ p) ∨ q) ∧ (p ∨ (¬ q)))))
+</jh>
+Implication as disjunction: (TODO: This is just an implication, not a biconditional, and has other forms with some negation elsewhere)
+<jh>
+stmt (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)))
+</jh>
+Disjunction as implication: (TODO: This is just an implication, not a biconditional, and has other forms with some negation elsewhere)
+<jh>
+stmt (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)))
+</jh>
+Negation as implication.  This one still holds.
+<jh>
+stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
+</jh>
+
+== Rules ==
+
+For the moment, we have just one rule. By the time this file is fleshed out, we'll probably have rules for pretty much all the theorems above.
+
+<jh>
+stmt (applyModusPonens () (p (p → q)) q)
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Subsystems of classical logic|!]]
