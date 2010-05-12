@@ -472,10 +472,67 @@ thm (introduceSubst () ((H φ)) (subst s x φ) (
 ))
 </jh>
 
-== Export ==
-When this page is done, we'd have proved all the theorems in [[Interface:First-order logic]], and would be able to export them.
+=== Convert from implicit substitution ===
+A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>.
+
+Although the distinct variable constraint between <code>x</code> and <code>s</code> should not be necessary (if we wanted to require that <code>x</code> and <code>s</code> are distinct we could have a simpler definition of <code>subst</code>), even the version with the constraint can be useful.
+
 <jh>
-#export (WITH_QUANTIFIABILITY Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+thm (convertImplicitToSubst ((x s) (y ψ) (x y)) 
+  ((HFREE (x is-not-free-in ψ))
+   (HEQ (((value x) = s) → (φ ↔ ψ)))
+  )
+  ((subst s x φ) ↔ ψ) (
+</jh>
+The proof will basically consist of two applications of <code>ImplicitSubstitutionThereExists</code>.
+
+First we rewrite <code>x = s → (φ ↔ ψ)</code> as <code>y = s → (x = y → (φ ↔ ψ))</code>
+<jh>
+        ((value y) = s) ((value x) = (value y)) ConjunctionCommutativity eliminateBiconditionalReverse
+        (value x) (value y) s EqualityTransitivity
+        applySyllogism
+
+        HEQ
+        applySyllogism
+
+        export
+</jh>
+Now we add ∀x to the consequent:
+<jh>
+        x generalize
+        x ((value y) = s) DistinctNotFree
+        moveAntecedentOutOfForAll
+</jh>
+The first application of <code>ImplicitSubstitutionThereExists</code> turns <code>∀x(x = y → (φ ↔ ψ))</code> into <code>(∃x x = y ∧ φ) ↔ ψ</code>:
+<jh>
+        HFREE
+        (value y) φ ImplicitSubstitutionThereExists
+</jh>
+Combining these results gets <code>y = s → ((∃x x = y ∧ φ) ↔ ψ)</code>:
+<jh>
+        applySyllogism
+</jh>
+We then apply <code>ImplicitSubstitutionThereExists</code> again to get <code>∃ y (y = s ∧ (∃x x = y ∧ φ)) ↔ ψ)</code>, which is our desired result.
+<jh>
+        y generalize
+        y ψ DistinctNotFree
+        s (∃ x (((value x) = (value y)) ∧ φ)) ImplicitSubstitutionThereExists
+        applyModusPonens
+))
+
+thm (makeSubstExplicit ((x s) (x ψ))
+  ((H (((value x) = s) → (φ ↔ ψ))))
+  ((subst s x φ) ↔ ψ) (
+        x ψ DistinctNotFree
+        H
+        convertImplicitToSubst
+))
+</jh>
+
+== Export ==
+That gives us [[Interface:First-order logic with quantifiability]], which we now export.
+<jh>
+export (WITH_QUANTIFIABILITY Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 </jh>
 
 == References ==
