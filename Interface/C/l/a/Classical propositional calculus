@@ -205,7 +205,7 @@ stmt (CommonConsequentAddition () () ((p → q) → ((q → r) → (p → r))))
 The biconditional simply creates an [[w:equivalence relation|equivalence relation]] among well-formed formulas:
 <jh>
 stmt (BiconditionalReflexivity () () (p ↔ p))
-stmt (BiconditionalSymmetry () () ((p ↔ q) → (q ↔ p)))
+stmt (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)))
 stmt (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)))
 </jh>
 This equivalence relation creates two [[w:equivalence class|equivalence class]]es, the true and the false formulas:
