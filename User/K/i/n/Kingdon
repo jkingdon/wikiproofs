@@ -153,6 +153,3 @@ Probably can base some of these on [http://code.google.com/p/ghilbert/source/bro
 Reducing the Principia axioms from 5 to 4 (unless I missed something, the change is to omit Assoc and change Add from <code>q → (p ∨ q)</code> to <code>q → (q ∨ p)</code>).  This is the axiomization used by [http://qedeq.org/0_03_11/doc/math/qedeq_logic_v1_en.pdf Elements of Mathematical Logic], Michael Meyling, August 2, 2008.
 
 Stanley Burris (1997), [http://www.math.uwaterloo.ca/~snburris/htdocs/scav/hilbert/hilbert.html Hilbert and Ackermann's 1928 Logic Book], describing work by [[w:Paul Bernays|Bernays]] in 1926 and adopted by, for example, D. Hilbert and W. Ackermann, Grundzüge der theoretischen Logik. Springer-Verlag, 1928.
-
-== BiconditionalSymmetry cleanup ==
-BiconditionalSymmetry should probably be *4.21 (biconditionalized) rather than the implication it is now.  At least, that's how we're doing DisjunctionCommutativity, ConjunctionCommutativity, and EqualitySymmetry, ForAllCommutation, ThereExistsCommutation, and probably most other theorems in which the implication immediately implies the biconditional and so either one is plausible.
