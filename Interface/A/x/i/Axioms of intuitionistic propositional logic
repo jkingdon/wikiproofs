@@ -1,0 +1,87 @@
+{{header
+ | title    = Axioms of intuitionistic propositional logic
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = [[w:Intuitionistic logic|Intuitionistic logic]] is a subset of [[Interface:Classical propositional calculus]] (subset in the sense that every theorem of intuitionistic logic is also a theorem of classical logic). It differs in omitting the [[w:law of the excluded middle]]. This interface contains one axiomization of intuitionistic logic.
+}}
+{{modules
+| parameters = ''None''
+| importedby = none yet
+| exportedby = none
+}}
+
+== Well-formed formulas ==
+
+We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.
+<jh>
+kind (formula)
+var (formula p q r s)
+</jh>
+
+== Connectives ==
+Although it is possible to define intuitionistic logic with a single (complicated) connective, or with as few as three of the usual connectives, here we take implication, disjunction, conjunction, and negation as primitive:
+
+<jh>
+term (formula (¬ formula)) # Negation
+term (formula (→ formula formula)) # Implication
+term (formula (∨ formula formula)) # Disjunction
+term (formula (∧ formula formula)) # Conjunction
+</jh>
+
+== Inference rule ==
+
+The one rule is [[w:modus ponens|modus ponens]]:
+<jh>
+stmt (applyModusPonens () (p (p → q)) q)
+</jh>
+
+== Implication ==
+
+The first two of the [[Interface:Standard axioms of propositional calculus]] serve as our axioms governing implication:
+
+<jh>
+stmt (Simp () () (p → (q → p)))
+stmt (Frege () () ((p → (q → r)) → ((p → q) → (p → r))))
+</jh>
+
+== Disjunction ==
+
+For disjunction, we assume the ability to introduce a left hand or right hand side to any proposition:
+<jh>
+stmt (DisjunctionLeftIntroduction () () (p → (q ∨ p)))
+stmt (DisjunctionRightIntroduction () () (p → (p ∨ q)))
+</jh>
+
+and the following form of disjunction composition:
+<jh>
+stmt (DisjunctionCompositionAxiom () () ((p → r) → ((q → r) → ((p ∨ q) → r))))
+</jh>
+
+== Conjunction ==
+
+A conjunction implies either of its propositions:
+<jh>
+stmt (ConjunctionLeftElimination () () ((p ∧ q) → q))
+stmt (ConjunctionRightElimination () () ((p ∧ q) → p))
+</jh>
+
+and can be derived from its propositions:
+<jh>
+stmt (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))))
+</jh>
+
+== Negation ==
+
+If an antecedent implies both a consequent and its negation, we can infer the negation of the original statement.
+<jh>
+stmt (ProofByContradiction () () ((p → q) → ((p → (¬ q)) → (¬ p)))) # *2.65 in Principia
+</jh>
+
+From a contradiction, anything follows:
+<jh>
+stmt (ContradictionImpliesAnthing () () (p → ((¬ p) → q))) # *2.24 in Principia
+</jh>
+
+[[Category:Subsystems of classical logic]]
