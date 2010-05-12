@@ -4,13 +4,13 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = This interface collects important theorems from first-order logic, which builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use first-order logic, without proving anything new within it.
+ | notes    = This interface collects important theorems from first-order logic, which builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use first-order logic, without proving anything new within it. It does not include results which rely on the [[Interface:Axiom of quantifiability]]; many modules may wish to import [[Interface:First-order logic with quantifiability]] instead of this interface.
 
 Statements can be added if necessary, but then the exporting modules have to be updated accordingly.
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus]]
-| importedby = [[Interface:Peano axioms]]
+| importedby = [[Interface:First-order logic with quantifiability]]
 | exportedby = [[First-order logic]]
 }}
 == Formulas, objects, and quantification ==
