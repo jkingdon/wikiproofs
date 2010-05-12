@@ -1,16 +1,16 @@
 {{modules
-| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic]]
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
 | importedby = None yet.
 | exportedby = [[Basic arithmetic]]
 }}
 
 This page covers basic arithmetic, up to the familiar laws of arithmetic: commutative, associative, distributive, etc. At least for now, it stops before continuing into number theory (divisibility, primes, etc).
 
-We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic|first-order logic]] (including equality):
+We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
 
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
-param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 </jh>
 
 The kind <code>object</code>, defined in first-order logic, represents a natural number:
