@@ -1063,19 +1063,19 @@ thm (BiconditionalReflexivity () () (p ↔ p) ( # *4.2
         introduceBiconditional
 ))
 
-thm (BiconditionalSymmetry () () ((p ↔ q) → (q ↔ p)) (
+thm (BiconditionalSymmetryImplication () () ((p ↔ q) → (q ↔ p)) (
         (p → q) (q → p) *3.22
 ))
 
-thm (*4.21 () () ((p ↔ q) ↔ (q ↔ p)) (
-        p q BiconditionalSymmetry
-        q p BiconditionalSymmetry
+thm (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)) ( # *4.21
+        p q BiconditionalSymmetryImplication
+        q p BiconditionalSymmetryImplication
         introduceBiconditional
 ))
 
 thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
         H
-        p q BiconditionalSymmetry
+        p q BiconditionalSymmetryImplication
         applyModusPonens
 ))
 </jh>
@@ -2209,7 +2209,7 @@ thm (*5.17 () () (((p ∨ q) ∧ (¬ (p ∧ q))) ↔ (p ↔ (¬ q))) (
         p q *5.17-2
         buildConjunction
 
-        (¬ q) p *4.21
+        (¬ q) p BiconditionalSymmetry
 
         applyBiconditionalTransitivity
 ))
