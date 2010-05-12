@@ -12,11 +12,11 @@
 | exportedby = None yet.
 }}
 
-First, we adopt the axioms of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic|first-order logic]] (including equality):
+First, we adopt the axioms of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
 
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
-param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 </jh>
 
 The kind <code>object</code>, defined in first-order logic, represents a natural number:
