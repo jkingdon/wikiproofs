@@ -1,0 +1,158 @@
+{{header
+ | title    = Intuitionistic propositional logic
+ | subtitle =
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The purpose of this page is to prove the statements of [[Interface:Intuitionistic propositional logic]] from the [[Interface:Axioms of intuitionistic propositional logic]].
+}}
+{{interfaces
+| imports = [[Interface:Axioms of intuitionistic propositional logic]]
+| exports = eventually [[Interface:Intuitionistic propositional logic]]
+}}
+
+{{under construction}}
+<jh>
+import (AXIOMS Interface:Axioms_of_intuitionistic_propositional_logic () ())
+</jh>
+We define some variables for [[w:well-formed formula|well-formed formula]]s:
+<jh>
+var (formula p q r s)
+</jh>
+
+Many of the proofs here are adapted, or even entirely copy-pasted, from pages such as [[Principia Mathematica propositional logic]] or [[Standard axioms imply Principia Mathematica axioms]]. It would be possible to reduce this duplication by having some of the other pages build on [[Interface:Intuitionistic propositional logic]], but the presentation might become less clear in other ways (certainly it would less closely track the way things are developed in ''Principia''), so we do not currently have the intuitionistic tail wag the classical dog.
+
+Some proofs are taken from metamath's set.mm.  In particular, metamath's section "Logical implication" makes use only of the two axioms <code>Simp</code> and <code>Frege</code>, and thus is entirely valid in an intuitionistic context.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
+
+== A few rules, syllogism, and Id ==
+
+It will be convenient to have the ''Frege'' axiom as a rule:
+<jh>
+thm (distributeAntecedent () ((H (p → (q → r)))) ((p → q) → (p → r)) (
+        H
+        p q r Frege
+        applyModusPonens
+))
+</jh>
+
+Next we derive the syllogism, which allows us to combine several implications.
+<jh>
+thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
+        H1
+
+</jh>
+First we turn <code>q → r</code> into <code>p → (q → r)</code>:
+<jh>
+        H2
+        (q → r) p Simp
+        applyModusPonens
+
+</jh>
+Then we turn that into <code>(p → q) → (p → r)</code>:
+<jh>
+        distributeAntecedent
+
+</jh>
+Now we can apply modus ponens to get our desired result:
+<jh>
+        applyModusPonens
+))
+</jh>
+
+Any proposition implies itself:
+<jh>
+thm (Id () () (p → p) (
+        p p Simp
+
+        p (p → p) Simp
+        p (p → p) p Frege
+        applyModusPonens
+
+        applyModusPonens
+))
+
+# Alternate name for the same theorem:
+thm (ImplicationReflexivity () () (p → p) (
+        p Id
+))
+</jh>
+
+A consequence is that we can absorb a redundant antecedent:
+<jh>
+thm (apply*2.43 () ((H (p → (p → q)))) (p → q) (
+        p Id
+
+        H
+        distributeAntecedent
+
+        applyModusPonens
+))
+</jh>
+
+== More common operations with implications ==
+Given a nested implication we often want to exchange the two antecedents:
+<jh>
+thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
+        q p Simp
+
+        H
+        distributeAntecedent
+
+        applySyllogism
+))
+</jh>
+
+If we have an implication, adding a common term to the antecedent and the consequent yields a new theorem:
+<jh>
+thm (CommonAntecedentAddition () () ((p → q) → ((r → p) → (r → q))) (
+        (p → q) r Simp
+        r p q Frege
+        applySyllogism
+))
+
+thm (addCommonAntecedent () ((H (p → q))) ((r → p) → (r → q)) (
+        H
+        (p → q) r Simp
+        applyModusPonens
+
+        distributeAntecedent
+))
+</jh>
+
+The analogous operation adding consequents swaps the initial antecedent and consequent:
+<jh>
+thm (addCommonConsequent () ((H (p → q))) ((q → r) → (p → r)) (
+        H
+
+        q r p CommonAntecedentAddition
+        applyComm
+
+        applyModusPonens
+))
+</jh>
+
+Here's a theorem form of <code>applyComm</code>:
+<jh>
+thm (Comm () () ((p → (q → r)) → (q → (p → r))) (
+        p q r Frege
+
+        q p Simp
+        (p → r) addCommonConsequent
+
+        applySyllogism
+))
+</jh>
+
+== Antecedent introduction ==
+This is just another name for the <code>Simp</code> axiom:
+<jh>
+thm (AntecedentIntroduction () () (p → (q → p)) (
+        p q Simp
+))
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Subsystems of classical logic|{{PAGENAME}}]]
