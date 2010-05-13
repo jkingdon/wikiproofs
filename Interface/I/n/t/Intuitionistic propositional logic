@@ -171,7 +171,7 @@ stmt (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))
 stmt (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))))
 stmt (ConjunctionMultiplication () () (((p → q) ∧ (r → s)) → ((p ∧ r) → (q ∧ s))))
 </jh>
-Adding a common antecedent to an implication, or adding a common consequent and reversing the direction of the implication: (TODO: do these hold?)
+Adding a common antecedent to an implication, or adding a common consequent and reversing the direction of the implication:
 <jh>
 stmt (CommonAntecedentAddition () () ((q → r) → ((p → q) → (p → r))))
 stmt (CommonConsequentAddition () () ((p → q) → ((q → r) → (p → r))))
