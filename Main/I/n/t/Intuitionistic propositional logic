@@ -24,7 +24,9 @@ Many of the proofs here are adapted, or even entirely copy-pasted, from pages su
 
 Some proofs are taken from metamath's set.mm.  In particular, metamath's section "Logical implication" makes use only of the two axioms <code>Simp</code> and <code>Frege</code>, and thus is entirely valid in an intuitionistic context.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
 
-== A few rules, syllogism, and Id ==
+== Implication ==
+
+=== Rule for antecedent distribution ===
 
 It will be convenient to have the ''Frege'' axiom as a rule:
 <jh>
@@ -34,6 +36,8 @@ thm (distributeAntecedent () ((H (p → (q → r)))) ((p → q) → (p → r)) (
         applyModusPonens
 ))
 </jh>
+
+=== Syllogism ===
 
 Next we derive the syllogism, which allows us to combine several implications.
 <jh>
@@ -59,6 +63,8 @@ Now we can apply modus ponens to get our desired result:
 ))
 </jh>
 
+=== Implication reflexivity ===
+
 Any proposition implies itself:
 <jh>
 thm (Id () () (p → p) (
@@ -77,6 +83,8 @@ thm (ImplicationReflexivity () () (p → p) (
 ))
 </jh>
 
+=== Absorb redundant antecedent ===
+
 A consequence is that we can absorb a redundant antecedent:
 <jh>
 thm (apply*2.43 () ((H (p → (p → q)))) (p → q) (
@@ -89,7 +97,7 @@ thm (apply*2.43 () ((H (p → (p → q)))) (p → q) (
 ))
 </jh>
 
-== More common operations with implications ==
+=== More common operations ===
 Given a nested implication we often want to exchange the two antecedents:
 <jh>
 thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
@@ -143,7 +151,7 @@ thm (Comm () () ((p → (q → r)) → (q → (p → r))) (
 ))
 </jh>
 
-== Antecedent introduction ==
+=== Antecedent introduction ===
 This is just another name for the <code>Simp</code> axiom:
 <jh>
 thm (AntecedentIntroduction () () (p → (q → p)) (
@@ -151,7 +159,7 @@ thm (AntecedentIntroduction () () (p → (q → p)) (
 ))
 </jh>
 
-== Converse of antecedent distribution ==
+=== Converse of antecedent distribution ===
 The converse of the <code>Frege</code> axiom also holds.<ref>[http://us.metamath.org/mpeuni/pm2.86.html pm2.86] in metamath's set.mm, accessed May 14, 2010</ref>
 <jh>
 thm (FregeConverse () () (((p → q) → (p → r)) → (p → (q → r))) (
@@ -168,6 +176,48 @@ Now we just switch <code>p</code> and <code>q</code> in <code>q → (p → r)</c
 <jh>
         q p r Comm
         applySyllogism
+))
+</jh>
+
+== Conjunction ==
+If we can prove two propositions, the conjunction of the two follows (this is just a rule form of the <code>ConjunctionRightIntroduction</code> axiom):
+<jh>
+thm (introduceConjunction ()
+  ((HLEFT p) (HRIGHT q))
+  (p ∧ q) (
+        HRIGHT
+        HLEFT
+        p q ConjunctionRightIntroduction
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+== Biconditional ==
+
+We define the biconditional as the conjunction of two implications:
+<jh>
+def ((↔ p q) ((p → q) ∧ (q → p)))
+</jh>
+
+And one way to prove a biconditional is to prove both of the implications:
+<jh>
+thm (introduceBiconditionalFromImplications () 
+  ((HFORWARD (p → q)) (HREVERSE (q → p))) 
+  (p ↔ q) (
+        HFORWARD
+        HREVERSE
+        introduceConjunction
+))
+</jh>
+
+=== Biconditionalized versions of some theorems we've already proved ===
+We've proved both directions of each of the following theorems, so the biconditional immediately follows:
+<jh>
+thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) (
+        p q r Frege
+        p q r FregeConverse
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
