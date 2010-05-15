@@ -193,6 +193,15 @@ thm (introduceConjunction ()
 ))
 </jh>
 
+=== Left introduction ===
+Most of the introduction and elimination statements we need to provide are axioms, but this one is a simple consequence of the axioms:
+<jh>
+thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) (
+        q p ConjunctionRightIntroduction
+        applyComm
+))
+</jh>
+
 == Biconditional ==
 
 We define the biconditional as the conjunction of two implications:
