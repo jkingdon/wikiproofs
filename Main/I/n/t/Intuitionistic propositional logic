@@ -180,6 +180,8 @@ Now we just switch <code>p</code> and <code>q</code> in <code>q → (p → r)</c
 </jh>
 
 == Conjunction ==
+
+=== Rules ===
 If we can prove two propositions, the conjunction of the two follows (this is just a rule form of the <code>ConjunctionRightIntroduction</code> axiom):
 <jh>
 thm (introduceConjunction ()
@@ -189,6 +191,21 @@ thm (introduceConjunction ()
         HLEFT
         p q ConjunctionRightIntroduction
         applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+Here are rules for the <code>ConjunctionLeftElimination</code> and <code>ConjunctionRightElimination</code> axioms:
+<jh>
+thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+        H
+        p q ConjunctionLeftElimination
+        applyModusPonens
+))
+
+thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+        H
+        p q ConjunctionRightElimination
         applyModusPonens
 ))
 </jh>
