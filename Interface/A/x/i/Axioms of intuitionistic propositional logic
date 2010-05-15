@@ -12,6 +12,9 @@
 | exportedby = none
 }}
 
+The axioms here are essentially identical to those in the ''Stanford Encyclopedia of Philosophy''.<ref>[http://plato.stanford.edu/entries/logic-intuitionistic/ Intuitionistic Logic], 
+First published Wed Sep 1, 1999; substantive revision Wed Apr 28, 2010, ''Stanford Encyclopedia of Philosophy''</ref>
+
 == Well-formed formulas ==
 
 We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.
@@ -83,5 +86,8 @@ From a contradiction, anything follows:
 <jh>
 stmt (ContradictionImpliesAnthing () () (p → ((¬ p) → q))) # *2.24 in Principia
 </jh>
+
+== References ==
+<references/>
 
 [[Category:Subsystems of classical logic|{{PAGENAME}}]]
