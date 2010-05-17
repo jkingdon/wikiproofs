@@ -235,6 +235,34 @@ and then adds <code>p</code> as an antecedent to each of <code>q</code>, <code>r
         p r (q ∧ r) Frege
         applySyllogism
 ))
+
+thm (composeConjunction () ((HQ (p → q)) (HR (p → r))) (p → (q ∧ r)) (
+        HR
+        HQ
+        p q r ConjunctionComposition1
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+We also prove a version of the converse:
+<jh>
+thm (ConjunctionCompositionReverse () () ((p → (q ∧ r)) → ((p → q) ∧ (p → r))) (
+</jh>
+We start with <code>(p → (q ∧ r)) → (p → q)</code>:
+<jh>
+        q r ConjunctionRightElimination
+        p addCommonAntecedent
+</jh>
+And the analogue for <code>r</code>, <code>(p → (q ∧ r)) → (p → r)</code>:
+<jh>
+        q r ConjunctionLeftElimination
+        p addCommonAntecedent
+</jh>
+Combining the two gives us our result:
+<jh>
+        composeConjunction
+))
 </jh>
 
 == Biconditional ==
