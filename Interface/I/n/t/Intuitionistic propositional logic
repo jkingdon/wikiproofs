@@ -208,21 +208,20 @@ stmt (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q)
 stmt (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)))
 </jh>
 
-==== Truth functions ====
+==== Builders ====
 
-The logical connectives are functions on the equivalence classes of true and false formulas. That is, if <math>p_1,\ldots,p_n</math> and <math>q_1,\ldots,q_n</math> are formulas such that <math>p_i</math> and <math>q_i</math> are in the same equivalence class for <math>i=1,\ldots,n</math>, then an <math>n</math>-ary logical connective will send both groups of formulas to the same equivalence class. We express this for our truth functions: (TODO: if we don't have something like this, it will be hard to build formulas, but need to check that these hold).
+(TODO: if we don't have something like this, it will be hard to build formulas, but need to check that these hold.  In particular, NegationBuilder seems likely to be an implication rather than a biconditional, if it holds).
 <jh>
-stmt (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))))
-stmt (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
-stmt (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
-stmt (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
-stmt (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
+stmt (NegationBuilder () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))))
+stmt (ImplicationBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
+stmt (DisjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
+stmt (ConjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
+stmt (BiconditionalBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
 </jh>
-Note that only negation has <code>↔</code> as its leading connective because it is the only truth function  which is [[w:injective|injective]]
 
-==== Truth function interdependencies ====
+==== Connective interdependencies ====
 
-The truth functions are not always independent of each other. We have already seen that in De Morgan's laws. Here are the remaining important interdependencies:
+The connectives are not always independent of each other. We have already seen that in De Morgan's laws. Here are the remaining important interdependencies:
 Biconditional as bidirectional implication: (TODO: I think this one still works, and in fact can be the definition of the biconditional in some intuitionistic axiomizations).
 <jh>
 stmt (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))))
