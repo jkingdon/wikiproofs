@@ -219,6 +219,24 @@ thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) (
 ))
 </jh>
 
+=== Conjunction composition ===
+Our first major theorem relating conjunction to implication is composition: from <code>p → q</code> and <code>p → r</code>, we can conclude <code>p → (q ∧ r)</code>.
+<jh>
+thm (ConjunctionComposition1 () () ((p → q) → ((p → r) → (p → (q ∧ r)))) (
+</jh>
+The proof starts with <code>q → (r → (q ∧ r))</code>:
+<jh>
+        q r ConjunctionRightIntroduction
+</jh>
+and then adds <code>p</code> as an antecedent to each of <code>q</code>, <code>r</code>, and <code>q ∧ r</code>:
+<jh>
+        p addCommonAntecedent
+
+        p r (q ∧ r) Frege
+        applySyllogism
+))
+</jh>
+
 == Biconditional ==
 
 We define the biconditional as the conjunction of two implications:
