@@ -139,7 +139,7 @@ Introduction principle for disjunction:
 stmt (DisjunctionLeftIntroduction () () (p → (q ∨ p)))
 stmt (DisjunctionRightIntroduction () () (p → (p ∨ q)))
 </jh>
-Introduction and elimination principles for conjunction: (TODO: Some of these are intuitionist axioms; the rest are theorems, right?).
+Introduction and elimination principles for conjunction:
 <jh>
 stmt (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))))
 stmt (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))))
