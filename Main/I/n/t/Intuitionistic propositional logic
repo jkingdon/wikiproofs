@@ -83,20 +83,6 @@ thm (ImplicationReflexivity () () (p → p) (
 ))
 </jh>
 
-=== Absorb redundant antecedent ===
-
-A consequence is that we can absorb a redundant antecedent:
-<jh>
-thm (apply*2.43 () ((H (p → (p → q)))) (p → q) (
-        p Id
-
-        H
-        distributeAntecedent
-
-        applyModusPonens
-))
-</jh>
-
 === More common operations ===
 Given a nested implication we often want to exchange the two antecedents:
 <jh>
@@ -148,6 +134,30 @@ thm (Comm () () ((p → (q → r)) → (q → (p → r))) (
         (p → r) addCommonConsequent
 
         applySyllogism
+))
+</jh>
+
+=== Absorb redundant antecedent ===
+
+We can absorb a redundant antecedent:
+<jh>
+thm (RedundantAntecedentAbsorption () ()
+  ((p → (p → q)) → (p → q)) (
+        p Id
+
+        p p q Frege
+        applyComm
+
+        applyModusPonens
+))
+
+thm (absorbRedundantAntecedent () ((H (p → (p → q)))) (p → q) (
+        p Id
+
+        H
+        distributeAntecedent
+
+        applyModusPonens
 ))
 </jh>
 
@@ -265,6 +275,57 @@ Combining the two gives us our result:
 ))
 </jh>
 
+=== Export and import ===
+The import and export theorems from classical propositional logic also hold in intuitionistic logic. We start with export, <code>(p ∧ q → r) → (p → (q → r))</code>. The proof is based around a variant of CommonConsequentAddition which has two antecedents, rather than one.
+
+<jh>
+var (formula common)
+thm (CommonConsequentAdditionToNestedImplication () ()
+  ((p → (q → r)) → ((r → common) → (p → (q → common)))) (
+        r common q CommonAntecedentAddition
+        (q → r) (q → common) p CommonAntecedentAddition
+        applySyllogism
+
+        applyComm
+))
+
+thm (Exportation () () (((p ∧ q) → r) → (p → (q → r))) (
+        p q ConjunctionRightIntroduction
+        p q (p ∧ q) r CommonConsequentAdditionToNestedImplication
+        applyModusPonens
+))
+</jh>
+
+The proof of export was based around having a conjunction as a consequent, that is <code>p → (q → p ∧ q)</code>.  The proof of import is based around <code>p ∧ q → p</code> (and likewise for <code>q</code>). The following lemma is what we'll use the glue together the different parts of the proof, and is basically a gussied up variant of applySyllogism:
+
+<jh>
+var (formula P Q R)
+thm (ImportLemma () 
+  ((H1 (P → (Q → R))) (H2 (R → (Q → r))))
+  (P → (Q → r)) (
+        H1
+
+        H2
+        Q addCommonAntecedent
+        applySyllogism
+</jh>
+Now we have <code>P → (Q → (Q → r))</code>, and just need to remove the extra <code>Q</code>:
+<jh>
+        Q r RedundantAntecedentAbsorption
+        applySyllogism
+))
+
+thm (Importation () () ((p → (q → r)) → ((p ∧ q) → r)) (
+        p q ConjunctionRightElimination
+        (q → r) addCommonConsequent
+
+        p q ConjunctionLeftElimination
+        r addCommonConsequent
+
+        ImportLemma
+))
+</jh>
+
 == Biconditional ==
 
 We define the biconditional as the conjunction of two implications:
@@ -289,6 +350,12 @@ We've proved both directions of each of the following theorems, so the biconditi
 thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) (
         p q r Frege
         p q r FregeConverse
+        introduceBiconditionalFromImplications
+))
+
+thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
+        p q r Importation
+        p q r Exportation
         introduceBiconditionalFromImplications
 ))
 </jh>
