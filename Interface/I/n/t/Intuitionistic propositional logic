@@ -126,7 +126,7 @@ stmt (DeMorgan4 () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))))
 
 === Other statements containing negation, implication, disjunction and conjunction ===
 
-Although there is no associativity law for implication, we have the following importation/exportation principle due to [[w:Guiseppe Peano|Guiseppe Peano]]: (TODO: is this correct?)
+The following importation/exportation principle applies as in classical logic:
 <jh>
 stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
 </jh>
