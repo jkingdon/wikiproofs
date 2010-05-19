@@ -294,6 +294,12 @@ thm (Exportation () () (((p ∧ q) → r) → (p → (q → r))) (
         p q (p ∧ q) r CommonConsequentAdditionToNestedImplication
         applyModusPonens
 ))
+
+thm (export () ((H ((p ∧ q) → r))) (p → (q → r)) (
+        H
+        p q r Exportation
+        applyModusPonens
+))
 </jh>
 
 The proof of export was based around having a conjunction as a consequent, that is <code>p → (q → p ∧ q)</code>.  The proof of import is based around <code>p ∧ q → p</code> (and likewise for <code>q</code>). The following lemma is what we'll use the glue together the different parts of the proof, and is basically a gussied up variant of applySyllogism:
@@ -323,6 +329,12 @@ thm (Importation () () ((p → (q → r)) → ((p ∧ q) → r)) (
         r addCommonConsequent
 
         ImportLemma
+))
+
+thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
+        H
+        p q r Importation
+        applyModusPonens
 ))
 </jh>
 
@@ -357,6 +369,16 @@ thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
         p q r Importation
         p q r Exportation
         introduceBiconditionalFromImplications
+))
+</jh>
+
+== Modus Ponens ==
+This is just an implication corresponding to the modus ponens rule:
+<jh>
+thm (ModusPonens () () ((p ∧ (p → q)) → q) (
+        (p → q) ImplicationReflexivity
+        applyComm
+        import
 ))
 </jh>
 
