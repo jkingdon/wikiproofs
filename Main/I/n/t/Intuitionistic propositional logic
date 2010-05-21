@@ -115,11 +115,16 @@ thm (addCommonAntecedent () ((H (p → q))) ((r → p) → (r → q)) (
 
 The analogous operation adding consequents swaps the initial antecedent and consequent:
 <jh>
+thm (CommonConsequentAddition () () 
+  ((p → q) → ((q → r) → (p → r))) (
+        q r p CommonAntecedentAddition
+        applyComm
+))
+
 thm (addCommonConsequent () ((H (p → q))) ((q → r) → (p → r)) (
         H
 
-        q r p CommonAntecedentAddition
-        applyComm
+        p q r CommonConsequentAddition
 
         applyModusPonens
 ))
