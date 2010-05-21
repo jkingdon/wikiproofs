@@ -343,6 +343,17 @@ thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
 ))
 </jh>
 
+=== Implication transitivity ===
+The form of the syllogism in [[Interface:Intuitionistic propositional logic]] is easy now that we have import:
+
+<jh>
+thm (ImplicationTransitivity () () 
+  (((p → q) ∧ (q → r)) → (p → r)) (
+        p q r CommonConsequentAddition
+        import
+))
+</jh>
+
 == Biconditional ==
 
 We define the biconditional as the conjunction of two implications:
