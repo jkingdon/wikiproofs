@@ -76,7 +76,7 @@ Introduction of an [[w:antecedent (logic)|antecedent]]. Whitehead and Russell ca
 <jh>
 stmt (AntecedentIntroduction () () (p → (q → p)))
 </jh>
-[[w:Syllogism|Syllogism]] can be stated in several ways, but this is probably the most familiar: (TODO: is this correct? does import/export hold?)
+[[w:Syllogism|Syllogism]] can be stated in several ways, all of which hold in intuitionistic logic. This form is perhaps the most familiar:
 <jh>
 stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
 </jh>
