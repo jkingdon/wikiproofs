@@ -82,9 +82,9 @@ If an antecedent implies both a consequent and its negation, we can infer the ne
 stmt (ProofByContradiction () () ((p → q) → ((p → (¬ q)) → (¬ p)))) # *2.65 in Principia
 </jh>
 
-From a contradiction, anything follows:
+From a contradiction, anything follows. This is also known as the [[w:Principle of explosion|principle of explosion]]. The presence of this axiom distinguishes intuitionistic logic from [[w:Minimal logic|minimal logic]].
 <jh>
-stmt (ContradictionImpliesAnthing () () (p → ((¬ p) → q))) # *2.24 in Principia
+stmt (Explosion () () (p → ((¬ p) → q))) # *2.24 in Principia
 </jh>
 
 == References ==
