@@ -20,7 +20,7 @@ We define some variables for [[w:well-formed formula|well-formed formula]]s:
 var (formula p q r s)
 </jh>
 
-Many of the proofs here are adapted, or even entirely copy-pasted, from pages such as [[Principia Mathematica propositional logic]] or [[Standard axioms imply Principia Mathematica axioms]]. It would be possible to reduce this duplication by having some of the other pages build on [[Interface:Intuitionistic propositional logic]], but the presentation might become less clear in other ways (certainly it would less closely track the way things are developed in ''Principia''), so we do not currently have the intuitionistic tail wag the classical dog.
+Some of the proofs here are adapted, or even entirely copy-pasted, from pages such as [[Principia Mathematica propositional logic]] or [[Standard axioms imply Principia Mathematica axioms]]. It would be possible to reduce this duplication by having some of the other pages build on [[Interface:Intuitionistic propositional logic]], but the presentation might become less clear in other ways (certainly it would less closely track the way things are developed in ''Principia''), so we do not currently have the intuitionistic tail wag the classical dog.
 
 Some proofs are taken from metamath's set.mm.  In particular, metamath's section "Logical implication" makes use only of the two axioms <code>Simp</code> and <code>Frege</code>, and thus is entirely valid in an intuitionistic context.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
 
@@ -324,6 +324,7 @@ thm (ImportLemma ()
 
         H2
         Q addCommonAntecedent
+
         applySyllogism
 </jh>
 Now we have <code>P → (Q → (Q → r))</code>, and just need to remove the extra <code>Q</code>:
