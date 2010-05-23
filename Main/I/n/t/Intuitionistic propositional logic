@@ -430,6 +430,44 @@ thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) (
 ))
 </jh>
 
+==== Disjunction idempotence ====
+<jh>
+thm (DisjunctionIdempotenceForward () () (p → (p ∨ p)) (
+        p p DisjunctionRightIntroduction
+))
+
+thm (DisjunctionIdempotenceReverse () () ((p ∨ p) → p) (
+        p ImplicationReflexivity
+        p ImplicationReflexivity
+        p p p DisjunctionCompositionAxiom
+        applyModusPonens
+        applyModusPonens
+))
+
+thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) (
+        p DisjunctionIdempotenceForward
+        p DisjunctionIdempotenceReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+==== Disjunction commutativity ====
+<jh>
+thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
+        q p DisjunctionRightIntroduction
+        p q DisjunctionLeftIntroduction
+        p (q ∨ p) q DisjunctionCompositionAxiom
+        applyModusPonens
+        applyModusPonens
+))
+
+thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) (
+        p q DisjunctionCommutativityImplication
+        q p DisjunctionCommutativityImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Modus Ponens ==
 This is just an implication corresponding to the modus ponens rule:
 <jh>
