@@ -388,6 +388,42 @@ thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
 ))
 </jh>
 
+=== Algebraic laws for disjunction and conjunction ===
+Most of the theorems of the propositional calculus which are analagous to those of other [[w:Abstract algebra|algebras]], showing properties such as commutivity and associativity, also hold for intuitionistic logic.
+
+==== Conjunction idempotence ====
+<jh>
+thm (ConjunctionIdempotenceForward () () (p → (p ∧ p)) (
+        p p ConjunctionRightIntroduction
+        absorbRedundantAntecedent
+))
+
+thm (ConjunctionIdempotenceReverse () () ((p ∧ p) → p) (
+        p p ConjunctionLeftElimination
+))
+
+thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) (
+        p ConjunctionIdempotenceForward
+        p ConjunctionIdempotenceReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+==== Conjunction commutativity ====
+<jh>
+thm (ConjunctionCommutativityImplication () () ((p ∧ q) → (q ∧ p)) (
+        p q ConjunctionLeftElimination
+        p q ConjunctionRightElimination
+        composeConjunction
+))
+
+thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) (
+        p q ConjunctionCommutativityImplication
+        q p ConjunctionCommutativityImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Modus Ponens ==
 This is just an implication corresponding to the modus ponens rule:
 <jh>
