@@ -167,10 +167,16 @@ thm (absorbRedundantAntecedent () ((H (p → (p → q)))) (p → q) (
 </jh>
 
 === Antecedent introduction ===
-This is just another name for the <code>Simp</code> axiom:
+We provide another name and a rule form for the <code>Simp</code> axiom:
 <jh>
 thm (AntecedentIntroduction () () (p → (q → p)) (
         p q Simp
+))
+
+thm (introduceAntecedent () ((H p)) (q → p) (
+        H
+        p q AntecedentIntroduction
+        applyModusPonens
 ))
 </jh>
 
@@ -431,6 +437,32 @@ thm (ModusPonens () () ((p ∧ (p → q)) → q) (
         (p → q) ImplicationReflexivity
         applyComm
         import
+))
+</jh>
+
+== Negation ==
+
+=== Double Negation ===
+Double negation introduction follows fairly directly from our first negation axiom.
+<jh>
+thm (DoubleNegation () () (p → (¬ (¬ p))) (
+</jh>
+The key step in the proof will be <code>(¬p → p) ∧ (¬p → ¬p) → ¬¬p</code> (which follows from the <code>ProofByContradiction</code> axiom). Taking the pieces of that formula one at a time, <code>p</code> implies <code>¬p → p</code>
+<jh>
+        p (¬ p) AntecedentIntroduction
+</jh>
+and <code>¬p → ¬p</code> is a theorem.
+<jh>
+         (¬ p) ImplicationReflexivity
+         p introduceAntecedent
+</jh>
+Now we assemble the result.
+<jh>
+        composeConjunction
+
+        (¬ p) p ProofByContradiction
+        import
+        applySyllogism
 ))
 </jh>
 
