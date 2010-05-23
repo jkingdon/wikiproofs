@@ -504,6 +504,12 @@ Now we assemble the result.
 ))
 </jh>
 
+== Export ==
+Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
+<jh>
+#export (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
+</jh>
+
 == References ==
 
 <references />
