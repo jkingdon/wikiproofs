@@ -505,6 +505,14 @@ Now we assemble the result.
 ))
 </jh>
 
+== True and false connectives ==
+We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
+
+<jh>
+def ((⊤) (¬ (p ∧ (¬ p))))
+def ((⊥) (p ∧ (¬ p)))
+</jh>
+
 == Export ==
 Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
 <jh>
