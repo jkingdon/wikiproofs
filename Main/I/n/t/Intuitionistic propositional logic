@@ -393,6 +393,15 @@ thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
         p q r Exportation
         introduceBiconditionalFromImplications
 ))
+
+thm (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))) (
+        p q r ConjunctionComposition1
+        import
+
+        p q r ConjunctionCompositionReverse
+
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 === Algebraic laws for disjunction and conjunction ===
