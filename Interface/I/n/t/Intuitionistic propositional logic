@@ -150,7 +150,7 @@ Case by case elimination: (TODO: this probably doesn't hold)
 <jh>
 stmt (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q))
 </jh>
-Composition for disjunction and conjunction: (TODO: DisjunctionComposition is an intuitionistic axiom; does ConjunctionComposition hold?)
+Composition for disjunction and conjunction:
 <jh>
 stmt (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)))
 stmt (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))))
