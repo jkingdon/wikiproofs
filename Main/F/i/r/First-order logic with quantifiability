@@ -4,7 +4,7 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = The purpose of this page is to prove the statements of [[Interface:First-order logic]] from [[Interface:Axioms of first-order logic]].
+ | notes    = The purpose of this page is to prove the statements of [[Interface:First-order logic with quantifiability]] from [[Interface:First-order logic]] and the [[Interface:Axiom of quantifiability]]. In particular, it adds substitution of an object (term) for a variable.
 
 {{under construction}}
 }}
@@ -13,7 +13,7 @@
 | exports = [[Interface:First-order logic with quantifiability]]
 }}
 
-We start with [[Interface:Classical propositional calculus]], and [[Interface:First-order logic]]. We don't import the [[Interface:Axiom of quantifiability]] yet.
+We start with [[Interface:Classical propositional calculus]] and [[Interface:First-order logic]]. We don't import the [[Interface:Axiom of quantifiability]] yet.
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
