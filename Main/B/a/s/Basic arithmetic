@@ -552,6 +552,29 @@ thm (cancelAdditionRight () ((H ((a + c) = (b + c)))) (a = b) (
 ))
 </jh>
 
+A commuted version is an easy consequence, but will be convenient to have:
+
+<jh>
+thm (AdditionCancellationLeft () () 
+  (((c + a) = (c + b)) → (a = b)) (
+        c a AdditionCommutativity
+        c b AdditionCommutativity
+        buildEquality
+        eliminateBiconditionalReverse
+
+        a c b AdditionCancellationRight
+        applySyllogism
+))
+
+thm (cancelAdditionLeft () 
+  ((H ((c + a) = (c + b))))
+  (a = b) (
+        H
+        c a b AdditionCancellationLeft
+        applyModusPonens
+))
+</jh>
+
 == Multiplication is commutative ==
 The proof that multiplication is commutative is analogous to the proof that addition is commutative. It starts with proving commuted versions of the two multiplication axioms by induction, and then using those results to prove <code>n · m = m · n</code> by induction.
 
