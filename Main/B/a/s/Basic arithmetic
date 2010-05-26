@@ -1129,6 +1129,30 @@ That in turn implies <code>∃ n 0 + n = a</code>, which is <code>0 ≤ a</code>
 ))
 </jh>
 
+=== Transitivity of ≤ ===
+
+Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + ab + bc = c</code>.  That implies <code>∃ ac a + ac = c</code> (because <code>ab + bc</code> is a specific value for <code>ac</code> and we can apply <code>ThereExistsIntroduction</code>), which is just <code>a ≤ c</code> by the definition.
+
+Formalizing the proof is somewhat tedious, partly because "rearranging the terms and cancelling" expands to many steps and partly because the first-order logic is not (yet at least) as straightforward as the above sketch, but the idea is unchanged.
+
+<jh>
+var (object ab bc ac)
+var (variable vab vbc vac)
+
+</jh>
+The following lemma includes all the rearrangements we will need (before we apply any of the predicate logic).
+<jh>
+#thm (LessEqualTransitivity-1 () ()
+#  ((((b + bc) = c) ∧ ((ac = (ab + bc)) ∧ ((a + ab) = b))) → ((a + ac) = c)) (
+        # proof not yet written
+#))
+
+#thm (LessEqualTransitivity () () 
+#  (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
+        # proof not written yet
+#))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
