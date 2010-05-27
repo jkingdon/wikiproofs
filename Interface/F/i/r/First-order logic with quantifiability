@@ -229,6 +229,15 @@ stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ
 stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
 </jh>
 
+=== Adding ∃ to the antecedent of a theorem ===
+
+This variant on moving formulas turns out to be used particularly often:
+<jh>
+stmt (addThereExistsToAntecedent ((x ψ))
+  ((φ → ψ))
+  ((∃ x φ) → ψ))
+</jh>
+
 == Substitution ==
 Having a formula which substitutes one variable for another greatly increases the readability of many theorems.  For example, a statement of [[w:mathematical induction|induction]] will generally apply the same formula with <code>0</code>, <code>k</code>, <code>k + 1</code>, or <code>n</code>.
 
