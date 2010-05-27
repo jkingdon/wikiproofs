@@ -999,6 +999,23 @@ thm (ForAllConjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∧ ψ
 ))
 </jh>
 
+=== Adding ∃ to the antecedent of a theorem ===
+
+A consequence of <code>ForAllImplicationConsequentMovement</code> is that if we have a theorem which is an implication, we can add ∃ to the antecedent (provided the consequent does not contain the variable we are quantifying over).
+<jh>
+thm (addThereExistsToAntecedent ((x ψ))
+  ((H (φ → ψ)))
+  ((∃ x φ) → ψ) (
+        H x generalize
+
+        x ψ DistinctNotFree
+        φ ForAllImplicationConsequentMovement
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
 == Quantifier order: ∃x∀y to ∀y∃x ==
 We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.<ref>[http://us.metamath.org/mpeuni/19.12.html 19.12] in metamath's set.mm, accessed February 22, 2010</ref>
 <jh>
