@@ -1,0 +1,536 @@
+{{header
+ | title    = Intuitionistic propositional logic
+ | subtitle =
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The purpose of this page is to prove the statements of [[Interface:Intuitionistic propositional logic]] from the [[Interface:Axioms of intuitionistic propositional logic]].
+}}
+{{interfaces
+| imports = [[Interface:Axioms of intuitionistic propositional logic]]
+| exports = eventually [[Interface:Intuitionistic propositional logic]]
+}}
+
+{{under construction}}
+<jh>
+import (AXIOMS Interface:Axioms_of_intuitionistic_propositional_logic () ())
+</jh>
+We define some variables for [[w:well-formed formula|well-formed formula]]s:
+<jh>
+var (formula p q r s)
+</jh>
+
+Some of the proofs here are adapted, or even entirely copy-pasted, from pages such as [[Principia Mathematica propositional logic]] or [[Standard axioms imply Principia Mathematica axioms]]. It would be possible to reduce this duplication by having some of the other pages build on [[Interface:Intuitionistic propositional logic]], but the presentation might become less clear in other ways (certainly it would less closely track the way things are developed in ''Principia''), so we do not currently have the intuitionistic tail wag the classical dog.
+
+Some proofs are taken from metamath's set.mm.  In particular, metamath's section "Logical implication" makes use only of the two axioms <code>Simp</code> and <code>Frege</code>, and thus is entirely valid in an intuitionistic context.<ref>[http://us.metamath.org/mpeuni/mmtheorems.html#mm2b Propositional calculus], from Metamath Proof Explorer, accessed February 26, 2010</ref>
+
+== Implication ==
+
+=== Rule for antecedent distribution ===
+
+It will be convenient to have the ''Frege'' axiom as a rule:
+<jh>
+thm (distributeAntecedent () ((H (p → (q → r)))) ((p → q) → (p → r)) (
+        H
+        p q r Frege
+        applyModusPonens
+))
+</jh>
+
+=== Syllogism ===
+
+Next we derive the syllogism, which allows us to combine several implications.
+<jh>
+thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
+        H1
+
+</jh>
+First we turn <code>q → r</code> into <code>p → (q → r)</code>:
+<jh>
+        H2
+        (q → r) p Simp
+        applyModusPonens
+
+</jh>
+Then we turn that into <code>(p → q) → (p → r)</code>:
+<jh>
+        distributeAntecedent
+
+</jh>
+Now we can apply modus ponens to get our desired result:
+<jh>
+        applyModusPonens
+))
+</jh>
+
+=== Implication reflexivity ===
+
+Any proposition implies itself:
+<jh>
+thm (Id () () (p → p) (
+        p p Simp
+
+        p (p → p) Simp
+        p (p → p) p Frege
+        applyModusPonens
+
+        applyModusPonens
+))
+
+# Alternate name for the same theorem:
+thm (ImplicationReflexivity () () (p → p) (
+        p Id
+))
+</jh>
+
+=== More common operations ===
+Given a nested implication we often want to exchange the two antecedents:
+<jh>
+thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
+        q p Simp
+
+        H
+        distributeAntecedent
+
+        applySyllogism
+))
+</jh>
+
+If we have an implication, adding a common term to the antecedent and the consequent yields a new theorem:
+<jh>
+thm (CommonAntecedentAddition () () ((p → q) → ((r → p) → (r → q))) (
+        (p → q) r Simp
+        r p q Frege
+        applySyllogism
+))
+
+thm (addCommonAntecedent () ((H (p → q))) ((r → p) → (r → q)) (
+        H
+        (p → q) r Simp
+        applyModusPonens
+
+        distributeAntecedent
+))
+</jh>
+
+The analogous operation adding consequents swaps the initial antecedent and consequent:
+<jh>
+thm (CommonConsequentAddition () () 
+  ((p → q) → ((q → r) → (p → r))) (
+        q r p CommonAntecedentAddition
+        applyComm
+))
+
+thm (addCommonConsequent () ((H (p → q))) ((q → r) → (p → r)) (
+        H
+
+        p q r CommonConsequentAddition
+
+        applyModusPonens
+))
+</jh>
+
+Here's a theorem form of <code>applyComm</code>:
+<jh>
+thm (Comm () () ((p → (q → r)) → (q → (p → r))) (
+        p q r Frege
+
+        q p Simp
+        (p → r) addCommonConsequent
+
+        applySyllogism
+))
+</jh>
+
+=== Absorb redundant antecedent ===
+
+We can absorb a redundant antecedent:
+<jh>
+thm (RedundantAntecedentAbsorption () ()
+  ((p → (p → q)) → (p → q)) (
+        p Id
+
+        p p q Frege
+        applyComm
+
+        applyModusPonens
+))
+
+thm (absorbRedundantAntecedent () ((H (p → (p → q)))) (p → q) (
+        p Id
+
+        H
+        distributeAntecedent
+
+        applyModusPonens
+))
+</jh>
+
+=== Antecedent introduction ===
+We provide another name and a rule form for the <code>Simp</code> axiom:
+<jh>
+thm (AntecedentIntroduction () () (p → (q → p)) (
+        p q Simp
+))
+
+thm (introduceAntecedent () ((H p)) (q → p) (
+        H
+        p q AntecedentIntroduction
+        applyModusPonens
+))
+</jh>
+
+=== Converse of antecedent distribution ===
+The converse of the <code>Frege</code> axiom also holds.<ref>[http://us.metamath.org/mpeuni/pm2.86.html pm2.86] in metamath's set.mm, accessed May 14, 2010</ref>
+<jh>
+thm (FregeConverse () () (((p → q) → (p → r)) → (p → (q → r))) (
+</jh>
+We start with <code>q → (p → q)</code>:
+<jh>
+        q p Simp
+</jh>
+Adding a common consequent gets us most of the way, to <code>((p → q) → (p → r)) → (q → (p → r))</code>:
+<jh>
+        (p → r) addCommonConsequent
+</jh>
+Now we just switch <code>p</code> and <code>q</code> in <code>q → (p → r)</code> and we're done:
+<jh>
+        q p r Comm
+        applySyllogism
+))
+</jh>
+
+== Conjunction ==
+
+=== Rules ===
+If we can prove two propositions, the conjunction of the two follows (this is just a rule form of the <code>ConjunctionRightIntroduction</code> axiom):
+<jh>
+thm (introduceConjunction ()
+  ((HLEFT p) (HRIGHT q))
+  (p ∧ q) (
+        HRIGHT
+        HLEFT
+        p q ConjunctionRightIntroduction
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+Here are rules for the <code>ConjunctionLeftElimination</code> and <code>ConjunctionRightElimination</code> axioms:
+<jh>
+thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+        H
+        p q ConjunctionLeftElimination
+        applyModusPonens
+))
+
+thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+        H
+        p q ConjunctionRightElimination
+        applyModusPonens
+))
+</jh>
+
+=== Left introduction ===
+Most of the introduction and elimination statements we need to provide are axioms, but this one is a simple consequence of the axioms:
+<jh>
+thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) (
+        q p ConjunctionRightIntroduction
+        applyComm
+))
+</jh>
+
+=== Conjunction composition ===
+Our first major theorem relating conjunction to implication is composition: from <code>p → q</code> and <code>p → r</code>, we can conclude <code>p → (q ∧ r)</code>.
+<jh>
+thm (ConjunctionComposition1 () () ((p → q) → ((p → r) → (p → (q ∧ r)))) (
+</jh>
+The proof starts with <code>q → (r → (q ∧ r))</code>:
+<jh>
+        q r ConjunctionRightIntroduction
+</jh>
+and then adds <code>p</code> as an antecedent to each of <code>q</code>, <code>r</code>, and <code>q ∧ r</code>:
+<jh>
+        p addCommonAntecedent
+
+        p r (q ∧ r) Frege
+        applySyllogism
+))
+
+thm (composeConjunction () ((HQ (p → q)) (HR (p → r))) (p → (q ∧ r)) (
+        HR
+        HQ
+        p q r ConjunctionComposition1
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+We also prove a version of the converse:
+<jh>
+thm (ConjunctionCompositionReverse () () ((p → (q ∧ r)) → ((p → q) ∧ (p → r))) (
+</jh>
+We start with <code>(p → (q ∧ r)) → (p → q)</code>:
+<jh>
+        q r ConjunctionRightElimination
+        p addCommonAntecedent
+</jh>
+And the analogue for <code>r</code>, <code>(p → (q ∧ r)) → (p → r)</code>:
+<jh>
+        q r ConjunctionLeftElimination
+        p addCommonAntecedent
+</jh>
+Combining the two gives us our result:
+<jh>
+        composeConjunction
+))
+</jh>
+
+=== Export and import ===
+The import and export theorems from classical propositional logic also hold in intuitionistic logic. We start with export, <code>(p ∧ q → r) → (p → (q → r))</code>. The proof is based around a variant of CommonConsequentAddition which has two antecedents, rather than one.
+
+<jh>
+var (formula common)
+thm (CommonConsequentAdditionToNestedImplication () ()
+  ((p → (q → r)) → ((r → common) → (p → (q → common)))) (
+        r common q CommonAntecedentAddition
+        (q → r) (q → common) p CommonAntecedentAddition
+        applySyllogism
+
+        applyComm
+))
+
+thm (Exportation () () (((p ∧ q) → r) → (p → (q → r))) (
+        p q ConjunctionRightIntroduction
+        p q (p ∧ q) r CommonConsequentAdditionToNestedImplication
+        applyModusPonens
+))
+
+thm (export () ((H ((p ∧ q) → r))) (p → (q → r)) (
+        H
+        p q r Exportation
+        applyModusPonens
+))
+</jh>
+
+The proof of export was based around having a conjunction as a consequent, that is <code>p → (q → p ∧ q)</code>.  The proof of import is based around <code>p ∧ q → p</code> (and likewise for <code>q</code>). The following lemma is what we'll use the glue together the different parts of the proof, and is basically a gussied up variant of applySyllogism:
+
+<jh>
+var (formula P Q R)
+thm (ImportLemma () 
+  ((H1 (P → (Q → R))) (H2 (R → (Q → r))))
+  (P → (Q → r)) (
+        H1
+
+        H2
+        Q addCommonAntecedent
+
+        applySyllogism
+</jh>
+Now we have <code>P → (Q → (Q → r))</code>, and just need to remove the extra <code>Q</code>:
+<jh>
+        Q r RedundantAntecedentAbsorption
+        applySyllogism
+))
+
+thm (Importation () () ((p → (q → r)) → ((p ∧ q) → r)) (
+        p q ConjunctionRightElimination
+        (q → r) addCommonConsequent
+
+        p q ConjunctionLeftElimination
+        r addCommonConsequent
+
+        ImportLemma
+))
+
+thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
+        H
+        p q r Importation
+        applyModusPonens
+))
+</jh>
+
+=== Implication transitivity ===
+The form of the syllogism in [[Interface:Intuitionistic propositional logic]] is easy now that we have import:
+
+<jh>
+thm (ImplicationTransitivity () () 
+  (((p → q) ∧ (q → r)) → (p → r)) (
+        p q r CommonConsequentAddition
+        import
+))
+</jh>
+
+== Biconditional ==
+
+We define the biconditional as the conjunction of two implications:
+<jh>
+def ((↔ p q) ((p → q) ∧ (q → p)))
+</jh>
+
+And one way to prove a biconditional is to prove both of the implications:
+<jh>
+thm (introduceBiconditionalFromImplications () 
+  ((HFORWARD (p → q)) (HREVERSE (q → p))) 
+  (p ↔ q) (
+        HFORWARD
+        HREVERSE
+        introduceConjunction
+))
+</jh>
+
+=== Biconditionalized versions of some theorems we've already proved ===
+We've proved both directions of each of the following theorems, so the biconditional immediately follows:
+<jh>
+thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) (
+        p q r Frege
+        p q r FregeConverse
+        introduceBiconditionalFromImplications
+))
+
+thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
+        p q r Importation
+        p q r Exportation
+        introduceBiconditionalFromImplications
+))
+
+thm (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))) (
+        p q r ConjunctionComposition1
+        import
+
+        p q r ConjunctionCompositionReverse
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+=== Algebraic laws for disjunction and conjunction ===
+Most of the theorems of the propositional calculus which are analagous to those of other [[w:Abstract algebra|algebras]], showing properties such as commutivity and associativity, also hold for intuitionistic logic.
+
+==== Conjunction idempotence ====
+<jh>
+thm (ConjunctionIdempotenceForward () () (p → (p ∧ p)) (
+        p p ConjunctionRightIntroduction
+        absorbRedundantAntecedent
+))
+
+thm (ConjunctionIdempotenceReverse () () ((p ∧ p) → p) (
+        p p ConjunctionLeftElimination
+))
+
+thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) (
+        p ConjunctionIdempotenceForward
+        p ConjunctionIdempotenceReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+==== Conjunction commutativity ====
+<jh>
+thm (ConjunctionCommutativityImplication () () ((p ∧ q) → (q ∧ p)) (
+        p q ConjunctionLeftElimination
+        p q ConjunctionRightElimination
+        composeConjunction
+))
+
+thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) (
+        p q ConjunctionCommutativityImplication
+        q p ConjunctionCommutativityImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+==== Disjunction idempotence ====
+<jh>
+thm (DisjunctionIdempotenceForward () () (p → (p ∨ p)) (
+        p p DisjunctionRightIntroduction
+))
+
+thm (DisjunctionIdempotenceReverse () () ((p ∨ p) → p) (
+        p ImplicationReflexivity
+        p ImplicationReflexivity
+        p p p DisjunctionCompositionAxiom
+        applyModusPonens
+        applyModusPonens
+))
+
+thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) (
+        p DisjunctionIdempotenceForward
+        p DisjunctionIdempotenceReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+==== Disjunction commutativity ====
+<jh>
+thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
+        q p DisjunctionRightIntroduction
+        p q DisjunctionLeftIntroduction
+        p (q ∨ p) q DisjunctionCompositionAxiom
+        applyModusPonens
+        applyModusPonens
+))
+
+thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) (
+        p q DisjunctionCommutativityImplication
+        q p DisjunctionCommutativityImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+== Modus Ponens ==
+This is just an implication corresponding to the modus ponens rule:
+<jh>
+thm (ModusPonens () () ((p ∧ (p → q)) → q) (
+        (p → q) ImplicationReflexivity
+        applyComm
+        import
+))
+</jh>
+
+== Negation ==
+
+=== Double Negation ===
+Double negation introduction follows fairly directly from our first negation axiom.
+<jh>
+thm (DoubleNegation () () (p → (¬ (¬ p))) (
+</jh>
+The key step in the proof will be <code>(¬p → p) ∧ (¬p → ¬p) → ¬¬p</code> (which follows from the <code>ProofByContradiction</code> axiom). Taking the pieces of that formula one at a time, <code>p</code> implies <code>¬p → p</code>
+<jh>
+        p (¬ p) AntecedentIntroduction
+</jh>
+and <code>¬p → ¬p</code> is a theorem.
+<jh>
+         (¬ p) ImplicationReflexivity
+         p introduceAntecedent
+</jh>
+Now we assemble the result.
+<jh>
+        composeConjunction
+
+        (¬ p) p ProofByContradiction
+        import
+        applySyllogism
+))
+</jh>
+
+== True and false connectives ==
+We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
+
+<jh>
+def ((⊤) (¬ (p ∧ (¬ p))))
+def ((⊥) (p ∧ (¬ p)))
+</jh>
+
+== Export ==
+Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
+<jh>
+#export (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Subsystems of classical logic|{{PAGENAME}}]]
+

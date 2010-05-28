@@ -1,0 +1,79 @@
+{{header
+ | title    = Peano axioms
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The first-order [[w:Peano axioms|Peano axioms]] are the most widely used formalism for [[w:Arithmetic|arithmetic]] (that is, the natural numbers: zero, one, two, ...). They are stronger than the axioms of [[w:Robinson arithmetic|Robinson arithmetic]] (which are similar but omit the induction axiom) and weaker than systems like [[w:Second-order arithmetic|second-order arithmetic]] or most kinds of set theory (such as [[w:Zermelo–Fraenkel set theory|ZFC]]).
+}}
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic]]
+| importedby = [[Basic arithmetic]]
+| exportedby = None yet.
+}}
+
+First, we adopt the axioms of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+The kind <code>object</code>, defined in first-order logic, represents a natural number:
+<jh>
+kindbind (object nat)
+var (nat a b c a0 a1 b0 b1)
+
+var (variable k n)
+</jh>
+
+There is a number zero:
+
+<jh>
+term (nat (0))
+</jh>
+
+There is a successor operation:
+<jh>
+term (nat (succ nat))
+</jh>
+
+Zero is not the successor of any number:
+<jh>
+stmt (ZeroNotSuccessor () () (¬ ((0) = (succ a))))
+</jh>
+
+By making the following axiom a biconditional, we express two ideas. The first is that equals can be substituted for equals (this is often a generic rule of first order logic, but JHilbert requires us to provide it for each term). The second idea, specific to the successor operation, is that each number is the successor of only one number.
+<jh>
+stmt (Successor () () (((succ b) = (succ a)) ↔ (b = a)))
+</jh>
+
+[[w:mathematical induction|Induction]]:
+<jh>
+var (formula φ)
+stmt (Induction () () 
+  (((subst (0) n φ) ∧ 
+    (∀ k ((subst (value k) n φ) → (subst (succ (value k)) n φ)))) 
+   → (∀ n φ)))
+</jh>
+
+We also supply the usual axioms for addition and multiplication:
+
+<jh>
+term (nat (+ nat nat))
+stmt (AdditiveIdentity () () ((a + (0)) = a))
+stmt (Addition () () ((a + (succ b)) = (succ (a + b))))
+
+term (nat (· nat nat))
+stmt (MultiplicativeZero () () ((a · (0)) = (0)))
+stmt (Multiplication () () ((a · (succ b)) = (a + (a · b))))
+</jh>
+
+and the principle that equals can be substituted for equals, in the context of addition and multiplication:
+<jh>
+stmt (AdditionBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 + b0) = (a1 + b1))))
+stmt (MultiplicationBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 · b0) = (a1 · b1))))
+</jh>
+
+[[Category:Elementary number theory|{{PAGENAME}}]]
+
