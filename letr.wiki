@@ -1,0 +1,6 @@
+=== Transitivity of ≤ ===
+
+Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + ab + bc = c</code>.  That implies <code>∃ ac a + ac = c</code> (because <code>ab + bc</code> is a specific value for <code>ac</code> and we can apply <code>ThereExistsIntroduction</code>), which is just <code>a ≤ c</code> by the definition.
+
+Formalizing the proof is somewhat tedious, partly because "rearranging the terms and cancelling" expands to many steps and partly because the first-order logic is not (yet at least) as straightforward as the above sketch, but the idea is unchanged.
+
