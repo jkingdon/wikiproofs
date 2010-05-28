@@ -1,6 +1,1248 @@
+{{header
+ | notes = This page covers basic arithmetic, starting from [[Interface:Peano axioms]] and proceeding as far as all the familiar laws of arithmetic: commutative, associative, distributive, etc.  At least for now, it stops before continuing into number theory (divisibility, primes, etc).
+}}
+{{interfaces
+| imports = [[Interface:Peano axioms]]
+| exports = [[Interface:Basic arithmetic]]
+}}
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Peano axioms|Peano axioms]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+
+var (formula φ)
+var (variable k n)
+var (nat a b c d a0 a1 b0 b1)
+</jh>
+
+Many of the proofs in this file are based on versions from Raph Levien.<ref>[http://levien.com/garden/ghnew/peano/ Peano], accessed March 2, 2010</ref>
+
+== Builders ==
+We provide rules and variants for the builder axioms.
+<jh>
+thm (AdditionBuilderLL () () ((b0 = b1) → ((a + b0) = (a + b1))) (
+        a EqualityReflexivity
+        (a = a) (b0 = b1) ConjunctionRightIntroduction
+        applyModusPonens
+
+        a a b0 b1 AdditionBuilder
+        applySyllogism
+))
+
+thm (AdditionBuilderRR () () ((a0 = a1) → ((a0 + b) = (a1 + b))) (
+        b EqualityReflexivity
+        (b = b) (a0 = a1) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        a0 a1 b b AdditionBuilder
+        applySyllogism
+))
+
+thm (buildAddition () ((HN (a0 = a1)) (HM (b0 = b1))) ((a0 + b0) = (a1 + b1)) (
+        HN
+        HM
+        introduceConjunction
+        a0 a1 b0 b1 AdditionBuilder
+        applyModusPonens
+))
+
+thm (buildAdditionLL () ((HM (b0 = b1))) ((a + b0) = (a + b1)) (
+        HM
+        b0 b1 a AdditionBuilderLL
+        applyModusPonens
+))
+
+thm (buildAdditionRR () ((HN (a0 = a1))) ((a0 + b) = (a1 + b)) (
+        HN
+        a0 a1 b AdditionBuilderRR
+        applyModusPonens
+))
+
+thm (addSuccessor () ((H (a = b))) ((succ a) = (succ b)) (
+        H
+        a b Successor eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (removeSuccessor () ((H ((succ a) = (succ b)))) (a = b) (
+        H
+        a b Successor eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (MultiplicationBuilderLL () () ((b0 = b1) → ((a · b0) = (a · b1))) (
+        a EqualityReflexivity
+        (a = a) (b0 = b1) ConjunctionRightIntroduction
+        applyModusPonens
+
+        a a b0 b1 MultiplicationBuilder
+        applySyllogism
+))
+
+thm (MultiplicationBuilderRR () () ((a0 = a1) → ((a0 · b) = (a1 · b))) (
+        b EqualityReflexivity
+        (b = b) (a0 = a1) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        a0 a1 b b MultiplicationBuilder
+        applySyllogism
+))
+
+thm (buildMultiplication () ((HN (a0 = a1)) (HM (b0 = b1))) ((a0 · b0) = (a1 · b1)) (
+        HN
+        HM
+        introduceConjunction
+        a0 a1 b0 b1 MultiplicationBuilder
+        applyModusPonens
+))
+
+thm (buildMultiplicationLL () ((HM (b0 = b1))) ((a · b0) = (a · b1)) (
+        HM
+        b0 b1 a MultiplicationBuilderLL
+        applyModusPonens
+))
+
+thm (buildMultiplicationRR () ((HN (a0 = a1))) ((a0 · b) = (a1 · b)) (
+        HN
+        a0 a1 b MultiplicationBuilderRR
+        applyModusPonens
+))
+</jh>
+
+Proofs using induction, when they build up their substitutions, make heavy use of builders in consequents:
+<jh>
+thm (buildEqualityInConsequent ()
+  ((HN (φ → (a0 = a1)))
+   (HM (φ → (b0 = b1))))
+  (φ → ((a0 = b0) ↔ (a1 = b1))) (
+        HN HM composeConjunction
+        a0 a1 b0 b1 EqualityBuilder
+        applySyllogism
+))
+
+thm (buildAdditionInConsequent ()
+  ((HN (φ → (a0 = a1)))
+   (HM (φ → (b0 = b1))))
+  (φ → ((a0 + b0) = (a1 + b1))) (
+        HN HM composeConjunction
+        a0 a1 b0 b1 AdditionBuilder
+        applySyllogism
+))
+</jh>
+
+== Induction ==
+Here we present some induction theorems.
+
+=== Induction5 ===
+This version has five hypotheses, which despite the large number turns out to be easier to handle than expressing base cases and induction steps via <code>subst</code>. The first three hypotheses handle the substitution machinery.  The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
+
+<jh>
+var (formula φ0 φk φSk)
+
+thm (Induction5 ((φ0 n) (φk n) (φSk n) (φ k) (n k))
+  ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
+   (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
+   (HSUBSK (((value n) = (succ (value k))) → (φ ↔ φSk)))
+   (HBASE φ0)
+   (HIND (φk → φSk))
+  )
+  φ (
+</jh>
+The main difference between this and <code>Induction</code> is that the latter uses <code>subst</code> and we use implicit substitutions. The theorem linking the two is <code>makeSubstExplicit</code>. We first show the base case, <code>(subst (0) n φ)</code>.
+<jh>
+        HBASE
+        HSUB0 makeSubstExplicit eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+The induction step is similar.
+<jh>
+        HSUBK makeSubstExplicit eliminateBiconditionalReverse
+        HIND
+        applySyllogism
+        HSUBSK makeSubstExplicit eliminateBiconditionalForward
+        applySyllogism
+        k generalize
+</jh>
+Now we combine the two and apply <code>Induction</code>.
+<jh>
+        introduceConjunction
+        n φ k Induction
+        applyModusPonens
+
+        specialize
+))
+</jh>
+
+=== Induction6S ===
+Having presented <code>Induction5</code>, there's an admission to make: it isn't quite enough.  There are two reasons.  The first is that the discrete variable constraints on n (for example, <code>(φ0 n)</code>) are a bit too onerous. For example, suppose we are trying to prove <code>Sm + n = S(m + n)</code> by induction on <code>n</code>. Then <code>φ0</code> would be <code>Sm + 0 = S(m + 0)</code>.  This only passes the constraint <code>(φ0 n)</code> if <code>m</code> is distinct from <code>n</code>, which is not a condition we want to impose.
+
+The second reason is that <code>n</code> in <code>Induction5</code> is a <code>variable</code>, rather than an <code>object</code>. Because the quantifiers and substitution are only needed during the proof, not at the end, this is an unnecessary restriction.
+
+The solution is <code>Induction6S</code>, which adds one more substitution, to separate the result from the variables used in the proof.  The naming conventions in the following are: <code>a</code> is the variable which will appear in the final result, <code>k</code> is the variable which appears in the induction step, and <code>n</code> is a variable which is used only in substitutions (the limitation of <code>Induction5</code> happens because it combines this one with what corresponds to <code>a</code> here).
+
+<jh>
+var (formula φa)
+
+thm (Induction6S ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
+  ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
+   (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
+   (HSUBSK (((value n) = (succ (value k))) → (φ ↔ φSk)))
+   (HSUBA (((value n) = a) → (φ ↔ φa)))
+   (HBASE φ0)
+   (HIND (φk → φSk))
+  )
+  φa (
+        HSUB0 HSUBK HSUBSK HBASE HIND Induction5
+        a n introduceSubst
+
+        HSUBA makeSubstExplicit eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
+== Addition is commutative ==
+The proof that <code>a + b = b + a</code> will be by induction, but we first prove two results which will underpin the base case and induction step.
+
+=== Commuted version of the AdditiveIdentity axiom ===
+The first step towards proving that addition is commutative will be a commuted version of the AdditiveIdentity axiom. We proceed by induction.
+
+<jh>
+thm (AdditiveIdentityLeft ((a k) (n k) (n a)) () (((0) + a) = a) (
+</jh>
+The substitution for the base case is <code>n = 0 → (0 + n = n ↔ 0 + 0 = 0)</code>.
+<jh>
+        (value n) (0) (0) AdditionBuilderLL
+        ((value n) = (0)) ImplicationReflexivity
+        buildEqualityInConsequent
+</jh>
+The substitution for the induction step antecedent is <code>n = k → (0 + n = n ↔ 0 + k = k)</code>.
+<jh>
+        (value n) (value k) (0) AdditionBuilderLL
+        ((value n) = (value k)) ImplicationReflexivity
+        buildEqualityInConsequent
+</jh>
+The substitution for the induction step consequent is similar.
+<jh>
+        (value n) (succ (value k)) (0) AdditionBuilderLL
+        ((value n) = (succ (value k))) ImplicationReflexivity
+        buildEqualityInConsequent
+</jh>
+The substitution for the result is similar.
+<jh>
+        (value n) a (0) AdditionBuilderLL
+        ((value n) = a) ImplicationReflexivity
+        buildEqualityInConsequent
+</jh>
+The base case, <code>0 + 0 = 0</code>, follows from the AdditiveIdentity axiom.
+<jh>
+        (0) AdditiveIdentity
+</jh>
+The induction step, <code>0 + k = k → 0 + Sk = Sk</code>, follows from the Addition axiom.
+<jh>
+        ((0) + (value k)) (value k) Successor eliminateBiconditionalForward
+
+        (0) (value k) Addition swapEquality
+        (succ (value k)) buildEqualityRR eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+Now that we have a <code>AdditiveIdentityLeft</code>, we'll also add <code>AdditiveIdentityRight</code> as a new name for the <code>AdditiveIdentity</code> axiom:
+<jh>
+thm (AdditiveIdentityRight () () ((a + (0)) = a) (
+        a AdditiveIdentity
+))
+</jh>
+
+=== Commuted version of the Addition axiom ===
+The proof is by induction on <code>b</code>.
+
+<jh>
+thm (AdditionCommuted ((n a) (n b) (n k) (k a)) () 
+  (((succ a) + b) = (succ (a + b))) (
+</jh>
+The substitution for the base case is <code>n = 0 → (Sa + n = S(a + n) ↔ Sa + 0 = S(a + 0))</code>.
+<jh>
+        (value n) (0) (succ a) AdditionBuilderLL
+
+        (value n) (0) a AdditionBuilderLL
+        (a + (value n)) (a + (0)) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) (succ a) AdditionBuilderLL
+
+        (value n) (value k) a AdditionBuilderLL
+        (a + (value n)) (a + (value k)) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) (succ a) AdditionBuilderLL
+
+        (value n) (succ (value k)) a AdditionBuilderLL
+        (a + (value n)) (a + (succ (value k))) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) b (succ a) AdditionBuilderLL
+
+        (value n) b a AdditionBuilderLL
+        (a + (value n)) (a + b) Successor eliminateBiconditionalForward
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+The base case is <code>Sa + 0 = S(a + 0)</code>. The <code>AdditiveIdentity</code> axiom implies that each side is equal to <code>Sn</code>.
+<jh>
+        (succ a) AdditiveIdentity
+
+        a AdditiveIdentity
+        addSuccessor
+        swapEquality
+
+        applyEqualityTransitivity
+</jh>
+The induction step is <code>Sa + k = S(a + k) → Sa + Sk = S(a + Sk)</code>. We prove this by starting with the antecedent and taking the successor of both sides, to get <code>S(Sa + k) = S(S(a + k))</code>.  Applying the <code>Addition</code> axiom to each of the two additions gets us <code>Sa + Sk = S(a + Sk)</code>, which is what we need.
+<jh>
+        ((succ a) + (value k)) (succ (a + (value k))) Successor eliminateBiconditionalForward
+
+        (succ a) (value k) Addition swapEquality
+        a (value k) Addition addSuccessor swapEquality
+        buildEquality eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+=== Proof that addition is commutative ===
+We prove <code>a + b = b + a</code> by induction on <code>a</code>.
+<jh>
+thm (AdditionCommutativity ((n a) (n b) (n k) (k b)) () ((a + b) = (b + a)) (
+</jh>
+The substitution for the base case is <code>n = 0 → n + b = b + n ↔ 0 + b = b + 0</code>.
+<jh>
+        (value n) (0) b AdditionBuilderRR
+        (value n) (0) b AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) b AdditionBuilderRR
+        (value n) (value k) b AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) b AdditionBuilderRR
+        (value n) (succ (value k)) b AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a b AdditionBuilderRR
+        (value n) a b AdditionBuilderLL
+        buildEqualityInConsequent
+</jh>
+The base case, <code>0 + b = b + 0</code>, follows from right and left identity.
+<jh>
+        b AdditiveIdentityLeft
+        b AdditiveIdentityRight swapEquality
+        applyEqualityTransitivity
+</jh>
+The induction step, <code>k + b = b + k → Sk + b = b + Sk</code> follows from the regular and commuted versions of the <code>Addition</code> axiom.
+<jh>
+        ((value k) + b) (b + (value k)) Successor eliminateBiconditionalForward
+
+        (value k) b AdditionCommuted swapEquality
+        b (value k) Addition swapEquality
+        buildEquality eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+== Addition is associative ==
+<jh>
+thm (AdditionAssociativity ((n a) (n b) (n c) (n k) (k b) (k c)) ()
+  (((a + b) + c) = (a + (b + c))) (
+</jh>
+The proof proceeds by induction on <code>a</code>. The substitution for the base case is <code>n = 0 → (n + b) + c = n + (b + c) ↔ (0 + b) + c = 0 + (b + c)</code>:
+<jh>
+        (value n) (0) b AdditionBuilderRR
+        ((value n) + b) ((0) + b) c AdditionBuilderRR
+        applySyllogism
+
+        (value n) (0) (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) b AdditionBuilderRR
+        ((value n) + b) ((value k) + b) c AdditionBuilderRR
+        applySyllogism
+
+        (value n) (value k) (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) b AdditionBuilderRR
+        ((value n) + b) ((succ (value k)) + b) c AdditionBuilderRR
+        applySyllogism
+
+        (value n) (succ (value k)) (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a b AdditionBuilderRR
+        ((value n) + b) (a + b) c AdditionBuilderRR
+        applySyllogism
+
+        (value n) a (b + c) AdditionBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Each side of the base case, <code>(0 + b) + c = 0 + (b + c)</code>, is equal to <code>b + c</code> by <code>AdditiveIdentityLeft</code>.
+<jh>
+        b AdditiveIdentityLeft
+        c buildAdditionRR
+
+        (b + c) AdditiveIdentityLeft
+        swapEquality
+
+        applyEqualityTransitivity
+</jh>
+To prove <code>(Sk + b) + c = Sk + (b + c)</code> from <code>(k + b) + c = k + (b + c)</code>, take the successor of both sides and apply <code>AdditionCommuted</code>, twice to the left side and once to the right side.
+<jh>
+        (((value k) + b) + c) ((value k) + (b + c)) Successor eliminateBiconditionalForward
+
+        (value k) b AdditionCommuted
+        c buildAdditionRR
+        ((value k) + b) c AdditionCommuted
+        applyEqualityTransitivity
+
+        (value k) (b + c) AdditionCommuted
+
+        buildEquality eliminateBiconditionalForward
+
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+== Addition cancellation ==
+The converse of <code>AdditionBuilderRR</code>, <code>a + c = b + c → a = b</code>, also holds.
+
+Before proving it, we fill a few holes in our propositional logic builders (one of which we'll need here):
+<jh>
+var (formula p q r)
+thm (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ r) ↔ (q ↔ r))) (
+</jh>
+We first derive <code>(p ↔ q) → ((p ↔ q) ∧ (r ↔ r))</code>:
+<jh>
+        r BiconditionalReflexivity
+        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+</jh>
+Then we just need to apply <code>BiconditionalFunction</code>:
+<jh>
+        p q r r BiconditionalFunction
+        applySyllogism
+))
+
+</jh>
+This one is just the same, but based on <code>ImplicationFunction</code>:
+<jh>
+thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → r) ↔ (q → r))) (
+        r BiconditionalReflexivity
+        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        p q r r ImplicationFunction
+        applySyllogism
+))
+</jh>
+
+The substitution for our addition cancellation induction is worth breaking out into a lemma:
+<jh>
+var (object sub)
+thm (AdditionCancellationRight-substitution () () (
+  ((value n) = sub) → (
+    (((a + (value n)) = (b + (value n))) → (a = b)) ↔ 
+    (((a + sub) = (b + sub)) → (a = b))
+  )) (
+        (value n) sub a AdditionBuilderLL
+        (value n) sub b AdditionBuilderLL
+        buildEqualityInConsequent
+
+        ((a + (value n)) = (b + (value n)))
+          ((a + sub) = (b + sub))
+          (a = b) ImplicationBuilderRR
+
+        applySyllogism
+))
+</jh>
+
+Now we can prove our addition cancellation theorem:
+<jh>
+thm (AdditionCancellationRight ((n a) (n b) (n c) (n k) (k a) (k b)) () (((a + c) = (b + c)) → (a = b)) (
+</jh>
+We proceed by induction on <code>c</code>.
+
+Here are the substitutions:
+<jh>
+        n (0) a b AdditionCancellationRight-substitution
+        n (value k) a b AdditionCancellationRight-substitution
+        n (succ (value k)) a b AdditionCancellationRight-substitution
+        n c a b AdditionCancellationRight-substitution
+</jh>
+The base case is <code>a + 0 = b + 0 → a = b</code>.
+<jh>
+        a AdditiveIdentityRight
+        b AdditiveIdentityRight
+        buildEquality
+        eliminateBiconditionalReverse
+</jh>
+The induction step is that <code>a + k = b + k → a = b</code> implies <code>a + Sk = b + Sk → a = b</code>. Starting with <code>a + Sk = b + Sk</code> we first move the successor operation to the start of each side: <code>S(a + k) = S(b + k)</code>.
+<jh>
+        a (value k) Addition
+        b (value k) Addition
+        buildEquality eliminateBiconditionalReverse
+</jh>
+Next we drop the successor operation from both sides:
+<jh>
+        (a + (value k)) (b + (value k)) Successor eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+So far we have <code>a + Sk = b + Sk → a + k = b + k</code>.  We just need to add <code>a = b</code> as a common consequent, and we have our induction step.
+<jh>
+        (a = b) addCommonConsequent
+
+        Induction6S
+))
+
+thm (cancelAdditionRight () ((H ((a + c) = (b + c)))) (a = b) (
+        H
+        a c b AdditionCancellationRight
+        applyModusPonens
+))
+</jh>
+
+A commuted version is an easy consequence, but will be convenient to have:
+
+<jh>
+thm (AdditionCancellationLeft () () 
+  (((c + a) = (c + b)) → (a = b)) (
+        c a AdditionCommutativity
+        c b AdditionCommutativity
+        buildEquality
+        eliminateBiconditionalReverse
+
+        a c b AdditionCancellationRight
+        applySyllogism
+))
+
+thm (cancelAdditionLeft () 
+  ((H ((c + a) = (c + b))))
+  (a = b) (
+        H
+        c a b AdditionCancellationLeft
+        applyModusPonens
+))
+</jh>
+
+== Multiplication is commutative ==
+The proof that multiplication is commutative is analogous to the proof that addition is commutative. It starts with proving commuted versions of the two multiplication axioms by induction, and then using those results to prove <code>n · m = m · n</code> by induction.
+
+=== Commuted version of the MultiplicativeZero axiom ===
+
+<jh>
+thm (MultiplicativeZeroLeft ((n a) (n k) (k a)) () (((0) · a) = (0)) (
+</jh>
+The proof proceeds by induction on <code>a</code>. The substitution for the base case is <code>n = 0 → (0 · n = 0 ↔ 0 · 0 = 0)</code>:
+<jh>
+        (value n) (0) (0) MultiplicationBuilderLL
+        (0) EqualityReflexivity
+        ((value n) = (0)) introduceAntecedent
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) (0) MultiplicationBuilderLL
+        (0) EqualityReflexivity
+        ((value n) = (value k)) introduceAntecedent
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) (0) MultiplicationBuilderLL
+        (0) EqualityReflexivity
+        ((value n) = (succ (value k))) introduceAntecedent
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a (0) MultiplicationBuilderLL
+        (0) EqualityReflexivity
+        ((value n) = a) introduceAntecedent
+        buildEqualityInConsequent
+</jh>
+The base case is <code>0 · 0 = 0</code>, which follows from the <code>MultiplicativeZero</code> axiom.
+<jh>
+        (0) MultiplicativeZero
+</jh>
+The induction step is proved as follows:
+ 0 · k = 0 → 0 + 0 · k = 0 + 0 (adding 0 to both sides)
+ 0 + 0 · k = 0 · Sk (by Multiplication axiom)
+ 0 + 0 = 0 (by AdditiveIdentity axiom)
+ 0 · k = 0 → 0 · Sk = 0 (combining the above steps)
+<jh>
+        ((0) · (value k)) (0) (0) AdditionBuilderLL
+
+        (0) (value k) Multiplication swapEquality
+        (0) AdditiveIdentity
+        buildEquality eliminateBiconditionalReverse
+
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+For parallelism, we also give an additional name to the <code>MultiplicativeZero</code> axiom:
+
+<jh>
+thm (MultiplicativeZeroRight () () ((a · (0)) = (0)) (
+        a MultiplicativeZero
+))
+</jh>
+
+=== Commuted version of the Multiplication axiom ===
+Here we prove <code>Sa · b = a · b + b</code>. We break apart some parts of the proof into separate lemmas.
+
+<jh>
+# kk corresponds to (value k)
+var (object kk)
+thm (MultiplicationCommuted-left () () ((((succ a) · kk) + (succ a)) = ((succ a) · (succ kk))) (
+        ((succ a) · kk) (succ a) AdditionCommutativity
+        (succ a) kk Multiplication swapEquality
+        applyEqualityTransitivity
+))
+
+thm (MultiplicationCommuted-right () () 
+  ((((a · kk) + kk) + (succ a)) = ((a · (succ kk)) + (succ kk))) (
+</jh>
+First we transform <code>n · k + k + Sn</code> to S(n · k + k + n):
+<jh>
+        ((a · kk) + kk) a Addition
+</jh>
+Now we swap the last <code>k</code> and <code>n</code> to get <code>S(n · k + n + k)</code>.  This is basically just <code>AdditionCommutativity</code>, but there's quite a bit of rearranging and building:
+<jh>
+        (a · kk) kk a AdditionAssociativity
+        kk a AdditionCommutativity (a · kk) buildAdditionLL
+        applyEqualityTransitivity
+
+        (a · kk) a kk AdditionAssociativity swapEquality
+        applyEqualityTransitivity
+        addSuccessor
+
+        applyEqualityTransitivity
+</jh>
+We now apply <code>Addition</code> to turn that into <code>n · k + n + Sk</code>
+<jh>
+        ((a · kk) + a) kk Addition swapEquality
+        applyEqualityTransitivity
+</jh>
+And <code>Multiplication</code> to get <code>n · Sk + Sk</code>
+<jh>
+        (a · kk) a AdditionCommutativity
+        a kk Multiplication swapEquality
+        applyEqualityTransitivity
+
+        (succ kk) buildAdditionRR
+
+        applyEqualityTransitivity
+))
+
+thm (MultiplicationCommuted-step () () 
+  ((((succ a) · kk) = ((a · kk) + kk)) →
+    (((succ a) · (succ kk)) = ((a · (succ kk)) + (succ kk)))) (
+</jh>
+Induction step: We get started by adding <code>Sn</code> to the right side of our induction step antecedant: <code>Sn · k = n · k + k → Sn · k + Sn = n · k + k + Sn</code>.
+<jh>
+        ((succ a) · kk) ((a · kk) + kk) (succ a) AdditionBuilderRR
+</jh>
+We transform <code>Sn · k + Sn</code> into <code>Sn · Sk</code>:
+<jh>
+        a kk MultiplicationCommuted-left
+</jh>
+Now we turn <code>n · k + k + Sn</code> into <code>n · Sk + Sk</code>:
+<jh>
+        a kk MultiplicationCommuted-right
+</jh>
+Now we just need to reassemble the entire induction step implication:
+<jh>
+        buildEquality eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (MultiplicationCommuted ((n a) (n b) (n k) (k a)) () 
+  (((succ a) · b) = ((a · b) + b)) (
+</jh>
+The proof is by induction on <code>b</code>. The substitution for the base case is <code>n = 0 → (Sa · n = a · n + n ↔ Sa · 0 = a · 0 + 0)</code>.
+<jh>
+        (value n) (0) (succ a) MultiplicationBuilderLL
+
+        (value n) (0) a MultiplicationBuilderLL
+        ((value n) = (0)) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) (succ a) MultiplicationBuilderLL
+
+        (value n) (value k) a MultiplicationBuilderLL
+        ((value n) = (value k)) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) (succ a) MultiplicationBuilderLL
+
+        (value n) (succ (value k)) a MultiplicationBuilderLL
+        ((value n) = (succ (value k))) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) b (succ a) MultiplicationBuilderLL
+
+        (value n) b a MultiplicationBuilderLL
+        ((value n) = b) ImplicationReflexivity
+        buildAdditionInConsequent
+
+        buildEqualityInConsequent
+</jh>
+The base case is <code>Sa · 0 = a · 0 + 0</code>.
+<jh>
+        (succ a) MultiplicativeZero
+        a MultiplicativeZero swapEquality
+        applyEqualityTransitivity
+
+        (a · (0)) AdditiveIdentityRight swapEquality
+        applyEqualityTransitivity
+</jh>
+Induction step:
+<jh>
+        a (value k) MultiplicationCommuted-step
+
+        Induction6S
+))
+</jh>
+
+=== Proof that multiplication is commutative ===
+
+The proof is by induction on <code>a</code>.
+<jh>
+thm (MultiplicationCommutativity ((n a) (n b) (n k) (k b)) () 
+  ((a · b) = (b · a)) (
+</jh>
+The substitution for the base case is <code>n = 0 → (n · b = b · n ↔ 0 · b = b · 0)</code>:
+<jh>
+        (value n) (0) b MultiplicationBuilderRR
+        (value n) (0) b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) b MultiplicationBuilderRR
+        (value n) (value k) b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) b MultiplicationBuilderRR
+        (value n) (succ (value k)) b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a b MultiplicationBuilderRR
+        (value n) a b MultiplicationBuilderLL
+        buildEqualityInConsequent
+</jh>
+The base case is <code>0 · b = b · 0</code>, and follows from left and right zeros, which we have already proved:
+<jh>
+        b MultiplicativeZeroLeft
+        b MultiplicativeZeroRight swapEquality
+        applyEqualityTransitivity
+</jh>
+Induction step.  Starting with <code>k · b = b · k</code> we add b to both sides:
+<jh>
+        ((value k) · b) (b · (value k)) b AdditionBuilderLL
+
+</jh>
+Then we note that <code>b + k · b = Sk · b</code>:
+<jh>
+        b ((value k) · b) AdditionCommutativity
+        (value k) b MultiplicationCommuted swapEquality
+        applyEqualityTransitivity
+</jh>
+And <code>b + b · k = b · Sk</code>:
+<jh>
+        b (value k) Multiplication swapEquality
+</jh>
+Now we combine these, to get <code>k · b = b · k → Sk · b = b · Sk</code>.
+<jh>
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+== Rearrangement ==
+Although there are a wide varieties of ways that a term could be rearranged by commutativity and associativity, the following rearrangement turns out to be one of the common ones:
+<jh>
+thm (Addition4 () () (((a + b) + (c + d)) = ((a + c) + (b + d))) (
+        a b (c + d) AdditionAssociativity
+
+        b c d AdditionAssociativity swapEquality
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        b c AdditionCommutativity
+        d buildAdditionRR
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        c b d AdditionAssociativity
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        a c (b + d) AdditionAssociativity swapEquality
+        applyEqualityTransitivity
+))
+</jh>
+
+== Multiplication distributes over addition ==
+<jh>
+thm (LeftDistribution ((n a) (n b) (n c) (n k) (k b) (k c)) ()
+  ((a · (b + c)) = ((a · b) + (a · c))) (
+</jh>
+The proof is by induction on <code>a</code>. The substitution for the base case is <code>n = 0 → (n · (b + c) = n · b + n · c ↔ 0 · (b + c) = 0 · b + 0 · c)</code>.
+<jh>
+        (value n) (0) (b + c) MultiplicationBuilderRR
+
+        (value n) (0) b MultiplicationBuilderRR
+        (value n) (0) c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) ((0) · b) ((value n) · c) ((0) · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction case antecedent:
+<jh>
+        (value n) (value k) (b + c) MultiplicationBuilderRR
+
+        (value n) (value k) b MultiplicationBuilderRR
+        (value n) (value k) c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) ((value k) · b) ((value n) · c) ((value k) · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction case consequent:
+<jh>
+        (value n) (succ (value k)) (b + c) MultiplicationBuilderRR
+
+        (value n) (succ (value k)) b MultiplicationBuilderRR
+        (value n) (succ (value k)) c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) ((succ (value k)) · b) 
+          ((value n) · c) ((succ (value k)) · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a (b + c) MultiplicationBuilderRR
+
+        (value n) a b MultiplicationBuilderRR
+        (value n) a c MultiplicationBuilderRR
+        composeConjunction
+        ((value n) · b) (a · b) ((value n) · c) (a · c) AdditionBuilder
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+The base case is <code>0 · (b + c) = 0 · b + 0 · c</code>.
+<jh>
+        (b + c) MultiplicativeZeroLeft
+
+        b MultiplicativeZeroLeft
+        c MultiplicativeZeroLeft
+        buildAddition
+        (0) AdditiveIdentity
+        applyEqualityTransitivity
+        swapEquality
+
+        applyEqualityTransitivity
+</jh>
+Now the induction step. We start with <code>k · (b + c) = k · b + k · c</code> and add (b + c) to the right of both sides:
+<jh>
+        ((value k) · (b + c)) (((value k) · b) + ((value k) · c)) (b + c) AdditionBuilderRR
+</jh>
+The left side is handled by observing that <code>k · (b + c) + (b + c) = Sk · (b + c)</code>:
+<jh>
+        (value k) (b + c) MultiplicationCommuted swapEquality
+</jh>
+For the right side, <code>k · b + k · c + (b + c)</code>, we rearrange the terms and apply MultiplicationCommuted twice, to get <code>Sk · b + Sk · c</code>.
+<jh>
+        ((value k) · b) ((value k) · c) b c Addition4
+
+        (value k) b MultiplicationCommuted swapEquality
+        (value k) c MultiplicationCommuted swapEquality
+        buildAddition
+
+        applyEqualityTransitivity
+</jh>
+Now we combine these, to get the induction step.
+<jh>
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+It will be convenient to also have a commuted version of this:
+
+<jh>
+thm (RightDistribution () ()
+  (((a + b) · c) = ((a · c) + (b · c))) (
+        (a + b) c MultiplicationCommutativity
+
+        c a b LeftDistribution
+        applyEqualityTransitivity
+
+        c a MultiplicationCommutativity
+        c b MultiplicationCommutativity
+        buildAddition
+        applyEqualityTransitivity
+))
+</jh>
+
+== Multiplication is associative ==
+
+<jh>
+thm (MultiplicationAssociativity ((n a) (n b) (n c) (n k) (k b) (k c)) ()
+  (((a · b) · c) = (a · (b · c))) (
+</jh>
+The proof is by induction on <code>a</code>. The substitution for the base case is <code>n = 0 → ((n · b) · c = n · (b · c) ↔ (0 · b) · c = 0 · (b · c))</code>.
+<jh>
+        (value n) (0) b MultiplicationBuilderRR
+        ((value n) · b) ((0) · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) (0) (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step antecedent:
+<jh>
+        (value n) (value k) b MultiplicationBuilderRR
+        ((value n) · b) ((value k) · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) (value k) (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the induction step consequent:
+<jh>
+        (value n) (succ (value k)) b MultiplicationBuilderRR
+        ((value n) · b) ((succ (value k)) · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) (succ (value k)) (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+Substitution for the result:
+<jh>
+        (value n) a b MultiplicationBuilderRR
+        ((value n) · b) (a · b) c MultiplicationBuilderRR
+        applySyllogism
+
+        (value n) a (b · c) MultiplicationBuilderRR
+
+        buildEqualityInConsequent
+</jh>
+The base case is <code>(0 · b) · c = 0 · (b · c))</code>
+<jh>
+        b MultiplicativeZeroLeft
+        c buildMultiplicationRR
+        c MultiplicativeZeroLeft
+        applyEqualityTransitivity
+
+        (b · c) MultiplicativeZeroLeft
+
+        swapEquality
+        applyEqualityTransitivity
+</jh>
+For the induction step, we take <code>(k · b) · c = k · (b · c))</code> and add <code>b · c</code> to both sides:
+<jh>
+        (((value k) · b) · c) ((value k) · (b · c)) (b · c) AdditionBuilderRR
+</jh>
+To the left side, <code>(k · b) · c + (b · c)</code>, we first collect the <code>c</code> using distributivity:
+<jh>
+        ((value k) · b) b c RightDistribution swapEquality
+</jh>
+That gives us <code>(k · b + b) · c</code> so we just need to turn it into <code>(Sk · b) · c</code>:
+<jh>
+        (value k) b MultiplicationCommuted swapEquality
+        c buildMultiplicationRR
+        applyEqualityTransitivity
+</jh>
+The right side, <code>k · (b · c) + b · c</code>, is even easier:
+<jh>
+        (value k) (b · c) MultiplicationCommuted swapEquality
+</jh>
+Now we combine these, to get the induction step.
+<jh>
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Induction6S
+))
+</jh>
+
+== One ==
+One is the successor of zero:
+
+<jh>
+def ((1) (succ (0)))
+</jh>
+
+It serves as a multiplicative identity:
+<jh>
+thm (MultiplicativeIdentityRight () ()
+  ((a · (1)) = a) (
+        a (0) Multiplication
+</jh>
+That gives us <code>a · 1 = a + a · 0</code>, so we first simplify <code>a · 0</code> to <code>0</code>.
+<jh>
+        a MultiplicativeZeroRight
+        a buildAdditionLL
+        applyEqualityTransitivity
+</jh>
+Now we turn <code>a + 0</code> to <code>a</code>.
+<jh>
+        a AdditiveIdentityRight
+        applyEqualityTransitivity
+))
+
+thm (MultiplicativeIdentityLeft () ()
+  (((1) · a) = a) (
+        (1) a MultiplicationCommutativity
+        a MultiplicativeIdentityRight
+        applyEqualityTransitivity
+))
+</jh>
+
+== Inequality ==
+We define an order on natural numbers:
+
+<jh>
+def ((≤ a b) (∃ n ((a + (value n)) = b)))
+</jh>
+
+Every number is greater than or equal to zero:
+<jh>
+thm (ZeroSmallest ((n a)) () ((0) ≤ a) (
+</jh>
+To prove this inequality, we need to find a number ''n'' such that <code>0 + ''n'' = a</code>. The number <code>a</code> does this.
+<jh>
+        a AdditiveIdentityLeft
+</jh>
+The rest is substitution machinery. We start with <code>n = a → (0 + n = a ↔ 0 + a = a)</code>:
+<jh>
+        (value n) a (0) AdditionBuilderLL
+
+        a EqualityReflexivity
+        ((value n) = a) introduceAntecedent
+
+        composeConjunction
+
+        ((0) + (value n)) ((0) + a) a a EqualityBuilder
+        applySyllogism
+</jh>
+We turn that into <code>(subst a n (0 + n = a)) ↔ 0 + a = a</code>:
+<jh>
+        makeSubstExplicit
+</jh>
+Which gives us <code>(subst a n (0 + n = a))</code>.
+<jh>
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+That in turn implies <code>∃ n 0 + n = a</code>, which is <code>0 ≤ a</code> by the definition of <code>≤</code>.
+<jh>
+        introduceThereExists
+))
+</jh>
+
 === Transitivity of ≤ ===
 
 Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + ab + bc = c</code>.  That implies <code>∃ ac a + ac = c</code> (because <code>ab + bc</code> is a specific value for <code>ac</code> and we can apply <code>ThereExistsIntroduction</code>), which is just <code>a ≤ c</code> by the definition.
 
 Formalizing the proof is somewhat tedious, partly because "rearranging the terms and cancelling" expands to many steps and partly because the first-order logic is not (yet at least) as straightforward as the above sketch, but the idea is unchanged.
+
+<jh>
+var (object ab bc ac)
+var (variable vab vbc vac)
+
+</jh>
+The following lemma includes all the rearrangements we will need (before we apply any of the predicate logic).
+<jh>
+#thm (LessEqualTransitivity-1 () ()
+#  ((((b + bc) = c) ∧ ((ac = (ab + bc)) ∧ ((a + ab) = b))) → ((a + ac) = c)) (
+        # proof not yet written
+#))
+
+#thm (LessEqualTransitivity () () 
+#  (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
+        # proof not written yet
+#))
+</jh>
+
+== Adding one and successor ==
+
+Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
+
+<jh>
+thm (SuccessorAddsOne () () ((a + (1)) = (succ a)) (
+        a (0) Addition
+
+        a AdditiveIdentityRight
+        addSuccessor
+
+        applyEqualityTransitivity
+))
+
+thm (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
+  ((HSUB0 (((value n) = (0)) → (φ ↔ φ0)))
+   (HSUBK (((value n) = (value k)) → (φ ↔ φk)))
+   (HSUBSK (((value n) = ((value k) + (1))) → (φ ↔ φSk)))
+   (HSUBA (((value n) = a) → (φ ↔ φa)))
+   (HBASE φ0)
+   (HIND (φk → φSk))
+  )
+  φa (
+        HSUB0 HSUBK
+
+        (value k) SuccessorAddsOne
+        (value n) buildEqualityLL
+        eliminateBiconditionalForward
+        HSUBSK
+        applySyllogism
+
+        HSUBA HBASE HIND
+        Induction6S
+))
+</jh>
+
+Changing <code>succ k</code> to <code>k + 1</code> in the <code>subst</code>-based form of induction is a simple application of builders. We apply the builders via several lemmas:
+
+<jh>
+thm (InductionSubst-1 () ()
+  ((subst ((value k) + (1)) n φ) ↔ (subst (succ (value k)) n φ)) (
+        (value k) SuccessorAddsOne
+        n φ buildSubstReplacement
+))
+
+thm (InductionSubst-2 () ()
+  ((∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ))) ↔
+   (∀ k ((subst (value k) n φ) → (subst (succ (value k)) n φ)))) (
+        (subst (value k) n φ) BiconditionalReflexivity
+        k n φ InductionSubst-1
+        buildImplication
+        k buildForAll
+))
+
+thm (InductionSubst-3 () ()
+  ((((subst (0) n φ) ∧ 
+     (∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ)))) 
+    → (∀ n φ)) ↔
+  (((subst (0) n φ) ∧ 
+     (∀ k ((subst (value k) n φ) → (subst (succ (value k)) n φ)))) 
+    → (∀ n φ))) (
+        (subst (0) n φ) BiconditionalReflexivity
+        k n φ InductionSubst-2
+        buildConjunction
+
+        (∀ n φ) BiconditionalReflexivity
+        buildImplication
+))
+
+thm (InductionSubst () () 
+  (((subst (0) n φ) ∧ 
+    (∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ)))) 
+   → (∀ n φ)) (
+        n φ k Induction
+
+        n φ k InductionSubst-3
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
+== Export ==
+
+<jh>
+export (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Elementary number theory|{{PAGENAME}}]]
 
