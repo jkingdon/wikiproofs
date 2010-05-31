@@ -1,19 +1,18 @@
 {{header
- | title    = First-order logic with quantifiability
+ | title    = First-order logic
  | subtitle = 
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = This interface collects important theorems from first-order logic, which builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use first-order logic, without proving anything new within it. It also includes results which rely on the [[Interface:Axiom of quantifiability|axiom of quantifiability]], such as most of the ones involving substituting a term for a variable.
+ | notes    = This interface collects important theorems from first-order logic, which builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use first-order logic, without proving anything new within it. It does not include results which rely on the [[Interface:Axiom of quantifiability]]; many modules may wish to import [[Interface:First-order logic with quantifiability]] instead of this interface.
 
 Statements can be added if necessary, but then the exporting modules have to be updated accordingly.
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus]]
-| importedby = [[Interface:Peano axioms]]
-| exportedby = [[First-order logic with quantifiability]]
+| importedby = [[Interface:First-order logic with quantifiability]]
+| exportedby = [[First-order logic]]
 }}
-
 == Formulas, objects, and quantification ==
 We build on [[Interface:Classical propositional calculus]]:
 <jh>
@@ -57,6 +56,12 @@ term (formula (∃ variable formula))
 <jh>
 stmt (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))))
 stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
+</jh>
+
+== Variations and consequences of double quantification elimination ==
+<jh>
+stmt (ax6o () () ((∃ x (∀ x φ)) → φ))
+stmt (a5i () (((∀ x φ) → ψ)) ((∀ x φ) → (∀ x ψ)))
 </jh>
 
 == Builders for quantifiers ==
@@ -109,6 +114,16 @@ stmt (distributeThereExistsImplication () ((∃ x (φ → ψ))) ((∀ x φ) → 
 stmt (collectThereExistsImplication () (((∀ x φ) → (∃ x ψ))) (∃ x (φ → ψ)))
 
 stmt (distributeForAllImplication () ((∀ x (φ → ψ))) ((∀ x φ) → (∀ x ψ)))
+</jh>
+
+=== Biconditional ===
+<jh>
+stmt (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))))
+</jh>
+
+=== Other kinds of splits ===
+<jh>
+stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
 </jh>
 
 == Generalization and specialization ==
@@ -248,52 +263,25 @@ stmt (addThereExistsToAntecedent ((x ψ))
   ((∃ x φ) → ψ))
 </jh>
 
-== Substitution ==
-Having a formula which substitutes one variable for another greatly increases the readability of many theorems.  For example, a statement of [[w:mathematical induction|induction]] will generally apply the same formula with <code>0</code>, <code>k</code>, <code>k + 1</code>, or <code>n</code>.
-
-This kind of substitution is known as ''proper substitution'' as there are some rules about what kinds of substitution are valid. The following theorems enable making proper substitutions.
-
-We first define the <code>subst</code> term:
-
+=== Other theorems related to substitution ===
 <jh>
-term (formula (subst object variable formula))
+stmt (equs3 () () 
+  ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))))
 </jh>
 
-so for example <code>(subst s x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>s</code>. In more conventional notation this would be <code>[s / x] φ</code> (or, using a common but potentially ambiguous notation, changing <code>φ(x)</code> to <code>φ(s)</code>).
+== Propositional logic ==
+These surely belong elsewhere, but are here for the moment.
 
-=== Building up expressions involving subst ===
-
-If we have a theorem, we can add a variable substitution onto it.
 <jh>
-stmt (introduceSubst () (φ) (subst s x φ))
-</jh>
-
-From an equality, we can build an equivalence of substitutions:
-<jh>
-stmt (SubstBuilderReplacement () ()
-  ((s = t) → ((subst s x φ) ↔ (subst t x φ))))
-stmt (buildSubstReplacement () ((s = t))
-  ((subst s x φ) ↔ (subst t x φ)))
-</jh>
-
-A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>y</code>. The discrete variable constraint between <code>x</code> and <code>s</code> should be one we can eliminate, but in practice it isn't too difficult to deal with.
-<jh>
-stmt (makeSubstExplicit ((x s) (x ψ))
-  ((((value x) = s) → (φ ↔ ψ)))
-  ((subst s x φ) ↔ ψ))
-</jh>
-
-We can add <code>subst</code> to both sides of an implication or a biconditional.
-<jh>
-stmt (addSubst () ((φ → ψ)) ((subst s x φ) → (subst s x ψ)))
-stmt (buildSubst () ((φ ↔ ψ)) ((subst s x φ) ↔ (subst s x ψ)))
-</jh>
-
-=== Turning substitution into there-exists ===
-One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
-<jh>
-stmt (ThereExistsIntroduction () () ((subst s x φ) → (∃ x φ)))
-stmt (introduceThereExists () ((subst s x φ)) (∃ x φ))
+stmt (applyNestedModusPonens () 
+  ((φ → (ψ → χ))
+   ψ)
+  (φ → χ))
+stmt (applyComm () ((φ → (ψ → χ))) (ψ → (φ → χ)))
+stmt (BiconditionalTranspositionWithNegatedRight () () ((φ ↔ (¬ ψ)) ↔ (ψ ↔ (¬ φ))))
+stmt (joinConsequents ()
+  ((φ → ψ) (φ → χ))
+  (φ → (¬ (ψ → (¬ χ)))))
 </jh>
 
 == What else? ==

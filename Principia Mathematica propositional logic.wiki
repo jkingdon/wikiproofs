@@ -1,0 +1,2363 @@
+{{header
+ | title    = Principia Mathematica
+ | subtitle = propositional logic
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The purpose of this page is to prove the statements of [[Interface:Classical propositional calculus]] from the [[Interface:Principia Mathematica propositional logic|Principia Mathematica]]<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref> axioms for [[w:propositional logic|propositional logic]].
+}}
+{{interfaces
+| imports = [[Interface:Principia Mathematica propositional logic]]
+| exports = [[Interface:Classical propositional calculus]]
+}}
+
+<jh>
+import (PRINCIPIA Interface:Principia_Mathematica_propositional_logic () ())
+</jh>
+We define some variables for [[w:well-formed formula|well-formed formula]]s:
+<jh>
+var (wff p q r s)
+</jh>
+Principia Mathematica does not define the [[w:nullary#Nullary|nullary]] [[w:logical connective|connectives]] "the true", <math>\top</math>, and "the false", <math>\bot</math>, so we define them here:
+<jh>
+def ((⊤) (p ∨ (¬ p)))
+def ((⊥) (p ∧ (¬ p)))
+</jh>
+We shall now begin to derive the statements. [[w:Alfred North Whitehead|Whitehead]] and [[w:Bertrand Russell|Russell]] use a decimal numbering system of the form <math>*r</math>, where <math>r</math> is a rational number with a small number of digits after the decimal point. Unless we give theorems our own name, we shall adopt their system for easier reference. Where we do use our own names, we sometimes give the decimal reference in a JHilbert comment.
+
+== Disjunction and implication ==
+
+=== First steps ===
+
+The [[w:modus ponens|modus ponens]] rule is an axiom of Principia Mathematica, so we don't need to prove it. The ''Perm'' axiom immediately gives rise to the [[w:logical disjunction|disjunctive]] commutativity rule:
+<jh>
+thm (swapDisjunction () ((H (p ∨ q))) (q ∨ p) (
+        H
+        p q Perm
+        applyModusPonens
+))
+</jh>
+
+Likewise it will be convenient to have the ''Sum'' axiom as a rule:
+<jh>
+thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
+        H
+        p q r Sum
+        applyModusPonens
+))
+</jh>
+
+Since Principia Mathematica defines implication, <math>p\rightarrow q</math>, as <math>(\neg p)\vee q</math>, the ''Add'' axiom yields the introduction of an antecedent (Whitehead and Russell call it "Simplification").
+<jh>
+thm (AntecedentIntroduction () () (p → (q → p)) ( # *2.02
+        p (¬ q) Add
+))
+</jh>
+It will be convenient to have this theorem as helper rule:
+<jh>
+thm (introduceAntecedent () ((H p)) (q → p) (
+        H
+        p q AntecedentIntroduction
+        applyModusPonens
+))
+</jh>
+Again due to the way implication is defined, ''Perm'' gives us our first transposition rule:
+<jh>
+thm (*2.03 () () ((p → (¬ q)) → (q → (¬ p))) (
+        (¬ p) (¬ q) Perm
+))
+
+thm (transposeWithNegatedConsequent () ((H (p → (¬ q)))) (q → (¬ p)) (
+        H
+        p q *2.03
+        applyModusPonens
+))
+</jh>
+Next, we prove a precursor to the commutative law of Conjunction, which will be very convenient until we get [[w:Giuseppe Peano|Peano]]'s transportation principle. We call this theorem ''Comm'' in accordance with Whitehead and Russell.
+<jh>
+thm (Comm () () ((p → (q → r)) → (q → (p → r))) ( # *2.04
+        (¬ p) (¬ q) r Assoc
+))
+
+thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
+        H
+        p q r Comm
+        applyModusPonens
+))
+</jh>
+This theorem enables us to prove two forms of the syllogism from the ''Sum'' axiom.  The rule applySyllogism expresses the syllogism nature of these theorems (we have two implications and derive a third).  But they also can be used to build up more complicated formulas, a pattern which is expressed by the <code>addCommonAntecedent</code> and <code>addCommonConsequent</code> rules, in which we just have one implication and derive a more involved formula.
+<jh>
+thm (CommonAntecedentAddition () () ((q → r) → ((p → q) → (p → r))) ( # *2.05
+        q r (¬ p) Sum
+))
+
+thm (addCommonAntecedent () ((H (q → r))) ((p → q) → (p → r)) (
+        H
+        q r p CommonAntecedentAddition
+        applyModusPonens
+))
+
+thm (CommonConsequentAddition () () ((p → q) → ((q → r) → (p → r))) ( # *2.06
+        q r p CommonAntecedentAddition
+        (q → r) (p → q) (p → r) Comm
+        applyModusPonens
+))
+
+thm (addCommonConsequent () ((H (p → q))) ((q → r) → (p → r)) (
+        H
+        p q r CommonConsequentAddition
+        applyModusPonens
+))
+
+thm (applySyllogism () ((H1 (p → q)) (H2 (q → r))) (p → r) (
+        H2
+        H1
+        p q r CommonConsequentAddition
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+The syllogism yields the "identity" ''Id'', <math>p\rightarrow p</math>, and, by ''Perm'', [[w:tertium non datur|tertium non datur]], which is, by our definition, just <math>\top</math>:
+<jh>
+thm (Id () () (p → p) ( # *2.08
+        p p Add
+        p Taut
+        applySyllogism
+))
+# Another name for the same theorem:
+thm (ImplicationReflexivity () () (p → p) (
+        p Id
+))
+
+thm (TertiumNonDatur () () (p ∨ (¬ p)) ( # *2.11
+        p Id
+        swapDisjunction        
+))
+
+thm (True () () (⊤) (
+        p TertiumNonDatur
+))
+</jh>
+Actually, for Whitehead and Russell use the permutation of our ''TertiumNonDatur'' as theirs.
+
+With the ''TertiumNonDatur'', we can tackle double negation:
+<jh>
+thm (*2.12 () () (p → (¬ (¬ p))) (
+        (¬ p) TertiumNonDatur
+))
+
+thm (*2.13 () () (p ∨ (¬ (¬ (¬ p)))) (
+        p TertiumNonDatur
+
+        (¬ p) *2.12
+        p disjoinLL
+
+        applyModusPonens
+))
+
+thm (*2.14 () () ((¬ (¬ p)) → p) (
+        p *2.13
+        swapDisjunction
+))
+
+thm (introduceDoubleNegation () ((H p)) (¬ (¬ p)) (
+        H
+        p *2.12
+        applyModusPonens
+))
+
+thm (eliminateDoubleNegation () ((H (¬ (¬ p)))) p (
+        H
+        p *2.14
+        applyModusPonens
+))
+</jh>
+
+=== Transposition ===
+Combined with double negation, the transposition law <math>*2.03</math> we already have yields the remaining three:
+<jh>
+thm (*2.15 () () (((¬ p) → q) → ((¬ q) → p)) (
+        q *2.12
+        (¬ p) addCommonAntecedent
+</jh>
+We now have <math>((\neg p)\rightarrow q)\rightarrow((\neg p)\rightarrow(\neg(\neg q)))</math>. We transpose the consequent using our transposition law <math>*2.03</math>
+<jh>
+        (¬ p) (¬ q) *2.03
+        applySyllogism
+</jh>
+to get <math>((\neg p)\rightarrow q)\rightarrow((\neg q)\rightarrow(\neg(\neg p)))</math>. All that remains to do now is to eliminate the double negation.
+<jh>
+        p *2.14
+        (¬ q) addCommonAntecedent
+        applySyllogism
+))
+
+thm (transposeWithNegatedAntecedent () ((H ((¬ p) → q))) ((¬ q) → p) (
+        H
+        p q *2.15
+        applyModusPonens
+))
+</jh>
+The proofs of the next two theorems work similar but are actually easier due to a more favourable distribution of negations:
+<jh>
+thm (*2.16 () () ((p → q) → ((¬ q) → (¬ p))) (
+        q *2.12
+        p addCommonAntecedent
+        p (¬ q) *2.03
+        applySyllogism
+))
+
+thm (introduceTransposition () ((H (p → q))) ((¬ q) → (¬ p)) (
+        H
+        p q *2.16
+        applyModusPonens
+))
+
+thm (*2.17 () () (((¬ q) → (¬ p)) → (p → q)) (
+        (¬ q) p *2.03
+        q *2.14
+        p addCommonAntecedent
+        applySyllogism
+))
+
+thm (eliminateTransposition () ((H ((¬ q) → (¬ p)))) (p → q) (
+        H
+        q p *2.17
+        applyModusPonens
+))
+</jh>
+
+=== Disjunction introduction ===
+Next, we prove the disjunction introduction laws. Introduction from the left is just the ''Add'' axiom of principia, and a permutation yields the introduction from the right.
+<jh>
+thm (DisjunctionLeftIntroduction () () (p → (q ∨ p)) (
+        p q Add
+))
+
+thm (introduceLeftDisjunction () ((H p)) (q ∨ p) (
+        H
+        p q DisjunctionLeftIntroduction
+        applyModusPonens
+))
+
+thm (DisjunctionRightIntroduction () () (p → (p ∨ q)) ( # *2.2
+        p q DisjunctionLeftIntroduction
+        q p Perm
+        applySyllogism
+))
+
+thm (introduceRightDisjunction () ((H p)) (p ∨ q) (
+        H
+        p q DisjunctionRightIntroduction
+        applyModusPonens
+))
+</jh>
+
+=== Modus ponens law ===
+Next, we prove a version of the modus ponens law with ''Assoc'':
+<jh>
+thm (*2.25 () () (p ∨ ((p ∨ q) → q)) (
+        (p ∨ q) Id
+        (¬ (p ∨ q)) p q Assoc
+        applyModusPonens
+))
+
+thm (*2.27 () () (p → ((p → q) → q)) (
+        (¬ p) q *2.25
+))
+</jh>
+
+=== Disjunction associativity ===
+We now "repair" the extra twist in the ''Assoc'' axiom to get the actual associativity rules for disjunction:
+<jh>
+thm (*2.3 () () ((p ∨ (q ∨ r)) → (p ∨ (r ∨ q))) (
+        q r Perm
+
+        p disjoinLL
+))
+
+thm (*2.31 () () ((p ∨ (q ∨ r)) → ((p ∨ q) ∨ r)) (
+        p q r *2.3
+        p r q Assoc
+        applySyllogism
+        r (p ∨ q) Perm
+        applySyllogism
+))
+
+thm (groupDisjunctionLeft () ((H (p ∨ (q ∨ r)))) ((p ∨ q) ∨ r) (
+        H
+        p q r *2.31
+        applyModusPonens
+))
+
+thm (*2.32 () () (((p ∨ q) ∨ r) → (p ∨ (q ∨ r))) (
+        (p ∨ q) r Perm
+        r p q Assoc
+        applySyllogism
+        p r q *2.3
+        applySyllogism
+))
+
+thm (groupDisjunctionRight () ((H ((p ∨ q) ∨ r))) (p ∨ (q ∨ r)) (
+        H
+        p q r *2.32
+        applyModusPonens
+))
+</jh>
+
+=== Expression building with disjunctions ===
+Now we prove three helpful theorems regarding expression building with disjunctions, that is, they are companions to the ''Sum'' axiom. All these proofs proceed in two steps, using a syllogism to alter the consequent of ''Sum''.
+<jh>
+thm (DisjunctionSummationLR () () ((q → r) → ((p ∨ q) → (r ∨ p))) ( # *2.36
+</jh>
+As first step, we simply take the ''Sum'' axiom,
+<jh>
+        q r p Sum
+</jh>
+and prove <math>((p\vee q)\rightarrow(p\vee r))\rightarrow((p\vee q)\rightarrow(r\vee p))</math> as second step,
+<jh>
+        p r Perm
+        (p ∨ q) addCommonAntecedent
+</jh>
+so that the result follows via a syllogism:
+<jh>
+        applySyllogism
+))
+
+thm (DisjunctionSummationRL () () ((q → r) → ((q ∨ p) → (p ∨ r))) ( # *2.37
+</jh>
+As first step, we take the ''Sum'' axiom with transposed consequent, that is <math>(q\rightarrow r)\rightarrow((\neg(p\vee r))\rightarrow(\neg(p\vee q)))</math>,
+<jh>
+        q r p Sum
+        (p ∨ q) (p ∨ r) *2.16
+        applySyllogism
+</jh>
+As second step, we prove <math>((\neg(p\vee r))\rightarrow(\neg(p\vee q)))\rightarrow((\neg(p\vee r))\rightarrow(\neg(q\vee p)))</math>
+<jh>
+        q p Perm
+        introduceTransposition
+        (¬ (p ∨ r)) addCommonAntecedent
+</jh>
+Combining these two steps, the result follows by transposing the consequent back.
+<jh>
+        applySyllogism
+        (p ∨ r) (q ∨ p) *2.17
+        applySyllogism
+))
+</jh>
+Finally, <code>DisjunctionSummationRR</code> follows directly from <code>DisjunctionSummationRL</code> in the same way.
+<jh>
+thm (DisjunctionSummationRR () () ((q → r) → ((q ∨ p) → (r ∨ p))) ( # *2.38
+        q r p DisjunctionSummationRL
+        p r Perm
+        (q ∨ p) addCommonAntecedent
+        applySyllogism
+))
+</jh>
+
+The rule forms of all three are:
+<jh>
+thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationLR
+        applyModusPonens
+))
+
+thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationRL
+        applyModusPonens
+))
+
+thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationRR
+        applyModusPonens
+))
+</jh>
+
+=== Implication distribution theorem (if part) ===
+Our next goal will be to prove the ''if'' part of the implication distribution theorem, <math>(p\rightarrow(q\rightarrow r))\leftrightarrow((p\rightarrow q)\rightarrow(p\rightarrow r))</math>. Given that implication is defined from disjunction and negation in Principia, it would seem more natural to use [[w:de Morgan's law|de Morgan's law]] for disjunction negation for that. However, we don't have that yet, and in fact, implication distribution is instrumental to prove the "principle of the factor" ''Fact'' below, which in turn is required for de Morgan's law. So what we shall do instead is to install equivalences such as <math>p\leftrightarrow(\neg(\neg p))</math>, <math>p\leftrightarrow p\vee p</math> and <math>p\vee q\leftrightarrow q\vee p</math> in more or less deep subexpression in a long chain of theorems until we finally arrive at the desired result. <jh>
+thm (*2.53 () () ((p ∨ q) → ((¬ p) → q)) (
+</jh>
+That is, we make <math>(p\vee q)\rightarrow((\neg(\neg p))\vee q)</math> from <math>p\rightarrow(\neg(\neg q))</math>.
+<jh>
+        p *2.12
+        q disjoinRR
+))
+
+thm (*2.6 () () (((¬ p) → q) → ((p → q) → q)) (
+        (¬ p) q q DisjunctionSummationRR
+</jh>
+This gives us already the result, except that the last <math>q</math> has been duplicated, <math>q\vee q</math>. We remove the duplicate using the ''Taut'' axiom.
+<jh>
+        q Taut
+        (¬ ((¬ p) ∨ q)) disjoinLL
+
+        applySyllogism
+))
+
+thm (*2.62 () () ((p ∨ q) → ((p → q) → q)) (
+        p q *2.53
+        p q *2.6
+        applySyllogism
+))
+
+thm (*2.621 () () ((p → q) → ((p ∨ q) → q)) (
+        p q *2.62
+        applyComm
+))
+
+thm (*2.73 () () ((p → q) → (((p ∨ q) ∨ r) → (q ∨ r))) (
+        p q *2.621
+        (p ∨ q) q r DisjunctionSummationRR
+        applySyllogism
+))
+
+thm (*2.74 () () ((q → p) → (((p ∨ q) ∨ r) → (p ∨ r))) (
+</jh>
+This is the same as <math>*2.73</math> except for a permutation in the second antecedent. Since this permutation is nested four levels deep, some work is required. We begin with <math>*2.73</math>,
+<jh>
+        q p r *2.73
+</jh>
+and prove the permutation <math>((p\vee q)\vee r)\rightarrow((q\vee p)\vee r)</math>:
+<jh>
+        p q r *2.32
+        p q r Assoc
+        applySyllogism
+        q p r *2.31
+        applySyllogism
+</jh>
+We can now install this permutation as an antecedent through a transposition. Then the theorem follows through a syllogism.
+<jh>
+        introduceTransposition
+        (p ∨ r) disjoinRR
+        applySyllogism
+))
+
+thm (*2.75 () () ((p ∨ q) → ((p ∨ (q → r)) → (p ∨ r))) (
+</jh>
+This is <math>*2.74</math>, with <math>q</math> replaced with <math>\neg q</math>, plus some of the usual transformations.
+<jh>
+        p q Perm
+        q p *2.53
+        applySyllogism
+</jh>
+This gives us <math>(p\vee q)\rightarrow((\neg q)\rightarrow p)</math>, which we can connect with <math>*2.74</math>,
+<jh>
+        (¬ q) p r *2.74
+        applySyllogism
+</jh>
+so we get <math>(p\vee q)\rightarrow(((p\vee(\neg q))\vee r)\rightarrow(p\vee r))</math>. The rest of the proof is now to effect the disjunctive associativity law in the second antecedent.
+<jh>
+        p (¬ q) r *2.31
+        introduceTransposition
+        (p ∨ r) disjoinRR
+
+        applySyllogism
+))
+
+thm (*2.76 () () ((p ∨ (q → r)) → ((p ∨ q) → (p ∨ r))) (
+        p q r *2.75
+        applyComm
+))
+
+thm (*2.77 () () ((p → (q → r)) → ((p → q) → (p → r))) (
+        (¬ p) q r *2.76
+))
+
+thm (distributeAntecedent () ((H (p → (q → r)))) ((p → q) → (p → r)) (
+        H
+        p q r *2.77
+        applyModusPonens
+))
+</jh>
+Theorem <math>*2.77</math> is now precisely the ''if'' part of the implicational distribution law.
+
+=== Syllogism in the consequent ===
+We prove a "syllogism in the consequent law", that is, <math>(p\rightarrow(q\rightarrow r))\rightarrow((p\rightarrow(r\rightarrow s))\rightarrow(p\rightarrow(q\rightarrow s)))</math>, which is useful for syllogisms depending on a common hypothesis. We first show a modus ponens law for disjunctions.
+<jh>
+thm (*2.8 () () ((q ∨ r) → ((r → s) → (q ∨ s))) (
+        q r Perm
+        r q *2.53
+        applySyllogism
+</jh>
+This gives us <math>(q\vee r)\rightarrow((\neg r)\rightarrow q)</math>. The theorem follows now by a summation:
+<jh>
+        (¬ r) q s DisjunctionSummationRR
+        applySyllogism
+))
+</jh>
+Next, we prove a three terms summation law:
+<jh>
+thm (*2.81 () () ((q → (r → s)) → ((p ∨ q) → ((p ∨ r) → (p ∨ s)))) (
+        q (r → s) p Sum
+</jh>
+This gives us <math>(q\rightarrow(r\rightarrow s))\rightarrow((p\vee q)\rightarrow(p\vee(r\rightarrow s)))</math>, so we only need to distribute the <math>p</math> over <math>r\rightarrow s</math>:
+<jh>
+        p r s *2.76
+        (p ∨ q) introduceAntecedent
+        distributeAntecedent
+        applySyllogism
+))
+</jh>
+Combining <math>*2.8</math> and <math>*2.81</math>, we get
+<jh>
+thm (*2.82 () () ((p ∨ (q ∨ r)) → ((p ∨ (r → s)) → (p ∨ (q ∨ s)))) (
+        q r s *2.8
+        (q ∨ r) (r → s) (q ∨ s) p *2.81
+        applyModusPonens
+))
+</jh>
+from which we can immediately derive our new syllogism law:
+<jh>
+thm (SyllogismInConsequent () () ((p → (q → r)) → ((p → (r → s)) → (p → (q → s)))) ( # *2.83
+        (¬ p) (¬ q) r s *2.82
+))
+
+thm (applySyllogismInConsequent () ((H1 (p → (q → r))) (H2 (p → (r → s)))) (p → (q → s)) (
+        H2
+        H1
+        p q r s SyllogismInConsequent
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+=== Implication distribution theorem (only-if part) ===
+Next we prove the ''only if'' part of the implicational distribution law (the ''if'' part of which we proved in <math>*2.77</math>). We start with a simple consequence of <math>*2.53</math> and the converse of <math>*2.53</math>:
+
+<jh>
+thm (*2.55 () () ((¬ p) → ((p ∨ q) → q)) (
+        p q *2.53
+        applyComm
+))
+
+thm (*2.54 () () (((¬ p) → q) → (p ∨ q)) (
+        p *2.14
+        q disjoinRR
+))
+</jh>
+
+The meat of our desired result is <math>((p\vee q)\rightarrow(p\vee r))\rightarrow(p\vee(q\rightarrow r))</math> (<math>*2.85</math>). It differs only by being partly expressed in terms of disjunction instead of implication.  Each of the following thm's is just an intermediate step in proving <math>*2.85</math>:
+
+<jh>
+thm (*2.85-1 () () (((p ∨ q) → r) → (q → r)) (
+        q p Add
+        r addCommonConsequent
+))
+
+thm (*2.85-unnamed1 () () ((¬ p) → (((p ∨ q) → (p ∨ r)) → ((p ∨ q) → r))) (
+        p r *2.55
+        (p ∨ r) r (p ∨ q) CommonAntecedentAddition
+        applySyllogism
+))
+
+thm (*2.85-2 () () ((¬ p) → (((p ∨ q) → (p ∨ r)) → (q → r))) (
+        p q r *2.85-unnamed1
+
+        p q r *2.85-1
+        (¬ p) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (*2.85-unnamed2 () () (((p ∨ q) → (p ∨ r)) → ((¬ p) → (q → r))) (
+        p q r *2.85-2
+        applyComm
+))
+
+thm (*2.85 () () (((p ∨ q) → (p ∨ r)) → (p ∨ (q → r))) (
+        p q r *2.85-unnamed2
+        p (q → r) *2.54
+        applySyllogism
+))
+</jh>
+
+From this follows the ''only if'' part of the implicational distribution law:
+<jh>
+thm (*2.86 () () (((p → q) → (p → r)) → (p → (q → r))) (
+        (¬ p) q r *2.85
+))
+
+thm (collectAntecedent () ((H ((p → q) → (p → r)))) (p → (q → r)) (
+        H
+        p q r *2.86
+        applyModusPonens
+))
+</jh>
+
+== Conjunction ==
+
+In this section we prove statements involving conjunction <math>p\wedge q</math>. Recall that conjunction is defined by <math>\neg((\neg p)\vee(\neg q))</math>. Our first theorem is the combination of two statements to a conjunction.
+<jh>
+thm (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))) ( # *3.2
+        ((¬ p) ∨ (¬ q)) TertiumNonDatur
+</jh>
+The trick is now to write <math>(\neg p)\vee(\neg q)\vee\ldots</math> as <math>p\rightarrow(q\rightarrow\ldots)</math>:
+<jh>
+        groupDisjunctionRight
+))
+
+thm (introduceConjunction () ((H1 p) (H2 q)) (p ∧ q) ( # *3.03
+        H2
+        H1
+        p q ConjunctionRightIntroduction
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+We also provide a commuted version:
+
+<jh>
+thm (ConjunctionLeftIntroduction () () (p → (q → (q ∧ p))) ( # *3.21
+        q p ConjunctionRightIntroduction
+        applyComm
+))
+</jh>
+
+We can prove the commutative law for conjunction from ''Perm'' using transpositions:
+<jh>
+thm (*3.22 () () ((p ∧ q) → (q ∧ p)) (
+        (q ∧ p) Id
+        eliminateTransposition
+        (¬ q) (¬ p) Perm
+        applySyllogism
+        introduceTransposition
+))
+
+thm (swapConjunction () ((H (p ∧ q))) (q ∧ p) (
+        H
+        p q *3.22
+        applyModusPonens
+))
+</jh>
+Next, we prove the negation of <math>\bot</math>:
+<jh>
+thm (*3.24 () () (¬ (p ∧ (¬ p))) (
+        (¬ p) TertiumNonDatur
+        ((¬ p) ∨ (¬ (¬ p))) *2.12
+        applyModusPonens
+))
+
+thm (NotFalse () () (¬ (⊥)) (
+        p *3.24
+))
+</jh>
+
+=== Conjunction elimination ===
+Next, we prove the conjunction elimination theorems.
+<jh>
+thm (ConjunctionRightElimination () () ((p ∧ q) → p) ( # *3.26
+        p q AntecedentIntroduction
+        groupDisjunctionLeft
+</jh>
+This gives us <math>((\neg p)\vee(\neg q))\vee p</math>. All we need now is a double negation of the left bracket.
+<jh>
+        ((¬ p) ∨ (¬ q)) p *2.53
+        applyModusPonens
+))
+
+thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+        H
+        p q ConjunctionRightElimination
+        applyModusPonens
+))
+
+thm (ConjunctionLeftElimination () () ((p ∧ q) → q) ( # *3.27
+        p q *3.22
+        q p ConjunctionRightElimination
+        applySyllogism
+))
+
+thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+        H
+        p q ConjunctionLeftElimination
+        applyModusPonens
+))
+</jh>
+
+=== Import and export ===
+We now prove Peano's import and export principles. We begin with exportation:
+<jh>
+thm (Exportation () () (((p ∧ q) → r) → (p → (q → r))) ( # *3.3
+</jh>
+To shift the bracket right, we combine transposition and the ''Comm'' axiom to get <math>((p\wedge q)\rightarrow r)\rightarrow(p\rightarrow((\neg r)\rightarrow(\neg q)))</math>:
+<jh>
+        ((¬ p) ∨ (¬ q)) r *2.15
+        (¬ r) p (¬ q) Comm
+        applySyllogism
+</jh>
+What remains to do now is to install a transposition of <math>r</math> with <math>q</math>:
+<jh>
+        r q *2.17
+        p introduceAntecedent distributeAntecedent
+        applySyllogism
+))
+
+thm (export () ((H ((p ∧ q) → r))) (p → (q → r)) (
+        H
+        p q r Exportation
+        applyModusPonens
+))
+</jh>
+Importation is simpler as the conjunction is in the consequent this time:
+<jh>
+thm (Importation () () ((p → (q → r)) → ((p ∧ q) → r)) ( # *3.31
+        (¬ p) (¬ q) r *2.31
+        ((¬ p) ∨ (¬ q)) r *2.53
+        applySyllogism
+))
+
+thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
+        H
+        p q r Importation
+        applyModusPonens
+))
+</jh>
+We can use importation to prove syllogisms in conjunction form:
+<jh>
+thm (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)) ( # *3.33
+        p q r CommonConsequentAddition
+        import
+))
+
+thm (*3.34 () () (((q → r) ∧ (p → q)) → (p → r)) (
+       q r p CommonAntecedentAddition
+       import
+))
+</jh>
+
+Import and export also give us another transposition theorem, <math>*3.37</math> (which we prove in several steps):
+<jh>
+thm (*3.37-1 () () ((p → (q → r)) → (p → ((¬ r) → (¬ q)))) (
+        q r *2.16
+        p addCommonAntecedent
+))
+
+thm (*3.37 () () (((p ∧ q) → r) → ((p ∧ (¬ r)) → (¬ q))) (
+        p q r Exportation
+        p q r *3.37-1
+        applySyllogism
+
+        p (¬ r) (¬ q) Importation
+        applySyllogism
+))
+</jh>
+
+=== Composition ===
+Next, we prove ''Comp'', the principle of composition,
+<jh>
+thm (Comp () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) ( # *3.43
+        q r ConjunctionRightIntroduction
+        p addCommonAntecedent
+        p r (q ∧ r) *2.77
+        applySyllogism
+        import
+))
+
+thm (composeConjunction () ((H1 (p → q)) (H2 (p → r))) (p → (q ∧ r)) (
+        H1 H2 introduceConjunction
+        p q r Comp
+        applyModusPonens
+))
+</jh>
+
+=== Disjunction composition ===
+Conjunction composition has an analogue for disjunction (<math>*3.44</math>), which we prove in several steps:
+
+<jh>
+thm (*3.44-1 () () ((((¬ q) → r) ∧ (r → p)) → ((q → p) → p)) (
+        (¬ q) r p ImplicationTransitivity
+        q p *2.6
+        applySyllogism
+))
+
+thm (*3.44-2 () () (((¬ q) → r) → (((q → p) ∧ (r → p)) → p)) (
+        q r p *3.44-1
+        export
+
+        (r → p) (q → p) p Comm
+        applySyllogism
+
+        (q → p) (r → p) p Importation
+        applySyllogism
+))
+
+thm (*3.44 () () (((q → p) ∧ (r → p)) → ((q ∨ r) → p)) (
+        q r p *3.44-2
+
+        applyComm
+
+        q r *2.53
+        p addCommonConsequent
+
+        applySyllogism
+))
+
+thm (composeDisjunction () ((HQP (q → p)) (HRP (r → p)))
+  ((q ∨ r) → p) (
+        HQP HRP introduceConjunction
+        q p r *3.44
+        applyModusPonens
+))
+</jh>
+
+=== Principle of the factor ===
+Finally, we prove Peano's principle of the factor, called ''Fact'' by Whitehead and Russell. It complements the ''Sum'' axiom and its companion theorems. Two consequences are partial builder theorems for conjunction and disjunction.
+<jh>
+thm (Fact () () ((p → q) → ((p ∧ r) → (q ∧ r))) ( # *3.45
+        p q (¬ r) CommonConsequentAddition
+        (q → (¬ r)) (p → (¬ r)) *2.16
+        applySyllogism
+))
+
+thm (ConjunctionMultiplication () () (((p → r) ∧ (q → s)) → ((p ∧ q) → (r ∧ s))) ( # *3.47
+</jh>
+We prove this theorem in two steps. First we use the left hand side of the antecedent to deduce <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow((p\wedge q)\rightarrow(q\wedge r))</math>:
+<jh>
+        (p → r) (q → s) ConjunctionRightElimination
+        p r q Fact
+        applySyllogism
+        r q *3.22
+        (p ∧ q) introduceAntecedent distributeAntecedent
+        applySyllogism
+</jh>
+Now we do the same with the right hand side of the antecedent to get <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow((q\wedge r)\rightarrow(r\wedge s))</math>. The theorem then follows from a syllogism in the consequent.
+<jh>
+        (p → r) (q → s) ConjunctionLeftElimination
+        q s r Fact
+        applySyllogism
+        s r *3.22
+        (q ∧ r) introduceAntecedent distributeAntecedent
+        applySyllogism
+        applySyllogismInConsequent
+))
+
+thm (conjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
+        H1 H2 introduceConjunction
+        p r q s ConjunctionMultiplication
+        applyModusPonens
+))
+
+thm (DisjunctionSummation () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) ( # *3.48
+</jh>
+This theorem follows exactly as <code>ConjunctionMultiplication</code>, except that we use the ''Sum'' type theorem <code>DisjunctionSummationRL</code> instead of ''Fact'' and <math>*3.22</math>.
+<jh>
+        (p → r) (q → s) ConjunctionRightElimination
+        p r q DisjunctionSummationRL
+        applySyllogism
+        (p → r) (q → s) ConjunctionLeftElimination
+        q s r DisjunctionSummationRL
+        applySyllogism
+        applySyllogismInConsequent
+))
+
+thm (disjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
+        H1 H2 introduceConjunction
+        p r q s DisjunctionSummation
+        applyModusPonens
+))
+</jh>
+
+== Biconditional ==
+
+In Principia, the biconditional <math>p\leftrightarrow q</math> is defined simply as <math>(p\rightarrow q)\wedge(q\rightarrow p)</math>, so our combination and elimination theorems for conjunction immediately yield the corresponding introduction and elimination rules for the biconditional.
+<jh>
+thm (BiconditionalForwardElimination () () ((p ↔ q) → (q → p)) (
+        (p → q) (q → p) ConjunctionLeftElimination
+))
+
+thm (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)) (
+        (p → q) (q → p) ConjunctionRightElimination
+))
+
+thm (introduceBiconditional () ((H1 (p → q)) (H2 (q → p))) (p ↔ q) (
+        H1 H2 introduceConjunction
+))
+
+thm (eliminateBiconditionalForward () ((H (p ↔ q))) (q → p) (
+        H eliminateLeftConjunction
+))
+
+thm (eliminateBiconditionalReverse () ((H (p ↔ q))) (p → q) (
+        H eliminateRightConjunction
+))
+</jh>
+
+=== Negation ===
+In order to prove the negation function theorem <math>(p\leftrightarrow q)\leftrightarrow((\neg p)\leftrightarrow(\neg q))</math>, we combine the two transposition laws <math>*2.16</math> and <math>*2.17</math>:
+<jh>
+thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) ( # *4.11
+        p q *2.16
+        q p *2.16
+        conjoin
+</jh>
+This gives us <math>(p\leftrightarrow q)\rightarrow((\neg q)\leftrightarrow(\neg p))</math>, the right hand side of which must be permuted:
+<jh>
+        ((¬ q) → (¬ p)) ((¬ p) → (¬ q)) *3.22
+        applySyllogism
+</jh>
+Now the same again for <math>*2.17</math>:
+<jh>
+        p q *2.17
+        q p *2.17
+        conjoin
+        (q → p) (p → q) *3.22
+        applySyllogism
+        introduceBiconditional
+))
+
+thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (removeNegation () ((H ((¬ p) ↔ (¬ q)))) (p ↔ q) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Biconditionalized transposition laws ===
+We proved various transposition laws for the conditional earlier. Now we provide some for the biconditional, starting with <math>(p\leftrightarrow(\neg q))\leftrightarrow(q\leftrightarrow(\neg p))</math>. The proof is a straightforward application of the conditional transposition laws, but has to prove each direction of the biconditionals.
+<jh>
+thm (*4.12-forward () () ((p ↔ (¬ q)) → (q → (¬ p))) (
+        p (¬ q) BiconditionalReverseElimination
+        p q *2.03 applySyllogism
+))
+
+thm (*4.12-reverse () () ((p ↔ (¬ q)) → ((¬ p) → q)) (
+        p (¬ q) BiconditionalForwardElimination
+        q p *2.15 applySyllogism
+))
+
+thm (*4.12 () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))) (
+        p q *4.12-forward
+        p q *4.12-reverse
+        composeConjunction
+
+        q p *4.12-forward
+        q p *4.12-reverse
+        composeConjunction
+
+        introduceBiconditional
+))
+</jh>
+
+=== Double negation ===
+<jh>
+thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
+        p *2.12
+        p *2.14
+        introduceBiconditional
+))
+</jh>
+
+=== Some more deduction tools ===
+The next two theorems, <math>*4.14</math> and <math>*4.15</math>, enable making some deductions involving biconditionals and conjunctions. They are similar to <math>*3.37</math> but extend it.
+
+The idea behind the proof of the converse of <math>*3.37</math> below is quite simple: <math>*3.37</math> becomes its own converse (modulo some double negation) when substituted with some negated terms.  The rest of the proof is just getting rid of the double negation.
+<jh>
+thm (converse-of-*3.37 () () (((p ∧ (¬ r)) → (¬ q)) → ((p ∧ q) → r)) (
+        p (¬ r) (¬ q) *3.37
+        # (((p ∧ (¬ r)) → (¬ q)) → ((p ∧ (¬ (¬ q))) → (¬ (¬ r))))
+
+        p (¬ (¬ q)) (¬ (¬ r)) Exportation
+        # ((p ∧ (¬ (¬ q))) → (¬ (¬ r)))) → (p → ((¬ (¬ q)) → (¬ (¬ r))))
+
+        (¬ q) (¬ r) *2.17
+        r q *2.17
+        applySyllogism
+        # ((¬ (¬ q)) → (¬ (¬ r))) → (q → r)
+
+        p addCommonAntecedent
+        # (p → ((¬ (¬ q)) → (¬ (¬ r)))) → (p → (q → r))
+
+        applySyllogism
+
+        p q r Importation
+        applySyllogism
+
+        applySyllogism
+))
+
+thm (*4.14 () () (((p ∧ q) → r) ↔ ((p ∧ (¬ r)) → (¬ q))) (
+        p q r *3.37
+        p r q converse-of-*3.37
+        introduceBiconditional
+))
+</jh>
+
+The next theorem, <math>(((p\wedge q)\rightarrow(\neg r))\leftrightarrow((q\wedge r)\rightarrow (\neg p)))</math>, is similar. Until we have built up more of the biconditional machinery, it will be easier to prove each implication separately. The proof is a straightforward substitution together with a commutation of the initial <math>p\wedge q</math>. As with the previous proof, most of the length of the proof consists of building up formulas to handle things like removing deeply nested double negation, a process which will get (somewhat) easier later.
+
+<jh>
+thm (*4.15-1 () () (((p ∧ q) → r) → ((q ∧ p) → r)) (
+        q p *3.22
+        r addCommonConsequent
+))
+
+thm (*4.15-2 () () (((p ∧ q) → (¬ r)) → ((q ∧ (¬ (¬ r))) → (¬ p))) (
+        p q (¬ r) *4.15-1
+        q p (¬ r) *4.14 eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (*4.15-forward () () (((p ∧ q) → (¬ r)) → ((q ∧ r) → (¬ p))) (
+        p q r *4.15-2
+
+        q (¬ (¬ r)) (¬ p) Exportation applySyllogism
+
+        r *2.12
+        (¬ p) addCommonConsequent
+
+        q addCommonAntecedent
+
+        applySyllogism
+
+        q r (¬ p) Importation applySyllogism
+))
+
+thm (*4.15-2-reverse () () (((q ∧ (¬ (¬ r))) → (¬ p)) → ((p ∧ q) → (¬ r))) (
+        q p (¬ r) *4.14 eliminateBiconditionalForward
+        q p (¬ r) *4.15-1
+        applySyllogism
+))
+
+thm (*4.15-reverse () () (((q ∧ r) → (¬ p)) → ((p ∧ q) → (¬ r))) (
+        q r (¬ p) Exportation
+
+        r *2.14
+        (¬ p) addCommonConsequent
+
+        q addCommonAntecedent
+
+        applySyllogism
+
+        q (¬ (¬ r)) (¬ p) Importation applySyllogism
+
+        q r p *4.15-2-reverse
+        applySyllogism
+))
+
+thm (*4.15 () () (((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p))) (
+        p q r *4.15-forward
+        q r p *4.15-reverse
+        introduceBiconditional
+))
+</jh>
+
+=== Reflexive, symmetric, and transitive ===
+
+The biconditional has these three properties (which correspond to those defining an [[w:equivalence relation|equivalence relation]]).
+
+<jh>
+thm (BiconditionalReflexivity () () (p ↔ p) ( # *4.2
+        p Id
+        p Id
+        introduceBiconditional
+))
+
+thm (BiconditionalSymmetryImplication () () ((p ↔ q) → (q ↔ p)) (
+        (p → q) (q → p) *3.22
+))
+
+thm (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)) ( # *4.21
+        p q BiconditionalSymmetryImplication
+        q p BiconditionalSymmetryImplication
+        introduceBiconditional
+))
+
+thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
+        H
+        p q BiconditionalSymmetryImplication
+        applyModusPonens
+))
+</jh>
+The proof of biconditional transitivity is somewhat more complicated. The antecedent contains essentially four disjunctions factors. Each of them has to be picked out and applied:
+<jh>
+thm (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)) ( # *4.22
+</jh>
+First factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionRightElimination
+        applySyllogism
+</jh>
+Third factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionRightElimination
+        applySyllogism
+        applySyllogismInConsequent
+</jh>
+Fourth factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionLeftElimination
+        applySyllogism
+</jh>
+Second factor:
+<jh>
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionLeftElimination
+        applySyllogism
+        applySyllogismInConsequent
+        composeConjunction
+))
+
+thm (applyBiconditionalTransitivity () ((H1 (p ↔ q)) (H2 (q ↔ r))) (p ↔ r) (
+        H1 H2 introduceConjunction
+        p q r BiconditionalTransitivity
+        applyModusPonens
+))
+</jh>
+
+=== Additional biconditional theorems ===
+Another easy builder theorem:
+<jh>
+
+thm (*4.37 () () ((p ↔ q) → ((p ∨ r) ↔ (q ∨ r))) (
+        p q r DisjunctionSummationRR
+        q p r DisjunctionSummationRR
+        conjoin
+))
+
+thm (buildRightDisjunction () ((H (p ↔ q))) ((p ∨ r) ↔ (q ∨ r)) (
+        H
+        p q r *4.37
+        applyModusPonens
+))
+</jh>
+
+=== More theorems stated using the biconditional ===
+Some more theorems where we have proved implications in both directions, but can now express them using the biconditional:
+<jh>
+thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) ( # *5.41
+        p q r *2.77
+        p q r *2.86
+        introduceBiconditional
+))
+
+thm (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))) ( # *4.1
+        p q *2.16
+        q p *2.17
+        introduceBiconditional
+))
+
+thm (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)) (
+        p q *2.15
+        q p *2.15
+        introduceBiconditional
+))
+
+thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))) (
+        p q *2.03
+        q p *2.03
+        introduceBiconditional
+))
+
+thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
+        p q r Importation
+        p q r Exportation
+        introduceBiconditional
+))
+</jh>
+
+=== Algebraic laws for disjunction and conjunction ===
+
+Some of the theorems of the propositional calculus can be thought of as analagous to those of other [[w:Abstract algebra|algebras]], showing properties such as commutivity and associativity.  Although Whitehead and Russell think this concept was overemphasized in their day,<ref>{{sc|Whitehead}} and {{sc|Russell}}, ''loc. cit.'', p.&nbsp;120</ref> they do provide theorems which represent algebraic properties.
+
+==== Idempotence ====
+
+Idempotence for disjunction and conjunction are perhaps the most interesting, as they cause the biggest differences between this algebra and many other algebras:<ref>{{sc|Whitehead}} and {{sc|Russell}}, ''loc. cit.'', p.&nbsp;121</ref>
+
+<jh>
+thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) ( # *4.25
+        p p Add
+        p Taut
+        introduceBiconditional
+))
+</jh>
+
+To prove conjunction idempotence, we first catch up on a few basic implication theorems we haven't needed until now:
+
+<jh>
+thm (*2.4 () () ((p ∨ (p ∨ q)) → (p ∨ q)) (
+        p p q *2.31
+</jh>
+That gives us <math>((p\vee(p\vee q)\rightarrow((p\vee p)\vee q))</math> and we just need to eliminate the extra <math>p\vee p</math>:
+<jh>
+        p Taut
+        q disjoinRR
+
+        applySyllogism
+))
+
+thm (*2.43 () () ((p → (p → q)) → (p → q)) (
+        (¬ p) q *2.4
+))
+
+thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
+        p p ConjunctionRightIntroduction
+        p (p ∧ p) *2.43
+        applyModusPonens
+
+        p p ConjunctionRightElimination
+
+        introduceBiconditional
+))
+</jh>
+
+Idempotence is also expressed in the following rules.
+
+<jh>
+thm (cloneAsDisjunction () ((H p)) (p ∨ p) (
+        H
+        p p Add
+        applyModusPonens
+))
+
+thm (conflateDisjunction () ((H (p ∨ p))) p (
+        H
+        p Taut
+        applyModusPonens
+))
+
+thm (cloneAsConjunction () ((H p)) (p ∧ p) (
+        H
+        p ConjunctionIdempotence eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (conflateConjunction () ((H (p ∧ p))) p (
+        H
+        p ConjunctionIdempotence eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+==== Commutativity ====
+We already have commutativity of disjunction and conjunction, but just need to express them using the biconditional:
+<jh>
+thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) ( # *4.31
+        p q Perm
+        q p Perm
+        introduceBiconditional
+))
+
+thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) ( # *4.3
+        p q *3.22
+        q p *3.22
+        introduceBiconditional
+))
+</jh>
+
+==== Associativity ====
+
+Both disjunction and conjunction are associative:
+
+<jh>
+thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) ( # *4.33
+        p q r *2.32
+        p q r *2.31
+        introduceBiconditional
+))
+
+</jh>
+ 
+The link between <math>*4.15</math> (which has some implications and negations) and the conjunctions in ConjunctionAssociativity may not be apparent, but follows from the definitions of conjunction and implication.
+<jh>
+thm (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))) ( # *4.32
+        p q r *4.15
+        addNegation
+
+        (q ∧ r) p ConjunctionCommutativity
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+We already provided rules for associating disjunctions; here are the corresponding ones for conjunctions:
+
+<jh>
+thm (groupConjunctionRight () ((H ((p ∧ q) ∧ r))) (p ∧ (q ∧ r)) (
+        H
+        p q r ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (groupConjunctionLeft () ((H (p ∧ (q ∧ r)))) ((p ∧ q) ∧ r) (
+        H
+        p q r ConjunctionAssociativity
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Substitution and builders ===
+If <math>p\leftrightarrow q</math>, then we want to be able to substitute <math>p</math> for <math>q</math> in a theorem to get a new theorem.<ref>{{sc|Whitehead}} and {{sc|Russell}}, ''loc. cit.'', p.&nbsp;120</ref>  The mechanism which we are working towards, in [[Interface:Classical propositional calculus]], is provided by <code>addNegation</code>, <code>removeNegation</code>, <code>buildImplication</code>, <code>buildDisjunction</code>, <code>buildConjunction</code>, and <code>buildBiconditional</code>. Those rules do not eliminate the need for a proof to build up the expressions embodying the substitution, but they reduce the process of constructing such a proof to a familiar (if perhaps tedious) pattern. We already proved <code>addNegation</code> and <code>removeNegation</code>, and we're now ready to prove the rest.
+
+==== Conjunction ====
+The proof proceeds by expanding <math>(p\leftrightarrow q)\wedge(r\leftrightarrow s)</math> into four implications, rearranging them using associativity and commutativity, and applying ConjunctionMultiplication to each half.
+
+First, the rearrangement we need is <code>ConjunctionFunction-1</code>, known as <code>an4</code> in metamath.<ref><code>an4</code> in <code>set.mm</code>, [http://us.metamath.org/mpeuni/an4.html metamath.org], accessed February 15, 2010</ref>
+
+<jh>
+thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
+        p q (r ∧ s) ConjunctionAssociativity
+        eliminateBiconditionalReverse
+
+        p Id
+        q r s ConjunctionAssociativity
+        eliminateBiconditionalForward
+        conjoin
+
+        applySyllogism
+
+        p Id
+        q r ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        s Id 
+        conjoin
+        conjoin
+
+        applySyllogism
+
+        p Id
+        r q s ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        conjoin
+
+        applySyllogism
+
+        p r (q ∧ s) ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+
+thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))) ( # *4.38
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
+        
+        p q r s ConjunctionMultiplication
+        q p s r ConjunctionMultiplication
+        conjoin
+
+        applySyllogism
+))
+
+thm (buildConjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∧ r) ↔ (q ∧ s)) (
+        H1 H2 introduceConjunction
+        p q r s ConjunctionFunction
+        applyModusPonens
+))
+</jh>
+
+==== Disjunction ====
+This is just like the theorem for conjunction, except that we build on the partial builder theorem DisjunctionSummation instead of ConjunctionMultiplication:
+
+<jh>
+thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))) ( # *4.39
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
+        
+        p q r s DisjunctionSummation
+        q p s r DisjunctionSummation
+        conjoin
+
+        applySyllogism
+))
+
+thm (buildDisjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∨ r) ↔ (q ∨ s)) (
+        H1 H2 introduceConjunction
+        p q r s DisjunctionFunction
+        applyModusPonens
+))
+</jh>
+
+==== Implication ====
+The builder for implication is a simple consequence of the builder for disjunction together with the equivalence of <math>(\neg p)\leftrightarrow(\neg q)</math> and <math>p\leftrightarrow q</math>.
+
+<jh>
+thm (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))) (
+        p q NegationFunction
+        (r ↔ s) BiconditionalReflexivity
+        buildConjunction
+
+        eliminateBiconditionalReverse
+
+        (¬ p) (¬ q) r s DisjunctionFunction
+
+        applySyllogism
+))
+
+thm (buildImplication () ((HPQ (p ↔ q)) (HRS (r ↔ s))) 
+  ((p → r) ↔ (q → s)) (
+        HPQ HRS introduceConjunction
+        p q r s ImplicationFunction
+        applyModusPonens
+))
+</jh>
+
+==== Biconditional ====
+To prove the biconditional builder, we need <math>((p\rightarrow r)\wedge(r\rightarrow p))\leftrightarrow((q\rightarrow s)\wedge(s\rightarrow q))</math>. As this is an equivalence of conjunctions, we'll get it with the conjunction builder.  The equivalences needed to apply the conjunction builder will come from the implication builder (and conjunction commutativity in one of the two directions).
+
+<jh>
+thm (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))) (
+        p q r s ImplicationFunction
+
+        (p ↔ q) (r ↔ s) *3.22
+        r s p q ImplicationFunction
+        applySyllogism
+
+        composeConjunction
+
+        (p → r) (q → s) (r → p) (s → q) 
+        ConjunctionFunction
+
+        applySyllogism
+))
+
+thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q ↔ s)) (
+        HPQ HRS introduceConjunction
+        p q r s BiconditionalFunction
+        applyModusPonens
+))
+</jh>
+
+=== Unidirectional builders ===
+The builders which we just proved start with biconditionals.  If we only have implications, there is a similar set of builders (which, of course, only provide implications, not biconditionals, in the consequent).  Here we summarize the ones we have already proved, and prove a few more.
+
+==== Negation ====
+The <code>Transposition</code> theorem, <math>(p\rightarrow q)\leftrightarrow((\neg q)\rightarrow(\neg p))</math>, is a unidirectional negation builder.
+
+==== Disjunction ====
+The disjunction summation theorem, <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow ((p\vee q)\rightarrow(r\vee s))</math>, is the general form of the unidirectional disjunction builder.
+
+We also provide convenience theorems for cases in which one of the implications is simply <math>r\rightarrow r</math>, and where there might be a commutation in one of the disjunctions.  All of these are already proved (<code>DisjunctionSummationLR</code>, <code>disjoinLR</code>, and so on), so the only thing we need to do here is provide <code>DisjunctionSummationLL</code> as a new name for the ''Sum'' axiom.
+
+<jh>
+thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
+        p q r Sum
+))
+</jh>
+
+==== Conjunction ====
+The conjunction multiplication theorem, <math>((p\rightarrow r)\wedge(q\rightarrow s))\rightarrow((p\wedge q)\rightarrow(r\wedge s))</math>, is the general form of the unidirectional disjunction builder.
+
+Here we add convenience theorems for cases in which one of the implications is simply <math>r\rightarrow r</math>, and where there might be a commutation in one of the conjunctions.
+
+<code>ConjunctionMultiplicationRR</code> is just a new name for the ''Fact'' theorem; the rest could either be proved from ''Fact'' and commutativity, or as special cases of <code>ConjunctionMultiplication</code>.
+
+<jh>
+thm (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))) (
+        r ImplicationReflexivity
+
+        r r p q ConjunctionMultiplication
+        export
+
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))) (
+        p q r ConjunctionMultiplicationLL
+
+        r q ConjunctionCommutativity eliminateBiconditionalReverse
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ r) → (q ∧ r))) (
+        p q r Fact
+))
+
+thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
+        p q r ConjunctionMultiplicationRR
+
+        q r ConjunctionCommutativity eliminateBiconditionalReverse
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (conjoinLL () ((H (p → q))) ((r ∧ p) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationLL
+        applyModusPonens
+))
+
+thm (conjoinLR () ((H (p → q))) ((r ∧ p) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationLR
+        applyModusPonens
+))
+
+thm (conjoinRL () ((H (p → q))) ((p ∧ r) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationRL
+        applyModusPonens
+))
+
+thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationRR
+        applyModusPonens
+))
+</jh>
+
+==== Implication ====
+The first two unidirectional implication builders came early on, <code>CommonAntecedentAddition</code> and <code>CommonConsequentAddition</code>.
+
+The general unidirectional implication builder would be <math>((p\rightarrow q)\wedge(r\rightarrow s))\rightarrow((q\rightarrow r)\rightarrow(p\rightarrow s))</math>.<ref><code>imim12i</code> in <code>set.mm</code>, [http://us.metamath.org/mpeuni/imim12i.html metamath.org], accessed February 15, 2010</ref>
+
+==== Biconditional ====
+There is no unidirectional builder for the biconditional.
+
+=== Distributive laws ===
+We prove two distributive laws.  The first one, <math>((p\wedge(q\vee r))\leftrightarrow((p\wedge q)\vee(p\wedge r))</math>, is analogous to the distributive law in well-known algebras such as the real numbers, <math>i\cdot(j+k)=i\cdot j+i\cdot k</math> (if one thinks of conjunction as being like multiplication and disjunction as being like addition).
+
+<jh>
+thm (ConjunctionLeftDistribution-forward () () 
+  ((p ∧ (q ∨ r)) → ((p ∧ q) ∨ (p ∧ r))) (
+        p q ConjunctionRightIntroduction
+        p r ConjunctionRightIntroduction
+        composeConjunction
+
+        q (p ∧ q) r (p ∧ r) DisjunctionSummation
+        applySyllogism
+
+        import
+))
+
+thm (ConjunctionLeftDistribution-reverse () ()
+  (((p ∧ q) ∨ (p ∧ r)) → (p ∧ (q ∨ r))) (
+        p q ConjunctionRightElimination
+        p r ConjunctionRightElimination
+        composeDisjunction
+
+        p q ConjunctionLeftElimination
+        p r ConjunctionLeftElimination
+        disjoin
+
+        composeConjunction
+))
+
+thm (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))) ( # *4.4
+        p q r ConjunctionLeftDistribution-forward
+        p q r ConjunctionLeftDistribution-reverse
+        introduceBiconditional
+))
+</jh>
+
+The second distributive law, <math>(p\vee(q\wedge r))\leftrightarrow((p\vee q)\wedge(p\vee r))</math>, has no analogue in ordinary algebra.<ref>{{sc|Whitehead}} and {{sc|Russell}}, ''loc. cit.'', p.&nbsp;124</ref>
+
+<jh>
+thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q) ∧ (p ∨ r))) (
+        q r ConjunctionRightElimination
+        p disjoinLL
+
+        q r ConjunctionLeftElimination
+        p disjoinLL
+
+        composeConjunction
+))
+
+thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p ∨ (q ∧ r))) (
+        p q *2.53
+        p r *2.53
+        conjoin
+
+        (¬ p) q r Comp
+        applySyllogism
+
+        p (q ∧ r) *2.54
+        applySyllogism
+))
+
+thm (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))) ( # *4.41
+        p q r DisjunctionLeftDistribution-forward
+        p q r DisjunctionLeftDistribution-reverse
+        introduceBiconditional
+))
+</jh>
+
+We also supply commuted versions of both laws and some rules:
+
+<jh>
+thm (DisjunctionRightDistribution () () (((p ∧ q) ∨ r) ↔ ((p ∨ r) ∧ (q ∨ r))) (
+        (p ∧ q) r DisjunctionCommutativity
+        r p q DisjunctionLeftDistribution
+        applyBiconditionalTransitivity
+
+        r p DisjunctionCommutativity
+        r q DisjunctionCommutativity
+        buildConjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (q ∧ r))) (
+        (p ∨ q) r ConjunctionCommutativity
+        r p q ConjunctionLeftDistribution
+        applyBiconditionalTransitivity
+
+        r p ConjunctionCommutativity
+        r q ConjunctionCommutativity
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (distributeLeftDisjunction () ((H (p ∨ (q ∧ r)))) ((p ∨ q) ∧ (p ∨ r)) (
+        H
+        p q r DisjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectLeftDisjunction () ((H ((p ∨ q) ∧ (p ∨ r)))) (p ∨ (q ∧ r)) (
+        H
+        p q r DisjunctionLeftDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (distributeRightDisjunction () ((H ((p ∧ q) ∨ r))) ((p ∨ r) ∧ (q ∨ r)) (
+        H
+        p q r DisjunctionRightDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectRightDisjunction () ((H ((p ∨ r) ∧ (q ∨ r)))) ((p ∧ q) ∨ r) (
+        H
+        p q r DisjunctionRightDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (distributeLeftConjunction () ((H (p ∧ (q ∨ r)))) ((p ∧ q) ∨ (p ∧ r)) (
+        H
+        p q r ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectLeftConjunction () ((H ((p ∧ q) ∨ (p ∧ r)))) (p ∧ (q ∨ r)) (
+        H
+        p q r ConjunctionLeftDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (distributeRightConjunction () ((H ((p ∨ q) ∧ r))) ((p ∧ r) ∨ (q ∧ r)) (
+        H
+        p q r ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectRightConjunction () ((H ((p ∧ r) ∨ (q ∧ r)))) ((p ∨ q) ∧ r) (
+        H
+        p q r ConjunctionRightDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== De Morgan's laws ===
+Since the definition of conjunction in Principia is based on [[w:De Morgan's laws|De Morgan's laws]], the laws themselves are not hard to prove.
+<jh>
+thm (DeMorganPDP () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))) ( # *4.56
+        p DoubleNegation
+        q DoubleNegation
+        buildDisjunction
+        addNegation
+))
+
+thm (DeMorganPDN () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) ( # *4.54
+        p DoubleNegation
+        (¬ q) buildRightDisjunction
+        addNegation
+))
+
+thm (DeMorganNDP () () ((¬ ((¬ p) ∨ q)) ↔ (p ∧ (¬ q))) ( # *4.52
+        (¬ p) BiconditionalReflexivity
+        q DoubleNegation
+        buildDisjunction
+        addNegation
+))
+
+thm (DeMorganNDN () () ((¬ ((¬ p) ∨ (¬ q))) ↔ (p ∧ q)) ( # *4.5
+        (¬ ((¬ p) ∨ (¬ q))) BiconditionalReflexivity
+))
+
+thm (DeMorganPCP () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) ( # *4.51
+        ((¬ p) ∨ (¬ q)) DoubleNegation
+        swapBiconditional
+))
+
+thm (DeMorganPCN () () ((¬ (p ∧ (¬ q))) ↔ ((¬ p) ∨ q)) ( # *4.53
+        (¬ p) BiconditionalReflexivity
+        q DoubleNegation
+        buildDisjunction
+
+        ((¬ p) ∨ (¬ (¬ q))) DoubleNegation
+        applyBiconditionalTransitivity
+        swapBiconditional
+))
+
+thm (DeMorganNCP () () ((¬ ((¬ p) ∧ q)) ↔ (p ∨ (¬ q))) ( # *4.55
+        p DoubleNegation
+        (¬ q) BiconditionalReflexivity
+        buildDisjunction
+
+        ((¬ (¬ p)) ∨ (¬ q)) DoubleNegation
+        applyBiconditionalTransitivity
+        swapBiconditional
+))
+
+thm (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)) ( # *4.57
+        p DoubleNegation
+        q DoubleNegation
+        buildDisjunction
+
+        ((¬ (¬ p)) ∨ (¬ (¬ q))) DoubleNegation
+        applyBiconditionalTransitivity
+        swapBiconditional
+))
+
+thm (distributeNegationPDP () ((H (¬ (p ∨ q)))) ((¬ p) ∧ (¬ q)) (
+        H
+        p q DeMorganPDP eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationPDN () ((H (¬ (p ∨ (¬ q))))) ((¬ p) ∧ q) (
+        H
+        p q DeMorganPDN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNDP () ((H (¬ ((¬ p) ∨ q)))) (p ∧ (¬ q)) (
+        H
+        p q DeMorganNDP eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNDN () ((H (¬ ((¬ p) ∨ (¬ q))))) (p ∧ q) (
+        H
+        p q DeMorganNDN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationPCP () ((H (¬ (p ∧ q)))) ((¬ p) ∨ (¬ q)) (
+        H
+        p q DeMorganPCP eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationPCN () ((H (¬ (p ∧ (¬ q))))) ((¬ p) ∨ q) (
+        H
+        p q DeMorganPCN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNCP () ((H (¬ ((¬ p) ∧ q)))) (p ∨ (¬ q)) (
+        H
+        p q DeMorganNCP eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNCN () ((H (¬ ((¬ p) ∧ (¬ q))))) (p ∨ q) (
+        H
+        p q DeMorganNCN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectNegationPDP () ((H (p ∨ q))) (¬ ((¬ p) ∧ (¬ q))) (
+        H
+        p q DeMorganNCN eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationPDN () ((H (p ∨ (¬ q)))) (¬ ((¬ p) ∧ q)) (
+        H
+        p q DeMorganNCP eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationNDP () ((H ((¬ p) ∨ q))) (¬ (p ∧ (¬ q))) (
+        H
+        p q DeMorganPCN eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationNDN () ((H ((¬ p) ∨ (¬ q)))) (¬ (p ∧ q)) (
+        H
+        p q DeMorganPCP eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationPCP () ((H (p ∧ q))) (¬ ((¬ p) ∨ (¬ q))) (
+        H
+        p q DeMorganNDN eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationPCN () ((H (p ∧ (¬ q)))) (¬ ((¬ p) ∨ q)) (
+        H
+        p q DeMorganNDP eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationNCP () ((H ((¬ p) ∧ q))) (¬ (p ∨ (¬ q))) (
+        H
+        p q DeMorganPDN eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
+        H
+        p q DeMorganPDP eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Biconditionalized composition ===
+
+We earlier proved composition laws for disjunction and conjunction:
+*<math>((p\rightarrow r)\wedge(q\rightarrow r))\rightarrow((p\vee q)\rightarrow r))</math>
+*<math>((p\rightarrow q)\wedge(p\rightarrow r))\rightarrow(p\rightarrow(q\wedge r))</math>
+The converses, while less interesting, are also true, and we prove them now.
+
+<jh>
+thm (DisjunctionComposition () () 
+  (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)) ( # *4.77
+        p r q *3.44
+
+        p q DisjunctionRightIntroduction
+        r addCommonConsequent
+
+        q p DisjunctionLeftIntroduction
+        r addCommonConsequent
+
+        composeConjunction
+
+        introduceBiconditional
+))
+
+thm (ConjunctionComposition () () 
+  (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))) ( # *4.76
+        p q r Comp
+
+        q r ConjunctionRightElimination
+        p addCommonAntecedent
+
+        q r ConjunctionLeftElimination
+        p addCommonAntecedent
+
+        composeConjunction
+
+        introduceBiconditional
+))
+
+thm (extractLeftDisjunction () ((H ((p ∨ q) → r))) (p → r) (
+        p q DisjunctionRightIntroduction
+        H
+        applySyllogism
+))
+
+thm (extractRightDisjunction () ((H ((p ∨ q) → r))) (q → r) (
+        q p DisjunctionLeftIntroduction
+        H
+        applySyllogism
+))
+
+thm (extractLeftConjunction () ((H (p → (q ∧ r)))) (p → q) (
+        H
+        q r ConjunctionRightElimination
+        applySyllogism
+))
+
+thm (extractRightConjunction () ((H (p → (q ∧ r)))) (p → r) (
+        H
+        q r ConjunctionLeftElimination
+        applySyllogism
+))
+
+</jh>
+
+=== Weakening of biconditional to disjunction ===
+We've already dealt with weakening the biconditional to an implication. This section just has the same theorems, or slight variations thereof, phrased in terms of disjunction instead of implication.
+
+<jh>
+thm (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))) (
+        p q BiconditionalForwardElimination
+        (¬ q) p DisjunctionCommutativity eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)) (
+        p q BiconditionalReverseElimination
+))
+
+thm (eliminateLeftBiconditionalDisjunction () ((H (p ↔ q))) (p ∨ (¬ q)) (
+        H
+        p q BiconditionalDisjunctionLeftElimination
+        applyModusPonens
+))
+
+thm (eliminateRightBiconditionalDisjunction () ((H (p ↔ q))) ((¬ p) ∨ q) (
+        H
+        p q BiconditionalDisjunctionRightElimination
+        applyModusPonens
+))
+</jh>
+
+== Case Elimination ==
+Proofs often show that one of several cases must apply, and then prove the desired proposition for each case. Here we provide one form of this, where there are two cases: <math>p</math> and <math>(\neg p)</math>. Note that in principle, it is always possible to reduce the handling of multiple cases to repeated handling of two cases.
+
+<jh>
+# one direction of *4.83; much like *2.61
+thm (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q) (
+        p q *2.6
+        applyComm
+        import
+))
+
+thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
+        HP HNOTP introduceConjunction
+        p q CaseElimination
+        applyModusPonens
+))
+</jh>
+
+== Modus ponens and modus tollens ==
+Now that we have import, we can derive the version of the ''modus ponens'' law which [[Interface:Classical propositional calculus]] expects:
+<jh>
+thm (ModusPonens () () ((p ∧ (p → q)) → q) ( # *3.35
+        p q *2.27
+        import
+))
+</jh>
+
+''Modus tollens'' is just a combination of ''modus ponens'' and transposition.
+
+<jh>
+thm (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)) (
+        p q Transposition eliminateBiconditionalReverse
+        (¬ q) conjoinLL
+
+        (¬ q) (¬ p) ModusPonens
+
+        applySyllogism
+))
+
+thm (applyModusTollens () ((H1 (¬ q)) (H2 (p → q))) (¬ p) (
+        H1
+
+        H2
+        introduceTransposition
+
+        applyModusPonens
+))
+</jh>
+
+== Tautology and contradiction ==
+[[Interface:Classical propositional calculus]] gives the name <code>Tautology</code> to <code>(p ∨ (¬ p)) ↔ (⊤)</code> and <code>Contradiction</code> to <code>(p ∧ (¬ p)) ↔ (⊥)</code>.  They are somewhat more subtle than they appear (and in particular are not just trivial consequences of our definitions of <code>⊤</code> and <code>⊥</code>), because the variable which appears in the definition of <code>⊤</code> or <code>⊥</code> is not the same as the one in the <code>Tautology</code> or <code>Contradiction</code> theorem. We therefore prove them as consequences of the notion that two true statements are equivalent (<math>*5.1</math>) or that two false statements are equivalent (<math>*5.21</math>).
+
+<jh>
+thm (*3.4 () () ((p ∧ q) → (p → q)) (
+        p q ConjunctionLeftElimination
+        q p AntecedentIntroduction
+        applySyllogism
+))
+
+thm (*5.1 () () ((p ∧ q) → (p ↔ q)) (
+        p q *3.4
+
+        p q *3.22
+        q p *3.4
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)) (
+        p TertiumNonDatur
+        q TertiumNonDatur
+        introduceConjunction
+
+        (p ∨ (¬ p)) (q ∨ (¬ q)) *5.1
+        applyModusPonens
+))
+
+thm (*5.21 () () (((¬ p) ∧ (¬ q)) → (p ↔ q)) (
+        (¬ p) (¬ q) *5.1
+        p q NegationFunction eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)) (
+        p *3.24
+        q *3.24
+        introduceConjunction
+
+        (p ∧ (¬ p)) (q ∧ (¬ q)) *5.21
+        applyModusPonens
+))
+</jh>
+
+Along the same lines is <math>(\neg p)\leftrightarrow(p\rightarrow(\bot))</math>.
+
+<jh>
+thm (NegationImplication-forward () () ((¬ p) → (p → (⊥))) (
+       p Contradiction eliminateBiconditionalReverse
+       export
+       applyComm
+))
+
+thm (NegationImplication-reverse () () ((p → (⊥)) → (¬ p)) (
+        p (⊥) Transposition eliminateBiconditionalReverse
+
+        NotFalse
+        (¬ (⊥)) (¬ p) ModusPonens export
+        applyModusPonens
+
+        applySyllogism
+))
+
+thm (NegationImplication () () ((¬ p) ↔ (p → (⊥))) (
+        p NegationImplication-forward
+        p NegationImplication-reverse
+        introduceBiconditional
+))
+
+thm (convertFromNegationToImplication () ((H (¬ p))) (p → (⊥)) (
+        H
+        p NegationImplication
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToNegationFromImplication () ((H (p → (⊥)))) (¬ p) (
+        H
+        p NegationImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+== Relationships between connectives ==
+Here we express implication in terms of disjunction, biconditional in terms of implication, etc.
+
+=== Biconditional and implications ===
+These are all straightforward because we define the biconditional as a conjunction of two implications.
+
+<jh>
+thm (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))) (
+        (p ↔ q) BiconditionalReflexivity
+))
+
+thm (convertFromBiconditionalToImplications () ((H (p ↔ q))) ((p → q) ∧ (q → p)) (
+        H
+))
+
+thm (convertToBiconditionalFromImplications () ((H ((p → q) ∧ (q → p)))) (p ↔ q) (
+        H
+))
+
+thm (introduceBiconditionalFromImplications () ((HPQ (p → q)) (HQP (q → p))) (p ↔ q) (
+        HPQ HQP introduceConjunction
+))
+</jh>
+
+=== Biconditional as disjunction of two conjunctions ===
+One way of looking at <math>p\leftrightarrow q</math> is "both p and q are true, or neither are true", or in symbols, <math>(p\leftrightarrow q)\leftrightarrow((p\wedge q)\vee((\neg p)\wedge(\neg q)))</math>. We prove this via a fairly long string of simpler propositions.
+
+<jh>
+thm (Abs () () ((p → (¬ p)) → (¬ p)) ( # *2.01
+        (¬ p) Taut
+))
+
+thm (*4.61 () () ((¬ (p → q)) ↔ (p ∧ (¬ q))) (
+        p q DeMorganNDP
+))
+
+thm (*4.82-forward () () (((p → q) ∧ (p → (¬ q))) → (¬ p)) (
+        q *3.24
+
+        p q (¬ q) ConjunctionComposition
+        p (q ∧ (¬ q)) Transposition
+        applyBiconditionalTransitivity
+        eliminateBiconditionalReverse
+
+        applyComm
+
+        applyModusPonens
+))
+
+thm (*5.15 () () ((p ↔ q) ∨ (p ↔ (¬ q))) (
+        p q *4.61 eliminateBiconditionalReverse
+        p (¬ q) *5.1
+        applySyllogism
+
+        (p → q) (p ↔ (¬ q)) *2.54
+        applyModusPonens
+</jh>
+At this point we have <math>(p\rightarrow q)\vee(p\leftrightarrow(\neg q))</math>.  We'll come back to that, after we prove <math>(q\rightarrow p)\vee(p\leftrightarrow(\neg q))</math>:
+<jh>
+        q p *4.61 eliminateBiconditionalReverse
+        q (¬ p) *5.1
+        applySyllogism
+
+        q p *4.12 eliminateBiconditionalReverse
+        applySyllogism
+
+        (q → p) (p ↔ (¬ q)) *2.54
+        applyModusPonens
+</jh>
+Now we have <math>(p\rightarrow q)\vee(p\leftrightarrow(\neg q))</math> and <math>(q\rightarrow p)\vee(p\leftrightarrow(\neg q))</math> on the proof stack. It is now enough to join those with a conjunction and apply the distributive law:
+<jh>
+
+        introduceConjunction
+        collectRightDisjunction
+))
+
+thm (*5.16-1 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ p)) (
+        p q BiconditionalReverseElimination
+        (p → (¬ q)) conjoinRR
+        p q *4.82-forward
+        applySyllogism
+))
+
+thm (*5.16-2 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ q)) (
+        p q BiconditionalForwardElimination
+        (p → (¬ q)) conjoinRR
+
+        q p (¬ q) ImplicationTransitivity
+        applySyllogism
+
+        q Abs
+        applySyllogism
+))
+
+thm (*5.16-3 () () (((p ↔ q) ∧ (p → (¬ q))) → (¬ ((¬ q) → p))) (
+        p q *5.16-2
+        p q *5.16-1
+        composeConjunction
+
+</jh>
+At this point we have <math>(\neg q)\wedge(\neg p)</math>, and we just need to apply DeMorgan's law and introduce double negation to get <math>(\neg((\neg(\neg q))\vee p))</math>.
+<jh>
+        q p DeMorganPDP eliminateBiconditionalForward
+        applySyllogism
+
+        q DoubleNegation
+        p BiconditionalReflexivity
+        buildDisjunction
+        addNegation
+        eliminateBiconditionalReverse
+
+        applySyllogism
+))
+
+thm (*5.16 () () (¬ ((p ↔ q) ∧ (p ↔ (¬ q)))) (
+        p q *5.16-3
+        export
+</jh>
+We're much closer than it may appear (because JHilbert automatically applies definitions), but other than two applications of DeMorgan's law, it is just the definitions of implication and biconditional: from <math>(p\leftrightarrow q)\rightarrow((p\rightarrow(\neg q))\rightarrow(\neg ((\neg q)\rightarrow p)))</math> the definition of implication yields <math>(p\leftrightarrow q)\rightarrow((\neg(p\rightarrow(\neg q)))\vee(\neg ((\neg q)\rightarrow p)))</math>
+<jh>
+        (p → (¬ q)) ((¬ q) → p) DeMorganPCP
+        eliminateBiconditionalForward applySyllogism
+</jh>
+Now we have <math>(p\leftrightarrow q)\rightarrow(\neg((p\rightarrow(\neg q))\wedge((\neg q)\rightarrow p)))</math> and hence <math>(p\leftrightarrow q)\rightarrow(\neg (p\leftrightarrow (\neg q)))</math> by the definition of the biconditional. A final appeal to the definition of implication yields <math>(\neg(p\leftrightarrow q))\vee(\neg(p\leftrightarrow(\neg q)))</math>.
+<jh>
+        collectNegationNDN
+))
+
+thm (*5.17-1 () () ((p ∨ q) ↔ ((¬ q) → p)) (
+        p q DisjunctionCommutativity
+
+        q DoubleNegation
+        p BiconditionalReflexivity
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (*5.17-2 () () ((¬ (p ∧ q)) ↔ (p → (¬ q))) (
+        p q DeMorganPCP
+))
+
+thm (*5.17 () () (((p ∨ q) ∧ (¬ (p ∧ q))) ↔ (p ↔ (¬ q))) (
+        p q *5.17-1
+        p q *5.17-2
+        buildConjunction
+
+        (¬ q) p BiconditionalSymmetry
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+One way to see <math>*5.18</math> is as a relationship between the biconditional and the [[w:exclusive or|exclusive or]].  One way to express an exclusive or is <math>p\leftrightarrow(\neg q)</math>, and seen this way, <math>*5.18</math> states that the biconditional is the negation of the exclusive or:
+<jh>
+thm (*5.18 () () ((p ↔ q) ↔ (¬ (p ↔ (¬ q)))) (
+        p q *5.15
+        p q *5.16
+        introduceConjunction
+
+        (p ↔ q) (p ↔ (¬ q)) *5.17
+        eliminateBiconditionalReverse applyModusPonens
+))
+
+thm (*5.22 () () ((¬ (p ↔ q)) ↔ ((p ∧ (¬ q)) ∨ (q ∧ (¬ p)))) (
+        (p → q) (q → p) DeMorganPCP
+</jh>
+At this point we have (applying the definition of implication) <math>(\neg((\neg p)\vee q))\vee(\neg((\neg q)\vee p))</math> and we need (applying the definition of conjunction) <math>(\neg ((\neg p)\vee(\neg(\neg q))))\vee(\neg((\neg q)\vee(\neg(\neg p))))</math>. So we just need to fix the double negation.
+<jh>
+
+        (¬ p) BiconditionalReflexivity
+        q DoubleNegation
+        buildDisjunction
+        addNegation
+
+        (¬ q) BiconditionalReflexivity
+        p DoubleNegation
+        buildDisjunction
+        addNegation
+
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (BiconditionalDisjunction () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))) ( # *5.23
+        p q *5.18
+        p (¬ q) *5.22
+        applyBiconditionalTransitivity
+</jh>
+We now have <math>(p\leftrightarrow q)\leftrightarrow((p\wedge(\neg(\neg q)))\vee((\neg q)\wedge(\neg p)))</math>, so we just need to fix the double negation and commute the second conjunction.
+<jh>
+        p BiconditionalReflexivity
+        q DoubleNegation swapBiconditional
+        buildConjunction
+
+        (¬ q) (¬ p) ConjunctionCommutativity
+
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (convertFromBiconditionalToDisjunction () ((H (p ↔ q))) ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))) (
+        H
+        p q BiconditionalDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToBiconditionalFromDisjunction () ((H ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))))) (p ↔ q) (
+        H
+        p q BiconditionalDisjunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Biconditional as conjunction of two disjunctions ===
+This one follows immediately from our definitions of biconditional and implication, and commutativity.
+
+<jh>
+thm (BiconditionalConjunction () () ((p ↔ q) ↔ (((¬ p) ∨ q) ∧ (p ∨ (¬ q)))) (
+        ((¬ p) ∨ q) BiconditionalReflexivity
+        (¬ q) p DisjunctionCommutativity
+        buildConjunction
+))
+
+thm (convertFromBiconditionalToConjunction () ((H (p ↔ q))) (((¬ p) ∨ q) ∧ (p ∨ (¬ q))) (
+        H
+        p q BiconditionalConjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToBiconditionalFromConjunction () ((H (((¬ p) ∨ q) ∧ (p ∨ (¬ q))))) (p ↔ q) (
+        H
+        p q BiconditionalConjunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (introduceBiconditionalFromDisjunctions () ((HPQ ((¬ p) ∨ q)) (HQP (p ∨ (¬ q)))) (p ↔ q) (
+        HPQ HQP introduceConjunction
+        p q BiconditionalConjunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Implications and disjunctions ===
+The relationship between implication and disjunction is just our definition of implication, or an easy consequence thereof.
+
+<jh>
+thm (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)) ( # *4.6
+        (p → q) BiconditionalReflexivity
+))
+
+thm (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)) ( # *4.64
+        p DoubleNegation
+        q BiconditionalReflexivity
+        buildDisjunction
+))
+
+thm (convertFromImplicationToDisjunction () ((H (p → q))) ((¬ p) ∨ q) (
+        H
+))
+
+thm (convertToImplicationFromDisjunction () ((H ((¬ p) ∨ q))) (p → q) (
+        H
+))
+
+thm (convertFromDisjunctionToImplication () ((H (p ∨ q))) ((¬ p) → q) (
+        H
+        p q DisjunctionImplication
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
+        H
+        p q DisjunctionImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+That's it!  We're ready to export our theorems to [[Interface:Classical propositional calculus]]. That interface also requires us to define the alias <code>formula</code> for <code>wff</code>s.
+<jh>
+kindbind (wff formula)
+export (CLASSICAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Classical propositional logic]]
+
