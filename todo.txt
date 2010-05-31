@@ -1,0 +1,15 @@
+Items which may be doable without a network connection:
+
+* definitions versus dummies (LessThan)
+* more intuitionistic logic
+  - easy disjunction/conjunction theorems
+  - get going on negation
+  - biconditional (should mostly be copy-paste from Principia, I think)
+* convenience theorems of propositional logic (e.g. buildDisjunctionLL)
+  - go through Classical propositional logic to see what might go here
+  - think through how/whether to parameterize this to work with intuitionistic logic
+
+To do with network:
+
+* download more pages (which?)
+
