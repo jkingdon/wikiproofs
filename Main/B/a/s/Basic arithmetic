@@ -1219,33 +1219,10 @@ Then we pull much the same trick with <code>y</code> (but it is easier as there 
 ))
 
 </jh>
-We can't quite prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code> until we come to grips with the three different dummy variables in that statement. The following theorems are temporary, and are part of an effort to come up with a solution. Following them is the commented out proof of transitivity, which is thought to be correct except for this detail.
+We can't quite prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code> until we come to grips with the three different dummy variables in that statement. We should be able to fix that once we have proved LessEqual. Following the commented out LessEqual is the commented out proof of transitivity, which is thought to be correct except for this detail.
 <jh>
-thm (debug-0 () () ((a ≤ c) → (a ≤ c)) (
-        (∃ vac ((a + (value vac)) = c)) ImplicationReflexivity
-))
-
-thm (debug-0.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
-        ((∃ vac ((a + (value vac)) = c)) ∧ (∃ vac ((a + (value vac)) = c))) ImplicationReflexivity
-))
-
-# blows up: "Consequent of theorem does not match proof result"
-#thm (debug-0.1.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
-#        ((∃ vac ((a + (value vac)) = c)) ∧ (∃ n ((a + (value n)) = c))) ImplicationReflexivity
-#))
-
-# I think this is probably correct and what we need for ThereExists, but haven't proved it yet
-#var (object sx sy)
-#thm (SwitchVar ((y t) (x t) (y sx) (x sy)) () ((∃ x (sx = t)) ↔ (∃ y (sy = t))) (
-#))
-
-# Harder than it looks, as the quantified variable on the left side is different than the one on the right side
-#thm (ThereExists () () ((≤ a b) ↔ (∃ n ((a + (value n)) = b))) (
-#))
-
-# This is the crux of our problem with LessEqualTransitivity:
-#thm (debug-1 () () (((a ≤ b) ∧ (b ≤ c)) → ((a ≤ b) ∧ (b ≤ c))) (
-#        ((∃ vab ((a + (value vab)) = b)) ∧ (∃ vbc ((b + (value vbc)) = c))) ImplicationReflexivity
+# Harder than it might look, as the quantified variable on the left side is different than the one on the right side
+#thm (LessEqual () () ((≤ a b) ↔ (∃ n ((a + (value n)) = b))) (
 #))
 
 #thm (LessEqualTransitivity ((vab vbc)) () 
