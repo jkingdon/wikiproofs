@@ -313,7 +313,7 @@ thm (export () ((H ((p ∧ q) → r))) (p → (q → r)) (
 ))
 </jh>
 
-The proof of export was based around having a conjunction as a consequent, that is <code>p → (q → p ∧ q)</code>.  The proof of import is based around <code>p ∧ q → p</code> (and likewise for <code>q</code>). The following lemma is what we'll use the glue together the different parts of the proof, and is basically a gussied up variant of applySyllogism:
+The proof of export was based around having a conjunction as a consequent, that is <code>p → (q → p ∧ q)</code>.  The proof of import is based around <code>p ∧ q → p</code> (and likewise for <code>q</code>). The following lemma is what we'll use to glue together the different parts of the proof, and is basically a gussied up variant of applySyllogism:
 
 <jh>
 var (formula P Q R)
