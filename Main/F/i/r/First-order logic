@@ -999,6 +999,64 @@ thm (ForAllConjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∧ ψ
 ))
 </jh>
 
+A bit of propositional logic:
+<jh>
+var (formula p q r)
+thm (DisjunctionBuilderLL () () ((p ↔ q) → ((r ∨ p) ↔ (r ∨ q))) (
+        r BiconditionalReflexivity
+        r r p q DisjunctionFunction export
+        applyModusPonens
+))
+
+thm (buildDisjunctionLL () ((H (p ↔ q)))
+  ((r ∨ p) ↔ (r ∨ q)) (
+        H
+        p q r DisjunctionBuilderLL
+        applyModusPonens
+))
+</jh>
+
+For ∃:<ref>[http://us.metamath.org/mpeuni/19.42.html 19.42] in metamath's set.mm, accessed May 31, 2010</ref>
+
+<jh>
+thm (ThereExistsConjunctionMovementNotFree () ((H (x is-not-free-in φ))) ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+</jh>
+We first note that the definition of ∃ makes <code>∃ x φ ∧ ψ</code> equivalent to <code>¬ ∀ x ¬ (φ ∧ ψ)</code> and apply DeMorgan's law to make it <code>¬ ∀ x (¬ φ ∨ ¬ ψ)</code>
+<jh>
+        φ ψ DeMorganPCP
+        x buildForAll
+        addNegation
+</jh>
+Now we can move <code>¬ φ</code> out of the scope of the quantifier, to get <code>¬ (¬ φ ∨ ∀ x ¬ ψ)</code>:
+<jh>
+        H negateNotFree
+        (¬ ψ) ForAllDisjunctionMovement
+        addNegation
+        applyBiconditionalTransitivity
+</jh>
+We now turn <code>∀ x ¬ ψ</code> into <code>¬ ∃ x ψ</code>:
+<jh>
+        x ψ NotThereExists swapBiconditional
+        (¬ φ) buildDisjunctionLL
+        addNegation
+        applyBiconditionalTransitivity
+</jh>
+Applying DeMorgan's law again, to get back to a conjunction, finishes our proof:
+<jh>
+        φ (∃ x ψ) DeMorganNDN
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Distinct variable versions of movement theorems ===
+Although the concept of <code>x is-not-free-in φ</code> is more general than saying that <code>x</code> does not appear in <code>φ</code> at all, most often the latter is the situation and it will be convenient to have versions of the above theorems which have distinct variable constraints rather than explicit freeness hypotheses.
+<jh>
+thm (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsConjunctionMovementNotFree
+))
+</jh>
+
 === Adding ∃ to the antecedent of a theorem ===
 
 A consequence of <code>ForAllImplicationConsequentMovement</code> is that if we have a theorem which is an implication, we can add ∃ to the antecedent (provided the consequent does not contain the variable we are quantifying over).
