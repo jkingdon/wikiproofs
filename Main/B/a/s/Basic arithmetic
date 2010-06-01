@@ -1133,23 +1133,155 @@ That in turn implies <code>∃ n 0 + n = a</code>, which is <code>0 ≤ a</code>
 
 Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + ab + bc = c</code>.  That implies <code>∃ ac a + ac = c</code> (because <code>ab + bc</code> is a specific value for <code>ac</code> and we can apply <code>ThereExistsIntroduction</code>), which is just <code>a ≤ c</code> by the definition.
 
-Formalizing the proof is somewhat tedious, partly because "rearranging the terms and cancelling" expands to many steps and partly because the first-order logic is not (yet at least) as straightforward as the above sketch, but the idea is unchanged.
+Formalizing the proof is somewhat tedious, because both "rearranging the terms and cancelling" and the first-order logic (substitution in particular) expand to many steps, but the idea is unchanged.
 
 <jh>
 var (object ab bc ac)
 var (variable vab vbc vac)
 
 </jh>
-The following lemma includes all the rearrangements we will need (before we apply any of the predicate logic).
+The following lemma includes the rearrangements we will need. It is a straightforward application of commutativity, associativity, and cancellation.
 <jh>
-#thm (LessEqualTransitivity-1 () ()
-#  ((((b + bc) = c) ∧ ((ac = (ab + bc)) ∧ ((a + ab) = b))) → ((a + ac) = c)) (
-        # proof not yet written
+thm (LessEqualTransitivity-1 () ()
+  ((((a + ab) = b) ∧ ((b + bc) = c)) → ((a + (ab + bc)) = c)) (
+</jh>
+We start with <code>a + ab = b ∧ b + bc = c → (a + ab) + (b + bc) = b + c</code>
+<jh>
+        (a + ab) b (b + bc) c AdditionBuilder
+</jh>
+On the left hand side of the consequent's equality, we commute <code>b</code> and <code>bc</code> and associate:
+<jh>
+        b bc AdditionCommutativity
+        (a + ab) buildAdditionLL
+
+        (a + ab) bc b AdditionAssociativity
+        swapEquality
+        applyEqualityTransitivity
+</jh>
+On the right hand side, we just commute <code>b</code> and <code>c</code>:
+<jh>
+        b c AdditionCommutativity
+</jh>
+Combining the two sides and cancelling the <code>b</code> gives <code>(a + ab) + bc = c</code>
+<jh>
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((a + ab) + bc) b c AdditionCancellationRight
+        applySyllogism
+</jh>
+Now we just apply associativity to the left hand side of that equality:
+<jh>
+        a ab bc AdditionAssociativity
+        c buildEqualityRR
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+</jh>
+This lemma is one of our usual substitution statements:
+<jh>
+thm (LessEqualTransitivity-sub () ()
+  ((ac = (ab + bc)) → (((a + ac) = c) ↔ ((a + (ab + bc)) = c))) (
+        ac (ab + bc) a AdditionBuilderLL
+        (a + ac) (a + (ab + bc)) c EqualityBuilderRR
+        applySyllogism
+))
+</jh>
+And our final lemma is a bit of predicate logic.  We name the propositions in this lemma <code>φx</code> and <code>ψy</code> to express the idea that <code>φx</code> will typically contain <code>x</code> and <code>ψy</code> will typically contain <code>y</code>.
+<jh>
+var (formula φx ψy)
+var (variable x y)
+thm (ThereExistsToFront ((φx y) (ψy x) (x y)) ()
+  (((∃ x φx) ∧ (∃ y ψy)) → (∃ x (∃ y (φx ∧ ψy)))) (
+</jh>
+We first show <code>(∃ x φx ∧ ∃ y ψy) ↔ ∃ x (φx ∧ ∃ y ψy)</code>:
+<jh>
+        (∃ x φx) (∃ y ψy) ConjunctionCommutativity
+
+        x (∃ y ψy) φx ThereExistsConjunctionMovement
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        (∃ y ψy) φx ConjunctionCommutativity
+        x buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+Then we pull much the same trick with <code>y</code> (but it is easier as there is no commuting to do):
+<jh>
+        y φx ψy ThereExistsConjunctionMovement
+        swapBiconditional
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        eliminateBiconditionalReverse
+))
+
+</jh>
+We can't quite prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code> until we come to grips with the three different dummy variables in that statement. The following theorems are temporary, and are part of an effort to come up with a solution. Following them is the commented out proof of transitivity, which is thought to be correct except for this detail.
+<jh>
+thm (debug-0 () () ((a ≤ c) → (a ≤ c)) (
+        (∃ vac ((a + (value vac)) = c)) ImplicationReflexivity
+))
+
+thm (debug-0.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
+        ((∃ vac ((a + (value vac)) = c)) ∧ (∃ vac ((a + (value vac)) = c))) ImplicationReflexivity
+))
+
+# blows up: "Consequent of theorem does not match proof result"
+#thm (debug-0.1.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
+#        ((∃ vac ((a + (value vac)) = c)) ∧ (∃ n ((a + (value n)) = c))) ImplicationReflexivity
 #))
 
-#thm (LessEqualTransitivity () () 
+# I think this is probably correct and what we need for ThereExists, but haven't proved it yet
+#var (object sx sy)
+#thm (SwitchVar ((y t) (x t) (y sx) (x sy)) () ((∃ x (sx = t)) ↔ (∃ y (sy = t))) (
+#))
+
+# Harder than it looks, as the quantified variable on the left side is different than the one on the right side
+#thm (ThereExists () () ((≤ a b) ↔ (∃ n ((a + (value n)) = b))) (
+#))
+
+# This is the crux of our problem with LessEqualTransitivity:
+#thm (debug-1 () () (((a ≤ b) ∧ (b ≤ c)) → ((a ≤ b) ∧ (b ≤ c))) (
+#        ((∃ vab ((a + (value vab)) = b)) ∧ (∃ vbc ((b + (value vbc)) = c))) ImplicationReflexivity
+#))
+
+#thm (LessEqualTransitivity ((vab vbc)) () 
 #  (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
-        # proof not written yet
+</jh>
+To assemble the proof, we first stick a statement on the proof stack which we'll use at the very end:
+<jh>
+#        vab ((a + (value vab)) = b) vbc ((b + (value vbc)) = c) ThereExistsToFront
+</jh>
+Leaving that aside, we now start with <code>LessEqualTransitivity-1</code>.
+<jh>
+#        a (value vab) b (value vbc) c LessEqualTransitivity-1
+</jh>
+Turning <code>LessEqualTransitivity-sub</code> into an explicit substitution gives us <code>([ab + bc / ac] a + ac = c) ↔ a + (ab + bc = c</code>:
+<jh>
+#        (value vac) (value vab) (value vbc) a c LessEqualTransitivity-sub
+#        makeSubstExplicit
+</jh>
+and we combining this with our previous result.
+<jh>
+#        eliminateBiconditionalForward
+#        applySyllogism
+</jh>
+Using the substitution to prove there exists, we get <code>a + ab = b ∧ b + bc = c → ∃ ac a + ac = c</code>.
+<jh>
+#        ((value vab) + (value vbc)) vac ((a + (value vac)) = c) ThereExistsIntroduction
+#        applySyllogism
+</jh>
+We add ∃ ab ∃ bc to the antecedent:
+<jh>
+#        vbc addThereExistsToAntecedent
+#        vab addThereExistsToAntecedent
+</jh>
+And picking up <code>∃ ab a + ab = b ∧ ∃ bc b + bc = c → ∃ ab ∃ bc a + ab = b ∧ b + bc = c</code> from the proof stack, we are done.
+<jh>
+#        applySyllogism
 #))
 </jh>
 
