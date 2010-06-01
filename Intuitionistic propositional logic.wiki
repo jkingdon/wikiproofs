@@ -313,7 +313,7 @@ thm (export () ((H ((p ∧ q) → r))) (p → (q → r)) (
 ))
 </jh>
 
-The proof of export was based around having a conjunction as a consequent, that is <code>p → (q → p ∧ q)</code>.  The proof of import is based around <code>p ∧ q → p</code> (and likewise for <code>q</code>). The following lemma is what we'll use the glue together the different parts of the proof, and is basically a gussied up variant of applySyllogism:
+The proof of export was based around having a conjunction as a consequent, that is <code>p → (q → p ∧ q)</code>.  The proof of import is based around <code>p ∧ q → p</code> (and likewise for <code>q</code>). The following lemma is what we'll use to glue together the different parts of the proof, and is basically a gussied up variant of applySyllogism:
 
 <jh>
 var (formula P Q R)
@@ -436,6 +436,76 @@ thm (ConjunctionCommutativityImplication () () ((p ∧ q) → (q ∧ p)) (
 thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) (
         p q ConjunctionCommutativityImplication
         q p ConjunctionCommutativityImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+==== Conjunction associativity ====
+To prove associativity for conjunctions, <code>(p ∧ q) ∧ r → p ∧ (q ∧ r)</code>, we first put onto the proof stack the statements that the left hand side implies each of <code>p</code>, <code>q</code>, and <code>r</code>.
+<jh>
+thm (ConjunctionRightAssociation () () (((p ∧ q) ∧ r) → (p ∧ (q ∧ r))) (
+</jh>
+<code>p</code>:
+<jh>
+        (p ∧ q) r ConjunctionRightElimination
+        p q ConjunctionRightElimination
+        applySyllogism
+</jh>
+<code>q</code>:
+<jh>
+        (p ∧ q) r ConjunctionRightElimination
+        p q ConjunctionLeftElimination
+        applySyllogism
+</jh>
+<code>r</code>:
+<jh>
+        (p ∧ q) r ConjunctionLeftElimination
+</jh>
+Now we compose <code>q ∧ r</code>:
+<jh>
+        composeConjunction
+</jh>
+And <code>p ∧ (q ∧ r)</code>:
+<jh>
+        composeConjunction
+</jh>
+))
+</jh>
+
+The proof for associating left is similar.
+<jh>
+thm (ConjunctionLeftAssociation () () ((p ∧ (q ∧ r)) → ((p ∧ q) ∧ r)) (
+</jh>
+<code>p</code>:
+<jh>
+        p (q ∧ r) ConjunctionRightElimination
+</jh>
+<code>q</code>:
+<jh>
+        p (q ∧ r) ConjunctionLeftElimination
+        q r ConjunctionRightElimination
+        applySyllogism
+</jh>
+Composing <code>p ∧ q</code>:
+<jh>
+        composeConjunction
+</jh>
+<code>r</code>:
+<jh>
+        p (q ∧ r) ConjunctionLeftElimination
+        q r ConjunctionLeftElimination
+        applySyllogism
+</jh>
+Composing <code>(p ∧ q) ∧ r</code>:
+<jh>
+        composeConjunction
+))
+</jh>
+
+<jh>
+thm (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))) (
+        p q r ConjunctionRightAssociation
+        p q r ConjunctionLeftAssociation
         introduceBiconditionalFromImplications
 ))
 </jh>
