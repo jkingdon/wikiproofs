@@ -1094,6 +1094,45 @@ We define an order on natural numbers:
 def ((≤ a b) (∃ n ((a + (value n)) = b)))
 </jh>
 
+===Definition as an equivalence===
+
+The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side.
+
+<jh>
+#stmt (sb8e ((y φ)) () ((∃ y (subst (value y) x φ)) ↔ (∃ x φ)))
+
+thm (ThereExists ((m n) (a m) (a n) (b m) (b n)) () ((a ≤ b) ↔ (∃ n ((a + (value n)) = b))) (
+</jh>
+To restate our "subtle difference" in terms of explaining what we need for our proof, the quantified variable on the left side of the biconditional (which results from the expansion of <code>≤</code>) is different from the quantified variable on the right hand side (<code>n</code>). So we need to switch variables.
+
+We start with <code>m = n → (a + m = b ↔ a + n = b)</code>,
+<jh>
+        (value m) (value n) a AdditionBuilderLL
+        b buildEqualityRR
+</jh>
+and turn it into <code>[n / m] a + m = b ↔ a + n = b</code>.
+<jh>
+        makeSubstExplicit
+</jh>
+We can now add <code>∃ n</code> to both sides,
+<jh>
+        n buildThereExists
+</jh>
+and apply <code>sb8e</code> to turn the left side into <code>∃ m a + m = b</code>.
+<jh>
+((∃ y (subst (value y) x φ)) ↔ (∃ x φ))
+        swapBiconditional
+        n m φ sb8e
+        applyBiconditionalTransitivity
+        swapBiconditional
+</jh>
+We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is enough since JHilbert is able to recognize that the left side is the definition of <code>a ≤ b</code>.
+<jh>
+))
+</jh>
+
+===Zero is the smallest natural number===
+
 Every number is greater than or equal to zero:
 <jh>
 thm (ZeroSmallest ((n a)) () ((0) ≤ a) (
@@ -1232,15 +1271,6 @@ thm (debug-0.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
 # blows up: "Consequent of theorem does not match proof result"
 #thm (debug-0.1.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
 #        ((∃ vac ((a + (value vac)) = c)) ∧ (∃ n ((a + (value n)) = c))) ImplicationReflexivity
-#))
-
-# I think this is probably correct and what we need for ThereExists, but haven't proved it yet
-#var (object sx sy)
-#thm (SwitchVar ((y t) (x t) (y sx) (x sy)) () ((∃ x (sx = t)) ↔ (∃ y (sy = t))) (
-#))
-
-# Harder than it looks, as the quantified variable on the left side is different than the one on the right side
-#thm (ThereExists () () ((≤ a b) ↔ (∃ n ((a + (value n)) = b))) (
 #))
 
 # This is the crux of our problem with LessEqualTransitivity:
