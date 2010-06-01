@@ -361,6 +361,23 @@ thm (ImplicationTransitivity () ()
 ))
 </jh>
 
+== Disjunction ==
+We provide a slight variation of the disjunction composition axiom, and a rule form:
+<jh>
+thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)) (
+        p r q DisjunctionCompositionAxiom
+        import
+))
+
+thm (composeDisjunction () ((HP (p → r)) (HQ (q → r))) ((p ∨ q) → r) (
+        HQ
+        HP
+        p r q DisjunctionCompositionAxiom
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
 == Biconditional ==
 
 We define the biconditional as the conjunction of two implications:
