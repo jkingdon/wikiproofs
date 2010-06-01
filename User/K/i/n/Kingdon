@@ -103,8 +103,9 @@ Now we massage <code>y = s → (x = y → φ)</code> into <code>x = s → φ</co
 </jh>
 
 === More moving formulas where quantified variable is not free ===
-*This one on wikipedia list of identities: [http://us.metamath.org/mpeuni/19.42.html 19.42]
 *These two similar: [http://us.metamath.org/mpeuni/19.28.html 19.28] [http://us.metamath.org/mpeuni/19.45.html 19.45]
+
+* Follow up on Foo -> FooNotFree rename per [[Interface talk:First-order logic]].
 
 === Others? ===
 [http://us.metamath.org/mpeuni/19.29.html 19.29]
