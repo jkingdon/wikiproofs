@@ -565,6 +565,70 @@ thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) (
 ))
 </jh>
 
+==== Disjunction associativity ====
+Proving associativity for disjunction is very much analogous to conjunction, with conjunction elimination and composition changed to disjunction introduction and composition.
+<jh>
+thm (DisjunctionRightAssociation () () (((p ∨ q) ∨ r) → (p ∨ (q ∨ r))) (
+</jh>
+<code>p</code> implies <code>p ∨ (q ∨ r)</code>:
+<jh>
+        p (q ∨ r) DisjunctionRightIntroduction
+</jh>
+Likewise for <code>q</code>:
+<jh>
+        q r DisjunctionRightIntroduction
+        (q ∨ r) p DisjunctionLeftIntroduction
+        applySyllogism
+</jh>
+Composing <code>p ∨ q</code>:
+<jh>
+        composeDisjunction
+</jh>
+<code>r</code>:
+<jh>
+        r q DisjunctionLeftIntroduction
+        (q ∨ r) p DisjunctionLeftIntroduction
+        applySyllogism
+</jh>
+Composing <code>(p ∨ q) ∨ r</code>:
+<jh>
+        composeDisjunction
+))
+
+thm (DisjunctionLeftAssociation () () ((p ∨ (q ∨ r)) → ((p ∨ q) ∨ r)) (
+</jh>
+<code>p</code> implies <code>(p ∨ q) ∨ r</code>:
+<jh>
+        p q DisjunctionRightIntroduction
+        (p ∨ q) r DisjunctionRightIntroduction
+        applySyllogism
+</jh>
+<code>q</code>:
+<jh>
+        q p DisjunctionLeftIntroduction
+        (p ∨ q) r DisjunctionRightIntroduction
+        applySyllogism
+</jh>
+<code>r</code>:
+<jh>
+        (p ∨ q) r DisjunctionLeftIntroduction
+</jh>
+Composing <code>q ∨ r</code>:
+<jh>
+        composeDisjunction
+</jh>
+Composing <code>p ∨ (q ∨ r)</code>:
+<jh>
+        composeDisjunction
+))
+
+thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) (
+        p q r DisjunctionRightAssociation
+        p q r DisjunctionLeftAssociation
+        introduceBiconditionalFromImplication s
+))
+</jh>
+
 == Modus Ponens ==
 This is just an implication corresponding to the modus ponens rule:
 <jh>
