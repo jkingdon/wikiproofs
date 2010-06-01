@@ -224,12 +224,22 @@ The results in this section all have to do with being able to move around formul
 ==== Implication ====
 <jh>
 stmt (ForAllImplicationAntecedentMovement () ((x is-not-free-in φ)) ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))))
+stmt (moveAntecedentOutOfForAll () ((∀ x (φ → ψ)) (x is-not-free-in φ)) (φ → (∀ x ψ)))
+stmt (moveAntecedentIntoForAll () 
+  ((φ → (∀ x ψ)) (x is-not-free-in φ)) 
+  (∀ x (φ → ψ)))
+
 stmt (ThereExistsImplicationAntecedentMovement () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)))
 stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
 </jh>
 
-=== Adding ∃ to the antecedent of a theorem ===
+==== Versions with distinct variables ====
+<jh>
+stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
+</jh>
+
+==== Adding ∃ to the antecedent of a theorem ====
 
 This variant on moving formulas turns out to be used particularly often:
 <jh>
