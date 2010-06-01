@@ -440,6 +440,75 @@ thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) (
 ))
 </jh>
 
+==== Conjunction associativity ====
+To prove associativity for conjunctions, <code>(p ∧ q) ∧ r → p ∧ (q ∧ r)</code>, we first put onto the proof stack the statements that the left hand side implies each of <code>p</code>, <code>q</code>, and <code>r</code>.
+<jh>
+thm (ConjunctionRightAssociation () () (((p ∧ q) ∧ r) → (p ∧ (q ∧ r))) (
+</jh>
+<code>p</code>:
+<jh>
+        (p ∧ q) r ConjunctionRightElimination
+        p q ConjunctionRightElimination
+        applySyllogism
+</jh>
+<code>q</code>:
+<jh>
+        (p ∧ q) r ConjunctionRightElimination
+        p q ConjunctionLeftElimination
+        applySyllogism
+</jh>
+<code>r</code>:
+<jh>
+        (p ∧ q) r ConjunctionLeftElimination
+</jh>
+Now we compose <code>q ∧ r</code>:
+<jh>
+        composeConjunction
+</jh>
+And <code>p ∧ (q ∧ r)</code>:
+<jh>
+        composeConjunction
+))
+</jh>
+
+The proof for associating left is similar.
+<jh>
+thm (ConjunctionLeftAssociation () () ((p ∧ (q ∧ r)) → ((p ∧ q) ∧ r)) (
+</jh>
+<code>p</code>:
+<jh>
+        p (q ∧ r) ConjunctionRightElimination
+</jh>
+<code>q</code>:
+<jh>
+        p (q ∧ r) ConjunctionLeftElimination
+        q r ConjunctionRightElimination
+        applySyllogism
+</jh>
+Composing <code>p ∧ q</code>:
+<jh>
+        composeConjunction
+</jh>
+<code>r</code>:
+<jh>
+        p (q ∧ r) ConjunctionLeftElimination
+        q r ConjunctionLeftElimination
+        applySyllogism
+</jh>
+Composing <code>(p ∧ q) ∧ r</code>:
+<jh>
+        composeConjunction
+))
+</jh>
+
+<jh>
+thm (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))) (
+        p q r ConjunctionRightAssociation
+        p q r ConjunctionLeftAssociation
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 ==== Disjunction idempotence ====
 <jh>
 thm (DisjunctionIdempotenceForward () () (p → (p ∨ p)) (
