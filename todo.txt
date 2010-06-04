@@ -12,7 +12,5 @@ Items which may be doable without a network connection:
 To do with network:
 
 * download more pages (which?)
-* look up precedence for propositional logic and put a note in CLASSICAL (for lack of a better place).
-  tighest to loosest: not, and, or, implication/biconditional
 * see how metamath proves sb8e
 
