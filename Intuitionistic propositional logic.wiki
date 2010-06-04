@@ -362,11 +362,16 @@ thm (ImplicationTransitivity () ()
 </jh>
 
 == Disjunction ==
-We provide a slight variation of the disjunction composition axiom, and a rule form:
+We provide a variation of the disjunction composition axiom, and a rule form:
 <jh>
-thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)) (
-        p r q DisjunctionCompositionAxiom
-        import
+thm (DisjunctionCompositionReverse () () (((p ∨ q) → r) → ((p → r) ∧ (q → r))) (
+        p q DisjunctionRightIntroduction
+        r addCommonConsequent
+
+        q p DisjunctionLeftIntroduction
+        r addCommonConsequent
+
+        composeConjunction
 ))
 
 thm (composeDisjunction () ((HP (p → r)) (HQ (q → r))) ((p ∨ q) → r) (
@@ -417,6 +422,14 @@ thm (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r
 
         p q r ConjunctionCompositionReverse
 
+        introduceBiconditionalFromImplications
+))
+
+thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)) (
+        p r q DisjunctionCompositionAxiom
+        import
+
+        p q r DisjunctionCompositionReverse
         introduceBiconditionalFromImplications
 ))
 </jh>
@@ -485,7 +498,6 @@ Now we compose <code>q ∧ r</code>:
 And <code>p ∧ (q ∧ r)</code>:
 <jh>
         composeConjunction
-</jh>
 ))
 </jh>
 
@@ -611,7 +623,7 @@ thm (DisjunctionLeftAssociation () () ((p ∨ (q ∨ r)) → ((p ∨ q) ∨ r)) 
 </jh>
 <code>r</code>:
 <jh>
-        (p ∨ q) r DisjunctionLeftIntroduction
+        r (p ∨ q) DisjunctionLeftIntroduction
 </jh>
 Composing <code>q ∨ r</code>:
 <jh>
@@ -625,7 +637,7 @@ Composing <code>p ∨ (q ∨ r)</code>:
 thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) (
         p q r DisjunctionRightAssociation
         p q r DisjunctionLeftAssociation
-        introduceBiconditionalFromImplication s
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
