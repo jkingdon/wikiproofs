@@ -8,6 +8,7 @@ Items which may be doable without a network connection:
 * convenience theorems of propositional logic (e.g. buildDisjunctionLL)
   - go through Classical propositional logic to see what might go here
   - think through how/whether to parameterize this to work with intuitionistic logic
+* add ≠ to first-order logic interface
 
 To do with network:
 
