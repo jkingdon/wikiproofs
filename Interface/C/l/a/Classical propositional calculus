@@ -57,6 +57,16 @@ and "the false",
 term (wff (⊥))
 </jh>
 
+=== Order of operations ===
+JHilbert requires everything to be parenthesized, and there is no ambiguity about which operations apply to which operands. However, in explanatory text we tend to omit some parentheses for readability, according to the following [[w:Order of operations|precedence]]:
+
+* ¬
+* ∧
+* ∨
+* →, ↔
+
+For example, <code>¬ p ∧ q ∨ r → q ∨ r</code> means <code>(((¬ p) ∧ q) ∨ r) → (q ∨ r)</code>.
+
 == Simple statements ==
 
 Here are the statements which do not require any hypotheses.
