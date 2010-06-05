@@ -4,11 +4,11 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = The purpose of this page is to prove the statements of [[Interface:Classical propositional calculus]] from the [[Interface:Principia Mathematica propositional logic|Principia Mathematica]]<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref> axioms for [[w:propositional logic|propositional logic]].
+ | notes    = The purpose of this page is to prove the statements of [[Interface:Principia Mathematica propositional logic theorems]] from the [[Interface:Principia Mathematica propositional logic|Principia Mathematica]]<ref>{{sc|A. Whitehead, B. Russell}}, Principia Mathematica, ''Cambridge University Press'', 1910.</ref> axioms for [[w:propositional logic|propositional logic]].
 }}
 {{interfaces
 | imports = [[Interface:Principia Mathematica propositional logic]]
-| exports = [[Interface:Classical propositional calculus]]
+| exports = [[Interface:Principia Mathematica propositional logic theorems]]
 }}
 
 <jh>
@@ -937,7 +937,7 @@ thm (*4.12-reverse () () ((p ↔ (¬ q)) → ((¬ p) → q)) (
         q p *2.15 applySyllogism
 ))
 
-thm (*4.12 () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))) (
+thm (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))) ( # *4.12
         p q *4.12-forward
         p q *4.12-reverse
         composeConjunction
@@ -947,6 +947,12 @@ thm (*4.12 () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))) (
         composeConjunction
 
         introduceBiconditional
+))
+
+thm (transposeBiconditionalWithNegatedRight () ((H (p ↔ (¬ q)))) (q ↔ (¬ p)) (
+        H
+        p q BiconditionalTranspositionWithNegatedRight eliminateBiconditionalReverse
+        applyModusPonens
 ))
 </jh>
 
@@ -2125,7 +2131,7 @@ At this point we have <math>(p\rightarrow q)\vee(p\leftrightarrow(\neg q))</math
         q (¬ p) *5.1
         applySyllogism
 
-        q p *4.12 eliminateBiconditionalReverse
+        q p BiconditionalTranspositionWithNegatedRight eliminateBiconditionalReverse
         applySyllogism
 
         (q → p) (p ↔ (¬ q)) *2.54
@@ -2349,10 +2355,10 @@ thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
 ))
 </jh>
 
-That's it!  We're ready to export our theorems to [[Interface:Classical propositional calculus]]. That interface also requires us to define the alias <code>formula</code> for <code>wff</code>s.
+That's it!  We're ready to export our theorems to [[Interface:Principia Mathematica propositional logic theorems]]. That interface also requires us to define the alias <code>formula</code> for <code>wff</code>s.
 <jh>
 kindbind (wff formula)
-export (CLASSICAL Interface:Classical_propositional_calculus () ())
+export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
 </jh>
 
 == References ==

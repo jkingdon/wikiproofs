@@ -1,0 +1,27 @@
+{{header
+ | title    = Convenience theorems of
+ | subtitle = propositional logic
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = This page proves those statments of [[Interface:Classical propositional calculus]] which aren't in [[Interface:Principia Mathematica propositional logic theorems]].  This includes chiefly additional builders (which aren't necessarily in most textbook treatments as they take substitution for granted), additional variants on modus ponens and related theorems, and the like. Some of them are significant aids to making proofs concise and readable, but some of them are more arguable and are here to ease translating proofs from other systems or so that people writing proofs can make their own decisions.
+}}
+{{interfaces
+| imports = [[Interface:Principia Mathematica propositional logic theorems]]
+| exports = [[Interface:Classical propositional calculus]]
+}}
+
+We first import [[Interface:Principia Mathematica propositional logic theorems]]:
+<jh>
+import (PRINCIPIA Interface:Principia_Mathematica_propositional_logic_theorems () ())
+</jh>
+
+When this page is more complete, more proofs will go here.
+
+We now export [[Interface:Classical propositional calculus]].
+<jh>
+export (CLASSICAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+[[Category:Classical propositional logic]]
+

@@ -1,16 +1,16 @@
 {{header
- | title    = Classical propositional calculus
+ | title    = Principia Mathematica propositional logic theorems
  | subtitle = 
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = This interface collects all important theorems from [[w:classical propositional calculus|classical propositional calculus]]. It is meant as a user-friendly reservoir for those interfaces and proof modules which merely use propositional logic, without proving anything new within it.
+ | notes    = This interface collects important theorems from [[w:classical propositional calculus|classical propositional logic]]. It is meant to contain all of the basic theorems of propositional logic, including most of the theorems from the propositional logic chapters of Whitehead and Russell's ''Principia Mathematica''.
 
-Statements can be added if necessary, but then the exporting modules have to be updated accordingly.
+Statements which are easy consequences of the theorems here should generally go in [[Interface:Classical propositional calculus]] which is meant to be a more comprehensive collection.
 }}
 {{modules
 | parameters = ''None''
-| importedby = [[Interface:First-order logic]], [[Interface:Basic arithmetic]] and many others
+| importedby = [[Convenience theorems of propositional logic]]
 | exportedby = [[Principia Mathematica propositional logic]]
 }}
 
@@ -405,5 +405,5 @@ stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
 
 <references />
 
-[[Category:Classical propositional logic|!]]
+[[Category:Classical propositional logic]]
 

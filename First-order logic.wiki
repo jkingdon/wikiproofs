@@ -1167,24 +1167,6 @@ That gives us <code>∀x(φ → ¬ ψ) ↔ ∀x ¬ (φ ∧ ψ)</code>.  Now we j
 The second theorem, <code>equs3</code>, is a special case which will be useful in dealing with substitution:<ref>[http://us.metamath.org/mpeuni/equs3.html equs3] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
-thm (BiconditionalTranspositionWithNegatedRight () () ((φ ↔ (¬ ψ)) ↔ (ψ ↔ (¬ φ))) (
-        φ (¬ ψ) BiconditionalImplication
-
-        φ ψ TranspositionWithNegatedConsequent
-        ψ φ TranspositionWithNegatedAntecedent
-        buildConjunction
-        applyBiconditionalTransitivity
-
-        ψ (¬ φ) BiconditionalImplication swapBiconditional
-        applyBiconditionalTransitivity
-))
-
-thm (transposeBiconditionalWithNegatedRight () ((H (φ ↔ (¬ ψ)))) (ψ ↔ (¬ φ)) (
-        H
-        φ ψ BiconditionalTranspositionWithNegatedRight eliminateBiconditionalReverse
-        applyModusPonens
-))
-
 thm (equs3 () () 
   ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))) (
         x ((value x) = s) φ alinexa

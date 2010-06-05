@@ -6,8 +6,8 @@ This is a list of propositional logic theorems which are proved outside [[:Categ
 # This theorem is only used one place (and perhaps is unlikely to be needed anywhere else), but it does make this particular proof more clear, so don't worry about it.
 # This theorem is unnecessary; it would be simpler to just avoid it (for example, metamath's set.mm has a theorem to apply modus ponens twice, but at least so far in wikiproofs our decision has been that <code>applyModusPonens applyModusPonens</code> expresses this idea just as clearly).
 # This theorem made it easier to translate a proof from another source, but ultimately it will be clearer to rearrange the proof using our usual idioms.
-# This is really a fundamental theorem which belongs alongside the other core theorems of propositional logic in [[Interface:Classical propositional calculus]].
-# This is a convenience theorem which probably should be somewhere in [[:Category:Classical propositional logic]] but perhaps should be separated (one way or another) from the fundamental theorems (for one thing, it can be proved from the fundamental theorems without much extra work).
+# This is really a fundamental theorem which belongs alongside the other core theorems of propositional logic in [[Interface:Principia Mathematica propositional logic theorems]]. Whether the theorem is in Principia is perhaps the largest criterion for whether it is fundamental. Others are whether it expresses a relationship between the various connectives or a statement which is not easily proved from other theorems.
+# This is a convenience theorem which probably should be in [[Interface:Classical propositional calculus]] but is an easy consequence of the fundamental theorems and is therefore more naturally proved in [[Convenience theorems of propositional logic]].
 
 ==The list==
 
@@ -18,7 +18,6 @@ From [[First-order logic]]:
 * rotate3Antecedents: like applyComm but when we need to move the first antecedent two steps in, not just one
 * Comm (perhaps a wise policy not to have propositional logic rules which don't have corresponding theorems)
 * principia*2.21
-* BiconditionalTranspositionWithNegatedRight, transposeBiconditionalWithNegatedRight (this is almost surely in Principia)
 * joinConsequents
 * anbi1d
 * ImplicationDistributionOverBiconditional, distributeImplicationOverBiconditional (probably really is a missing theorem; at least it is in Principia and is not easy to derive from what we have already)
