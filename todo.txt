@@ -7,11 +7,9 @@ Items which may be doable without a network connection:
   - biconditional (should mostly be copy-paste from Principia, I think)
 * convenience theorems of propositional logic (e.g. buildDisjunctionLL)
   - go through Classical propositional logic to see what might go here
-  - think through how/whether to parameterize this to work with intuitionistic logic
-* add ≠ to first-order logic interface
 
 To do with network:
 
-* download more pages (which?)
 * see how metamath proves sb8e
+* get a copy of Interface:Basic arithmetic
 
