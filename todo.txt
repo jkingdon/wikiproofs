@@ -16,5 +16,7 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-(none currently)
+* to download:
+  Interface:Axioms of first-order logic
+  Interface:Axiom of quantifiability
 
