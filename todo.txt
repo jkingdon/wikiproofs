@@ -1,15 +1,22 @@
 Items which may be doable without a network connection:
 
-* definitions versus dummies (LessThan)
+* prove sb8
+* think about sbn
+* sb8e, once sb8/sbn done
+* definitions versus dummies (LessThan), once sb8e done
+
 * more intuitionistic logic
   - easy disjunction/conjunction theorems
   - get going on negation
   - biconditional (should mostly be copy-paste from Principia, I think)
-* convenience theorems of propositional logic (e.g. buildDisjunctionLL)
+* convenience theorems of propositional logic
+  - buildDisjunctionLL in First-order logic
   - go through Classical propositional logic to see what might go here
+  - Basic Arithmetic has at least a few
+* Figure out the right name for 19.21ai and export it
+  (ForAllImplicationAntecedentMovementNotFree?)
 
 To do with network:
 
-* see how metamath proves sb8e
-* get a copy of Interface:Basic arithmetic
+(none currently)
 

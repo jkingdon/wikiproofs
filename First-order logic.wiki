@@ -186,6 +186,12 @@ thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
 ))
 </jh>
 
+=== Not equal ===
+Although <code>≠</code> is just an abbreviation for negation and equality, we do need to repeat the definition in this file to be able to export to [[Interface:First-order logic]].
+<jh>
+def ((≠ s t) (¬ (s = t)))
+</jh>
+
 == Specialization ==
 We can remove a universal quantifier. This is sometimes taken as an axiom but here we prove it from the other axioms via a number of intermediate steps.<ref>[http://us.metamath.org/mpeuni/ax4.html ax4] in metamath's set.mm, accessed February 18, 2010</ref> In many formulations of predicate logic, specialization is combined with substitution (and often a distinction between constants and variables), but we handle substitution later.  Constants in our system are represented by predicates with no arguments (for example, <code>(0)</code> in [[Interface:Basic arithmetic]]), and our substitution mechanisms will be able to handle them (as well as other kinds of terms).
 

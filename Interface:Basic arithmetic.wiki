@@ -1,0 +1,145 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
+| importedby = None yet.
+| exportedby = [[Basic arithmetic]]
+}}
+
+This page covers basic arithmetic, up to the familiar laws of arithmetic: commutative, associative, distributive, etc. At least for now, it stops before continuing into number theory (divisibility, primes, etc).
+
+We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+The kind <code>object</code>, defined in first-order logic, represents a natural number:
+<jh>
+kindbind (object nat)
+var (nat a b c d a0 a1 b0 b1)
+</jh>
+
+There are two operations, addition and multiplication:
+<jh>
+term (nat (+ nat nat))
+term (nat (· nat nat))
+</jh>
+
+== Builders ==
+Equals can be substituted for equals, in the context of addition and multiplication.  We provide a number of convenience builders in addition to the basic ones.
+
+<jh>
+stmt (AdditionBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 + b0) = (a1 + b1))))
+
+stmt (AdditionBuilderLL () () ((b0 = b1) → ((a + b0) = (a + b1))))
+stmt (AdditionBuilderRR () () ((a0 = a1) → ((a0 + b) = (a1 + b))))
+
+stmt (buildAddition () ((a0 = a1) (b0 = b1)) ((a0 + b0) = (a1 + b1)))
+
+stmt (buildAdditionLL () ((b0 = b1)) ((a + b0) = (a + b1)))
+stmt (buildAdditionRR () ((a0 = a1)) ((a0 + b) = (a1 + b)))
+
+stmt (MultiplicationBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 · b0) = (a1 · b1))))
+
+stmt (MultiplicationBuilderLL () () ((b0 = b1) → ((a · b0) = (a · b1))))
+stmt (MultiplicationBuilderRR () () ((a0 = a1) → ((a0 · b) = (a1 · b))))
+
+stmt (buildMultiplication () ((a0 = a1) (b0 = b1)) ((a0 · b0) = (a1 · b1)))
+
+stmt (buildMultiplicationLL () ((b0 = b1)) ((a · b0) = (a · b1)))
+stmt (buildMultiplicationRR () ((a0 = a1)) ((a0 · b) = (a1 · b)))
+</jh>
+
+== Commutative, associative, and distributive ==
+
+Both addition and multiplication are commutative and associative:
+
+<jh>
+stmt (AdditionCommutativity () () ((a + b) = (b + a)))
+stmt (AdditionAssociativity () ()
+  (((a + b) + c) = (a + (b + c))))
+
+stmt (MultiplicationCommutativity () () 
+  ((a · b) = (b · a)))
+stmt (MultiplicationAssociativity () ()
+  (((a · b) · c) = (a · (b · c))))
+</jh>
+
+We also provide a convenience theorem which applies commutativity and associativity in a common way:
+<jh>
+stmt (Addition4 () () (((a + b) + (c + d)) = ((a + c) + (b + d))))
+</jh>
+
+We can distribute multiplication over addition:
+<jh>
+stmt (LeftDistribution () ()
+  ((a · (b + c)) = ((a · b) + (a · c))))
+stmt (RightDistribution () ()
+  (((a + b) · c) = ((a · c) + (b · c))))
+</jh>
+
+== Zero ==
+
+There is a constant called <code>0</code> which serves as an additive [[w:Identity element|identity]]:
+
+<jh>
+term (nat (0))
+
+stmt (AdditiveIdentityLeft () () (((0) + a) = a))
+stmt (AdditiveIdentityRight () () ((a + (0)) = a))
+</jh>
+
+It also is a multiplicative zero:
+<jh>
+stmt (MultiplicativeZeroLeft () () (((0) · a) = (0)))
+stmt (MultiplicativeZeroRight () () ((a · (0)) = (0)))
+</jh>
+
+== One ==
+There is a constant called <code>1</code>:
+
+<jh>
+term (nat (1))
+</jh>
+
+It serves as a multiplicative identity:
+
+<jh>
+stmt (MultiplicativeIdentityRight () ()
+  ((a · (1)) = a))
+stmt (MultiplicativeIdentityLeft () ()
+  (((1) · a) = a))
+</jh>
+
+== Induction ==
+There are a number of ways to state [[w:mathematical induction|induction]].
+
+This one is via <code>subst</code>:
+<jh>
+var (formula φ)
+var (variable k n)
+
+stmt (InductionSubst () () 
+  (((subst (0) n φ) ∧ 
+    (∀ k ((subst (value k) n φ) → (subst ((value k) + (1)) n φ)))) 
+   → (∀ n φ)))
+</jh>
+
+This one has six hypotheses, which despite the large number turns out to be easier to handle than <code>InductionSubst</code>. The first four hypotheses handle the substitution machinery. The last two express the base case and induction step, and because the substitution has already been taken care of, tend to contain more mathematically interesting content and less substitution machinery.
+
+<jh>
+var (formula φ0 φk φSk φa)
+
+stmt (Induction6 ((n a) (φ0 n) (φk n) (φSk n) (φa n) (φ k) (n k))
+  ((((value n) = (0)) → (φ ↔ φ0))
+   (((value n) = (value k)) → (φ ↔ φk))
+   (((value n) = ((value k) + (1))) → (φ ↔ φSk))
+   (((value n) = a) → (φ ↔ φa))
+   φ0
+   (φk → φSk)
+  )
+  φa)
+</jh>
+
+[[Category:Elementary number theory|{{PAGENAME}}]]
+
