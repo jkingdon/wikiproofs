@@ -8,7 +8,19 @@
 
 [[First-order logic]], [[Interface:First-order logic]]
 
-* Not sure whether these are the most salient subst theorems, but some interesting-looking ones are:
+=== sb8e ===
+We need sb8e for LessThan.  Here's what it depends on in metamath:
+* [http://us.metamath.org/mpeuni/sb8e.html sb8e]
+:* [http://us.metamath.org/mpeuni/sbn.html sbn]
+::* sb4 and others (probably can't use metamath as-is, given our differing definition of subst)
+:* [http://us.metamath.org/mpeuni/sb8.html sb8]
+::* [http://us.metamath.org/mpeuni/stdpc4.html stdpc4]
+:::* sb2. Compare this with convertImplicitToSubst
+::* what else does sb8 depend on?
+
+=== Worth proving? ===
+
+* Not sure whether these are the most salient subst theorems (perhaps better to see what we end up needing), but some interesting-looking ones are:
 :*[http://us.metamath.org/mpeuni/stdpc4.html stdpc4]
 :*[http://us.metamath.org/mpeuni/sbequ.html sbequ]
 :*[http://us.metamath.org/mpeuni/sbcom2.html sbcom2]
