@@ -13,8 +13,6 @@ Items which may be doable without a network connection:
   - buildDisjunctionLL in First-order logic
   - go through Classical propositional logic to see what might go here
   - Basic Arithmetic has at least a few
-* Figure out the right name for 19.21ai and export it
-  (ForAllImplicationAntecedentMovementNotFree?)
 
 To do with network:
 
