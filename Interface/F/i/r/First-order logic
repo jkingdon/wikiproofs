@@ -164,6 +164,12 @@ stmt (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))))
 stmt (buildEqualityLL () ((t0 = t1)) ((s = t0) ↔ (s = t1)))
 </jh>
 
+We also define <code>≠</code>, which is just an abbreviation for negation and equality.
+
+<jh>
+def ((≠ s t) (¬ (s = t)))
+</jh>
+
 == Free variables ==
 The conventional treatment of [[w:free variable|free variables]] is syntactic; variables are defined as free depending on where they occur in a formula relative to the quantifiers over that variable. Our concept of free variable is similar (and can be used in applying first-order logic in exactly the same way), although we do provide one additional way to consider a variable "free" which would not be present in most systems.
 
