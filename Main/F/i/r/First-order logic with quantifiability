@@ -437,7 +437,7 @@ We export and add one more ∀x:
         export
         a5i
 </jh>
-which gives us <code>(∀x(x = s → φ) → ∀x(x = s → ∀x ¬ ∀x(x = s → ¬ φ)))</code>.  The consequent of that is just what we need to apply ax9o:
+which gives us <code>(∀x(x = s → φ) → ∀x(x = s → ∀x ¬ ∀x(x = s → ¬ φ)))</code>.  The consequent of that is just what we need to apply <code>ax9oc</code>:
 <jh>
         x s (¬ (∀ x (((value x) = s) → (¬ φ)))) ax9oc
         applySyllogism
