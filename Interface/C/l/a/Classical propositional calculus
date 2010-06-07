@@ -284,6 +284,13 @@ Negation as implication:
 stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
 </jh>
 
+==== Transposition ====
+Transposition applies for the biconditional as well as for the implication, although commutativity means that some of the theorems can look different while still covering the same territory.  The <code>NegationFunction</code> theorem covers the case in which both or neither side is negated, and the following covers the case in which one side is negated:
+
+<jh>
+stmt (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (p ↔ (¬ q))))
+</jh>
+
 == Rules ==
 
 Each propositional calculus needs at least one rule of detachment (modus ponens appears to be the most common). However, it will be convenient to have certain toolbox of rules implementing often used statements.
@@ -401,6 +408,7 @@ stmt (convertFromDisjunctionToImplication () ((p ∨ q)) ((¬ p) → q))
 stmt (convertToDisjunctionFromImplication () (((¬ p) → q)) (p ∨ q))
 stmt (convertFromNegationToImplication () ((¬ p)) (p → (⊥)))
 stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
+stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
 </jh>
 
 == References ==
