@@ -11,7 +11,7 @@ Statements can be added if necessary, but then the exporting modules have to be 
 {{modules
 | parameters = ''None''
 | importedby = [[Interface:First-order logic]], [[Interface:Basic arithmetic]] and many others
-| exportedby = [[Principia Mathematica propositional logic]]
+| exportedby = [[Convenience theorems of propositional logic]]
 }}
 
 == Well-formed formulas ==
