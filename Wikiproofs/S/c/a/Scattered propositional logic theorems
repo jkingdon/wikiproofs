@@ -18,7 +18,6 @@ From [[First-order logic]]:
 * rotate3Antecedents: like applyComm but when we need to move the first antecedent two steps in, not just one
 * Comm (perhaps a wise policy not to have propositional logic rules which don't have corresponding theorems)
 * principia*2.21
-* BiconditionalTranspositionWithNegatedRight, transposeBiconditionalWithNegatedRight (this is almost surely in Principia)
 * joinConsequents
 * anbi1d
 * ImplicationDistributionOverBiconditional, distributeImplicationOverBiconditional (probably really is a missing theorem; at least it is in Principia and is not easy to derive from what we have already)
