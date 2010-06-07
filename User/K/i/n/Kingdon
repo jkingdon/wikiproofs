@@ -14,9 +14,10 @@ We need sb8e for LessThan.  Here's what it depends on in metamath:
 :* [http://us.metamath.org/mpeuni/sbn.html sbn]
 ::* sb4 and others (probably can't use metamath as-is, given our differing definition of subst)
 :* [http://us.metamath.org/mpeuni/sb8.html sb8]
-::* [http://us.metamath.org/mpeuni/stdpc4.html stdpc4]
-:::* sb2. Compare this with convertImplicitToSubst
-::* what else does sb8 depend on?
+::* [http://us.metamath.org/mpeuni/stdpc4.html stdpc4] (see peano_thms a4sbc which is for object not variable)
+:::* [http://us.metamath.org/mpeuni/sb2.html sb2]. Compare this with convertImplicitToSubst
+::* [http://us.metamath.org/mpeuni/hbsb3.html hbsb3]
+::* [http://us.metamath.org/mpeuni/sbid2.html sbid2] - in metamath proved via [http://us.metamath.org/mpeuni/sbco.html sbco] and [http://us.metamath.org/mpeuni/sbf.html sbf]; could also perhaps be proved via [http://us.metamath.org/mpeuni/sbco2.html sbco2] if that could be proved independently of sbid2. See sbcco in peano_thms.
 
 === Worth proving? ===
 
