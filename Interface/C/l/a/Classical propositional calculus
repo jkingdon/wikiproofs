@@ -288,7 +288,7 @@ stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
 Transposition applies for the biconditional as well as for the implication, although commutativity means that some of the theorems can look different while still covering the same territory.  The <code>NegationFunction</code> theorem covers the case in which both or neither side is negated, and the following covers the case in which one side is negated:
 
 <jh>
-stmt (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (p ↔ (¬ q))))
+stmt (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))))
 </jh>
 
 == Rules ==
