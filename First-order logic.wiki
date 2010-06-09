@@ -611,6 +611,40 @@ thm (collectThereExistsImplication () ((H ((∀ x φ) → (∃ x ψ)))) (∃ x (
 ))
 </jh>
 
+=== Combining ∀ and ∃ to prove ∃ on a conjunction ===
+One way of thinking of the following theorem is that we want to find an <code>x</code> for which both <code>φ</code> and <code>ψ</code> hold. The second half of the antecedent (<code>∃ x ψ</code>) gives us such an <code>x</code>, which also holds for <code>φ</code> because <code>φ</code> holds for any value of <code>x</code>.<ref>[http://us.metamath.org/mpeuni/19.29.html 19.29] in metamath's set.mm, accessed 2010</ref>
+<jh>
+thm (ForAllThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))) (
+        x φ (¬ ψ) ForAllImplication
+</jh>
+That gives us <code>∀ x (φ → ¬ ψ) → (∀ x φ → ∀ x ¬ ψ)</code>. We first transform <code>∀ x ¬ ψ</code> into <code>¬ ∃ x ψ</code>.
+<jh>
+        x ψ NotThereExists eliminateBiconditionalForward
+        (∀ x φ) addCommonAntecedent
+        (∀ x (φ → (¬ ψ))) addCommonAntecedent
+        applyModusPonens
+</jh>
+Transposing this gives us <code>¬ (∀ x φ → ¬ ∃ x ψ) → ¬ ∀ x (φ → ¬ ψ)</code>.
+<jh>
+        introduceTransposition
+</jh>
+We are going to transform both sides of this with <code>ConjunctionImplication</code>.  First, the left side directly converts to <code>∀ x φ ∧ ∃ x ψ</code>.
+<jh>
+        (∀ x φ) (∃ x ψ) ConjunctionImplication swapBiconditional
+        transformAntecedent
+</jh>
+The right side, <code>¬ ∀ x (φ → ¬ ψ)</code>, is only slightly more complicated.
+<jh>
+        (φ → ¬ ψ) NotForAll
+
+        φ ψ ConjunctionImplication swapBiconditional
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        eliminateBiconditionalReverse applySyllogism
+))
+</jh>
+
 == Negation ==
 This relationship between quantification and negation is sometimes taken as an axiom instead of our <code>QuantifiedNegation</code>, but we prove it here:<ref>[http://us.metamath.org/mpeuni/ax6o.html ax6o] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
