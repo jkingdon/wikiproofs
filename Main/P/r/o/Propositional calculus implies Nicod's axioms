@@ -157,7 +157,7 @@ thm (Nicod.Prop () () ((p | (q | r)) | ((t | (t | t)) | ((s | q) | ((p | s) | (p
 
 == Export of Nicod's axioms ==
 
-Nicod defines implication in terms of the [[w:Sheffer stroke|Sheffer stroke]]. Although we don't use Nicod's version of implication in this file, we have to define it for the export to work. Because of the differing definitions, we prefix the Nicod kinds, definitions, and statements with <code>Nicod.</code>
+Nicod defines implication in terms of the [[w:Sheffer stroke|Sheffer stroke]]. Although we don't use Nicod's version of implication in this file, we have to define it for the export to work. Because of the differing definitions, we prefix the Nicod kinds of [http://www.casino-spielen.biz/roulette-spielen/ roulette spielen], definitions, and statements with <code>Nicod.</code>
 
 <jh>
 kindbind (formula Nicod.wff)
