@@ -411,6 +411,13 @@ stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
 stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
 </jh>
 
+== Convenience theorems and rules ==
+=== Detachment ===
+These are analogues to modus ponens, but where only a portion of the antecedent is detached.
+<jh>
+stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
+</jh>
+
 == References ==
 
 <references />
