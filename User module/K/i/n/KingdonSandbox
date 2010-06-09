@@ -5,7 +5,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 #import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 #import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
-import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
+#import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 
 var (formula p q φ ψ)
 var (variable x y x0 y0 x1 y1 k n)
