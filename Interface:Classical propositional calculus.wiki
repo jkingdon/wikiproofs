@@ -411,6 +411,12 @@ stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
 stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
 </jh>
 
+=== Transformation ===
+By "transforming", we mean applying a biconditional to replace part of a formula.
+<jh>
+stmt (transformAntecedent ((p → q) (p ↔ r)) (r → q))
+</jh>
+
 == References ==
 
 <references />

@@ -19,4 +19,7 @@ To do with network:
 * to download:
   Interface:Axioms of first-order logic
   Interface:Axiom of quantifiability
+  Convenience theorems of propositional logic
+  Interface:First-order logic
+  Interface:Classical propositional calculus
 
