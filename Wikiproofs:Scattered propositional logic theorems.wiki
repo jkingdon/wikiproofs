@@ -20,7 +20,6 @@ From [[First-order logic]]:
 * joinConsequents
 * anbi1d
 * ImplicationDistributionOverBiconditional, distributeImplicationOverBiconditional (probably really is a missing theorem; at least it is in Principia and is not easy to derive from what we have already)
-* ConjunctionImplication (*4.63), ImplicationConjunction (not a lot of work to get these from DeMorgan and DisjunctionImplication, but seems like the kind of relationship between connectives that GrafZahl was arguing for. Also, metamath proofs tend to use these)
 
 From [[Basic arithmetic]]:
 * BiconditionalBuilderRR, ImplicationBuilderRR: these are biconditionalized analogues to DisjunctionSummationRR, ConjunctionMultiplicationRR, etc. Not only do we use them here, I suspect a search for BiconditionalReflexivity would turn up more places where they could be helpful.

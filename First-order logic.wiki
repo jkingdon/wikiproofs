@@ -1237,27 +1237,6 @@ thm (distributeImplicationOverBiconditional () ((H (φ → (ψ ↔ χ)))) ((φ �
 ))
 </jh>
 
-=== Propositional logic digression: conjunction and implication ===
-Although we don't need these right now, for future reference here's a bit more propositional logic:
-<jh>
-thm (ConjunctionImplication () () ((φ ∧ ψ) ↔ (¬ (φ → (¬ ψ)))) (
-        φ ψ DeMorganNDN swapBiconditional
-
-        φ (¬ ψ) ImplicationDisjunction swapBiconditional
-        addNegation
-
-        applyBiconditionalTransitivity
-))
-
-thm (ImplicationConjunction () () ((φ → ψ) ↔ (¬ (φ ∧ (¬ ψ)))) (
-        φ ψ ImplicationDisjunction
-
-        φ ψ DeMorganPCN swapBiconditional
-
-        applyBiconditionalTransitivity
-))
-</jh>
-
 == Substitution of variables ==
 We now move to proper substitution via <code>substVariable</code>.
 
