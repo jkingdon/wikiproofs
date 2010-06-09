@@ -66,19 +66,12 @@ thm (exbidv ((φ x))
         H x addForAllToConsequent x ψ χ 19.18 applySyllogism
 ))
 
-thm (mpan2 ()
-  ((H1 ψ) (H2 ((φ ∧ ψ) → χ)))
-  (φ → χ) (
-        H1 ψ φ ConjunctionCommutativity eliminateBiconditionalReverse
-        H2 applySyllogism export applyModusPonens
-))
-
 thm (anbi1d ()
   ((H (φ → (ψ ↔ χ))))
   (φ → ((ψ ∧ θ) ↔ (χ ∧ θ))) (
         H
         θ BiconditionalReflexivity
-        ψ χ θ θ ConjunctionFunction mpan2
+        ψ χ θ θ ConjunctionFunction detach2of2
         applySyllogism
 ))
 
