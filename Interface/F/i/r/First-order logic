@@ -260,13 +260,16 @@ stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ 
 stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 </jh>
 
-==== Adding ∃ to the antecedent of a theorem ====
+==== Adding quantifiers to theorems which are implications ====
 
-This variant on moving formulas turns out to be used particularly often:
+These variants on moving formulas turn out to be used particularly often:
 <jh>
 stmt (addThereExistsToAntecedent ((x ψ))
   ((φ → ψ))
   ((∃ x φ) → ψ))
+stmt (addForAllToConsequent ((x φ))
+  ((φ → ψ))
+  (φ → (∀ x ψ)))
 </jh>
 
 === Other theorems related to substitution ===
