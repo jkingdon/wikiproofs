@@ -16,8 +16,28 @@ We first import [[Interface:Principia Mathematica propositional logic theorems]]
 import (PRINCIPIA Interface:Principia_Mathematica_propositional_logic_theorems () ())
 </jh>
 
-When this page is more complete, more proofs will go here.
+As usual, <code>p</code>, <code>q</code>, and <code>r</code> are formulas:
+<jh>
+var (formula p q r)
+</jh>
 
+== Detachment ==
+We have already encountered our first detachment rule, <code>applyModusPonens</code>, which takes a proposition and an implication with that proposition as antecedent.  The following are variants in which the implication has several antecedents (that is, the antecedent is a conjunction of two or more propositions) and we detach one or more of the antecedents.
+
+<jh>
+thm (detach2of2 () ((H q) (HIMP ((p ∧ q) → r))) (p → r) (
+        H
+
+        q p ConjunctionCommutativity eliminateBiconditionalReverse
+        HIMP
+        applySyllogism
+
+        export
+        applyModusPonens
+))
+</jh>
+
+== Done ==
 We now export [[Interface:Classical propositional calculus]].
 <jh>
 export (CLASSICAL Interface:Classical_propositional_calculus () ())
