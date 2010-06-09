@@ -60,17 +60,10 @@ thm (19.18 () ()
         eliminateBiconditionalForward applySyllogism
 ))
 
-thm (19.21aiv ((φ x))
-  ((H (φ → ψ)))
-  (φ → (∀ x ψ)) (
-        x φ DistinctNotFree ForAllAddRemove eliminateBiconditionalForward
-        H x addForAll applySyllogism
-))
-
 thm (exbidv ((φ x))
   ((H (φ → (ψ ↔ χ))))
   (φ → ((∃ x ψ) ↔ (∃ x χ))) (
-        H x 19.21aiv x ψ χ 19.18 applySyllogism
+        H x addForAllToConsequent x ψ χ 19.18 applySyllogism
 ))
 
 thm (mpan2 ()
@@ -499,9 +492,7 @@ First we rewrite <code>x = s → (φ ↔ ψ)</code> as <code>y = s → (x = y �
 </jh>
 Now we add ∀x to the consequent:
 <jh>
-        x generalize
-        x ((value y) = s) DistinctNotFree
-        moveAntecedentOutOfForAll
+        x addForAllToConsequent
 </jh>
 The first application of <code>ImplicitSubstitutionThereExists</code> turns <code>∀x(x = y → (φ ↔ ψ))</code> into <code>(∃x x = y ∧ φ) ↔ ψ</code>:
 <jh>
