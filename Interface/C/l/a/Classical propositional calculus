@@ -424,6 +424,12 @@ By "transforming", we mean applying a biconditional to replace part of a formula
 stmt (transformAntecedent () ((p → q) (p ↔ r)) (r → q))
 </jh>
 
+=== Additional relationships between connectives ===
+<jh>
+stmt (ConjunctionImplication () () ((p ∧ q) ↔ (¬ (p → (¬ q)))))
+stmt (ImplicationConjunction () () ((p → q) ↔ (¬ (p ∧ (¬ q)))))
+</jh>
+
 == References ==
 
 <references />
