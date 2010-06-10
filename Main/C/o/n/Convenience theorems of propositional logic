@@ -37,6 +37,16 @@ thm (detach2of2 () ((H q) (HIMP ((p ∧ q) → r))) (p → r) (
 ))
 </jh>
 
+== Transforming parts of formula ==
+By "transforming", we mean applying a biconditional to replace part of a formula.
+<jh>
+thm (transformAntecedent () ((HIMP (p → q)) (HEQ (p ↔ r))) (r → q) (
+        HEQ eliminateBiconditionalForward
+        HIMP
+        applySyllogism
+))
+</jh>
+
 == Done ==
 We now export [[Interface:Classical propositional calculus]].
 <jh>
