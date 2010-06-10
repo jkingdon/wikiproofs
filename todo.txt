@@ -1,6 +1,6 @@
 Items which may be doable without a network connection:
 
-* prove sb8
+* prove sb8 (see User:Kingdon for a few notes)
 * think about sbn
 * sb8e, once sb8/sbn done
 * definitions versus dummies (LessThan), once sb8e done
@@ -16,4 +16,6 @@ Items which may be doable without a network connection:
 
 To do with network:
 
+* download files
+  First-order logic with quantifiability.wiki (once edits made)
 
