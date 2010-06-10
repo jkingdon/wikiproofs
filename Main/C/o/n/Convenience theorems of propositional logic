@@ -74,4 +74,7 @@ We now export [[Interface:Classical propositional calculus]].
 export (CLASSICAL Interface:Classical_propositional_calculus () ())
 </jh>
 
+== Footnotes ==
+<references/>
+
 [[Category:Classical propositional logic]]
