@@ -418,6 +418,12 @@ These are analogues to modus ponens, but where only a portion of the antecedent 
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
 </jh>
 
+=== Transformation ===
+By "transforming", we mean applying a biconditional to replace part of a formula.
+<jh>
+stmt (transformAntecedent () ((p → q) (p ↔ r)) (r → q))
+</jh>
+
 == References ==
 
 <references />
