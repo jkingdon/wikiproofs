@@ -160,6 +160,9 @@ We'll show that it has the [[w:Total order|expected properties of an order]].
 
 Probably can base some of these on [http://code.google.com/p/ghilbert/source/browse/trunk/peano/peano_thms.gh peano_thms.gh]
 
+=== nomenclature: combining vs combination ===
+Shouldn't ThereExistsConjunctionCombining be called ThereExistsConjunctionCombination and likewise for any other *Combining theorems?
+
 === Basic arithmetic ===
 [[Interface:Basic arithmetic]] does not currently have anything which needs to be proved with the ZeroNotSuccessor axiom (in fact, I'm pretty sure that modular arithmetic can model it). We should have one or more such. There is no largest number (e.g. <code>¬ ∃N ∀a a < N</code>)? Something about lack of cycles (can't keep adding one and get back where you started)? The total order properties would seem to suffice, and are more natural (the above are not aesthetically appealing, as they just restate ZeroNotSuccessor and are not, on the face of it, useful in algebra and the like).
 
