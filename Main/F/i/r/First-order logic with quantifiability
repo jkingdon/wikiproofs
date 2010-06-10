@@ -160,6 +160,48 @@ Having gotten about as far as we're going to get without the [[Interface:Axiom o
 import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
 </jh>
 
+== Specialization with substitution ==
+The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref>
+<jh>
+thm (SpecializationToObject ((y s) (y x) (y φ)) () ((∀ x φ) → (subst s x φ)) (
+</jh>
+We start with <code>∀ x φ ∧ ∃ x x = y → ∃ x (φ ∧ x = y)</code> and eliminate the second antecedent (because it is an instance of <code>Quantifiability</code>).
+<jh>
+        x (value y) Quantifiability
+        x φ ((value x) = (value y)) ThereExistsConjunctionCombining
+        detach2of2
+</jh>
+Commuting the conjunction in the consequent gives <code>∀ x φ → ∃ x (x = y ∧ φ)</code>
+<jh>
+        φ ((value x) = (value y)) ConjunctionCommutativity
+        x buildThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We are heading towards the definition of <code>[ s / x ] φ</code>, which has two quantifiers: an outer one on <code>y</code> and an inner one on <code>x</code>.  So far we have the quantifier for <code>x</code> and a similar set of steps to the ones we just took will give us a similar expression with a quantifier for <code>y</code>.
+<jh>
+        y addForAllToConsequent
+</jh>
+We add <code>∃ y y = s</code> (a theorem) to the consequent:
+<jh>
+        y s Quantifiability
+        (∀ x φ) introduceAntecedent
+        composeConjunction
+</jh>
+The consequent is <code>∀ y ∃ x (x = y ∧ φ) ∧ ∃ y y = s)</code>, which we first turn into <code>∃ y (∃ x (x = y ∧ φ) ∧ y = s)</code>,
+<jh>
+        y (∃ x (((value x) = (value y)) ∧ φ)) ((value y) = s) ThereExistsConjunctionCombining
+        applySyllogism
+</jh>
+And then into <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code>.
+<jh>
+        (∃ x (((value x) = (value y)) ∧ φ)) ((value y) = s) ConjunctionCommutativity
+        y buildThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == Quantifiers and equality ==
 
 Here we prove a number of results involving equality and quantifiers. Many of them will pave the way for results involving explicit (subst) substitution.
@@ -305,26 +347,6 @@ thm (SubstImplicitForAll () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s)
 
 === Implicit substitution and ∃ ===
 There is a similar result with ∃.<ref>[http://us.metamath.org/mpeuni/equsex.html equsex] in metamath's set.mm, accessed March 9, 2010, with <code>s</code> (the replacement) changed from a <code>variable</code> to an <code>object</code></ref>
-
-We first provide a bit more propositional logic:
-<jh>
-thm (ConjunctionImplication () () ((φ ∧ ψ) ↔ (¬ (φ → (¬ ψ)))) (
-        φ ψ DeMorganNDN swapBiconditional
-
-        φ (¬ ψ) ImplicationDisjunction swapBiconditional
-        addNegation
-
-        applyBiconditionalTransitivity
-))
-
-thm (ImplicationConjunction () () ((φ → ψ) ↔ (¬ (φ ∧ (¬ ψ)))) (
-        φ ψ ImplicationDisjunction
-
-        φ ψ DeMorganPCN swapBiconditional
-
-        applyBiconditionalTransitivity
-))
-</jh>
 
 Our implicit substitution theorem is:
 <jh>
