@@ -614,7 +614,7 @@ thm (collectThereExistsImplication () ((H ((∀ x φ) → (∃ x ψ)))) (∃ x (
 === Combining ∀ and ∃ to prove ∃ on a conjunction ===
 One way of thinking of the following theorem is that we want to find an <code>x</code> for which both <code>φ</code> and <code>ψ</code> hold. The second half of the antecedent (<code>∃ x ψ</code>) gives us such an <code>x</code>, which also holds for <code>φ</code> because <code>φ</code> holds for any value of <code>x</code>.<ref>[http://us.metamath.org/mpeuni/19.29.html 19.29] in metamath's set.mm, accessed 2010</ref>
 <jh>
-thm (ForAllThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))) (
+thm (ThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))) (
         x φ (¬ ψ) ForAllImplication
 </jh>
 That gives us <code>∀ x (φ → ¬ ψ) → (∀ x φ → ∀ x ¬ ψ)</code>. We first transform <code>∀ x ¬ ψ</code> into <code>¬ ∃ x ψ</code>.
@@ -635,7 +635,7 @@ We are going to transform both sides of this with <code>ConjunctionImplication</
 </jh>
 The right side, <code>¬ ∀ x (φ → ¬ ψ)</code>, is only slightly more complicated.
 <jh>
-        (φ → ¬ ψ) NotForAll
+        x (φ → (¬ ψ)) NotForAll
 
         φ ψ ConjunctionImplication swapBiconditional
         x buildThereExists
