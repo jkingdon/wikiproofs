@@ -47,6 +47,27 @@ thm (transformAntecedent () ((HIMP (p → q)) (HEQ (p ↔ r))) (r → q) (
 ))
 </jh>
 
+== More relationships between connectives ==
+The following relationships between conjunction and implication parallel those between disjunction and implication (and in fact follow easily from them and DeMorgan's laws).<ref>ConjunctionImplication is *4.63 in ''Principia'', with the two sides of the biconditional commuted</ref>
+<jh>
+thm (ConjunctionImplication () () ((p ∧ q) ↔ (¬ (p → (¬ q)))) (
+        p q DeMorganNDN swapBiconditional
+
+        p (¬ q) ImplicationDisjunction swapBiconditional
+        addNegation
+
+        applyBiconditionalTransitivity
+))
+
+thm (ImplicationConjunction () () ((p → q) ↔ (¬ (p ∧ (¬ q)))) (
+        p q ImplicationDisjunction
+
+        p q DeMorganPCN swapBiconditional
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Done ==
 We now export [[Interface:Classical propositional calculus]].
 <jh>
