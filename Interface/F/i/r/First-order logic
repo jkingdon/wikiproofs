@@ -124,7 +124,7 @@ stmt (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x 
 === Other kinds of splits and combinations ===
 <jh>
 stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
-stmt (ForAllThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
+stmt (ThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
 </jh>
 
 == Generalization and specialization ==
