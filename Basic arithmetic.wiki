@@ -1101,7 +1101,7 @@ The following theorem looks just like the definition for <code>≤</code>.  Howe
 <jh>
 #stmt (sb8e ((y φ)) () ((∃ y (subst (value y) x φ)) ↔ (∃ x φ)))
 
-thm (ThereExists ((m n) (a m) (a n) (b m) (b n)) () ((a ≤ b) ↔ (∃ n ((a + (value n)) = b))) (
+thm (LessThan ((m n) (a m) (a n) (b m) (b n)) () ((a ≤ b) ↔ (∃ n ((a + (value n)) = b))) (
 </jh>
 To restate our "subtle difference" in terms of explaining what we need for our proof, the quantified variable on the left side of the biconditional (which results from the expansion of <code>≤</code>) is different from the quantified variable on the right hand side (<code>n</code>). So we need to switch variables.
 
@@ -1120,9 +1120,8 @@ We can now add <code>∃ n</code> to both sides,
 </jh>
 and apply <code>sb8e</code> to turn the left side into <code>∃ m a + m = b</code>.
 <jh>
-((∃ y (subst (value y) x φ)) ↔ (∃ x φ))
         swapBiconditional
-        n m φ sb8e
+        n m ((a + (value m)) = b) sb8e
         applyBiconditionalTransitivity
         swapBiconditional
 </jh>
