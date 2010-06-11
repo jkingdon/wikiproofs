@@ -370,6 +370,28 @@ thm (SubstImplicitThereExists () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x)
 ))
 </jh>
 
+and a version with distinct variable constraint instead of a freeness hypothesis is:
+<jh>
+thm (ImplicitThereExists ((x ψ)) ((HEQ (((value x) = s) → (φ ↔ ψ))))
+  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
+        x ψ DistinctNotFree
+        HEQ
+        SubstImplicitThereExists
+))
+</jh>
+
+== Substitution and ∃ ==
+We've already seen that <code>∃ x (x = s ∧ φ)</code> is closely related to substitution.  Here we show that it is equivalent to <code>[ s / x ] φ</code>, as long as <code>x</code> does not appear in <code>s</code>.
+<jh>
+thm (SubstitutionThereExists ((x s)) () ( (subst s x φ) ↔ (∃ x (((value x) = s) ∧ φ))) (
+        (value y) s (value x) EqualityBuilderLL
+        φ anbi1d
+        x buildThereExistsInConsequent
+        ImplicitThereExists
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == equs4c ==
 This is an analogue to equs4 from [[First-order logic]] but for objects not variables:
 
