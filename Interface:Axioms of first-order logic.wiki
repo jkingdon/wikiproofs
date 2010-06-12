@@ -87,15 +87,6 @@ stmt (VariableSubstitution ((x y)) ()
   (((value x) = (value y)) → (φ → (∀ x (((value x) = (value y)) → φ)))) )
 </jh>
 
-The <code>QuantifierIntroduction</code> axiom is related to <code>Generalization</code> in that it adds a universal quantifier to a proposition (in this case, <code>s = t</code>). In fact, if <code>z</code> were distinct from <code>s</code> and <code>t</code>, <code>Generalization</code> would give us <code>s = t → ∀ z s = t</code>. The antecedents here, however, are weaker. The proposition <code>¬ ∀ z z = s</code> allows <code>z</code> to appear in <code>s</code>, but just requires that <code>z</code> is not always equal to <code>s</code>.
-<jh>
-stmt (QuantifierIntroduction () () ( 
-  (¬ (∀ z ((value z) = s))) 
-  → ( (¬ (∀ z ((value z) = t))) 
-      → ( (s = t) → (∀ z (s = t)) ) ) )
-)
-</jh>
-
 There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic). Such a statement for equals itself, <code>(s0 = s1 ∧ t0 = t1) → (s0 = t0 ↔ s1 = t1)</code>, can be proved from the above axioms, so an additional axiom is not needed here.
 
 == Axiom of quantifiability ==
