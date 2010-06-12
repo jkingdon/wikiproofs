@@ -22,5 +22,8 @@ To do with network:
   First-order logic with quantifiability.wiki (once edits made)
   Interface:Intuitionistic propositional logic.wiki
 * rename anbi1d to buildConjunctionRRInConsequent and move to
-  convenience theorems
+  convenience theorems, update scattered theorems
+  - prove buildConjunctionLL in convenience theorems
+  - upload theorems from git (some depend on the above)
+  - move BiconditionalBuilderRR, ImplicationBuilderRR from basic arithmetic and update scattered theorems
 

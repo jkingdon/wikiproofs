@@ -392,6 +392,28 @@ thm (SubstitutionThereExists ((x s)) () ( (subst s x φ) ↔ (∃ x (((value x) 
 ))
 </jh>
 
+== Composition ==
+If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 11 May 2010</ref>
+<jh>
+thm (SubstitutionComposition ((φ y) (s y)) ()
+  ((subst s y (subst y x φ)) ↔ (subst s x φ)) (
+</jh>
+The proof consists of rewriting both of the substitutions on the left hand side via <code>SubstitutionThereExists</code>. First we show <code>[ s / y ] [ y / x ] φ ↔ ∃ y (y = s ∧ [ y / x ] φ)</code>.
+<jh>
+        s y (subst y x φ) SubstitutionThereExists
+</jh>
+The second invocation of <code>SubstitutionThereExists</code> shows that the right hand side of that expression is equivalent to <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code>
+<jh>
+        (value y) x φ SubstitutionThereExists
+        ((value y) = s) buildConjunctionLL
+        y buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+And that is just the definition of <code>[ s / x ] φ</code>.
+<jh>
+))
+</jh>
+
 == equs4c ==
 This is an analogue to equs4 from [[First-order logic]] but for objects not variables:
 
