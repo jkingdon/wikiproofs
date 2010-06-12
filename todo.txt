@@ -26,4 +26,6 @@ To do with network:
   - prove buildConjunctionLL in convenience theorems
   - upload theorems from git (some depend on the above)
   - move BiconditionalBuilderRR, ImplicationBuilderRR from basic arithmetic and update scattered theorems
+* look at metamath proof of sb56 and see if we are ready to prove
+  sbc56.
 
