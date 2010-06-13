@@ -24,3 +24,17 @@ I _think_ that what I want to do is download a local copy, and use the latest jh
 :You're not missing anything. Extracting is just not properly implemented yet. There should be a SpecialPage for that. Even the server currently just uses
 :<pre>private static final Pattern PATTERN = Pattern.compile("<jh>.*?</jh>", Pattern.DOTALL);</pre>
 :which is probably not even safe (think HTML comments and <nowiki><nowiki></nowiki> tags).--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 21:55, 2 March 2010 (UTC)
+
+== bug in ghilbert, or am I just confused? ==
+
+If I go to the subversion version 9 of peano_thms.gh, I see the following (extracting just the relevant bits):
+
+  thm (sbc5 ((A x)) ()
+    (<-> ([/] A x ph) (E. x (/\ (= x A) ph)))
+  . . .
+  thm (sbcco ((ph y) (A y)) ()
+    (<-> ([/] A y ([/] y x ph)) ([/] A x ph))
+    A y ([/] y x ph) sbc5
+      y x ph sbc5
+
+Shoudn't the second invocation of sbc5 blow up because there isn't a distinct variable constraint on (x y)? If not, why not? Is this a bug in the var/tvar code? I don't see a reason why being a var rather than a tvar could soundly bypass distinct variable constraints, but I could have missed something. [[User:Kingdon|Kingdon]] 20:08, 12 June 2010 (UTC)
