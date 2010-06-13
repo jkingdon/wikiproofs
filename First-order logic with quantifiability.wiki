@@ -49,17 +49,11 @@ We can build up formulas based on equivalences or equalities of the the substitu
 In this section we will prove <code>s = t → ((subst s x φ) ↔ (subst t x φ))</code>. This is like dfsbcq in set.mm.<ref>[http://us.metamath.org/mpeuni/dfsbcq.html dfsbcq] in metamath's set.mm, accessed March 7, 2010</ref>
 
 <jh>
-thm (exbidv ((φ x))
-  ((H (φ → (ψ ↔ χ))))
-  (φ → ((∃ x ψ) ↔ (∃ x χ))) (
-        H x addForAllToConsequent x ψ χ ForAllBiconditionalThereExists applySyllogism
-))
-
 thm (SubstBuilderReplacement ((s y) (t y)) ()
   ((s = t) → ((subst s x φ) ↔ (subst t x φ))) (
         s t (value y) EqualityBuilderLL
         (∃ x (((value x) = (value y)) ∧ φ)) buildConjunctionRRInConsequent
-        y exbidv
+        y buildThereExistsInConsequent
 
 </jh>
 Now we just need to apply the definition of <code>subst</code> and we are done:

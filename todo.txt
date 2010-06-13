@@ -1,7 +1,7 @@
 Items which may be doable without a network connection:
 
 * prove sb8 (see User:Kingdon for a few notes)
-* think about sbn
+* think about sbn (probably waiting on sb56)
 * sb8e, once sb8/sbn done
 * definitions versus dummies (LessThan), once sb8e done
 
@@ -19,8 +19,6 @@ Items which may be doable without a network connection:
 To do with network:
 
 * move BiconditionalBuilderRR, ImplicationBuilderRR from basic arithmetic and update scattered theorems
-* rename exbidv to buildThereExistsInConsequent (I think, check this is right), and move to
-  [[First-order logic]]
 * look at metamath proof of sb56 and see if we are ready to prove
   sbc56.
 
