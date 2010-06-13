@@ -415,7 +415,12 @@ stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
 
 === Additional builders ===
 <jh>
+var (formula antecedent common)
+
 stmt (buildConjunctionLL () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
+stmt (buildConjunctionRRInConsequent ()
+  ((antecedent → (p ↔ q)))
+  (antecedent → ((p ∧ common) ↔ (q ∧ common))))
 </jh>
 
 === Detachment ===
