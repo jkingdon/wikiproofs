@@ -55,19 +55,10 @@ thm (exbidv ((φ x))
         H x addForAllToConsequent x ψ χ ForAllBiconditionalThereExists applySyllogism
 ))
 
-thm (anbi1d ()
-  ((H (φ → (ψ ↔ χ))))
-  (φ → ((ψ ∧ θ) ↔ (χ ∧ θ))) (
-        H
-        θ BiconditionalReflexivity
-        ψ χ θ θ ConjunctionFunction detach2of2
-        applySyllogism
-))
-
 thm (SubstBuilderReplacement ((s y) (t y)) ()
   ((s = t) → ((subst s x φ) ↔ (subst t x φ))) (
         s t (value y) EqualityBuilderLL
-        (∃ x (((value x) = (value y)) ∧ φ)) anbi1d
+        (∃ x (((value x) = (value y)) ∧ φ)) buildConjunctionRRInConsequent
         y exbidv
 
 </jh>
@@ -447,7 +438,7 @@ thm (SubstitutionThereExists ((x s) (s y) (x y) (φ y)) () ( (subst s x φ) ↔ 
 We start with applying some builders to get <code>y = s → (∃ x (x = y ∧ φ) ↔ ∃ x (x = s ∧ φ))</code>.
 <jh>
         (value y) s (value x) EqualityBuilderLL
-        φ anbi1d
+        φ buildConjunctionRRInConsequent
         x buildThereExistsInConsequent
 </jh>
 <code>ImplicitThereExists</code> then gives us <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ)) ↔ ∃ x (x = s ∧ φ)</code>, which is our desired result by the definition of <code>subst</code>.
