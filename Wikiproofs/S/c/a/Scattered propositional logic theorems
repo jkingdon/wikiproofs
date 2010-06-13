@@ -18,7 +18,6 @@ From [[First-order logic]]:
 * Comm (perhaps a wise policy not to have propositional logic rules which don't have corresponding theorems)
 * principia*2.21
 * joinConsequents
-* anbi1d
 * ImplicationDistributionOverBiconditional, distributeImplicationOverBiconditional (probably really is a missing theorem; at least it is in Principia and is not easy to derive from what we have already)
 
 From [[Basic arithmetic]]:
