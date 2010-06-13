@@ -1555,46 +1555,32 @@ thm (buildSubstVariable () ((H (φ ↔ ψ))) ((substVariable y x φ) ↔ (substV
 == More builders ==
 These builders are similar in spirit to the convenience builders of propositional logic, although they are (slightly) harder to derive.
 
-First, a biconditionalized version of <code>ForAllImplicationThereExists</code>.
+First, a biconditionalized version of <code>ForAllImplicationThereExists</code>.<ref>[http://us.metamath.org/mpeuni/19.18.html 19.18] in metamath's set.mm, accessed June 12, 2010</ref>
 <jh>
-thm (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))) (
-</jh>
-First we rewrite <code>∀ x (φ ↔ ψ)</code> as <code>∀ x (φ → ψ) ∧ ∀ x (ψ → φ)</code>.
-<jh>
-        φ ψ BiconditionalImplication
-        x buildForAll
+thm (ForAllBiconditionalThereExists () ()
+  ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))) (
+        φ ψ BiconditionalReverseElimination x addForAll
+        x φ ψ ForAllImplicationThereExists applySyllogism
 
-        x (φ → ψ) (ψ → φ) ForAllConjunction
-        applyBiconditionalTransitivity
+        φ ψ BiconditionalForwardElimination x addForAll
+        x ψ φ ForAllImplicationThereExists applySyllogism
 
-        eliminateBiconditionalReverse
-</jh>
-Now we apply <code>ForAllImplicationThereExists</code> to each of the quantified implications,
-<jh>
-        x φ ψ ForAllImplicationThereExists
-        x ψ φ ForAllImplicationThereExists
-</jh>
-and combine them to get <code>(∃ x φ → ∃ x ψ) ∧ (∃ x ψ → ∃ x φ)</code>.
-<jh>
-        conjoin
-        applySyllogism
-</jh>
-All that remains is to apply <code>BiconditionalImplication</code>.
-<jh>
+        composeConjunction
         (∃ x φ) (∃ x ψ) BiconditionalImplication
-        eliminateBiconditionalForward
-        applySyllogism
+        eliminateBiconditionalForward applySyllogism
 ))
 </jh>
 
 Now, builders.
 
 <jh>
-thm (buildThereExistsInConsequent ((x φ)) ((H (φ → (ψ ↔ χ)))) ((φ → ((∃ x ψ) ↔ (∃ x χ)))) (
+thm (buildThereExistsInConsequent ((x φ)) 
+  ((H (φ → (ψ ↔ χ))))
+  (φ → ((∃ x ψ) ↔ (∃ x χ))) (
         H
         x addForAllToConsequent
 
-        ψ χ ForAllBiconditionalThereExists
+        x ψ χ ForAllBiconditionalThereExists
         applySyllogism
 ))
 </jh>

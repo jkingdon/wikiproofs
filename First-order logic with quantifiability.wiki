@@ -33,9 +33,11 @@ We now turn to substitution of an object for a variable.
 
 In some formulations of predicate logic, this kind of substitution (known as ''proper substitution'' as there are some rules about what kinds of substitution are valid) is performed syntactically and the rules governing it are expressed in English or a meta-theory.  JHilbert does not have a feature to do syntactic proper substitution, but we are able to build up equivalent mechanisms from equality. The theorems in [[Interface:First-order logic with quantifiability]] could be proven from either the syntactic definition or ours.
 
-We define a formula <code>(subst s x φ)</code> which means, roughly, that <code>φ</code> is true if ocurrences of <code>x</code> are replaced by <code>s</code> ("roughly" because we have not tried to define proper substitution precisely). The definition contains a dummy variable <code>y</code> to give the expected results if <code>x</code> and <code>s</code> are not distinct.<ref>It resembles [http://us.metamath.org/mpeuni/dfsb7.html dfsb7] in metamath's set.mm, accessed March 8, 2010, except that <code>s</code> (the replacement) is an <code>object</code> rather than a <code>variable</code>.</ref>
+We define a formula <code>(subst s x φ)</code> which means, roughly, that <code>φ</code> is true if ocurrences of <code>x</code> are replaced by <code>s</code> ("roughly" because we have not tried to define proper substitution precisely). In dicussion, we also use the notation <code>[ s / x ] φ</code> (which is not legal JHilbert syntax) for the same thing. The definition is <code>[ s / x ] φ ≝ ∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code>. The definition contains a dummy variable <code>y</code> to give the expected results if <code>x</code> and <code>s</code> are not distinct.<ref>It resembles [http://us.metamath.org/mpeuni/dfsb7.html dfsb7] in metamath's set.mm, accessed March 8, 2010, except that <code>s</code> (the replacement) is an <code>object</code> rather than a <code>variable</code>.</ref>
+
+Currently, the definition of <code>subst</code> is an axiom in [[Interface:Axiom of quantifiability]].  Therefore, we import that interface now, even though we aren't going to use the axiom of quantifiability itself for a little while.
 <jh>
-def ((subst s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
+import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
 </jh>
 
 This section contains a few of the preliminary results, which we can prove without the axiom of quantifiability.
@@ -47,39 +49,27 @@ We can build up formulas based on equivalences or equalities of the the substitu
 In this section we will prove <code>s = t → ((subst s x φ) ↔ (subst t x φ))</code>. This is like dfsbcq in set.mm.<ref>[http://us.metamath.org/mpeuni/dfsbcq.html dfsbcq] in metamath's set.mm, accessed March 7, 2010</ref>
 
 <jh>
-thm (19.18 () ()
-  ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))) (
-        φ ψ BiconditionalReverseElimination x addForAll
-        x φ ψ ForAllImplicationThereExists applySyllogism
-
-        φ ψ BiconditionalForwardElimination x addForAll
-        x ψ φ ForAllImplicationThereExists applySyllogism
-
-        composeConjunction
-        (∃ x φ) (∃ x ψ) BiconditionalImplication
-        eliminateBiconditionalForward applySyllogism
-))
-
 thm (exbidv ((φ x))
   ((H (φ → (ψ ↔ χ))))
   (φ → ((∃ x ψ) ↔ (∃ x χ))) (
-        H x addForAllToConsequent x ψ χ 19.18 applySyllogism
-))
-
-thm (anbi1d ()
-  ((H (φ → (ψ ↔ χ))))
-  (φ → ((ψ ∧ θ) ↔ (χ ∧ θ))) (
-        H
-        θ BiconditionalReflexivity
-        ψ χ θ θ ConjunctionFunction detach2of2
-        applySyllogism
+        H x addForAllToConsequent x ψ χ ForAllBiconditionalThereExists applySyllogism
 ))
 
 thm (SubstBuilderReplacement ((s y) (t y)) ()
   ((s = t) → ((subst s x φ) ↔ (subst t x φ))) (
         s t (value y) EqualityBuilderLL
-        (∃ x (((value x) = (value y)) ∧ φ)) anbi1d
+        (∃ x (((value x) = (value y)) ∧ φ)) buildConjunctionRRInConsequent
         y exbidv
+
+</jh>
+Now we just need to apply the definition of <code>subst</code> and we are done:
+<jh>
+        s x φ y Subst
+        t x φ y Subst
+        buildBiconditional
+
+        eliminateBiconditionalForward
+        applySyllogism
 ))
 
 thm (buildSubstReplacement () ((H (s = t))) 
@@ -99,6 +89,15 @@ thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
         x addThereExists
         ((value y) = s) conjoinLL
         y addThereExists
+</jh>
+Now we just need to apply the definition of <code>subst</code> and we are done:
+<jh>
+        s x φ y Subst
+        swapBiconditional transformAntecedent
+
+        s x ψ y Subst
+        eliminateBiconditionalForward
+        applySyllogism
 ))
 </jh>
 
@@ -145,6 +144,11 @@ We add <code>∃ y</code> to both sides and simplify <code>∃ y ∃ x φ</code>
         y (∃ x φ) DistinctNotFree
         ThereExistsAddRemove eliminateBiconditionalReverse
         applySyllogism
+</jh>
+Now we just need to apply the definition of <code>subst</code> and we are done:
+<jh>
+        s x φ y Subst
+        swapBiconditional transformAntecedent
 ))
 
 thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
@@ -155,9 +159,53 @@ thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
 </jh>
 
 == Axiom of quantifiability ==
-Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now import it and start proving some consequences of it.
+Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now start proving some consequences of it (because that file also contains the definition of subst, we have already imported it).
+
+== Specialization with substitution ==
+The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref>
 <jh>
-import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
+thm (SpecializationToObject ((y s) (y x) (y φ)) () ((∀ x φ) → (subst s x φ)) (
+</jh>
+We start with <code>∀ x φ ∧ ∃ x x = y → ∃ x (φ ∧ x = y)</code> and eliminate the second antecedent (because it is an instance of <code>Quantifiability</code>).
+<jh>
+        x (value y) Quantifiability
+        x φ ((value x) = (value y)) ThereExistsConjunctionCombining
+        detach2of2
+</jh>
+Commuting the conjunction in the consequent gives <code>∀ x φ → ∃ x (x = y ∧ φ)</code>
+<jh>
+        φ ((value x) = (value y)) ConjunctionCommutativity
+        x buildThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We are heading towards the definition of <code>[ s / x ] φ</code>, which has two quantifiers: an outer one on <code>y</code> and an inner one on <code>x</code>.  So far we have the quantifier for <code>x</code> and a similar set of steps to the ones we just took will give us a similar expression with a quantifier for <code>y</code>.
+<jh>
+        y addForAllToConsequent
+</jh>
+We add <code>∃ y y = s</code> (a theorem) to the consequent:
+<jh>
+        y s Quantifiability
+        (∀ x φ) introduceAntecedent
+        composeConjunction
+</jh>
+The consequent is <code>∀ y ∃ x (x = y ∧ φ) ∧ ∃ y y = s)</code>, which we first turn into <code>∃ y (∃ x (x = y ∧ φ) ∧ y = s)</code>,
+<jh>
+        y (∃ x (((value x) = (value y)) ∧ φ)) ((value y) = s) ThereExistsConjunctionCombining
+        applySyllogism
+</jh>
+And then into <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code>.
+<jh>
+        (∃ x (((value x) = (value y)) ∧ φ)) ((value y) = s) ConjunctionCommutativity
+        y buildThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we just need to apply the definition of <code>subst</code> and we are done:
+<jh>
+        s x φ y Subst
+        eliminateBiconditionalForward
+        applySyllogism))
 </jh>
 
 == Quantifiers and equality ==
@@ -305,6 +353,8 @@ thm (SubstImplicitForAll () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s)
 
 === Implicit substitution and ∃ ===
 There is a similar result with ∃.<ref>[http://us.metamath.org/mpeuni/equsex.html equsex] in metamath's set.mm, accessed March 9, 2010, with <code>s</code> (the replacement) changed from a <code>variable</code> to an <code>object</code></ref>
+
+Our implicit substitution theorem is:
 <jh>
 thm (ImplicitSubstitutionThereExists () ((HFREE (x is-not-free-in ψ))) 
   ((∀ x (((value x) = s) → (φ ↔ ψ))) → ((∃ x (((value x) = s) ∧ φ)) ↔ ψ)) (
@@ -383,24 +433,37 @@ thm (ImplicitThereExists ((x ψ)) ((HEQ (((value x) = s) → (φ ↔ ψ))))
 == Substitution and ∃ ==
 We've already seen that <code>∃ x (x = s ∧ φ)</code> is closely related to substitution.  Here we show that it is equivalent to <code>[ s / x ] φ</code>, as long as <code>x</code> does not appear in <code>s</code>.
 <jh>
-thm (SubstitutionThereExists ((x s)) () ( (subst s x φ) ↔ (∃ x (((value x) = s) ∧ φ))) (
+thm (SubstitutionThereExists ((x s) (s y) (x y) (φ y)) () ( (subst s x φ) ↔ (∃ x (((value x) = s) ∧ φ))) (
+</jh>
+We start with applying some builders to get <code>y = s → (∃ x (x = y ∧ φ) ↔ ∃ x (x = s ∧ φ))</code>.
+<jh>
         (value y) s (value x) EqualityBuilderLL
-        φ anbi1d
+        φ buildConjunctionRRInConsequent
         x buildThereExistsInConsequent
+</jh>
+<code>ImplicitThereExists</code> then gives us <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ)) ↔ ∃ x (x = s ∧ φ)</code>, which is our desired result by the definition of <code>subst</code>.
+<jh>
         ImplicitThereExists
+</jh>
+Now we just need to apply the definition of <code>subst</code> and we are done:
+<jh>
+        swapBiconditional
+        s x φ y Subst
+        swapBiconditional
         applyBiconditionalTransitivity
+        swapBiconditional
 ))
 </jh>
 
 == Composition ==
-If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 11 May 2010</ref>
+If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 12 Jun 2010. I don't know why the (x y) distinct variable constraint is missing from that version; the second invocation of sbc5 would seem to require it.</ref>
 <jh>
-thm (SubstitutionComposition ((φ y) (s y)) ()
-  ((subst s y (subst y x φ)) ↔ (subst s x φ)) (
+thm (SubstitutionComposition ((φ y) (s y) (x y)) ()
+  ((subst s y (subst (value y) x φ)) ↔ (subst s x φ)) (
 </jh>
 The proof consists of rewriting both of the substitutions on the left hand side via <code>SubstitutionThereExists</code>. First we show <code>[ s / y ] [ y / x ] φ ↔ ∃ y (y = s ∧ [ y / x ] φ)</code>.
 <jh>
-        s y (subst y x φ) SubstitutionThereExists
+        s y (subst (value y) x φ) SubstitutionThereExists
 </jh>
 The second invocation of <code>SubstitutionThereExists</code> shows that the right hand side of that expression is equivalent to <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code>
 <jh>
@@ -409,8 +472,10 @@ The second invocation of <code>SubstitutionThereExists</code> shows that the rig
         y buildThereExists
         applyBiconditionalTransitivity
 </jh>
-And that is just the definition of <code>[ s / x ] φ</code>.
+But <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code> is <code>[ s / x ] φ</code>, by definition.
 <jh>
+        s x φ y Subst
+        swapBiconditional applyBiconditionalTransitivity
 ))
 </jh>
 
@@ -445,7 +510,7 @@ We export and add one more ∀x:
         export
         a5i
 </jh>
-which gives us <code>(∀x(x = s → φ) → ∀x(x = s → ∀x ¬ ∀x(x = s → ¬ φ)))</code>.  The consequent of that is just what we need to apply ax9o:
+which gives us <code>(∀x(x = s → φ) → ∀x(x = s → ∀x ¬ ∀x(x = s → ¬ φ)))</code>.  The consequent of that is just what we need to apply <code>ax9oc</code>:
 <jh>
         x s (¬ (∀ x (((value x) = s) → (¬ φ)))) ax9oc
         applySyllogism
@@ -476,6 +541,10 @@ thm (introduceSubst () ((H φ)) (subst s x φ) (
         y generalize
 
         y s (∃ x (((value x) = (value y)) ∧ φ)) equs4c
+        applyModusPonens
+
+        s x φ y Subst
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
@@ -524,6 +593,14 @@ We then apply <code>ImplicitSubstitutionThereExists</code> again to get <code>�
         y ψ DistinctNotFree
         s (∃ x (((value x) = (value y)) ∧ φ)) ImplicitSubstitutionThereExists
         applyModusPonens
+</jh>
+Now we just need to apply the definition of <code>subst</code> and we are done:
+<jh>
+        swapBiconditional
+        s x φ y Subst
+        swapBiconditional
+        applyBiconditionalTransitivity
+        swapBiconditional
 ))
 
 thm (makeSubstExplicit ((x s) (x ψ))

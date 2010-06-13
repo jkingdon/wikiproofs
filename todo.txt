@@ -18,14 +18,9 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-* download files
-  First-order logic with quantifiability.wiki (once edits made)
-  Interface:Intuitionistic propositional logic.wiki
-* rename anbi1d to buildConjunctionRRInConsequent and move to
-  convenience theorems, update scattered theorems
-  - prove buildConjunctionLL in convenience theorems
-  - upload theorems from git (some depend on the above)
-  - move BiconditionalBuilderRR, ImplicationBuilderRR from basic arithmetic and update scattered theorems
+* move BiconditionalBuilderRR, ImplicationBuilderRR from basic arithmetic and update scattered theorems
+* rename exbidv to buildThereExistsInConsequent (I think, check this is right), and move to
+  [[First-order logic]]
 * look at metamath proof of sb56 and see if we are ready to prove
   sbc56.
 

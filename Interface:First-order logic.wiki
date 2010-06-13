@@ -74,6 +74,14 @@ stmt (buildForAll () ((φ ↔ ψ)) ((∀ x φ) ↔ (∀ x ψ)))
 stmt (buildThereExists () ((φ ↔ ψ)) ((∃ x φ) ↔ (∃ x ψ)))
 </jh>
 
+=== Additional builders ===
+Some of these builders rely on theorems we haven't presented yet, but they are similar to the simple ones above in terms of general intent.
+<jh>
+stmt (buildThereExistsInConsequent ((x φ)) 
+  ((φ → (ψ ↔ χ)))
+  (φ → ((∃ x ψ) ↔ (∃ x χ))))
+</jh>
+
 == Order ==
 The order of adjacent quantifiers of the same type can be exchanged:
 <jh>
@@ -124,6 +132,7 @@ stmt (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x 
 === Other kinds of splits and combinations ===
 <jh>
 stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
+stmt (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))))
 stmt (ThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
 </jh>
 

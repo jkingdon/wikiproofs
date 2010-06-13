@@ -63,10 +63,15 @@ Here are the statements which do not require any hypotheses.
 
 === Negation and implication ===
 
-Double negation can be introduced but not eliminated.
-[[w:double negative elimination|Double negation]]:
+[[w:double negative elimination|Double negation]] can be introduced but not eliminated, but triple negation is equivalent to single negation.<ref>Heyting, 1966, page 100</ref>
 <jh>
 stmt (DoubleNegation () () (p → (¬ (¬ p))))
+stmt (TripleNegation () () ((¬ (¬ (¬ p))) ↔ (¬ p)))
+</jh>
+Double negation is of great importance partly due to a metatheorem which states that <code>¬ ¬ p</code> is provable in intuitionistic logic if and only if <code>p</code> is provable in classical logic.  Here are two theorems relating to double negation; the converse of <code>DoubleNegatedDisjunction</code> does not hold.<ref>Heyting, 1966, page 101</ref>
+<jh>
+stmt (DoubleNegatedConjunction () () (((¬ (¬ p)) ∧ (¬ (¬ q))) ↔ (¬ (¬ (p ∧ q)))))
+stmt (DoubleNegatedDisjunction () () (((¬ (¬ p)) ∨ (¬ (¬ q))) → (¬ (¬ (p ∨ q)))))
 </jh>
 Implication is [[w:reflexive relation|reflexive]]. Sometimes, this is called "Identity" or "Tautology".
 <jh>
@@ -84,7 +89,10 @@ If the [[w:consequent|consequent]] of an implication is an implication itself, i
 <jh>
 stmt (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))))
 </jh>
-[[w:Transposition_(logic)|Transposition]] does not hold. (TODO: are any of the variants true in one direction?)
+[[w:Transposition_(logic)|Transposition]] merely holds in one direction, not as a biconditional.<ref>Heyting, 1966, page 100</ref>
+<jh>
+stmt (TranspositionIntroduction () () ((p → q) → ((¬ q) → (¬ p))))
+</jh>
 
 === Disjunction and conjunction ===
 
@@ -116,7 +124,7 @@ stmt (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (
 
 === De Morgan's laws ===
 
-[[w:De Morgan's laws|De Morgan's laws]] do not hold, in general, but some of them are available, often as implications rather than biconditionals. (TODO: Are there others worth mentioning? Come up with a suitable naming scheme).
+[[w:De Morgan's laws|De Morgan's laws]] do not hold, in general, but some of them are available, often as implications rather than biconditionals.<ref>DeMorgan3 and DeMorgan4 can be found on page 100 of Heyting, 1966</ref>
 <jh>
 stmt (DeMorgan1 () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))))
 stmt (DeMorgan2 () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
@@ -130,9 +138,10 @@ The following importation/exportation principle applies as in classical logic:
 <jh>
 stmt (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)))
 </jh>
-[[w:Modus ponens|Modus ponens]] holds but of course [[w:modus tollens|modus tollens]] does not.
+[[w:Modus ponens|Modus ponens]] holds and the ability to introduce transposition also gives us [[w:modus tollens|modus tollens]].
 <jh>
 stmt (ModusPonens () () ((p ∧ (p → q)) → q))
+stmt (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)))
 </jh>
 Introduction principle for disjunction:
 <jh>
@@ -255,9 +264,12 @@ For the moment, we have just one rule. By the time this file is fleshed out, we'
 stmt (applyModusPonens () (p (p → q)) q)
 </jh>
 
-== References ==
+== Footnotes ==
 
 <references />
+
+== Cited works ==
+* Heyting, A. (1966), ''Intuitionism: An introduction'', second edition, North-Holland publishing company, Amsterdam
 
 [[Category:Subsystems of classical logic|!]]
 
