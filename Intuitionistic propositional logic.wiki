@@ -653,6 +653,29 @@ thm (ModusPonens () () ((p ∧ (p → q)) → q) (
 
 == Negation ==
 
+=== Transposition ===
+Although intuitionistic logic does not allow removing transposition, it does allow introducing it.
+<jh>
+thm (TranspositionIntroduction () () ((p → q) → ((¬ q) → (¬ p))) (
+</jh>
+The <code>ProofByContradiction</code> axiom is <code>(p → q) → ((p → ¬ q) → ¬ p)</code>.  That is, if <code>p</code> implies both <code>q</code> and its negation, <code>p</code> cannot be true. What we are trying to prove can be thought of as a weaker form of this, which is that if <code>p</code> implies <code>q</code>, and the negation of q holds (without worrying about <code>p</code>), then <code>p</code> cannot be true, or in symbols <code>(p → q) → (¬ q → ¬ p)</code>.
+<jh>
+        p q ProofByContradiction
+
+        (¬ q) p AntecedentIntroduction
+        (¬ p) introduceCommonConsequent
+        (p → q) introduceCommonAntecedent
+
+        applyModusPonens
+))
+
+thm (introduceTransposition () ((H (p → q))) ((¬ q) → (¬ p)) (
+        H
+        p q TranspositionIntroduction
+        applyModusPonens
+))
+</jh>
+
 === Double Negation ===
 Double negation introduction follows fairly directly from our first negation axiom.
 <jh>
