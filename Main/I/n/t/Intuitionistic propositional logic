@@ -718,6 +718,20 @@ The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an 
 ))
 </jh>
 
+=== DeMorgan's laws ===
+
+<jh>
+thm (DeMorganPDPForward () () ((¬ (p ∨ q)) → ((¬ p) ∧ (¬ q))) (
+        p q DisjunctionRightIntroduction
+        introduceTransposition
+
+        q p DisjunctionLeftIntroduction
+        introduceTransposition
+
+        composeConjunction
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
