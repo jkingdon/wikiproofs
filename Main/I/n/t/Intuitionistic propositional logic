@@ -700,6 +700,24 @@ Now we assemble the result.
 ))
 </jh>
 
+=== Triple negation ===
+In intuitionistic logic, <code>¬ ¬ p</code> is not equivalent to <code>p</code> itself. Triple negation, however, is equivalent to single negation, so one merely needs to worry about formulas without negation, with single negation, or with double negation, not greater amounts of negation.
+<jh>
+thm (TripleNegation () () ((¬ (¬ (¬ p))) ↔ (¬ p)) (
+</jh>
+We prove the forward direction by taking <code>p → ¬ ¬ p</code> and transposing it.
+<jh>
+        p DoubleNegation
+        introduceTransposition
+</jh>
+The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an instance of the <code>DoubleNegation</code> theorem.
+<jh>
+        (¬ p) DoubleNegation
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
