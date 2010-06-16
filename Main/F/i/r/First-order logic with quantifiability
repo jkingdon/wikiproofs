@@ -454,6 +454,32 @@ thm (VariableToObject ((x s) (x φs))
 ))
 </jh>
 
+=== Object version of VariableSubstitution axiom ===
+The <code>VariableSubstitution</code> axiom is stated in terms of substitution of one variable for another. The analogue in which an object is substituted for a variable also holds.
+<jh>
+thm (ObjectSubstitution ((x s) (x y) (φ y) (s y)) () 
+  (((value x) = s) → (φ → (∀ x (((value x) = s) → φ)))) (
+</jh>
+The general idea of the proof is to "substitute" <code>s</code> for <code>y</code> using a formula of the form <code>y = s → (''a formula with y in it'' ↔ ''much the same formula, but with s'')</code>.
+</jh>
+Now we can start building our substitution, <code>y = s → ((x = y → (φ → ∀ x (x = y → φ))) ↔ (x = s → (φ → ∀ x (x = s → φ))))</code>
+<jh>
+        (value y) s (value x) EqualityBuilderLL
+
+        (value y) s (value x) EqualityBuilderLL
+        φ buildCommonConsequentInConsequent
+        x buildForAllInConsequent
+        φ buildCommonAntecedentInConsequent
+
+        buildImplicationInConsequent
+</jh>
+Now we apply <code>VariableToObject</code> to convert the axiom to our desired result.
+<jh>
+        x y φ VariableSubstitution
+        VariableToObject
+))
+</jh>
+
 == Substitution and ∃ ==
 We've already seen that <code>∃ x (x = s ∧ φ)</code> is closely related to substitution.  Here we show that it is equivalent to <code>[ s / x ] φ</code>, as long as <code>x</code> does not appear in <code>s</code>.
 <jh>
