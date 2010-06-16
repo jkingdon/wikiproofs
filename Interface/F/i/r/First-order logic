@@ -289,6 +289,8 @@ stmt (addForAllToConsequent ((x φ))
 <jh>
 stmt (equs3 () () 
   ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))))
+stmt (VariableSubstitution ((x y)) () 
+  (((value x) = (value y)) → (φ → (∀ x (((value x) = (value y)) → φ)))) )
 </jh>
 
 == Propositional logic ==
