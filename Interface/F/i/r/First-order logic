@@ -297,11 +297,6 @@ stmt (VariableSubstitution ((x y)) ()
 These surely belong elsewhere, but are here for the moment.
 
 <jh>
-stmt (applyNestedModusPonens () 
-  ((φ → (ψ → χ))
-   ψ)
-  (φ → χ))
-stmt (applyComm () ((φ → (ψ → χ))) (ψ → (φ → χ)))
 stmt (joinConsequents ()
   ((φ → ψ) (φ → χ))
   (φ → (¬ (ψ → (¬ χ)))))
