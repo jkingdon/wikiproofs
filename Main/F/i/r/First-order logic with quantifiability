@@ -424,6 +424,36 @@ thm (ImplicitThereExists ((x ψ)) ((HEQ (((value x) = s) → (φ ↔ ψ))))
 ))
 </jh>
 
+=== Implicit substitution of an object for a variable ===
+Suppose that we have a formula <code>φx</code> and a formula <code>φs</code> which is much the same, but with <code>s</code> in place of <code>x</code>.  Then if <code>φx</code> is a theorem, we can conclude <code>φs</code>.
+
+Before we state this more formally, we prove a lemma.
+
+<jh>
+thm (VariableToObjectLemma ((x s) (x φ))
+  ((H (((value x) = s) → φ)))
+  φ (
+        x s Quantifiability
+        H
+        x addThereExistsToAntecedent
+        applyModusPonens
+))
+</jh>
+
+Our main result can be restated as that <code>φx</code> and <code>x = s → (φx ↔ φs)</code> enable us to conclude <code>φs</code>.
+
+<jh>
+var (formula φx φs)
+thm (VariableToObject ((x s) (x φs))
+  ((HSUB (((value x) = s) → (φx ↔ φs)))
+   (Hφx φx)
+  )
+  φs (
+        Hφx HSUB detachImplicationBiconditional
+        VariableToObjectLemma
+))
+</jh>
+
 == Substitution and ∃ ==
 We've already seen that <code>∃ x (x = s ∧ φ)</code> is closely related to substitution.  Here we show that it is equivalent to <code>[ s / x ] φ</code>, as long as <code>x</code> does not appear in <code>s</code>.
 <jh>
