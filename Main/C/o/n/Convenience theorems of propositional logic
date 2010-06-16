@@ -62,7 +62,7 @@ thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
 ))
 
 thm (detachImplicationImplication () 
-  ((HIMP (antecedent → (p → q))) (H p))
+  ((H p) (HIMP (antecedent → (p → q))))
   (antecedent → q) (
         H
         HIMP
