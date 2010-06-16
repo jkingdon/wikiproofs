@@ -16,9 +16,9 @@ We first import [[Interface:Principia Mathematica propositional logic theorems]]
 import (PRINCIPIA Interface:Principia_Mathematica_propositional_logic_theorems () ())
 </jh>
 
-As usual, <code>p</code>, <code>q</code>, and <code>r</code> are formulas:
+As usual, <code>p</code>, <code>q</code>, and <code>r</code> are formulas. We also define some longer names which will make the formulas with a lot of variables more readable.
 <jh>
-var (formula p q r)
+var (formula p q r antecedent common)
 </jh>
 
 == Detachment ==
@@ -50,6 +50,26 @@ thm (detach2of2 () ((H q) (HIMP ((p ∧ q) → r))) (p → r) (
 Here the "implication" is really a nesting of implications and/or biconditionals, and we detach one of the formulas from somewhere inside the nested formulas.
 
 <jh>
+thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
+        H
+        import
+
+        q p ConjunctionCommutativity eliminateBiconditionalReverse
+        r addCommonConsequent
+
+        applyModusPonens
+        export
+))
+
+thm (detachImplicationImplication () 
+  ((HIMP (antecedent → (p → q))) (H p))
+  (antecedent → q) (
+        H
+        HIMP
+        applyComm
+        applyModusPonens
+))
+
 thm (detachImplicationBiconditional () 
   ((H q) 
    (HIMP (p → (q ↔ r))))
@@ -110,7 +130,6 @@ thm (buildConjunctionLL () ((H (p ↔ q))) ((r ∧ p) ↔ (r ∧ q)) (
 Often we work with formulas which all have an antecedent in common, and in which all our building happens in the consequent. This is particularly helpful when dealing with substitution as it is handled in [[Interface:First-order logic with quantifiability]].
 
 <jh>
-var (formula antecedent common)
 thm (buildConjunctionRRInConsequent ()
   ((H (antecedent → (p ↔ q))))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))) (
