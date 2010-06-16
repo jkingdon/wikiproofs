@@ -323,8 +323,7 @@ and reassemble our result.
 <jh>
         (∀ x (((value x) = s) → φ)) (∀ x (((value x) = s) → (∀ x ψ))) ψ BiconditionalTransitivity
         export
-        applyComm
-        applyModusPonens
+        detachImplicationImplication
 
         applySyllogism
 ))
