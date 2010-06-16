@@ -415,17 +415,28 @@ stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
 
 === Additional builders ===
 <jh>
-var (formula antecedent common)
+var (formula antecedent common p0 q0 p1 q1)
 
 stmt (buildConjunctionLL () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
 stmt (buildConjunctionRRInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))))
+stmt (buildCommonAntecedentInConsequent ()
+  ((antecedent → (p ↔ q)))
+  (antecedent → ((common → p) ↔ (common → q))))
+stmt (buildCommonConsequentInConsequent ()
+  ((antecedent → (p ↔ q)))
+  (antecedent → ((p → common) ↔ (q → common))))
+stmt (buildImplicationInConsequent ()
+  ((antecedent → (p0 ↔ q0))
+   (antecedent → (p1 ↔ q1)))
+  (antecedent → ((p0 → p1) ↔ (q0 → q1))))
 </jh>
 
 === Detachment ===
 These are analogues to modus ponens, but where some other portion of the formula, other than a single antecedent, is detached.
 <jh>
+stmt (detach1of2 () (p ((p ∧ q) → r)) (q → r))
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
 stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
 </jh>
