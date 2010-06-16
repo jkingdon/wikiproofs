@@ -284,9 +284,9 @@ Starting with <code>x = s → (φ ↔ ψ)</code>, we first add <code>∀x</code>
         HFREE
         ForAllAddRemove swapBiconditional
 
-        φ ψ (∀ x ψ) BiconditionalTransitivity export applyComm
+        φ ψ (∀ x ψ) BiconditionalTransitivity export
 
-        applyModusPonens
+        detachImplicationImplication
 
         ((value x) = s) addCommonAntecedent
 </jh>
