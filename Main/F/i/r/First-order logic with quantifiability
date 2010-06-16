@@ -211,12 +211,12 @@ First is a consequence of the <code>Quantifiability</code> axiom:<ref>like [http
 
 <jh>
 thm (ax9oc () () ((∀ x (((value x) = s) → (∀ x φ))) → φ) (
+        x s Quantifiability
         x ((value x) = s) (∀ x φ) ForAllImplicationThereExists
 </jh>
 This gives us <code>∀x(x = s → ∀xφ) → (∃x x = s → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = s</code> is just the <code>Quantifiability</code> axiom, and can therefore be removed:
 <jh>
-        x s Quantifiability
-        applyNestedModusPonens
+        detachImplicationImplication
 </jh>
 Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
 <jh>
