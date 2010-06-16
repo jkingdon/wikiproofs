@@ -80,6 +80,9 @@ Some of these builders rely on theorems we haven't presented yet, but they are s
 stmt (buildThereExistsInConsequent ((x φ)) 
   ((φ → (ψ ↔ χ)))
   (φ → ((∃ x ψ) ↔ (∃ x χ))))
+stmt (buildForAllInConsequent ((x φ))
+  ((φ → (ψ ↔ χ)))
+  (φ → ((∀ x ψ) ↔ (∀ x χ))))
 </jh>
 
 == Order ==
