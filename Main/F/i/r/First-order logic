@@ -1583,6 +1583,16 @@ thm (buildThereExistsInConsequent ((x φ))
         x ψ χ ForAllBiconditionalThereExists
         applySyllogism
 ))
+
+thm (buildForAllInConsequent ((x φ))
+  ((H (φ → (ψ ↔ χ))))
+  (φ → ((∀ x ψ) ↔ (∀ x χ))) (
+        H
+        x addForAllToConsequent
+
+        x ψ χ ForAllBiconditional
+        applySyllogism
+))
 </jh>
 
 == Export ==
