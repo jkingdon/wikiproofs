@@ -439,6 +439,7 @@ These are analogues to modus ponens, but where some other portion of the formula
 stmt (detach1of2 () (p ((p ∧ q) → r)) (q → r))
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
 stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
+stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent → q))
 </jh>
 
 === Transformation ===
