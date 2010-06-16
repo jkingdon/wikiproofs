@@ -424,9 +424,10 @@ stmt (buildConjunctionRRInConsequent ()
 </jh>
 
 === Detachment ===
-These are analogues to modus ponens, but where only a portion of the antecedent is detached.
+These are analogues to modus ponens, but where some other portion of the formula, other than a single antecedent, is detached.
 <jh>
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
+stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
 </jh>
 
 === Transformation ===
