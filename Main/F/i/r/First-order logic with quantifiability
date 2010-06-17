@@ -479,6 +479,30 @@ Now we apply <code>VariableToObject</code> to convert the axiom to our desired r
 ))
 </jh>
 
+=== Two ways to express substitution when variables are distinct ===
+In previous sections, we have seen that <code>∃ x (x = s ∧ φ)</code> and <code>∀ x (x = s → φ)</code> behave similarly.  In fact, as long as <code>x</code> and <code>s</code> are distinct, they are completely equivalent.<ref>[http://us.metamath.org/mpeuni/sb56.html sb56] in metamath's set.mm, accessed June 17, 2010, except that <code>s</code> is an <code>object</code> rather than a <code>variable</code></ref>
+<jh>
+thm (ThereExistsForAll ((x s)) () ((∃ x (((value x) = s) ∧ φ)) ↔ (∀ x (((value x) = s) → φ))) (
+</jh>
+First we stick something on the proof stack for later use:
+<jh>
+        x (((value x) = s) → φ) BoundForAllNotFree
+</jh>
+The proof consists of first proving <code>x = s → (φ ↔ ∀ x (x = s → φ))</code>,
+<jh>
+        x s φ ObjectSubstitution
+
+        x (((value x) = s) → φ) Specialization
+        applyComm
+
+        introduceBiconditionalFromImplicationsInConsequent
+</jh>
+and then turning this implicit substitution into its ∃ form.
+<jh>
+        ImplicitThereExistsNotFree
+))
+</jh>
+
 == Substitution and ∃ ==
 We've already seen that <code>∃ x (x = s ∧ φ)</code> is closely related to substitution.  Here we show that it is equivalent to <code>[ s / x ] φ</code>, as long as <code>x</code> does not appear in <code>s</code>.
 <jh>
