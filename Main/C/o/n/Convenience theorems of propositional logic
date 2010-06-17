@@ -168,6 +168,23 @@ thm (buildImplicationInConsequent ()
 ))
 </jh>
 
+== Additional theorems in the consequent ==
+The various *InConsequent theorems are generally easy consequences of <code>composeConjunction</code>.
+<jh>
+thm (introduceBiconditionalFromImplicationsInConsequent ()
+  ((HFORWARD (antecedent → (p → q)))
+   (HREVERSE (antecedent → (q → p))))
+  (antecedent → (p ↔ q)) (
+        HFORWARD
+        HREVERSE
+        composeConjunction
+
+        p q BiconditionalImplication eliminateBiconditionalForward
+
+        applySyllogism
+))
+</jh>
+
 == Done ==
 We now export [[Interface:Classical propositional calculus]].
 <jh>
