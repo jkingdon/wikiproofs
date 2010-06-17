@@ -13,7 +13,6 @@ This is a list of propositional logic theorems which are proved outside [[:Categ
 
 From [[First-order logic]]:
 
-* rotate3Antecedents: like applyComm but when we need to move the first antecedent two steps in, not just one
 * Comm (perhaps a wise policy not to have propositional logic rules which don't have corresponding theorems)
 * principia*2.21
 * joinConsequents
