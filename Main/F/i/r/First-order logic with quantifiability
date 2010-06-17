@@ -401,7 +401,7 @@ and combine this with the first part of the proof.
 
 The rule form is:
 <jh>
-thm (SubstImplicitThereExists () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
+thm (ImplicitThereExistsNotFree () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
   ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
         HEQ
         x generalize
@@ -419,7 +419,7 @@ thm (ImplicitThereExists ((x ψ)) ((HEQ (((value x) = s) → (φ ↔ ψ))))
   ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
         x ψ DistinctNotFree
         HEQ
-        SubstImplicitThereExists
+        ImplicitThereExistsNotFree
 ))
 </jh>
 
