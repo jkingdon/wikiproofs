@@ -433,6 +433,11 @@ stmt (buildImplicationInConsequent ()
   (antecedent → ((p0 → p1) ↔ (q0 → q1))))
 </jh>
 
+=== Various theorems in the consequent ===
+<jh>
+stmt (introduceBiconditionalFromImplicationsInConsequent () ((antecedent → (p → q)) (antecedent → (q → p))) (antecedent → (p ↔ q)))
+</jh>
+
 === Detachment ===
 These are analogues to modus ponens, but where some other portion of the formula, other than a single antecedent, is detached.
 <jh>
