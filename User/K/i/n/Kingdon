@@ -33,10 +33,6 @@ We need sb8e for LessThan.  Here's what it depends on in metamath. In most cases
 :*[http://us.metamath.org/mpeuni/hbs1f.html hbs1f]
 :*[http://us.metamath.org/mpeuni/hbsb2a.html hbsb2a]
 
-intro for sb56:
---- Two ways to express substitution when variables are distinct ---
-In the previous two sections, we have seen that <code>∃x(x = s ∧ φ)</code> and <code>∀x(x = s → φ)</code> behave similarly.  In fact, as long as <code>x</code> and <code>s</code> are distinct, they are completely equivalent.
-
 === More moving formulas where quantified variable is not free ===
 *These two similar: [http://us.metamath.org/mpeuni/19.28.html 19.28] [http://us.metamath.org/mpeuni/19.45.html 19.45]
 
