@@ -46,30 +46,6 @@ thm (distributeForAllImplication () ((H (∀ x (φ → ψ)))) ((∀ x φ) → (�
 ))
 </jh>
 
-== A bit of propositional logic ==
-
-<jh>
-thm (applyComm () ((H (φ → (ψ → χ)))) (ψ → (φ → χ)) (
-        H
-        import
-
-        ψ φ ConjunctionCommutativity eliminateBiconditionalReverse
-        χ addCommonConsequent
-
-        applyModusPonens
-        export
-))
-
-thm (applyNestedModusPonens () 
-  ((HIMP (φ → (ψ → χ))) (H ψ))
-  (φ → χ) (
-        H
-        HIMP
-        applyComm
-        applyModusPonens
-))
-</jh>
-
 == Equality ==
 
 The basic facts about equality are that it is reflexive, symmetric and transitive. Since we have axioms for those properties, we just add a few rules:
@@ -1442,7 +1418,7 @@ The first line we'll use at the very end.
 
         applyComm
 </jh>
-We now have <code>ψ → (x = y → φ)</code>.  The antecedent of that is almost <code>(∀ x ((x = y) → φ))</code>, which is what we'll need for <code>sb2</code>.
+We now have <code>ψ → (x = y → φ)</code>.  The consequent of that is almost <code>(∀ x ((x = y) → φ))</code>, which is what we'll need for <code>sb2</code>.
 <jh>
 
         x generalize
