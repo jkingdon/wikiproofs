@@ -442,6 +442,12 @@ stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
 stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent → q))
 </jh>
 
+=== Commutation of antecedents ===
+This result is a consequence of import/export and conjunction commutativity.
+<jh>
+stmt (applyComm () ((p → (q → r))) (q → (p → r)))
+</jh>
+
 === Transformation ===
 By "transforming", we mean applying a biconditional to replace part of a formula.
 <jh>
