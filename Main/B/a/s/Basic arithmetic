@@ -457,36 +457,6 @@ To prove <code>(Sk + b) + c = Sk + (b + c)</code> from <code>(k + b) + c = k + (
 == Addition cancellation ==
 The converse of <code>AdditionBuilderRR</code>, <code>a + c = b + c → a = b</code>, also holds.
 
-Before proving it, we fill a few holes in our propositional logic builders (one of which we'll need here):
-<jh>
-var (formula p q r)
-thm (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ r) ↔ (q ↔ r))) (
-</jh>
-We first derive <code>(p ↔ q) → ((p ↔ q) ∧ (r ↔ r))</code>:
-<jh>
-        r BiconditionalReflexivity
-        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
-        applyModusPonens
-</jh>
-Then we just need to apply <code>BiconditionalFunction</code>:
-<jh>
-        p q r r BiconditionalFunction
-        applySyllogism
-))
-
-</jh>
-This one is just the same, but based on <code>ImplicationFunction</code>:
-<jh>
-thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → r) ↔ (q → r))) (
-        r BiconditionalReflexivity
-        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
-        applyModusPonens
-
-        p q r r ImplicationFunction
-        applySyllogism
-))
-</jh>
-
 The substitution for our addition cancellation induction is worth breaking out into a lemma:
 <jh>
 var (object sub)
