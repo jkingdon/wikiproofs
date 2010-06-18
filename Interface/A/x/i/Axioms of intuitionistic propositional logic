@@ -40,7 +40,14 @@ The one rule is [[w:modus ponens|modus ponens]]:
 stmt (applyModusPonens () (p (p → q)) q)
 </jh>
 
-4orfL9  <a href="http://duectmbvbptp.com/">duectmbvbptp</a>, [url=http://pczfaybblgnl.com/]pczfaybblgnl[/url], [link=http://scbqrdemyqyw.com/]scbqrdemyqyw[/link], http://livyhnmgueat.com/
+== Implication ==
+
+The first two of the [[Interface:Standard axioms of propositional calculus]] serve as our axioms governing implication:
+
+<jh>
+stmt (Simp () () (p → (q → p)))
+stmt (Frege () () ((p → (q → r)) → ((p → q) → (p → r))))
+</jh>
 
 == Disjunction ==
 
