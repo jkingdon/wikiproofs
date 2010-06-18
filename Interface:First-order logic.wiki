@@ -80,6 +80,9 @@ Some of these builders rely on theorems we haven't presented yet, but they are s
 stmt (buildThereExistsInConsequent ((x φ)) 
   ((φ → (ψ ↔ χ)))
   (φ → ((∃ x ψ) ↔ (∃ x χ))))
+stmt (buildForAllInConsequent ((x φ))
+  ((φ → (ψ ↔ χ)))
+  (φ → ((∀ x ψ) ↔ (∀ x χ))))
 </jh>
 
 == Order ==
@@ -286,17 +289,14 @@ stmt (addForAllToConsequent ((x φ))
 <jh>
 stmt (equs3 () () 
   ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))))
+stmt (VariableSubstitution ((x y)) () 
+  (((value x) = (value y)) → (φ → (∀ x (((value x) = (value y)) → φ)))) )
 </jh>
 
 == Propositional logic ==
 These surely belong elsewhere, but are here for the moment.
 
 <jh>
-stmt (applyNestedModusPonens () 
-  ((φ → (ψ → χ))
-   ψ)
-  (φ → χ))
-stmt (applyComm () ((φ → (ψ → χ))) (ψ → (φ → χ)))
 stmt (joinConsequents ()
   ((φ → ψ) (φ → χ))
   (φ → (¬ (ψ → (¬ χ)))))

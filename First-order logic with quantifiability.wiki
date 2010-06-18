@@ -211,12 +211,12 @@ First is a consequence of the <code>Quantifiability</code> axiom:<ref>like [http
 
 <jh>
 thm (ax9oc () () ((∀ x (((value x) = s) → (∀ x φ))) → φ) (
+        x s Quantifiability
         x ((value x) = s) (∀ x φ) ForAllImplicationThereExists
 </jh>
 This gives us <code>∀x(x = s → ∀xφ) → (∃x x = s → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = s</code> is just the <code>Quantifiability</code> axiom, and can therefore be removed:
 <jh>
-        x s Quantifiability
-        applyNestedModusPonens
+        detachImplicationImplication
 </jh>
 Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
 <jh>
@@ -284,9 +284,9 @@ Starting with <code>x = s → (φ ↔ ψ)</code>, we first add <code>∀x</code>
         HFREE
         ForAllAddRemove swapBiconditional
 
-        φ ψ (∀ x ψ) BiconditionalTransitivity export applyComm
+        φ ψ (∀ x ψ) BiconditionalTransitivity export
 
-        applyModusPonens
+        detachImplicationImplication
 
         ((value x) = s) addCommonAntecedent
 </jh>
@@ -323,8 +323,7 @@ and reassemble our result.
 <jh>
         (∀ x (((value x) = s) → φ)) (∀ x (((value x) = s) → (∀ x ψ))) ψ BiconditionalTransitivity
         export
-        applyComm
-        applyModusPonens
+        detachImplicationImplication
 
         applySyllogism
 ))
@@ -402,7 +401,7 @@ and combine this with the first part of the proof.
 
 The rule form is:
 <jh>
-thm (SubstImplicitThereExists () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
+thm (ImplicitThereExistsNotFree () ((HFREE (x is-not-free-in ψ)) (HEQ (((value x) = s) → (φ ↔ ψ))))
   ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
         HEQ
         x generalize
@@ -420,7 +419,87 @@ thm (ImplicitThereExists ((x ψ)) ((HEQ (((value x) = s) → (φ ↔ ψ))))
   ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
         x ψ DistinctNotFree
         HEQ
-        SubstImplicitThereExists
+        ImplicitThereExistsNotFree
+))
+</jh>
+
+=== Implicit substitution of an object for a variable ===
+Suppose that we have a formula <code>φx</code> and a formula <code>φs</code> which is much the same, but with <code>s</code> in place of <code>x</code>.  Then if <code>φx</code> is a theorem, we can conclude <code>φs</code>.
+
+Before we state this more formally, we prove a lemma.
+
+<jh>
+thm (VariableToObjectLemma ((x s) (x φ))
+  ((H (((value x) = s) → φ)))
+  φ (
+        x s Quantifiability
+        H
+        x addThereExistsToAntecedent
+        applyModusPonens
+))
+</jh>
+
+Our main result can be restated as that <code>φx</code> and <code>x = s → (φx ↔ φs)</code> enable us to conclude <code>φs</code>.
+
+<jh>
+var (formula φx φs)
+thm (VariableToObject ((x s) (x φs))
+  ((HSUB (((value x) = s) → (φx ↔ φs)))
+   (Hφx φx)
+  )
+  φs (
+        Hφx HSUB detachImplicationBiconditional
+        VariableToObjectLemma
+))
+</jh>
+
+=== Object version of VariableSubstitution axiom ===
+The <code>VariableSubstitution</code> axiom is stated in terms of substitution of one variable for another. The analogue in which an object is substituted for a variable also holds.
+<jh>
+thm (ObjectSubstitution ((x s) (x y) (φ y) (s y)) () 
+  (((value x) = s) → (φ → (∀ x (((value x) = s) → φ)))) (
+</jh>
+The general idea of the proof is to "substitute" <code>s</code> for <code>y</code> using a formula of the form <code>y = s → (''a formula with y in it'' ↔ ''much the same formula, but with s'')</code>.
+</jh>
+Now we can start building our substitution, <code>y = s → ((x = y → (φ → ∀ x (x = y → φ))) ↔ (x = s → (φ → ∀ x (x = s → φ))))</code>
+<jh>
+        (value y) s (value x) EqualityBuilderLL
+
+        (value y) s (value x) EqualityBuilderLL
+        φ buildCommonConsequentInConsequent
+        x buildForAllInConsequent
+        φ buildCommonAntecedentInConsequent
+
+        buildImplicationInConsequent
+</jh>
+Now we apply <code>VariableToObject</code> to convert the axiom to our desired result.
+<jh>
+        x y φ VariableSubstitution
+        VariableToObject
+))
+</jh>
+
+=== Two ways to express substitution when variables are distinct ===
+In previous sections, we have seen that <code>∃ x (x = s ∧ φ)</code> and <code>∀ x (x = s → φ)</code> behave similarly.  In fact, as long as <code>x</code> and <code>s</code> are distinct, they are completely equivalent.<ref>[http://us.metamath.org/mpeuni/sb56.html sb56] in metamath's set.mm, accessed June 17, 2010, except that <code>s</code> is an <code>object</code> rather than a <code>variable</code></ref>
+<jh>
+thm (ThereExistsForAll ((x s)) () ((∃ x (((value x) = s) ∧ φ)) ↔ (∀ x (((value x) = s) → φ))) (
+</jh>
+First we stick something on the proof stack for later use:
+<jh>
+        x (((value x) = s) → φ) BoundForAllNotFree
+</jh>
+The proof consists of first proving <code>x = s → (φ ↔ ∀ x (x = s → φ))</code>,
+<jh>
+        x s φ ObjectSubstitution
+
+        x (((value x) = s) → φ) Specialization
+        applyComm
+
+        introduceBiconditionalFromImplicationsInConsequent
+</jh>
+and then turning this implicit substitution into its ∃ form.
+<jh>
+        ImplicitThereExistsNotFree
 ))
 </jh>
 

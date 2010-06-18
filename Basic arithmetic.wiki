@@ -457,36 +457,6 @@ To prove <code>(Sk + b) + c = Sk + (b + c)</code> from <code>(k + b) + c = k + (
 == Addition cancellation ==
 The converse of <code>AdditionBuilderRR</code>, <code>a + c = b + c → a = b</code>, also holds.
 
-Before proving it, we fill a few holes in our propositional logic builders (one of which we'll need here):
-<jh>
-var (formula p q r)
-thm (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ r) ↔ (q ↔ r))) (
-</jh>
-We first derive <code>(p ↔ q) → ((p ↔ q) ∧ (r ↔ r))</code>:
-<jh>
-        r BiconditionalReflexivity
-        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
-        applyModusPonens
-</jh>
-Then we just need to apply <code>BiconditionalFunction</code>:
-<jh>
-        p q r r BiconditionalFunction
-        applySyllogism
-))
-
-</jh>
-This one is just the same, but based on <code>ImplicationFunction</code>:
-<jh>
-thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → r) ↔ (q → r))) (
-        r BiconditionalReflexivity
-        (r ↔ r) (p ↔ q) ConjunctionLeftIntroduction
-        applyModusPonens
-
-        p q r r ImplicationFunction
-        applySyllogism
-))
-</jh>
-
 The substitution for our addition cancellation induction is worth breaking out into a lemma:
 <jh>
 var (object sub)
@@ -1094,44 +1064,6 @@ We define an order on natural numbers:
 def ((≤ a b) (∃ n ((a + (value n)) = b)))
 </jh>
 
-===Definition as an equivalence===
-
-The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side.
-
-<jh>
-#stmt (sb8e ((y φ)) () ((∃ y (subst (value y) x φ)) ↔ (∃ x φ)))
-
-thm (LessThan ((m n) (a m) (a n) (b m) (b n)) () ((a ≤ b) ↔ (∃ n ((a + (value n)) = b))) (
-</jh>
-To restate our "subtle difference" in terms of explaining what we need for our proof, the quantified variable on the left side of the biconditional (which results from the expansion of <code>≤</code>) is different from the quantified variable on the right hand side (<code>n</code>). So we need to switch variables.
-
-We start with <code>m = n → (a + m = b ↔ a + n = b)</code>,
-<jh>
-        (value m) (value n) a AdditionBuilderLL
-        b buildEqualityRR
-</jh>
-and turn it into <code>[n / m] a + m = b ↔ a + n = b</code>.
-<jh>
-        makeSubstExplicit
-</jh>
-We can now add <code>∃ n</code> to both sides,
-<jh>
-        n buildThereExists
-</jh>
-and apply <code>sb8e</code> to turn the left side into <code>∃ m a + m = b</code>.
-<jh>
-        swapBiconditional
-        n m ((a + (value m)) = b) sb8e
-        applyBiconditionalTransitivity
-        swapBiconditional
-</jh>
-We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is enough since JHilbert is able to recognize that the left side is the definition of <code>a ≤ b</code>.
-<jh>
-))
-</jh>
-
-===Zero is the smallest natural number===
-
 Every number is greater than or equal to zero:
 <jh>
 thm (ZeroSmallest ((n a)) () ((0) ≤ a) (
@@ -1257,24 +1189,10 @@ Then we pull much the same trick with <code>y</code> (but it is easier as there 
 ))
 
 </jh>
-We can't quite prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code> until we come to grips with the three different dummy variables in that statement. The following theorems are temporary, and are part of an effort to come up with a solution. Following them is the commented out proof of transitivity, which is thought to be correct except for this detail.
+We can't quite prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code> until we come to grips with the three different dummy variables in that statement. We should be able to fix that once we have proved LessEqual. Following the commented out LessEqual is the commented out proof of transitivity, which is thought to be correct except for this detail.
 <jh>
-thm (debug-0 () () ((a ≤ c) → (a ≤ c)) (
-        (∃ vac ((a + (value vac)) = c)) ImplicationReflexivity
-))
-
-thm (debug-0.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
-        ((∃ vac ((a + (value vac)) = c)) ∧ (∃ vac ((a + (value vac)) = c))) ImplicationReflexivity
-))
-
-# blows up: "Consequent of theorem does not match proof result"
-#thm (debug-0.1.1 () () (((a ≤ c) ∧ (a ≤ c)) → ((a ≤ c) ∧ (a ≤ c))) (
-#        ((∃ vac ((a + (value vac)) = c)) ∧ (∃ n ((a + (value n)) = c))) ImplicationReflexivity
-#))
-
-# This is the crux of our problem with LessEqualTransitivity:
-#thm (debug-1 () () (((a ≤ b) ∧ (b ≤ c)) → ((a ≤ b) ∧ (b ≤ c))) (
-#        ((∃ vab ((a + (value vab)) = b)) ∧ (∃ vbc ((b + (value vbc)) = c))) ImplicationReflexivity
+# Harder than it might look, as the quantified variable on the left side is different than the one on the right side
+#thm (LessEqual () () ((≤ a b) ↔ (∃ n ((a + (value n)) = b))) (
 #))
 
 #thm (LessEqualTransitivity ((vab vbc)) () 

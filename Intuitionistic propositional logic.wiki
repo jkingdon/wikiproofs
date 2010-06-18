@@ -663,8 +663,8 @@ The <code>ProofByContradiction</code> axiom is <code>(p → q) → ((p → ¬ q)
         p q ProofByContradiction
 
         (¬ q) p AntecedentIntroduction
-        (¬ p) introduceCommonConsequent
-        (p → q) introduceCommonAntecedent
+        (¬ p) addCommonConsequent
+        (p → q) addCommonAntecedent
 
         applyModusPonens
 ))

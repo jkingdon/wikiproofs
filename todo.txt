@@ -11,14 +11,11 @@ Items which may be doable without a network connection:
   - biconditional (should mostly be copy-paste from Principia, I think)
 * convenience theorems of propositional logic
   - buildDisjunctionLL in First-order logic
-  - Basic Arithmetic has at least a few
+  - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
   (I think it might enable omitting a bunch of strange little
   theorems).
 
 To do with network:
 
-* move BiconditionalBuilderRR, ImplicationBuilderRR from basic arithmetic and update scattered theorems
-* look at metamath proof of sb56 and see if we are ready to prove
-  sbc56.
 

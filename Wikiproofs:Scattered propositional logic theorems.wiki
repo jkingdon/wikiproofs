@@ -13,16 +13,10 @@ This is a list of propositional logic theorems which are proved outside [[:Categ
 
 From [[First-order logic]]:
 
-* applyComm and applyNestedModusPonens (the former might obviate the need for the latter)
-* rotate3Antecedents: like applyComm but when we need to move the first antecedent two steps in, not just one
 * Comm (perhaps a wise policy not to have propositional logic rules which don't have corresponding theorems)
 * principia*2.21
 * joinConsequents
-* anbi1d
 * ImplicationDistributionOverBiconditional, distributeImplicationOverBiconditional (probably really is a missing theorem; at least it is in Principia and is not easy to derive from what we have already)
-
-From [[Basic arithmetic]]:
-* BiconditionalBuilderRR, ImplicationBuilderRR: these are biconditionalized analogues to DisjunctionSummationRR, ConjunctionMultiplicationRR, etc. Not only do we use them here, I suspect a search for BiconditionalReflexivity would turn up more places where they could be helpful.
 
 [[Category:Wikiproofs]]
 
