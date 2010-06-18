@@ -124,6 +124,29 @@ thm (buildConjunctionLL () ((H (p ↔ q))) ((r ∧ p) ↔ (r ∧ q)) (
         H
         buildConjunction
 ))
+
+thm (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ common) ↔ (q ↔ common))) (
+</jh>
+We first derive <code>(p ↔ q) → ((p ↔ q) ∧ (common ↔ common))</code>:
+<jh>
+        common BiconditionalReflexivity
+        (common ↔ common) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+</jh>
+Then we just need to apply <code>BiconditionalFunction</code>:
+<jh>
+        p q common common BiconditionalFunction
+        applySyllogism
+))
+
+thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
+        common BiconditionalReflexivity
+        (common ↔ common) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        p q common common ImplicationFunction
+        applySyllogism
+))
 </jh>
 
 === Building in the consequent ===
