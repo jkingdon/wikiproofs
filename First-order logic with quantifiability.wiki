@@ -528,6 +528,46 @@ Now we just need to apply the definition of <code>subst</code> and we are done:
 ))
 </jh>
 
+== Substitution can be moved across connectives ==
+Substituting a formula consisting of a logical connective is equivalent to substituting each of the operands of that connective.
+
+=== Negation ===
+For negation, this is <code>[ s / x ] ¬ φ ↔ ¬ [ s / x ] φ</code>.<ref>[http://us.metamath.org/mpeuni/sbn.html sbn] in metamath's set.mm, accessed 2010, except that <code>s</code> is an <code>object</code> rather than a <code>variable</code></ref>
+
+The proof consists of just moving negation around (via the following lemma) and applying <code>ThereExistsForAll</code>.
+
+<jh>
+stmt (SubstNegationLemma () () 
+  ((∀ x (((value x) = s) → (¬ φ))) ↔ (¬ (∃ x (((value x) = s) ∧ φ)))) (
+        x s φ equs3
+        transposeBiconditionalWithNegatedRight
+))
+
+thm (SubstNegation ((y x) (y s)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+        y s x (¬ φ) Subst
+
+        y s (∃ x (((value x) = (value y)) ∧ (¬ φ))) ThereExistsForAll
+        applyBiconditionalTransitivity
+
+        x (value y) (¬ φ) ThereExistsForAll
+        ((value y) = s) buildImplicationAntecedent
+        y buildForAll
+        applyBiconditionalTransitivity
+
+        x (value y) φ SubstNegationLemma
+        ((value y) = s) buildImplicationAntecedent
+        y buildForAll
+        applyBiconditionalTransitivity
+
+        y s (∃ x (((value x) = (value y)) ∧ φ))
+        applyBiconditionalTransitivity
+
+        y s x φ Subst
+        addNegation
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Composition ==
 If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 12 Jun 2010. I don't know why the (x y) distinct variable constraint is missing from that version; the second invocation of sbc5 would seem to require it.</ref>
 <jh>

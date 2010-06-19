@@ -1,13 +1,15 @@
 Items which may be doable without a network connection:
 
-* prove sb8 (see User:Kingdon for a few notes)
-* think about sbn (probably waiting on sb56)
+* prove sb8 (see User:Kingdon for notes)
 * sb8e, once sb8/sbn done
 * definitions versus dummies (LessThan), once sb8e done
 
 * more intuitionistic logic
   - easy disjunction/conjunction theorems
   - get going on negation
+  - DoubleNegatedConjunction, DoubleNegatedDisjunction
+  - rest of DeMorgan
+  - NegationBuilder follows easily from TranspositionIntroduction
   - biconditional (should mostly be copy-paste from Principia, I think)
 * convenience theorems of propositional logic
   - buildDisjunctionLL in First-order logic
@@ -15,6 +17,18 @@ Items which may be doable without a network connection:
 * look at whether Raph's proof of ceqsex simplifies our development
   (I think it might enable omitting a bunch of strange little
   theorems).
+* naming convention for implication builders
+  a. addImplicationAntecedent (from addCommonAntecedent)
+     ImplicationConsequentAddition (from CommonConsequentAddition)
+     ImplicationConsequentBuilder (from ImplicationBuilderRR)
+     ImplicationConsequentBuilderInConsequent
+     buildImplicationAntecedent
+     buildImplication
+     buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
+  b. addImplicationLL
+     buildImplicationLL
+     buildImplication
+     buildImplicationRRInConsequent
 
 To do with network:
 
