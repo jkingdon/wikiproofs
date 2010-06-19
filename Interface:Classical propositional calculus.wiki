@@ -421,6 +421,8 @@ stmt (buildConjunctionLL () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
 stmt (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ common) ↔ (q ↔ common))))
 stmt (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))))
 
+stmt (buildImplicationAntecedent () ((p ↔ q)) ((common → p) ↔ (common → q)))
+
 stmt (buildConjunctionRRInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))))

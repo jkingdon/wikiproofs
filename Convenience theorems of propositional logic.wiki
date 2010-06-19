@@ -149,6 +149,15 @@ thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common
 ))
 </jh>
 
+For implications, we call the two sides the antecedent and consequent, rather than L and R (well, except for theorems which were named before this convention was establish and which noone has gotten around to renaming yet).
+<jh>
+thm (buildImplicationAntecedent () ((H (p ↔ q))) ((common → p) ↔ (common → q)) (
+        common BiconditionalReflexivity
+        H
+        buildImplication
+))
+</jh>
+
 === Building in the consequent ===
 Often we work with formulas which all have an antecedent in common, and in which all our building happens in the consequent. This is particularly helpful when dealing with substitution as it is handled in [[Interface:First-order logic with quantifiability]].
 
