@@ -24,7 +24,6 @@ We need sb8e for LessThan.  Here's what it depends on in metamath. In most cases
 === Worth proving? ===
 
 * Not sure whether these are the most salient subst theorems (perhaps better to see what we end up needing), but some interesting-looking ones are:
-:*[http://us.metamath.org/mpeuni/sbequ.html sbequ]
 :*[http://us.metamath.org/mpeuni/sbcom2.html sbcom2]
 :*[http://us.metamath.org/mpeuni/sbid2v.html sbid2v]
 :*[http://us.metamath.org/mpeuni/sbf.html sbf]
