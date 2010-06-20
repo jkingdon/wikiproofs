@@ -825,6 +825,38 @@ thm (DoubleNegatedDisjunction () () (((¬ (¬ p)) ∨ (¬ (¬ q))) → (¬ (¬ (
 ))
 </jh>
 
+The converse of <code>DoubleNegatedConjunctionReverse</code> we can prove via the following lemma which introduces double negation to all three formulas of a nested implication.
+<jh>
+thm (addDoubleNegationImplicationImplication () ((H (p → (q → r))))
+  ((¬ (¬ p)) → ((¬ (¬ q)) → (¬ (¬ r)))) (
+        H
+        q r TranspositionIntroduction
+        applySyllogism
+
+        applyComm
+        p (¬ q) TranspositionIntroduction
+        applySyllogism
+
+        applyComm
+        (¬ r) (¬ p) TranspositionIntroduction
+        applySyllogism
+
+        applyComm
+))
+
+thm (DoubleNegatedConjunctionForward () () (((¬ (¬ p)) ∧ (¬ (¬ q))) → (¬ (¬ (p ∧ q)))) (
+        p q ConjunctionRightIntroduction
+        addDoubleNegationImplicationImplication
+        import
+))
+
+thm (DoubleNegatedConjunction () () (((¬ (¬ p)) ∧ (¬ (¬ q))) ↔ (¬ (¬ (p ∧ q)))) (
+        p q DoubleNegatedConjunctionForward
+        p q DoubleNegatedConjunctionReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
