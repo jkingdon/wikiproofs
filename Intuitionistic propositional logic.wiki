@@ -718,8 +718,35 @@ The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an 
 ))
 </jh>
 
+=== Disjunctive syllogism ===
+[[w:Disjunctive syllogism|Disjunctive syllogism]]:
+<jh>
+thm (DisjunctiveSyllogismLemma () () ((p → q) → ((p ∨ q) → q)) (
+</jh>
+The key to the proof of this lemma is <code>(p → q) → ((q → q) → (p ∨ q → q))</code>, which holds by disjunction composition. Once we have that, we just need to remove the <code>q → q</code>.
+<jh>
+        q ImplicationReflexivity
+
+        p q q DisjunctionCompositionAxiom
+        applyComm
+
+        applyModusPonens
+))
+
+thm (DisjunctiveSyllogism () () (((¬ p) ∧ (p ∨ q)) → q) (
+        p q Explosion
+        applyComm
+
+        p q DisjunctiveSyllogismLemma
+        applySyllogism
+
+        import
+))
+</jh>
+
 === DeMorgan's laws ===
 
+The first two of DeMorgan's laws are straightforward:
 <jh>
 thm (DeMorganPDPForward () () ((¬ (p ∨ q)) → ((¬ p) ∧ (¬ q))) (
         p q DisjunctionRightIntroduction
@@ -729,6 +756,104 @@ thm (DeMorganPDPForward () () ((¬ (p ∨ q)) → ((¬ p) ∧ (¬ q))) (
         introduceTransposition
 
         composeConjunction
+))
+
+thm (DeMorganPCPReverse () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))) (
+        p q ConjunctionRightElimination
+        introduceTransposition
+
+        p q ConjunctionLeftElimination
+        introduceTransposition
+
+        composeDisjunction
+))
+</jh>
+
+To prove the converse of <code>DeMorganPDPForward</code>, we start with a lemma which is a rearrangement of <code>DisjunctiveSyllogism</code> plus transposition.
+<jh>
+thm (DeMorganPDPReverseLemma () () ((¬ p) → ((¬ q) → (¬ (p ∨ q)))) (
+        p q DisjunctiveSyllogism
+        export
+
+        (p ∨ q) q TranspositionIntroduction
+        applySyllogism
+))
+</jh>
+
+This lemma is, however, just an import away from the desired result.
+<jh>
+thm (DeMorganPDPReverse () () (((¬ p) ∧ (¬ q)) → (¬ (p ∨ q))) (
+        p q DeMorganPDPReverseLemma
+        import
+))
+</jh>
+
+Combining the forward and reverse directions we get <code>DeMorganPDPSwapped</code>:
+<jh>
+thm (DeMorganPDPSwapped () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))) (
+        p q DeMorganPDPReverse
+        p q DeMorganPDPForward
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+=== Double negation and connectives ===
+The first two of these relationships between double negation and conjunction or disjunction are easy consequences of transposition.
+<jh>
+thm (DoubleNegatedConjunctionReverse () () ((¬ (¬ (p ∧ q))) → ((¬ (¬ p)) ∧ (¬ (¬ q)))) (
+        p q ConjunctionRightElimination
+        introduceTransposition
+        introduceTransposition
+
+        p q ConjunctionLeftElimination
+        introduceTransposition
+        introduceTransposition
+
+        composeConjunction
+))
+
+thm (DoubleNegatedDisjunction () () (((¬ (¬ p)) ∨ (¬ (¬ q))) → (¬ (¬ (p ∨ q)))) (
+        p q DisjunctionRightIntroduction
+        introduceTransposition
+        introduceTransposition
+
+        q p DisjunctionLeftIntroduction
+        introduceTransposition
+        introduceTransposition
+
+        composeDisjunction
+))
+</jh>
+
+The converse of <code>DoubleNegatedConjunctionReverse</code> we can prove via the following lemma which introduces double negation to all three formulas of a nested implication.
+<jh>
+thm (addDoubleNegationImplicationImplication () ((H (p → (q → r))))
+  ((¬ (¬ p)) → ((¬ (¬ q)) → (¬ (¬ r)))) (
+        H
+        q r TranspositionIntroduction
+        applySyllogism
+
+        applyComm
+        p (¬ q) TranspositionIntroduction
+        applySyllogism
+
+        applyComm
+        (¬ r) (¬ p) TranspositionIntroduction
+        applySyllogism
+
+        applyComm
+))
+
+thm (DoubleNegatedConjunctionForward () () (((¬ (¬ p)) ∧ (¬ (¬ q))) → (¬ (¬ (p ∧ q)))) (
+        p q ConjunctionRightIntroduction
+        addDoubleNegationImplicationImplication
+        import
+))
+
+thm (DoubleNegatedConjunction () () (((¬ (¬ p)) ∧ (¬ (¬ q))) ↔ (¬ (¬ (p ∧ q)))) (
+        p q DoubleNegatedConjunctionForward
+        p q DoubleNegatedConjunctionReverse
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
