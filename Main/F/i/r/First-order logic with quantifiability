@@ -46,7 +46,7 @@ This section contains a few of the preliminary results, which we can prove witho
 We can build up formulas based on equivalences or equalities of the the substituted proposition or the replacement (that is, <code>φ</code> or <code>s</code> in <code>(subst s x φ)</code>, respectively).
 
 ==== Based on replacement ====
-In this section we will prove <code>s = t → ((subst s x φ) ↔ (subst t x φ))</code>. This is like dfsbcq in set.mm.<ref>[http://us.metamath.org/mpeuni/dfsbcq.html dfsbcq] in metamath's set.mm, accessed March 7, 2010</ref>
+In this section we will prove <code>s = t → ((subst s x φ) ↔ (subst t x φ))</code>. This is like dfsbcq in set.mm.<ref>[http://us.metamath.org/mpeuni/dfsbcq.html dfsbcq] in metamath's set.mm, accessed March 7, 2010</ref> The set.mm analogue for substituting a <code>variable</code> (rather than an <code>object</code>) is sbequ.<ref>[http://us.metamath.org/mpeuni/sbequ.html sbequ] in metamath's set.mm, accessed June 20, 2010</ref>
 
 <jh>
 thm (SubstBuilderReplacement ((s y) (t y)) ()
