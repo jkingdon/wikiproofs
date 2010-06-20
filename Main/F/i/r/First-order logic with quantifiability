@@ -460,8 +460,8 @@ thm (ObjectSubstitution ((x s) (x y) (φ y) (s y)) ()
   (((value x) = s) → (φ → (∀ x (((value x) = s) → φ)))) (
 </jh>
 The general idea of the proof is to "substitute" <code>s</code> for <code>y</code> using a formula of the form <code>y = s → (''a formula with y in it'' ↔ ''much the same formula, but with s'')</code>.
-</jh>
-Now we can start building our substitution, <code>y = s → ((x = y → (φ → ∀ x (x = y → φ))) ↔ (x = s → (φ → ∀ x (x = s → φ))))</code>
+
+We start with our substitution, <code>y = s → ((x = y → (φ → ∀ x (x = y → φ))) ↔ (x = s → (φ → ∀ x (x = s → φ))))</code>
 <jh>
         (value y) s (value x) EqualityBuilderLL
 
