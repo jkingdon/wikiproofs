@@ -156,7 +156,7 @@ thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
 Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now start proving some consequences of it (because that file also contains the definition of subst, we have already imported it).
 
 == Specialization with substitution ==
-The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref>
+The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref><ref>Hirst and Hirst, axiom 4 on page 51</ref>
 <jh>
 thm (SpecializationToObject ((y s) (y x) (y φ)) () ((∀ x φ) → (subst s x φ)) (
 </jh>
@@ -731,7 +731,10 @@ That gives us [[Interface:First-order logic with quantifiability]], which we now
 export (WITH_QUANTIFIABILITY Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 </jh>
 
-== References ==
+== Footnotes ==
 <references/>
+
+== Cited works ==
+Hirst, Holly P. and Hirst, Jeffry L. (2008-2009 Edition), ''[http://www.mathsci.appstate.edu/~jlh/primer/hirst.pdf A Primer for Logic and Proof]'', self-published on the web by [http://www.mathsci.appstate.edu/~jlh/ Jeff Hirst]
 
 [[Category:Classical first-order logic]]
