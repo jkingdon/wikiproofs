@@ -9,7 +9,6 @@ Items which may be doable without a network connection:
   - NegationBuilder follows easily from TranspositionIntroduction
   - biconditional (should mostly be copy-paste from Principia, I think)
 * convenience theorems of propositional logic
-  - buildDisjunctionLL in First-order logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
   (I think it might enable omitting a bunch of strange little
@@ -25,7 +24,9 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-* Download some metamath proofs? (if so, which ones?)
+* Download/browse following metamath proofs:
+  - sbco
+  - sbid2
 * See what the intuitionistic export blows up on currently
 
 Maybe todo (without network):

@@ -1023,23 +1023,6 @@ thm (ForAllConjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∧ ψ
 ))
 </jh>
 
-A bit of propositional logic:
-<jh>
-var (formula p q r)
-thm (DisjunctionBuilderLL () () ((p ↔ q) → ((r ∨ p) ↔ (r ∨ q))) (
-        r BiconditionalReflexivity
-        r r p q DisjunctionFunction export
-        applyModusPonens
-))
-
-thm (buildDisjunctionLL () ((H (p ↔ q)))
-  ((r ∨ p) ↔ (r ∨ q)) (
-        H
-        p q r DisjunctionBuilderLL
-        applyModusPonens
-))
-</jh>
-
 For ∃:<ref>[http://us.metamath.org/mpeuni/19.42.html 19.42] in metamath's set.mm, accessed May 31, 2010</ref>
 
 <jh>

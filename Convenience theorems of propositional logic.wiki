@@ -119,6 +119,19 @@ thm (ImplicationConjunction () () ((p → q) ↔ (¬ (p ∧ (¬ q)))) (
 == Additional builders ==
 The builders in [[Interface:Principia Mathematica propositional logic theorems]] for the various connectives often have a theorem form (e.g. <code>ConjunctionFunction</code>) and a rule form (e.g. <code>buildConjunction</code>). They may have a version for the implication rather than the biconditional (e.g. <code>DisjunctionSummation</code>, although sometimes only the biconditionalized version holds) and variants which add a common formula to one side or the other (e.g. <code>DisjunctionSummationLL</code> and <code>DisjunctionSummationRR</code>). Here we prove some of those variations which we haven't proved yet. The LR and RL variations (analogous to <code>DisjunctionSummationLR</code> and <code>DisjunctionSummationRL</code>) haven't as often been needed, but they could go here too, if there is a need.
 <jh>
+thm (DisjunctionBuilderLL () () ((p ↔ q) → ((r ∨ p) ↔ (r ∨ q))) (
+        r BiconditionalReflexivity
+        r r p q DisjunctionFunction export
+        applyModusPonens
+))
+
+thm (buildDisjunctionLL () ((H (p ↔ q)))
+  ((r ∨ p) ↔ (r ∨ q)) (
+        H
+        p q r DisjunctionBuilderLL
+        applyModusPonens
+))
+
 thm (buildConjunctionLL () ((H (p ↔ q))) ((r ∧ p) ↔ (r ∧ q)) (
         r BiconditionalReflexivity
         H
