@@ -104,7 +104,7 @@ Other related systems, which may help you understand JHilbert (especially until 
 
 *[http://metamath.org/ Metamath]. Metamath is in the same general family, in the sense of having fairly explicit proofs and a simple proof verifier.  There is an automated converter to convert metamath to ghilbert.
 
-*[http://wiki.planetmath.org/AsteroidMeta/Ghilbert ghilbert]. Ghilbert, compared with metamath, adds a number of features most notably safe definitions (in metamath, definitions are axioms and a poorly constructed definition can render the system [[w:Inconsistent|inconsistent]]) and the ability to separate proofs into interfaces and modules. In particular, [http://wiki.planetmath.org/AsteroidMeta/Ghilbert_specification the specification] is rather close to what is described in this page.
+*[http://wiki.planetmath.org/AsteroidMeta/Ghilbert ghilbert]. Ghilbert, compared with metamath, adds a number of features most notably definitions (in an attempt, not successful as of 2009, to make it impossible for a poorly constructed definition to render the system [[w:Inconsistent|inconsistent]]) and the ability to separate proofs into interfaces and modules. In particular, [http://wiki.planetmath.org/AsteroidMeta/Ghilbert_specification the specification] is rather close to what is described in this page.
 
 [[Category:Help]]
 [[Category:JHilbert]]
