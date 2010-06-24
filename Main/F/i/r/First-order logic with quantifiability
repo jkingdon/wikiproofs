@@ -152,6 +152,26 @@ thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
 ))
 </jh>
 
+== Free variables and substitution ==
+A substitution acts like a quantifier in the sense that it binds the variable being substituted. So this variable is not free in the substituted formula (provided it is not free in the object being substituted for the variable).
+<jh>
+thm (SubstNotFree ((x s) (x y)) () (x is-not-free-in (subst s x φ)) (
+</jh>
+The proof consists of just applying our not-free theorems to each piece of the definition of <code>subst</code>
+<jh>
+        x ((value y) = s) DistinctNotFree
+        x (((value x) = (value y)) ∧ φ) BoundThereExistsNotFree
+        conjunctionNotFree
+        y addThereExistsNotFree
+
+        s x φ y Subst
+        x buildNotFree
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
 == Axiom of quantifiability ==
 Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now start proving some consequences of it (because that file also contains the definition of subst, we have already imported it).
 
