@@ -1,0 +1,169 @@
+<pre>
+# Example for unsoundness in Ghilbert with the old definition mechanism, as
+# suggested by Carl Witty.
+
+import (PROP pax/prop () "")
+import (ZFCAX zfc/set_mm_ax (PROP) "")
+import (ZFC zfc/set_mm (PROP ZFCAX) "")
+
+var (wff ph ps)
+var (set x y)
+var (class A B C)
+
+def ((constx) x)
+
+thm (badth () () (-> ph (A. (constx) ph)) (
+	ph (constx) ax-17
+))
+
+thm (eqeltri () ((eqeltri.1 (= A B)) (eqeltri.2 (e. B C))) (e. A C) (
+	eqeltri.2
+	eqeltri.1 C eleq1i
+	mpbir
+))
+
+thm (ax1cn () () (e. (1) (CC)) (
+	axresscn
+	df-1
+	1r
+	(1R) opelreal
+	mpbir
+
+	eqeltri
+
+	sselii
+))
+
+thm (biimpri () ((biimpr.1 (<-> ph ps))) (-> ps ph) (
+	biimpr.1
+	ph ps bi2
+	ax-mp
+))
+
+thm (biimpi () ((biimp.1 (<-> ph ps))) (-> ph ps) (
+	biimp.1
+	ph ps bi1
+	ax-mp
+))
+
+thm (impbii () ((impbi.1 (-> ph ps)) (impbi.2 (-> ps ph))) (<-> ph ps) (
+	impbi.1
+	impbi.2
+	ph ps bi3
+	mp2
+))
+
+thm (notbii () ((bi.a (<-> ph ps))) (<-> (-. ph) (-. ps)) (
+	bi.a biimpri con3i
+	bi.a biimpi con3i
+	impbii
+))
+
+thm (notnot2 () () (-> (-. (-. ph)) ph) (
+	(-. ph) ph pm2.21
+	ph pm2.18
+	syl
+))
+
+thm (con4i () ((con4i.1 (-> (-. ph) (-. ps)))) (-> ps ph) (
+	con4i.1
+	ph ps ax-3
+	ax-mp
+))
+
+thm (notnot1 () () (-> ph (-. (-. ph))) (
+	(-. ph) notnot2 con4i
+))
+
+thm (notnoti () ((negbi.1 ph)) (-. (-. ph)) (
+	negbi.1
+	ph notnot1
+	ax-mp
+))
+
+thm (notnotri () ((negai.1 (-. (-. ph)))) ph (
+	negai.1
+	ph notnot2
+	ax-mp
+))
+
+thm (badth2lem1 () () (-. (A. x (= (cv x) (0)))) (
+	ax1ne0
+	(1) (0) df-ne
+	mpbi
+
+	ax1cn
+	(1) (CC) x csbvarg
+	ax-mp
+
+	ax1cn
+	(e. (cv y) (0)) x ax-17 (1) (CC) csbconstgf
+	ax-mp
+
+	eqeq12i
+	mtbir
+
+	ax1cn
+	(1) (CC) x (cv x) (0) sbceqdig
+	ax-mp bicomi notbii
+
+	mpbi
+
+	ax1cn
+	(1) (CC) x (= (cv x) (0)) a4sbc
+	ax-mp
+
+	mto
+))
+
+thm (badth2lem2 () () (-. (A. x (-. (= (cv x) (0))))) (
+	0cn
+	(0) (CC) x csbvarg
+	ax-mp
+
+	0cn
+	(0) (CC) x (cv x) (0) sbceq1dig
+	ax-mp
+
+	mpbir notnoti
+
+	0cn
+	(0) (CC) x (= (cv x) (0)) sbcng
+	ax-mp
+
+	mtbir
+
+	0cn
+	(0) (CC) x (-. (= (cv x) (0))) a4sbc
+	ax-mp
+
+	mto
+))
+
+thm (badth2lem3 () () (-. (A. (constx) (= (cv (constx)) (0)))) (
+	(constx) badth2lem1
+))
+
+thm (badth2lem4 () () (-. (A. (constx) (-. (= (cv (constx)) (0))))) (
+	(constx) badth2lem2
+))
+
+thm (badth2lem5 () () (-. (= (cv (constx)) (0))) (
+	badth2lem3
+	(= (cv (constx)) (0)) badth
+	mto
+))
+
+thm (badth2lem6 () () (= (cv (constx)) (0)) (
+	badth2lem4
+	(-. (= (cv (constx)) (0))) badth
+	mto notnotri
+))
+
+thm (badth2 () () ph (
+	badth2lem6
+	badth2lem5 ph pm2.21i
+	ax-mp
+))
+</pre>
+
