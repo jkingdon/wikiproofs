@@ -283,6 +283,8 @@ stmt (addThereExistsToAntecedent ((x ψ))
 stmt (addForAllToConsequent ((x φ))
   ((φ → ψ))
   (φ → (∀ x ψ)))
+
+stmt (addForAllToConsequentNotFree () ((x is-not-free-in φ) (φ → ψ)) (φ → (∀ x ψ)))
 </jh>
 
 === Other theorems related to substitution ===
