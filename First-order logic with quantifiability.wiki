@@ -152,6 +152,26 @@ thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
 ))
 </jh>
 
+== Free variables and substitution ==
+A substitution acts like a quantifier in the sense that it binds the variable being substituted. So this variable is not free in the substituted formula (provided it is not free in the object being substituted for the variable).
+<jh>
+thm (SubstNotFree ((x s) (x y)) () (x is-not-free-in (subst s x φ)) (
+</jh>
+The proof consists of just applying our not-free theorems to each piece of the definition of <code>subst</code>
+<jh>
+        x ((value y) = s) DistinctNotFree
+        x (((value x) = (value y)) ∧ φ) BoundThereExistsNotFree
+        conjunctionNotFree
+        y addThereExistsNotFree
+
+        s x φ y Subst
+        x buildNotFree
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
 == Axiom of quantifiability ==
 Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now start proving some consequences of it (because that file also contains the definition of subst, we have already imported it).
 
@@ -722,6 +742,56 @@ thm (makeSubstExplicit ((x s) (x ψ))
         x ψ DistinctNotFree
         H
         convertImplicitToSubst
+))
+</jh>
+
+== Substituting one quantified variable for another ==
+If we have a quantified formula, and we substitute the quantified variable for another (using <code>subst</code>), the formula holds with the substituted variable in the quantifier.  In symbols, this is <code>∀ x φ ↔ ∀ y [ y / x ] φ</code> and <code>∃ x φ ↔ ∃ y [ y / x ] φ</code>, where <code>y</code> is not free in <code>φ</code>.<ref>[http://us.metamath.org/mpeuni/sb8.html sb8] and [http://us.metamath.org/mpeuni/sb8e.html sb8e] in metamath's set.mm, accessed June 24, 2010</ref>
+
+For now, we just prove one direction of these.
+<jh>
+thm (sb8ForwardNotFree () ((HFREE (y is-not-free-in φ))) ((∀ x φ) → (∀ y (subst (value y) x φ))) (
+</jh>
+An application of <code>SpecializationToObject</code> gives us <code>∀ x φ → [ y / x ] φ</code>; we just need to observe that <code>y</code> is not free in <code>∀ x φ</code>, which enables us to add the missing <code>∀ y</code>.
+<jh>
+        HFREE
+        x addForAllNotFree
+
+        x φ (value y) SpecializationToObject
+
+        addForAllToConsequentNotFree
+))
+
+thm (sb8eReverseNotFree () ((HFREE (y is-not-free-in φ))) ((∃ y (subst (value y) x φ)) → (∃ x φ)) (
+        HFREE
+        negateNotFree
+        x sb8ForwardNotFree
+
+        introduceTransposition
+</jh>
+That gives us <code>¬ ∀ y [ y / x ] ¬ φ → ¬ ∀ x ¬ φ</code>, and we just need to move around the negations to get our desired result.  We start with the consequent.
+<jh>
+        x (¬ φ) NotForAll
+        φ DoubleNegation x buildThereExists swapBiconditional
+        applyBiconditionalTransitivity
+
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The antecedent is similar but has one more step because of the substitution.
+<jh>
+        y (subst (value y) x (¬ φ)) NotForAll
+
+        (value y) x (¬ φ) SubstNegation swapBiconditional
+        y buildThereExists
+        applyBiconditionalTransitivity
+
+        φ DoubleNegation swapBiconditional
+        (value y) x buildSubst
+        y buildThereExists
+        applyBiconditionalTransitivity
+
+        transformAntecedent
 ))
 </jh>
 

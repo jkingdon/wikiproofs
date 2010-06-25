@@ -350,7 +350,7 @@ thm (import () ((H (p → (q → r)))) ((p ∧ q) → r) (
 ))
 </jh>
 
-=== Implication transitivity ===
+=== Implication transitivity and other consequences of import ====
 The form of the syllogism in [[Interface:Intuitionistic propositional logic]] is easy now that we have import:
 
 <jh>
@@ -358,6 +358,44 @@ thm (ImplicationTransitivity () ()
   (((p → q) ∧ (q → r)) → (p → r)) (
         p q r CommonConsequentAddition
         import
+))
+</jh>
+
+Likewise, we restate <code>ConjunctionComposition1</code> using the new tool:
+<jh>
+thm (ConjunctionCompositionForward () () (((p → q) ∧ (p → r)) → (p → (q ∧ r))) (
+        p q r ConjunctionComposition1
+        import
+))
+</jh>
+
+=== Builders ===
+
+Our first major builder lets us add a common conjunct to both sides of an implication.  We start with a few lemmas, and then prove the main theorem.
+
+<jh>
+thm (ConjunctionMultiplicationRX-q () () ((p → q) → ((p ∧ common) → q)) (
+        p common ConjunctionRightElimination
+        (p → q) introduceAntecedent
+        (p → q) ImplicationReflexivity
+        composeConjunction
+
+        (p ∧ common) p q ImplicationTransitivity
+        applySyllogism
+))
+
+thm (ConjunctionMultiplicationRX-common () () ((p → q) → ((p ∧ common) → common)) (
+        p common ConjunctionLeftElimination
+        (p → q) introduceAntecedent
+))
+
+thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ common) → (q ∧ common))) (
+        p q common ConjunctionMultiplicationRX-q
+        p q common ConjunctionMultiplicationRX-common
+        composeConjunction
+
+        (p ∧ common) q common ConjunctionCompositionForward
+        applySyllogism
 ))
 </jh>
 

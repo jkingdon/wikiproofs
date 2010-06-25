@@ -417,10 +417,9 @@ stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
 <jh>
 var (formula antecedent common p0 q0 p1 q1)
 
-stmt (DisjunctionBuilderLL () () ((p ↔ q) → ((common ∨ p) ↔ (common ∨ q))) (
+stmt (DisjunctionBuilderLL () () ((p ↔ q) → ((common ∨ p) ↔ (common ∨ q))))
 stmt (buildDisjunctionLL () ((p ↔ q)) ((common ∨ p) ↔ (common ∨ q)))
 stmt (buildConjunctionLL () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
-
 stmt (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ common) ↔ (q ↔ common))))
 stmt (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))))
 

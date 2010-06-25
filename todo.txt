@@ -1,12 +1,16 @@
 Items which may be doable without a network connection:
 
-* prove sb8 (see User:Kingdon for notes)
-* sb8e, once sb8/sbn done
+* implicit variant of sb8e
 * definitions versus dummies (LessThan), once sb8e done
 
 * more intuitionistic logic
-  - rest of DeMorgan
+  - DisjunctionSummation*, other ConjunctionMultiplication* - perhaps can prove these as I need them
+  - DeMorganNDNReverse - maybe from double negation introduction and DeMorganPDPSwapped?
+  - DeMorganNCNReverse - a similar trick might work
   - NegationBuilder follows easily from TranspositionIntroduction
+  - DisjunctionLeftDistribution - both directions seem to be straightforward from composeConjunction or composeDisjunction, and the usual suspects
+  - DisjunctionRightDistribution - from commutativity, I think, but we'd likely need to do builders first
+  - ModusTollens - seems easy
   - biconditional (should mostly be copy-paste from Principia, I think)
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
@@ -24,11 +28,6 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-* Download/browse following metamath proofs:
-  - sbco
-  - sbid2
-* See what the intuitionistic export blows up on currently
-
 Maybe todo (without network):
 
 Proof of sbf; seems like we are ready for this one.
@@ -42,4 +41,20 @@ Step	Hyp	Ref 	Expression
 7	2, 6	syl 11	. 2 ⊢ (φ → [y / x]φ)
 8	5, 7	impbii 163	1 ⊢ ([y / x]φ ↔ φ)
 
+Ref 	Expression
+sbco	⊢ ([y / x][x / y]φ ↔ [y / x]φ)
+Proof of Theorem sbco Step	Hyp	Ref 	Expression
+1	 	equsb2 1257	. . 3 ⊢ [y / x]y = x
+2	 	sbequ12 1244	. . . . 5 ⊢ (y = x → (φ ↔ [x / y]φ))
+3	2	bicomd 544	. . . 4 ⊢ (y = x → ([x / y]φ ↔ φ))
+4	3	sbimi 1236	. . 3 ⊢ ([y / x]y = x → [y / x]([x / y]φ ↔ φ))
+5	1, 4	ax-mp 7	. 2 ⊢ [y / x]([x / y]φ ↔ φ)
+6	 	sbbi 1302	. 2 ⊢ ([y / x]([x / y]φ ↔ φ) ↔ ([y / x][x / y]φ ↔ [y / x]φ))
+7	5, 6	mpbi 195	1 ⊢ ([y / x][x / y]φ ↔ [y / x]φ)
+
+Draft of essay:
+
+What is the difference between an unsound definition like <point to example> and a sound one like ⊤ or ⊥ in [[Principia Mathematica propositional logic]], or ≤ in [[Basic arithmetic]]? It is that the sound ones do not depend on the choice of the dummy variable.  For example, for ⊥, p ∧ ¬ p is equivalent to q ∧ ¬ q.  This is not just a metalogical argument; it is a theorem we can prove within the system (and indeed the relevant proofs are Tautology and Contradiction in[[Principia Mathematica propositional logic]] and LessEqual in [[Basic arithmetic]]).  No such proof is forthcoming with <pathological example>.  In other words, noone can expect to get safe definitions (which include dummy variables) for free; the safety of a definition must be proved.
+
+How does this help us design a definition mechanism?  The most straightforward way is relatively simple.  Every time a definition gets applied, dummy variables are expanded to fresh variables. (in some very limited circumstances, these can be unified with named variables, but only if all instances of a particular named variable unify). The goal here is that the definition can be used (a) freely if it has no dummy variables, or (b) if it has dummy variables, mainly in order to prove a theorem similar to LessEqual.
 
