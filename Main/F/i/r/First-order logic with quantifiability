@@ -745,6 +745,56 @@ thm (makeSubstExplicit ((x s) (x ψ))
 ))
 </jh>
 
+== Substituting one quantified variable for another ==
+If we have a quantified formula, and we substitute the quantified variable for another (using <code>subst</code>), the formula holds with the substituted variable in the quantifier.  In symbols, this is <code>∀ x φ ↔ ∀ y [ y / x ] φ</code> and <code>∃ x φ ↔ ∃ y [ y / x ] φ</code>, where <code>y</code> is not free in <code>φ</code>.<ref>[http://us.metamath.org/mpeuni/sb8.html sb8] and [http://us.metamath.org/mpeuni/sb8e.html sb8e] in metamath's set.mm, accessed June 24, 2010</ref>
+
+For now, we just prove one direction of these.
+<jh>
+thm (sb8ForwardNotFree () ((HFREE (y is-not-free-in φ))) ((∀ x φ) → (∀ y (subst (value y) x φ))) (
+</jh>
+An application of <code>SpecializationToObject</code> gives us <code>∀ x φ → [ y / x ] φ</code>; we just need to observe that <code>y</code> is not free in <code>∀ x φ</code>, which enables us to add the missing <code>∀ y</code>.
+<jh>
+        HFREE
+        x addForAllNotFree
+
+        x φ (value y) SpecializationToObject
+
+        addForAllToConsequentNotFree
+))
+
+thm (sb8eReverseNotFree () ((HFREE (y is-not-free-in φ))) ((∃ y (subst (value y) x φ)) → (∃ x φ)) (
+        HFREE
+        negateNotFree
+        x sb8ForwardNotFree
+
+        introduceTransposition
+</jh>
+That gives us <code>¬ ∀ y [ y / x ] ¬ φ → ¬ ∀ x ¬ φ</code>, and we just need to move around the negations to get our desired result.  We start with the consequent.
+<jh>
+        x (¬ φ) NotForAll
+        φ DoubleNegation x buildThereExists swapBiconditional
+        applyBiconditionalTransitivity
+
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The antecedent is similar but has one more step because of the substitution.
+<jh>
+        y (subst (value y) x (¬ φ)) NotForAll
+
+        (value y) x (¬ φ) SubstNegation swapBiconditional
+        y buildThereExists
+        applyBiconditionalTransitivity
+
+        φ DoubleNegation swapBiconditional
+        (value y) x buildSubst
+        y buildThereExists
+        applyBiconditionalTransitivity
+
+        transformAntecedent
+))
+</jh>
+
 == Export ==
 That gives us [[Interface:First-order logic with quantifiability]], which we now export.
 <jh>
