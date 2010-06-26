@@ -1,7 +1,5 @@
 Items which may be doable without a network connection:
 
-* definitions versus dummies (LessEqual), once sb8e done
-
 * more intuitionistic logic
   - DisjunctionSummation*, other ConjunctionMultiplication* - perhaps can prove these as I need them
   - DeMorganNDNReverse - maybe from double negation introduction and DeMorganPDPSwapped?

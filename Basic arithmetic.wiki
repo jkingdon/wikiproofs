@@ -1064,6 +1064,31 @@ We define an order on natural numbers:
 def ((≤ a b) (∃ n ((a + (value n)) = b)))
 </jh>
 
+===Definition as an equivalence===
+
+The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side.
+
+<jh>
+thm (LessEqual ((m n) (a m) (a n) (b m) (b n)) () ((a ≤ b) ↔ (∃ n ((a + (value n)) = b))) (
+</jh>
+To restate our "subtle difference" in terms of explaining what we need for our proof, the quantified variable on the left side of the biconditional (which results from the expansion of <code>≤</code>) is different from the quantified variable on the right hand side (<code>n</code>). So we need to switch variables.
+
+We start with <code>m = n → (a + m = b ↔ a + n = b)</code>,
+<jh>
+        (value m) (value n) a AdditionBuilderLL
+        b buildEqualityRR
+</jh>
+and apply <code>ChangeVariableThereExists</code>.
+<jh>
+        ChangeVariableThereExists
+</jh>
+We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is enough since JHilbert is able to recognize that the left side is the definition of <code>a ≤ b</code>.
+<jh>
+))
+</jh>
+
+===Zero is the smallest natural number===
+
 Every number is greater than or equal to zero:
 <jh>
 thm (ZeroSmallest ((n a)) () ((0) ≤ a) (
@@ -1189,47 +1214,51 @@ Then we pull much the same trick with <code>y</code> (but it is easier as there 
 ))
 
 </jh>
-We can't quite prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code> until we come to grips with the three different dummy variables in that statement. We should be able to fix that once we have proved LessEqual. Following the commented out LessEqual is the commented out proof of transitivity, which is thought to be correct except for this detail.
-<jh>
-# Harder than it might look, as the quantified variable on the left side is different than the one on the right side
-#thm (LessEqual () () ((≤ a b) ↔ (∃ n ((a + (value n)) = b))) (
-#))
-
-#thm (LessEqualTransitivity ((vab vbc)) () 
-#  (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
+We are now ready to prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code>. <jh>
+thm (LessEqualTransitivity ((vab vbc)) () 
+  (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
 </jh>
 To assemble the proof, we first stick a statement on the proof stack which we'll use at the very end:
 <jh>
-#        vab ((a + (value vab)) = b) vbc ((b + (value vbc)) = c) ThereExistsToFront
+        vab ((a + (value vab)) = b) vbc ((b + (value vbc)) = c) ThereExistsToFront
 </jh>
 Leaving that aside, we now start with <code>LessEqualTransitivity-1</code>.
 <jh>
-#        a (value vab) b (value vbc) c LessEqualTransitivity-1
+        a (value vab) b (value vbc) c LessEqualTransitivity-1
 </jh>
 Turning <code>LessEqualTransitivity-sub</code> into an explicit substitution gives us <code>([ab + bc / ac] a + ac = c) ↔ a + (ab + bc = c</code>:
 <jh>
-#        (value vac) (value vab) (value vbc) a c LessEqualTransitivity-sub
-#        makeSubstExplicit
+        (value vac) (value vab) (value vbc) a c LessEqualTransitivity-sub
+        makeSubstExplicit
 </jh>
 and we combining this with our previous result.
 <jh>
-#        eliminateBiconditionalForward
-#        applySyllogism
+        eliminateBiconditionalForward
+        applySyllogism
 </jh>
 Using the substitution to prove there exists, we get <code>a + ab = b ∧ b + bc = c → ∃ ac a + ac = c</code>.
 <jh>
-#        ((value vab) + (value vbc)) vac ((a + (value vac)) = c) ThereExistsIntroduction
-#        applySyllogism
+        ((value vab) + (value vbc)) vac ((a + (value vac)) = c) ThereExistsIntroduction
+        applySyllogism
 </jh>
 We add ∃ ab ∃ bc to the antecedent:
 <jh>
-#        vbc addThereExistsToAntecedent
-#        vab addThereExistsToAntecedent
+        vbc addThereExistsToAntecedent
+        vab addThereExistsToAntecedent
 </jh>
-And picking up <code>∃ ab a + ab = b ∧ ∃ bc b + bc = c → ∃ ab ∃ bc a + ab = b ∧ b + bc = c</code> from the proof stack, we are done.
+And picking up <code>∃ ab a + ab = b ∧ ∃ bc b + bc = c → ∃ ab ∃ bc a + ab = b ∧ b + bc = c</code> from the proof stack, we now have everything (except applying the definition of ≤).
 <jh>
-#        applySyllogism
-#))
+        applySyllogism
+
+        a b ab LessEqual
+        b c bc LessEqual
+        buildConjunction
+        a c ac LessEqual
+        buildImplication
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 == Adding one and successor ==
