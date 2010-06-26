@@ -407,12 +407,7 @@ Our first major builder lets us add a common conjunct to both sides of an implic
 <jh>
 thm (ConjunctionMultiplicationRX-q () () ((p → q) → ((p ∧ common) → q)) (
         p common ConjunctionRightElimination
-        (p → q) introduceAntecedent
-        (p → q) ImplicationReflexivity
-        composeConjunction
-
-        (p ∧ common) p q ImplicationTransitivity
-        applySyllogism
+        q addCommonConsequent
 ))
 
 thm (ConjunctionMultiplicationRX-common () () ((p → q) → ((p ∧ common) → common)) (
@@ -477,6 +472,45 @@ thm (composeDisjunction () ((HP (p → r)) (HQ (q → r))) ((p ∨ q) → r) (
         p r q DisjunctionCompositionAxiom
         applyModusPonens
         applyModusPonens
+))
+</jh>
+
+=== Commutativity ===
+<jh>
+thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
+        q p DisjunctionRightIntroduction
+        p q DisjunctionLeftIntroduction
+        p (q ∨ p) q DisjunctionCompositionAxiom
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+=== Builders ===
+
+==== DisjunctionSummationRR ====
+
+Our first disjunction builder is proved analogously to <code>ConjunctionMultiplicationRR</code>.
+
+<jh>
+thm (DisjunctionSummationXL-p () () ((p → q) → (p → (common ∨ q))) (
+        q common DisjunctionLeftIntroduction
+        p addCommonAntecedent
+))
+
+thm (DisjunctionSummationXL-common () () ((p → q) → (common → (common ∨ q))) (
+        common q DisjunctionRightIntroduction
+        (p → q) introduceAntecedent
+))
+
+thm (DisjunctionSummationRL () () ((p → q) → ((p ∧ common) → (q ∧ common))) (
+        p q common DisjunctionSummationXL-p
+        p q common DisjunctionSummationXL-common
+        composeConjunction
+
+        p (common ∨ q) common DisjunctionCompositionAxiom
+        import
+        applySyllogism
 ))
 </jh>
 
@@ -672,14 +706,6 @@ thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) (
 
 ==== Disjunction commutativity ====
 <jh>
-thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
-        q p DisjunctionRightIntroduction
-        p q DisjunctionLeftIntroduction
-        p (q ∨ p) q DisjunctionCompositionAxiom
-        applyModusPonens
-        applyModusPonens
-))
-
 thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) (
         p q DisjunctionCommutativityImplication
         q p DisjunctionCommutativityImplication
