@@ -113,15 +113,6 @@ thm (buildMultiplicationRR () ((HN (a0 = a1))) ((a0 · b) = (a1 · b)) (
 
 Proofs using induction, when they build up their substitutions, make heavy use of builders in consequents:
 <jh>
-thm (buildEqualityInConsequent ()
-  ((HN (φ → (a0 = a1)))
-   (HM (φ → (b0 = b1))))
-  (φ → ((a0 = b0) ↔ (a1 = b1))) (
-        HN HM composeConjunction
-        a0 a1 b0 b1 EqualityBuilder
-        applySyllogism
-))
-
 thm (buildAdditionInConsequent ()
   ((HN (φ → (a0 = a1)))
    (HM (φ → (b0 = b1))))
@@ -1069,6 +1060,7 @@ def ((≤ a b) (∃ n ((a + (value n)) = b)))
 The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side.
 
 <jh>
+var (variable m)
 thm (LessEqual ((m n) (a m) (a n) (b m) (b n)) () ((a ≤ b) ↔ (∃ n ((a + (value n)) = b))) (
 </jh>
 To restate our "subtle difference" in terms of explaining what we need for our proof, the quantified variable on the left side of the biconditional (which results from the expansion of <code>≤</code>) is different from the quantified variable on the right hand side (<code>n</code>). So we need to switch variables.
@@ -1076,7 +1068,7 @@ To restate our "subtle difference" in terms of explaining what we need for our p
 We start with <code>m = n → (a + m = b ↔ a + n = b)</code>,
 <jh>
         (value m) (value n) a AdditionBuilderLL
-        b buildEqualityRR
+        b buildEqualityRRInConsequent
 </jh>
 and apply <code>ChangeVariableThereExists</code>.
 <jh>
@@ -1212,10 +1204,14 @@ Then we pull much the same trick with <code>y</code> (but it is easier as there 
 
         eliminateBiconditionalReverse
 ))
-
 </jh>
-We are now ready to prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code>. <jh>
-thm (LessEqualTransitivity ((vab vbc)) () 
+
+We are now ready to prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.
+<jh>
+thm (LessEqualTransitivity (
+  (vab vbc) (vab vac) (vab a) (vab b) (vab c)
+  (vbc a) (vbc b) (vbc c) (vbc vac)
+  (vac a) (vac c)) () 
   (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
 </jh>
 To assemble the proof, we first stick a statement on the proof stack which we'll use at the very end:
@@ -1250,10 +1246,10 @@ And picking up <code>∃ ab a + ab = b ∧ ∃ bc b + bc = c → ∃ ab ∃ bc a
 <jh>
         applySyllogism
 
-        a b ab LessEqual
-        b c bc LessEqual
+        a b vab LessEqual
+        b c vbc LessEqual
         buildConjunction
-        a c ac LessEqual
+        a c vac LessEqual
         buildImplication
 
         eliminateBiconditionalForward

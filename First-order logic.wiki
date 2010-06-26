@@ -162,6 +162,27 @@ thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
 ))
 </jh>
 
+For convenience, we also supply builders in the consequent:
+
+<jh>
+thm (buildEqualityInConsequent ()
+  ((HN (φ → (s0 = s1)))
+   (HM (φ → (t0 = t1))))
+  (φ → ((s0 = t0) ↔ (s1 = t1))) (
+        HN HM composeConjunction
+        s0 s1 t0 t1 EqualityBuilder
+        applySyllogism
+))
+
+thm (buildEqualityRRInConsequent ()
+  ((H (φ → (s0 = s1))))
+  (φ → ((s0 = t) ↔ (s1 = t))) (
+        H
+        t EqualityReflexivity φ introduceAntecedent
+        buildEqualityInConsequent
+))
+</jh>
+
 === Not equal ===
 Although <code>≠</code> is just an abbreviation for negation and equality, we do need to repeat the definition in this file to be able to export to [[Interface:First-order logic]].
 <jh>

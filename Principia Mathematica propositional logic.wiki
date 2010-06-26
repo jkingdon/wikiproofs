@@ -873,7 +873,7 @@ thm (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)) (
         (p → q) (q → p) ConjunctionRightElimination
 ))
 
-thm (introduceBiconditional () ((H1 (p → q)) (H2 (q → p))) (p ↔ q) (
+thm (introduceBiconditionalFromImplications () ((H1 (p → q)) (H2 (q → p))) (p ↔ q) (
         H1 H2 introduceConjunction
 ))
 
@@ -906,7 +906,7 @@ Now the same again for <math>*2.17</math>:
         conjoin
         (q → p) (p → q) *3.22
         applySyllogism
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
@@ -946,7 +946,7 @@ thm (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔
         q p *4.12-reverse
         composeConjunction
 
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (transposeBiconditionalWithNegatedRight () ((H (p ↔ (¬ q)))) (q ↔ (¬ p)) (
@@ -961,7 +961,7 @@ thm (transposeBiconditionalWithNegatedRight () ((H (p ↔ (¬ q)))) (q ↔ (¬ p
 thm (DoubleNegation () () (p ↔ (¬ (¬ p))) ( # *4.13
         p *2.12
         p *2.14
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -996,7 +996,7 @@ thm (converse-of-*3.37 () () (((p ∧ (¬ r)) → (¬ q)) → ((p ∧ q) → r))
 thm (*4.14 () () (((p ∧ q) → r) ↔ ((p ∧ (¬ r)) → (¬ q))) (
         p q r *3.37
         p r q converse-of-*3.37
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1054,7 +1054,7 @@ thm (*4.15-reverse () () (((q ∧ r) → (¬ p)) → ((p ∧ q) → (¬ r))) (
 thm (*4.15 () () (((p ∧ q) → (¬ r)) ↔ ((q ∧ r) → (¬ p))) (
         p q r *4.15-forward
         q r p *4.15-reverse
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1066,7 +1066,7 @@ The biconditional has these three properties (which correspond to those defining
 thm (BiconditionalReflexivity () () (p ↔ p) ( # *4.2
         p Id
         p Id
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (BiconditionalSymmetryImplication () () ((p ↔ q) → (q ↔ p)) (
@@ -1076,7 +1076,7 @@ thm (BiconditionalSymmetryImplication () () ((p ↔ q) → (q ↔ p)) (
 thm (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)) ( # *4.21
         p q BiconditionalSymmetryImplication
         q p BiconditionalSymmetryImplication
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
@@ -1147,31 +1147,31 @@ Some more theorems where we have proved implications in both directions, but can
 thm (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))) ( # *5.41
         p q r *2.77
         p q r *2.86
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))) ( # *4.1
         p q *2.16
         q p *2.17
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)) (
         p q *2.15
         q p *2.15
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))) (
         p q *2.03
         q p *2.03
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (Transportation () () ((p → (q → r)) ↔ ((p ∧ q) → r)) (
         p q r Importation
         p q r Exportation
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1187,7 +1187,7 @@ Idempotence for disjunction and conjunction are perhaps the most interesting, as
 thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) ( # *4.25
         p p Add
         p Taut
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1216,7 +1216,7 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) ( # *4.24
 
         p p ConjunctionRightElimination
 
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1254,13 +1254,13 @@ We already have commutativity of disjunction and conjunction, but just need to e
 thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) ( # *4.31
         p q Perm
         q p Perm
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) ( # *4.3
         p q *3.22
         q p *3.22
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1272,7 +1272,7 @@ Both disjunction and conjunction are associative:
 thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) ( # *4.33
         p q r *2.32
         p q r *2.31
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 </jh>
@@ -1564,7 +1564,7 @@ thm (ConjunctionLeftDistribution-reverse () ()
 thm (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))) ( # *4.4
         p q r ConjunctionLeftDistribution-forward
         p q r ConjunctionLeftDistribution-reverse
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1596,7 +1596,7 @@ thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p
 thm (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))) ( # *4.41
         p q r DisjunctionLeftDistribution-forward
         p q r DisjunctionLeftDistribution-reverse
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -1863,7 +1863,7 @@ thm (DisjunctionComposition () ()
 
         composeConjunction
 
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (ConjunctionComposition () () 
@@ -1878,7 +1878,7 @@ thm (ConjunctionComposition () ()
 
         composeConjunction
 
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (extractLeftDisjunction () ((H ((p ∨ q) → r))) (p → r) (
@@ -2050,7 +2050,7 @@ thm (NegationImplication-reverse () () ((p → (⊥)) → (¬ p)) (
 thm (NegationImplication () () ((¬ p) ↔ (p → (⊥))) (
         p NegationImplication-forward
         p NegationImplication-reverse
-        introduceBiconditional
+        introduceBiconditionalFromImplications
 ))
 
 thm (convertFromNegationToImplication () ((H (¬ p))) (p → (⊥)) (
@@ -2085,10 +2085,6 @@ thm (convertFromBiconditionalToImplications () ((H (p ↔ q))) ((p → q) ∧ (q
 
 thm (convertToBiconditionalFromImplications () ((H ((p → q) ∧ (q → p)))) (p ↔ q) (
         H
-))
-
-thm (introduceBiconditionalFromImplications () ((HPQ (p → q)) (HQP (q → p))) (p ↔ q) (
-        HPQ HQP introduceConjunction
 ))
 </jh>
 

@@ -169,12 +169,18 @@ There is also the principle of "equals can be substituted for equals". In our sy
 <jh>
 stmt (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))))
 stmt (buildEquality () ((s0 = s1) (t0 = t1)) ((s0 = t0) ↔ (s1 = t1)))
+</jh>
 
+We also supply a variety of variant builders, for convenience:
+<jh>
 stmt (EqualityBuilderRR () () ((s0 = s1) → ((s0 = t) ↔ (s1 = t))))
 stmt (buildEqualityRR () ((s0 = s1)) ((s0 = t) ↔ (s1 = t)))
 
 stmt (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))))
 stmt (buildEqualityLL () ((t0 = t1)) ((s = t0) ↔ (s = t1)))
+
+stmt (buildEqualityInConsequent () ((φ → (s0 = s1)) (φ → (t0 = t1))) (φ → ((s0 = t0) ↔ (s1 = t1))))
+stmt (buildEqualityRRInConsequent () ((φ → (s0 = s1))) (φ → ((s0 = t) ↔ (s1 = t))))
 </jh>
 
 We also define <code>≠</code>, which is just an abbreviation for negation and equality.

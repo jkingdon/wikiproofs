@@ -801,7 +801,8 @@ The <code>(x y)</code> distinct variable constraint is subject to the same comme
 
 We first prove the reverse implication.
 <jh>
-thm (ChangeVariableThereExistsReverse ((y φx) (x φy) (x y)) ((H ((value x) = (value y)) → (φx ↔ φy))) ((∃ y φy) → (∃ x φx)) (
+var (formula φy)
+thm (ChangeVariableThereExistsReverse ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ y φy) → (∃ x φx)) (
 </jh>
 First we show <code>∃ y φy → ∃ y [ y / x ] φx</code>.
 <jh>
@@ -819,11 +820,11 @@ We then transform the right hand side to <code>∃ x φx</code>, and we are done
 
 The reverse direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
 <jh>
-thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H ((value x) = (value y)) → (φx ↔ φy))) ((∃ x φx) → (∃ y φy)) (
+thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ x φx) → (∃ y φy)) (
         H
 
-        (value x) (value y) EqualityCommutativity
-        φx φy BiconditionalCommutativity
+        (value x) (value y) EqualitySymmetry
+        φx φy BiconditionalSymmetry
         buildImplication
 
         eliminateBiconditionalReverse
@@ -832,7 +833,7 @@ thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H ((value x) = (
         ChangeVariableThereExistsReverse
 ))
 
-thm (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((H ((value x) = (value y)) → (φx ↔ φy))) ((∃ x φx) ↔ (∃ y φy)) (
+thm (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ x φx) ↔ (∃ y φy)) (
         H
         ChangeVariableThereExistsForward
 
