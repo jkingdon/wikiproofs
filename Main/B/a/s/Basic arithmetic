@@ -113,23 +113,6 @@ thm (buildMultiplicationRR () ((HN (a0 = a1))) ((a0 · b) = (a1 · b)) (
 
 Proofs using induction, when they build up their substitutions, make heavy use of builders in consequents:
 <jh>
-thm (buildEqualityInConsequent ()
-  ((HN (φ → (a0 = a1)))
-   (HM (φ → (b0 = b1))))
-  (φ → ((a0 = b0) ↔ (a1 = b1))) (
-        HN HM composeConjunction
-        a0 a1 b0 b1 EqualityBuilder
-        applySyllogism
-))
-
-thm (buildEqualityRRInConsequent ()
-  ((H (φ → (a0 = a1))))
-  (φ → ((a0 = b) ↔ (a1 = b))) (
-        H
-        b EqualityReflexivity φ introduceAntecedent
-        buildEqualityInConsequent
-))
-
 thm (buildAdditionInConsequent ()
   ((HN (φ → (a0 = a1)))
    (HM (φ → (b0 = b1))))
