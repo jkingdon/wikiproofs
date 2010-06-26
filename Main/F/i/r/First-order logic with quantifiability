@@ -795,6 +795,55 @@ The antecedent is similar but has one more step because of the substitution.
 ))
 </jh>
 
+Here is a version with implicit substitution. Think of <code>φx</code> and <code>φy</code> as two versions of the same formula, but where <code>x</code> has been changed to <code>y</code>. More formally, <code>y</code> does not appear in <code>φx</code>, <code>x</code> does not appear in <code>φy</code>, and <code>x = y → (φx ↔ φy)</code>. This lets us conclude <code>∃ y φy ↔ ∃ x φx</code>.
+
+The <code>(x y)</code> distinct variable constraint is subject to the same commentary as <code>(x s)</code> in <code>makeSubstExplicit</code> (that is, that it might not be necessary).
+
+We first prove the reverse implication.
+<jh>
+var (formula φy)
+thm (ChangeVariableThereExistsReverse ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ y φy) → (∃ x φx)) (
+</jh>
+First we show <code>∃ y φy → ∃ y [ y / x ] φx</code>.
+<jh>
+        H makeSubstExplicit
+        eliminateBiconditionalForward
+        y addThereExists
+</jh>
+We then transform the right hand side to <code>∃ x φx</code>, and we are done.
+<jh>
+        y φx DistinctNotFree
+        x sb8eReverseNotFree
+        applySyllogism
+))
+</jh>
+
+The reverse direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
+<jh>
+thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ x φx) → (∃ y φy)) (
+        H
+
+        (value x) (value y) EqualitySymmetry
+        φx φy BiconditionalSymmetry
+        buildImplication
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        ChangeVariableThereExistsReverse
+))
+
+thm (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ x φx) ↔ (∃ y φy)) (
+        H
+        ChangeVariableThereExistsForward
+
+        H
+        ChangeVariableThereExistsReverse
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 That gives us [[Interface:First-order logic with quantifiability]], which we now export.
 <jh>
