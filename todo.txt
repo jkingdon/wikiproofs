@@ -1,7 +1,6 @@
 Items which may be doable without a network connection:
 
-* implicit variant of sb8e
-* definitions versus dummies (LessThan), once sb8e done
+* definitions versus dummies (LessEqual), once sb8e done
 
 * more intuitionistic logic
   - DisjunctionSummation*, other ConjunctionMultiplication* - perhaps can prove these as I need them
@@ -27,30 +26,6 @@ Items which may be doable without a network connection:
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 
 To do with network:
-
-Maybe todo (without network):
-
-Proof of sbf; seems like we are ready for this one.
-Step	Hyp	Ref 	Expression
-1	 	sb1 1239	. . . 4 ⊢ ([y / x]φ → ∃x(x = y ⋀ φ))
-2	 	sbf.1	. . . . 5 ⊢ (φ → ∀xφ)
-3	2	19.41 1157	. . . 4 ⊢ (∃x(x = y ⋀ φ) ↔ (∃x x = y ⋀ φ))
-4	1, 3	sylib 204	. . 3 ⊢ ([y / x]φ → (∃x x = y ⋀ φ))
-5	4	pm3.27d 333	. 2 ⊢ ([y / x]φ → φ)
-6	 	stdpc4 1248	. . 3 ⊢ (∀xφ → [y / x]φ)
-7	2, 6	syl 11	. 2 ⊢ (φ → [y / x]φ)
-8	5, 7	impbii 163	1 ⊢ ([y / x]φ ↔ φ)
-
-Ref 	Expression
-sbco	⊢ ([y / x][x / y]φ ↔ [y / x]φ)
-Proof of Theorem sbco Step	Hyp	Ref 	Expression
-1	 	equsb2 1257	. . 3 ⊢ [y / x]y = x
-2	 	sbequ12 1244	. . . . 5 ⊢ (y = x → (φ ↔ [x / y]φ))
-3	2	bicomd 544	. . . 4 ⊢ (y = x → ([x / y]φ ↔ φ))
-4	3	sbimi 1236	. . 3 ⊢ ([y / x]y = x → [y / x]([x / y]φ ↔ φ))
-5	1, 4	ax-mp 7	. 2 ⊢ [y / x]([x / y]φ ↔ φ)
-6	 	sbbi 1302	. 2 ⊢ ([y / x]([x / y]φ ↔ φ) ↔ ([y / x][x / y]φ ↔ [y / x]φ))
-7	5, 6	mpbi 195	1 ⊢ ([y / x][x / y]φ ↔ [y / x]φ)
 
 Draft of essay:
 

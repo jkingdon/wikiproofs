@@ -296,6 +296,12 @@ stmt (ThereExistsIntroduction () () ((subst s x φ) → (∃ x φ)))
 stmt (introduceThereExists () ((subst s x φ)) (∃ x φ))
 </jh>
 
+=== Changing the quantified variable ===
+We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly.
+<jh>
+stmt (ChangeVariableThereExists ((y φx) (x φy) (x y)) (((value x) = (value y)) → (φx ↔ φy)) ((∃ x φx) ↔ (∃ y φy)) (
+</jh>
+
 == What else? ==
 This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
 
