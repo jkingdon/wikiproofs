@@ -369,7 +369,18 @@ thm (ConjunctionCompositionForward () () (((p → q) ∧ (p → r)) → (p → (
 ))
 </jh>
 
+=== Commutativity ===
+<jh>
+thm (ConjunctionCommutativityImplication () () ((p ∧ q) → (q ∧ p)) (
+        p q ConjunctionLeftElimination
+        p q ConjunctionRightElimination
+        composeConjunction
+))
+</jh>
+
 === Builders ===
+
+==== ConjunctionMultiplicationRR ====
 
 Our first major builder lets us add a common conjunct to both sides of an implication.  We start with a few lemmas, and then prove the main theorem.
 
@@ -396,6 +407,34 @@ thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ common) → (q ∧
 
         (p ∧ common) q common ConjunctionCompositionForward
         applySyllogism
+))
+</jh>
+
+==== Other builders ====
+The rest of the <code>ConjunctionMultiplication</code> variants follow from the first one, just like in [[Principia Mathematica propositional logic]].
+
+<jh>
+thm (ConjunctionMultiplication () () (((p → r) ∧ (q → s)) → ((p ∧ q) → (r ∧ s))) (
+        (p → r) (q → s) ConjunctionRightElimination
+        p r q ConjunctionMultiplicationRR
+        applySyllogism
+        r q ConjunctionCommutativityImplication
+        (p ∧ q) introduceAntecedent distributeAntecedent
+        applySyllogism
+
+        (p → r) (q → s) ConjunctionLeftElimination
+        q s r ConjunctionMultiplicationRR
+        applySyllogism
+        s r ConjunctionCommutativityImplication
+        (q ∧ r) introduceAntecedent distributeAntecedent
+        applySyllogism
+        applySyllogismInConsequent
+))
+
+thm (conjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
+        H1 H2 introduceConjunction
+        p r q s ConjunctionMultiplication
+        applyModusPonens
 ))
 </jh>
 
@@ -495,12 +534,6 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) (
 
 ==== Conjunction commutativity ====
 <jh>
-thm (ConjunctionCommutativityImplication () () ((p ∧ q) → (q ∧ p)) (
-        p q ConjunctionLeftElimination
-        p q ConjunctionRightElimination
-        composeConjunction
-))
-
 thm (ConjunctionCommutativity () () ((p ∧ q) ↔ (q ∧ p)) (
         p q ConjunctionCommutativityImplication
         q p ConjunctionCommutativityImplication
@@ -833,6 +866,20 @@ thm (DeMorganPDPSwapped () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))) (
         p q DeMorganPDPForward
         introduceBiconditionalFromImplications
 ))
+</jh>
+
+The following result follows from double negation introduction and <code>DeMorganPDPSwapped</code>.
+<jh>
+thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
+        p DoubleNegation
+        q DoubleNegation
+        conjoin
+
+        (¬ p) (¬ q) DeMorganPDPSwapped
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+#stmt (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
 </jh>
 
 === Double negation and connectives ===
