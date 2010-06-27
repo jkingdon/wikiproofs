@@ -423,6 +423,12 @@ thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ common) → (q ∧
         (p ∧ common) q common ConjunctionCompositionForward
         applySyllogism
 ))
+
+thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationRR
+        applyModusPonens
+))
 </jh>
 
 ==== Other builders ====
@@ -449,6 +455,51 @@ thm (ConjunctionMultiplication () () (((p → r) ∧ (q → s)) → ((p ∧ q) �
 thm (conjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
         H1 H2 introduceConjunction
         p r q s ConjunctionMultiplication
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))) (
+        r ImplicationReflexivity
+
+        r r p q ConjunctionMultiplication
+        export
+
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))) (
+        p q r ConjunctionMultiplicationLL
+
+        r q ConjunctionCommutativityImplication
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
+        p q r ConjunctionMultiplicationRR
+
+        q r ConjunctionCommutativityImplication
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (conjoinLL () ((H (p → q))) ((r ∧ p) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationLL
+        applyModusPonens
+))
+
+thm (conjoinLR () ((H (p → q))) ((r ∧ p) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationLR
+        applyModusPonens
+))
+
+thm (conjoinRL () ((H (p → q))) ((p ∧ r) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationRL
         applyModusPonens
 ))
 </jh>
@@ -512,6 +563,12 @@ thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ common) → (common ∨
         import
         applySyllogism
 ))
+
+thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationRL
+        applyModusPonens
+))
 </jh>
 
 ==== DisjunctionSummation ====
@@ -532,6 +589,57 @@ thm (DisjunctionSummation () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r
 thm (disjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
         H1 H2 introduceConjunction
         p r q s DisjunctionSummation
+        applyModusPonens
+))
+</jh>
+
+==== DisjunctionSummation variations ====
+We could prove the <code>DisjunctionSummationLL</code>, <code>DisjunctionSummationRR</code>, and <code>DisjunctionSummationLR</code> the same way that we proved <code>DisjunctionSummationRL</code>, but here we prove them as special cases of <code>DisjunctionSummation</code>.
+
+<jh>
+thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
+        r ImplicationReflexivity
+
+        r r p q DisjunctionSummation
+        export
+
+        applyModusPonens
+))
+
+thm (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))) (
+        p q r DisjunctionSummationLL
+
+        r q DisjunctionCommutativityImplication
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))) (
+        r ImplicationReflexivity
+
+        p q r r DisjunctionSummation
+        export
+        applyComm
+
+        applyModusPonens
+))
+
+thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationLL
+        applyModusPonens
+))
+
+thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationLR
+        applyModusPonens
+))
+
+thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationRR
         applyModusPonens
 ))
 </jh>
