@@ -200,6 +200,26 @@ Now we just switch <code>p</code> and <code>q</code> in <code>q → (p → r)</c
 ))
 </jh>
 
+=== Syllogism in the consequent ===
+This theorem is similar to syllogism, but where each piece has a common antecedent.
+<jh>
+thm (SyllogismInConsequent () () ((p → (q → r)) → ((p → (r → s)) → (p → (q → s)))) (
+        q r s CommonConsequentAddition
+        p addCommonAntecedent
+
+        p (r → s) (q → s) Frege
+        applySyllogism
+))
+
+thm (applySyllogismInConsequent () ((H1 (p → (q → r))) (H2 (p → (r → s)))) (p → (q → s)) (
+        H2
+        H1
+        p q r s SyllogismInConsequent
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
 == Conjunction ==
 
 === Rules ===
@@ -387,12 +407,7 @@ Our first major builder lets us add a common conjunct to both sides of an implic
 <jh>
 thm (ConjunctionMultiplicationRX-q () () ((p → q) → ((p ∧ common) → q)) (
         p common ConjunctionRightElimination
-        (p → q) introduceAntecedent
-        (p → q) ImplicationReflexivity
-        composeConjunction
-
-        (p ∧ common) p q ImplicationTransitivity
-        applySyllogism
+        q addCommonConsequent
 ))
 
 thm (ConjunctionMultiplicationRX-common () () ((p → q) → ((p ∧ common) → common)) (
@@ -407,6 +422,12 @@ thm (ConjunctionMultiplicationRR () () ((p → q) → ((p ∧ common) → (q ∧
 
         (p ∧ common) q common ConjunctionCompositionForward
         applySyllogism
+))
+
+thm (conjoinRR () ((H (p → q))) ((p ∧ r) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationRR
+        applyModusPonens
 ))
 </jh>
 
@@ -436,6 +457,51 @@ thm (conjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∧ q) → (r ∧ s)) (
         p r q s ConjunctionMultiplication
         applyModusPonens
 ))
+
+thm (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))) (
+        r ImplicationReflexivity
+
+        r r p q ConjunctionMultiplication
+        export
+
+        applyModusPonens
+))
+
+thm (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))) (
+        p q r ConjunctionMultiplicationLL
+
+        r q ConjunctionCommutativityImplication
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (ConjunctionMultiplicationRL () () ((p → q) → ((p ∧ r) → (r ∧ q))) (
+        p q r ConjunctionMultiplicationRR
+
+        q r ConjunctionCommutativityImplication
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (conjoinLL () ((H (p → q))) ((r ∧ p) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationLL
+        applyModusPonens
+))
+
+thm (conjoinLR () ((H (p → q))) ((r ∧ p) → (q ∧ r)) (
+        H
+        p q r ConjunctionMultiplicationLR
+        applyModusPonens
+))
+
+thm (conjoinRL () ((H (p → q))) ((p ∧ r) → (r ∧ q)) (
+        H
+        p q r ConjunctionMultiplicationRL
+        applyModusPonens
+))
 </jh>
 
 == Disjunction ==
@@ -460,6 +526,124 @@ thm (composeDisjunction () ((HP (p → r)) (HQ (q → r))) ((p ∨ q) → r) (
 ))
 </jh>
 
+=== Commutativity ===
+<jh>
+thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
+        q p DisjunctionRightIntroduction
+        p q DisjunctionLeftIntroduction
+        p (q ∨ p) q DisjunctionCompositionAxiom
+        applyModusPonens
+        applyModusPonens
+))
+</jh>
+
+=== Builders ===
+
+==== DisjunctionSummationRL ====
+
+Our first disjunction builder is proved analogously to <code>ConjunctionMultiplicationRR</code>.
+
+<jh>
+thm (DisjunctionSummationXL-p () () ((p → q) → (p → (common ∨ q))) (
+        q common DisjunctionLeftIntroduction
+        p addCommonAntecedent
+))
+
+thm (DisjunctionSummationXL-common () () ((p → q) → (common → (common ∨ q))) (
+        common q DisjunctionRightIntroduction
+        (p → q) introduceAntecedent
+))
+
+thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ common) → (common ∨ q))) (
+        p q common DisjunctionSummationXL-p
+        p q common DisjunctionSummationXL-common
+        composeConjunction
+
+        p (common ∨ q) common DisjunctionCompositionAxiom
+        import
+        applySyllogism
+))
+
+thm (disjoinRL () ((H (p → q))) ((p ∨ r) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationRL
+        applyModusPonens
+))
+</jh>
+
+==== DisjunctionSummation ====
+
+This theorem follows exactly as <code>ConjunctionMultiplication</code>, except that we use <code>DisjunctionSummationRL</code> instead of <code>ConjunctionMultiplicationRR</code> and <code>ConjunctionCommutativity</code>.
+
+<jh>
+thm (DisjunctionSummation () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) (
+        (p → r) (q → s) ConjunctionRightElimination
+        p r q DisjunctionSummationRL
+        applySyllogism
+        (p → r) (q → s) ConjunctionLeftElimination
+        q s r DisjunctionSummationRL
+        applySyllogism
+        applySyllogismInConsequent
+))
+
+thm (disjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
+        H1 H2 introduceConjunction
+        p r q s DisjunctionSummation
+        applyModusPonens
+))
+</jh>
+
+==== DisjunctionSummation variations ====
+We could prove the <code>DisjunctionSummationLL</code>, <code>DisjunctionSummationRR</code>, and <code>DisjunctionSummationLR</code> the same way that we proved <code>DisjunctionSummationRL</code>, but here we prove them as special cases of <code>DisjunctionSummation</code>.
+
+<jh>
+thm (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))) (
+        r ImplicationReflexivity
+
+        r r p q DisjunctionSummation
+        export
+
+        applyModusPonens
+))
+
+thm (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))) (
+        p q r DisjunctionSummationLL
+
+        r q DisjunctionCommutativityImplication
+        (p → q) introduceAntecedent
+
+        applySyllogismInConsequent
+))
+
+thm (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))) (
+        r ImplicationReflexivity
+
+        p q r r DisjunctionSummation
+        export
+        applyComm
+
+        applyModusPonens
+))
+
+thm (disjoinLL () ((H (p → q))) ((r ∨ p) → (r ∨ q)) (
+        H
+        p q r DisjunctionSummationLL
+        applyModusPonens
+))
+
+thm (disjoinLR () ((H (p → q))) ((r ∨ p) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationLR
+        applyModusPonens
+))
+
+thm (disjoinRR () ((H (p → q))) ((p ∨ r) → (q ∨ r)) (
+        H
+        p q r DisjunctionSummationRR
+        applyModusPonens
+))
+</jh>
+
 == Biconditional ==
 
 We define the biconditional as the conjunction of two implications:
@@ -475,6 +659,25 @@ thm (introduceBiconditionalFromImplications ()
         HFORWARD
         HREVERSE
         introduceConjunction
+))
+</jh>
+
+We can eliminate one of the implications of a biconditional:
+<jh>
+thm (BiconditionalForwardElimination () () ((p ↔ q) → (q → p)) (
+        (p → q) (q → p) ConjunctionLeftElimination
+))
+
+thm (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)) (
+        (p → q) (q → p) ConjunctionRightElimination
+))
+
+thm (eliminateBiconditionalForward () ((H (p ↔ q))) (q → p) (
+        H eliminateLeftConjunction
+))
+
+thm (eliminateBiconditionalReverse () ((H (p ↔ q))) (p → q) (
+        H eliminateRightConjunction
 ))
 </jh>
 
@@ -508,6 +711,61 @@ thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → 
 
         p q r DisjunctionCompositionReverse
         introduceBiconditionalFromImplications
+))
+</jh>
+
+=== Reflexive, symmetric, and transitive ===
+
+The biconditional has these three properties (which correspond to those defining an [[w:equivalence relation|equivalence relation]]). The proofs here are taken directly from [[Principia Mathematica propositional logic]], as they are also valid in intuitionistic logic.
+
+<jh>
+thm (BiconditionalReflexivity () () (p ↔ p) (
+        p Id
+        p Id
+        introduceBiconditionalFromImplications
+))
+
+thm (BiconditionalSymmetryImplication () () ((p ↔ q) → (q ↔ p)) (
+        (p → q) (q → p) ConjunctionCommutativityImplication
+))
+
+thm (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)) (
+        p q BiconditionalSymmetryImplication
+        q p BiconditionalSymmetryImplication
+        introduceBiconditionalFromImplications
+))
+
+thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
+        H
+        p q BiconditionalSymmetryImplication
+        applyModusPonens
+))
+
+thm (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)) (
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionRightElimination
+        applySyllogism
+
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionRightElimination
+        applySyllogism
+        applySyllogismInConsequent
+
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionLeftElimination
+        applySyllogism
+
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionLeftElimination
+        applySyllogism
+        applySyllogismInConsequent
+        composeConjunction
+))
+
+thm (applyBiconditionalTransitivity () ((H1 (p ↔ q)) (H2 (q ↔ r))) (p ↔ r) (
+        H1 H2 introduceConjunction
+        p q r BiconditionalTransitivity
+        applyModusPonens
 ))
 </jh>
 
@@ -633,14 +891,6 @@ thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) (
 
 ==== Disjunction commutativity ====
 <jh>
-thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
-        q p DisjunctionRightIntroduction
-        p q DisjunctionLeftIntroduction
-        p (q ∨ p) q DisjunctionCompositionAxiom
-        applyModusPonens
-        applyModusPonens
-))
-
 thm (DisjunctionCommutativity () () ((p ∨ q) ↔ (q ∨ p)) (
         p q DisjunctionCommutativityImplication
         q p DisjunctionCommutativityImplication
@@ -879,7 +1129,18 @@ thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
         eliminateBiconditionalReverse
         applySyllogism
 ))
-#stmt (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
+</jh>
+
+We can pull the same trick for disjunction to get our final version of DeMorgan's law.
+<jh>
+thm (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))) (
+        p DoubleNegation
+        q DoubleNegation
+        disjoin
+
+        (¬ p) (¬ q) DeMorganPCPReverse
+        applySyllogism
+))
 </jh>
 
 === Double negation and connectives ===

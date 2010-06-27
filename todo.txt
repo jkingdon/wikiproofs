@@ -1,12 +1,11 @@
 Items which may be doable without a network connection:
 
 * more intuitionistic logic
-  - DisjunctionSummation*, other ConjunctionMultiplication* - perhaps can prove these as I need them
-  - DeMorganNDNReverse - maybe from double negation introduction and DeMorganPDPSwapped?
-  - DeMorganNCNReverse - a similar trick might work
   - NegationBuilder follows easily from TranspositionIntroduction
-  - DisjunctionLeftDistribution - both directions seem to be straightforward from composeConjunction or composeDisjunction, and the usual suspects
-  - DisjunctionRightDistribution - from commutativity, I think, but we'd likely need to do builders first
+  - distributive laws. the principia proof works except for:
+thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p ∨ (q ∧ r))) (
+
+  - DisjunctionLeftDistribution - both directions seem to be straightforward from composeConjunction or composeDisjunction, and the usual suspects (copy-paste from principia)
   - ModusTollens - seems easy
   - biconditional (should mostly be copy-paste from Principia, I think)
 * convenience theorems of propositional logic
@@ -24,12 +23,4 @@ Items which may be doable without a network connection:
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 
 To do with network:
-
-Draft of essay:
-
-What is the difference between an unsound definition like constx (def ((constx) x) from [[User:GrafZahl/unsound-def.gh]]) and a sound one like ⊤ or ⊥ in [[Principia Mathematica propositional logic]], or ≤ in [[Basic arithmetic]]? It is that the sound ones do not depend on the choice of the dummy variable.  For example, for ⊥, p ∧ ¬ p is equivalent to q ∧ ¬ q.  This is not just a metalogical argument; it is a theorem we can prove within the system (and indeed the relevant proofs are Tautology and Contradiction in[[Principia Mathematica propositional logic]] and LessEqual in [[Basic arithmetic]]).  No such proof is forthcoming with constx.  In other words, noone can expect to get safe definitions (which include dummy variables) for free; the safety of a definition must be proved.
-
-How does this help us design a definition mechanism?  The most straightforward way is relatively simple.  Every time a definition gets applied, dummy variables are expanded to fresh variables. In some very limited circumstances, these can be unified with named variables, but only if all instances of a particular named variable unify. The goal here is that the definition can be used (a) freely if it has no dummy variables, or (b) if it has dummy variables, mainly in order to prove a theorem similar to LessEqual. I'm not sure I can be completely precise about "all instances of a particular named variable unify", but it might be equivalent to saying that dummy variables (including a variable any one of them unifies with) are considered to have a disjoint variable constraint with everything else in the statement where the definition appears.
-
-Examples: in [[User:GrafZahl/Definitions_in_JHilbert]], the folding of (bar a b b) to (foo a b) is not legitimate because the dummy variable c can fold only to a variable which appears nowhere else, and b appears elsewhere here. In unsound-def.gh, <not sure>.
 
