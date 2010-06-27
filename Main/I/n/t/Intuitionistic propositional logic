@@ -514,6 +514,28 @@ thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ common) → (common ∨
 ))
 </jh>
 
+==== DisjunctionSummation ====
+
+This theorem follows exactly as <code>ConjunctionMultiplication</code>, except that we use <code>DisjunctionSummationRL</code> instead of <code>ConjunctionMultiplicationRR</code> and <code>ConjunctionCommutativity</code>.
+
+<jh>
+thm (DisjunctionSummation () () (((p → r) ∧ (q → s)) → ((p ∨ q) → (r ∨ s))) (
+        (p → r) (q → s) ConjunctionRightElimination
+        p r q DisjunctionSummationRL
+        applySyllogism
+        (p → r) (q → s) ConjunctionLeftElimination
+        q s r DisjunctionSummationRL
+        applySyllogism
+        applySyllogismInConsequent
+))
+
+thm (disjoin () ((H1 (p → r)) (H2 (q → s))) ((p ∨ q) → (r ∨ s)) (
+        H1 H2 introduceConjunction
+        p r q s DisjunctionSummation
+        applyModusPonens
+))
+</jh>
+
 == Biconditional ==
 
 We define the biconditional as the conjunction of two implications:
