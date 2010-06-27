@@ -488,7 +488,7 @@ thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
 
 === Builders ===
 
-==== DisjunctionSummationRR ====
+==== DisjunctionSummationRL ====
 
 Our first disjunction builder is proved analogously to <code>ConjunctionMultiplicationRR</code>.
 
@@ -503,7 +503,7 @@ thm (DisjunctionSummationXL-common () () ((p → q) → (common → (common ∨ 
         (p → q) introduceAntecedent
 ))
 
-thm (DisjunctionSummationRL () () ((p → q) → ((p ∧ common) → (q ∧ common))) (
+thm (DisjunctionSummationRL () () ((p → q) → ((p ∨ common) → (common ∨ q))) (
         p q common DisjunctionSummationXL-p
         p q common DisjunctionSummationXL-common
         composeConjunction
