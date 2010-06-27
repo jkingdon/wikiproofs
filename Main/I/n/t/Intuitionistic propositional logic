@@ -606,6 +606,61 @@ thm (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → 
 ))
 </jh>
 
+=== Reflexive, symmetric, and transitive ===
+
+The biconditional has these three properties (which correspond to those defining an [[w:equivalence relation|equivalence relation]]). The proofs here are taken directly from [[Principia Mathematica propositional logic]], as they are also valid in intuitionistic logic.
+
+<jh>
+thm (BiconditionalReflexivity () () (p ↔ p) (
+        p Id
+        p Id
+        introduceBiconditionalFromImplications
+))
+
+thm (BiconditionalSymmetryImplication () () ((p ↔ q) → (q ↔ p)) (
+        (p → q) (q → p) ConjunctionCommutativityImplication
+))
+
+thm (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)) (
+        p q BiconditionalSymmetryImplication
+        q p BiconditionalSymmetryImplication
+        introduceBiconditionalFromImplications
+))
+
+thm (swapBiconditional () ((H (p ↔ q))) (q ↔ p) (
+        H
+        p q BiconditionalSymmetryImplication
+        applyModusPonens
+))
+
+thm (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)) (
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionRightElimination
+        applySyllogism
+
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionRightElimination
+        applySyllogism
+        applySyllogismInConsequent
+
+        (p ↔ q) (q ↔ r) ConjunctionLeftElimination
+        (q → r) (r → q) ConjunctionLeftElimination
+        applySyllogism
+
+        (p ↔ q) (q ↔ r) ConjunctionRightElimination
+        (p → q) (q → p) ConjunctionLeftElimination
+        applySyllogism
+        applySyllogismInConsequent
+        composeConjunction
+))
+
+thm (applyBiconditionalTransitivity () ((H1 (p ↔ q)) (H2 (q ↔ r))) (p ↔ r) (
+        H1 H2 introduceConjunction
+        p q r BiconditionalTransitivity
+        applyModusPonens
+))
+</jh>
+
 === Algebraic laws for disjunction and conjunction ===
 Most of the theorems of the propositional calculus which are analagous to those of other [[w:Abstract algebra|algebras]], showing properties such as commutivity and associativity, also hold for intuitionistic logic.
 
