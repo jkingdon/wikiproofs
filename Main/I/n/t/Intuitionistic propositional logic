@@ -966,7 +966,18 @@ thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
         eliminateBiconditionalReverse
         applySyllogism
 ))
-#stmt (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
+</jh>
+
+We can pull the same trick for disjunction to get our final version of DeMorgan's law.
+<jh>
+thm (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))) (
+        p DoubleNegation
+        q DoubleNegation
+        disjoin
+
+        (¬ p) (¬ q) DeMorganPCPReverse
+        applySyllogism
+))
 </jh>
 
 === Double negation and connectives ===
