@@ -12,4 +12,15 @@ var (variable x y x0 y0 x1 y1 k n)
 var (object s t u)
 
 var (nat a b c)
+
+thm (warmup ((y φ)) () (φ → (∀ y φ)) (
+        φ y Generalization
+))
+
+def ((constx) x)
+
+# blows up with "Required distinct variable constraints are not a subset of actual distinct variable constraints":
+#thm (badth () () (φ → (∀ (constx) φ)) (
+#        φ (constx) Generalization
+#))
 </jh>
