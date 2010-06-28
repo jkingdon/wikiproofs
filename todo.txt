@@ -2,12 +2,8 @@ Items which may be doable without a network connection:
 
 * more intuitionistic logic
   - NegationBuilder follows easily from TranspositionIntroduction
-  - distributive laws. the principia proof works except for:
-thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p ∨ (q ∧ r))) (
-
-  - DisjunctionLeftDistribution - both directions seem to be straightforward from composeConjunction or composeDisjunction, and the usual suspects (copy-paste from principia)
   - ModusTollens - seems easy
-  - biconditional (should mostly be copy-paste from Principia, I think)
+  - CaseElimination - variant with disjunctions.  Can we show that the full version implies TertiumNonDatur? (informally, I guess, although I suppose we could have a bunch of interface files for TertiumNonDatur equivalences).
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -23,4 +19,8 @@ thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 
 To do with network:
+
+* download wikipedia page on intuitionistic logic
+* stanford encyclopedia of philosophy article while I'm at it
+* upload proofs
 
