@@ -962,6 +962,266 @@ thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) (
 ))
 </jh>
 
+=== Builders ===
+
+The builders for conjunction and disjunction can be proved using the proofs in [[Principia Mathematica propositional logic]].
+
+==== Conjunction ====
+
+<jh>
+thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
+        p q (r ∧ s) ConjunctionAssociativity
+        eliminateBiconditionalReverse
+
+        p Id
+        q r s ConjunctionAssociativity
+        eliminateBiconditionalForward
+        conjoin
+
+        applySyllogism
+
+        p Id
+        q r ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        s Id 
+        conjoin
+        conjoin
+
+        applySyllogism
+
+        p Id
+        r q s ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        conjoin
+
+        applySyllogism
+
+        p r (q ∧ s) ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+
+thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))) ( # *4.38
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
+        
+        p q r s ConjunctionMultiplication
+        q p s r ConjunctionMultiplication
+        conjoin
+
+        applySyllogism
+))
+
+thm (buildConjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∧ r) ↔ (q ∧ s)) (
+        H1 H2 introduceConjunction
+        p q r s ConjunctionFunction
+        applyModusPonens
+))
+</jh>
+
+==== Disjunction ====
+This is just like the theorem for conjunction, except that we build on the partial builder theorem DisjunctionSummation instead of ConjunctionMultiplication:
+
+<jh>
+thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))) ( # *4.39
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
+        
+        p q r s DisjunctionSummation
+        q p s r DisjunctionSummation
+        conjoin
+
+        applySyllogism
+))
+
+thm (buildDisjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∨ r) ↔ (q ∨ s)) (
+        H1 H2 introduceConjunction
+        p q r s DisjunctionFunction
+        applyModusPonens
+))
+</jh>
+
+=== Distributivity ===
+Here we take up distributivity of disjunction over conjunction, and conjunction over disjunction.  Most of the proofs given in [[Principia Mathematica propositional logic]] apply for intuitionistic logic, as they are fairly straightforward applications of disjunction and conjunction composition.  The tough one is <code>((p ∨ q) ∧ (p ∨ r)) → p ∨ (q ∧ r)</code> (because it has a conjunction in the antecedent and a disjunction in the consequent, it won't yield to straightforward composition tricks).  ''Principia'' proves it from the equivalence of <code>p ∨ q</code> and <code>¬ p → q</code> (which does not hold in both directions in intuitionistic logic).  We prove it from import and builders.
+
+The first step is a lemma which will let us harmlessly apply builders more than once.
+<jh>
+thm (RedundantDisjunctionAbsorption () () ((p ∨ (p ∨ q)) → (p ∨ q)) (
+        p p q DisjunctionAssociativity
+        eliminateBiconditionalForward
+
+        p DisjunctionIdempotence
+        eliminateBiconditionalForward
+        q disjoinRR
+
+        applySyllogism
+))
+</jh>
+
+Now we are ready for the proof of the tough distributivity case.
+<jh>
+thm (DisjunctionLeftDistribution-reverse () () (((p ∨ q) ∧ (p ∨ r)) → (p ∨ (q ∧ r))) (
+</jh>
+We start with <code>r → (q → (q ∧ r))</code>, and disjoin <code>p</code> to both sides of the second implication.
+<jh>
+        r q ConjunctionLeftIntroduction
+        q (q ∧ r) p DisjunctionSummationLL
+        applySyllogism
+</jh>
+That gives us <code>r → (p ∨ q → p ∨ (q ∧ r))</code>. We commute antecedents and disjoin <code>p</code> again.
+<jh>
+        applyComm
+        r (p ∨ (q ∧ r)) p DisjunctionSummationLL
+        applySyllogism
+</jh>
+We now have <code>p ∨ q → (p ∨ r → p ∨ (p ∨ (q ∧ r)))</code>.  We just need to import, remove the redundant <code>p</code>, and we are done.
+<jh>
+        import
+        p (q ∧ r) RedundantDisjunctionAbsorption
+        applySyllogism
+))
+</jh>
+
+The rest of this section contains proofs taken from [[Principia Mathematica propositional logic]].
+
+<jh>
+thm (ConjunctionLeftDistribution-forward () () 
+  ((p ∧ (q ∨ r)) → ((p ∧ q) ∨ (p ∧ r))) (
+        p q ConjunctionRightIntroduction
+        p r ConjunctionRightIntroduction
+        composeConjunction
+
+        q (p ∧ q) r (p ∧ r) DisjunctionSummation
+        applySyllogism
+
+        import
+))
+
+thm (ConjunctionLeftDistribution-reverse () ()
+  (((p ∧ q) ∨ (p ∧ r)) → (p ∧ (q ∨ r))) (
+        p q ConjunctionRightElimination
+        p r ConjunctionRightElimination
+        composeDisjunction
+
+        p q ConjunctionLeftElimination
+        p r ConjunctionLeftElimination
+        disjoin
+
+        composeConjunction
+))
+
+thm (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p ∧ r))) (
+        p q r ConjunctionLeftDistribution-forward
+        p q r ConjunctionLeftDistribution-reverse
+        introduceBiconditionalFromImplications
+))
+
+thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q) ∧ (p ∨ r))) (
+        q r ConjunctionRightElimination
+        p disjoinLL
+
+        q r ConjunctionLeftElimination
+        p disjoinLL
+
+        composeConjunction
+))
+
+thm (DisjunctionLeftDistribution () () ((p ∨ (q ∧ r)) ↔ ((p ∨ q) ∧ (p ∨ r))) (
+        p q r DisjunctionLeftDistribution-forward
+        p q r DisjunctionLeftDistribution-reverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+Also from [[Principia Mathematica propositional logic]] are commuted versions of both laws and some rules:
+
+<jh>
+thm (DisjunctionRightDistribution () () (((p ∧ q) ∨ r) ↔ ((p ∨ r) ∧ (q ∨ r))) (
+        (p ∧ q) r DisjunctionCommutativity
+        r p q DisjunctionLeftDistribution
+        applyBiconditionalTransitivity
+
+        r p DisjunctionCommutativity
+        r q DisjunctionCommutativity
+        buildConjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (q ∧ r))) (
+        (p ∨ q) r ConjunctionCommutativity
+        r p q ConjunctionLeftDistribution
+        applyBiconditionalTransitivity
+
+        r p ConjunctionCommutativity
+        r q ConjunctionCommutativity
+        buildDisjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (distributeLeftDisjunction () ((H (p ∨ (q ∧ r)))) ((p ∨ q) ∧ (p ∨ r)) (
+        H
+        p q r DisjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectLeftDisjunction () ((H ((p ∨ q) ∧ (p ∨ r)))) (p ∨ (q ∧ r)) (
+        H
+        p q r DisjunctionLeftDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (distributeRightDisjunction () ((H ((p ∧ q) ∨ r))) ((p ∨ r) ∧ (q ∨ r)) (
+        H
+        p q r DisjunctionRightDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectRightDisjunction () ((H ((p ∨ r) ∧ (q ∨ r)))) ((p ∧ q) ∨ r) (
+        H
+        p q r DisjunctionRightDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (distributeLeftConjunction () ((H (p ∧ (q ∨ r)))) ((p ∧ q) ∨ (p ∧ r)) (
+        H
+        p q r ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectLeftConjunction () ((H ((p ∧ q) ∨ (p ∧ r)))) (p ∧ (q ∨ r)) (
+        H
+        p q r ConjunctionLeftDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (distributeRightConjunction () ((H ((p ∨ q) ∧ r))) ((p ∧ r) ∨ (q ∧ r)) (
+        H
+        p q r ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectRightConjunction () ((H ((p ∧ r) ∨ (q ∧ r)))) ((p ∨ q) ∧ r) (
+        H
+        p q r ConjunctionRightDistribution
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
 == Modus Ponens ==
 This is just an implication corresponding to the modus ponens rule:
 <jh>
