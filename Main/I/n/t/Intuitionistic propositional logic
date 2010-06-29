@@ -1257,6 +1257,28 @@ thm (introduceTransposition () ((H (p → q))) ((¬ q) → (¬ p)) (
 ))
 </jh>
 
+Modus tollens is an easy consequence of transposition introduction.
+
+<jh>
+thm (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)) (
+        p q TranspositionIntroduction
+        (¬ q) conjoinLL
+
+        (¬ q) (¬ p) ModusPonens
+        applySyllogism
+))
+
+thm (applyModusTollens () ((H (¬ q)) (HIMP (p → q))) (¬ p) (
+        H
+        HIMP
+        introduceConjunction
+
+        q p ModusTollens
+
+        applyModusPonens
+))
+</jh>
+
 === Double Negation ===
 Double negation introduction follows fairly directly from our first negation axiom.
 <jh>
