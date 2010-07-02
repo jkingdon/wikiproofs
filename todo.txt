@@ -2,8 +2,10 @@ Items which may be doable without a network connection:
 
 * more intuitionistic logic
   - NegationBuilder follows easily from TranspositionIntroduction
-  - ModusTollens - seems easy
   - CaseElimination - variant with disjunctions.  Can we show that the full version implies TertiumNonDatur? (informally, I guess, although I suppose we could have a bunch of interface files for TertiumNonDatur equivalences).
+  (p -> p) & (~ p -> p) -> p
+  (~ p -> p) -> p
+  Q: does this imply ~ p | p as in classical logic?
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -20,7 +22,4 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-* download wikipedia page on intuitionistic logic
-* stanford encyclopedia of philosophy article while I'm at it
-* upload proofs
 

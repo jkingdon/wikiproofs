@@ -962,7 +962,91 @@ thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) (
 ))
 </jh>
 
-==== Distributivity ====
+=== Builders ===
+
+The builders for conjunction and disjunction can be proved using the proofs in [[Principia Mathematica propositional logic]].
+
+==== Conjunction ====
+
+<jh>
+thm (ConjunctionFunction-1 () () (((p ∧ q) ∧ (r ∧ s)) → ((p ∧ r) ∧ (q ∧ s))) (
+        p q (r ∧ s) ConjunctionAssociativity
+        eliminateBiconditionalReverse
+
+        p Id
+        q r s ConjunctionAssociativity
+        eliminateBiconditionalForward
+        conjoin
+
+        applySyllogism
+
+        p Id
+        q r ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        s Id 
+        conjoin
+        conjoin
+
+        applySyllogism
+
+        p Id
+        r q s ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        conjoin
+
+        applySyllogism
+
+        p r (q ∧ s) ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+
+thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))) ( # *4.38
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
+        
+        p q r s ConjunctionMultiplication
+        q p s r ConjunctionMultiplication
+        conjoin
+
+        applySyllogism
+))
+
+thm (buildConjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∧ r) ↔ (q ∧ s)) (
+        H1 H2 introduceConjunction
+        p q r s ConjunctionFunction
+        applyModusPonens
+))
+</jh>
+
+==== Disjunction ====
+This is just like the theorem for conjunction, except that we build on the partial builder theorem DisjunctionSummation instead of ConjunctionMultiplication:
+
+<jh>
+thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))) ( # *4.39
+        (p → q) (q → p) (r → s) (s → r) ConjunctionFunction-1
+        
+        p q r s DisjunctionSummation
+        q p s r DisjunctionSummation
+        conjoin
+
+        applySyllogism
+))
+
+thm (buildDisjunction () (
+  (H1 (p ↔ q))
+  (H2 (r ↔ s)))
+  ((p ∨ r) ↔ (q ∨ s)) (
+        H1 H2 introduceConjunction
+        p q r s DisjunctionFunction
+        applyModusPonens
+))
+</jh>
+
+=== Distributivity ===
 Here we take up distributivity of disjunction over conjunction, and conjunction over disjunction.  Most of the proofs given in [[Principia Mathematica propositional logic]] apply for intuitionistic logic, as they are fairly straightforward applications of disjunction and conjunction composition.  The tough one is <code>((p ∨ q) ∧ (p ∨ r)) → p ∨ (q ∧ r)</code> (because it has a conjunction in the antecedent and a disjunction in the consequent, it won't yield to straightforward composition tricks).  ''Principia'' proves it from the equivalence of <code>p ∨ q</code> and <code>¬ p → q</code> (which does not hold in both directions in intuitionistic logic).  We prove it from import and builders.
 
 The first step is a lemma which will let us harmlessly apply builders more than once.
@@ -1036,9 +1120,7 @@ thm (ConjunctionLeftDistribution () () ((p ∧ (q ∨ r)) ↔ ((p ∧ q) ∨ (p 
         p q r ConjunctionLeftDistribution-reverse
         introduceBiconditionalFromImplications
 ))
-</jh>
 
-<jh>
 thm (DisjunctionLeftDistribution-forward () () ((p ∨ (q ∧ r)) → ((p ∨ q) ∧ (p ∨ r))) (
         q r ConjunctionRightElimination
         p disjoinLL
@@ -1171,6 +1253,28 @@ The <code>ProofByContradiction</code> axiom is <code>(p → q) → ((p → ¬ q)
 thm (introduceTransposition () ((H (p → q))) ((¬ q) → (¬ p)) (
         H
         p q TranspositionIntroduction
+        applyModusPonens
+))
+</jh>
+
+Modus tollens is an easy consequence of transposition introduction.
+
+<jh>
+thm (ModusTollens () () (((¬ q) ∧ (p → q)) → (¬ p)) (
+        p q TranspositionIntroduction
+        (¬ q) conjoinLL
+
+        (¬ q) (¬ p) ModusPonens
+        applySyllogism
+))
+
+thm (applyModusTollens () ((H (¬ q)) (HIMP (p → q))) (¬ p) (
+        H
+        HIMP
+        introduceConjunction
+
+        q p ModusTollens
+
         applyModusPonens
 ))
 </jh>
