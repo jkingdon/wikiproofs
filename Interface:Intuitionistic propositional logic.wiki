@@ -198,6 +198,12 @@ stmt (TautologyId () () ((p → p) ↔ (⊤)))
 stmt (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)))
 </jh>
 
+In intuitionistic logic, the following theorems from [[Interface:Classical propositional calculus]] might be better termed "proved" and "disproved" (or some such terminology) rather than <code>True</code> and <code>NotFalse</code>, but they do hold as stated.
+<jh>
+stmt (True () () (⊤))
+stmt (NotFalse () () (¬ (⊥)))
+</jh>
+
 ==== Weakenings ====
 
 A biconditional makes a strong statement. Often, we only need a weaker statement. For introductions, see the section on [[#Truth function interdependencies|truth function interdependencies]].
