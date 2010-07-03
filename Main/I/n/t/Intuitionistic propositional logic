@@ -1282,7 +1282,7 @@ thm (applyModusTollens () ((H (¬ q)) (HIMP (p → q))) (¬ p) (
 === Double Negation ===
 Double negation introduction follows fairly directly from our first negation axiom.
 <jh>
-thm (DoubleNegation () () (p → (¬ (¬ p))) (
+thm (DoubleNegationIntroduction () () (p → (¬ (¬ p))) (
 </jh>
 The key step in the proof will be <code>(¬p → p) ∧ (¬p → ¬p) → ¬¬p</code> (which follows from the <code>ProofByContradiction</code> axiom). Taking the pieces of that formula one at a time, <code>p</code> implies <code>¬p → p</code>
 <jh>
@@ -1310,12 +1310,12 @@ thm (TripleNegation () () ((¬ (¬ (¬ p))) ↔ (¬ p)) (
 </jh>
 We prove the forward direction by taking <code>p → ¬ ¬ p</code> and transposing it.
 <jh>
-        p DoubleNegation
+        p DoubleNegationIntroduction
         introduceTransposition
 </jh>
-The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an instance of the <code>DoubleNegation</code> theorem.
+The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an instance of the <code>DoubleNegationIntroduction</code> theorem.
 <jh>
-        (¬ p) DoubleNegation
+        (¬ p) DoubleNegationIntroduction
 
         introduceBiconditionalFromImplications
 ))
@@ -1403,8 +1403,8 @@ thm (DeMorganPDPSwapped () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))) (
 The following result follows from double negation introduction and <code>DeMorganPDPSwapped</code>.
 <jh>
 thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
-        p DoubleNegation
-        q DoubleNegation
+        p DoubleNegationIntroduction
+        q DoubleNegationIntroduction
         conjoin
 
         (¬ p) (¬ q) DeMorganPDPSwapped
@@ -1416,8 +1416,8 @@ thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
 We can pull the same trick for disjunction to get our final version of DeMorgan's law.
 <jh>
 thm (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))) (
-        p DoubleNegation
-        q DoubleNegation
+        p DoubleNegationIntroduction
+        q DoubleNegationIntroduction
         disjoin
 
         (¬ p) (¬ q) DeMorganPCPReverse
@@ -1485,12 +1485,86 @@ thm (DoubleNegatedConjunction () () (((¬ (¬ p)) ∧ (¬ (¬ q))) ↔ (¬ (¬ (
 ))
 </jh>
 
+=== No contradictions ===
+The <code>Explosion</code> axiom amounts to denying that a proposition and its negation can both hold. Here we express this idea as a theorem (which is also found as *3.24 in [[Principia Mathematica propositional logic]]).
+<jh>
+thm (NoContradiction () () (¬ (p ∧ (¬ p))) (
+</jh>
+The proof is based on <code>¬ q → ¬ (p ∧ ¬ p)</code>, which is a rearrangment of <code>Explosion</code>.  To apply this we just need a theorem (any theorem) which starts with a negation, to plug in for <code>¬ q</code>.  The double negation of <code>Id</code> will do.
+<jh>
+        r Id
+        (r → r) DoubleNegationIntroduction
+        applyModusPonens
+
+        p (¬ (r → r)) Explosion
+        import
+        introduceTransposition
+
+        applyModusPonens
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
 <jh>
 def ((⊤) (¬ (p ∧ (¬ p))))
 def ((⊥) (p ∧ (¬ p)))
+</jh>
+
+Proving <code>TautologyId</code> is straightforward; the proof from [[Principia Mathematica propositional logic]] works with only the obvious changes for the difference between <code>Tautology</code> and <code>TautologyId</code>.
+
+<jh>
+thm (*3.4 () () ((p ∧ q) → (p → q)) (
+        p q ConjunctionLeftElimination
+        q p AntecedentIntroduction
+        applySyllogism
+))
+
+thm (*5.1 () () ((p ∧ q) → (p ↔ q)) (
+        p q *3.4
+
+        p q ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        q p *3.4
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (TautologyId () () ((p → p) ↔ (⊤)) (
+        p Id
+        q NoContradiction
+        introduceConjunction
+
+        (p → p) (¬ (q ∧ (¬ q))) *5.1
+        applyModusPonens
+))
+</jh>
+
+The <code>Contradiction</code> theorem also holds.  To prove it the same way as <code>TautologyId</code> would require <code>¬ p ∧ ¬ q → (p ↔ q)</code> (*5.21 in [[Principia Mathematica propositional logic]]). Since we don't have that, we can prove it in an even more direct way: a contradiction implies anything, including the consequent of each of the implications in this theorem.
+<jh>
+thm (ContradictionLemma () () ((p ∧ (¬ p)) → (q ∧ (¬ q))) (
+        p (q ∧ (¬ q)) Explosion
+        import
+))
+
+thm (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)) (
+        p q ContradictionLemma
+        q p ContradictionLemma
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+The next two are trivial.
+<jh>
+thm (True () () (⊤) (
+        p NoContradiction
+))
+
+thm (NotFalse () () (¬ (⊥)) (
+        p NoContradiction
+))
 </jh>
 
 == Export ==
