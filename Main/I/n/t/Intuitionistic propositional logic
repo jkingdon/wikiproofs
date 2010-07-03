@@ -1504,6 +1504,29 @@ The proof is based on <code>¬ q → ¬ (p ∧ ¬ p)</code>, which is a rearrang
 ))
 </jh>
 
+== Case elimination ==
+Proving a theorem by cases, as in <code>CaseElimination</code> of [[Interface:Classical propositional calculus]], is not, in general, allowed in intuitionism/constructivism. For example, there is a well-known non-constructive proof that an irrational number raised to an irrational power can be rational that proceeds by handling the cases where √2<sup>√2</sup> is rational or irrational, without establishing which one holds. A constructive proof, on the other hand, would need to establish whether √2<sup>√2</sup> was rational first.<ref>Su, Francis E., et al. "[http://www.math.hmc.edu/funfacts/ffiles/10004.3-5.shtml Rational Irrational Power]," [http://www.math.hmc.edu/funfacts Mudd Math Fun Facts], accessed 3 Jul 2010</ref>  We do note that <code>p ∨ q</code>, which is stronger than <code>¬ p → q</code> in intuitionistic logic, can be used for case elimination. This is more of a curiosity than a way of proving anything, as proving <code>p ∨ q</code> in intuitionistic logic would tend to be as hard as proving <code>q</code>.
+<jh>
+thm (DisjunctiveCaseElimination () () (((p ∨ q) ∧ ((¬ p) ∨ q)) → q) (
+</jh>
+We start by collecting the <code>q</code> from the left side to get <code>(p ∧ ¬ p) ∨ q</code>.
+<jh>
+        p (¬ p) q DisjunctionRightDistribution
+        eliminateBiconditionalForward
+</jh>
+Because <code>¬ (p ∧ ¬ p)</code> is a theorem, disjunctive syllogism gives us <code>(p ∧ ¬ p) ∨ q → q</code>.
+<jh>
+        p NoContradiction
+        (p ∧ (¬ p)) q DisjunctiveSyllogism
+        export
+        applyModusPonens
+</jh>
+And this is just a syllogism away from our desired result.
+<jh>
+        applySyllogism
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
