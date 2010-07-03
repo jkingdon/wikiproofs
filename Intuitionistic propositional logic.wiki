@@ -1485,6 +1485,25 @@ thm (DoubleNegatedConjunction () () (((¬ (¬ p)) ∧ (¬ (¬ q))) ↔ (¬ (¬ (
 ))
 </jh>
 
+=== No contradictions ===
+The <code>Explosion</code> axiom amounts to denying that a proposition and its negation can both hold. Here we express this idea as a theorem.
+<jh>
+thm (NoContradiction () () (¬ (p ∧ (¬ p))) (
+</jh>
+The proof is based on <code>¬ q → ¬ (p ∧ ¬ p)</code>, which is a rearrangment of <code>Explosion</code>.  To apply this we just need a theorem (any theorem) which starts with a negation, to plug in for <code>¬ q</code>.  The double negation of <code>Id</code> will do.
+<jh>
+        r Id
+        (r → r) DoubleNegation
+        applyModusPonens
+
+        p (¬ (r → r)) Explosion
+        import
+        introduceTransposition
+
+        applyModusPonens
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
@@ -1492,6 +1511,33 @@ We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a s
 def ((⊤) (¬ (p ∧ (¬ p))))
 def ((⊥) (p ∧ (¬ p)))
 </jh>
+
+Proving <code>TautologyId</code> is straightforward; the proof from [[Principia Mathematica propositional logic]] works with only the obvious changes for the difference between <code>Tautology</code> and <code>TautologyId</code>.
+
+thm (*3.4 () () ((p ∧ q) → (p → q)) (
+        p q ConjunctionLeftElimination
+        q p AntecedentIntroduction
+        applySyllogism
+))
+
+thm (*5.1 () () ((p ∧ q) → (p ↔ q)) (
+        p q *3.4
+
+        p q *3.22
+        q p *3.4
+        applySyllogism
+
+        composeConjunction
+))
+
+stmt (TautologyId () () ((p → p) ↔ (⊤)))
+        p Id
+        q NoContradiction
+        introduceConjunction
+
+        (p → p) (¬ (q ∧ (¬ q))) *5.1
+        applyModusPonens
+))
 
 == Export ==
 Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
