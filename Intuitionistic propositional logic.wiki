@@ -1504,6 +1504,29 @@ The proof is based on <code>¬ q → ¬ (p ∧ ¬ p)</code>, which is a rearrang
 ))
 </jh>
 
+== Case elimination ==
+Proving a theorem by cases, as in <code>CaseElimination</code> of [[Interface:Classical propositional calculus]], is not, in general, allowed in intuitionism/constructivism. For example, there is a clever non-constructive proof of (TODO: allude to that example about the irrational/rational exponentiation).  We do note that <code>p ∨ q</code>, which is stronger than <code>¬ p → q</code> in intuitionistic logic, can be used for case elimination.
+<jh>
+thm (DisjunctiveCaseElimination () () (((p ∨ q) ∧ ((¬ p) ∨ q)) → q) (
+</jh>
+We start by collecting the <code>q</code> from the left side to get <code>(p ∧ ¬ p) ∨ q</code>.
+<jh>
+        p q (¬ p) DisjunctionRightDistribution
+        eliminateBiconditionalForward
+</jh>
+Because <code>¬ (p ∧ ¬ p)</code> is a theorem, disjunctive syllogism gives us <code>(p ∧ ¬ p) ∨ q → q</code>.
+<jh>
+        p NoContradiction
+        (p ∧ (¬ p)) q DisjunctiveSyllogism
+        export
+        applyModusPonens
+</jh>
+And this is just a syllogism away from our desired result.
+<jh>
+        applySyllogism
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
