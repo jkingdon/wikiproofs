@@ -57,10 +57,6 @@ term (formula (⊥))
 
 Here are the statements which do not require any hypotheses.
 
-=== Constant statements ===
-
-(TODO: do True and NotFalse from [[Interface:Classical propositional calculus]] hold?)
-
 === Negation and implication ===
 
 [[w:double negative elimination|Double negation]] can be introduced but not eliminated, but triple negation is equivalent to single negation.<ref>Heyting, 1966, page 100</ref>
@@ -155,9 +151,9 @@ stmt (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))))
 stmt (ConjunctionLeftElimination () () ((p ∧ q) → q))
 stmt (ConjunctionRightElimination () () ((p ∧ q) → p))
 </jh>
-Case by case elimination: (TODO: this probably doesn't hold)
+Case by case elimination. We provide a version with disjunctions, but this is rather weaker than the classical version.
 <jh>
-stmt (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q))
+stmt (DisjunctiveCaseElimination () () (((p ∨ q) ∧ ((¬ p) ∨ q)) → q))
 </jh>
 Composition for disjunction and conjunction:
 <jh>
@@ -196,9 +192,16 @@ stmt (BiconditionalReflexivity () () (p ↔ p))
 stmt (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)))
 stmt (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)))
 </jh>
-The TertiumNonDatur (law of excluded middle) does not hold, nor does Tautology from [[Interface:Classical propositional calculus]], but Contradiction does. (TODO: right?)
+The <code>TertiumNonDatur</code> (law of excluded middle) does not hold. We can have <code>Tautology</code> and <code>Contradiction</code> from [[Interface:Classical propositional calculus]], as long as we rephrase the former to refer to another theorem rather than the <code>TertiumNonDatur</code>.
 <jh>
+stmt (TautologyId () () ((p → p) ↔ (⊤)))
 stmt (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)))
+</jh>
+
+In intuitionistic logic, the following theorems from [[Interface:Classical propositional calculus]] might be better termed "proved" and "disproved" (or "valid" and "invalid", or some such terminology) rather than <code>True</code> and <code>NotFalse</code>, but they do hold as stated.
+<jh>
+stmt (True () () (⊤))
+stmt (NotFalse () () (¬ (⊥)))
 </jh>
 
 ==== Weakenings ====
