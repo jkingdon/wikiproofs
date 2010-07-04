@@ -61,7 +61,7 @@ Here are the statements which do not require any hypotheses.
 
 [[w:double negative elimination|Double negation]] can be introduced but not eliminated, but triple negation is equivalent to single negation.<ref>Heyting, 1966, page 100</ref>
 <jh>
-stmt (DoubleNegation () () (p → (¬ (¬ p))))
+stmt (DoubleNegationIntroduction () () (p → (¬ (¬ p))))
 stmt (TripleNegation () () ((¬ (¬ (¬ p))) ↔ (¬ p)))
 </jh>
 Double negation is of great importance partly due to a metatheorem which states that <code>¬ ¬ p</code> is provable in intuitionistic logic if and only if <code>p</code> is provable in classical logic.  Here are two theorems relating to double negation; the converse of <code>DoubleNegatedDisjunction</code> does not hold.<ref>Heyting, 1966, page 101</ref>
@@ -151,7 +151,7 @@ stmt (ConjunctionRightIntroduction () () (p → (q → (p ∧ q))))
 stmt (ConjunctionLeftElimination () () ((p ∧ q) → q))
 stmt (ConjunctionRightElimination () () ((p ∧ q) → p))
 </jh>
-Case by case elimination.
+Case by case elimination. We provide a version with disjunctions, but this is rather weaker than the classical version.
 <jh>
 stmt (DisjunctiveCaseElimination () () (((p ∨ q) ∧ ((¬ p) ∨ q)) → q))
 </jh>
@@ -160,7 +160,7 @@ Composition for disjunction and conjunction:
 stmt (DisjunctionComposition () () (((p → r) ∧ (q → r)) ↔ ((p ∨ q) → r)))
 stmt (ConjunctionComposition () () (((p → q) ∧ (p → r)) ↔ (p → (q ∧ r))))
 </jh>
-Summation for disjunction. We use the suffixes <code>LL</code>, <code>LR</code>, <code>RL</code> and <code>RR</code> to indicate if the summands were added to the left or the right of antecedent or consequent, respectively. (TODO: do these hold?)
+Summation for disjunction. We use the suffixes <code>LL</code>, <code>LR</code>, <code>RL</code> and <code>RR</code> to indicate if the summands were added to the left or the right of antecedent or consequent, respectively.
 <jh>
 stmt (DisjunctionSummationLL () () ((p → q) → ((r ∨ p) → (r ∨ q))))
 stmt (DisjunctionSummationLR () () ((p → q) → ((r ∨ p) → (q ∨ r))))
@@ -168,7 +168,7 @@ stmt (DisjunctionSummationRL () () ((p → q) → ((p ∨ r) → (r ∨ q))))
 stmt (DisjunctionSummationRR () () ((p → q) → ((p ∨ r) → (q ∨ r))))
 stmt (DisjunctionSummation () () (((p → q) ∧ (r → s)) → ((p ∨ r) → (q ∨ s))))
 </jh>
-Multiplication for conjunction, with the same suffixes as above. (TODO: do these hold?)
+Multiplication for conjunction, with the same suffixes as above.
 <jh>
 stmt (ConjunctionMultiplicationLL () () ((p → q) → ((r ∧ p) → (r ∧ q))))
 stmt (ConjunctionMultiplicationLR () () ((p → q) → ((r ∧ p) → (q ∧ r))))
@@ -186,19 +186,19 @@ stmt (CommonConsequentAddition () () ((p → q) → ((q → r) → (p → r))))
 
 ==== Equivalence relation ====
 
-The biconditional simply creates an [[w:equivalence relation|equivalence relation]] among well-formed formulas: (TODO: These hold here, right?)
+As in classical logic, the biconditional can be thought of as creating an [[w:equivalence relation|equivalence relation]] among formulas.
 <jh>
 stmt (BiconditionalReflexivity () () (p ↔ p))
 stmt (BiconditionalSymmetry () () ((p ↔ q) ↔ (q ↔ p)))
 stmt (BiconditionalTransitivity () () (((p ↔ q) ∧ (q ↔ r)) → (p ↔ r)))
 </jh>
-The <code>TertiumNonDatur</code> (law of excluded middle) does not hold. We can have <code>Tautology</code> and <code>Contradiction</code> from [[Interface:Classical propositional calculus]], as long as we rephrase the former to refer to another theorem rather than the <code>TertiumNonDatur</code>. (TODO: right?)
+The <code>TertiumNonDatur</code> (law of excluded middle) does not hold. We can have <code>Tautology</code> and <code>Contradiction</code> from [[Interface:Classical propositional calculus]], as long as we rephrase the former to refer to another theorem rather than the <code>TertiumNonDatur</code>.
 <jh>
 stmt (TautologyId () () ((p → p) ↔ (⊤)))
 stmt (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)))
 </jh>
 
-In intuitionistic logic, the following theorems from [[Interface:Classical propositional calculus]] might be better termed "proved" and "disproved" (or some such terminology) rather than <code>True</code> and <code>NotFalse</code>, but they do hold as stated.
+In intuitionistic logic, the following theorems from [[Interface:Classical propositional calculus]] might be better termed "proved" and "disproved" (or "valid" and "invalid", or some such terminology) rather than <code>True</code> and <code>NotFalse</code>, but they do hold as stated.
 <jh>
 stmt (True () () (⊤))
 stmt (NotFalse () () (¬ (⊥)))
@@ -214,17 +214,13 @@ stmt (BiconditionalForwardElimination () () ((p ↔ q) → (q → p)))
 stmt (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)))
 </jh>
 
-When we think of a biconditional as two disjunctions, an intuitive naming convention is more elusive, but we currently call <code>(¬ p) ∨ q</code> the ''left'' one and <code>p ∨ (¬ q)</code> the ''right'' one. (TODO: make sure these are written correctly for the weaker intuitionist relationship between → and ∨)
-<jh>
-stmt (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))))
-stmt (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)))
-</jh>
+[[Interface:Classical propositional calculus]] has a similar set of weakenings to disjunctions, but they do not apply in intuitionistic logic.
 
 ==== Builders ====
 
-(TODO: if we don't have something like this, it will be hard to build formulas, but need to check that these hold.  In particular, NegationBuilder seems likely to be an implication rather than a biconditional, if it holds).
+We are able to build formulas as in classical logic. We give them different names than in [[Interface:Classical propositional calculus]] to reflect the lack of a simple notion of "true" and "false" in intuitionistic logic, and because <code>NegationBuilder</code> is only an implication (rather than the biconditional in classical logic).
 <jh>
-stmt (NegationBuilder () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))))
+stmt (NegationBuilder () () ((p ↔ q) → ((¬ p) ↔ (¬ q))))
 stmt (ImplicationBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
 stmt (DisjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
 stmt (ConjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
@@ -233,28 +229,27 @@ stmt (BiconditionalBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (
 
 ==== Connective interdependencies ====
 
-The connectives are not always independent of each other. We have already seen that in De Morgan's laws. Here are the remaining important interdependencies:
-Biconditional as bidirectional implication: (TODO: I think this one still works, and in fact can be the definition of the biconditional in some intuitionistic axiomizations).
+Although the connectives are interrelated in intuitionistic logic, most of the classical theorems expressing those relationships only hold as implications, rather than biconditionals. We have already seen that for De Morgan's laws. Here are some more.
+
+The biconditional is related to implication and conjunction as in classical logic.
 <jh>
 stmt (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))))
 </jh>
-Biconditional as disjunction of the two equivalence classes: (TODO: check on this)
+
+In a nutshell, disjunction makes a stronger statement than implication, but the details depend on where the negations are placed. In classical logic, by contrast, <code>p → q</code> is equivalent to <code>¬ p ∨ q</code> and likewise for other placements of the negations.
 <jh>
-stmt (BiconditionalDisjunction () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))))
+stmt (DisjunctionImplicationForward () () ((p ∨ q) → ((¬ p) → q)))
+stmt (ImplicationDisjunctionReverse () () (((¬ p) ∨ q) → (p → q)))
+stmt (NotImplicationDisjunction () () ((¬ (p → q)) → (¬ ((¬ p) ∨ q))))
+stmt (NotDisjunctionImplication () () ((¬ (p ∨ q)) ↔ (¬ ((¬ p) → q))))
 </jh>
-Biconditional as conjunction: (TODO: check on this)
+
+We do not have <code>BiconditionalDisjunction</code> from [[Interface:Classical propositional calculus]], and <code>BiconditionalConjunction</code> only in one direction.
 <jh>
-stmt (BiconditionalConjunction () () ((p ↔ q) ↔ (((¬ p) ∨ q) ∧ (p ∨ (¬ q)))))
+stmt (BiconditionalConjunctionReverse () () ((((¬ p) ∨ q) ∧ (p ∨ (¬ q))) → (p ↔ q)))
 </jh>
-Implication as disjunction: (TODO: This is just an implication, not a biconditional, and has other forms with some negation elsewhere)
-<jh>
-stmt (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)))
-</jh>
-Disjunction as implication: (TODO: This is just an implication, not a biconditional, and has other forms with some negation elsewhere)
-<jh>
-stmt (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)))
-</jh>
-Negation as implication.  This one still holds.
+
+Negation as implication.  This one holds as in classical logic.
 <jh>
 stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
 </jh>

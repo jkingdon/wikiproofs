@@ -1282,7 +1282,7 @@ thm (applyModusTollens () ((H (¬ q)) (HIMP (p → q))) (¬ p) (
 === Double Negation ===
 Double negation introduction follows fairly directly from our first negation axiom.
 <jh>
-thm (DoubleNegation () () (p → (¬ (¬ p))) (
+thm (DoubleNegationIntroduction () () (p → (¬ (¬ p))) (
 </jh>
 The key step in the proof will be <code>(¬p → p) ∧ (¬p → ¬p) → ¬¬p</code> (which follows from the <code>ProofByContradiction</code> axiom). Taking the pieces of that formula one at a time, <code>p</code> implies <code>¬p → p</code>
 <jh>
@@ -1310,12 +1310,12 @@ thm (TripleNegation () () ((¬ (¬ (¬ p))) ↔ (¬ p)) (
 </jh>
 We prove the forward direction by taking <code>p → ¬ ¬ p</code> and transposing it.
 <jh>
-        p DoubleNegation
+        p DoubleNegationIntroduction
         introduceTransposition
 </jh>
-The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an instance of the <code>DoubleNegation</code> theorem.
+The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an instance of the <code>DoubleNegationIntroduction</code> theorem.
 <jh>
-        (¬ p) DoubleNegation
+        (¬ p) DoubleNegationIntroduction
 
         introduceBiconditionalFromImplications
 ))
@@ -1403,8 +1403,8 @@ thm (DeMorganPDPSwapped () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))) (
 The following result follows from double negation introduction and <code>DeMorganPDPSwapped</code>.
 <jh>
 thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
-        p DoubleNegation
-        q DoubleNegation
+        p DoubleNegationIntroduction
+        q DoubleNegationIntroduction
         conjoin
 
         (¬ p) (¬ q) DeMorganPDPSwapped
@@ -1416,8 +1416,8 @@ thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
 We can pull the same trick for disjunction to get our final version of DeMorgan's law.
 <jh>
 thm (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))) (
-        p DoubleNegation
-        q DoubleNegation
+        p DoubleNegationIntroduction
+        q DoubleNegationIntroduction
         disjoin
 
         (¬ p) (¬ q) DeMorganPCPReverse
@@ -1505,13 +1505,13 @@ The proof is based on <code>¬ q → ¬ (p ∧ ¬ p)</code>, which is a rearrang
 </jh>
 
 == Case elimination ==
-Proving a theorem by cases, as in <code>CaseElimination</code> of [[Interface:Classical propositional calculus]], is not, in general, allowed in intuitionism/constructivism. For example, there is a clever non-constructive proof of (TODO: allude to that example about the irrational/rational exponentiation).  We do note that <code>p ∨ q</code>, which is stronger than <code>¬ p → q</code> in intuitionistic logic, can be used for case elimination.
+Proving a theorem by cases, as in <code>CaseElimination</code> of [[Interface:Classical propositional calculus]], is not, in general, allowed in intuitionism/constructivism. For example, there is a well-known non-constructive proof that an irrational number raised to an irrational power can be rational that proceeds by handling the cases where √2<sup>√2</sup> is rational or irrational, without establishing which one holds. A constructive proof, on the other hand, would need to establish whether √2<sup>√2</sup> was rational first.<ref>Su, Francis E., et al. "[http://www.math.hmc.edu/funfacts/ffiles/10004.3-5.shtml Rational Irrational Power]," [http://www.math.hmc.edu/funfacts Mudd Math Fun Facts], accessed 3 Jul 2010</ref>  We do note that <code>p ∨ q</code>, which is stronger than <code>¬ p → q</code> in intuitionistic logic, can be used for case elimination. This is more of a curiosity than a way of proving anything, as proving <code>p ∨ q</code> in intuitionistic logic would tend to be as hard as proving <code>q</code>.
 <jh>
 thm (DisjunctiveCaseElimination () () (((p ∨ q) ∧ ((¬ p) ∨ q)) → q) (
 </jh>
 We start by collecting the <code>q</code> from the left side to get <code>(p ∧ ¬ p) ∨ q</code>.
 <jh>
-        p q (¬ p) DisjunctionRightDistribution
+        p (¬ p) q DisjunctionRightDistribution
         eliminateBiconditionalForward
 </jh>
 Because <code>¬ (p ∧ ¬ p)</code> is a theorem, disjunctive syllogism gives us <code>(p ∧ ¬ p) ∨ q → q</code>.
@@ -1537,6 +1537,7 @@ def ((⊥) (p ∧ (¬ p)))
 
 Proving <code>TautologyId</code> is straightforward; the proof from [[Principia Mathematica propositional logic]] works with only the obvious changes for the difference between <code>Tautology</code> and <code>TautologyId</code>.
 
+<jh>
 thm (*3.4 () () ((p ∧ q) → (p → q)) (
         p q ConjunctionLeftElimination
         q p AntecedentIntroduction
@@ -1546,14 +1547,15 @@ thm (*3.4 () () ((p ∧ q) → (p → q)) (
 thm (*5.1 () () ((p ∧ q) → (p ↔ q)) (
         p q *3.4
 
-        p q *3.22
+        p q ConjunctionCommutativity
+        eliminateBiconditionalReverse
         q p *3.4
         applySyllogism
 
         composeConjunction
 ))
 
-thm (TautologyId () () ((p → p) ↔ (⊤)))
+thm (TautologyId () () ((p → p) ↔ (⊤)) (
         p Id
         q NoContradiction
         introduceConjunction
