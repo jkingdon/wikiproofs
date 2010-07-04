@@ -61,7 +61,7 @@ Here are the statements which do not require any hypotheses.
 
 [[w:double negative elimination|Double negation]] can be introduced but not eliminated, but triple negation is equivalent to single negation.<ref>Heyting, 1966, page 100</ref>
 <jh>
-stmt (DoubleNegation () () (p → (¬ (¬ p))))
+stmt (DoubleNegationIntroduction () () (p → (¬ (¬ p))))
 stmt (TripleNegation () () ((¬ (¬ (¬ p))) ↔ (¬ p)))
 </jh>
 Double negation is of great importance partly due to a metatheorem which states that <code>¬ ¬ p</code> is provable in intuitionistic logic if and only if <code>p</code> is provable in classical logic.  Here are two theorems relating to double negation; the converse of <code>DoubleNegatedDisjunction</code> does not hold.<ref>Heyting, 1966, page 101</ref>
