@@ -1029,6 +1029,10 @@ thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q 
         applySyllogism
 ))
 
+thm (ConjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))) (
+        p q r s ConjunctionFunction
+))
+
 thm (buildConjunction () (
   (H1 (p ↔ q))
   (H2 (r ↔ s)))
@@ -1541,6 +1545,114 @@ Because <code>¬ (p ∧ ¬ p)</code> is a theorem, disjunctive syllogism gives u
 And this is just a syllogism away from our desired result.
 <jh>
         applySyllogism
+))
+</jh>
+
+== More builders ==
+Now that we've proved some results involving negation, we are ready to tackle the rest of the builders.
+
+=== Negation ===
+The negation builder is an easy consequence of transposition introduction (we just need to biconditionalize it).
+<jh>
+thm (NegationBuilder () () ((p ↔ q) → ((¬ p) ↔ (¬ q))) (
+        p q BiconditionalImplication
+        eliminateBiconditionalReverse
+
+        (p → q) (q → p) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        q p TranspositionIntroduction
+        p q TranspositionIntroduction
+        conjoin
+        applySyllogism
+
+        (¬ p) (¬ q) BiconditionalImplication eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
+        H
+        p q NegationBuilder
+        applyModusPonens
+))
+</jh>
+
+=== Implication ===
+The proof of the implication builder is analogous to the way we proved <code>ConjunctionMultiplication</code>. We base it on <code>CommonConsequentAddition</code> and <code>CommonAntecedentAddition</code>.
+
+<jh>
+thm (ImplicationBuilder-1 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q → r))) (
+        (p ↔ q) (r ↔ s) ConjunctionRightElimination
+        p q BiconditionalForwardElimination
+        applySyllogism
+
+        q p r CommonConsequentAddition
+        applySyllogism
+))
+
+thm (ImplicationBuilder-2 () () (((p ↔ q) ∧ (r ↔ s)) → ((q → r) → (q → s))) (
+        (p ↔ q) (r ↔ s) ConjunctionLeftElimination
+        r s BiconditionalReverseElimination
+        applySyllogism
+
+        r s q CommonAntecedentAddition
+        applySyllogism
+))
+
+thm (ImplicationBuilder-3 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q → s))) (
+        p q r s ImplicationBuilder-1
+        p q r s ImplicationBuilder-2
+        applySyllogismInConsequent
+))
+
+thm (ImplicationBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))) (
+        p q r s ImplicationBuilder-3
+
+        p q BiconditionalSymmetry
+        r s BiconditionalSymmetry
+        buildConjunction
+        eliminateBiconditionalReverse
+        q p s r ImplicationBuilder-3
+        applySyllogism
+
+        composeConjunction
+
+        (p → r) (q → s) BiconditionalImplication
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (buildImplication () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p → r) ↔ (q → s)) (
+        HPQ
+        HRS
+        introduceConjunction
+        p q r s ImplicationBuilder
+        applyModusPonens
+))
+</jh>
+
+=== Biconditional ===
+We derive the biconditional builder from the implication builder, just as in [[Principia Mathematica propositional logic]].
+<jh>
+thm (BiconditionalBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))) (
+        p q r s ImplicationBuilder
+
+        (p ↔ q) (r ↔ s) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        r s p q ImplicationBuilder
+        applySyllogism
+
+        composeConjunction
+
+        (p → r) (q → s) (r → p) (s → q) ConjunctionBuilder
+        applySyllogism
+))
+
+thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q ↔ s)) (
+        HPQ HRS introduceConjunction
+        p q r s BiconditionalBuilder
+        applyModusPonens
 ))
 </jh>
 
