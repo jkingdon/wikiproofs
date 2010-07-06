@@ -20,5 +20,3 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-* upload intuitionistic
-

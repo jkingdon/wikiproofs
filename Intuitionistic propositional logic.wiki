@@ -662,21 +662,6 @@ thm (introduceBiconditionalFromImplications ()
 ))
 </jh>
 
-Likewise, the following also restate the definition.
-<jh>
-thm (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))) (
-        (p ↔ q) BiconditionalReflexivity
-))
-
-thm (convertFromBiconditionalToImplications () ((H (p ↔ q))) ((p → q) ∧ (q → p)) (
-        H
-))
-
-thm (convertToBiconditionalFromImplications () ((H ((p → q) ∧ (q → p)))) (p ↔ q) (
-        H
-))
-</jh>
-
 We can eliminate one of the implications of a biconditional:
 <jh>
 thm (BiconditionalForwardElimination () () ((p ↔ q) → (q → p)) (
@@ -781,6 +766,23 @@ thm (applyBiconditionalTransitivity () ((H1 (p ↔ q)) (H2 (q ↔ r))) (p ↔ r)
         H1 H2 introduceConjunction
         p q r BiconditionalTransitivity
         applyModusPonens
+))
+</jh>
+
+=== Relating biconditional to implications ===
+
+The following just restate the definition of the biconditional.
+<jh>
+thm (BiconditionalImplication () () ((p ↔ q) ↔ ((p → q) ∧ (q → p))) (
+        (p ↔ q) BiconditionalReflexivity
+))
+
+thm (convertFromBiconditionalToImplications () ((H (p ↔ q))) ((p → q) ∧ (q → p)) (
+        H
+))
+
+thm (convertToBiconditionalFromImplications () ((H ((p → q) ∧ (q → p)))) (p ↔ q) (
+        H
 ))
 </jh>
 
@@ -1025,6 +1027,10 @@ thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q 
         conjoin
 
         applySyllogism
+))
+
+thm (ConjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))) (
+        p q r s ConjunctionFunction
 ))
 
 thm (buildConjunction () (
@@ -1587,7 +1593,7 @@ thm (ImplicationBuilder-1 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q
 
 thm (ImplicationBuilder-2 () () (((p ↔ q) ∧ (r ↔ s)) → ((q → r) → (q → s))) (
         (p ↔ q) (r ↔ s) ConjunctionLeftElimination
-        r s BiconditionalForwardElimination
+        r s BiconditionalReverseElimination
         applySyllogism
 
         r s q CommonAntecedentAddition
@@ -1603,11 +1609,14 @@ thm (ImplicationBuilder-3 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q
 thm (ImplicationBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))) (
         p q r s ImplicationBuilder-3
 
-        p q BiconditionalCommutativity
-        r s BiconditionalCommutativity
+        p q BiconditionalSymmetry
+        r s BiconditionalSymmetry
         buildConjunction
+        eliminateBiconditionalReverse
         q p s r ImplicationBuilder-3
         applySyllogism
+
+        composeConjunction
 
         (p → r) (q → s) BiconditionalImplication
         eliminateBiconditionalForward
@@ -1642,7 +1651,7 @@ thm (BiconditionalBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q
 
 thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q ↔ s)) (
         HPQ HRS introduceConjunction
-        p q r s BiconditionalFunction
+        p q r s BiconditionalBuilder
         applyModusPonens
 ))
 </jh>
@@ -1680,7 +1689,7 @@ thm (NotImplicationDisjunction () () ((¬ (p → q)) → (¬ ((¬ p) ∨ q))) (
         introduceTransposition
 ))
 
-thm (NotDisjunctionImplicationReverse () () ((¬ ((¬ p) → q)) ↔ (¬ (p ∨ q))) (
+thm (NotDisjunctionImplicationReverse () () ((¬ ((¬ p) → q)) → (¬ (p ∨ q))) (
         p q DisjunctionImplicationForward
         introduceTransposition
 ))
@@ -1701,7 +1710,7 @@ thm (NotDisjunctionImplicationForward-1 () () ((¬ (p ∨ q)) → (¬ ((¬ (¬ p
         applySyllogism
 ))
 
-#thm (NotDisjunctionImplicationForward () () ((¬ (p ∨ q)) → (¬ ((¬ p) #→ q))) (
+#thm (NotDisjunctionImplicationForward () () ((¬ (p ∨ q)) → (¬ ((¬ p) → q))) (
 #        p q NotDisjunctionImplicationForward-1
 #        
 #))
@@ -1719,7 +1728,7 @@ thm (BiconditionalConjunctionReverse () () ((((¬ p) ∨ q) ∧ (p ∨ (¬ q))) 
         q p ImplicationDisjunctionReverse
         applySyllogism
 
-        buildConjunction
+        conjoin
 ))
 </jh>
 
@@ -1787,6 +1796,8 @@ thm (NotFalse () () (¬ (⊥)) (
 </jh>
 
 === Negation and ⊥ ===
+
+Here we show that <code>¬ p</code> is equivalent to <code>p → ⊥</code>.  In some axiomizations of intuitionistic logic, this is the definition of negation.  For us, it is a theorem.
 
 <jh>
 thm (NegationImplicationForward () () ((¬ p) → (p → (⊥))) (
