@@ -1040,7 +1040,7 @@ thm (buildConjunction () (
 </jh>
 
 ==== Disjunction ====
-This is just like the theorem for conjunction, except that we build on the partial builder theorem DisjunctionSummation instead of ConjunctionMultiplication:
+This is just like the theorem for conjunction, except that we build on the partial builder theorem <code>DisjunctionSummation</code> instead of <code>ConjunctionMultiplication</code>:
 
 <jh>
 thm (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))) ( # *4.39
