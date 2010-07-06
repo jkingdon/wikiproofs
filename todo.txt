@@ -1,9 +1,9 @@
 Items which may be doable without a network connection:
 
 * more intuitionistic logic
-  - NegationBuilder follows easily from TranspositionIntroduction
-  - implication and biconditional builders (from CommonConsequentAddition &c?)
-  - a few more
+  - BiconditionalConjunctionReverse
+  - rules
+  - start in on law of the excluded middle
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -20,4 +20,5 @@ Items which may be doable without a network connection:
 
 To do with network:
 
+* upload intuitionistic
 
