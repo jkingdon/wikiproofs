@@ -218,13 +218,13 @@ stmt (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)))
 
 ==== Builders ====
 
-We are able to build formulas as in classical logic. We give them different names than in [[Interface:Classical propositional calculus]] to reflect the lack of a simple notion of "true" and "false" in intuitionistic logic, and because <code>NegationBuilder</code> is only an implication (rather than the biconditional in classical logic).
+We are able to build formulas as in classical logic. The naming is mostly from [[Interface:Classical propositional calculus]] even though the concept of "truth function" doesn't apply the same way. <code>NegationBuilder</code> is only an implication (rather than the biconditional in classical logic), so we give that one a different name.
 <jh>
 stmt (NegationBuilder () () ((p ↔ q) → ((¬ p) ↔ (¬ q))))
-stmt (ImplicationBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
-stmt (DisjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
-stmt (ConjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
-stmt (BiconditionalBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
+stmt (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))))
+stmt (DisjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∨ r) ↔ (q ∨ s))))
+stmt (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))))
+stmt (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))))
 </jh>
 
 ==== Connective interdependencies ====
