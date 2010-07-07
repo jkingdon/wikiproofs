@@ -120,12 +120,12 @@ stmt (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (
 
 === De Morgan's laws ===
 
-[[w:De Morgan's laws|De Morgan's laws]] do not hold, in general, but some of them are available, often as implications rather than biconditionals.<ref>DeMorganPCPReverse and DeMorganPDPSwapped can be found on page 100 of Heyting, 1966</ref> The naming convention makes more sense if you look at [[Interface:Classical propositional calculus]] first. The letters (<code>P</code> for non-negated, <code>N</code> for negated, <code>D</code> for disjunction, and <code>C</code> for conjunction) refer to a disjunction/conjunction which is itself negated, and is thought of as being on the left side of a biconditional.  If it is really on the right side of a biconditional, our naming convention is to add <code>Swapped</code>; if it is really a consequent of an implication, the naming convention is to add <code>Reverse</code>.
+[[w:De Morgan's laws|De Morgan's laws]] do not hold, in general, but some of them are available, often as implications rather than biconditionals.<ref>NegationCollectionNDN and NegationCollectionNCNDistributionPDP can be found on page 100 of Heyting, 1966</ref> The naming convention is basd on <code>P</code> for non-negated, <code>N</code> for negated, <code>D</code> for disjunction, and <code>C</code> for conjunction.  Collection refers to a formula which is negated on the right hand side; distribution refers to a formula which is negated on the left hand side.
 <jh>
-stmt (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))))
-stmt (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
-stmt (DeMorganPCPReverse () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))))
-stmt (DeMorganPDPSwapped () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))))
+stmt (NegationCollectionPCP () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))))
+stmt (NegationCollectionPDP () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
+stmt (NegationCollectionNDN () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))))
+stmt (NegationCollectionNCNDistributionPDP () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))))
 </jh>
 
 === Other statements containing negation, implication, disjunction and conjunction ===
