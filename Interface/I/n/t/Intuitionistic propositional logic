@@ -256,10 +256,98 @@ stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
 
 == Rules ==
 
-For the moment, we have just one rule. By the time this file is fleshed out, we'll probably have rules for pretty much all the theorems above.
+Here we supply rules corresponding to many of the theorems above, including those rules from [[Interface:Principia Mathematica propositional logic theorems]] which hold intuitionistically.
 
+Negation and implication:
 <jh>
+stmt (introduceDoubleNegation () (p) (¬ (¬ p)))
+stmt (eliminateTripleNegation () ((¬ (¬ (¬ p)))) (¬ p))
+stmt (introduceAntecedent () (p) (q → p))
+stmt (applySyllogism () ((p → q) (q → r)) (p → r))
+stmt (applySyllogismInConsequent () ((p → (q → r)) (p → (r → s))) (p → (q → s)))
+stmt (distributeAntecedent () ((p → (q → r))) ((p → q) → (p → r)))
+stmt (collectAntecedent () (((p → q) → (p → r))) (p → (q → r)))
+stmt (introduceTransposition () ((p → q)) ((¬ q) → (¬ p)))
+</jh>
+Disjunction and conjunction:
+<jh>
+stmt (cloneAsDisjunction () (p) (p ∨ p))
+stmt (conflateDisjunction () ((p ∨ p)) p)
+stmt (cloneAsConjunction () (p) (p ∧ p))
+stmt (conflateConjunction () ((p ∧ p)) p)
+stmt (groupDisjunctionLeft () ((p ∨ (q ∨ r))) ((p ∨ q) ∨ r))
+stmt (groupDisjunctionRight () (((p ∨ q) ∨ r)) (p ∨ (q ∨ r)))
+stmt (groupConjunctionLeft () ((p ∧ (q ∧ r))) ((p ∧ q) ∧ r))
+stmt (groupConjunctionRight () (((p ∧ q) ∧ r)) (p ∧ (q ∧ r)))
+stmt (swapDisjunction () ((p ∨ q)) (q ∨ p))
+stmt (swapConjunction () ((p ∧ q)) (q ∧ p))
+stmt (distributeLeftDisjunction () ((p ∨ (q ∧ r))) ((p ∨ q) ∧ (p ∨ r)))
+stmt (collectLeftDisjunction () (((p ∨ q) ∧ (p ∨ r))) (p ∨ (q ∧ r)))
+stmt (distributeRightDisjunction () (((p ∧ q) ∨ r)) ((p ∨ r) ∧ (q ∨ r)))
+stmt (collectRightDisjunction () (((p ∨ r) ∧ (q ∨ r))) ((p ∧ q) ∨ r))
+stmt (distributeLeftConjunction () ((p ∧ (q ∨ r))) ((p ∧ q) ∨ (p ∧ r)))
+stmt (collectLeftConjunction () (((p ∧ q) ∨ (p ∧ r))) (p ∧ (q ∨ r)))
+stmt (distributeRightConjunction () (((p ∨ q) ∧ r)) ((p ∧ r) ∨ (q ∧ r)))
+stmt (collectRightConjunction () (((p ∧ r) ∨ (q ∧ r))) ((p ∨ q) ∧ r))
+</jh>
+De Morgan's laws:
+<jh>
+stmt (collectNegationPCP () ((p ∧ q)) (¬ ((¬ p) ∨ (¬ q))))
+stmt (collectNegationPDP () ((p ∨ q)) (¬ ((¬ p) ∧ (¬ q))))
+stmt (collectNegationNDN () (((¬ p) ∨ (¬ q))) (¬ (p ∧ q)))
+stmt (collectNegationNCN () (((¬ p) ∧ (¬ q))) (¬ (p ∨ q)))
+stmt (distributeNegationPDP () ((¬ (p ∨ q))) ((¬ p) ∧ (¬ q)))
+</jh>
+Other rules containing negation, implication, disjunction and conjunction:
+<jh>
+stmt (import () ((p → (q → r))) ((p ∧ q) → r))
+stmt (export () (((p ∧ q) → r)) (p → (q → r)))
 stmt (applyModusPonens () (p (p → q)) q)
+stmt (applyModusTollens () ((¬ q) (p → q)) (¬ p))
+stmt (introduceLeftDisjunction () (p) (q ∨ p))
+stmt (introduceRightDisjunction () (p) (p ∨ q))
+stmt (introduceConjunction () (p q) (p ∧ q))
+stmt (eliminateLeftConjunction () ((p ∧ q)) q)
+stmt (eliminateRightConjunction () ((p ∧ q)) p)
+stmt (composeDisjunction () ((p → r) (q → r)) ((p ∨ q) → r))
+stmt (extractLeftDisjunction () (((p ∨ q) → r)) (p → r))
+stmt (extractRightDisjunction () (((p ∨ q) → r)) (q → r))
+stmt (composeConjunction () ((p → q) (p → r)) (p → (q ∧ r)))
+stmt (extractLeftConjunction () ((p → (q ∧ r))) (p → q))
+stmt (extractRightConjunction () ((p → (q ∧ r))) (p → r))
+stmt (disjoinLL () ((p → q)) ((r ∨ p) → (r ∨ q)))
+stmt (disjoinLR () ((p → q)) ((r ∨ p) → (q ∨ r)))
+stmt (disjoinRL () ((p → q)) ((p ∨ r) → (r ∨ q)))
+stmt (disjoinRR () ((p → q)) ((p ∨ r) → (q ∨ r)))
+stmt (disjoin () ((p → q) (r → s)) ((p ∨ r) → (q ∨ s)))
+stmt (conjoinLL () ((p → q)) ((r ∧ p) → (r ∧ q)))
+stmt (conjoinLR () ((p → q)) ((r ∧ p) → (q ∧ r)))
+stmt (conjoinRL () ((p → q)) ((p ∧ r) → (r ∧ q)))
+stmt (conjoinRR () ((p → q)) ((p ∧ r) → (q ∧ r)))
+stmt (conjoin () ((p → q) (r → s)) ((p ∧ r) → (q ∧ s)))
+stmt (addCommonAntecedent () ((q → r)) ((p → q) → (p → r)))
+stmt (addCommonConsequent () ((p → q)) ((q → r) → (p → r)))
+</jh>
+Biconditional:
+<jh>
+stmt (swapBiconditional () ((p ↔ q)) (q ↔ p))
+stmt (applyBiconditionalTransitivity () ((p ↔ q) (q ↔ r)) (p ↔ r))
+stmt (eliminateBiconditionalForward () ((p ↔ q)) (q → p))
+stmt (eliminateBiconditionalReverse () ((p ↔ q)) (p → q))
+stmt (addNegation () ((p ↔ q)) ((¬ p) ↔ (¬ q)))
+stmt (buildImplication () ((p ↔ q) (r ↔ s)) ((p → r) ↔ (q → s)))
+stmt (buildDisjunction () ((p ↔ q) (r ↔ s)) ((p ∨ r) ↔ (q ∨ s)))
+stmt (buildConjunction () ((p ↔ q) (r ↔ s)) ((p ∧ r) ↔ (q ∧ s)))
+stmt (buildBiconditional () ((p ↔ q) (r ↔ s)) ((p ↔ r) ↔ (q ↔ s)))
+stmt (convertFromBiconditionalToImplications () ((p ↔ q)) ((p → q) ∧ (q → p)))
+stmt (convertToBiconditionalFromImplications () (((p → q) ∧ (q → p))) (p ↔ q))
+stmt (introduceBiconditionalFromImplications () ((p → q) (q → p)) (p ↔ q))
+stmt (convertToBiconditionalFromConjunction () ((((¬ p) ∨ q) ∧ (p ∨ (¬ q)))) (p ↔ q))
+stmt (introduceBiconditionalFromDisjunctions () (((¬ p) ∨ q) (p ∨ (¬ q))) (p ↔ q))
+stmt (convertFromDisjunctionToImplication () ((p ∨ q)) ((¬ p) → q))
+stmt (convertToImplicationFromDisjunction () (((¬ p) ∨ q)) (p → q))
+stmt (convertFromNegationToImplication () ((¬ p)) (p → (⊥)))
+stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
 </jh>
 
 == Footnotes ==
