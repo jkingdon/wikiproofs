@@ -1656,6 +1656,66 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
 ))
 </jh>
 
+== Relationships between connectives ==
+
+=== Disjunction and implication ===
+<jh>
+thm (DisjunctionImplicationForward () () ((p ∨ q) → ((¬ p) → q)) (
+</jh>
+This one looks a lot like <code>DisjunctiveSyllogism</code>, modulo a commutation and an export.
+<jh>
+        (p ∨ q) (¬ p) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        p q DisjunctiveSyllogism
+        applySyllogism
+
+        export
+))
+
+</jh>
+The next three implication/disjunction theorems are easy consequences of this one.
+<jh>
+thm (ImplicationDisjunctionReverse () () (((¬ p) ∨ q) → (p → q)) (
+        (¬ p) q DisjunctionImplicationForward
+
+        p DoubleNegationIntroduction
+        q addCommonConsequent
+        applySyllogism
+))
+
+thm (NotImplicationDisjunction () () ((¬ (p → q)) → (¬ ((¬ p) ∨ q))) (
+        p q ImplicationDisjunctionReverse
+        introduceTransposition
+))
+
+thm (NotDisjunctionImplicationReverse () () ((¬ ((¬ p) → q)) → (¬ (p ∨ q))) (
+        p q DisjunctionImplicationForward
+        introduceTransposition
+))
+</jh>
+
+The converse of <code>NotDisjunctionImplicationReverse</code> also holds, but is a bit more difficult. 
+
+We start with a negation rearrangement lemma. (TODO: this may or may not be a dead end).
+<jh>
+thm (NotDisjunctionImplicationForward-1 () () ((¬ (p ∨ q)) → (¬ ((¬ (¬ p)) ∨ q))) (
+        p q DeMorganPDPSwapped eliminateBiconditionalForward
+
+        p TripleNegation eliminateBiconditionalForward
+        (¬ q) conjoinRR
+        applySyllogism
+
+        (¬ (¬ p)) q DeMorganPDPSwapped eliminateBiconditionalReverse
+        applySyllogism
+))
+
+#thm (NotDisjunctionImplicationForward () () ((¬ (p ∨ q)) → (¬ ((¬ p) → q))) (
+#        p q NotDisjunctionImplicationForward-1
+#        
+#))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
