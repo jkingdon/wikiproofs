@@ -1716,6 +1716,22 @@ thm (NotDisjunctionImplicationForward-1 () () ((¬ (p ∨ q)) → (¬ ((¬ (¬ p
 #))
 </jh>
 
+=== Proving a biconditional from two disjunctions ===
+
+Since a suitably negated disjunction implies an implication, the antecedent of this theorem readily reduces to <code>p → q</code> and <code>q → p</code>, which is what we need to prove <code>p ↔ q</code>.
+<jh>
+thm (BiconditionalConjunctionReverse () () ((((¬ p) ∨ q) ∧ (p ∨ (¬ q))) → (p ↔ q)) (
+        p q ImplicationDisjunctionReverse
+
+        p (¬ q) DisjunctionCommutativity
+        eliminateBiconditionalReverse
+        q p ImplicationDisjunctionReverse
+        applySyllogism
+
+        conjoin
+))
+</jh>
+
 == True and false connectives ==
 We define true (⊤) as a theorem (any theorem would do), and false (⊥) as a statement whose negation is a theorem.
 
