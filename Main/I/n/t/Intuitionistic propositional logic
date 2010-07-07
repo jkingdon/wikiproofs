@@ -1795,6 +1795,42 @@ thm (NotFalse () () (¬ (⊥)) (
 ))
 </jh>
 
+=== Negation and ⊥ ===
+
+Here we show that <code>¬ p</code> is equivalent to <code>p → ⊥</code>.  In some axiomizations of intuitionistic logic, this is the definition of negation.  For us, it is a theorem.
+
+<jh>
+thm (NegationImplicationForward () () ((¬ p) → (p → (⊥))) (
+        (¬ p) p ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        p Contradiction
+        eliminateBiconditionalReverse
+
+        applySyllogism
+
+        export
+))
+
+thm (NegationImplicationReverse () () ((p → (⊥)) → (¬ p)) (
+        q Contradiction eliminateBiconditionalForward
+        p addCommonAntecedent
+
+        p q (¬ q) ConjunctionComposition eliminateBiconditionalForward
+        applySyllogism
+
+        p q ProofByContradiction
+        import
+        applySyllogism
+))
+
+thm (NegationImplication () () ((¬ p) ↔ (p → (⊥))) (
+        p NegationImplicationForward
+        p NegationImplicationReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
 <jh>
