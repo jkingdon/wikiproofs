@@ -1,1 +1,144 @@
-hVpZGQ  <a href="http://haafziyodkjr.com/">haafziyodkjr</a>, [url=http://kkegscznfybs.com/]kkegscznfybs[/url], [link=http://yfisyipacvzf.com/]yfisyipacvzf[/link], http://fmyshbtztfma.com/
+{{header
+ | title    = Set-theoretical description of JHilbert
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = In this draft, I will try to express the core concepts of JHilbert in informal, set-theoretical language, hopefully in less convoluted form than in the [[User:GrafZahl/Botched attempt to prove JHilbert definition soundness|previous botched attempt]]. I shall also include the [[User:GrafZahl/Definitions in JHilbert|proposed degradation]] of definitions to mere abbreviations (with no dummy variables) as well as the [[User:CarlWitty/Definitions proposal|new definitions scheme]] proposed by [[User:CarlWitty]]. However, I will not include a description of the modularity features of JHilbert (import, export, param, and kindbind) at this point.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:59, 18 February 2010 (UTC)
+}}
+
+:''[[Image:Zeichen 123.svg|50px|none]] Work in progress''
+
+== Introduction ==
+
+JHilbert is a Java application based on Ghilbert, which in turn is based on metamath. It allows the collaborative formal verification of proofs. JHilbert has a command line mode, and a server mode (which drives this wiki), making it an application of already medium complexity. Being what it is, however, the small kernel of core concepts, the logic that drives the proof machinery, is of crucial importance. It is only these core concepts, notably without the collaboration features (modularisation) and I/O system, which shall be formally described in this essay in informal, set-theoretical language. (By "formally" I mean that I use actual mathematics for the description, by "informal" I mean that I don't intend to verify the description with a proof verifier, interesting a project as it would be.)
+
+There has been an earlier attempt to describe these core concepts and prove their soundness. Aside from containing some errors, it was at times unnecessarily complicated. I shall attempt to do away with such cruft this time.
+
+== Acknowledgements ==
+
+There are lots of people to acknowledge, most notably Normal Megill for creating metamath, Raph Levien for creating Ghilbert and for discussing the definition mechanism with me, Mel L. O'Cat for discussions during the time JHilbert was made, Carl Witty for the new definition mechanism, and Kingdon for prolonged interest in JHilbert. Bug me if I forgot someone.
+
+== Notation ==
+
+As the title suggests, we shall use [[w:set theory|set theory]] to describe JHilbert concepts. You should have elementary familiarity with set theory before reading this document. The notation used by us is explained in the following table.
+
+{| border="1"
+! Notation !! Explanation
+|-
+| <math>\emptyset</math> || The [[w:empty set|empty set]].
+|-
+| <math>\mathbb{N}</math> || The set of positive [[w:integer|integer]]s <math>\{1,2,3,\ldots\}</math>.
+|-
+| <math>\mathbb{N}_0</math> || The set of non-negative integers <math>\{0,1,2,3,\ldots\}</math>.
+|-
+| <math>f\colon A\to B</math> || A [[w:map (mathematics)|map]] with [[w:domain of a function|domain]] <math>A</math> and [[w:codomain|codomain]] <math>B</math>.
+|-
+| <math>f(A)</math> || The [[w:image (mathematics)|image]] of the set <math>A</math> under the map <math>f</math>.
+|-
+| <math>()</math> || The empty [[w:sequence|sequence]].
+|-
+| <math>(a)</math> || The sequence containing only the element <math>a</math>.
+|-
+| <math>(a,b)</math> || [[w:Ordered pair|ordered pair]] of elements <math>a</math> and <math>b</math>.
+|-
+| <math>(a,b,c)</math> || Ordered [[w:triple|triple]] or 3-[[w:tuple|tuple]] of elements <math>a</math>, <math>b</math> and <math>c</math>.
+|-
+| <math>(a,b,c,d)</math> || You get the idea.
+|-
+| <math>s_i</math> || the <math>i</math>-th element of the sequence <math>s</math>,
+|-
+| <math>|s|</math> || The length of the sequence <math>s</math>. For example, if <math>s=(a_1,\ldots,a_n)</math> then <math>|s|=n</math>. In particular, <math>|()|=0</math>.
+|-
+| <math>s\sqcup t</math> || The [[w:concatenation|concatenation]] of the sequences <math>s</math> and <math>t</math>. For example, if <math>s=(a_1,\ldots,a_n)</math> and <math>t=(b_1,\ldots,b_m)</math>, then <math>s\sqcup t=(a_1,\ldots,a_n,b_1,\ldots,b_m)</math>. In particular, <math>|s\sqcup t|)|s|+|t|</math>.
+|-
+| <math>a\in A</math> || <math>a</math> is an element of the set <math>A</math>.
+|-
+| <math>A\cup B</math> || The [[w:union (set theory)|union]] of the sets <math>A</math> and <math>B</math>.
+|-
+| <math>A\cap B</math> || The [[w:intersection (set theory)|intersection]] of the sets <math>A</math> and <math>B</math>.
+|}
+
+== Formal systems ==
+
+The four basic concepts of JHilbert are ''kinds'', ''variables'', ''functors'' and ''statements''. When JHilbert reads source code, it keeps track of these in the form of a ''formal system'' <math>\mathfrak{F}</math>, whose set-theoretical representation will be given here by <math>\mathcal{F}=(KIND,VAR,FUNC,STAT)</math>. Here, the sets <math>KIND</math>, <math>VAR</math>, <math>FUNC</math>, and <math>STAT</math> stand for the currently defined kinds, variables, functors, and statements, respectively. Each time the user defines a new one of these objects, the respective set is increased by one new member in the set-theoretical representation. In the following sections, we shall define the set-theoretical nature of the objects that go into these sets. Initially, all four sets start out empty, that is <math>\mathcal{F}=(\emptyset,\emptyset,\emptyset,\emptyset)</math>.
+
+== Objects and names ==
+
+In the following sections, we shall define the set-theoretical objects that may go into the sets <math>KIND</math>, <math>VAR</math>, <math>FUNC</math>, and <math>STAT</math> as certain [[w:tuple|tuple]]s. The first element of such a tuple will always be a ''name''. This document does not elaborate on the precise nature a name might have. In a JHilbert implementation they would be [[w:Unicode|Unicode]] identifiers. We merely remark that we assume all of our objects to have mutually distinct names. Hence, names serve as sure distinctors where two objects are structurally identical but must be different nevertheless. A typical example would be two different variables of the same kind.
+
+== Kinds ==
+
+Kinds, the elements of <math>KIND</math>, are just names. They are assigned additional data by the fact that we assume the set <math>KIND</math> to be a disjoint union <math>KIND=SKIND\cup VKIND</math> ("disjoint union" means <math>SKIND\cap VKIND=\emptyset</math>), where <math>SKIND</math> is the set of ''substitutable kinds'', while <math>VKIND</math> is the set of ''pure variable kinds''. The difference between those two kinds of kinds will become apparent in the sections on functors and expressions.
+
+In JHilbert, the <code>kindbind</code> command allows to define equivalence classes among kinds. As this is a feature of the modularity system, we shall omit its set-theoretical representation here and merely remark that a substitutable kind and a pure variable kind can never be equivalent.
+
+== Variables ==
+
+Variables, the elements of <math>VAR</math> are defined as tuples <math>(N,K)</math> where <math>N</math> is a name and <math>K\in KIND</math>. The decomposition of kinds into substitutable kinds and pure variable kinds induces a disjoint decomposition <math>VAR=SVAR\cup PVAR</math>, where <math>SVAR</math> is the set of variables of substitutable kind, and <math>PVAR</math> is the set of variable of pure variable kind.
+
+== Functors ==
+
+Functors are the elements of <math>FUNC</math>. Together with the variables, they will be used to build complex expressions in the next section. We assume <math>FUNC</math> to be totally ordered. The order of functors corresponds to the order in which they are defined in JHilbert. This total order is later used to prevent cyclic definitions and abbreviations. In this context, we speak of a functor coming ''before'' or ''after'' another. The functors themselves are abstractly characterised by the following properties:
+* A ''result kind'' <math>R\in SKIND</math>. Note that <math>R\in VKIND</math> is not allowed.
+* A ''place count'' <math>n\in\mathbb{N}_0</math>. It describes the number of "parameters" a functor takes.
+* <math>n</math> ''input kinds'' <math>K_1,\ldots,K_n\in KIND</math>. Note that here, both substitutable and pure variable kinds are permitted. If <math>n=0</math>, the functor has no input kinds at all and is ''constant''.
+The set <math>FUNC</math> decomposes into three mutually disjoint subsets <math>FUNC=TERM\cup ABBREV\cup DEF</math>, the elements of each of which will have a different set-theoretical representation, but all elements will have the above abstract properties. In this section, we will only explain the set-theoretical representation of the elements of <math>TERM</math>, leaving <math>ABBREV</math> and <math>DEF</math> for the sections on abbreviations and definitions, respectively.
+
+The elements of <math>TERM</math> are called the ''term functors''. They are triples <math>(N,R,K)</math> where <math>N</math> is a name, <math>R\in SKIND</math> is the result kind and <math>K=(K_1,\ldots,K_n)</math> is a finite, possibly empty, sequence of kinds, that is <math>K_i\in KIND</math>, <math>i=1,\ldots,n</math>. The place count is then given by <math>n=|K|</math>, the length of the sequence <math>K</math>.
+
+== Expressions ==
+
+Expressions are a derived concept. Set-theoretically, every expression is a finite sequence of elements from <math>VAR\cup FUNC</math>. However, the converse is not true. We shall now describe [[w:recursive definition|recursively]] which of these finite sequences are expressions. Alongside, we shall define the ''kind'' of each expression.
+# Each sequence which consists of only a single variable is an expression. The kind of the expression equals the kind of the variable.
+# Each sequence which is a concatenation <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> where <math>f</math> is a functor, <math>n</math> is the place count of <math>f</math> and <math>e_1,\ldots,e_n</math> are expressions such that the kind of the <math>k</math>-th expression matches the <math>k</math>-th input kind of <math>f</math>, for all <math>k=1,\ldots,n</math>, is an expression. The kind of the expression is the result kind of <math>f</math>.
+# Nothing else is an expression, or the kind of an expression.
+
+We denote the set of all expressions by <math>EXP</math>. Note that <math>EXP</math> depends on <math>\mathcal{F}</math>. Unlike the previously encountered sets, <math>EXP</math> may be (and usually is) an infinite set. Also note that the only way the kind of an expression can be a pure variable kind is the expression consisting of a single variable with pure variable kind.
+
+If <math>e\in EXP</math>, then we call a variable <math>v</math> appearing in <math>e</math> an ''apparent variable'' of <math>e</math>.
+
+'''Proposition.''' The set <math>EXP</math> is ''prefix-free'', that is, if <math>e\in EXP</math> and <math>s</math> is any finite non-empty sequence of elements from <math>VAR\cup FUNC</math>, then <math>e\sqcup s\notin EXP</math>. Furthermore, the decomposition of an expression according to 2. of the definition is unique.
+
+''Proof.'' By definition, there are no empty expressions, and any expression of length greater than one starts with a functor. Hence, the claims are true for expressions of length exactly one, as such expressions are either variables or constant functors with place count zero. Let <math>e</math> be an expression of length greater than one. Assume the claims to be true for shorter expressions. Let <math>s</math> be a finite sequence of elements from <math>VAR\cup FUNC</math> such that <math>\tilde{e}:=e\sqcup s</math> is an expression. Let <math>(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math> be a decomposition of <math>e</math>, and let <math>(\tilde{f})\sqcup\tilde{e}_1\sqcup\ldots\sqcup\tilde{e}_{\tilde{n}}</math> be a decomposition of <math>\tilde{e}</math>, both as suggested by the definition. Clearly, <math>f=\tilde{f}</math>. Therefore, <math>n=\tilde{n}</math> to match the place count. Now, <math>\tilde{e}_1</math> cannot be shorter than <math>e_1</math>, or else it would be a prefix for <math>e_1</math>, in violation of the induction hypothesis. Likewise, <math>e_1</math> cannot be shorter than <math>\tilde{e}_1</math>. Therefore, <math>e_1=\tilde{e}_1</math>. Now, <math>e_2</math> and <math>\tilde{e}_2</math>, if they exist, have the same starting point. Hence, by the same argument, <math>e_2=\tilde{e}_2</math>, and so on, <math>e_k=\tilde{e}_k</math> for all <math>k=1,\ldots,n</math>. Therefore, <math>e=\tilde{e}</math> and thus <math>s=()</math>. Hence, by induction, <math>e</math> is not a prefix, and its decomposition is unique. '''Q.E.D.'''
+
+A map <math>s\colon VAR\to EXP</math> is called a ''proper substitution map'' if the kind of <math>v</math> and <math>s(v)</math> are equal for all <math>v\in VAR</math>. Note that this implies <math>s(PVAR)\subseteq PVAR^1</math>, that is, pure variable kind variables are mapped to expressions consisting only of a pure variable kind variable. Also note that we can extend any partial map from <math>VAR</math> to <math>EXP</math> to a total map by setting <math>s(v):=(v)</math> for all <math>v\in VAR</math> outside the domain of <math>s</math>.
+
+Let <math>e\in EXP</math> and let <math>s\colon VAR\to EXP</math> be a proper substitution map. We can then recursively define the ''proper substitution'' <math>s(e)</math> as follows:
+# <math>s(e)=(s(v))</math> if <math>e=(v)</math>.
+# <math>s(e)=(f)\sqcup s(e_1)\sqcup\ldots\sqcup s(e_n)</math> if <math>e=(f)\sqcup e_1\sqcup\ldots\sqcup e_n</math>.
+Due to the above proposition, <math>s(e)</math> is well-defined. It is easy to see that <math>s(e)\in EXP</math>.
+
+== Abbreviations ==
+
+Abbreviation functors, the members of the set <math>ABBREV</math> are special functors which can be used in an expression to abbreviate or otherwise re-express another expression. Set-theoretically, they take the form <math>(N,l,e)</math> where <math>N</math> is a name, <math>l</math> is a finite (possibly empty) sequence of variables and <math>e</math> is an expression, called the ''definiens'', which starts with a functor and whose apparent variables are precisely the elements of <math>l</math>. Furthermore, all functors occurring in <math>e</math> must come before <math>(N,l,e)</math>. The place count of a definition <math>(N,l,e)</math> is given by <math>|l|</math>, and its input kinds are the kinds of the variables <math>l_1,\ldots,l_{|l|}</math>. Its result kind is the kind of <math>e</math>. Note that since <math>e</math> starts with a functor, this is always a substitutable kind.
+We now recursively define the ''depth'' of a functor recursively as a non-negative integer:
+# A functor has depth <math>0</math> if it is not an abbreviation functor.
+# A an abbreviation functor has depth <math>n</math> if the starting functor of its definiens has depth </math>n-1</math>.
+These definitions establish a relation between an abbreviation functor and the starting functor of its definiens. This gives rise to chains of functors. The elements of these chains are enumerated by their depth. Chains may overlap, but they form a forest (union of trees), in particular the maximum depth element of a chain never overlaps with anything else. The union of these chains form a [[w:partial order|partial order]] which is compatible (that is, a subset of) the total order on the functors.
+
+Let <math>f:=(N,l,e)\in ABBREV</math> have place count <math>n</math>, and let <math>e_1,\ldots,e_n\in EXP</math> such that <math>\tilde{e}:=f\sqcup e_1\sqcup\ldots\sqcup e_n\in EXP</math>. Define <math>s\colon VAR\to EXP</math> by setting <math>s(l_1):=e_1,\ldots,s(l_n):=e_n</math>, and <math>s(v)=(v)</math> otherwise. It is easy to see that this is a proper substitution map. We now define recursively when an expression is the ''abbreviation'' of another.
+# For all <math>e,s,\tilde{e}</math> as above, <math>\tilde{e}</math> is an abbreviation of <math>s(e)</math>.
+# Let <math>e,s,\tilde{e}</math> be as above. Assume <math>e'</math> contains <math>\tilde{e}</math> as a subexpression. Let <math>e''</math> be <math>e'</math>, with one or more occurrences of <math>\tilde{e}</math> replaced by <math>s(e)</math>. Then <math>e'</math> is an abbreviation of <math>e''</math>.
+# Let <math>e</math> be an abbreviation of <math>e'</math> and let <math>e'</math> be an abbreviation of <math>e''</math>, then <math>e</math> is an abbreviation of <math>e''</math>.
+This relation defines a partial order on <math>EXP</math>. Furthermore, each element of <math>EXP</math> either does not contain any abbreviation functors, or is the abbreviation of a unique such expression. For assume <math>e</math> contains an abbreviation functor. Pick all such functors with maximal depth in <math>e</math> and replace each of their corresponding expressions with expressions they are abbreviations of. The expression thus gained only contains functors which come before that functor. Hence, after a finite number of steps, the functors in the expression will all have depth zero. Uniqueness follows since the chains form a tree. We call this unique expression the ''total unfolding'' of the original expression.
+
+Let <math>e_1,e_2\in EXP</math> and let <math>e_1',e_2'</math> be their total unfoldings. We call <math>e_2</math> a ''specialisation'' of <math>e_1</math> if there is a proper substitution map <math>s</math> such that <math>s(e_1')=e_2'</math>.
+
+== Disjoint variable constraints ==
+
+A ''disjoint variable constraint'' is a tuple <math>(v_1,v_2)</math> with <math>v_1\in PVAR</math>,<math>v_2\in VAR</math> and <math>v_1\neq v_2</math>.
+
+Note that since <math>VAR</math> is a finite set, any set of disjoint variable constraints is necessarily also finite.
+
+== Statements ==
+
+Statements, the elements of <math>STAT</math>, are defined as quadruples <math>(N,D,H,e)</math>, where <math>N</math> is a name, <math>H</math> is a finite (possibly empty) sequence of expressions (the ''hypotheses''), <math>e</math> is an expression (the ''consequent'') and <math>D</math> is a set of disjoint variable constraints with the extra restriction that all variables appearing in the tuples of <math>D</math> are apparent variables of the consequent or of one of the hypotheses.
+
+We call a quadruple <math>(N,D,H,e)</math> a ''pre-statement'' if it fulfils the above definition except possibly the apparent variable restriction on <math>D</math>.
+
+== Definitions ==
+
+== Proofs ==
+
+== Translation to metamath ==
