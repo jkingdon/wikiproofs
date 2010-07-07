@@ -1658,6 +1658,24 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
 
 == Relationships between connectives ==
 
+=== Conjunction and implication ===
+Analogous to DeMorgan's law, there are four relationships between conjunction and implication, which differ depending on where the negations are placed. They are:
+ p ∧ q → ¬ (p → ¬ q)
+ (p → q) → ¬ (p ∧ ¬ q)
+ p ∧ ¬ q → ¬ (p → q)
+ p → ¬ q ↔ ¬ (p ∧ q)
+
+For now, we only prove the third one.
+
+<jh>
+thm (ConjunctionImplication3 () () ((p ∧ (¬ q)) → (¬ (p → q))) (
+        p q ModusPonens export
+        (p → q) q TranspositionIntroduction
+        applySyllogism
+        import
+))
+</jh>
+
 === Disjunction and implication ===
 <jh>
 thm (DisjunctionImplicationForward () () ((p ∨ q) → ((¬ p) → q)) (
@@ -1697,23 +1715,19 @@ thm (NotDisjunctionImplicationReverse () () ((¬ ((¬ p) → q)) → (¬ (p ∨ 
 
 The converse of <code>NotDisjunctionImplicationReverse</code> also holds, but is a bit more difficult. 
 
-We start with a negation rearrangement lemma. (TODO: this may or may not be a dead end).
 <jh>
-thm (NotDisjunctionImplicationForward-1 () () ((¬ (p ∨ q)) → (¬ ((¬ (¬ p)) ∨ q))) (
+thm (NotDisjunctionImplicationForward () () ((¬ (p ∨ q)) → (¬ ((¬ p) → q))) (
         p q DeMorganPDPSwapped eliminateBiconditionalForward
 
-        p TripleNegation eliminateBiconditionalForward
-        (¬ q) conjoinRR
-        applySyllogism
-
-        (¬ (¬ p)) q DeMorganPDPSwapped eliminateBiconditionalReverse
+        (¬ p) q ConjunctionImplication3
         applySyllogism
 ))
 
-#thm (NotDisjunctionImplicationForward () () ((¬ (p ∨ q)) → (¬ ((¬ p) → q))) (
-#        p q NotDisjunctionImplicationForward-1
-#        
-#))
+thm (NotDisjunctionImplication () () ((¬ (p ∨ q)) ↔ (¬ ((¬ p) → q))) (
+        p q NotDisjunctionImplicationForward
+        p q NotDisjunctionImplicationReverse
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 === Proving a biconditional from two disjunctions ===
