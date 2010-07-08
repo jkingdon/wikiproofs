@@ -8,10 +8,9 @@
 }}
 {{interfaces
 | imports = [[Interface:Axioms of intuitionistic propositional logic]]
-| exports = eventually [[Interface:Intuitionistic propositional logic]]
+| exports = [[Interface:Intuitionistic propositional logic]]
 }}
 
-{{under construction}}
 <jh>
 import (AXIOMS Interface:Axioms_of_intuitionistic_propositional_logic () ())
 </jh>
@@ -310,6 +309,18 @@ Combining the two gives us our result:
 <jh>
         composeConjunction
 ))
+
+thm (extractLeftConjunction () ((H (p → (q ∧ r)))) (p → q) (
+        H
+        q r ConjunctionRightElimination
+        applySyllogism
+))
+
+thm (extractRightConjunction () ((H (p → (q ∧ r)))) (p → r) (
+        H
+        q r ConjunctionLeftElimination
+        applySyllogism
+))
 </jh>
 
 === Export and import ===
@@ -535,6 +546,33 @@ thm (composeDisjunction () ((HP (p → r)) (HQ (q → r))) ((p ∨ q) → r) (
         p r q DisjunctionCompositionAxiom
         applyModusPonens
         applyModusPonens
+))
+</jh>
+
+Here are a few other rules corresponding to axioms.
+<jh>
+thm (introduceLeftDisjunction () ((H p)) (q ∨ p) (
+        H
+        p q DisjunctionLeftIntroduction
+        applyModusPonens
+))
+
+thm (introduceRightDisjunction () ((H p)) (p ∨ q) (
+        H
+        p q DisjunctionRightIntroduction
+        applyModusPonens
+))
+
+thm (extractLeftDisjunction () ((H ((p ∨ q) → r))) (p → r) (
+        p q DisjunctionRightIntroduction
+        H
+        applySyllogism
+))
+
+thm (extractRightDisjunction () ((H ((p ∨ q) → r))) (q → r) (
+        q p DisjunctionLeftIntroduction
+        H
+        applySyllogism
 ))
 </jh>
 
@@ -1800,8 +1838,14 @@ This one looks a lot like <code>DisjunctiveSyllogism</code>, modulo a commutatio
         export
 ))
 
+thm (convertFromDisjunctionToImplication () ((H (p ∨ q))) ((¬ p) → q) (
+        H
+        p q DisjunctionImplicationForward
+        applyModusPonens
+))
 </jh>
-The next three implication/disjunction theorems are easy consequences of this one.
+
+The following implication/disjunction theorems are easy consequences of this one.
 <jh>
 thm (ImplicationDisjunctionReverse () () (((¬ p) ∨ q) → (p → q)) (
         (¬ p) q DisjunctionImplicationForward
@@ -1809,6 +1853,12 @@ thm (ImplicationDisjunctionReverse () () (((¬ p) ∨ q) → (p → q)) (
         p DoubleNegationIntroduction
         q addCommonConsequent
         applySyllogism
+))
+
+thm (convertToImplicationFromDisjunction () ((H ((¬ p) ∨ q))) (p → q) (
+        H
+        p q ImplicationDisjunctionReverse
+        applyModusPonens
 ))
 
 thm (NotImplicationDisjunction () () ((¬ (p → q)) → (¬ ((¬ p) ∨ q))) (
@@ -1852,6 +1902,18 @@ thm (BiconditionalConjunctionReverse () () ((((¬ p) ∨ q) ∧ (p ∨ (¬ q))) 
         applySyllogism
 
         conjoin
+))
+
+thm (convertToBiconditionalFromConjunction () ((H (((¬ p) ∨ q) ∧ (p ∨ (¬ q))))) (p ↔ q) (
+        H
+        p q BiconditionalConjunctionReverse
+        applyModusPonens
+))
+
+thm (introduceBiconditionalFromDisjunctions () ((HPQ ((¬ p) ∨ q)) (HQP (p ∨ (¬ q)))) (p ↔ q) (
+        HPQ HQP introduceConjunction
+        p q BiconditionalConjunctionReverse
+        applyModusPonens
 ))
 </jh>
 
@@ -1952,12 +2014,26 @@ thm (NegationImplication () () ((¬ p) ↔ (p → (⊥))) (
         p NegationImplicationReverse
         introduceBiconditionalFromImplications
 ))
+
+thm (convertFromNegationToImplication () ((H (¬ p))) (p → (⊥)) (
+        H
+        p NegationImplication
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToNegationFromImplication () ((H (p → (⊥)))) (¬ p) (
+        H
+        p NegationImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 == Export ==
 Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
 <jh>
-#export (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
+export (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
 </jh>
 
 == References ==
