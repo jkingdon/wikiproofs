@@ -1,0 +1,194 @@
+{{header
+ | title    = From intuitionistic to classical
+ | subtitle = propositional logic
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Adding the [[Interface:Law of the excluded middle]] to [[Interface:Intuitionistic propositional logic]] gives classical propositional logic.
+}}
+{{interfaces
+| imports = *[[Interface:Intuitionistic propositional logic]]
+*[[Interface:Law of the excluded middle]]
+| exports = [[Interface:Principia Mathematica propositional logic theorems]]
+}}
+
+Instead of proving the axioms of classical propositional logic (for example, [[Interface:Standard axioms of propositional logic]]), we prove the [[Interface:Principia Mathematica propositional logic theorems]].  This is for two reasons.  The first is to show that all the connectives, not just those mentioned in the axioms, have the same meanings (this could alternately be achieved by including all the definitions in the interface with the axioms, as in [[Interface:Principia Mathematica propositional logic]]). The second is to present an alternative proof of the [[Interface:Principia Mathematica propositional logic theorems]].  In some cases the way we prove the theorems is very similar, but in others it is quite different.  The proofs in [[Principia Mathematica propositional logic]] rely heavily on the relationships between the connectives (especially implication and disjunction), and the proofs via intuitionistic logic rely more heavily on theorems such as disjunction composition and conjunction composition.
+
+{{under construction}}
+<jh>
+import (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
+import (EXCLUDED_MIDDLE Interface:Law_of_the_excluded_middle () ())
+</jh>
+We define some variables:
+<jh>
+var (formula p q r s)
+</jh>
+
+== Double negation elimination ==
+<jh>
+thm (DoubleNegationElimination () () ((¬ (¬ p)) → p) (
+        p TertiumNonDatur
+        swapDisjunction
+
+        (¬ p) p DisjunctionImplicationForward
+        applyModusPonens
+))
+
+thm (eliminateDoubleNegation () ((H (¬ (¬ p)))) p (
+        H
+        p DoubleNegationElimination
+        applyModusPonens
+))
+
+thm (DoubleNegation () () (p ↔ (¬ (¬ p))) (
+        p DoubleNegationIntroduction
+        p DoubleNegationElimination
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+== Transposition elimination ==
+<jh>
+thm (TranspositionElimination () () (((¬ q) → (¬ p)) → (p → q)) (
+        (¬ q) (¬ p) TranspositionIntroduction
+
+        p DoubleNegation
+        q DoubleNegation
+        buildImplication
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+
+thm (eliminateTransposition () ((H ((¬ q) → (¬ p)))) (p → q) (
+        H
+        q p TranspositionElimination
+        applyModusPonens
+))
+
+thm (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))) (
+        p q TranspositionIntroduction
+        p q TranspositionElimination
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+<jh>
+thm (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)) (
+        (¬ p) q Transposition
+
+        (¬ q) BiconditionalReflexivity
+        p DoubleNegation
+        buildImplication
+        swapBiconditional
+
+        applyBiconditionalTransitivity
+))
+
+thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))) (
+        p DoubleNegation
+        (¬ q) BiconditionalReflexivity
+        buildImplication
+
+        q (¬ p) Transposition
+        swapBiconditional
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Transposition for the biconditional ===
+
+To prove this biconditional transposition law, we write the biconditional on the left and right side as a pair of implications, and then apply transposition to each of them.
+
+<jh>
+thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) (
+        p q BiconditionalImplication
+
+        p q Transposition
+        q p Transposition
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        ((¬ q) → (¬ p)) ((¬ p) → (¬ q)) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+
+        (¬ p) (¬ q) BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The following version is similar, but with the negation placed differently.  The proof is similar, but is based on different variants of transposition for implications.
+
+<jh>
+thm (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))) (
+        p (¬ q) BiconditionalImplication
+
+        p q TranspositionWithNegatedConsequent
+        q p TranspositionWithNegatedAntecedent
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        (¬ p) q BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+== DeMorgan's laws ==
+<jh>
+#stmt (DeMorganPDP () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))))
+#stmt (DeMorganPDN () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)))
+#stmt (DeMorganNDP () () ((¬ ((¬ p) ∨ q)) ↔ (p ∧ (¬ q))))
+#stmt (DeMorganNDN () () ((¬ ((¬ p) ∨ (¬ q))) ↔ (p ∧ q)))
+#stmt (DeMorganPCP () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))))
+#stmt (DeMorganPCN () () ((¬ (p ∧ (¬ q))) ↔ ((¬ p) ∨ q)))
+#stmt (DeMorganNCP () () ((¬ ((¬ p) ∧ q)) ↔ (p ∨ (¬ q))))
+#stmt (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)))
+</jh>
+
+== Case elimination ==
+<jh>
+#stmt (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q))
+</jh>
+
+== Tautology ==
+The intention of this theorem is similar to the intuitionistic <code>TautologyId</code>, but it is stated in terms of the law of the excluded middle.
+
+<jh>
+#stmt (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)))
+</jh>
+
+== Relationships between connectives ==
+
+=== Biconditional and two disjunctions ===
+<jh>
+#stmt (BiconditionalDisjunctionLeftElimination () () ((p ↔ q) → (p ∨ (¬ q))))
+#stmt (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q)))
+#stmt (BiconditionalConjunction () () ((p ↔ q) ↔ (((¬ p) ∨ q) ∧ (p ∨ (¬ q)))))
+</jh>
+
+=== Biconditional as the disjunction of two equivalence classes ===
+
+<jh>
+#stmt (BiconditionalDisjunction () () ((p ↔ q) ↔ ((p ∧ q) ∨ ((¬ p) ∧ (¬ q)))))
+</jh>
+
+=== Implication and disjunction ===
+
+<jh>
+#stmt (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)))
+#stmt (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)))
+</jh>
+
+== Export ==
+When this file is done, we'll be ready to export to [[Interface:Principia Mathematica propositional logic theorems]].
+
+<jh>
+kindbind (wff formula)
+export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
+</jh>
+
+[[Category:Subsystems of classical logic|{{PAGENAME}}]]
+

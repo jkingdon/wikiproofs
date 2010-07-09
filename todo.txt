@@ -1,9 +1,7 @@
 Items which may be doable without a network connection:
 
 * more intuitionistic logic
-  - BiconditionalConjunctionReverse
-  - rules
-  - start in on law of the excluded middle
+  - From intuitionistic to classical propositional logic.wiki
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -19,4 +17,7 @@ Items which may be doable without a network connection:
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 
 To do with network:
+
+download changed files
+upload
 

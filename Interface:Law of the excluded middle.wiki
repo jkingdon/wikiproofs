@@ -1,0 +1,37 @@
+{{header
+ | title    = Law of the excluded middle
+ | subtitle = (''tertium non datum'')
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = The [[w:tertium non datur|law of the excluded middle]] is so named because it states that a proposition must be true or false, with no middle ground. It is also known as the ''tertium non datur''.
+}}
+
+To state the axiom, we need formulas including disjunction and negation. We could provide this via a parameter, but here we merely define the few things required for our axiom.
+<jh>
+kind (formula)
+var (formula p)
+term (formula (∨ formula formula))
+term (formula (¬ formula))
+</jh>
+
+Here is the axiom:
+<jh>
+stmt (TertiumNonDatur () () (p ∨ (¬ p)))
+</jh>
+
+== Equivalent axioms ==
+Assuming [[Interface:Intuitionistic propositional logic]], a variety of axioms all have the effect of producing classical propositional logic.  The law of the excluded middle is one of them.  A few others are:
+<dl>
+<dt>double negation elimination</dt>
+<dd>¬ ¬ p → p</dd>
+<dt>transposition elimination</dt>
+<dd>(¬ q → ¬ p) → (p → q)</dd>
+<dt>case elimination</dt>
+<dd>(p → q) ∧ (¬ p → q) → q</dd>
+<dt>Peirce's law</dt>
+<dd>((p → q) → p) → p</dd>
+</dl>
+
+[[Category:Subsystems of classical logic|{{PAGENAME}}]]
+
