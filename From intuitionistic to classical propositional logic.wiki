@@ -117,6 +117,13 @@ thm (NegationFunction () () ((p ↔ q) ↔ ((¬ p) ↔ (¬ q))) (
         swapBiconditional
         applyBiconditionalTransitivity
 ))
+
+thm (removeNegation () ((H ((¬ p) ↔ (¬ q)))) (p ↔ q) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 The following version is similar, but with the negation placed differently.  The proof is similar, but is based on different variants of transposition for implications.
@@ -134,18 +141,99 @@ thm (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔
         swapBiconditional
         applyBiconditionalTransitivity
 ))
+
+thm (transposeBiconditionalWithNegatedRight () ((H (p ↔ (¬ q)))) (q ↔ (¬ p)) (
+        H
+        p q BiconditionalTranspositionWithNegatedRight
+        applyModusPonens
+))
+</jh>
+
+It will also be convenient to have a commuted version of this theorem.
+<jh>
+thm (BiconditionalTranspositionWithNegatedLeft () () (((¬ p) ↔ q) ↔ ((¬ q) ↔ p)) (
+        (¬ p) q BiconditionalSymmetry
+
+        q p BiconditionalTranspositionWithNegatedRight
+        applyBiconditionalTransitivity
+
+        p (¬ q) BiconditionalSymmetry
+        applyBiconditionalTransitivity
+))
+
+thm (transposeBiconditionalWithNegatedLeft () ((H ((¬ p) ↔ q))) ((¬ q) ↔ p) (
+        H
+        p q BiconditionalTranspositionWithNegatedLeft
+        applyModusPonens
+))
 </jh>
 
 == DeMorgan's laws ==
+One of DeMorgan's laws holds (in both directions) intuitionistically.
+
 <jh>
-#stmt (DeMorganPDP () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))))
-#stmt (DeMorganPDN () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)))
-#stmt (DeMorganNDP () () ((¬ ((¬ p) ∨ q)) ↔ (p ∧ (¬ q))))
-#stmt (DeMorganNDN () () ((¬ ((¬ p) ∨ (¬ q))) ↔ (p ∧ q)))
-#stmt (DeMorganPCP () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))))
-#stmt (DeMorganPCN () () ((¬ (p ∧ (¬ q))) ↔ ((¬ p) ∨ q)))
-#stmt (DeMorganNCP () () ((¬ ((¬ p) ∧ q)) ↔ (p ∨ (¬ q))))
-#stmt (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)))
+thm (DeMorganPDP () () ((¬ (p ∨ q)) ↔ ((¬ p) ∧ (¬ q))) (
+        p q NegationCollectionNCNDistributionPDP
+        swapBiconditional
+))
+</jh>
+
+Double negation elimination turns that one into the other three which distribute negation across disjunction.
+
+<jh>
+thm (DeMorganPDN () () ((¬ (p ∨ (¬ q))) ↔ ((¬ p) ∧ q)) (
+        p (¬ q) DeMorganPDP
+
+        (¬ p) BiconditionalReflexivity
+        q DoubleNegation swapBiconditional
+        buildConjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (DeMorganNDP () () ((¬ ((¬ p) ∨ q)) ↔ (p ∧ (¬ q))) (
+        (¬ p) q DeMorganPDP
+
+        p DoubleNegation swapBiconditional
+        (¬ q) BiconditionalReflexivity
+        buildConjunction
+
+        applyBiconditionalTransitivity
+))
+
+thm (DeMorganNDN () () ((¬ ((¬ p) ∨ (¬ q))) ↔ (p ∧ q)) (
+        (¬ p) (¬ q) DeMorganPDP
+
+        p DoubleNegation
+        q DoubleNegation
+        buildConjunction
+        swapBiconditional
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The versions which distribute negation across a conjunction follow from the above versions and transposition.
+<jh>
+thm (DeMorganPCP () () ((¬ (p ∧ q)) ↔ ((¬ p) ∨ (¬ q))) (
+        p q DeMorganNDN
+        transposeBiconditionalWithNegatedLeft
+))
+
+thm (DeMorganPCN () () ((¬ (p ∧ (¬ q))) ↔ ((¬ p) ∨ q)) (
+        p q DeMorganNDP
+        transposeBiconditionalWithNegatedLeft
+))
+
+thm (DeMorganNCP () () ((¬ ((¬ p) ∧ q)) ↔ (p ∨ (¬ q))) (
+        p q DeMorganPDN
+        transposeBiconditionalWithNegatedLeft
+))
+
+thm (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)) (
+        p q DeMorganPDP
+        transposeBiconditionalWithNegatedLeft
+))
 </jh>
 
 == Case elimination ==
@@ -157,7 +245,11 @@ thm (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔
 The intention of this theorem is similar to the intuitionistic <code>TautologyId</code>, but it is stated in terms of the law of the excluded middle.
 
 <jh>
-#stmt (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)))
+thm (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)) (
+        True (p ∨ (¬ p)) introduceAntecedent
+        p TertiumNonDatur (⊤) introduceAntecedent
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 == Relationships between connectives ==
@@ -177,9 +269,26 @@ The intention of this theorem is similar to the intuitionistic <code>TautologyId
 
 === Implication and disjunction ===
 
+Intuitionistic logic does have one equivalence relating disjunction to implication, <code>¬ (p ∨ q) ↔ ¬ (¬ p → q)</code>. That and transposition gets us one of the classical equivalences,
 <jh>
-#stmt (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)))
-#stmt (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)))
+thm (DisjunctionImplication () () ((p ∨ q) ↔ ((¬ p) → q)) (
+        p q NotDisjunctionImplication
+        removeNegation
+))
+</jh>
+and throwing in a little double negation elimination gets us the other.
+<jh>
+thm (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)) (
+        (¬ p) q DisjunctionImplication
+
+        p DoubleNegation swapBiconditional
+        q BiconditionalReflexivity
+        buildImplication
+
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
 </jh>
 
 == Export ==
