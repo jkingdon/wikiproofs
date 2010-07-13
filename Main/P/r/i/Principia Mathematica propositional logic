@@ -2357,6 +2357,11 @@ kindbind (wff formula)
 export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
 </jh>
 
+We also export [[Interface:Law of the excluded middle]], just to emphasize that the law of the excluded middle is a theorem of classical propositional logic.
+<jh>
+export (EXCLUDED_MIDDLE Interface:Law_of_the_excluded_middle () ())
+</jh>
+
 == References ==
 
 <references />
