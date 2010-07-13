@@ -42,7 +42,7 @@ stmt (applyModusPonens () (p (p → q)) q)
 
 == Implication ==
 
-The first two of the [[Interface:Standard axioms of propositional calculus]] serve as our axioms governing implication:
+The first two of the [[Interface:Standard axioms of propositional logic]] serve as our axioms governing implication:
 
 <jh>
 stmt (Simp () () (p → (q → p)))
