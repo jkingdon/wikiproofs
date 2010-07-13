@@ -12,12 +12,11 @@
 | importedby = [[From intuitionistic to classical propositional logic]]
 | exportedby = [[Principia Mathematica propositional logic]]
 }}
-To state the axiom, we need formulas including disjunction and negation. We could provide this via a parameter, but here we merely define the few things required for our axiom.
+To state the axiom, we need formulas including disjunction and negation. The parameter here can be any flavor of propositional logic which defines them, including intuitionistic or classical logic.
 <jh>
-kind (formula)
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+
 var (formula p)
-term (formula (∨ formula formula))
-term (formula (¬ formula))
 </jh>
 
 Here is the axiom:
