@@ -2,11 +2,11 @@
  | notes = The standard axioms of propositional calculus are one of the more widely used axiomizations of propositional logic. Here we show that the standard axioms imply the Principia axioms. In [[Propositional calculus implies standard axioms]] we show the converse. Therefore, the two axiomizations are equivalent.
 }}
 {{interfaces
-| imports = [[Interface:Standard axioms of propositional calculus]]
+| imports = [[Interface:Standard axioms of propositional logic]]
 | exports = [[Interface:Principia Mathematica propositional logic|Principia Mathematica propositional logic]]
 }}
 
-The axioms are defined in [[Interface:Standard axioms of propositional calculus]], which we import straight away.
+The axioms are defined in [[Interface:Standard axioms of propositional logic]], which we import straight away.
 <jh>
 import (STANDARD Interface:Standard_axioms_of_propositional_logic () ())
 </jh>
