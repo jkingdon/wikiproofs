@@ -1,10 +1,10 @@
 {{header
- | notes = In [[Standard axioms imply Principia Mathematica axioms]] we show that the [[Interface:Standard axioms of propositional calculus]] imply the ''Principia'' axioms.  Here we show that the Principia axioms imply the standard ones.
+ | notes = In [[Standard axioms imply Principia Mathematica axioms]] we show that the [[Interface:Standard axioms of propositional logic]] imply the ''Principia'' axioms.  Here we show that the Principia axioms imply the standard ones.
 }}
 
 {{interfaces
 | imports = [[Interface:Classical propositional calculus]]
-| exports = [[Interface:Standard axioms of propositional calculus|Standard axioms]]
+| exports = [[Interface:Standard axioms of propositional logic|Standard axioms]]
 }}
 
 In order to avoid duplicating a lot of the work in [[Principia Mathematica propositional logic]], we'll just import [[Interface:Classical propositional calculus]].  Since [[Principia Mathematica propositional logic]] proves that interface from the ''Principia'' axioms, this is equivalent to importing the ''Principia'' axioms.
@@ -39,7 +39,7 @@ thm (Transp () () (((¬ p) → (¬ q)) → (q → p)) (
 The inference rule, <code>applyModusPonens</code>, is the same in the two sets of axioms (and has the same name), so we don't need to do anything.
 
 <jh>
-export (STANDARD Interface:Standard_axioms_of_propositional_calculus () ())
+export (STANDARD Interface:Standard_axioms_of_propositional_logic () ())
 </jh>
 
 [[Category:Classical propositional logic]]
