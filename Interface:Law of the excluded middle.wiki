@@ -1,18 +1,22 @@
 {{header
  | title    = Law of the excluded middle
- | subtitle = (''tertium non datum'')
+ | subtitle = (''tertium non datur'')
  | left     = 
  | right    = 
  | shortcut = 
  | notes    = The [[w:tertium non datur|law of the excluded middle]] is so named because it states that a proposition must be true or false, with no middle ground. It is also known as the ''tertium non datur''.
 }}
 
-To state the axiom, we need formulas including disjunction and negation. We could provide this via a parameter, but here we merely define the few things required for our axiom.
+{{modules
+| parameters = ''None''
+| importedby = [[From intuitionistic to classical propositional logic]]
+| exportedby = [[Principia Mathematica propositional logic]]
+}}
+To state the axiom, we need formulas including disjunction and negation. The parameter here can be any flavor of propositional logic which defines them, including intuitionistic or classical logic.
 <jh>
-kind (formula)
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+
 var (formula p)
-term (formula (∨ formula formula))
-term (formula (¬ formula))
 </jh>
 
 Here is the axiom:

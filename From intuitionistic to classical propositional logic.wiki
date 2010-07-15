@@ -7,8 +7,9 @@
  | notes    = Adding the [[Interface:Law of the excluded middle]] to [[Interface:Intuitionistic propositional logic]] gives classical propositional logic.
 }}
 {{interfaces
-| imports = *[[Interface:Intuitionistic propositional logic]]
-*[[Interface:Law of the excluded middle]]
+| imports = 
+[[Interface:Intuitionistic propositional logic]]<br />
+[[Interface:Law of the excluded middle]]
 | exports = [[Interface:Principia Mathematica propositional logic theorems]]
 }}
 
@@ -17,7 +18,9 @@ Instead of proving the axioms of classical propositional logic (for example, [[I
 {{under construction}}
 <jh>
 import (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
-import (EXCLUDED_MIDDLE Interface:Law_of_the_excluded_middle () ())
+
+kindbind (formula wff)
+import (EXCLUDED_MIDDLE Interface:Law_of_the_excluded_middle (INTUITIONISTIC) ())
 </jh>
 We define some variables:
 <jh>
@@ -68,12 +71,10 @@ thm (eliminateTransposition () ((H ((¬ q) → (¬ p)))) (p → q) (
 
 thm (Transposition () () ((p → q) ↔ ((¬ q) → (¬ p))) (
         p q TranspositionIntroduction
-        p q TranspositionElimination
+        q p TranspositionElimination
         introduceBiconditionalFromImplications
 ))
-</jh>
 
-<jh>
 thm (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)) (
         (¬ p) q Transposition
 
@@ -137,7 +138,7 @@ thm (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔
         buildConjunction
         applyBiconditionalTransitivity
 
-        (¬ p) q BiconditionalImplication
+        q (¬ p) BiconditionalImplication
         swapBiconditional
         applyBiconditionalTransitivity
 ))
@@ -145,6 +146,7 @@ thm (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔
 thm (transposeBiconditionalWithNegatedRight () ((H (p ↔ (¬ q)))) (q ↔ (¬ p)) (
         H
         p q BiconditionalTranspositionWithNegatedRight
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 </jh>
@@ -164,6 +166,7 @@ thm (BiconditionalTranspositionWithNegatedLeft () () (((¬ p) ↔ q) ↔ ((¬ q)
 thm (transposeBiconditionalWithNegatedLeft () ((H ((¬ p) ↔ q))) ((¬ q) ↔ p) (
         H
         p q BiconditionalTranspositionWithNegatedLeft
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 </jh>
@@ -296,7 +299,7 @@ When this file is done, we'll be ready to export to [[Interface:Principia Mathem
 
 <jh>
 kindbind (wff formula)
-export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
+#export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
 </jh>
 
 [[Category:Subsystems of classical logic|{{PAGENAME}}]]

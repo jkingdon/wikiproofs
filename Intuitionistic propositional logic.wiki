@@ -8,10 +8,9 @@
 }}
 {{interfaces
 | imports = [[Interface:Axioms of intuitionistic propositional logic]]
-| exports = eventually [[Interface:Intuitionistic propositional logic]]
+| exports = [[Interface:Intuitionistic propositional logic]]
 }}
 
-{{under construction}}
 <jh>
 import (AXIOMS Interface:Axioms_of_intuitionistic_propositional_logic () ())
 </jh>
@@ -198,6 +197,12 @@ Now we just switch <code>p</code> and <code>q</code> in <code>q → (p → r)</c
         q p r Comm
         applySyllogism
 ))
+
+thm (collectAntecedent () ((H ((p → q) → (p → r)))) (p → (q → r)) (
+        H
+        p q r FregeConverse
+        applyModusPonens
+))
 </jh>
 
 === Syllogism in the consequent ===
@@ -304,6 +309,18 @@ Combining the two gives us our result:
 <jh>
         composeConjunction
 ))
+
+thm (extractLeftConjunction () ((H (p → (q ∧ r)))) (p → q) (
+        H
+        q r ConjunctionRightElimination
+        applySyllogism
+))
+
+thm (extractRightConjunction () ((H (p → (q ∧ r)))) (p → r) (
+        H
+        q r ConjunctionLeftElimination
+        applySyllogism
+))
 </jh>
 
 === Export and import ===
@@ -395,6 +412,12 @@ thm (ConjunctionCommutativityImplication () () ((p ∧ q) → (q ∧ p)) (
         p q ConjunctionLeftElimination
         p q ConjunctionRightElimination
         composeConjunction
+))
+
+thm (swapConjunction () ((H (p ∧ q))) (q ∧ p) (
+        H
+        p q ConjunctionCommutativityImplication
+        applyModusPonens
 ))
 </jh>
 
@@ -526,6 +549,33 @@ thm (composeDisjunction () ((HP (p → r)) (HQ (q → r))) ((p ∨ q) → r) (
 ))
 </jh>
 
+Here are a few other rules corresponding to axioms.
+<jh>
+thm (introduceLeftDisjunction () ((H p)) (q ∨ p) (
+        H
+        p q DisjunctionLeftIntroduction
+        applyModusPonens
+))
+
+thm (introduceRightDisjunction () ((H p)) (p ∨ q) (
+        H
+        p q DisjunctionRightIntroduction
+        applyModusPonens
+))
+
+thm (extractLeftDisjunction () ((H ((p ∨ q) → r))) (p → r) (
+        p q DisjunctionRightIntroduction
+        H
+        applySyllogism
+))
+
+thm (extractRightDisjunction () ((H ((p ∨ q) → r))) (q → r) (
+        q p DisjunctionLeftIntroduction
+        H
+        applySyllogism
+))
+</jh>
+
 === Commutativity ===
 <jh>
 thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
@@ -533,6 +583,12 @@ thm (DisjunctionCommutativityImplication () () ((p ∨ q) → (q ∨ p)) (
         p q DisjunctionLeftIntroduction
         p (q ∨ p) q DisjunctionCompositionAxiom
         applyModusPonens
+        applyModusPonens
+))
+
+thm (swapDisjunction () ((H (p ∨ q))) (q ∨ p) (
+        H
+        p q DisjunctionCommutativityImplication
         applyModusPonens
 ))
 </jh>
@@ -805,6 +861,18 @@ thm (ConjunctionIdempotence () () (p ↔ (p ∧ p)) (
         p ConjunctionIdempotenceReverse
         introduceBiconditionalFromImplications
 ))
+
+thm (cloneAsConjunction () ((H p)) (p ∧ p) (
+        H
+        p ConjunctionIdempotence eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (conflateConjunction () ((H (p ∧ p))) p (
+        H
+        p ConjunctionIdempotence eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 ==== Conjunction commutativity ====
@@ -875,13 +943,25 @@ Composing <code>(p ∧ q) ∧ r</code>:
 <jh>
         composeConjunction
 ))
-</jh>
 
-<jh>
 thm (ConjunctionAssociativity () () (((p ∧ q) ∧ r) ↔ (p ∧ (q ∧ r))) (
         p q r ConjunctionRightAssociation
         p q r ConjunctionLeftAssociation
         introduceBiconditionalFromImplications
+))
+
+thm (groupConjunctionRight () ((H ((p ∧ q) ∧ r))) (p ∧ (q ∧ r)) (
+        H
+        p q r ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (groupConjunctionLeft () ((H (p ∧ (q ∧ r)))) ((p ∧ q) ∧ r) (
+        H
+        p q r ConjunctionAssociativity
+        eliminateBiconditionalForward
+        applyModusPonens
 ))
 </jh>
 
@@ -903,6 +983,18 @@ thm (DisjunctionIdempotence () () (p ↔ (p ∨ p)) (
         p DisjunctionIdempotenceForward
         p DisjunctionIdempotenceReverse
         introduceBiconditionalFromImplications
+))
+
+thm (cloneAsDisjunction () ((H p)) (p ∨ p) (
+        H
+        p DisjunctionIdempotence eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (conflateDisjunction () ((H (p ∨ p))) p (
+        H
+        p DisjunctionIdempotence eliminateBiconditionalForward
+        applyModusPonens
 ))
 </jh>
 
@@ -977,6 +1069,18 @@ thm (DisjunctionAssociativity () () (((p ∨ q) ∨ r) ↔ (p ∨ (q ∨ r))) (
         p q r DisjunctionLeftAssociation
         introduceBiconditionalFromImplications
 ))
+
+thm (groupDisjunctionLeft () ((H (p ∨ (q ∨ r)))) ((p ∨ q) ∨ r) (
+        H
+        p q r DisjunctionLeftAssociation
+        applyModusPonens
+))
+
+thm (groupDisjunctionRight () ((H ((p ∨ q) ∨ r))) (p ∨ (q ∨ r)) (
+        H
+        p q r DisjunctionRightAssociation
+        applyModusPonens
+))
 </jh>
 
 === Builders ===
@@ -1027,10 +1131,6 @@ thm (ConjunctionFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q 
         conjoin
 
         applySyllogism
-))
-
-thm (ConjunctionBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ∧ r) ↔ (q ∧ s))) (
-        p q r s ConjunctionFunction
 ))
 
 thm (buildConjunction () (
@@ -1322,6 +1422,12 @@ Now we assemble the result.
         import
         applySyllogism
 ))
+
+thm (introduceDoubleNegation () ((H p)) (¬ (¬ p)) (
+        H
+        p DoubleNegationIntroduction
+        applyModusPonens
+))
 </jh>
 
 === Triple negation ===
@@ -1339,6 +1445,13 @@ The reverse direction is even easier, as <code>¬ p → ¬ ¬ ¬ p</code> is an 
         (¬ p) DoubleNegationIntroduction
 
         introduceBiconditionalFromImplications
+))
+
+thm (eliminateTripleNegation () ((H (¬ (¬ (¬ p))))) (¬ p) (
+        H
+        p TripleNegation
+        eliminateBiconditionalReverse
+        applyModusPonens
 ))
 </jh>
 
@@ -1372,7 +1485,7 @@ thm (DisjunctiveSyllogism () () (((¬ p) ∧ (p ∨ q)) → q) (
 
 The first two of DeMorgan's laws are straightforward:
 <jh>
-thm (DeMorganPDPForward () () ((¬ (p ∨ q)) → ((¬ p) ∧ (¬ q))) (
+thm (NegationDistributionPDP () () ((¬ (p ∨ q)) → ((¬ p) ∧ (¬ q))) (
         p q DisjunctionRightIntroduction
         introduceTransposition
 
@@ -1382,7 +1495,7 @@ thm (DeMorganPDPForward () () ((¬ (p ∨ q)) → ((¬ p) ∧ (¬ q))) (
         composeConjunction
 ))
 
-thm (DeMorganPCPReverse () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))) (
+thm (NegationCollectionNDN () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))) (
         p q ConjunctionRightElimination
         introduceTransposition
 
@@ -1395,7 +1508,7 @@ thm (DeMorganPCPReverse () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))) (
 
 To prove the converse of <code>DeMorganPDPForward</code>, we start with a lemma which is a rearrangement of <code>DisjunctiveSyllogism</code> plus transposition.
 <jh>
-thm (DeMorganPDPReverseLemma () () ((¬ p) → ((¬ q) → (¬ (p ∨ q)))) (
+thm (NegationCollectionNCNLemma () () ((¬ p) → ((¬ q) → (¬ (p ∨ q)))) (
         p q DisjunctiveSyllogism
         export
 
@@ -1406,29 +1519,29 @@ thm (DeMorganPDPReverseLemma () () ((¬ p) → ((¬ q) → (¬ (p ∨ q)))) (
 
 This lemma is, however, just an import away from the desired result.
 <jh>
-thm (DeMorganPDPReverse () () (((¬ p) ∧ (¬ q)) → (¬ (p ∨ q))) (
-        p q DeMorganPDPReverseLemma
+thm (NegationCollectionNCN () () (((¬ p) ∧ (¬ q)) → (¬ (p ∨ q))) (
+        p q NegationCollectionNCNLemma
         import
 ))
 </jh>
 
-Combining the forward and reverse directions we get <code>DeMorganPDPSwapped</code>:
+Combining the forward and reverse directions we get <code>NegationCollectionNCNDistributionPDP</code>:
 <jh>
-thm (DeMorganPDPSwapped () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))) (
-        p q DeMorganPDPReverse
-        p q DeMorganPDPForward
+thm (NegationCollectionNCNDistributionPDP () () (((¬ p) ∧ (¬ q)) ↔ (¬ (p ∨ q))) (
+        p q NegationCollectionNCN
+        p q NegationDistributionPDP
         introduceBiconditionalFromImplications
 ))
 </jh>
 
-The following result follows from double negation introduction and <code>DeMorganPDPSwapped</code>.
+The following result follows from double negation introduction and <code>NegationCollectionNCNDistributionPDP</code>.
 <jh>
-thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
+thm (NegationCollectionPCP () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
         p DoubleNegationIntroduction
         q DoubleNegationIntroduction
         conjoin
 
-        (¬ p) (¬ q) DeMorganPDPSwapped
+        (¬ p) (¬ q) NegationCollectionNCNDistributionPDP
         eliminateBiconditionalReverse
         applySyllogism
 ))
@@ -1436,13 +1549,48 @@ thm (DeMorganNDNReverse () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))) (
 
 We can pull the same trick for disjunction to get our final version of DeMorgan's law.
 <jh>
-thm (DeMorganNCNReverse () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))) (
+thm (NegationCollectionPDP () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))) (
         p DoubleNegationIntroduction
         q DoubleNegationIntroduction
         disjoin
 
-        (¬ p) (¬ q) DeMorganPCPReverse
+        (¬ p) (¬ q) NegationCollectionNDN
         applySyllogism
+))
+</jh>
+
+Rules:
+<jh>
+thm (collectNegationPCP () ((H (p ∧ q))) (¬ ((¬ p) ∨ (¬ q))) (
+        H
+        p q NegationCollectionPCP
+        applyModusPonens
+))
+
+thm (collectNegationPDP () ((H (p ∨ q))) (¬ ((¬ p) ∧ (¬ q))) (
+        H
+        p q NegationCollectionPDP
+        applyModusPonens
+))
+
+thm (collectNegationNDN () ((H ((¬ p) ∨ (¬ q)))) (¬ (p ∧ q)) (
+        H
+        p q NegationCollectionNDN
+        applyModusPonens
+))
+
+thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
+        H
+        p q NegationCollectionNCNDistributionPDP
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationPDP () ((H (¬ (p ∨ q)))) ((¬ p) ∧ (¬ q)) (
+        H
+        p q NegationCollectionNCNDistributionPDP
+        eliminateBiconditionalForward
+        applyModusPonens
 ))
 </jh>
 
@@ -1514,8 +1662,7 @@ thm (NoContradiction () () (¬ (p ∧ (¬ p))) (
 The proof is based on <code>¬ q → ¬ (p ∧ ¬ p)</code>, which is a rearrangment of <code>Explosion</code>.  To apply this we just need a theorem (any theorem) which starts with a negation, to plug in for <code>¬ q</code>.  The double negation of <code>Id</code> will do.
 <jh>
         r Id
-        (r → r) DoubleNegationIntroduction
-        applyModusPonens
+        introduceDoubleNegation
 
         p (¬ (r → r)) Explosion
         import
@@ -1582,7 +1729,7 @@ thm (addNegation () ((H (p ↔ q))) ((¬ p) ↔ (¬ q)) (
 The proof of the implication builder is analogous to the way we proved <code>ConjunctionMultiplication</code>. We base it on <code>CommonConsequentAddition</code> and <code>CommonAntecedentAddition</code>.
 
 <jh>
-thm (ImplicationBuilder-1 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q → r))) (
+thm (ImplicationFunction-1 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q → r))) (
         (p ↔ q) (r ↔ s) ConjunctionRightElimination
         p q BiconditionalForwardElimination
         applySyllogism
@@ -1591,7 +1738,7 @@ thm (ImplicationBuilder-1 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q
         applySyllogism
 ))
 
-thm (ImplicationBuilder-2 () () (((p ↔ q) ∧ (r ↔ s)) → ((q → r) → (q → s))) (
+thm (ImplicationFunction-2 () () (((p ↔ q) ∧ (r ↔ s)) → ((q → r) → (q → s))) (
         (p ↔ q) (r ↔ s) ConjunctionLeftElimination
         r s BiconditionalReverseElimination
         applySyllogism
@@ -1600,20 +1747,20 @@ thm (ImplicationBuilder-2 () () (((p ↔ q) ∧ (r ↔ s)) → ((q → r) → (q
         applySyllogism
 ))
 
-thm (ImplicationBuilder-3 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q → s))) (
-        p q r s ImplicationBuilder-1
-        p q r s ImplicationBuilder-2
+thm (ImplicationFunction-3 () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) → (q → s))) (
+        p q r s ImplicationFunction-1
+        p q r s ImplicationFunction-2
         applySyllogismInConsequent
 ))
 
-thm (ImplicationBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))) (
-        p q r s ImplicationBuilder-3
+thm (ImplicationFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p → r) ↔ (q → s))) (
+        p q r s ImplicationFunction-3
 
         p q BiconditionalSymmetry
         r s BiconditionalSymmetry
         buildConjunction
         eliminateBiconditionalReverse
-        q p s r ImplicationBuilder-3
+        q p s r ImplicationFunction-3
         applySyllogism
 
         composeConjunction
@@ -1627,7 +1774,7 @@ thm (buildImplication () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p → r) ↔ (q →
         HPQ
         HRS
         introduceConjunction
-        p q r s ImplicationBuilder
+        p q r s ImplicationFunction
         applyModusPonens
 ))
 </jh>
@@ -1635,28 +1782,46 @@ thm (buildImplication () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p → r) ↔ (q →
 === Biconditional ===
 We derive the biconditional builder from the implication builder, just as in [[Principia Mathematica propositional logic]].
 <jh>
-thm (BiconditionalBuilder () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))) (
-        p q r s ImplicationBuilder
+thm (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (q ↔ s))) (
+        p q r s ImplicationFunction
 
         (p ↔ q) (r ↔ s) ConjunctionCommutativity
         eliminateBiconditionalReverse
-        r s p q ImplicationBuilder
+        r s p q ImplicationFunction
         applySyllogism
 
         composeConjunction
 
-        (p → r) (q → s) (r → p) (s → q) ConjunctionBuilder
+        (p → r) (q → s) (r → p) (s → q) ConjunctionFunction
         applySyllogism
 ))
 
 thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q ↔ s)) (
         HPQ HRS introduceConjunction
-        p q r s BiconditionalBuilder
+        p q r s BiconditionalFunction
         applyModusPonens
 ))
 </jh>
 
 == Relationships between connectives ==
+
+=== Conjunction and implication ===
+Analogous to DeMorgan's law, there are four relationships between conjunction and implication, which differ depending on where the negations are placed. They are:
+ p ∧ q → ¬ (p → ¬ q)
+ (p → q) → ¬ (p ∧ ¬ q)
+ p ∧ ¬ q → ¬ (p → q)
+ p → ¬ q ↔ ¬ (p ∧ q)
+
+For now, we only prove the third one.
+
+<jh>
+thm (ConjunctionImplication3 () () ((p ∧ (¬ q)) → (¬ (p → q))) (
+        p q ModusPonens export
+        (p → q) q TranspositionIntroduction
+        applySyllogism
+        import
+))
+</jh>
 
 === Disjunction and implication ===
 <jh>
@@ -1673,8 +1838,14 @@ This one looks a lot like <code>DisjunctiveSyllogism</code>, modulo a commutatio
         export
 ))
 
+thm (convertFromDisjunctionToImplication () ((H (p ∨ q))) ((¬ p) → q) (
+        H
+        p q DisjunctionImplicationForward
+        applyModusPonens
+))
 </jh>
-The next three implication/disjunction theorems are easy consequences of this one.
+
+The following implication/disjunction theorems are easy consequences of this one.
 <jh>
 thm (ImplicationDisjunctionReverse () () (((¬ p) ∨ q) → (p → q)) (
         (¬ p) q DisjunctionImplicationForward
@@ -1682,6 +1853,12 @@ thm (ImplicationDisjunctionReverse () () (((¬ p) ∨ q) → (p → q)) (
         p DoubleNegationIntroduction
         q addCommonConsequent
         applySyllogism
+))
+
+thm (convertToImplicationFromDisjunction () ((H ((¬ p) ∨ q))) (p → q) (
+        H
+        p q ImplicationDisjunctionReverse
+        applyModusPonens
 ))
 
 thm (NotImplicationDisjunction () () ((¬ (p → q)) → (¬ ((¬ p) ∨ q))) (
@@ -1697,23 +1874,19 @@ thm (NotDisjunctionImplicationReverse () () ((¬ ((¬ p) → q)) → (¬ (p ∨ 
 
 The converse of <code>NotDisjunctionImplicationReverse</code> also holds, but is a bit more difficult. 
 
-We start with a negation rearrangement lemma. (TODO: this may or may not be a dead end).
 <jh>
-thm (NotDisjunctionImplicationForward-1 () () ((¬ (p ∨ q)) → (¬ ((¬ (¬ p)) ∨ q))) (
-        p q DeMorganPDPSwapped eliminateBiconditionalForward
+thm (NotDisjunctionImplicationForward () () ((¬ (p ∨ q)) → (¬ ((¬ p) → q))) (
+        p q NegationCollectionNCNDistributionPDP eliminateBiconditionalForward
 
-        p TripleNegation eliminateBiconditionalForward
-        (¬ q) conjoinRR
-        applySyllogism
-
-        (¬ (¬ p)) q DeMorganPDPSwapped eliminateBiconditionalReverse
+        (¬ p) q ConjunctionImplication3
         applySyllogism
 ))
 
-#thm (NotDisjunctionImplicationForward () () ((¬ (p ∨ q)) → (¬ ((¬ p) → q))) (
-#        p q NotDisjunctionImplicationForward-1
-#        
-#))
+thm (NotDisjunctionImplication () () ((¬ (p ∨ q)) ↔ (¬ ((¬ p) → q))) (
+        p q NotDisjunctionImplicationForward
+        p q NotDisjunctionImplicationReverse
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 === Proving a biconditional from two disjunctions ===
@@ -1729,6 +1902,18 @@ thm (BiconditionalConjunctionReverse () () ((((¬ p) ∨ q) ∧ (p ∨ (¬ q))) 
         applySyllogism
 
         conjoin
+))
+
+thm (convertToBiconditionalFromConjunction () ((H (((¬ p) ∨ q) ∧ (p ∨ (¬ q))))) (p ↔ q) (
+        H
+        p q BiconditionalConjunctionReverse
+        applyModusPonens
+))
+
+thm (introduceBiconditionalFromDisjunctions () ((HPQ ((¬ p) ∨ q)) (HQP (p ∨ (¬ q)))) (p ↔ q) (
+        HPQ HQP introduceConjunction
+        p q BiconditionalConjunctionReverse
+        applyModusPonens
 ))
 </jh>
 
@@ -1829,12 +2014,26 @@ thm (NegationImplication () () ((¬ p) ↔ (p → (⊥))) (
         p NegationImplicationReverse
         introduceBiconditionalFromImplications
 ))
+
+thm (convertFromNegationToImplication () ((H (¬ p))) (p → (⊥)) (
+        H
+        p NegationImplication
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToNegationFromImplication () ((H (p → (⊥)))) (¬ p) (
+        H
+        p NegationImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 == Export ==
 Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
 <jh>
-#export (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
+export (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
 </jh>
 
 == References ==

@@ -4,7 +4,7 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = [[w:Intuitionistic logic|Intuitionistic logic]] is a subset of [[Interface:Classical propositional calculus]] (subset in the sense that every theorem of intuitionistic logic is also a theorem of classical logic). It differs in omitting the [[w:law of the excluded middle]]. This interface contains one axiomization of intuitionistic logic.
+ | notes    = [[w:Intuitionistic logic|Intuitionistic logic]] is a subset of [[Interface:Classical propositional calculus]] (subset in the sense that every theorem of intuitionistic logic is also a theorem of classical logic). It differs in omitting the [[Interface:Law of the excluded middle|law of the excluded middle]]. This interface contains one axiomization of intuitionistic logic.
 }}
 {{modules
 | parameters = ''None''
@@ -42,7 +42,7 @@ stmt (applyModusPonens () (p (p → q)) q)
 
 == Implication ==
 
-The first two of the [[Interface:Standard axioms of propositional calculus]] serve as our axioms governing implication:
+The first two of the [[Interface:Standard axioms of propositional logic]] serve as our axioms governing implication:
 
 <jh>
 stmt (Simp () () (p → (q → p)))
