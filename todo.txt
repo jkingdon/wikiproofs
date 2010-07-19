@@ -16,7 +16,72 @@ Items which may be doable without a network connection:
      buildImplicationAntecedent
      buildImplication
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
+* General set theory
+  - write axioms (see downloaded wikipedia page)
+    = compare with axsep etc from set.mm
+  - prove theorems such as empty set.
+  - definitions and consequences: opth from set.mm, union,
+    intersection, difference (e.g. eldifi and similar), subset
+  - singleton, unordered pair ("pair"?), ordered pair ("cons"?)
+    = elsn provides "definition" of singleton, with axiom of
+      adjunction being the key to the proof, but how to express
+      in jhilbert?
+      x = s <-> x element-of { s }
+      also s = t <-> s element-of { t }   (elsncg, basically)
+  - indexed union or intersection? (if needed for functions)
+  - binary relations. Notation (relates s R t) ?
+  - prove Peano axioms from them
+  - finite induction (e.g. peano5 in set.mm)
+  - functions and relations (e.g. cxp and following in set.mm)
+  - recursion theorem (see downloaded wikipedia page, Joedit)
+    = frfnom and friends in set.mm
+    = what is "rec"? some kind of recursion definition...
+
+download set.mm proof of axiom of null set
+
+ This theorem should not be referenced by any proof. Instead, use ax-nul 2822 below so that the uses of the Null Set Axiom can be more easily identified.
+Assertion Ref 	Expression
+axnul	⊢ ∃x∀y ¬ y ∈ x
+Distinct variable group:   x,y
+Proof of Theorem axnul Step	Hyp	Ref 	Expression
+1	 	ax-sep 2815	. 2 ⊢ ∃x∀y(y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y)))
+2	 	pm3.24 681	. . . . . 6 ⊢ ¬ (y ∈ y ⋀ ¬ y ∈ y)
+3	2	intnan 715	. . . . 5 ⊢ ¬ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))
+4	 	id 67	. . . . 5 ⊢ ((y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → (y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))))
+5	3, 4	mtbiri 742	. . . 4 ⊢ ((y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → ¬ y ∈ x)
+6	5	19.20i 1054	. . 3 ⊢ (∀y(y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → ∀y ¬ y ∈ x)
+7	6	19.22i 1102	. 2 ⊢ (∃x∀y(y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → ∃x∀y ¬ y ∈ x)
+8	1, 7	ax-mp 7	1 ⊢ ∃x∀y ¬ y ∈ x
+
+definitions:
+  y ∈ { x ∈ z | φ } ↔ [y / x] (x ∈ z ∧ φ)
+  y ∈ { x ∈ z | φ } ↔ y ∈ z ∧ [y / x] φ
+  thm? ∃ result result = { x ∈ z | φ }
+    * this better not be disprovable, or else it contradicts Quantifiability
+
+  What is the connection between
+  y ∈ s ↔ t
+  and
+  ∃ result result = s
+  ?
+  ∃ result ∀ y (y ∈ result ↔ y ∈ s)
+    (where s is { x | φ })
+  ∃ result ∀ y (y ∈ result ↔ [y / x]φ)
+    e.g. suppose s is ∅ which we want to define as { x | x ≠ x }
+    e.g. ∃ result ∀ y (y ∈ result ↔ y ≠ y)
+    from that conclude
+      y ∈ { x | φ } ↔ [y / x]φ
+  stmt (bm1.3ii ((x y) (x φ)) (∃ x ∀ y ( φ → y ∈ x )) (∃ x ∀ y ( y ∈ x ↔ φ )) )
+    e.g. ?
+
+  stmt (df-clabr ((result y φ) (result y x)) (∃ result ∀ y (y ∈ result ↔ [y / x]φ)) (y ∈ { x | φ } ↔ [y / x]φ) )
 
 To do with network:
 
+Upload the clab stuff
+
+Look at/download stanford encyclopedia of philosophy Basic Set Theory:
+http://plato.stanford.edu/entries/set-theory/primer.html
+
+Take at least a glance at http://www.math.ufl.edu/%7Ejal/set_theory.html (mentioned by stanford encyclopedia of philosophy)
 

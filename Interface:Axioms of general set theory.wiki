@@ -1,0 +1,77 @@
+{{header
+ | title    = Axioms of general set theory
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = [[w:General set theory|General set theory]] consists of only three axioms, but suffices to establish set theory for finite sets. It also can serve as the basis for more powerful set theories, such as [[w:Zermelo–Fraenkel set theory|ZFC]], as the axioms of general set theory are also axioms or theorems of most set theories.
+}}
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic]]
+| importedby = [[General set theory]]
+| exportedby = None yet.
+}}
+
+First, we adopt the axioms of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+First-order logic provides us with two kinds: <code>variable</code> is a variable, which represents a set and can be quantified over, and <code>object</code> is an expression which represents a set. For example, a variable might be <code>x</code>, <code>y</code>, or <code>z</code>, but an object could be the singleton <code>{ x }</code>, the unordered pair <code>{ x, y }</code>, the ordered pair <code>〈 x, y 〉</code>, the union <code>x ∪ y</code>, etc. To some extent the concepts of variable and object correspond to set and class in some theories (like metamath's set.mm), but one key difference is that we have no [[w:proper class|proper classes]] thanks to the [[Interface:Axiom of quantifiability|axiom of quantifiability]].
+
+<jh>
+var (variable x y z w)
+var (formula φ)
+</jh>
+
+We define one key predicate. The formula <code>s ∈ t</code> means "s is an element of t".
+
+<jh>
+term (formula (∈ object object))
+</jh>
+
+Our first axiom, the axiom of extensionality, states that if two sets have the same elements, they are equal. In symbols this is <code>∀ z (z ∈ x ↔ z ∈ y) → x = y</code>.  Versions with weaker distinct variable constaints also hold, but they can be proved from this version and other axioms, so we assume the weakest version (the one with the most distinct variable constraints).
+
+<jh>
+stmt (Extensionality ((x y z)) () ((∀ z (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y)))) → ((value x) = (value y))))
+</jh>
+
+The converse of the axiom of extensionality is usually taken to be a consequence of the general principle that equals can be substituted for equals, but in JHilbert this must be adopted as an axiom for each non-logical predicate (in this case ∈). (TODO: what version of this to adopt? Combine it with Extensionality like we did in Peano? check set.mm)
+
+<jh>
+stmt (buildIsElementAxiom () (((value x) = (value y))) (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y))))
+</jh>
+
+The axiom of separation is <code>∃ y ∀ x (x ∈ y ↔ x ∈ z ∧ φ)</code>.  Given a set <code>z</code> and a formula <code>φ</code> this asserts the existence of a set <code>y</code> which contains the elements of <code>z</code> which satisfy <code>φ</code>. The distinct variable constraint between <code>φ</code> and <code>y</code> is needed and is part of textbook statements of this axiom.  Most of the other distinct variable constraints are implicit in the notation in many textbooks, and not all of them are necessary, but as with extensionality we include them.  
+<jh>
+stmt (Separation ((x y z) (φ y z)) () (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ (value z)) ∧ φ)))))
+</jh>
+
+The third axiom, the axiom of adjunction, states that given two sets, we can form a set which contains all the elements of one of them, plus the second set as a single element. That is, given <code>x</code> and </code>y</code>, there exists a set <code>x ∪ { y }</code>.  The axiom in symbols is <code>∃ w ∀ z (z ∈ w ↔ (z ∈ x ∨ z = y))</code>. It is rarely stated in this form, but is related to results such as the union of two sets being a set,<ref>[http://us.metamath.org/mpeuni/unex.html unex], metamath's set.mm, accessed July 17, 2010</ref> the axiom of pairing,<ref>[http://us.metamath.org/mpeuni/ax-pr.html ax-pr], metamath's set.mm, accessed July 17, 2010</ref> and the singleton of a set being a set.<ref>[http://us.metamath.org/mpeuni/snex.html snex], metamath's set.mm, accessed July 17, 2010</ref>
+<jh>
+stmt (Adjunction ((x z w) (y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ (value x)) ∨ ((value z) = (value y)))))))
+</jh>
+
+==Defining sets==
+What we have presented so far provides the ideas of set theory, but there is one important notational detail to attend to. The above axioms let us conclude that there is a set with no elements, or a set whose only element is a set <code>x</code>, but they do not provide any way to introduce notation such as <code>∅</code> or <code>{ x }</code> for those concepts.
+
+We want to define <code>{ y | φ }</code> (the set of all <code>y</code> for which <code>φ</code> holds), of kind <code>object</code>, but we need to tread carefully to avoid [[w:Russell's paradox|Russell's paradox]] and related problems. Metamath's set.mm uses the definition <code>x ∈ { y | φ } ↔ [ x / y ] φ</code>,<ref>[http://us.metamath.org/mpeuni/df-clab.html df-clab], metamath's set.mm, accessed 2009</ref> which allows <code>{ y | φ }</code> to be a proper class rather than a set. As long as we assume the [[Interface:Axiom of quantifiability|axiom of quantifiability]], this avenue is not open to us. Instead, we provide a version of the metamath definition which has a hypothesis stating that the resulting set exists. This closely parallels the idiom of proving that something exists, and only then introducing a notation for it.
+
+The syntax <code>{ y | φ }</code> is not available in JHilbert, so we will write it as <code>(abstract y φ)</code>.
+<jh>
+term (object (abstract variable formula))
+</jh>
+
+Our restricted version of the metamath definition follows. The hypothesis is <code>∃ result ∀ x (x ∈ result ↔ [x / y]φ)</code>, which can be paraphrased as "<code>{ y | φ }</code> is a set". We adopt as an axiom that this hypothesis let us conclude <code>x ∈ { y | φ } ↔ [x / y]φ</code>. All variables are distinct except that <code>y</code> typically would appear in <code>φ</code>.
+<jh>
+var (variable result)
+stmt (Abstraction ((result x φ) (result x y)) (∃ result (∀ x ((x ∈ result) ↔ (subst x y φ)))) ((x ∈ (abstract y φ)) ↔ (subst x y φ)))
+</jh>
+
+==References==
+<references/>
+
+[[Category:Axiomatics of classical set theory and its fragments|{{PAGENAME}}]]
+
