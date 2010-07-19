@@ -54,6 +54,22 @@ The third axiom, the axiom of adjunction, states that given two sets, we can for
 stmt (Adjunction ((x z w) (y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ (value x)) ∨ ((value z) = (value y)))))))
 </jh>
 
+==Defining sets==
+What we have presented so far provides the ideas of set theory, but there is one important notational detail to attend to. The above axioms let us conclude that there is a set with no elements, or a set whose only element is a set <code>x</code>, but they do not provide any way to introduce notation such as <code>∅</code> or <code>{ x }</code> for those concepts.
+
+We want to define <code>{ y | φ }</code> (the set of all <code>y</code> for which <code>φ</code> holds), of kind <code>object</code>, but we need to tread carefully to avoid [[w:Russell's paradox|Russell's paradox]] and related problems. Metamath's set.mm uses the definition <code>x ∈ { y | φ } ↔ [ x / y ] φ</code>,<ref>[http://us.metamath.org/mpeuni/df-clab.html df-clab], metamath's set.mm, accessed 2009</ref> which allows <code>{ y | φ }</code> to be a proper class rather than a set. As long as we assume the [[Interface:Axiom of quantifiability|axiom of quantifiability]], this avenue is not open to us. Instead, we provide a version of the metamath definition which has a hypothesis stating that the resulting set exists. This closely parallels the idiom of proving that something exists, and only then introducing a notation for it.
+
+The syntax <code>{ y | φ }</code> is not available in JHilbert, so we will write it as <code>(abstract y φ)</code>.
+<jh>
+term (object (abstract variable formula))
+</jh>
+
+Our restricted version of the metamath definition follows. The hypothesis is <code>∃ result ∀ x (x ∈ result ↔ [x / y]φ)</code>, which can be paraphrased as "<code>{ y | φ }</code> is a set". We adopt as an axiom that this hypothesis let us conclude <code>x ∈ { y | φ } ↔ [x / y]φ</code>. All variables are distinct except that <code>y</code> typically would appear in <code>φ</code>.
+<jh>
+var (variable result)
+stmt (Abstraction ((result x φ) (result x y)) ((∃ result (∀ x (((value x) ∈ (value result)) ↔ (subst (value x) y φ))))) (((value x) ∈ (abstract y φ)) ↔ (subst (value x) y φ)))
+</jh>
+
 ==References==
 <references/>
 
