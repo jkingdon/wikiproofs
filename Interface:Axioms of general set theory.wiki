@@ -64,10 +64,12 @@ The syntax <code>{ y | φ }</code> is not available in JHilbert, so we will writ
 term (object (abstract variable formula))
 </jh>
 
-Our restricted version of the metamath definition follows. The hypothesis is <code>∃ result ∀ x (x ∈ result ↔ [x / y]φ)</code>, which can be paraphrased as "<code>{ y | φ }</code> is a set". We adopt as an axiom that this hypothesis let us conclude <code>x ∈ { y | φ } ↔ [x / y]φ</code>. All variables are distinct except that <code>y</code> typically would appear in <code>φ</code>.
+Our restricted version of the metamath definition follows. The hypothesis is <code>∃ result ∀ x (x ∈ result ↔ [x / y]φ)</code>, which can be paraphrased as "<code>{ y | φ }</code> is a set". We adopt an axiom that this hypothesis lets us conclude <code>x ∈ { y | φ } ↔ [x / y]φ</code>. All variables are distinct except that <code>y</code> can (and typically does) appear in <code>φ</code>.
 <jh>
 var (variable result)
-stmt (Abstraction ((result x φ) (result x y)) (∃ result (∀ x ((x ∈ result) ↔ (subst x y φ)))) ((x ∈ (abstract y φ)) ↔ (subst x y φ)))
+stmt (Abstraction ((result x φ) (result x y))
+  ((∃ result (∀ x (((value x) ∈ (value result)) ↔ (subst (value x) y φ)))))
+  (((value x) ∈ (abstract y φ)) ↔ (subst (value x) y φ)))
 </jh>
 
 ==References==

@@ -53,32 +53,7 @@ Proof of Theorem axnul Step	Hyp	Ref 	Expression
 7	6	19.22i 1102	. 2 ⊢ (∃x∀y(y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → ∃x∀y ¬ y ∈ x)
 8	1, 7	ax-mp 7	1 ⊢ ∃x∀y ¬ y ∈ x
 
-definitions:
-  y ∈ { x ∈ z | φ } ↔ [y / x] (x ∈ z ∧ φ)
-  y ∈ { x ∈ z | φ } ↔ y ∈ z ∧ [y / x] φ
-  thm? ∃ result result = { x ∈ z | φ }
-    * this better not be disprovable, or else it contradicts Quantifiability
-
-  What is the connection between
-  y ∈ s ↔ t
-  and
-  ∃ result result = s
-  ?
-  ∃ result ∀ y (y ∈ result ↔ y ∈ s)
-    (where s is { x | φ })
-  ∃ result ∀ y (y ∈ result ↔ [y / x]φ)
-    e.g. suppose s is ∅ which we want to define as { x | x ≠ x }
-    e.g. ∃ result ∀ y (y ∈ result ↔ y ≠ y)
-    from that conclude
-      y ∈ { x | φ } ↔ [y / x]φ
-  stmt (bm1.3ii ((x y) (x φ)) (∃ x ∀ y ( φ → y ∈ x )) (∃ x ∀ y ( y ∈ x ↔ φ )) )
-    e.g. ?
-
-  stmt (df-clabr ((result y φ) (result y x)) (∃ result ∀ y (y ∈ result ↔ [y / x]φ)) (y ∈ { x | φ } ↔ [y / x]φ) )
-
 To do with network:
-
-Upload the clab stuff
 
 Look at/download stanford encyclopedia of philosophy Basic Set Theory:
 http://plato.stanford.edu/entries/set-theory/primer.html
