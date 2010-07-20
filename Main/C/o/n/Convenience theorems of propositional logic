@@ -83,6 +83,36 @@ thm (detachImplicationBiconditional ()
 
         detach2of2
 ))
+
+thm (detachImplicationBiconditionalRight () 
+  ((H r) 
+   (HIMP (p → (q ↔ r))))
+  (p → q) (
+        H
+
+        HIMP
+        q r BiconditionalSymmetry eliminateBiconditionalReverse
+        applySyllogism
+
+        detachImplicationBiconditional
+))
+</jh>
+
+=== Negated detachment ===
+This variant of ''modus tollens'' detaches the right hand side of a biconditional, which is a consequent.<ref>[http://us.metamath.org/mpeuni/mtbiri.html mtbiri], metamath's set.mm, accessed July 20, 2010</ref>
+<jh>
+thm (negatedDetachImplicationBiconditionalRight () 
+  ((H (¬ r)) 
+   (HIMP (p → (q ↔ r))))
+  (p → (¬ q)) (
+        H
+
+        HIMP
+        q r NegationFunction eliminateBiconditionalReverse
+        applySyllogism
+
+        detachImplicationBiconditionalRight
+))
 </jh>
 
 == Transforming parts of formula ==
