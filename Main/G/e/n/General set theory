@@ -1,0 +1,38 @@
+{{header
+ | title    = 
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Here we start with the axioms of set theory and prove theorems for the usual concepts: empty set, singletons, unordered pairs, ordered pairs, relations, functions, some kinds of unions, intersection, set difference, and so on.  Although general set theory does not have any axioms which allow us to construct infinite sets, it does not forbid them either and all of the results here will be applicable for infinite sets as well, if supplemented by axioms which posit the existence of such sets. }}
+{{interfaces
+| imports = [[Interface:Axioms of general set theory]]
+| exports = eventually [[Interface:General set theory theorems]]
+}}
+
+We start by importing the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Axioms of general set theory]].  We also define some variables.
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (AXIOMS Interface:Axioms_of_general_set_theory (CLASSICAL FIRSTORDER) ())
+
+var (variable x y z w)
+var (object s t u)
+</jh>
+
+== Empty set ==
+
+{{under construction}}
+
+== Done ==
+When it exists, we'll be able to export to [[Interface:General set theory theorems]].
+
+<jh>
+#export (CLASSICAL Interface:General_set_theory_theorems () ())
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Axiomatics of classical set theory and its fragments‎]]
