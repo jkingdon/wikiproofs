@@ -451,7 +451,14 @@ These are analogues to modus ponens, but where some other portion of the formula
 stmt (detach1of2 () (p ((p ∧ q) → r)) (q → r))
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
 stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
+stmt (detachImplicationBiconditionalRight () (r (p → (q ↔ r))) (p → q))
 stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent → q))
+</jh>
+
+=== Negated detachment ===
+These are variants of ''modus tollens'' where we detach a portion of a formula which is more complicated than just a single implication.
+<jh>
+stmt (negatedDetachImplicationBiconditionalRight () ((¬ r) (p → (q ↔ r))) (p → (¬ q)))
 </jh>
 
 === Commutation of antecedents ===
