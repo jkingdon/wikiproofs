@@ -301,6 +301,11 @@ stmt (addSubst () ((φ → ψ)) ((subst s x φ) → (subst s x ψ)))
 stmt (buildSubst () ((φ ↔ ψ)) ((subst s x φ) ↔ (subst s x ψ)))
 </jh>
 
+=== Substitution of a variable which does not appear ===
+<jh>
+stmt (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ))
+</jh>
+
 === Turning substitution into there-exists ===
 One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
 <jh>
