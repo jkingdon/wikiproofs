@@ -7,7 +7,7 @@
  | notes    = [[w:General set theory|General set theory]] consists of only three axioms, but suffices to establish set theory for finite sets. It also can serve as the basis for more powerful set theories, such as [[w:Zermelo–Fraenkel set theory|ZFC]], as the axioms of general set theory are also axioms or theorems of most set theories.
 }}
 {{modules
-| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic]]
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
 | importedby = [[General set theory]]
 | exportedby = None yet.
 }}
@@ -52,6 +52,12 @@ stmt (Separation ((x y z) (φ y z)) () (∃ y (∀ x (((value x) ∈ (value y)) 
 The third axiom, the axiom of adjunction, states that given two sets, we can form a set which contains all the elements of one of them, plus the second set as a single element. That is, given <code>x</code> and </code>y</code>, there exists a set <code>x ∪ { y }</code>.  The axiom in symbols is <code>∃ w ∀ z (z ∈ w ↔ (z ∈ x ∨ z = y))</code>. It is rarely stated in this form, but is related to results such as the union of two sets being a set,<ref>[http://us.metamath.org/mpeuni/unex.html unex], metamath's set.mm, accessed July 17, 2010</ref> the axiom of pairing,<ref>[http://us.metamath.org/mpeuni/ax-pr.html ax-pr], metamath's set.mm, accessed July 17, 2010</ref> and the singleton of a set being a set.<ref>[http://us.metamath.org/mpeuni/snex.html snex], metamath's set.mm, accessed July 17, 2010</ref>
 <jh>
 stmt (Adjunction ((x z w) (y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ (value x)) ∨ ((value z) = (value y)))))))
+</jh>
+
+Not an element (<code>∉</code>) is just an abbreviation for negation and element-of.
+<jh>
+var (object s t)
+def ((∉ s t) (¬ (s ∈ t)))
 </jh>
 
 ==Defining sets==
