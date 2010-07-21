@@ -16,7 +16,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (AXIOMS Interface:Axioms_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 
-var (variable x y z w)
+var (variable x y z w result)
 var (object s t u)
 </jh>
 
@@ -24,7 +24,7 @@ var (object s t u)
 {{under construction}}
 The [[w:empty set|empty set]], or null set, is the set with no elements. We start with the conventional form of the [[w:Axiom of empty set|axiom of empty set]], which is a theorem rather than an axiom for us (and for many other axiomizations of set theory).<ref>[http://us.metamath.org/mpeuni/axnul.html axnul], metamath's set.mm, accessed July 19, 2010</ref>
 <jh>
-thm (EmptySet ((x y z)) () (∃ x (∀ y (¬ ((value y) ∈ (value x))))) (
+thm (axnul ((x y z)) () (∃ x (∀ y (¬ ((value y) ∈ (value x))))) (
 </jh>
 The only set theory axiom we use in the proof is the axiom of separation, which says that given the existence of any set (which is implicit in some the predicate logic steps), we can construct a subset of it which has no elements. Here is our application of separation, which we will use at the end of the proof (after a bunch of logical steps).
 <jh>
@@ -53,6 +53,49 @@ We're almost there. We just need to add the quantifiers and apply the instance o
 <jh>
         y addForAll
         x addThereExists
+        applyModusPonens
+))
+</jh>
+
+Now we introduce the symbol <code>∅</code> for the empty set.
+
+<jh>
+def ((∅) (abstract y (⊥)))
+
+#thm (EmptySet ((result x y)) () ((value x) ∉ (∅)) (
+thm (EmptySet ((result x y)) () ((value x) ∉ (abstract y (⊥))) (
+</jh>
+To apply <code>Abstraction</code>, we need <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>. This follows from <code>axnul</code>, the <code>NegationBiconditional</code> relationship between negation and <code>⊥</code>, and the fact that substituting a variable in <code>⊥</code> has no effect.
+<jh>
+        result x axnul
+
+        ((value x) ∈ (value result)) NegationBiconditional
+        ((value x) ∈ (value result)) BiconditionalReflexivity
+        (value x) y (⊥) NullSubstitution swapBiconditional
+        buildBiconditional
+        applyBiconditionalTransitivity
+
+        x buildForAll
+        result buildThereExists
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+Now that we have <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>, we can apply <code>Abstraction</code> to get <code>x ∈ ∅ ↔ [x / y]⊥</code>.
+<jh>
+        Abstraction
+</jh>
+Moving the substitution which has no effect
+<jh>
+        (value x) y (⊥) NullSubstitution
+        applyBiconditionalTransitivity
+</jh>
+gives us <code>x ∈ ∅ ↔ ⊥</code>
+and then <code>NegationBiconditional</code> gives us our desired result.
+<jh>
+#        ((value x) ∈ (∅)) NegationBiconditional
+        ((value x) ∈ (abstract y (⊥))) NegationBiconditional
+        eliminateBiconditionalForward
         applyModusPonens
 ))
 </jh>
