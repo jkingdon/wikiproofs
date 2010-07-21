@@ -1,5 +1,5 @@
 {{header
- | title    = 
+ | title    = General set theory
  | subtitle = 
  | left     = 
  | right    = 
@@ -20,8 +20,9 @@ var (variable x y z w result)
 var (object s t u)
 </jh>
 
-== Empty set ==
 {{under construction}}
+
+== Empty set ==
 The [[w:empty set|empty set]], or null set, is the set with no elements. We start with the conventional form of the [[w:Axiom of empty set|axiom of empty set]], which is a theorem rather than an axiom for us (and for many other axiomizations of set theory).<ref>[http://us.metamath.org/mpeuni/axnul.html axnul], metamath's set.mm, accessed July 19, 2010</ref>
 <jh>
 thm (axnul ((x y z)) () (∃ x (∀ y (¬ ((value y) ∈ (value x))))) (
