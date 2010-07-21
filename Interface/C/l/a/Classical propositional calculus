@@ -477,6 +477,8 @@ stmt (transformAntecedent () ((p → q) (p ↔ r)) (r → q))
 <jh>
 stmt (ConjunctionImplication () () ((p ∧ q) ↔ (¬ (p → (¬ q)))))
 stmt (ImplicationConjunction () () ((p → q) ↔ (¬ (p ∧ (¬ q)))))
+
+stmt (NegationBiconditional () () ((¬ p) ↔ (p ↔ (⊥))))
 </jh>
 
 == References ==
