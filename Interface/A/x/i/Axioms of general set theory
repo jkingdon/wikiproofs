@@ -38,10 +38,12 @@ Our first axiom, the axiom of extensionality, states that if two sets have the s
 stmt (Extensionality ((x y z)) () ((∀ z (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y)))) → ((value x) = (value y))))
 </jh>
 
-The converse of the axiom of extensionality is usually taken to be a consequence of the general principle that equals can be substituted for equals, but in JHilbert this must be adopted as an axiom for each non-logical predicate (in this case ∈). (TODO: what version of this to adopt? Combine it with Extensionality like we did in Peano? check set.mm)
+The principle that equals can be substituted for equals in JHilbert must be adopted as an axiom for each non-logical predicate (in this case ∈), which we do now.<ref>They are variants of [http://us.metamath.org/mpeuni/ax-13.html ax-13] and [http://us.metamath.org/mpeuni/ax-14.html ax-14] in metamath's set.mm, accessed July 21, 2010. The minor change is to biconditionalize them, but the major one is to make them apply for object, not just variable.</ref>
 
 <jh>
-stmt (buildIsElementAxiom () (((value x) = (value y))) (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y))))
+var (object s t s0 s1 t0 t1)
+stmt (IsElementBuilderLL () () ((t0 = t1) → ((s ∈ t0) ↔ (s ∈ t1))))
+stmt (IsElementBuilderRR () () ((s0 = s1) → ((s0 ∈ t) ↔ (s1 ∈ t))))
 </jh>
 
 The axiom of separation is <code>∃ y ∀ x (x ∈ y ↔ x ∈ z ∧ φ)</code>.  Given a set <code>z</code> and a formula <code>φ</code> this asserts the existence of a set <code>y</code> which contains the elements of <code>z</code> which satisfy <code>φ</code>. The distinct variable constraint between <code>φ</code> and <code>y</code> is needed and is part of textbook statements of this axiom.  Most of the other distinct variable constraints are implicit in the notation in many textbooks, and not all of them are necessary, but as with extensionality we include them.  
@@ -56,7 +58,6 @@ stmt (Adjunction ((x z w) (y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) �
 
 Not an element (<code>∉</code>) is just an abbreviation for negation and element-of.
 <jh>
-var (object s t)
 def ((∉ s t) (¬ (s ∈ t)))
 </jh>
 
