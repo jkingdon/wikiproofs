@@ -63,8 +63,7 @@ Now we introduce the symbol <code>∅</code> for the empty set.
 <jh>
 def ((∅) (abstract y (⊥)))
 
-#thm (EmptySet ((result x y)) () ((value x) ∉ (∅)) (
-thm (EmptySet ((result x y)) () ((value x) ∉ (abstract y (⊥))) (
+thm (EmptySet ((result x y)) () ((value x) ∉ (∅)) (
 </jh>
 To apply <code>Abstraction</code>, we need <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>. This follows from <code>axnul</code>, the <code>NegationBiconditional</code> relationship between negation and <code>⊥</code>, and the fact that substituting a variable in <code>⊥</code> has no effect.
 <jh>
@@ -82,7 +81,7 @@ To apply <code>Abstraction</code>, we need <code>∃ result ∀ x (x ∈ result 
         eliminateBiconditionalReverse
         applyModusPonens
 </jh>
-Now that we have <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>, we can apply <code>Abstraction</code> to get <code>x ∈ ∅ ↔ [x / y]⊥</code>.
+Now that we have <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>, we can apply <code>Abstraction</code> to get <code>x ∈ {y | ⊥} ↔ [x / y]⊥</code>.
 <jh>
         Abstraction
 </jh>
@@ -91,10 +90,9 @@ Moving the substitution which has no effect
         (value x) y (⊥) NullSubstitution
         applyBiconditionalTransitivity
 </jh>
-gives us <code>x ∈ ∅ ↔ ⊥</code>
+gives us <code>x ∈ {y | ⊥} ↔ ⊥</code>
 and then <code>NegationBiconditional</code> gives us our desired result.
 <jh>
-#        ((value x) ∈ (∅)) NegationBiconditional
         ((value x) ∈ (abstract y (⊥))) NegationBiconditional
         eliminateBiconditionalForward
         applyModusPonens
