@@ -22,7 +22,7 @@ param (CLASSICAL Interface:Classical_propositional_calculus () ())
 
 By convention we use φ, ψ, χ, and θ to represent formulas:
 <jh>
-var (formula φ ψ χ θ)
+var (formula φ ψ χ θ φx φs φy)
 </jh>
 
 We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is a valid object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
@@ -260,6 +260,16 @@ stmt (addThereExistsToAntecedent ((x ψ))
   ((∃ x φ) → ψ))
 </jh>
 
+== Converting variable to object ==
+We can convert a formula containing a variable <code>x</code> to one containing an object <code>s</code> using the following theorem.
+<jh>
+stmt (VariableToObject ((x s) (x φs))
+  ((((value x) = s) → (φx ↔ φs))
+   φx
+  )
+  φs)
+</jh>
+
 == Substitution ==
 Having a formula which substitutes one variable for another greatly increases the readability of many theorems.  For example, a statement of [[w:mathematical induction|induction]] will generally apply the same formula with <code>0</code>, <code>k</code>, <code>k + 1</code>, or <code>n</code>.
 
@@ -316,7 +326,6 @@ stmt (introduceThereExists () ((subst s x φ)) (∃ x φ))
 === Changing the quantified variable ===
 We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly.
 <jh>
-var (formula φx φy)
 stmt (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((((value x) = (value y)) → (φx ↔ φy))) ((∃ x φx) ↔ (∃ y φy)))
 </jh>
 
