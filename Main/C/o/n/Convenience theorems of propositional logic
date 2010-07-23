@@ -297,6 +297,15 @@ thm (buildImplicationInConsequent ()
         p0 q0 p1 q1 ImplicationFunction
         applySyllogism
 ))
+
+thm (buildBiconditionalLLInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common ↔ p) ↔ (common ↔ q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q BiconditionalFunction detach1of2
+        applySyllogism
+))
 </jh>
 
 == Additional theorems in the consequent ==
