@@ -99,6 +99,34 @@ and then <code>NegationBiconditional</code> gives us our desired result.
 ))
 </jh>
 
+== Adjunction for objects ==
+The <code>Adjunction</code> axiom allows us to form a set with the elements of a given set and a single additional given element, where the given sets are represented by variables. Here we prove the same thing, but with object in place of variable. The proof is by straightforward application of <code>VariableToObject</code> with the usual substitution machinery.
+<jh>
+thm (AdjunctionObject-1 ((s x z w) (y x z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ s) ∨ ((value z) = (value y)))))) (
+        (value x) s (value z) IsElementBuilderLL
+        ((value z) = (value y)) buildDisjunctionRRInConsequent
+        ((value z) ∈ (value w)) buildBiconditionalLLInConsequent
+        z buildForAllInConsequent
+        w buildThereExistsInConsequent
+
+        w z x y Adjunction
+
+        VariableToObject
+))
+
+thm (AdjunctionObject ((s y z w) (t y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ s) ∨ ((value z) = t))))) (
+        (value y) t (value z) EqualityBuilderLL
+        ((value z) ∈ s) buildDisjunctionLLInConsequent
+        ((value z) ∈ (value w)) buildBiconditionalLLInConsequent
+        z buildForAllInConsequent
+        w buildThereExistsInConsequent
+
+        w z s y AdjunctionObject-1
+
+        VariableToObject
+))
+</jh>
+
 == Done ==
 When it exists, we'll be able to export to [[Interface:General set theory theorems]].
 
