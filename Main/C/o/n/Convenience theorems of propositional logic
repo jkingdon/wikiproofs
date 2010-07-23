@@ -252,6 +252,24 @@ thm (buildConjunctionRRInConsequent ()
         applySyllogism
 ))
 
+thm (buildDisjunctionRRInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((p ∨ common) ↔ (q ∨ common))) (
+        H
+        common BiconditionalReflexivity
+        p q common common DisjunctionFunction detach2of2
+        applySyllogism
+))
+
+thm (buildDisjunctionLLInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common ∨ p) ↔ (common ∨ q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q DisjunctionFunction detach1of2
+        applySyllogism
+))
+
 thm (buildCommonConsequentInConsequent ()
   ((H (antecedent → (p ↔ q))))
   (antecedent → ((p → common) ↔ (q → common))) (
