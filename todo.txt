@@ -17,9 +17,7 @@ Items which may be doable without a network connection:
      buildImplication
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 * General set theory
-  - write axioms (see downloaded wikipedia page)
-    = compare with axsep etc from set.mm
-  - prove theorems such as empty set.
+  - singleton, unordered pair, ordered pair
   - definitions and consequences: opth from set.mm, union,
     intersection, difference (e.g. eldifi and similar), subset
   - singleton, unordered pair ("pair"?), ordered pair ("cons"?)
@@ -36,22 +34,6 @@ Items which may be doable without a network connection:
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
     = what is "rec"? some kind of recursion definition...
-
-download set.mm proof of axiom of null set
-
- This theorem should not be referenced by any proof. Instead, use ax-nul 2822 below so that the uses of the Null Set Axiom can be more easily identified.
-Assertion Ref 	Expression
-axnul	⊢ ∃x∀y ¬ y ∈ x
-Distinct variable group:   x,y
-Proof of Theorem axnul Step	Hyp	Ref 	Expression
-1	 	ax-sep 2815	. 2 ⊢ ∃x∀y(y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y)))
-2	 	pm3.24 681	. . . . . 6 ⊢ ¬ (y ∈ y ⋀ ¬ y ∈ y)
-3	2	intnan 715	. . . . 5 ⊢ ¬ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))
-4	 	id 67	. . . . 5 ⊢ ((y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → (y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))))
-5	3, 4	mtbiri 742	. . . 4 ⊢ ((y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → ¬ y ∈ x)
-6	5	19.20i 1054	. . 3 ⊢ (∀y(y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → ∀y ¬ y ∈ x)
-7	6	19.22i 1102	. 2 ⊢ (∃x∀y(y ∈ x ↔ (y ∈ z ⋀ (y ∈ y ⋀ ¬ y ∈ y))) → ∃x∀y ¬ y ∈ x)
-8	1, 7	ax-mp 7	1 ⊢ ∃x∀y ¬ y ∈ x
 
 To do with network:
 

@@ -1,0 +1,142 @@
+{{header
+ | title    = General set theory
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Here we start with the axioms of set theory and prove theorems for the usual concepts: empty set, singletons, unordered pairs, ordered pairs, relations, functions, some kinds of unions, intersection, set difference, and so on.  Although general set theory does not have any axioms which allow us to construct infinite sets, it does not forbid them either and all of the results here will be applicable for infinite sets as well, if supplemented by axioms which posit the existence of such sets. }}
+{{interfaces
+| imports = [[Interface:Axioms of general set theory]]
+| exports = eventually [[Interface:General set theory theorems]]
+}}
+
+We start by importing the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Axioms of general set theory]].  We also define some variables.
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (AXIOMS Interface:Axioms_of_general_set_theory (CLASSICAL FIRSTORDER) ())
+
+var (variable x y z w result)
+var (object s t u)
+</jh>
+
+{{under construction}}
+
+== Empty set ==
+The [[w:empty set|empty set]], or null set, is the set with no elements. We start with the conventional form of the [[w:Axiom of empty set|axiom of empty set]], which is a theorem rather than an axiom for us (and for many other axiomizations of set theory).<ref>[http://us.metamath.org/mpeuni/axnul.html axnul], metamath's set.mm, accessed July 19, 2010</ref>
+<jh>
+thm (axnul ((x y z)) () (∃ x (∀ y (¬ ((value y) ∈ (value x))))) (
+</jh>
+The only set theory axiom we use in the proof is the axiom of separation, which says that given the existence of any set (which is implicit in some the predicate logic steps), we can construct a subset of it which has no elements. Here is our application of separation, which we will use at the end of the proof (after a bunch of logical steps).
+<jh>
+        x y z (((value y) ∈ (value y)) ∧ (¬ ((value y) ∈ (value y)))) Separation
+</jh>
+The proof starts with <code>¬ (y ∈ y ∧ ¬ y ∈ y)</code>
+<jh>
+        (¬ ((value y) ∈ (value y))) TertiumNonDatur
+        collectNegationNDN
+</jh>
+We now add <code>y ∈ z</code> to get <code>¬ (y ∈ z ∧ (y ∈ y ∧ ¬ y ∈ y))</code>
+<jh>
+        ((value y) ∈ (value z)) (((value y) ∈ (value y)) ∧ (¬ ((value y) ∈ (value y)))) ConjunctionLeftElimination
+        introduceTransposition
+        applyModusPonens
+</jh>
+We note that <code>y ∈ x ↔ (y ∈ z ∧ (y ∈ y ∧ ¬ y ∈ y))</code> implies itself.
+<jh>
+        (((value y) ∈ (value x)) ↔ (((value y) ∈ (value z)) ∧ (((value y) ∈ (value y)) ∧ (¬ ((value y) ∈ (value y)))))) ImplicationReflexivity
+</jh>
+We detach half the biconditional to get <code>(y ∈ x ↔ (y ∈ z ∧ (y ∈ y ∧ ¬ y ∈ y))) → ¬ y ∈ x</code>
+<jh>
+        negatedDetachImplicationBiconditionalRight
+</jh>
+We're almost there. We just need to add the quantifiers and apply the instance of the axiom of separation that we started with.
+<jh>
+        y addForAll
+        x addThereExists
+        applyModusPonens
+))
+</jh>
+
+Now we introduce the symbol <code>∅</code> for the empty set.
+
+<jh>
+def ((∅) (abstract y (⊥)))
+
+thm (EmptySet ((result x y)) () ((value x) ∉ (∅)) (
+</jh>
+To apply <code>Abstraction</code>, we need <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>. This follows from <code>axnul</code>, the <code>NegationBiconditional</code> relationship between negation and <code>⊥</code>, and the fact that substituting a variable in <code>⊥</code> has no effect.
+<jh>
+        result x axnul
+
+        ((value x) ∈ (value result)) NegationBiconditional
+        ((value x) ∈ (value result)) BiconditionalReflexivity
+        (value x) y (⊥) NullSubstitution swapBiconditional
+        buildBiconditional
+        applyBiconditionalTransitivity
+
+        x buildForAll
+        result buildThereExists
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+Now that we have <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>, we can apply <code>Abstraction</code> to get <code>x ∈ {y | ⊥} ↔ [x / y]⊥</code>.
+<jh>
+        Abstraction
+</jh>
+Moving the substitution which has no effect
+<jh>
+        (value x) y (⊥) NullSubstitution
+        applyBiconditionalTransitivity
+</jh>
+gives us <code>x ∈ {y | ⊥} ↔ ⊥</code>
+and then <code>NegationBiconditional</code> gives us our desired result.
+<jh>
+        ((value x) ∈ (abstract y (⊥))) NegationBiconditional
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+== Adjunction for objects ==
+The <code>Adjunction</code> axiom allows us to form a set with the elements of a given set and a single additional given element, where the given sets are represented by variables. Here we prove the same thing, but with object in place of variable. The proof is by straightforward application of <code>VariableToObject</code> with the usual substitution machinery.
+<jh>
+thm (AdjunctionObject-1 ((s x z w) (y x z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ s) ∨ ((value z) = (value y)))))) (
+        (value x) s (value z) IsElementBuilderLL
+        ((value z) = (value y)) buildDisjunctionRRInConsequent
+        ((value z) ∈ (value w)) buildBiconditionalLLInConsequent
+        z buildForAllInConsequent
+        w buildThereExistsInConsequent
+
+        w z x y Adjunction
+
+        VariableToObject
+))
+
+thm (AdjunctionObject ((s y z w) (t y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ s) ∨ ((value z) = t))))) (
+        (value y) t (value z) EqualityBuilderLL
+        ((value z) ∈ s) buildDisjunctionLLInConsequent
+        ((value z) ∈ (value w)) buildBiconditionalLLInConsequent
+        z buildForAllInConsequent
+        w buildThereExistsInConsequent
+
+        w z s y AdjunctionObject-1
+
+        VariableToObject
+))
+</jh>
+
+== Done ==
+When it exists, we'll be able to export to [[Interface:General set theory theorems]].
+
+<jh>
+#export (CLASSICAL Interface:General_set_theory_theorems () ())
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Axiomatics of classical set theory and its fragments‎]]
+

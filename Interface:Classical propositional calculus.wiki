@@ -428,6 +428,9 @@ stmt (buildImplicationAntecedent () ((p ↔ q)) ((common → p) ↔ (common → 
 stmt (buildConjunctionRRInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))))
+stmt (buildDisjunctionRRInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((p ∨ common) ↔ (q ∨ common))))
+stmt (buildDisjunctionLLInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((common ∨ p) ↔ (common ∨ q))))
+
 stmt (buildCommonAntecedentInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((common → p) ↔ (common → q))))
@@ -438,6 +441,7 @@ stmt (buildImplicationInConsequent ()
   ((antecedent → (p0 ↔ q0))
    (antecedent → (p1 ↔ q1)))
   (antecedent → ((p0 → p1) ↔ (q0 → q1))))
+stmt (buildBiconditionalLLInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((common ↔ p) ↔ (common ↔ q))))
 </jh>
 
 === Various theorems in the consequent ===
@@ -451,7 +455,14 @@ These are analogues to modus ponens, but where some other portion of the formula
 stmt (detach1of2 () (p ((p ∧ q) → r)) (q → r))
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
 stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
+stmt (detachImplicationBiconditionalRight () (r (p → (q ↔ r))) (p → q))
 stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent → q))
+</jh>
+
+=== Negated detachment ===
+These are variants of ''modus tollens'' where we detach a portion of a formula which is more complicated than just a single implication.
+<jh>
+stmt (negatedDetachImplicationBiconditionalRight () ((¬ r) (p → (q ↔ r))) (p → (¬ q)))
 </jh>
 
 === Commutation of antecedents ===
@@ -470,6 +481,8 @@ stmt (transformAntecedent () ((p → q) (p ↔ r)) (r → q))
 <jh>
 stmt (ConjunctionImplication () () ((p ∧ q) ↔ (¬ (p → (¬ q)))))
 stmt (ImplicationConjunction () () ((p → q) ↔ (¬ (p ∧ (¬ q)))))
+
+stmt (NegationBiconditional () () ((¬ p) ↔ (p ↔ (⊥))))
 </jh>
 
 == References ==

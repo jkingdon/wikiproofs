@@ -7,7 +7,7 @@
  | notes    = [[w:General set theory|General set theory]] consists of only three axioms, but suffices to establish set theory for finite sets. It also can serve as the basis for more powerful set theories, such as [[w:Zermelo–Fraenkel set theory|ZFC]], as the axioms of general set theory are also axioms or theorems of most set theories.
 }}
 {{modules
-| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic]]
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
 | importedby = [[General set theory]]
 | exportedby = None yet.
 }}
@@ -38,10 +38,12 @@ Our first axiom, the axiom of extensionality, states that if two sets have the s
 stmt (Extensionality ((x y z)) () ((∀ z (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y)))) → ((value x) = (value y))))
 </jh>
 
-The converse of the axiom of extensionality is usually taken to be a consequence of the general principle that equals can be substituted for equals, but in JHilbert this must be adopted as an axiom for each non-logical predicate (in this case ∈). (TODO: what version of this to adopt? Combine it with Extensionality like we did in Peano? check set.mm)
+The principle that equals can be substituted for equals in JHilbert must be adopted as an axiom for each non-logical predicate (in this case ∈), which we do now.<ref>They are variants of [http://us.metamath.org/mpeuni/ax-13.html ax-13] and [http://us.metamath.org/mpeuni/ax-14.html ax-14] in metamath's set.mm, accessed July 21, 2010. The minor change is to biconditionalize them, but the major one is to make them apply for object, not just variable.</ref>
 
 <jh>
-stmt (buildIsElementAxiom () (((value x) = (value y))) (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y))))
+var (object s t s0 s1 t0 t1)
+stmt (IsElementBuilderLL () () ((t0 = t1) → ((s ∈ t0) ↔ (s ∈ t1))))
+stmt (IsElementBuilderRR () () ((s0 = s1) → ((s0 ∈ t) ↔ (s1 ∈ t))))
 </jh>
 
 The axiom of separation is <code>∃ y ∀ x (x ∈ y ↔ x ∈ z ∧ φ)</code>.  Given a set <code>z</code> and a formula <code>φ</code> this asserts the existence of a set <code>y</code> which contains the elements of <code>z</code> which satisfy <code>φ</code>. The distinct variable constraint between <code>φ</code> and <code>y</code> is needed and is part of textbook statements of this axiom.  Most of the other distinct variable constraints are implicit in the notation in many textbooks, and not all of them are necessary, but as with extensionality we include them.  
@@ -52,6 +54,11 @@ stmt (Separation ((x y z) (φ y z)) () (∃ y (∀ x (((value x) ∈ (value y)) 
 The third axiom, the axiom of adjunction, states that given two sets, we can form a set which contains all the elements of one of them, plus the second set as a single element. That is, given <code>x</code> and </code>y</code>, there exists a set <code>x ∪ { y }</code>.  The axiom in symbols is <code>∃ w ∀ z (z ∈ w ↔ (z ∈ x ∨ z = y))</code>. It is rarely stated in this form, but is related to results such as the union of two sets being a set,<ref>[http://us.metamath.org/mpeuni/unex.html unex], metamath's set.mm, accessed July 17, 2010</ref> the axiom of pairing,<ref>[http://us.metamath.org/mpeuni/ax-pr.html ax-pr], metamath's set.mm, accessed July 17, 2010</ref> and the singleton of a set being a set.<ref>[http://us.metamath.org/mpeuni/snex.html snex], metamath's set.mm, accessed July 17, 2010</ref>
 <jh>
 stmt (Adjunction ((x z w) (y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ (value x)) ∨ ((value z) = (value y)))))))
+</jh>
+
+Not an element (<code>∉</code>) is just an abbreviation for negation and element-of.
+<jh>
+def ((∉ s t) (¬ (s ∈ t)))
 </jh>
 
 ==Defining sets==
