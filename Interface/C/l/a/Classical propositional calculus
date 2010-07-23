@@ -428,6 +428,9 @@ stmt (buildImplicationAntecedent () ((p ↔ q)) ((common → p) ↔ (common → 
 stmt (buildConjunctionRRInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))))
+stmt (buildDisjunctionRRInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((p ∨ common) ↔ (q ∨ common))))
+stmt (buildDisjunctionLLInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((common ∨ p) ↔ (common ∨ q))))
+
 stmt (buildCommonAntecedentInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((common → p) ↔ (common → q))))
