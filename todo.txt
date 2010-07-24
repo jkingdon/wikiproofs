@@ -1,7 +1,8 @@
 Items which may be doable without a network connection:
 
-* look through singleton proofs to see what builders and such
-  need to be added.
+Look at/download stanford encyclopedia of philosophy Basic Set Theory:
+http://plato.stanford.edu/entries/set-theory/primer.html
+
 * more intuitionistic logic
   - From intuitionistic to classical propositional logic.wiki
   - write SyllogismInConsequent (should hold intuitionistically)
@@ -39,10 +40,4 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-Look at/download stanford encyclopedia of philosophy Basic Set Theory:
-http://plato.stanford.edu/entries/set-theory/primer.html
-
-Take at least a glance at http://www.math.ufl.edu/%7Ejal/set_theory.html (mentioned by stanford encyclopedia of philosophy)
-
-upload singleton proofs.
 

@@ -220,6 +220,12 @@ Then we just need to apply <code>BiconditionalFunction</code>:
         applySyllogism
 ))
 
+thm (buildBiconditionalLL () ((H (p ↔ q))) ((common ↔ p) ↔ (common ↔ q)) (
+        common BiconditionalReflexivity
+        H
+        buildBiconditional
+))
+
 thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
         common BiconditionalReflexivity
         (common ↔ common) (p ↔ q) ConjunctionLeftIntroduction
@@ -243,6 +249,13 @@ thm (buildImplicationAntecedent () ((H (p ↔ q))) ((common → p) ↔ (common �
 Often we work with formulas which all have an antecedent in common, and in which all our building happens in the consequent. This is particularly helpful when dealing with substitution as it is handled in [[Interface:First-order logic with quantifiability]].
 
 <jh>
+thm (addNegationInConsequent () ((H (antecedent → (p ↔ q)))) (antecedent → ((¬ p) ↔ (¬ q))) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
 thm (buildConjunctionRRInConsequent ()
   ((H (antecedent → (p ↔ q))))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))) (
@@ -295,6 +308,15 @@ thm (buildImplicationInConsequent ()
   (antecedent → ((p0 → p1) ↔ (q0 → q1))) (
         H0 H1 composeConjunction
         p0 q0 p1 q1 ImplicationFunction
+        applySyllogism
+))
+
+thm (buildBiconditionalInConsequent ()
+  ((H0 (antecedent → (p0 ↔ q0)))
+   (H1 (antecedent → (p1 ↔ q1))))
+  (antecedent → ((p0 ↔ p1) ↔ (q0 ↔ q1))) (
+        H0 H1 composeConjunction
+        p0 q0 p1 q1 BiconditionalFunction
         applySyllogism
 ))
 

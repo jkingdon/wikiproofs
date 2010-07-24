@@ -61,9 +61,10 @@ We're almost there. We just need to add the quantifiers and apply the instance o
 Now we introduce the symbol <code>∅</code> for the empty set.
 
 <jh>
-def ((∅) (abstract y (⊥)))
+var (variable emptyElement)
+def ((∅) (abstract emptyElement (⊥)))
 
-thm (EmptySetVariable ((result x y)) () ((value x) ∉ (∅)) (
+thm (EmptySetVariable ((result x y)) () ((value x) ∉ (abstract y (⊥))) (
 </jh>
 To apply <code>Abstraction</code>, we need <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>. This follows from <code>axnul</code>, the <code>NegationBiconditional</code> relationship between negation and <code>⊥</code>, and the fact that substituting a variable in <code>⊥</code> has no effect.
 <jh>
@@ -101,16 +102,20 @@ and then <code>NegationBiconditional</code> gives us our desired result.
 
 We provide a version with object instead of variable.
 <jh>
-thm (EmptySet ((x s)) () (s ∉ (∅)) (
+thm (EmptySetObject ((x s y)) () (s ∉ (abstract y (⊥))) (
 </jh>
 The substitution to apply <code>VariableToObject</code> is <code>x = s → x ∉ ∅ ↔ s ∉ ∅</code>
 <jh>
-        (value x) s (∅) IsElementBuilderRR
+        (value x) s (abstract y (⊥)) IsElementBuilderRR
         addNegationInConsequent
 
-        x EmptySetVariable
+        x y EmptySetVariable
 
         VariableToObject
+))
+
+thm (EmptySet ((s emptyElement)) () (s ∉ (∅)) (
+        s emptyElement EmptySetObject
 ))
 </jh>
 
@@ -148,10 +153,10 @@ Given a set (object) <code>s</code>, here we construct a set <code>{ s }</code> 
 Our first lemma is <code>y = s ↔ y ∈ ∅ ∨ y = s</code>, which is the first step towards applying the adjunction axiom to singletons. To avoid having to write <code>(value y)</code> everywhere, we use <code>yy</code> for an object which corresponds to the variable <code>y</code>
 <jh>
 var (object yy)
-thm (Singleton-1 () () ((yy = s) ↔ ((yy ∈ (∅)) ∨ (yy = s))) (
-        (yy = s) (yy ∈ (∅)) DisjunctionLeftIntroduction
+thm (Singleton-1 ((yy emptyElement)) () ((yy = s) ↔ ((yy ∈ (abstract emptyElement (⊥))) ∨ (yy = s))) (
+        (yy = s) (yy ∈ (abstract emptyElement (⊥))) DisjunctionLeftIntroduction
 
-        yy EmptySet
+        yy emptyElement EmptySetObject
         (yy ≠ s) introduceAntecedent
         eliminateTransposition
 
@@ -165,7 +170,7 @@ thm (Singleton-1 () () ((yy = s) ↔ ((yy ∈ (∅)) ∨ (yy = s))) (
 
 In a few places we'll need <code>[y / z]z = s ↔ y = s</code>.
 <jh>
-thm (Singleton-eq ((yy z) (z s)) (subst yy z ((value z) = s)) ↔ (yy = s)) (
+thm (Singleton-eq ((yy z) (z s)) () ((subst yy z ((value z) = s)) ↔ (yy = s)) (
 </jh>
 Our substitution is <code>z = y → (z = s ↔ y = s)</code>.
 <jh>
@@ -180,16 +185,17 @@ Making this explicit gives us our result.
 
 Applying <code>Singleton-eq</code> to the left hand side of <code>Singleton-1</code> gets us <code>[y / z]z = s ↔ y ∈ ∅ ∨ y = s</code>.
 <jh>
-thm (Singleton-2 ((yy z) (z s)) () ((subst yy z ((value z) = s)) ↔ ((yy ∈ (∅)) ∨ (yy = s))) (
+thm (Singleton-2 ((yy z) (z s) (yy emptyElement)) () ((subst yy z ((value z) = s)) ↔ ((yy ∈ (abstract emptyElement (⊥))) ∨ (yy = s))) (
         yy z s Singleton-eq
-        yy s Singleton-1
+        yy s emptyElement Singleton-1
         applyBiconditionalTransitivity
 ))
 </jh>
 
 The next step is to take <code>Singleton-2</code> and apply builders until we get <code>∃ result ∀ y (y ∈ result ↔ [y / z]z = s) ↔ ∃ result ∀ y (y ∈ result ↔ (y ∈ ∅ ∨ y = s))</code>
-thm (Singleton-3 ((y z) (z s)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (∅)) ∨ ((value y) = s)))))) (
-        (value y) z s Singleton-2
+<jh>
+thm (Singleton-3 ((y z) (z s) (y emptyElement)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (abstract emptyElement (⊥))) ∨ ((value y) = s)))))) (
+        (value y) z s emptyElement Singleton-2
         ((value y) ∈ (value result)) buildBiconditionalLL
         y buildForAll
         result buildThereExists
@@ -198,10 +204,10 @@ thm (Singleton-3 ((y z) (z s)) () ((∃ result (∀ y (((value y) ∈ (value res
 
 The right hand side of <code>Singleton-3</code> holds by adjunction, so we can conclude the left hand side as a theorem.
 <jh>
-thm (Singleton-4 ((y z) (z s) (result y s)) () (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) (
-        result y (∅) s AdjunctionObject
+thm (Singleton-4 ((y z) (z s) (result y s) (result y emptyElement)) () (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) (
+        result y (abstract emptyElement (⊥)) s AdjunctionObject
 
-        result y z s Singleton-3
+        result y z s emptyElement Singleton-3
         eliminateBiconditionalForward
 
         applyModusPonens
@@ -215,7 +221,8 @@ def ((singleton s) (abstract y ((value y) = s)))
 
 We can now prove that <code>y ∈ { s } ↔ y = s</code>
 <jh>
-thm (SingletonVariable ((result z y s)) () (((value y) ∈ (singleton s)) ↔ ((value y) = s)) (
+var (variable singletonElement)
+thm (SingletonVariable ((result z y s)) () (((value y) ∈ (abstract z ((value z) = s))) ↔ ((value y) = s)) (
         result y z s Singleton-4
         Abstraction
 
@@ -226,17 +233,21 @@ thm (SingletonVariable ((result z y s)) () (((value y) ∈ (singleton s)) ↔ ((
 
 Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
 <jh>
-thm (Singleton ((y t) (y s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
+thm (SingletonObject ((y t) (y s singletonElement)) () ((t ∈ (abstract singletonElement ((value singletonElement) = s))) ↔ (t = s)) (
 </jh>
 Our substitution is <code>y = t → ((y ∈ { s } ↔ y = s) ↔ (t ∈ { s } ↔ t = s))</code>.
 <jh>
-        y t (singleton s) IsElementBuilderRR
-        y t s EqualityBuilderRR
+        (value y) t (abstract singletonElement ((value singletonElement) = s)) IsElementBuilderRR
+        (value y) t s EqualityBuilderRR
         buildBiconditionalInConsequent
 
-        y s SingletonVariable
+        y singletonElement s SingletonVariable
 
         VariableToObject
+))
+
+thm (Singleton ((singletonElement s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
+        t singletonElement s SingletonObject
 ))
 </jh>
 
