@@ -243,6 +243,13 @@ thm (buildImplicationAntecedent () ((H (p ↔ q))) ((common → p) ↔ (common �
 Often we work with formulas which all have an antecedent in common, and in which all our building happens in the consequent. This is particularly helpful when dealing with substitution as it is handled in [[Interface:First-order logic with quantifiability]].
 
 <jh>
+thm (addNegationInConsequent () ((H (antecedent → (p ↔ q)))) (antecedent → ((¬ p) ↔ (¬ q))) (
+        H
+        p q NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
 thm (buildConjunctionRRInConsequent ()
   ((H (antecedent → (p ↔ q))))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))) (
