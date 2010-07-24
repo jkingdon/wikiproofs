@@ -421,6 +421,7 @@ stmt (DisjunctionBuilderLL () () ((p ↔ q) → ((common ∨ p) ↔ (common ∨ 
 stmt (buildDisjunctionLL () ((p ↔ q)) ((common ∨ p) ↔ (common ∨ q)))
 stmt (buildConjunctionLL () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
 stmt (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ common) ↔ (q ↔ common))))
+stmt (buildBiconditionalLL () ((p ↔ q)) ((common ↔ p) ↔ (common ↔ q)))
 stmt (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))))
 
 stmt (buildImplicationAntecedent () ((p ↔ q)) ((common → p) ↔ (common → q)))
