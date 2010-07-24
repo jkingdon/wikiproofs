@@ -63,7 +63,7 @@ Now we introduce the symbol <code>∅</code> for the empty set.
 <jh>
 def ((∅) (abstract y (⊥)))
 
-thm (EmptySet ((result x y)) () ((value x) ∉ (∅)) (
+thm (EmptySetVariable ((result x y)) () ((value x) ∉ (∅)) (
 </jh>
 To apply <code>Abstraction</code>, we need <code>∃ result ∀ x (x ∈ result ↔ [x / y]⊥)</code>. This follows from <code>axnul</code>, the <code>NegationBiconditional</code> relationship between negation and <code>⊥</code>, and the fact that substituting a variable in <code>⊥</code> has no effect.
 <jh>
@@ -99,6 +99,21 @@ and then <code>NegationBiconditional</code> gives us our desired result.
 ))
 </jh>
 
+We provide a version with object instead of variable.
+<jh>
+thm (EmptySet ((x s)) () (s ∉ (∅)) (
+</jh>
+The substitution to apply <code>VariableToObject</code> is <code>x = s → x ∉ ∅ ↔ s ∉ ∅</code>
+<jh>
+        (value x) s (∅) IsElementBuilderRR
+        addNegationInConsequent
+
+        x EmptySetVariable
+
+        VariableToObject
+))
+</jh>
+
 == Adjunction for objects ==
 The <code>Adjunction</code> axiom allows us to form a set with the elements of a given set and a single additional given element, where the given sets are represented by variables. Here we prove the same thing, but with object in place of variable. The proof is by straightforward application of <code>VariableToObject</code> with the usual substitution machinery.
 <jh>
@@ -122,6 +137,104 @@ thm (AdjunctionObject ((s y z w) (t y z w)) () (∃ w (∀ z (((value z) ∈ (va
         w buildThereExistsInConsequent
 
         w z s y AdjunctionObject-1
+
+        VariableToObject
+))
+</jh>
+
+== Singletons ==
+Given a set (object) <code>s</code>, here we construct a set <code>{ s }</code> which has <code>s</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { s } ↔ y = s</code>.
+
+Our first lemma is <code>y = s ↔ y ∈ ∅ ∨ y = s</code>, which is the first step towards applying the adjunction axiom to singletons. To avoid having to write <code>(value y)</code> everywhere, we use <code>yy</code> for an object which corresponds to the variable <code>y</code>
+<jh>
+var (object yy)
+thm (Singleton-1 () () ((yy = s) ↔ ((yy ∈ (∅)) ∨ (yy = s))) (
+        (yy = s) (yy ∈ (∅)) DisjunctionLeftIntroduction
+
+        yy EmptySet
+        (yy ≠ s) introduceAntecedent
+        eliminateTransposition
+
+        (yy = s) ImplicationReflexivity
+
+        composeDisjunction
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+In a few places we'll need <code>[y / z]z = s ↔ y = s</code>.
+<jh>
+thm (Singleton-eq ((yy z) (z s)) (subst yy z ((value z) = s)) ↔ (yy = s)) (
+</jh>
+Our substitution is <code>z = y → (z = s ↔ y = s)</code>.
+<jh>
+        ((value z) = yy) ImplicationReflexivity
+        s buildEqualityRRInConsequent
+</jh>
+Making this explicit gives us our result.
+<jh>
+        makeSubstExplicit
+))
+</jh>
+
+Applying <code>Singleton-eq</code> to the left hand side of <code>Singleton-1</code> gets us <code>[y / z]z = s ↔ y ∈ ∅ ∨ y = s</code>.
+<jh>
+thm (Singleton-2 ((yy z) (z s)) () ((subst yy z ((value z) = s)) ↔ ((yy ∈ (∅)) ∨ (yy = s))) (
+        yy z s Singleton-eq
+        yy s Singleton-1
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The next step is to take <code>Singleton-2</code> and apply builders until we get <code>∃ result ∀ y (y ∈ result ↔ [y / z]z = s) ↔ ∃ result ∀ y (y ∈ result ↔ (y ∈ ∅ ∨ y = s))</code>
+thm (Singleton-3 ((y z) (z s)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (∅)) ∨ ((value y) = s)))))) (
+        (value y) z s Singleton-2
+        ((value y) ∈ (value result)) buildBiconditionalLL
+        y buildForAll
+        result buildThereExists
+))
+</jh>
+
+The right hand side of <code>Singleton-3</code> holds by adjunction, so we can conclude the left hand side as a theorem.
+<jh>
+thm (Singleton-4 ((y z) (z s) (result y s)) () (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) (
+        result y (∅) s AdjunctionObject
+
+        result y z s Singleton-3
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
+Because the notation <code>{ s }</code> is not available, we call it <code>(singleton s)</code>.
+<jh>
+def ((singleton s) (abstract y ((value y) = s)))
+</jh>
+
+We can now prove that <code>y ∈ { s } ↔ y = s</code>
+<jh>
+thm (SingletonVariable ((result z y s)) () (((value y) ∈ (singleton s)) ↔ ((value y) = s)) (
+        result y z s Singleton-4
+        Abstraction
+
+        (value y) z s Singleton-eq
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
+<jh>
+thm (Singleton ((y t) (y s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
+</jh>
+Our substitution is <code>y = t → ((y ∈ { s } ↔ y = s) ↔ (t ∈ { s } ↔ t = s))</code>.
+<jh>
+        y t (singleton s) IsElementBuilderRR
+        y t s EqualityBuilderRR
+        buildBiconditionalInConsequent
+
+        y s SingletonVariable
 
         VariableToObject
 ))

@@ -1,5 +1,7 @@
 Items which may be doable without a network connection:
 
+* look through singleton proofs to see what builders and such
+  need to be added.
 * more intuitionistic logic
   - From intuitionistic to classical propositional logic.wiki
   - write SyllogismInConsequent (should hold intuitionistically)
@@ -17,7 +19,7 @@ Items which may be doable without a network connection:
      buildImplication
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 * General set theory
-  - singleton, unordered pair, ordered pair
+  - unordered pair, ordered pair
   - definitions and consequences: opth from set.mm, union,
     intersection, difference (e.g. eldifi and similar), subset
   - singleton, unordered pair ("pair"?), ordered pair ("cons"?)
@@ -41,4 +43,6 @@ Look at/download stanford encyclopedia of philosophy Basic Set Theory:
 http://plato.stanford.edu/entries/set-theory/primer.html
 
 Take at least a glance at http://www.math.ufl.edu/%7Ejal/set_theory.html (mentioned by stanford encyclopedia of philosophy)
+
+upload singleton proofs.
 
