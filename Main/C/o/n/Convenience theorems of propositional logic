@@ -220,6 +220,12 @@ Then we just need to apply <code>BiconditionalFunction</code>:
         applySyllogism
 ))
 
+thm (buildBiconditionalLL () ((H (p ↔ q))) ((common ↔ p) ↔ (common ↔ q)) (
+        common BiconditionalReflexivity
+        H
+        buildBiconditional
+))
+
 thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
         common BiconditionalReflexivity
         (common ↔ common) (p ↔ q) ConjunctionLeftIntroduction
