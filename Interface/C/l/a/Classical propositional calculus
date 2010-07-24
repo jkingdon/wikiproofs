@@ -425,6 +425,7 @@ stmt (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → commo
 
 stmt (buildImplicationAntecedent () ((p ↔ q)) ((common → p) ↔ (common → q)))
 
+stmt (addNegationInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((¬ p) ↔ (¬ q))))
 stmt (buildConjunctionRRInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))))
