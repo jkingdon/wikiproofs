@@ -1222,12 +1222,12 @@ Leaving that aside, we now start with <code>LessEqualTransitivity-1</code>.
 <jh>
         a (value vab) b (value vbc) c LessEqualTransitivity-1
 </jh>
-Turning <code>LessEqualTransitivity-sub</code> into an explicit substitution gives us <code>([ab + bc / ac] a + ac = c) ↔ a + (ab + bc = c</code>:
+Turning <code>LessEqualTransitivity-sub</code> into an explicit substitution gives us <code>([ab + bc / ac] a + ac = c) ↔ a + (ab + bc = c</code>,
 <jh>
         (value vac) (value vab) (value vbc) a c LessEqualTransitivity-sub
         makeSubstExplicit
 </jh>
-and we combining this with our previous result.
+and we combine this with our previous result.
 <jh>
         eliminateBiconditionalForward
         applySyllogism
