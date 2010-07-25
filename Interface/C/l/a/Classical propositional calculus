@@ -419,6 +419,9 @@ var (formula antecedent common p0 q0 p1 q1)
 
 stmt (DisjunctionBuilderLL () () ((p ↔ q) → ((common ∨ p) ↔ (common ∨ q))))
 stmt (buildDisjunctionLL () ((p ↔ q)) ((common ∨ p) ↔ (common ∨ q)))
+stmt (DisjunctionBuilderRR () () ((p ↔ q) → ((p ∨ common) ↔ (q ∨ common))))
+stmt (buildDisjunctionRR () ((p ↔ q)) ((p ∨ common) ↔ (q ∨ common)))
+
 stmt (buildConjunctionLL () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
 stmt (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ common) ↔ (q ↔ common))))
 stmt (buildBiconditionalLL () ((p ↔ q)) ((common ↔ p) ↔ (common ↔ q)))
