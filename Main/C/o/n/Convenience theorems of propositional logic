@@ -200,6 +200,19 @@ thm (buildDisjunctionLL () ((H (p ↔ q)))
         applyModusPonens
 ))
 
+thm (DisjunctionBuilderRR () () ((p ↔ q) → ((p ∨ common) ↔ (q ∨ common))) (
+        common BiconditionalReflexivity
+        p q common common DisjunctionFunction
+        detach2of2
+))
+
+thm (buildDisjunctionRR () ((H (p ↔ q)))
+  ((p ∨ common) ↔ (q ∨ common)) (
+        H
+        p q common DisjunctionBuilderRR
+        applyModusPonens
+))
+
 thm (buildConjunctionLL () ((H (p ↔ q))) ((r ∧ p) ↔ (r ∧ q)) (
         r BiconditionalReflexivity
         H
