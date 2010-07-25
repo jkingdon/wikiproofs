@@ -20,13 +20,12 @@ http://plato.stanford.edu/entries/set-theory/primer.html
      buildImplication
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 * General set theory
-  - unordered pair, ordered pair
-  - definitions and consequences: opth from set.mm, union,
+  - ordered pair
+  - definitions and consequences: opth from set.mm, union?,
     intersection, difference (e.g. eldifi and similar), subset
-  - singleton, unordered pair ("pair"?), ordered pair ("cons"?)
-    = elsn provides "definition" of singleton, with axiom of
-      adjunction being the key to the proof, but how to express
-      in jhilbert?
+  - ordered pair ("cons"?)
+  - cite metamath?
+    = elsn provides "definition" of singleton
       x = s <-> x element-of { s }
       also s = t <-> s element-of { t }   (elsncg, basically)
   - indexed union or intersection? (if needed for functions)

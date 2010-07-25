@@ -1,0 +1,61 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
+| importedby = None yet.
+| exportedby = [[General set theory]]
+}}
+
+This page covers set theory including the empty set, singletons, unordered pairs, ordered pairs, and eventually relations, functions, induction, recursion, ordinal successors.
+
+It does not include any results specific to infinite sets.
+
+We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+First-order logic provides us with two kinds: <code>variable</code> is a variable, which represents a set and can be quantified over, and <code>object</code> is an expression which represents a set. For example, a variable might be <code>x</code>, <code>y</code>, or <code>z</code>, but an object could be the singleton <code>{ x }</code>, the unordered pair <code>{ x, y }</code>, the ordered pair <code>〈 x, y 〉</code>, etc. To some extent the concepts of variable and object correspond to set and class in some theories (like metamath's set.mm), but one key difference is that we have no [[w:proper class|proper classes]] thanks to the [[Interface:Axiom of quantifiability|axiom of quantifiability]].
+
+<jh>
+var (variable x y z w)
+var (object s t u s0 s1 t0 t1)
+</jh>
+
+We can test whether one set is an element of another, and define an abbreviation for the negated version.
+<jh>
+term (formula (∈ object object))
+def ((∉ s t) (¬ (s ∈ t)))
+</jh>
+
+We assert the existence of the empty set, a set with no elements.
+<jh>
+term (object (∅))
+stmt (EmptySet () () (s ∉ (∅)))
+</jh>
+
+Given a set, we can form a set <code>{ s }</code> which has only it as an element.
+<jh>
+term (object (singleton object))
+stmt (Singleton () () ((t ∈ (singleton s)) ↔ (t = s)))
+</jh>
+
+Given two sets, we can form a unordered pair <code>{ s, t }</code> which has only those sets as elements.
+<jh>
+term (object (unorderedPair object object))
+stmt (UnorderedPair () () ((u ∈ (unorderedPair s t)) ↔ ((u = s) ∨ (u = t))))
+</jh>
+
+== Builders ==
+Equals can be substituted for equals, in the context of set operations.
+
+<jh>
+stmt (IsElementBuilderLL () () ((t0 = t1) → ((s ∈ t0) ↔ (s ∈ t1))))
+stmt (IsElementBuilderRR () () ((s0 = s1) → ((s0 ∈ t) ↔ (s1 ∈ t))))
+</jh>
+
+== To be added ==
+Extensionality (probably), separation (presumably in the form of defining <code>{y ∈ s | φ}</code>).
+
+[[Category:Axiomatics of classical set theory and its fragments|{{PAGENAME}}]]
+
