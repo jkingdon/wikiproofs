@@ -277,8 +277,73 @@ We construct the substitution <code>z = y → (z = s ∨ z = t ↔ y = s ∨ y =
 
         makeSubstExplicit
 ))
+</jh>
 
-# ...to be continued
+We now combine the previous two results and apply some builders to get <code>∃ result ∀ y (y ∈ result ↔ [y / z](z = s ∨ z = t)) ↔ ∃ result ∀ y (y ∈ result ↔ y ∈ { s } ∨ y = t)</code>
+<jh>
+thm (UnorderedPair-3 ((singletonElement s) (z y) (z s) (z t)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = s) ∨ ((value z) = t)))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (abstract singletonElement ((value singletonElement) = s))) ∨ ((value y) = t)))))) (
+        (value y) z s t UnorderedPair-sub
+        (value y) singletonElement s t UnorderedPair-1 swapBiconditional
+        applyBiconditionalTransitivity
+
+        ((value y) ∈ (value result)) buildBiconditionalLL
+        y buildForAll
+        result buildThereExists
+))
+</jh>
+
+The right hand side of <code>UnorderedPair-3</code> holds by adjunction, so we can conclude the left hand side as a theorem.
+<jh>
+thm (UnorderedPair-4 ((y z) (z s) (z t) (result y s) (result y t) (result y singletonElement) (singletonElement s)) ()
+  (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = s) ∨ ((value z) = t)))))) (
+        result y (abstract singletonElement ((value singletonElement) = s)) t AdjunctionObject
+
+        result y z s t singletonElement UnorderedPair-3
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
+Because the notation <code>{ s, t }</code> is not available, we call it <code>(unorderedPair s t)</code>.
+<jh>
+def ((unorderedPair s t) (abstract y (((value y) = s) ∨ ((value y) = t))))
+</jh>
+
+We can now prove that <code>y ∈ { s, t } ↔ y = s ∨ y = t</code>
+<jh>
+var (variable pairElement)
+thm (UnorderedPairVariable ((result z y s) (result z y t)) ()
+  (((value y) ∈ (abstract z (((value z) = s) ∨ ((value z) = t)))) ↔ (((value y) = s) ∨ ((value y) = t))) (
+        result y z s t UnorderedPair-4
+        Abstraction
+
+        (value y) z s t UnorderedPair-sub
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
+<jh>
+thm (UnorderedPairObject ((y u) (y s pairElement) (y t pairElement)) () ((u ∈ (abstract pairElement (((value pairElement) = s) ∨ ((value pairElement) = t)))) ↔ ((u = s) ∨ (u = t))) (
+</jh>
+Our substitution is <code>y = u → ((y ∈ { s, t } ↔ y = s ∨ y = t) ↔ (u ∈ { s, t } ↔ u = s ∨ u = t))</code>.
+<jh>
+        (value y) u (abstract pairElement (((value pairElement) = s) ∨ ((value pairElement) = t))) IsElementBuilderRR
+
+        (value y) u s EqualityBuilderRR
+        (value y) u t EqualityBuilderRR
+        buildDisjunctionInConsequent
+        buildBiconditionalInConsequent
+
+        y pairElement s t UnorderedPairVariable
+
+        VariableToObject
+))
+
+thm (UnorderedPair ((pairElement s) (pairElement t)) () ((u ∈ (unorderedPair s t)) ↔ ((u = s) ∨ (u = t))) (
+        u pairElement s t UnorderedPairObject
+))
 </jh>
 
 == Done ==
