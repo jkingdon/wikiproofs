@@ -296,6 +296,18 @@ thm (buildDisjunctionLLInConsequent ()
         applySyllogism
 ))
 
+var (formula p0 q0 p1 q1)
+thm (buildDisjunctionInConsequent ()
+  ((H0 (antecedent → (p0 ↔ q0)))
+   (H1 (antecedent → (p1 ↔ q1))))
+  (antecedent → ((p0 ∨ p1) ↔ (q0 ∨ q1))) (
+        H0
+        H1
+        composeConjunction
+        p0 q0 p1 q1 DisjunctionFunction
+        applySyllogism
+))
+
 thm (buildCommonConsequentInConsequent ()
   ((H (antecedent → (p ↔ q))))
   (antecedent → ((p → common) ↔ (q → common))) (
@@ -314,7 +326,6 @@ thm (buildCommonAntecedentInConsequent ()
         applySyllogism
 ))
 
-var (formula p0 q0 p1 q1)
 thm (buildImplicationInConsequent ()
   ((H0 (antecedent → (p0 ↔ q0)))
    (H1 (antecedent → (p1 ↔ q1))))
