@@ -150,7 +150,9 @@ thm (AdjunctionObject ((s y z w) (t y z w)) () (∃ w (∀ z (((value z) ∈ (va
 == Singletons ==
 Given a set (object) <code>s</code>, here we construct a set <code>{ s }</code> which has <code>s</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { s } ↔ y = s</code>.
 
-Our first lemma is <code>y = s ↔ y ∈ ∅ ∨ y = s</code>, which is the first step towards applying the adjunction axiom to singletons. To avoid having to write <code>(value y)</code> everywhere, we use <code>yy</code> for an object which corresponds to the variable <code>y</code>
+Our first lemma is <code>y = s ↔ y ∈ ∅ ∨ y = s</code>, which is the first step towards applying the adjunction axiom to singletons. To avoid having to write <code>(value y)</code> everywhere, we use <code>yy</code> for an object which corresponds to the variable <code>y</code>.
+
+Another detail is that if we specified the empty set as <code>(∅)</code>, it would expand to a dummy variable which we are unable to express a distinct variable constraint for.  By writing <code>{ emptyElement | ⊥ }</code> instead we get to include the distinct variable constraints on <code>emptyElement</code>.  In our informal descriptions we will continue to say <code>∅</code> in such situations.
 <jh>
 var (object yy)
 thm (Singleton-1 ((yy emptyElement)) () ((yy = s) ↔ ((yy ∈ (abstract emptyElement (⊥))) ∨ (yy = s))) (
@@ -249,6 +251,34 @@ Our substitution is <code>y = t → ((y ∈ { s } ↔ y = s) ↔ (t ∈ { s } �
 thm (Singleton ((singletonElement s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
         t singletonElement s SingletonObject
 ))
+</jh>
+
+== Unordered pair ==
+
+The unordered pair <code>{s, t}</code> has <code>s</code> and <code>t</code> as elements.  That is, we seek to prove <code>y ∈ {s, t} ↔ y = s ∨ y = t</code>. The idea of the proof is easy: apply adjunction to <code>{ s }</code> and <code>t</code>, but formalizing this involves much the same substitution machinery that we saw with singletons.
+
+The first lemma is <code>y ∈ { s } ∨ y = t ↔ y = s ∨ y = t</code>.
+<jh>
+thm (UnorderedPair-1 ((singletonElement s)) () (((yy ∈ (abstract singletonElement ((value singletonElement) = s))) ∨ (yy = t)) ↔ ((yy = s) ∨ (yy = t))) (
+        yy singletonElement s SingletonObject
+        (yy = t) buildDisjunctionRR
+))
+</jh>
+
+The next lemma, <code>[y / z](z = s ∨ z = t) ↔ y = s ∨ y = t</code>, is a substitution that we'll use two places.
+<jh>
+thm (UnorderedPair-sub ((z yy) (z s) (z t)) () ((subst yy z (((value z) = s) ∨ ((value z) = t))) ↔ ((yy = s) ∨ (yy = t))) (
+</jh>
+We construct the substitution <code>z = y → (z = s ∨ z = t ↔ y = s ∨ y = t)</code> and then make it explicit.
+<jh>
+        (value z) yy s EqualityBuilderRR
+        (value z) yy t EqualityBuilderRR
+        buildDisjunctionInConsequent
+
+        makeSubstExplicit
+))
+
+# ...to be continued
 </jh>
 
 == Done ==
