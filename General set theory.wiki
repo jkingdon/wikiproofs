@@ -17,7 +17,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (AXIOMS Interface:Axioms_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (variable x y z w result)
-var (object s t u)
+var (object s t u A B C D A0 A1 B0 B1)
 </jh>
 
 {{under construction}}
@@ -147,6 +147,43 @@ thm (AdjunctionObject ((s y z w) (t y z w)) () (∃ w (∀ z (((value z) ∈ (va
 ))
 </jh>
 
+== Object version of extensionality ==
+Here is a variant of extensionality, <code>∀ z (z ∈ A ↔ z ∈ B) → A = B</code>, which changes variables to objects. We first prove a lemma.
+
+<jh>
+thm (ExtensionalityObject-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ (value y)))) → (A = (value y))) (
+</jh>
+This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))
+<jh>
+        (value x) A (value z) IsElementBuilderLL
+        ((value z) ∈ (value y)) buildBiconditionalRRInConsequent
+        z addForAllToConsequent
+
+        (value x) A y EqualityBuilderRR
+
+        buildImplicationInConsequent
+
+        z x y Extensionality
+        VariableToObject
+))
+
+thm (ExtensionalityObject ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)) (
+</jh>
+To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))
+<jh>
+        (value y) B (value z) IsElementBuilderLL
+        ((value z) ∈ A) buildBiconditionalLLInConsequent
+        z addForAllToConsequent
+
+        (value y) B A EqualityBuilderLL
+
+        buildImplicationInConsequent
+
+        z A y ExtensionalityObject-1
+        VariableToObject
+))
+</jh>
+
 == Singletons ==
 Given a set (object) <code>s</code>, here we construct a set <code>{ s }</code> which has <code>s</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { s } ↔ y = s</code>.
 
@@ -253,6 +290,35 @@ thm (Singleton ((singletonElement s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
 ))
 </jh>
 
+=== Builder ===
+The builder for singletons is <code>A = B → { A } = { B }</code>.<ref>[http://us.metamath.org/mpeuni/sneq.html sneq], metamath's set.mm, accessed July, 2010</ref>
+<jh>
+thm (SingletonBuilder ((z A) (z B)) () ((A = B) → ((singleton A) = (singleton B))) (
+</jh>
+The equality builder gives us <code>A = B → z = A ∧ z = B</code>.
+<jh>
+        A B (value z) EqualityBuilderLL
+</jh>
+Applying <code>Singleton</code> twice gives us <code>z ∈ {A} ∧ z ∈ {B} ↔ z = A ∧ z = B</code>
+<jh>
+        (value z) A Singleton
+        (value z) B Singleton
+        buildConjunction
+</jh>
+We now combine those two results to get <code>A = B → z ∈ {A} ∧ z ∈ {B}</code>
+<jh>
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Extensionality turns <code>z ∈ {A} ∧ z ∈ {B}</code> into <code>{A} = {B}</code>.
+<jh>
+        z addForAllToConsequent
+
+        z A B ExtensionalityObject
+        applySyllogism
+))
+</jh>
+
 == Unordered pair ==
 
 The unordered pair <code>{s, t}</code> has <code>s</code> and <code>t</code> as elements.  That is, we seek to prove <code>y ∈ {s, t} ↔ y = s ∨ y = t</code>. The idea of the proof is easy: apply adjunction to <code>{ s }</code> and <code>t</code>, but formalizing this involves much the same substitution machinery that we saw with singletons.
@@ -344,6 +410,11 @@ Our substitution is <code>y = u → ((y ∈ { s, t } ↔ y = s ∨ y = t) ↔ (u
 thm (UnorderedPair ((pairElement s) (pairElement t)) () ((u ∈ (unorderedPair s t)) ↔ ((u = s) ∨ (u = t))) (
         u pairElement s t UnorderedPairObject
 ))
+</jh>
+
+=== Builder ===
+<jh>
+#thm (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))) ())
 </jh>
 
 == Done ==

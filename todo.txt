@@ -1,7 +1,11 @@
 Items which may be doable without a network connection:
 
-Look at/download stanford encyclopedia of philosophy Basic Set Theory:
-http://plato.stanford.edu/entries/set-theory/primer.html
+* need these for ordered pairs
+  - prcom, prid1 (used in proof of preq1 or preq2)
+  - preq1, preq2 (builders for unordered pair)
+  - opeq12 (builder for ordered pair)
+* set theory theorems we may need/want but not yet
+  - prid2
 
 * more intuitionistic logic
   - From intuitionistic to classical propositional logic.wiki
