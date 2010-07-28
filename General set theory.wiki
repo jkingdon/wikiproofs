@@ -153,13 +153,13 @@ Here is a variant of extensionality, <code>∀ z (z ∈ A ↔ z ∈ B) → A = B
 <jh>
 thm (ExtensionalityObject-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ (value y)))) → (A = (value y))) (
 </jh>
-This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))
+This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))</code>
 <jh>
         (value x) A (value z) IsElementBuilderLL
         ((value z) ∈ (value y)) buildBiconditionalRRInConsequent
-        z addForAllToConsequent
+        z buildForAllInConsequent
 
-        (value x) A y EqualityBuilderRR
+        (value x) A (value y) EqualityBuilderRR
 
         buildImplicationInConsequent
 
@@ -173,7 +173,7 @@ To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableT
 <jh>
         (value y) B (value z) IsElementBuilderLL
         ((value z) ∈ A) buildBiconditionalLLInConsequent
-        z addForAllToConsequent
+        z buildForAllInConsequent
 
         (value y) B A EqualityBuilderLL
 
@@ -293,29 +293,38 @@ thm (Singleton ((singletonElement s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
 === Builder ===
 The builder for singletons is <code>A = B → { A } = { B }</code>.<ref>[http://us.metamath.org/mpeuni/sneq.html sneq], metamath's set.mm, accessed July, 2010</ref>
 <jh>
-thm (SingletonBuilder ((z A) (z B)) () ((A = B) → ((singleton A) = (singleton B))) (
+var (variable a b)
+thm (SingletonBuilder-1 ((z A) (z B) (z a) (z b) (A a) (B b)) () ((A = B) → ((abstract a ((value a) = A)) = (abstract b ((value b) = B)))) (
 </jh>
-The equality builder gives us <code>A = B → z = A ∧ z = B</code>.
+The equality builder gives us <code>A = B → (z = A ↔ z = B)</code>.
 <jh>
         A B (value z) EqualityBuilderLL
 </jh>
-Applying <code>Singleton</code> twice gives us <code>z ∈ {A} ∧ z ∈ {B} ↔ z = A ∧ z = B</code>
+Applying <code>Singleton</code> twice gives us <code>(z ∈ {A} ↔ z ∈ {B}) ↔ (z = A ↔ z = B)</code>
 <jh>
-        (value z) A Singleton
-        (value z) B Singleton
-        buildConjunction
+        (value z) a A SingletonObject
+        (value z) b B SingletonObject
+        buildBiconditional
 </jh>
-We now combine those two results to get <code>A = B → z ∈ {A} ∧ z ∈ {B}</code>
+We now combine those two results to get <code>A = B → (z ∈ {A} ↔ z ∈ {B})</code>
 <jh>
         eliminateBiconditionalForward
         applySyllogism
 </jh>
-Extensionality turns <code>z ∈ {A} ∧ z ∈ {B}</code> into <code>{A} = {B}</code>.
+Extensionality turns <code>z ∈ {A} ↔ z ∈ {B}</code> into <code>{A} = {B}</code>.
 <jh>
         z addForAllToConsequent
 
-        z A B ExtensionalityObject
+        z (abstract a ((value a) = A)) (abstract b ((value b) = B)) ExtensionalityObject
         applySyllogism
+))
+
+thm (SingletonBuilder-2 ((A a) (B b)) () ((A = B) → ((singleton A) = (abstract b ((value b) = B)))) (
+        A B a b SingletonBuilder-1
+))
+
+thm (SingletonBuilder ((B b)) () ((A = B) → ((singleton A) = (singleton B))) (
+        A B b SingletonBuilder-2
 ))
 </jh>
 
