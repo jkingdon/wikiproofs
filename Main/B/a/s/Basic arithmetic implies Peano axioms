@@ -9,7 +9,7 @@ The idea behind [[Interface:Basic arithmetic]] is that it should include everyth
 We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic]], and [[Interface:Basic arithmetic]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
-import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (BASIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 
 var (formula φ)
