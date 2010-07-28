@@ -153,7 +153,7 @@ Here is a variant of extensionality, <code>∀ z (z ∈ A ↔ z ∈ B) → A = B
 <jh>
 thm (ExtensionalityObject-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ (value y)))) → (A = (value y))) (
 </jh>
-This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))
+This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))</code>
 <jh>
         (value x) A (value z) IsElementBuilderLL
         ((value z) ∈ (value y)) buildBiconditionalRRInConsequent
