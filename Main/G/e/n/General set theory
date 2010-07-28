@@ -290,6 +290,44 @@ thm (Singleton ((singletonElement s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
 ))
 </jh>
 
+=== Builder ===
+The builder for singletons is <code>A = B → { A } = { B }</code>.<ref>[http://us.metamath.org/mpeuni/sneq.html sneq], metamath's set.mm, accessed July, 2010</ref>
+<jh>
+var (variable a b)
+thm (SingletonBuilder-1 ((z A) (z B) (z a) (z b) (A a) (B b)) () ((A = B) → ((abstract a ((value a) = A)) = (abstract b ((value b) = B)))) (
+</jh>
+The equality builder gives us <code>A = B → (z = A ↔ z = B)</code>.
+<jh>
+        A B (value z) EqualityBuilderLL
+</jh>
+Applying <code>Singleton</code> twice gives us <code>(z ∈ {A} ↔ z ∈ {B}) ↔ (z = A ↔ z = B)</code>
+<jh>
+        (value z) a A SingletonObject
+        (value z) b B SingletonObject
+        buildBiconditional
+</jh>
+We now combine those two results to get <code>A = B → (z ∈ {A} ↔ z ∈ {B})</code>
+<jh>
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Extensionality turns <code>z ∈ {A} ↔ z ∈ {B}</code> into <code>{A} = {B}</code>.
+<jh>
+        z addForAllToConsequent
+
+        z (abstract a ((value a) = A)) (abstract b ((value b) = B)) ExtensionalityObject
+        applySyllogism
+))
+
+thm (SingletonBuilder-2 ((A a) (B b)) () ((A = B) → ((singleton A) = (abstract b ((value b) = B)))) (
+        A B a b SingletonBuilder-1
+))
+
+thm (SingletonBuilder ((B b)) () ((A = B) → ((singleton A) = (singleton B))) (
+        A B b SingletonBuilder-2
+))
+</jh>
+
 == Unordered pair ==
 
 The unordered pair <code>{s, t}</code> has <code>s</code> and <code>t</code> as elements.  That is, we seek to prove <code>y ∈ {s, t} ↔ y = s ∨ y = t</code>. The idea of the proof is easy: apply adjunction to <code>{ s }</code> and <code>t</code>, but formalizing this involves much the same substitution machinery that we saw with singletons.
@@ -381,6 +419,11 @@ Our substitution is <code>y = u → ((y ∈ { s, t } ↔ y = s ∨ y = t) ↔ (u
 thm (UnorderedPair ((pairElement s) (pairElement t)) () ((u ∈ (unorderedPair s t)) ↔ ((u = s) ∨ (u = t))) (
         u pairElement s t UnorderedPairObject
 ))
+</jh>
+
+=== Builder ===
+<jh>
+#thm (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))) ())
 </jh>
 
 == Done ==
