@@ -14,5 +14,16 @@ Discussion is more than welcome!
 
 [[User:Raph|Raph]] 22:24, 28 March 2010 (UTC)
 
+:I have a hard time reacting to a long-term vision, so I'll start with the prototype at [http://ghilbert-test.appspot.com/]. It seems to require that I have quite a bit of interaction with the ASCII. Having expressed my aversion to ever seeing the ASCII, I'll also express scepticism about writing proofs in a jsmath-like/MathJax-like/fancier-javascripty math typesetting system.  I'm willing to be convinced otherwise, but, well, it just might be a matter of distrusting things which don't exist yet or it might be a doubt that the typesetting would really stay out of the way. My vision is something like what we now have on wikiproofs, augmented with something like:
+
+* precedence
+
+* the ability to have the operator split across more than one token.  For example, <code>{ A }</code> would be syntactic sugar for <code>({} A)</code>, <code>〈 x, y 〉</code> would be syntactic sugar for <code>(〈,〉 x y)</code>, <code>∀ x ∈ A φ</code> would be syntactic sugar for <code>(∀∈ x A φ</code>, etc (I guess this is sort of like smalltalk keyword arguments).  I don't know exactly how general this mechanism could be made and still coexist with precedence, but I'm hoping for some kind of middle ground between (a) austere syntaxes like s-expressions, (b) syntaxes which hardcode the operators and precedences, like ruby/C++/etc, and (c) highly configurable syntaxes where parsing becomes really complicated (HOL? I don't know it well enough to say whether it is an example of this or not).
+
+Whether this is the only syntax, or whether others exist (for example for interchange with other systems), I don't think I have much opinion about. I'm just making a statement about what I envisage interacting with as I write proofs. [[User:Kingdon|Kingdon]] 23:36, 27 July 2010 (UTC)
+
 == References ==
 <references/>
+
+[[Category:Wikiproofs]]
+[[Category:JHilbert]]
