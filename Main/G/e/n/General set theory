@@ -17,7 +17,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (AXIOMS Interface:Axioms_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (variable x y z w result)
-var (object s t u)
+var (object s t u A B C D A0 A1 B0 B1)
 </jh>
 
 {{under construction}}
@@ -143,6 +143,43 @@ thm (AdjunctionObject ((s y z w) (t y z w)) () (∃ w (∀ z (((value z) ∈ (va
 
         w z s y AdjunctionObject-1
 
+        VariableToObject
+))
+</jh>
+
+== Object version of extensionality ==
+Here is a variant of extensionality, <code>∀ z (z ∈ A ↔ z ∈ B) → A = B</code>, which changes variables to objects. We first prove a lemma.
+
+<jh>
+thm (ExtensionalityObject-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ (value y)))) → (A = (value y))) (
+</jh>
+This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))
+<jh>
+        (value x) A (value z) IsElementBuilderLL
+        ((value z) ∈ (value y)) buildBiconditionalRRInConsequent
+        z buildForAllInConsequent
+
+        (value x) A (value y) EqualityBuilderRR
+
+        buildImplicationInConsequent
+
+        z x y Extensionality
+        VariableToObject
+))
+
+thm (ExtensionalityObject ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)) (
+</jh>
+To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))
+<jh>
+        (value y) B (value z) IsElementBuilderLL
+        ((value z) ∈ A) buildBiconditionalLLInConsequent
+        z buildForAllInConsequent
+
+        (value y) B A EqualityBuilderLL
+
+        buildImplicationInConsequent
+
+        z A y ExtensionalityObject-1
         VariableToObject
 ))
 </jh>
