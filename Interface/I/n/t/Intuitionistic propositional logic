@@ -81,6 +81,11 @@ stmt (AntecedentIntroduction () () (p → (q → p)))
 <jh>
 stmt (ImplicationTransitivity () () (((p → q) ∧ (q → r)) → (p → r)))
 </jh>
+There are many theorems we could state in forms with a common antecedent; here is one:
+<jh>
+stmt (SyllogismInConsequent () () ((p → (q → r)) → ((p → (r → s)) → (p → (q → s)))))
+</jh>
+
 If the [[w:consequent|consequent]] of an implication is an implication itself, its antecedent can be distributed over antecedent and consequent of the consequent, and vice versa.
 <jh>
 stmt (AntecedentDistribution () () ((p → (q → r)) ↔ ((p → q) → (p → r))))
