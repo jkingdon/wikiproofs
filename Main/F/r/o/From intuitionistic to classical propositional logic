@@ -15,7 +15,6 @@
 
 Instead of proving the axioms of classical propositional logic (for example, [[Interface:Standard axioms of propositional logic]]), we prove the [[Interface:Principia Mathematica propositional logic theorems]].  This is for two reasons.  The first is to show that all the connectives, not just those mentioned in the axioms, have the same meanings (this could alternately be achieved by including all the definitions in the interface with the axioms, as in [[Interface:Principia Mathematica propositional logic]]). The second is to present an alternative proof of the [[Interface:Principia Mathematica propositional logic theorems]].  In some cases the way we prove the theorems is very similar, but in others it is quite different.  The proofs in [[Principia Mathematica propositional logic]] rely heavily on the relationships between the connectives (especially implication and disjunction), and the proofs via intuitionistic logic rely more heavily on theorems such as disjunction composition and conjunction composition.
 
-{{under construction}}
 <jh>
 import (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
 
@@ -86,6 +85,13 @@ thm (TranspositionWithNegatedAntecedent () () (((¬ p) → q) ↔ ((¬ q) → p)
         applyBiconditionalTransitivity
 ))
 
+thm (transposeWithNegatedAntecedent () ((H ((¬ p) → q))) ((¬ q) → p) (
+        H
+        p q TranspositionWithNegatedAntecedent
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
 thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))) (
         p DoubleNegation
         (¬ q) BiconditionalReflexivity
@@ -95,6 +101,13 @@ thm (TranspositionWithNegatedConsequent () () ((p → (¬ q)) ↔ (q → (¬ p))
         swapBiconditional
 
         applyBiconditionalTransitivity
+))
+
+thm (transposeWithNegatedConsequent () ((H (p → (¬ q)))) (q → (¬ p)) (
+        H
+        p q TranspositionWithNegatedConsequent
+        eliminateBiconditionalReverse
+        applyModusPonens
 ))
 </jh>
 
@@ -239,6 +252,76 @@ thm (DeMorganNCN () () ((¬ ((¬ p) ∧ (¬ q))) ↔ (p ∨ q)) (
 ))
 </jh>
 
+We supply those rules which do not hold intuitionistically.
+<jh>
+thm (distributeNegationPDN () ((H (¬ (p ∨ (¬ q))))) ((¬ p) ∧ q) (
+        H
+        p q DeMorganPDN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNDP () ((H (¬ ((¬ p) ∨ q)))) (p ∧ (¬ q)) (
+        H
+        p q DeMorganNDP eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNDN () ((H (¬ ((¬ p) ∨ (¬ q))))) (p ∧ q) (
+        H
+        p q DeMorganNDN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationPCP () ((H (¬ (p ∧ q)))) ((¬ p) ∨ (¬ q)) (
+        H
+        p q DeMorganPCP eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationPCN () ((H (¬ (p ∧ (¬ q))))) ((¬ p) ∨ q) (
+        H
+        p q DeMorganPCN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNCP () ((H (¬ ((¬ p) ∧ q)))) (p ∨ (¬ q)) (
+        H
+        p q DeMorganNCP eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (distributeNegationNCN () ((H (¬ ((¬ p) ∧ (¬ q))))) (p ∨ q) (
+        H
+        p q DeMorganNCN eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (collectNegationPDN () ((H (p ∨ (¬ q)))) (¬ ((¬ p) ∧ q)) (
+        H
+        p q DeMorganNCP eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationNDP () ((H ((¬ p) ∨ q))) (¬ (p ∧ (¬ q))) (
+        H
+        p q DeMorganPCN eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationPCN () ((H (p ∧ (¬ q)))) (¬ ((¬ p) ∨ q)) (
+        H
+        p q DeMorganNDP eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (collectNegationNCP () ((H ((¬ p) ∧ q))) (¬ (p ∨ (¬ q))) (
+        H
+        p q DeMorganPDN eliminateBiconditionalForward
+        applyModusPonens
+))
+
+</jh>
+
 == Tautology ==
 The intention of this theorem is similar to the intuitionistic <code>TautologyId</code>, but it is stated in terms of the law of the excluded middle.
 
@@ -273,6 +356,20 @@ thm (ImplicationDisjunction () () ((p → q) ↔ ((¬ p) ∨ q)) (
         applyBiconditionalTransitivity
 
         swapBiconditional
+))
+
+thm (convertFromImplicationToDisjunction () ((H (p → q))) ((¬ p) ∨ q) (
+        H
+        p q ImplicationDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
+        H
+        p q DisjunctionImplication
+        eliminateBiconditionalForward
+        applyModusPonens
 ))
 </jh>
 
@@ -311,6 +408,26 @@ thm (BiconditionalDisjunctionRightElimination () () ((p ↔ q) → ((¬ p) ∨ q
 
         applySyllogism
 ))
+
+thm (convertFromBiconditionalToConjunction () ((H (p ↔ q))) (((¬ p) ∨ q) ∧ (p ∨ (¬ q))) (
+        H
+        p q BiconditionalConjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (eliminateLeftBiconditionalDisjunction () ((H (p ↔ q))) (p ∨ (¬ q)) (
+        H
+        p q BiconditionalDisjunctionLeftElimination
+        applyModusPonens
+))
+
+thm (eliminateRightBiconditionalDisjunction () ((H (p ↔ q))) ((¬ p) ∨ q) (
+        H
+        p q BiconditionalDisjunctionRightElimination
+        applyModusPonens
+))
+
 </jh>
 
 === Biconditional as the disjunction of two equivalence classes ===
@@ -367,6 +484,21 @@ One more application of the distributive law gives us <code>(p ∧ q) ∨ (¬ p 
         (p ∧ q) (¬ p) (¬ q) DisjunctionLeftDistribution swapBiconditional
         applyBiconditionalTransitivity
 ))
+
+thm (convertFromBiconditionalToDisjunction () ((H (p ↔ q))) ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))) (
+        H
+        p q BiconditionalDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (convertToBiconditionalFromDisjunction () ((H ((p ∧ q) ∨ ((¬ p) ∧ (¬ q))))) (p ↔ q) (
+        H
+        p q BiconditionalDisjunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
 </jh>
 
 == Case elimination ==
@@ -383,6 +515,16 @@ thm (CaseElimination () () (((p → q) ∧ ((¬ p) → q)) → q) (
         p q DisjunctiveCaseElimination
         applySyllogism
 ))
+
+thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
+        HP
+        HNOTP
+        introduceConjunction
+
+        p q CaseElimination
+
+        applyModusPonens
+))
 </jh>
 
 == Export ==
@@ -390,7 +532,7 @@ When this file is done, we'll be ready to export to [[Interface:Principia Mathem
 
 <jh>
 kindbind (wff formula)
-#export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
+export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
 </jh>
 
 [[Category:Subsystems of classical logic|{{PAGENAME}}]]
