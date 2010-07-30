@@ -7,9 +7,6 @@ Items which may be doable without a network connection:
 * set theory theorems we may need/want but not yet
   - prid2
 
-* more intuitionistic logic
-  - From intuitionistic to classical propositional logic.wiki
-  - write SyllogismInConsequent (should hold intuitionistically)
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -23,6 +20,7 @@ Items which may be doable without a network connection:
      buildImplicationAntecedent
      buildImplication
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
+* rewrite opening paragraph of substVariable section
 * General set theory
   - ordered pair
   - definitions and consequences: opth from set.mm, union?,
@@ -39,8 +37,9 @@ Items which may be doable without a network connection:
   - functions and relations (e.g. cxp and following in set.mm)
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
-    = what is "rec"? some kind of recursion definition...
+      - e.g. http://us.metamath.org/mpeuni/df-rdg.html
 
 To do with network:
 
+* export intuitionistic logic from principia just like law of the excluded middle
 

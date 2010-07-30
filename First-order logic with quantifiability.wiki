@@ -247,54 +247,6 @@ Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
 
 === Implicit substitution and ∀ ===
 A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. Here we relate such a statement to <code>∀x(x = s → φ)</code> (which is one of the formulas we'll be using in manipulating substitutions).<ref>[http://us.metamath.org/mpeuni/equsal.html equsal] in metamath's set.mm, accessed May 11, 2010, but for an object not a variable</ref>
-
-First, a propositional logic theorem:<ref>*5.74 from A. Whitehead, B. Russell, Principia Mathematica, Cambridge University Press, 1910.</ref>
-<jh>
-thm (ImplicationDistributionOverBiconditional () () ((φ → (ψ ↔ χ)) ↔ ((φ → ψ) ↔ (φ → χ))) (
-</jh>
-We split <code>(φ → ψ) ↔ (φ → χ)</code> into two implications:
-<jh>
-        (φ → ψ) (φ → χ) BiconditionalImplication
-</jh>
-Then we apply <code>AntecedentDistribution</code> to each one,
-<jh>
-        φ ψ χ AntecedentDistribution swapBiconditional
-        φ χ ψ AntecedentDistribution swapBiconditional
-</jh>
-and combine them.
-<jh>
-        buildConjunction
-</jh>
-The left hand side from buildConjunction was <code>((φ → ψ) → (φ → χ)) ∧ ((φ → χ) → (φ → ψ))</code>, so we are ready to apply transitivity there.
-<jh>
-        applyBiconditionalTransitivity
-</jh>
-The right hand side from buildConjunction was <code>(φ → (ψ → χ)) ∧ (φ → (χ → ψ))</code>, which we first transform to <code>φ → ((ψ → χ) ∧ (χ → ψ))</code>,
-<jh>
-        φ (ψ → χ) (χ → ψ) ConjunctionComposition
-        applyBiconditionalTransitivity
-</jh>
-and then to <code>φ → (ψ ↔ χ)</code>.
-<jh>
-        φ BiconditionalReflexivity
-        ψ χ BiconditionalImplication swapBiconditional
-        buildImplication
-        applyBiconditionalTransitivity
-
-</jh>
-We now have our desired result except the two sides are interchanged.
-<jh>
-        swapBiconditional
-))
-
-thm (distributeImplicationOverBiconditional () ((H (φ → (ψ ↔ χ)))) ((φ → ψ) ↔ (φ → χ)) (
-        H
-        φ ψ χ ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
-        applyModusPonens
-))
-</jh>
-
-And our implicit substitution theorem:
 <jh>
 thm (ImplicitSubstitutionForAll () ((HFREE (x is-not-free-in ψ))) 
   ((∀ x (((value x) = s) → (φ ↔ ψ))) → ((∀ x (((value x) = s) → φ)) ↔ ψ)) (

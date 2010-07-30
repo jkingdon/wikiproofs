@@ -2351,6 +2351,53 @@ thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
 ))
 </jh>
 
+== Implication distribution over biconditional ==
+Antecedent distribution said that we can distribute the antecedent in a formula of the form <code>p → (q → r)</code>. Here we prove a similar result for <code>p → (q ↔ r)</code>.
+<jh>
+thm (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))) ( # *5.74
+</jh>
+We split <code>(p → q) ↔ (p → r)</code> into two implications:
+<jh>
+        (p → q) (p → r) BiconditionalImplication
+</jh>
+Then we apply <code>AntecedentDistribution</code> to each one,
+<jh>
+        p q r AntecedentDistribution swapBiconditional
+        p r q AntecedentDistribution swapBiconditional
+</jh>
+and combine them.
+<jh>
+        buildConjunction
+</jh>
+The left hand side from buildConjunction was <code>((p → q) → (p → r)) ∧ ((p → r) → (p → q))</code>, so we are ready to apply transitivity there.
+<jh>
+        applyBiconditionalTransitivity
+</jh>
+The right hand side from buildConjunction was <code>(p → (q → r)) ∧ (p → (r → q))</code>, which we first transform to <code>p → ((q → r) ∧ (r → q))</code>,
+<jh>
+        p (q → r) (r → q) ConjunctionComposition
+        applyBiconditionalTransitivity
+</jh>
+and then to <code>p → (q ↔ r)</code>.
+<jh>
+        p BiconditionalReflexivity
+        q r BiconditionalImplication swapBiconditional
+        buildImplication
+        applyBiconditionalTransitivity
+
+</jh>
+We now have our desired result except the two sides are interchanged.
+<jh>
+        swapBiconditional
+))
+
+thm (distributeImplicationOverBiconditional () ((H (p → (q ↔ r)))) ((p → q) ↔ (p → r)) (
+        H
+        p q r ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
 That's it!  We're ready to export our theorems to [[Interface:Principia Mathematica propositional logic theorems]]. That interface also requires us to define the alias <code>formula</code> for <code>wff</code>s.
 <jh>
 kindbind (wff formula)
