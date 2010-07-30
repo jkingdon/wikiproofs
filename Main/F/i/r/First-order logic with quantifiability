@@ -5,8 +5,6 @@
  | right    = 
  | shortcut = 
  | notes    = The purpose of this page is to prove the statements of [[Interface:First-order logic with quantifiability]] from [[Interface:First-order logic]] and the [[Interface:Axiom of quantifiability]]. In particular, it adds substitution of an object (term) for a variable.
-
-{{under construction}}
 }}
 {{interfaces
 | imports = [[Interface:First-order logic]] [[Interface:Axiom of quantifiability]]
