@@ -291,6 +291,12 @@ Transposition applies for the biconditional as well as for the implication, alth
 stmt (BiconditionalTranspositionWithNegatedRight () () ((p ↔ (¬ q)) ↔ (q ↔ (¬ p))))
 </jh>
 
+==== Antecedent distribution ====
+Here is a version of <code>AntecedentDistribution</code> with one of the implications replaced by a biconditional.
+<jh>
+stmt (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))))
+</jh>
+
 == Rules ==
 
 Each propositional calculus needs at least one rule of detachment (modus ponens appears to be the most common). However, it will be convenient to have certain toolbox of rules implementing often used statements.
@@ -409,6 +415,7 @@ stmt (convertToDisjunctionFromImplication () (((¬ p) → q)) (p ∨ q))
 stmt (convertFromNegationToImplication () ((¬ p)) (p → (⊥)))
 stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
 stmt (transposeBiconditionalWithNegatedRight () ((p ↔ (¬ q))) (q ↔ (¬ p)))
+stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) ↔ (p → r)))
 </jh>
 
 == Convenience theorems and rules ==
