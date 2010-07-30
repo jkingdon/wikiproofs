@@ -5,8 +5,6 @@
  | right    = 
  | shortcut = 
  | notes    = The purpose of this page is to prove the statements of [[Interface:First-order logic]] from [[Interface:Axioms of first-order logic]].
-
-{{under construction}}
 }}
 {{interfaces
 | imports = [[Interface:Axioms of first-order logic]]
