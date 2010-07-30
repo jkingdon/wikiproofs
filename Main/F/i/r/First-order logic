@@ -1215,7 +1215,7 @@ thm (equs3 () ()
 == Substitution of variables ==
 We now move to proper substitution via <code>substVariable</code>.
 
-This section only covers the case where we substitute one variable for another, not where we substitute an object for a variable. The latter is more general and is treated in the next section, on <code>subst</code>. In fact this section, on <code>substVariable</code>, will probably be dropped unless some of the results end up being useful in contexts such as proving theorems for the more general <code>subst</code>.
+This section only covers the case where we substitute one variable for another, not where we substitute an object for a variable. The latter is more general and is treated in [[First-order logic with quantifiability]]. This section, on <code>substVariable</code>, is of interest mainly for theories which do not want to accept the [[Interface:Axiom of quantifiability]]. It is not yet fully developed.
 
 === Definition ===
 Our definition of <code>substVariable</code> is somewhat complicated, mainly in order to handle the case in which y and x are not distinct.<ref>[http://us.metamath.org/mpeuni/df-sb.html df-sb] in metamath's set.mm, accessed February 22, 2010</ref>
