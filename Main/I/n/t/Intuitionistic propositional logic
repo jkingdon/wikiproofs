@@ -1803,6 +1803,38 @@ thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q �
 ))
 </jh>
 
+== Distribution of implication over biconditional ==
+
+The proof of this result from [[Principia Mathematica propositional logic]] applies verbatim.
+<jh>
+thm (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))) (
+        (p → q) (p → r) BiconditionalImplication
+
+        p q r AntecedentDistribution swapBiconditional
+        p r q AntecedentDistribution swapBiconditional
+
+        buildConjunction
+
+        applyBiconditionalTransitivity
+
+        p (q → r) (r → q) ConjunctionComposition
+        applyBiconditionalTransitivity
+
+        p BiconditionalReflexivity
+        q r BiconditionalImplication swapBiconditional
+        buildImplication
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
+
+thm (distributeImplicationOverBiconditional () ((H (p → (q ↔ r)))) ((p → q) ↔ (p → r)) (
+        H
+        p q r ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
 == Relationships between connectives ==
 
 === Conjunction and implication ===
