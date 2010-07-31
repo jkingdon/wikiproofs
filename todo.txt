@@ -41,5 +41,4 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-* export intuitionistic logic from principia just like law of the excluded middle
 
