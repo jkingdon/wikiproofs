@@ -2352,7 +2352,7 @@ thm (convertToDisjunctionFromImplication () ((H ((¬ p) → q))) (p ∨ q) (
 </jh>
 
 == Implication distribution over biconditional ==
-Antecedent distribution said that we can distribute the antecedent in a formula of the form <code>p → (q → r)</code>. Here we prove a similar result for <code>p → (q ↔ r)</code>.
+Antecedent distribution says that we can distribute the antecedent in a formula of the form <code>p → (q → r)</code>. Here we prove a similar result for <code>p → (q ↔ r)</code>.
 <jh>
 thm (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))) ( # *5.74
 </jh>
