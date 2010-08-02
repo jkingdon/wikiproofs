@@ -422,8 +422,52 @@ thm (UnorderedPair ((pairElement s) (pairElement t)) () ((u ∈ (unorderedPair s
 </jh>
 
 === Builder ===
+The builder for unordered pairs is <code>A0 = B0 ∧ A1 = B1 → {A0, A1} = {B0, B1}</code>.
 <jh>
-#thm (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))) ())
+thm (UnorderedPairBuilder-1
+  ((z a) (z A0) (z A1) (z b) (z B0) (z B1) (a A0) (a A1) (b B0) (b B1))
+  ()
+  (((A0 = B0) ∧ (A1 = B1)) → ((abstract a (((value a) = A0) ∨ ((value a) = A1))) = (abstract b (((value b) = B0) ∨ ((value b) = B1))))) (
+</jh>
+Applying builders for equality and disjunction, we get <code>A0 = B0 ∧ A1 = B1 → (z = A0 ∨ z = A1 ↔ z = B0 ∨ z = B1)</code>.
+<jh>
+        (A0 = B0) (A1 = B1) ConjunctionRightElimination
+        A0 B0 (value z) EqualityBuilderLL
+        applySyllogism
+
+        (A0 = B0) (A1 = B1) ConjunctionLeftElimination
+        A1 B1 (value z) EqualityBuilderLL
+        applySyllogism
+
+        composeConjunction
+
+        ((value z) = A0) ((value z) = B0) ((value z) = A1) ((value z) = B1) DisjunctionFunction
+        applySyllogism
+</jh>
+Applying <code>UnorderedPair</code>, we get <code>A0 = B0 ∧ A1 = B1 → (z ∈ {A0, A1} ↔ z ∈ {B0, B1})</code>.
+<jh>
+        (value z) a A0 A1 UnorderedPairObject
+        swapBiconditional
+        transformBiconditionalLeftInConsequent
+
+        (value z) b B0 B1 UnorderedPairObject
+        swapBiconditional
+        transformBiconditionalRightInConsequent
+</jh>
+By extensionality, the right hand side implies <code>{A0, A1} = {B0, B1}</code>.
+<jh>
+        z addForAllToConsequent
+        z (abstract a (((value a) = A0) ∨ ((value a) = A1))) (abstract b (((value b) = B0) ∨ ((value b) = B1))) ExtensionalityObject
+        applySyllogism
+))
+
+thm (UnorderedPairBuilder-2 ((a A0) (a A1) (b B0) (b B1)) () (((A0 = B0) ∧ (A1 = B1)) → ((abstract a (((value a) = A0) ∨ ((value a) = A1))) = (unorderedPair B0 B1))) (
+        A0 B0 A1 B1 a b UnorderedPairBuilder-1
+))
+
+thm (UnorderedPairBuilder ((a A0) (a A1)) () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))) (
+        A0 B0 A1 B1 a UnorderedPairBuilder-2
+))
 </jh>
 
 == Done ==
