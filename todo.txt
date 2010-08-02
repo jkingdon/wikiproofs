@@ -6,6 +6,9 @@ Items which may be doable without a network connection:
 * set theory theorems we may need/want but not yet
   - prid2
 
+* arithmetic
+  - a ≤ a (leid in peano_thms)
+
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -40,4 +43,18 @@ Items which may be doable without a network connection:
 
 To do with network:
 
+Download all files from 05e695ecdb97667e0d18057c52d1fb14216c85e2 and newer
+  * General_set_theory
+  * Interface:Classical propositional calculus
+  * Convenience theorems of propositional logic
+  * First-order logic
+  * First-order logic with quantifiability
+  * Wikiproofs:Scattered propositional logic theorems‎
+  * Interface:Principia Mathematica propositional logic theorems
+  * Intuitionistic propositional logic‎
+  * Principia Mathematica propositional logic
+
+sudo yum install maven2
+
+nomenclature: combining vs combination from User:Kingdon
 
