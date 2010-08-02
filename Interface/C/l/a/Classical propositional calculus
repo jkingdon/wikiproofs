@@ -496,6 +496,8 @@ stmt (applyComm () ((p → (q → r))) (q → (p → r)))
 By "transforming", we mean applying a biconditional to replace part of a formula.
 <jh>
 stmt (transformAntecedent () ((p → q) (p ↔ r)) (r → q))
+stmt (transformBiconditionalLeftInConsequent () ((antecedent → (p ↔ q)) (p ↔ r)) (antecedent → (r ↔ q)))
+stmt (transformBiconditionalRightInConsequent () ((antecedent → (p ↔ q)) (q ↔ r)) (antecedent → (p ↔ r)))
 </jh>
 
 === Additional relationships between connectives ===
