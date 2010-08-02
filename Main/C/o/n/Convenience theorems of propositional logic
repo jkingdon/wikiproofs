@@ -125,6 +125,33 @@ thm (transformAntecedent () ((HIMP (p → q)) (HEQ (p ↔ r))) (r → q) (
 ))
 </jh>
 
+thm (transformBiconditionalLeftInConsequent () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
+        HEQ
+        swapBiconditional
+        antecedent introduceAntecedent
+
+        HIMP
+
+        composeConjunction
+        
+        r p q BiconditionalTransitivity
+
+        applySyllogism
+))
+
+thm (transformBiconditionalRightInConsequent () ((HIMP (antecedent → (p ↔ q))) (HEQ (q ↔ r))) (antecedent → (p ↔ r)) (
+        HIMP
+
+        HEQ
+        antecedent introduceAntecedent
+        composeConjunction
+        
+        p q r BiconditionalTransitivity
+
+        applySyllogism
+))
+</jh>
+
 == More relationships between connectives ==
 
 === Conjunction and implication ===
