@@ -11,7 +11,7 @@
 
 === Mathematical content ===
 
-We have [[Interface:Classical propositional calculus]] and a proof of it from axioms. The obvious next step is [[:Category:Predicate logic|first-order logic]].
+We're in pretty good shape with [[Interface:Classical propositional calculus|propositional logic]]. [[:Category:Classical first-order logic|first-order logic]] is usable but somewhat less complete, and [[Basic arithmetic]] and [[General set theory]] are really just getting started. It is also possible to start work on anything which you are prepared to express axioms for—now that we have logic the main thing you are likely to find missing is relations, functions, subsets, and other bits of familiar mathematical machinery, but some problems can be expressed without them.
 
 === Non-mathematical content ===
 
@@ -24,7 +24,8 @@ Policies guidelines need to be crafted, large-scale projects organised, etc. ''T
 == JHilbert verifier ==
 
 A lot of stuff is still missing:
-* Help pages (http://www.mathi.uni-heidelberg.de/~alex/jhilbert/commands.html might be a starting place).
+* [[Wikiproofs:JHilbert definition soundness]] is probably the highest priority. 
+* Help pages, for example fleshing out [[Help:JHilbert]] (http://www.mathi.uni-heidelberg.de/~alex/jhilbert/commands.html might be a starting place).
 * A formal specification of JHilbert. Not everything has been implemented yet in the current experimental version, such as functor selection also by [[w:type signature|type signature]] instead of name only, precedence and functor concatenation.
 * Once a formal specification has been written, a programming interface reflecting the specification can be developed, test suites for it can be written, and finally the interface can be implemented.
 * Better tutorials. [[Help:Tutorial]] is only a start.
