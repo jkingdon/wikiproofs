@@ -7,7 +7,7 @@
  | notes    = Here we start with the axioms of set theory and prove theorems for the usual concepts: empty set, singletons, unordered pairs, ordered pairs, relations, functions, some kinds of unions, intersection, set difference, and so on.  Although general set theory does not have any axioms which allow us to construct infinite sets, it does not forbid them either and all of the results here will be applicable for infinite sets as well, if supplemented by axioms which posit the existence of such sets. }}
 {{interfaces
 | imports = [[Interface:Axioms of general set theory]]
-| exports = [[Interface:General set theory theorems]]
+| exports = [[Interface:Basic operations of general set theory]]
 }}
 
 We start by importing the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Axioms of general set theory]].  We also define some variables.
@@ -477,10 +477,10 @@ def ((orderedPair A B) (unorderedPair (singleton A) (unorderedPair A B)))
 </jh>
 
 == Done ==
-We have now proved all the theorems in [[Interface:General set theory theorems]].
+We have now proved all the theorems in [[Interface:Basic operations of general set theory]].
 
 <jh>
-export (GENERAL Interface:General_set_theory_theorems (CLASSICAL FIRSTORDER) ())
+export (GENERAL Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
