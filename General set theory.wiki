@@ -441,7 +441,7 @@ Applying builders for equality and disjunction, we get <code>A0 = B0 ∧ A1 = B1
 
         composeConjunction
 
-        ((value z) = A0) ((value z) = B0) ((value z) A1) ((value z) A1) ((value z) B1) DisjunctionBuilder
+        ((value z) = A0) ((value z) = B0) ((value z) = A1) ((value z) = B1) DisjunctionFunction
         applySyllogism
 </jh>
 Applying <code>UnorderedPair</code>, we get <code>A0 = B0 ∧ A1 = B1 → (z ∈ {A0, A1} ↔ z ∈ {B0, B1})</code>.
