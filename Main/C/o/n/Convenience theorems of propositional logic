@@ -123,7 +123,6 @@ thm (transformAntecedent () ((HIMP (p → q)) (HEQ (p ↔ r))) (r → q) (
         HIMP
         applySyllogism
 ))
-</jh>
 
 thm (transformBiconditionalLeftInConsequent () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
         HEQ
@@ -387,6 +386,22 @@ thm (buildBiconditionalRRInConsequent ()
         common BiconditionalReflexivity
         p q common common BiconditionalFunction detach2of2
         applySyllogism
+))
+</jh>
+
+== Additional transformations ==
+<jh>
+thm (transformDisjunctionLeftInConsequent () ((HIMP (antecedent → (p ∨ q))) (HEQ (p ↔ r))) (antecedent → (r ∨ q)) (
+        HIMP
+
+        antecedent BiconditionalReflexivity
+        HEQ
+        q buildDisjunctionRR
+        buildImplication
+
+        eliminateBiconditionalReverse
+
+        applyModusPonens
 ))
 </jh>
 
