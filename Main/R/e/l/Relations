@@ -40,6 +40,28 @@ thm (UnorderedPairLeftMembership () () (A ∈ (unorderedPair A B)) (
 ))
 </jh>
 
+=== Unordered pair equality can imply equality of members ===
+<code>{A, C} = {B, C} → A = B</code>.<ref>[http://us.metamath.org/mpeuni/preqr1.html preqr1], metamath's set.mm, accessed August 4, 2010</ref>
+
+First we prove a lemma, <code>{A, C} = {B, C} → A = B ∨ A = C</code>
+<jh>
+thm (UnorderedPairFirstMembersEqual-1 () () (((unorderedPair A C) = (unorderedPair B C)) → ((A = B) ∨ (A = C))) (
+        A C UnorderedPairLeftMembership
+
+        (unorderedPair A C) (unorderedPair B C) A IsElementBuilderLL
+
+        detachImplicationBiconditional
+</jh>
+That gives us <code>{A, C} = {B, C} → A ∈ {B, C}</code>.
+<jh>
+        A B C UnorderedPair
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+# ...to be continued
+</jh>
+
 == Ordered pair ==
 The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
 <jh>
