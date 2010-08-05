@@ -41,7 +41,7 @@ thm (UnorderedPairLeftMembership () () (A ∈ (unorderedPair A B)) (
 </jh>
 
 === Unordered pair equality can imply equality of members ===
-<code>{A, C} = {B, C} → A = B</code>.<ref>[http://us.metamath.org/mpeuni/preqr1.html preqr1], metamath's set.mm, accessed August 4, 2010</ref>
+Here we prove <code>{A, C} = {B, C} → A = B</code>.<ref>[http://us.metamath.org/mpeuni/preqr1.html preqr1], metamath's set.mm, accessed August 4, 2010</ref>
 
 First we prove a lemma, <code>{A, C} = {B, C} → A = B ∨ A = C</code>
 <jh>
