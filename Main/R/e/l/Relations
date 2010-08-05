@@ -59,7 +59,45 @@ That gives us <code>{A, C} = {B, C} → A ∈ {B, C}</code>.
         applySyllogism
 ))
 
-# ...to be continued
+thm (UnorderedPairFirstMembersEqual () () (((unorderedPair A C) = (unorderedPair B C)) → (A = B)) (
+</jh>
+We apply our lemma once to get <code>{A, C} = {B, C} → A = B ∨ A = C</code>
+<jh>
+        A C B UnorderedPairFirstMembersEqual-1
+
+</jh>
+Applying the lemma a second time, with some commutations, gives us <code>{A, C} = {B, C} → A = B ∨ B = C</code>
+<jh>
+        (unorderedPair A C) (unorderedPair B C) EqualitySymmetry
+        eliminateBiconditionalReverse
+        B C A UnorderedPairFirstMembersEqual-1
+        applySyllogism
+
+        B A EqualitySymmetry
+        transformDisjunctionLeftInConsequent
+</jh>
+We now combine the two results to get <code>{A, C} = {B, C} → (A = B ∨ A = C) ∧ (A = B ∨ B = C)</code>, and apply distributivity to the right hand side to turn it into <code>A = B ∨ (A = C ∧ B = C)</code>.
+<jh>
+        composeConjunction
+        (A = B) (A = C) (B = C) DisjunctionLeftDistribution
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+We turn <code>A = C ∧ B = C</code> into <code>A = B</code>, and after a bit more rearrangement, we are done.
+<jh>
+        B C EqualitySymmetry
+        eliminateBiconditionalReverse
+        (A = C) conjoinLL
+        A C B EqualityTransitivity
+        applySyllogism
+
+        (A = B) disjoinLL
+        applySyllogism
+
+        (A = B) DisjunctionIdempotence
+        eliminateBiconditionalForward
+        applySyllogism
+))
 </jh>
 
 == Ordered pair ==
