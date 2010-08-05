@@ -126,4 +126,7 @@ thm (OrderedPairBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((orderedPair A0 B0
 == To be added ==
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
+== References ==
+<references/>
+
 [[Category:Other classical set theory]]
