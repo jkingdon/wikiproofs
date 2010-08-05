@@ -19,7 +19,7 @@ First-order logic provides us with two kinds: <code>variable</code> is a variabl
 
 <jh>
 var (variable x y z w)
-var (object s t u s0 s1 t0 t1)
+var (object s t u s0 s1 t0 t1 A B A0 A1 B0 B1)
 </jh>
 
 We can test whether one set is an element of another, and define an abbreviation for the negated version.
@@ -52,9 +52,19 @@ Equals can be substituted for equals, in the context of set operations.
 <jh>
 stmt (IsElementBuilderLL () () ((t0 = t1) → ((s ∈ t0) ↔ (s ∈ t1))))
 stmt (IsElementBuilderRR () () ((s0 = s1) → ((s0 ∈ t) ↔ (s1 ∈ t))))
+
+stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
+
+stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))))
+</jh>
+
+== Extensionality ==
+Sets with the same elements are equal.
+<jh>
+stmt (ExtensionalityObject ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)))
 </jh>
 
 == To be added ==
-Extensionality (probably), separation (presumably in the form of defining <code>{y ∈ s | φ}</code>).
+Separation (presumably in the form of defining <code>{y ∈ s | φ}</code>).
 
 [[Category:Axiomatics of classical set theory and its fragments|{{PAGENAME}}]]
