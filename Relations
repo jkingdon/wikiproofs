@@ -1,0 +1,209 @@
+{{header
+ | title    = Relations
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Here we start with [[Interface:Basic operations of general set theory]] and provide ordered pairs, relations, and functions. }}
+{{interfaces
+| imports = [[Interface:Basic operations of general set theory]]
+| exports = none yet
+}}
+
+We first import [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]].
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
+</jh>
+
+As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
+<jh>
+var (object A B C D A0 A1 B0 B1)
+var (variable x y z w)
+</jh>
+
+== Singletons ==
+Logically, these theorems belong with the other singleton theorems in [[General set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+
+=== A set is an element of its singleton ===
+Here we show <code>A ∈ {A}</code>.<ref>[http://us.metamath.org/mpeuni/snid.html snid], metamath's set.mm, accessed August 5, 2010</ref>
+<jh>
+thm (SingletonMembership () () (A ∈ (singleton A)) (
+        A EqualityReflexivity
+
+        A A Singleton
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
+== Unordered pairs ==
+Logically, these theorems belong with the other unordered pair theorems in [[General set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+
+=== An unordered pair contains its first member ===
+Here we show that <code>A ∈ {A, B}</code>.<ref>[http://us.metamath.org/mpeuni/prid1.html prid1], metamath's set.mm, accessed August 4, 2010.</ref>
+<jh>
+thm (UnorderedPairLeftMembership () () (A ∈ (unorderedPair A B)) (
+        A EqualityReflexivity
+        (A = B) introduceRightDisjunction
+
+        A A B UnorderedPair
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
+=== Unordered pair equality can imply equality of members ===
+Here we prove <code>{A, C} = {B, C} → A = B</code>.<ref>[http://us.metamath.org/mpeuni/preqr1.html preqr1], metamath's set.mm, accessed August 4, 2010</ref>
+
+First we prove a lemma, <code>{A, C} = {B, C} → A = B ∨ A = C</code>
+<jh>
+thm (UnorderedPairFirstMembersEqual-1 () () (((unorderedPair A C) = (unorderedPair B C)) → ((A = B) ∨ (A = C))) (
+        A C UnorderedPairLeftMembership
+
+        (unorderedPair A C) (unorderedPair B C) A IsElementBuilderLL
+
+        detachImplicationBiconditional
+</jh>
+That gives us <code>{A, C} = {B, C} → A ∈ {B, C}</code>.
+<jh>
+        A B C UnorderedPair
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (UnorderedPairFirstMembersEqual () () (((unorderedPair A C) = (unorderedPair B C)) → (A = B)) (
+</jh>
+We apply our lemma once to get <code>{A, C} = {B, C} → A = B ∨ A = C</code>
+<jh>
+        A C B UnorderedPairFirstMembersEqual-1
+
+</jh>
+Applying the lemma a second time, with some commutations, gives us <code>{A, C} = {B, C} → A = B ∨ B = C</code>
+<jh>
+        (unorderedPair A C) (unorderedPair B C) EqualitySymmetry
+        eliminateBiconditionalReverse
+        B C A UnorderedPairFirstMembersEqual-1
+        applySyllogism
+
+        B A EqualitySymmetry
+        transformDisjunctionLeftInConsequent
+</jh>
+We now combine the two results to get <code>{A, C} = {B, C} → (A = B ∨ A = C) ∧ (A = B ∨ B = C)</code>, and apply distributivity to the right hand side to turn it into <code>A = B ∨ (A = C ∧ B = C)</code>.
+<jh>
+        composeConjunction
+        (A = B) (A = C) (B = C) DisjunctionLeftDistribution
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+We turn <code>A = C ∧ B = C</code> into <code>A = B</code>, and after a bit more rearrangement, we are done.
+<jh>
+        B C EqualitySymmetry
+        eliminateBiconditionalReverse
+        (A = C) conjoinLL
+        A C B EqualityTransitivity
+        applySyllogism
+
+        (A = B) disjoinLL
+        applySyllogism
+
+        (A = B) DisjunctionIdempotence
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+== Ordered pair ==
+The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
+<jh>
+def ((orderedPair A B) (unorderedPair (singleton A) (unorderedPair A B)))
+</jh>
+
+=== Ordered pair builder ===
+Equals can be substituted for equals in ordered pairs, that is, <code>A0 = A1 ∧ B0 = B1 →〈A0, B0〉=〈A1, B1〉</code>. This forms one direction of the ordered pair theorem (it is the less interesting of the two, as it holds for a wide variety of operations, not just ordered pairs).
+<jh>
+thm (OrderedPairBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((orderedPair A0 B0) = (orderedPair A1 B1))) (
+        (A0 = A1) (B0 = B1) ConjunctionRightElimination
+        A0 A1 SingletonBuilder
+        applySyllogism
+
+        A0 A1 B0 B1 UnorderedPairBuilder
+
+        composeConjunction
+
+        (singleton A0) (singleton A1) (unorderedPair A0 B0) (unorderedPair A1 B1) UnorderedPairBuilder
+        applySyllogism
+))
+</jh>
+
+=== First half of the ordered pair theorem ===
+In this section we prove <code>〈A0, B0〉=〈A1, B1〉→ A0 = A1</code>.
+
+Our first lemma is <code>{A} ∈ 〈A, B〉</code>a simple consequence of our definition of ordered pair.<ref>[http://us.metamath.org/mpeuni/opi1.html opi1], metamath's set.mm, accessed August 5, 2010.</ref>
+<jh>
+thm (OrderedPairTheoremForwardFirst-1 () () ((singleton A) ∈ (orderedPair A B)) (
+        (singleton A) (unorderedPair A B) UnorderedPairLeftMembership
+))
+</jh>
+
+The next lemma, <code>A ∈ 〈B, C〉 ↔ A = {B} ∨ A = {B, C}</code>, also follows directly from our definition of ordered pair.<ref>[http://us.metamath.org/mpeuni/elop.html elop], metamath's set.mm, accessed August 5, 2010.</ref>
+<jh>
+thm (OrderedPairTheoremForwardFirst-2 () () ((A ∈ (orderedPair B C)) ↔ ((A = (singleton B)) ∨ (A = (unorderedPair B C)))) (
+         A (singleton B) (unorderedPair B C) UnorderedPair
+))
+</jh>
+
+We're ready for <code>〈A0, B0〉=〈A1, B1〉→ A0 = A1</code>. We rename the variables in an effort to make the proof easier to read: <code>〈A, B〉=〈C, D〉→ A = C</code><ref>[http://us.metamath.org/mpeuni/opth1.html opth1], metamath's set.mm, accessed August 5, 2010.</ref>
+<jh>
+thm (OrderedPairTheoremForwardFirst () () (((orderedPair A B) = (orderedPair C D)) → (A = C)) (
+</jh>
+The first step is <code>〈A, B〉=〈C, D〉 → ({C} ∈ 〈A, B〉 ↔ {C} ∈ 〈C, D〉)</code>, from our builder for <code>∈</code>.
+
+But <code>{C} ∈ 〈C, D〉</code> is true unconditionally, so this formula reduces to <code>〈A, B〉=〈C, D〉 → {C} ∈ 〈A, B〉</code>.
+<jh>
+        C D OrderedPairTheoremForwardFirst-1
+        (orderedPair A B) (orderedPair C D) (singleton C) IsElementBuilderLL
+        detachImplicationBiconditionalRight
+</jh>
+We now apply our other lemma to turn <code>{C} ∈ 〈A, B〉</code> into <code>{C} = {A} ∨ {C} = {A, B}</code>.
+<jh>
+        (singleton C) A B OrderedPairTheoremForwardFirst-2
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We'll show that each half of <code>{C} = {A} ∨ {C} = {A, B}</code> implies <code>A ∈ {C}</code>.  The left half follows from <code>{C} = {A} → (A ∈ {C} ↔ A ∈ {A})</code> once we detach the theorem <code>A ∈ {A}</code>.
+<jh>
+        A SingletonMembership
+        (singleton C) (singleton A) A IsElementBuilderLL
+        detachImplicationBiconditionalRight
+</jh>
+The right half is similar: the builder gives us <code>{C} = {A, B} → (A ∈ {C} ↔ A ∈ {A, B})</code> and we can detach <code>A ∈ {A, B}</code>.
+<jh>
+        A B UnorderedPairLeftMembership
+        (singleton C) (unorderedPair A B) A IsElementBuilderLL
+        detachImplicationBiconditionalRight
+</jh>
+We now compose the two and combine with our earlier result to get <code>〈A, B〉=〈C, D〉 → A ∈ {C}</code>
+<jh>
+        composeDisjunction
+        applySyllogism
+</jh>
+Transforming <code>A ∈ {C}</code> to <code>A = C</code> finishes the proof.
+<jh>
+        A C Singleton
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+== To be added ==
+Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
+
+== References ==
+<references/>
+
+[[Category:Other classical set theory]]
+
