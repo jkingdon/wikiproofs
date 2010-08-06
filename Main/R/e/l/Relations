@@ -123,6 +123,25 @@ thm (OrderedPairBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((orderedPair A0 B0
 ))
 </jh>
 
+=== First half of the ordered pair theorem ===
+In this section we prove <code>〈A0, B0〉=〈A1, B1〉→ A0 = A1</code>.
+
+Our first lemma is <code>{A} ∈ 〈A, B〉</code>a simple consequence of our definition of ordered pair.
+<jh>
+thm (OrderedPairTheoremForwardFirst-1 () () ((singleton A) ∈ (orderedPair A B)) (
+        (singleton A) (unorderedPair A B) UnorderedPairLeftMembership
+))
+</jh>
+
+The next lemma, <code>A ∈ 〈B, C〉 ↔ A = {B} ∨ A = {B, C}</code>, also follows directly from our definition of ordered pair.
+<jh>
+thm (OrderedPairTheoremForwardFirst-2 () () ((A ∈ (orderedPair B C)) ↔ ((A = (singleton B)) ∨ (A = (unorderedPair B C)))) (
+         A (singleton B) (unorderedPair B C) UnorderedPair
+))
+</jh>
+
+...to be continued...
+
 == To be added ==
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
