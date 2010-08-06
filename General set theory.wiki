@@ -4,10 +4,10 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = Here we start with the axioms of set theory and prove theorems for the usual concepts: empty set, singletons, unordered pairs, ordered pairs, relations, functions, some kinds of unions, intersection, set difference, and so on.  Although general set theory does not have any axioms which allow us to construct infinite sets, it does not forbid them either and all of the results here will be applicable for infinite sets as well, if supplemented by axioms which posit the existence of such sets. }}
+ | notes    = Here we start with the axioms of set theory and prove theorems for a few of the basic concepts: empty set, singletons, and unordered pairs.  Other topics of general set theory are treated elsewhere, such as ordered pairs, relations, functions, some kinds of unions, intersection, set difference, and so on.  Although general set theory does not have any axioms which allow us to construct infinite sets, it does not forbid them either and all of the results here will be applicable for infinite sets as well, if supplemented by axioms which posit the existence of such sets. }}
 {{interfaces
 | imports = [[Interface:Axioms of general set theory]]
-| exports = [[Interface:General set theory theorems]]
+| exports = [[Interface:Basic operations of general set theory]]
 }}
 
 We start by importing the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Axioms of general set theory]].  We also define some variables.
@@ -169,7 +169,7 @@ This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObjec
 
 thm (ExtensionalityObject ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)) (
 </jh>
-To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))
+To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))</code>
 <jh>
         (value y) B (value z) IsElementBuilderLL
         ((value z) ∈ A) buildBiconditionalLLInConsequent
@@ -470,17 +470,11 @@ thm (UnorderedPairBuilder ((a A0) (a A1)) () (((A0 = B0) ∧ (A1 = B1)) → ((un
 ))
 </jh>
 
-== Ordered pair ==
-The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
-<jh>
-def ((orderedPair A B) (unorderedPair (singleton A) (unorderedPair A B)))
-</jh>
-
 == Done ==
-We have now proved all the theorems in [[Interface:General set theory theorems]].
+We have now proved all the theorems in [[Interface:Basic operations of general set theory]].
 
 <jh>
-export (GENERAL Interface:General_set_theory_theorems (CLASSICAL FIRSTORDER) ())
+export (GENERAL Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
