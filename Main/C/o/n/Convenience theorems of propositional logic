@@ -420,6 +420,19 @@ thm (introduceBiconditionalFromImplicationsInConsequent ()
 
         applySyllogism
 ))
+
+thm (applyModusPonensInConsequent ()
+  ((H (antecedent → p))
+   (HIMP (antecedent → (p → q))))
+  (antecedent → q) (
+        H
+        HIMP
+        composeConjunction
+
+        p q ModusPonens
+
+        applySyllogism
+))
 </jh>
 
 == Done ==
