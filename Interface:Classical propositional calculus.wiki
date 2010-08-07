@@ -468,6 +468,7 @@ stmt (buildBiconditionalRRInConsequent () ((antecedent → (p ↔ q))) (antecede
 === Various theorems in the consequent ===
 <jh>
 stmt (introduceBiconditionalFromImplicationsInConsequent () ((antecedent → (p → q)) (antecedent → (q → p))) (antecedent → (p ↔ q)))
+stmt (applyModusPonensInConsequent () ((antecedent → p) (antecedent → (p → q)) (antecedent → q))
 </jh>
 
 === Detachment ===
