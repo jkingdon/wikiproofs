@@ -1,35 +1,5 @@
 Items which may be doable without a network connection:
 
-* need these for ordered pairs
-  - prcom (used in proof of preqr2), opth
-
-opth	⊢ (<.A, B>. = <.C, D>. ↔ (A = C ⋀ B = D))
-Proof of Theorem opth Step	Hyp	Ref 	Expression
-1	 	opth.1	. . . 4 ⊢ A ∈ V
-2	1	opth1 2900	. . 3 ⊢ (<.A, B>. = <.C, D>. → A = C)
-3	 	eqeq1 1552	. . . . 5 ⊢ (<.A, B>. = <.C, D>. → (<.A, B>. = <.C, B>. ↔ <.C, D>. = <.C, B>.))
-4	 	opeq1 2590	. . . . 5 ⊢ (A = C → <.A, B>. = <.C, B>.)
-5	3, 4	syl5bi 214	. . . 4 ⊢ (<.A, B>. = <.C, D>. → (A = C → <.C, D>. = <.C, B>.))
-6	 	df-op 2512	. . . . . . 7 ⊢ <.C, D>. = {{C}, {C, D}}
-7	 	df-op 2512	. . . . . . 7 ⊢ <.C, B>. = {{C}, {C, B}}
-8	6, 7	eqeq12i 1559	. . . . . 6 ⊢ (<.C, D>. = <.C, B>. ↔ {{C}, {C, D}} = {{C}, {C, B}})
-9	 	prex 2895	. . . . . . 7 ⊢ {C, D} ∈ V
-10	 	prex 2895	. . . . . . 7 ⊢ {C, B} ∈ V
-11	9, 10	preqr2 2585	. . . . . 6 ⊢ ({{C}, {C, D}} = {{C}, {C, B}} → {C, D} = {C, B})
-12	8, 11	sylbi 205	. . . . 5 ⊢ (<.C, D>. = <.C, B>. → {C, D} = {C, B})
-13	 	opth.3	. . . . . . 7 ⊢ D ∈ V
-14	 	opth.2	. . . . . . 7 ⊢ B ∈ V
-15	13, 14	preqr2 2585	. . . . . 6 ⊢ ({C, D} = {C, B} → D = B)
-16	15	eqcomd 1551	. . . . 5 ⊢ ({C, D} = {C, B} → B = D)
-17	12, 16	syl 11	. . . 4 ⊢ (<.C, D>. = <.C, B>. → B = D)
-18	5, 17	syl6 23	. . 3 ⊢ (<.A, B>. = <.C, D>. → (A = C → B = D))
-19	2, 18	jcai 297	. 2 ⊢ (<.A, B>. = <.C, D>. → (A = C ⋀ B = D))
-20	 	opeq12 2592	. 2 ⊢ ((A = C ⋀ B = D) → <.A, B>. = <.C, D>.)
-21	19, 20	impbii 163	1 ⊢ (<.A, B>. = <.C, D>. ↔ (A = C ⋀ B = D))
-
-* set theory theorems we may need/want but not yet
-  - prid2
-
 * arithmetic
   - a ≤ a (leid in peano_thms)
 
@@ -46,7 +16,6 @@ Proof of Theorem opth Step	Hyp	Ref 	Expression
      buildImplicationAntecedent
      buildImplication
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
-* rewrite opening paragraph of substVariable section
 * General set theory
   - ordered pair
   - definitions and consequences: opth from set.mm, union?,
@@ -78,4 +47,15 @@ Download files
   * Principia Mathematica propositional logic
 
 nomenclature: combining vs combination from User:Kingdon
+
+rename transformBiconditionalLeftInConsequent to transformImplicationBiconditionalLeft and likewise for Right.
+
+rename s,t,u to A,B,C in General Set Theory and Interface:Basic operations of general set theory
+
+Edit Wikiproofs:Policy regarding redirects.
+== Redirects ==
+Because [[Help:JHilbert|JHilbert]] does not currently follow redirects when processing proofs, redirects should not exist in interfaces or modules. If you want to [[w:WP:MOVE|move a page]], first move it, then remove all references to the old name, then [[Wikiproofs:Administrator requests|ask an administrator]] to delete the redirect.
+
+== Administrator requests ==
+If you need help from an administrator, for example to [[w:WP:Vandalism|block vandals]] or [[w:CFD|delete a page]], please add your request to [[Wikiproofs talk:Administrator requests|this page's talk page]].
 
