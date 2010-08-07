@@ -32,7 +32,7 @@ We define one key predicate. The formula <code>s ∈ t</code> means "s is an ele
 term (formula (∈ object object))
 </jh>
 
-Our first axiom, the axiom of extensionality, states that if two sets have the same elements, they are equal. In symbols this is <code>∀ z (z ∈ x ↔ z ∈ y) → x = y</code>.  Versions with weaker distinct variable constaints also hold, but they can be proved from this version and other axioms, so we assume the weakest version (the one with the most distinct variable constraints).
+Our first axiom, the axiom of extensionality, states that if two sets have the same elements, they are equal. In symbols this is <code>∀ z (z ∈ x ↔ z ∈ y) → x = y</code>.  Versions with fewer distinct variable constaints also hold, but they can be proved from this version and other axioms, so we assume the weakest version (the one with the most distinct variable constraints).
 
 <jh>
 stmt (Extensionality ((x y z)) () ((∀ z (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y)))) → ((value x) = (value y))))
