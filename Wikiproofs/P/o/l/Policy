@@ -4,4 +4,7 @@ Wikiproofs is small enough that we don't have a lot of highly formalized policie
 
 * [[Wikiproofs:Copyrights]], concerning conditions under which content from Wikiproofs can be reused and modified
 
+== Redirects ==
+Because [[Help:JHilbert|JHilbert]] does not follow redirects when processing proofs, redirects should not exist to interfaces or modules (until JHilbert is fixed). If you want to [[w:WP:MOVE|move a page]], first move it, then remove all references to the old name, then [[Wikiproofs:Administrator requests|ask an administrator]] to delete the redirect.
+
 [[Category:Wikiproofs]]
