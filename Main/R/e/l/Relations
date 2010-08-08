@@ -172,6 +172,24 @@ thm (OrderedPairBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((orderedPair A0 B0
 ))
 </jh>
 
+We also provide the usual convenience builders.
+<jh>
+thm (OrderedPairBuilderLL () () ((B0 = B1) → ((orderedPair A B0) = (orderedPair A B1))) (
+        A EqualityReflexivity
+        A A B0 B1 OrderedPairBuilder
+        export
+        applyModusPonens
+))
+
+thm (OrderedPairBuilderRR () () ((A0 = A1) → ((orderedPair A0 B) = (orderedPair A1 B))) (
+        B EqualityReflexivity
+        A0 A1 B B OrderedPairBuilder
+        export
+        applyComm
+        applyModusPonens
+))
+</jh>
+
 === First half of the ordered pair theorem ===
 In this section we prove <code>〈A0, B0〉=〈A1, B1〉→ A0 = A1</code>.
 
@@ -229,6 +247,78 @@ Transforming <code>A ∈ {C}</code> to <code>A = C</code> finishes the proof.
         A C Singleton
         eliminateBiconditionalReverse
         applySyllogism
+))
+</jh>
+
+=== Second half of the ordered pair theorem ===
+In this section we prove <code>〈A0, B0〉=〈A1, B1〉→ B0 = B1</code>.
+
+Our first lemma is <code>〈C, D〉=〈C, B〉→ D = B</code>.<ref>Taken from a portion of the proof of [http://us.metamath.org/mpeuni/opth.html opth], metamath's set.mm, accessed August 6, 2010.</ref>
+<jh>
+thm (OrderedPairTheoremForwardSecond-1 () () (((orderedPair C D) = (orderedPair C B)) → (D = B)) (
+</jh>
+The definition of ordered pair gives us <code>{{C}, {C, D}} = {{C}, {C, B}}</code> and two applications of <code>UnorderedPairSecondMembersEqual</code> give us <code>D = B</code>.
+<jh>
+        (singleton C) (unorderedPair C D) (unorderedPair C B) UnorderedPairSecondMembersEqual
+        C D B UnorderedPairSecondMembersEqual
+        applySyllogism
+))
+</jh>
+
+The next lemma is most of the work. It is <code>〈A, B〉=〈C, D〉→ (A = C → D = B)</code>.
+<jh>
+thm (OrderedPairTheoremForwardSecond-2 () () (((orderedPair A B) = (orderedPair C D)) → ((A = C) → (D = B))) (
+</jh>
+We start with <code>〈A, B〉=〈C, D〉→ (〈A, B〉=〈C, B〉 ↔ 〈C, D〉=〈C, B〉)</code>.
+<jh>
+        (orderedPair A B) (orderedPair C D) (orderedPair C B) EqualityBuilderRR
+</jh>
+The ordered pair builder and a bit of rearrangment turns that into <code>〈A, B〉=〈C, D〉→ (A = C → 〈C, D〉=〈C, B〉)</code>.
+<jh>
+        ((orderedPair A B) = (orderedPair C B)) ((orderedPair C D) = (orderedPair C B)) BiconditionalReverseElimination
+        applySyllogism
+
+        A C B OrderedPairBuilderRR
+        ((orderedPair C D) = (orderedPair C B)) addCommonConsequent
+        applySyllogism
+</jh>
+Applying the lemma <code>OrderedPairTheoremForwardSecond-1</code> turns this into <code>〈A, B〉=〈C, D〉→ (A = C → D = B)</code>, our desired result.
+<jh>
+        C D B OrderedPairTheoremForwardSecond-1
+        (A = C) addCommonAntecedent
+        applySyllogism
+))
+</jh>
+
+We now combine <code>〈A, B〉=〈C, D〉→ A = C</code> and <code>〈A, B〉=〈C, D〉→ (A = C → D = B)</code> to get <code>〈A, B〉=〈C, D〉→ B = D</code>.
+<jh>
+thm (OrderedPairTheoremForwardSecond () () (((orderedPair A B) = (orderedPair C D)) → (B = D)) (
+        A B C D OrderedPairTheoremForwardFirst
+        A B C D OrderedPairTheoremForwardSecond-2
+        applyModusPonensInConsequent
+
+        D B EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+=== Ordered pair theorem ===
+We are now ready to combine these results to prove the ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. We prove the forward implication,
+<jh>
+thm (OrderedPairTheoremForward () () (((orderedPair A0 B0) = (orderedPair A1 B1)) → ((A0 = A1) ∧ (B0 = B1))) (
+        A0 B0 A1 B1 OrderedPairTheoremForwardFirst
+        A0 B0 A1 B1 OrderedPairTheoremForwardSecond
+        composeConjunction
+))
+</jh>
+
+and the biconditionalized theorem.
+<jh>
+thm (OrderedPairTheorem () () (((orderedPair A0 B0) = (orderedPair A1 B1)) ↔ ((A0 = A1) ∧ (B0 = B1))) (
+        A0 B0 A1 B1 OrderedPairTheoremForward
+        A0 A1 B0 B1 OrderedPairBuilder
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
