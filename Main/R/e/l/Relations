@@ -56,6 +56,26 @@ thm (UnorderedPairLeftMembership () () (A ∈ (unorderedPair A B)) (
 ))
 </jh>
 
+=== Unordered pair commutativity ===
+Unordered pairs are unordered: <code>{A, B} = {B, A}</code>.
+<jh>
+thm (UnorderedPairCommutativity ((x A) (x B)) () ((unorderedPair A B) = (unorderedPair B A)) (
+        (value x) A B UnorderedPair
+
+        ((value x) = A) ((value x) = B) DisjunctionCommutativity
+        applyBiconditionalTransitivity
+
+        (value x) B A UnorderedPair
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        x generalize
+        x (unorderedPair A B) (unorderedPair B A) ExtensionalityObject
+
+        applyModusPonens
+))
+</jh>
+
 === Unordered pair equality can imply equality of members ===
 Here we prove <code>{A, C} = {B, C} → A = B</code>.<ref>[http://us.metamath.org/mpeuni/preqr1.html preqr1], metamath's set.mm, accessed August 4, 2010</ref>
 
