@@ -136,6 +136,19 @@ We turn <code>A = C ∧ B = C</code> into <code>A = B</code>, and after a bit mo
 ))
 </jh>
 
+Here is a commuted version: <code>{C, A} = {C, B} → A = B</code>.<ref>[http://us.metamath.org/mpeuni/preqr2.html preqr2], metamath's set.mm, accessed August 4, 2010</ref>
+<jh>
+thm (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPair C B)) → (A = B)) (
+        C A UnorderedPairCommutativity
+        C B UnorderedPairCommutativity
+        buildEquality
+        eliminateBiconditionalReverse
+
+        A C B UnorderedPairFirstMembersEqual
+        applySyllogism
+))
+</jh>
+
 == Ordered pair ==
 The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
 <jh>
