@@ -124,7 +124,7 @@ thm (transformAntecedent () ((HIMP (p → q)) (HEQ (p ↔ r))) (r → q) (
         applySyllogism
 ))
 
-thm (transformBiconditionalLeftInConsequent () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
+thm (transformImplicationBiconditionalLeft () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
         HEQ
         swapBiconditional
         antecedent introduceAntecedent
@@ -138,7 +138,7 @@ thm (transformBiconditionalLeftInConsequent () ((HIMP (antecedent → (p ↔ q))
         applySyllogism
 ))
 
-thm (transformBiconditionalRightInConsequent () ((HIMP (antecedent → (p ↔ q))) (HEQ (q ↔ r))) (antecedent → (p ↔ r)) (
+thm (transformImplicationBiconditionalRight () ((HIMP (antecedent → (p ↔ q))) (HEQ (q ↔ r))) (antecedent → (p ↔ r)) (
         HIMP
 
         HEQ
@@ -391,7 +391,7 @@ thm (buildBiconditionalRRInConsequent ()
 
 == Additional transformations ==
 <jh>
-thm (transformDisjunctionLeftInConsequent () ((HIMP (antecedent → (p ∨ q))) (HEQ (p ↔ r))) (antecedent → (r ∨ q)) (
+thm (transformImplicationDisjunctionLeft () ((HIMP (antecedent → (p ∨ q))) (HEQ (p ↔ r))) (antecedent → (r ∨ q)) (
         HIMP
 
         antecedent BiconditionalReflexivity
