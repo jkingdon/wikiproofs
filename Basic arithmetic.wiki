@@ -1176,35 +1176,6 @@ thm (LessEqualTransitivity-sub () ()
         applySyllogism
 ))
 </jh>
-And our final lemma is a bit of predicate logic.  We name the propositions in this lemma <code>φx</code> and <code>ψy</code> to express the idea that <code>φx</code> will typically contain <code>x</code> and <code>ψy</code> will typically contain <code>y</code>.
-<jh>
-var (formula φx ψy)
-var (variable x y)
-thm (ThereExistsToFront ((φx y) (ψy x) (x y)) ()
-  (((∃ x φx) ∧ (∃ y ψy)) → (∃ x (∃ y (φx ∧ ψy)))) (
-</jh>
-We first show <code>(∃ x φx ∧ ∃ y ψy) ↔ ∃ x (φx ∧ ∃ y ψy)</code>:
-<jh>
-        (∃ x φx) (∃ y ψy) ConjunctionCommutativity
-
-        x (∃ y ψy) φx ThereExistsConjunctionMovement
-        swapBiconditional
-        applyBiconditionalTransitivity
-
-        (∃ y ψy) φx ConjunctionCommutativity
-        x buildThereExists
-        applyBiconditionalTransitivity
-</jh>
-Then we pull much the same trick with <code>y</code> (but it is easier as there is no commuting to do):
-<jh>
-        y φx ψy ThereExistsConjunctionMovement
-        swapBiconditional
-        x buildThereExists
-        applyBiconditionalTransitivity
-
-        eliminateBiconditionalReverse
-))
-</jh>
 
 We are now ready to prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.
 <jh>
@@ -1216,7 +1187,8 @@ thm (LessEqualTransitivity (
 </jh>
 To assemble the proof, we first stick a statement on the proof stack which we'll use at the very end:
 <jh>
-        vab ((a + (value vab)) = b) vbc ((b + (value vbc)) = c) ThereExistsToFront
+        vab vbc ((a + (value vab)) = b) ((b + (value vbc)) = c) ThereExistsScattering
+        eliminateBiconditionalForward
 </jh>
 Leaving that aside, we now start with <code>LessEqualTransitivity-1</code>.
 <jh>

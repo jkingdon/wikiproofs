@@ -18,18 +18,19 @@ Items which may be doable without a network connection:
      buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 * General set theory
   - ordered pair
-  - definitions and consequences: opth from set.mm, union?,
+  - definitions and consequences: union?,
     intersection, difference (e.g. eldifi and similar), subset
-  - cite metamath?
-    = elsn provides "definition" of singleton
-      x = A ↔ x ∈ { A }
-      also A = B ↔ A ∈ { B }   (elsncg, basically)
-      do both directions of A = B ↔ { A } = { B } hold? (think so)
+  - do both directions of A = B ↔ { A } = { B } hold? (think so)
   - indexed union or intersection? (if needed for functions)
   - binary relations. Notation (relates s R t) ?
   - prove Peano axioms from them
+    - suc11
   - finite induction (e.g. peano5 in set.mm)
   - functions and relations (e.g. cxp and following in set.mm)
+    - cross products, e.g. cxp, df-xp, elxp, opelxp1, opelxp
+      xpss regarding existence of cross products (note dependence on
+      ax-pow, which is more explicit in xpsspw).
+    - note dmex depends on ax-pow and ax-un, but doesn't need replacement.
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
@@ -41,21 +42,18 @@ Download files
   * Convenience theorems of propositional logic
   * First-order logic
   * First-order logic with quantifiability
+  * Interface:First-order logic
+  * Interface:First-order logic with quantifiability
   * Wikiproofs:Scattered propositional logic theorems‎
   * Interface:Principia Mathematica propositional logic theorems
   * Intuitionistic propositional logic‎
   * Principia Mathematica propositional logic
+  * Axioms of general set theory
+  * General set theory
+  * Basic operations of general set theory
+  * User:Kingdon
 
 nomenclature: combining vs combination from User:Kingdon
 
-rename transformBiconditionalLeftInConsequent to transformImplicationBiconditionalLeft and likewise for Right.
-
-rename s,t,u to A,B,C in General Set Theory and Interface:Basic operations of general set theory
-
-Edit Wikiproofs:Policy regarding redirects.
-== Redirects ==
-Because [[Help:JHilbert|JHilbert]] does not currently follow redirects when processing proofs, redirects should not exist in interfaces or modules. If you want to [[w:WP:MOVE|move a page]], first move it, then remove all references to the old name, then [[Wikiproofs:Administrator requests|ask an administrator]] to delete the redirect.
-
-== Administrator requests ==
-If you need help from an administrator, for example to [[w:WP:Vandalism|block vandals]] or [[w:CFD|delete a page]], please add your request to [[Wikiproofs talk:Administrator requests|this page's talk page]].
+Don't export TheoremNotFree
 

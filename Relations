@@ -110,7 +110,7 @@ Applying the lemma a second time, with some commutations, gives us <code>{A, C} 
         applySyllogism
 
         B A EqualitySymmetry
-        transformDisjunctionLeftInConsequent
+        transformImplicationDisjunctionLeft
 </jh>
 We now combine the two results to get <code>{A, C} = {B, C} → (A = B ∨ A = C) ∧ (A = B ∨ B = C)</code>, and apply distributivity to the right hand side to turn it into <code>A = B ∨ (A = C ∧ B = C)</code>.
 <jh>
@@ -253,11 +253,12 @@ Transforming <code>A ∈ {C}</code> to <code>A = C</code> finishes the proof.
 === Second half of the ordered pair theorem ===
 In this section we prove <code>〈A0, B0〉=〈A1, B1〉→ B0 = B1</code>.
 
-Our first lemma is <code>〈C, D〉=〈C, B〉→ D = B</code>.<ref>Taken from a portion of the proof of <ref>[http://us.metamath.org/mpeuni/opth.html opth], metamath's set.mm, accessed August 6, 2010.</ref>
+Our first lemma is <code>〈C, D〉=〈C, B〉→ D = B</code>.<ref>Taken from a portion of the proof of [http://us.metamath.org/mpeuni/opth.html opth], metamath's set.mm, accessed August 6, 2010.</ref>
 <jh>
 thm (OrderedPairTheoremForwardSecond-1 () () (((orderedPair C D) = (orderedPair C B)) → (D = B)) (
 </jh>
 The definition of ordered pair gives us <code>{{C}, {C, D}} = {{C}, {C, B}}</code> and two applications of <code>UnorderedPairSecondMembersEqual</code> give us <code>D = B</code>.
+<jh>
         (singleton C) (unorderedPair C D) (unorderedPair C B) UnorderedPairSecondMembersEqual
         C D B UnorderedPairSecondMembersEqual
         applySyllogism
@@ -296,7 +297,7 @@ thm (OrderedPairTheoremForwardSecond () () (((orderedPair A B) = (orderedPair C 
         A B C D OrderedPairTheoremForwardSecond-2
         applyModusPonensInConsequent
 
-        D B EqualityCommutativity
+        D B EqualitySymmetry
         eliminateBiconditionalReverse
         applySyllogism
 ))
@@ -316,7 +317,7 @@ and the biconditionalized theorem.
 <jh>
 thm (OrderedPairTheorem () () (((orderedPair A0 B0) = (orderedPair A1 B1)) ↔ ((A0 = A1) ∧ (B0 = B1))) (
         A0 B0 A1 B1 OrderedPairTheoremForward
-        A0 B0 A1 B1 OrderedPairBuilder
+        A0 A1 B0 B1 OrderedPairBuilder
         introduceBiconditionalFromImplications
 ))
 </jh>
