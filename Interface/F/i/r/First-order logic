@@ -272,12 +272,22 @@ stmt (moveAntecedentIntoForAll ()
 stmt (ThereExistsImplicationAntecedentMovement () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)))
 stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
+
+stmt (ThereExistsConjunctionMovementNotFree () ((x is-not-free-in φ)) ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 </jh>
 
 ==== Versions with distinct variables ====
 <jh>
 stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
+</jh>
+
+==== Scattering and gathering ====
+If we have two formulas joined by a conjunction, one quantified over one variable and the other quantified over another, we can express the quantifiers either at the beginning or with the formulas they apply to.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed August 8, 2010</ref> We name the propositions <code>φx</code> and <code>ψy</code> to express the idea that <code>φx</code> will typically contain <code>x</code> and <code>ψy</code> will typically contain <code>y</code>.
+<jh>
+var (formula φx ψy)
+stmt (ThereExistsScattering ((φx y) (ψy x)) ()
+  ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))))
 </jh>
 
 ==== Adding quantifiers to theorems which are implications ====
