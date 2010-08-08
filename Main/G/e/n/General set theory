@@ -448,11 +448,11 @@ Applying <code>UnorderedPair</code>, we get <code>A0 = B0 ∧ A1 = B1 → (z ∈
 <jh>
         (value z) a A0 A1 UnorderedPairObject
         swapBiconditional
-        transformBiconditionalLeftInConsequent
+        transformImplicationBiconditionalLeft
 
         (value z) b B0 B1 UnorderedPairObject
         swapBiconditional
-        transformBiconditionalRightInConsequent
+        transformImplicationBiconditionalRight
 </jh>
 By extensionality, the right hand side implies <code>{A0, A1} = {B0, B1}</code>.
 <jh>
