@@ -110,7 +110,7 @@ Applying the lemma a second time, with some commutations, gives us <code>{A, C} 
         applySyllogism
 
         B A EqualitySymmetry
-        transformDisjunctionLeftInConsequent
+        transformImplicationDisjunctionLeft
 </jh>
 We now combine the two results to get <code>{A, C} = {B, C} → (A = B ∨ A = C) ∧ (A = B ∨ B = C)</code>, and apply distributivity to the right hand side to turn it into <code>A = B ∨ (A = C ∧ B = C)</code>.
 <jh>
