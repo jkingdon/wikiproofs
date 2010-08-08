@@ -1112,6 +1112,38 @@ thm (addThereExistsToAntecedent ((x ψ))
 ))
 </jh>
 
+=== Scattering and gathering ===
+This is a variation of movement of formulas in and out of quantification.
+<jh>
+var (formula φx ψy)
+thm (ThereExistsScattering ((φx y) (ψy x)) ()
+  ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))) (
+</jh>
+We first show <code>(∃ x φx ∧ ∃ y ψy) ↔ ∃ x (φx ∧ ∃ y ψy)</code>:
+<jh>
+        (∃ x φx) (∃ y ψy) ConjunctionCommutativity
+
+        x ψy DistinctNotFree
+        y addThereExistsNotFree
+        φx ThereExistsConjunctionMovementNotFree
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        (∃ y ψy) φx ConjunctionCommutativity
+        x buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+Then we pull much the same trick with <code>y</code> (but it is easier as there is no commuting to do):
+<jh>
+        y φx ψy ThereExistsConjunctionMovement
+        swapBiconditional
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
+</jh>
+
 == Quantifier order: ∃x∀y to ∀y∃x ==
 We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.<ref>[http://us.metamath.org/mpeuni/19.12.html 19.12] in metamath's set.mm, accessed February 22, 2010</ref>
 <jh>
