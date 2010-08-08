@@ -19,39 +19,39 @@ First-order logic provides us with two kinds: <code>variable</code> is a variabl
 
 <jh>
 var (variable x y z w)
-var (object s t u s0 s1 t0 t1 A B A0 A1 B0 B1)
+var (object A B C A0 A1 B0 B1)
 </jh>
 
 We can test whether one set is an element of another, and define an abbreviation for the negated version.
 <jh>
 term (formula (∈ object object))
-def ((∉ s t) (¬ (s ∈ t)))
+def ((∉ A B) (¬ (A ∈ B)))
 </jh>
 
 We assert the existence of the empty set, a set with no elements.
 <jh>
 term (object (∅))
-stmt (EmptySet () () (s ∉ (∅)))
+stmt (EmptySet () () (A ∉ (∅)))
 </jh>
 
-Given a set, we can form a set <code>{ s }</code> which has only it as an element.
+Given a set, we can form a set <code>{ s }</code> which has only it as an element.<ref>[http://us.metamath.org/mpeuni/elsncg.html elsncg], metamath's set.mm, accessed August 7, 2010</ref>
 <jh>
 term (object (singleton object))
-stmt (Singleton () () ((t ∈ (singleton s)) ↔ (t = s)))
+stmt (Singleton () () ((A ∈ (singleton B)) ↔ (A = B)))
 </jh>
 
 Given two sets, we can form a unordered pair <code>{ s, t }</code> which has only those sets as elements.
 <jh>
 term (object (unorderedPair object object))
-stmt (UnorderedPair () () ((u ∈ (unorderedPair s t)) ↔ ((u = s) ∨ (u = t))))
+stmt (UnorderedPair () () ((B ∈ (unorderedPair A0 A1)) ↔ ((B = A0) ∨ (B = A1))))
 </jh>
 
 == Builders ==
 Equals can be substituted for equals, in the context of set operations.
 
 <jh>
-stmt (IsElementBuilderLL () () ((t0 = t1) → ((s ∈ t0) ↔ (s ∈ t1))))
-stmt (IsElementBuilderRR () () ((s0 = s1) → ((s0 ∈ t) ↔ (s1 ∈ t))))
+stmt (IsElementBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
+stmt (IsElementBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
@@ -65,6 +65,6 @@ stmt (ExtensionalityObject ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((val
 </jh>
 
 == To be added ==
-Separation (presumably in the form of defining <code>{y ∈ s | φ}</code>).
+Separation (presumably in the form of defining <code>{y ∈ A | φ}</code>).
 
 [[Category:Axiomatics of classical set theory and its fragments|{{PAGENAME}}]]
