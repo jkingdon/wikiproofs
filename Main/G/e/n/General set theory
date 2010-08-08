@@ -17,7 +17,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (AXIOMS Interface:Axioms_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (variable x y z w result)
-var (object s t u A B C D A0 A1 B0 B1)
+var (object A B C D A0 A1 B0 B1)
 </jh>
 
 {{under construction}}
@@ -102,11 +102,11 @@ and then <code>NegationBiconditional</code> gives us our desired result.
 
 We provide a version with object instead of variable.
 <jh>
-thm (EmptySetObject ((x s y)) () (s ∉ (abstract y (⊥))) (
+thm (EmptySetObject ((x A y)) () (A ∉ (abstract y (⊥))) (
 </jh>
-The substitution to apply <code>VariableToObject</code> is <code>x = s → x ∉ ∅ ↔ s ∉ ∅</code>
+The substitution to apply <code>VariableToObject</code> is <code>x = A → x ∉ ∅ ↔ A ∉ ∅</code>
 <jh>
-        (value x) s (abstract y (⊥)) IsElementBuilderRR
+        (value x) A (abstract y (⊥)) IsElementBuilderRR
         addNegationInConsequent
 
         x y EmptySetVariable
@@ -114,16 +114,16 @@ The substitution to apply <code>VariableToObject</code> is <code>x = s → x ∉
         VariableToObject
 ))
 
-thm (EmptySet ((s emptyElement)) () (s ∉ (∅)) (
-        s emptyElement EmptySetObject
+thm (EmptySet ((A emptyElement)) () (A ∉ (∅)) (
+        A emptyElement EmptySetObject
 ))
 </jh>
 
 == Adjunction for objects ==
 The <code>Adjunction</code> axiom allows us to form a set with the elements of a given set and a single additional given element, where the given sets are represented by variables. Here we prove the same thing, but with object in place of variable. The proof is by straightforward application of <code>VariableToObject</code> with the usual substitution machinery.
 <jh>
-thm (AdjunctionObject-1 ((s x z w) (y x z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ s) ∨ ((value z) = (value y)))))) (
-        (value x) s (value z) IsElementBuilderLL
+thm (AdjunctionObject-1 ((A x z w) (y x z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ A) ∨ ((value z) = (value y)))))) (
+        (value x) A (value z) IsElementBuilderLL
         ((value z) = (value y)) buildDisjunctionRRInConsequent
         ((value z) ∈ (value w)) buildBiconditionalLLInConsequent
         z buildForAllInConsequent
@@ -134,14 +134,14 @@ thm (AdjunctionObject-1 ((s x z w) (y x z w)) () (∃ w (∀ z (((value z) ∈ (
         VariableToObject
 ))
 
-thm (AdjunctionObject ((s y z w) (t y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ s) ∨ ((value z) = t))))) (
-        (value y) t (value z) EqualityBuilderLL
-        ((value z) ∈ s) buildDisjunctionLLInConsequent
+thm (AdjunctionObject ((A y z w) (B y z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ A) ∨ ((value z) = B))))) (
+        (value y) B (value z) EqualityBuilderLL
+        ((value z) ∈ A) buildDisjunctionLLInConsequent
         ((value z) ∈ (value w)) buildBiconditionalLLInConsequent
         z buildForAllInConsequent
         w buildThereExistsInConsequent
 
-        w z s y AdjunctionObject-1
+        w z A y AdjunctionObject-1
 
         VariableToObject
 ))
@@ -185,21 +185,21 @@ To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableT
 </jh>
 
 == Singletons ==
-Given a set (object) <code>s</code>, here we construct a set <code>{ s }</code> which has <code>s</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { s } ↔ y = s</code>.
+Given a set (object) <code>A</code>, here we construct a set <code>{ A }</code> which has <code>s</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { A } ↔ y = A</code>.
 
-Our first lemma is <code>y = s ↔ y ∈ ∅ ∨ y = s</code>, which is the first step towards applying the adjunction axiom to singletons. To avoid having to write <code>(value y)</code> everywhere, we use <code>yy</code> for an object which corresponds to the variable <code>y</code>.
+Our first lemma is <code>y = A ↔ y ∈ ∅ ∨ y = A</code>, which is the first step towards applying the adjunction axiom to singletons. To avoid having to write <code>(value y)</code> everywhere, we use <code>yy</code> for an object which corresponds to the variable <code>y</code>.
 
 Another detail is that if we specified the empty set as <code>(∅)</code>, it would expand to a dummy variable which we are unable to express a distinct variable constraint for.  By writing <code>{ emptyElement | ⊥ }</code> instead we get to include the distinct variable constraints on <code>emptyElement</code>.  In our informal descriptions we will continue to say <code>∅</code> in such situations.
 <jh>
 var (object yy)
-thm (Singleton-1 ((yy emptyElement)) () ((yy = s) ↔ ((yy ∈ (abstract emptyElement (⊥))) ∨ (yy = s))) (
-        (yy = s) (yy ∈ (abstract emptyElement (⊥))) DisjunctionLeftIntroduction
+thm (Singleton-1 ((yy emptyElement)) () ((yy = A) ↔ ((yy ∈ (abstract emptyElement (⊥))) ∨ (yy = A))) (
+        (yy = A) (yy ∈ (abstract emptyElement (⊥))) DisjunctionLeftIntroduction
 
         yy emptyElement EmptySetObject
-        (yy ≠ s) introduceAntecedent
+        (yy ≠ A) introduceAntecedent
         eliminateTransposition
 
-        (yy = s) ImplicationReflexivity
+        (yy = A) ImplicationReflexivity
 
         composeDisjunction
 
@@ -207,14 +207,14 @@ thm (Singleton-1 ((yy emptyElement)) () ((yy = s) ↔ ((yy ∈ (abstract emptyEl
 ))
 </jh>
 
-In a few places we'll need <code>[y / z]z = s ↔ y = s</code>.
+In a few places we'll need <code>[y / z]z = A ↔ y = A</code>.
 <jh>
-thm (Singleton-eq ((yy z) (z s)) () ((subst yy z ((value z) = s)) ↔ (yy = s)) (
+thm (Singleton-eq ((yy z) (z A)) () ((subst yy z ((value z) = A)) ↔ (yy = A)) (
 </jh>
-Our substitution is <code>z = y → (z = s ↔ y = s)</code>.
+Our substitution is <code>z = y → (z = A ↔ y = A)</code>.
 <jh>
         ((value z) = yy) ImplicationReflexivity
-        s buildEqualityRRInConsequent
+        A buildEqualityRRInConsequent
 </jh>
 Making this explicit gives us our result.
 <jh>
@@ -222,19 +222,19 @@ Making this explicit gives us our result.
 ))
 </jh>
 
-Applying <code>Singleton-eq</code> to the left hand side of <code>Singleton-1</code> gets us <code>[y / z]z = s ↔ y ∈ ∅ ∨ y = s</code>.
+Applying <code>Singleton-eq</code> to the left hand side of <code>Singleton-1</code> gets us <code>[y / z]z = A ↔ y ∈ ∅ ∨ y = A</code>.
 <jh>
-thm (Singleton-2 ((yy z) (z s) (yy emptyElement)) () ((subst yy z ((value z) = s)) ↔ ((yy ∈ (abstract emptyElement (⊥))) ∨ (yy = s))) (
-        yy z s Singleton-eq
-        yy s emptyElement Singleton-1
+thm (Singleton-2 ((yy z) (z A) (yy emptyElement)) () ((subst yy z ((value z) = A)) ↔ ((yy ∈ (abstract emptyElement (⊥))) ∨ (yy = A))) (
+        yy z A Singleton-eq
+        yy A emptyElement Singleton-1
         applyBiconditionalTransitivity
 ))
 </jh>
 
-The next step is to take <code>Singleton-2</code> and apply builders until we get <code>∃ result ∀ y (y ∈ result ↔ [y / z]z = s) ↔ ∃ result ∀ y (y ∈ result ↔ (y ∈ ∅ ∨ y = s))</code>
+The next step is to take <code>Singleton-2</code> and apply builders until we get <code>∃ result ∀ y (y ∈ result ↔ [y / z]z = A) ↔ ∃ result ∀ y (y ∈ result ↔ (y ∈ ∅ ∨ y = A))</code>
 <jh>
-thm (Singleton-3 ((y z) (z s) (y emptyElement)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (abstract emptyElement (⊥))) ∨ ((value y) = s)))))) (
-        (value y) z s emptyElement Singleton-2
+thm (Singleton-3 ((y z) (z A) (y emptyElement)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = A))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (abstract emptyElement (⊥))) ∨ ((value y) = A)))))) (
+        (value y) z A emptyElement Singleton-2
         ((value y) ∈ (value result)) buildBiconditionalLL
         y buildForAll
         result buildThereExists
@@ -243,50 +243,50 @@ thm (Singleton-3 ((y z) (z s) (y emptyElement)) () ((∃ result (∀ y (((value 
 
 The right hand side of <code>Singleton-3</code> holds by adjunction, so we can conclude the left hand side as a theorem.
 <jh>
-thm (Singleton-4 ((y z) (z s) (result y s) (result y emptyElement)) () (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = s))))) (
-        result y (abstract emptyElement (⊥)) s AdjunctionObject
+thm (Singleton-4 ((y z) (z A) (result y A) (result y emptyElement)) () (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = A))))) (
+        result y (abstract emptyElement (⊥)) A AdjunctionObject
 
-        result y z s emptyElement Singleton-3
+        result y z A emptyElement Singleton-3
         eliminateBiconditionalForward
 
         applyModusPonens
 ))
 </jh>
 
-Because the notation <code>{ s }</code> is not available, we call it <code>(singleton s)</code>.
+Because the notation <code>{ A }</code> is not available, we call it <code>(singleton A)</code>.
 <jh>
-def ((singleton s) (abstract y ((value y) = s)))
+def ((singleton A) (abstract y ((value y) = A)))
 </jh>
 
-We can now prove that <code>y ∈ { s } ↔ y = s</code>
+We can now prove that <code>y ∈ { A } ↔ y = A</code>
 <jh>
 var (variable singletonElement)
-thm (SingletonVariable ((result z y s)) () (((value y) ∈ (abstract z ((value z) = s))) ↔ ((value y) = s)) (
-        result y z s Singleton-4
+thm (SingletonVariable ((result z y A)) () (((value y) ∈ (abstract z ((value z) = A))) ↔ ((value y) = A)) (
+        result y z A Singleton-4
         Abstraction
 
-        (value y) z s Singleton-eq
+        (value y) z A Singleton-eq
         applyBiconditionalTransitivity
 ))
 </jh>
 
 Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
 <jh>
-thm (SingletonObject ((y t) (y s singletonElement)) () ((t ∈ (abstract singletonElement ((value singletonElement) = s))) ↔ (t = s)) (
+thm (SingletonObject ((y B) (y A singletonElement)) () ((B ∈ (abstract singletonElement ((value singletonElement) = A))) ↔ (B = A)) (
 </jh>
-Our substitution is <code>y = t → ((y ∈ { s } ↔ y = s) ↔ (t ∈ { s } ↔ t = s))</code>.
+Our substitution is <code>y = B → ((y ∈ { A } ↔ y = A) ↔ (B ∈ { A } ↔ B = A))</code>.
 <jh>
-        (value y) t (abstract singletonElement ((value singletonElement) = s)) IsElementBuilderRR
-        (value y) t s EqualityBuilderRR
+        (value y) B (abstract singletonElement ((value singletonElement) = A)) IsElementBuilderRR
+        (value y) B A EqualityBuilderRR
         buildBiconditionalInConsequent
 
-        y singletonElement s SingletonVariable
+        y singletonElement A SingletonVariable
 
         VariableToObject
 ))
 
-thm (Singleton ((singletonElement s)) () ((t ∈ (singleton s)) ↔ (t = s)) (
-        t singletonElement s SingletonObject
+thm (Singleton ((singletonElement A)) () ((B ∈ (singleton A)) ↔ (B = A)) (
+        B singletonElement A SingletonObject
 ))
 </jh>
 
@@ -330,35 +330,35 @@ thm (SingletonBuilder ((B b)) () ((A = B) → ((singleton A) = (singleton B))) (
 
 == Unordered pair ==
 
-The unordered pair <code>{s, t}</code> has <code>s</code> and <code>t</code> as elements.  That is, we seek to prove <code>y ∈ {s, t} ↔ y = s ∨ y = t</code>. The idea of the proof is easy: apply adjunction to <code>{ s }</code> and <code>t</code>, but formalizing this involves much the same substitution machinery that we saw with singletons.
+The unordered pair <code>{A, B}</code> has <code>A</code> and <code>B</code> as elements.  That is, we seek to prove <code>y ∈ {A, B} ↔ y = A ∨ y = B</code>. The idea of the proof is easy: apply adjunction to <code>{ A }</code> and <code>B</code>, but formalizing this involves much the same substitution machinery that we saw with singletons.
 
-The first lemma is <code>y ∈ { s } ∨ y = t ↔ y = s ∨ y = t</code>.
+The first lemma is <code>y ∈ { A } ∨ y = B ↔ y = A ∨ y = B</code>.
 <jh>
-thm (UnorderedPair-1 ((singletonElement s)) () (((yy ∈ (abstract singletonElement ((value singletonElement) = s))) ∨ (yy = t)) ↔ ((yy = s) ∨ (yy = t))) (
-        yy singletonElement s SingletonObject
-        (yy = t) buildDisjunctionRR
+thm (UnorderedPair-1 ((singletonElement A)) () (((yy ∈ (abstract singletonElement ((value singletonElement) = A))) ∨ (yy = B)) ↔ ((yy = A) ∨ (yy = B))) (
+        yy singletonElement A SingletonObject
+        (yy = B) buildDisjunctionRR
 ))
 </jh>
 
-The next lemma, <code>[y / z](z = s ∨ z = t) ↔ y = s ∨ y = t</code>, is a substitution that we'll use two places.
+The next lemma, <code>[y / z](z = A ∨ z = B) ↔ y = A ∨ y = B</code>, is a substitution that we'll use two places.
 <jh>
-thm (UnorderedPair-sub ((z yy) (z s) (z t)) () ((subst yy z (((value z) = s) ∨ ((value z) = t))) ↔ ((yy = s) ∨ (yy = t))) (
+thm (UnorderedPair-sub ((z yy) (z A) (z B)) () ((subst yy z (((value z) = A) ∨ ((value z) = B))) ↔ ((yy = A) ∨ (yy = B))) (
 </jh>
-We construct the substitution <code>z = y → (z = s ∨ z = t ↔ y = s ∨ y = t)</code> and then make it explicit.
+We construct the substitution <code>z = y → (z = A ∨ z = B ↔ y = A ∨ y = B)</code> and then make it explicit.
 <jh>
-        (value z) yy s EqualityBuilderRR
-        (value z) yy t EqualityBuilderRR
+        (value z) yy A EqualityBuilderRR
+        (value z) yy B EqualityBuilderRR
         buildDisjunctionInConsequent
 
         makeSubstExplicit
 ))
 </jh>
 
-We now combine the previous two results and apply some builders to get <code>∃ result ∀ y (y ∈ result ↔ [y / z](z = s ∨ z = t)) ↔ ∃ result ∀ y (y ∈ result ↔ y ∈ { s } ∨ y = t)</code>
+We now combine the previous two results and apply some builders to get <code>∃ result ∀ y (y ∈ result ↔ [y / z](z = A ∨ z = B)) ↔ ∃ result ∀ y (y ∈ result ↔ y ∈ { A } ∨ y = B)</code>
 <jh>
-thm (UnorderedPair-3 ((singletonElement s) (z y) (z s) (z t)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = s) ∨ ((value z) = t)))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (abstract singletonElement ((value singletonElement) = s))) ∨ ((value y) = t)))))) (
-        (value y) z s t UnorderedPair-sub
-        (value y) singletonElement s t UnorderedPair-1 swapBiconditional
+thm (UnorderedPair-3 ((singletonElement A) (z y) (z A) (z B)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = A) ∨ ((value z) = B)))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ (abstract singletonElement ((value singletonElement) = A))) ∨ ((value y) = B)))))) (
+        (value y) z A B UnorderedPair-sub
+        (value y) singletonElement A B UnorderedPair-1 swapBiconditional
         applyBiconditionalTransitivity
 
         ((value y) ∈ (value result)) buildBiconditionalLL
@@ -369,55 +369,55 @@ thm (UnorderedPair-3 ((singletonElement s) (z y) (z s) (z t)) () ((∃ result (�
 
 The right hand side of <code>UnorderedPair-3</code> holds by adjunction, so we can conclude the left hand side as a theorem.
 <jh>
-thm (UnorderedPair-4 ((y z) (z s) (z t) (result y s) (result y t) (result y singletonElement) (singletonElement s)) ()
-  (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = s) ∨ ((value z) = t)))))) (
-        result y (abstract singletonElement ((value singletonElement) = s)) t AdjunctionObject
+thm (UnorderedPair-4 ((y z) (z A) (z B) (result y A) (result y B) (result y singletonElement) (singletonElement A)) ()
+  (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = A) ∨ ((value z) = B)))))) (
+        result y (abstract singletonElement ((value singletonElement) = A)) B AdjunctionObject
 
-        result y z s t singletonElement UnorderedPair-3
+        result y z A B singletonElement UnorderedPair-3
         eliminateBiconditionalForward
 
         applyModusPonens
 ))
 </jh>
 
-Because the notation <code>{ s, t }</code> is not available, we call it <code>(unorderedPair s t)</code>.
+Because the notation <code>{ A, B }</code> is not available, we call it <code>(unorderedPair A B)</code>.
 <jh>
-def ((unorderedPair s t) (abstract y (((value y) = s) ∨ ((value y) = t))))
+def ((unorderedPair A B) (abstract y (((value y) = A) ∨ ((value y) = B))))
 </jh>
 
-We can now prove that <code>y ∈ { s, t } ↔ y = s ∨ y = t</code>
+We can now prove that <code>y ∈ { A, B } ↔ y = A ∨ y = B</code>
 <jh>
 var (variable pairElement)
-thm (UnorderedPairVariable ((result z y s) (result z y t)) ()
-  (((value y) ∈ (abstract z (((value z) = s) ∨ ((value z) = t)))) ↔ (((value y) = s) ∨ ((value y) = t))) (
-        result y z s t UnorderedPair-4
+thm (UnorderedPairVariable ((result z y A) (result z y B)) ()
+  (((value y) ∈ (abstract z (((value z) = A) ∨ ((value z) = B)))) ↔ (((value y) = A) ∨ ((value y) = B))) (
+        result y z A B UnorderedPair-4
         Abstraction
 
-        (value y) z s t UnorderedPair-sub
+        (value y) z A B UnorderedPair-sub
         applyBiconditionalTransitivity
 ))
 </jh>
 
 Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
 <jh>
-thm (UnorderedPairObject ((y u) (y s pairElement) (y t pairElement)) () ((u ∈ (abstract pairElement (((value pairElement) = s) ∨ ((value pairElement) = t)))) ↔ ((u = s) ∨ (u = t))) (
+thm (UnorderedPairObject ((y C) (y A pairElement) (y B pairElement)) () ((C ∈ (abstract pairElement (((value pairElement) = A) ∨ ((value pairElement) = B)))) ↔ ((C = A) ∨ (C = B))) (
 </jh>
-Our substitution is <code>y = u → ((y ∈ { s, t } ↔ y = s ∨ y = t) ↔ (u ∈ { s, t } ↔ u = s ∨ u = t))</code>.
+Our substitution is <code>y = C → ((y ∈ { A, B } ↔ y = A ∨ y = B) ↔ (C ∈ { A, B } ↔ C = A ∨ C = B))</code>.
 <jh>
-        (value y) u (abstract pairElement (((value pairElement) = s) ∨ ((value pairElement) = t))) IsElementBuilderRR
+        (value y) C (abstract pairElement (((value pairElement) = A) ∨ ((value pairElement) = B))) IsElementBuilderRR
 
-        (value y) u s EqualityBuilderRR
-        (value y) u t EqualityBuilderRR
+        (value y) C A EqualityBuilderRR
+        (value y) C B EqualityBuilderRR
         buildDisjunctionInConsequent
         buildBiconditionalInConsequent
 
-        y pairElement s t UnorderedPairVariable
+        y pairElement A B UnorderedPairVariable
 
         VariableToObject
 ))
 
-thm (UnorderedPair ((pairElement s) (pairElement t)) () ((u ∈ (unorderedPair s t)) ↔ ((u = s) ∨ (u = t))) (
-        u pairElement s t UnorderedPairObject
+thm (UnorderedPair ((pairElement A) (pairElement B)) () ((C ∈ (unorderedPair A B)) ↔ ((C = A) ∨ (C = B))) (
+        C pairElement A B UnorderedPairObject
 ))
 </jh>
 
