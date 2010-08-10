@@ -73,6 +73,8 @@ Shouldn't ThereExistsConjunctionCombining be called ThereExistsConjunctionCombin
 
 * x ≤ y → x · z ≤ y · z (or ZeroSmallest, or I think some of the others) would rule out integer arithmetic.
 
+* 1 ≠ 0 needs ZeroNotSuccessor (without it the universe with one object can model the system).
+
 == More axiomizations of propositional logic ==
 Reducing the Principia axioms from 5 to 4 (unless I missed something, the change is to omit Assoc and change Add from <code>q → (p ∨ q)</code> to <code>q → (q ∨ p)</code>).  This is the axiomization used by [http://qedeq.org/0_03_11/doc/math/qedeq_logic_v1_en.pdf Elements of Mathematical Logic], Michael Meyling, August 2, 2008.
 
