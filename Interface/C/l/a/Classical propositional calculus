@@ -14,17 +14,7 @@ Statements can be added if necessary, but then the exporting modules have to be 
 | exportedby = [[Convenience theorems of propositional logic]]
 }}
 
-== Well-formed formulas ==
-
-We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.
-<jh>
-kind (wff)
-var (wff p q r s)
-</jh>
-Some authors just use the term ''formula'' instead of ''wff'', so we define <code>formula</code> to be an alias of <code>wff</code>
-<jh>
-kindbind (wff formula)
-</jh>
+http://mesotheliomainfos.com/css/63/sportsmans-warehouse.html sportsmans warehouse,  fobooz, http://bibleoncddvd.com/cp/11/yeast-infection-causes.html yeast infection causes,  =-]]], http://vestal-ny-hotels.com/cp/75/wichita-county-tax-office.html wichita county tax office,  pbbihj, http://24dimensions.com/aspnet_client/686/effects-of-stroke.html effects of stroke,  tdikc, http://kilgore-tx-hotels.com/res-inc/026/cabelas-maine.html cabelas maine,  eis, http://hotels-near-roc.com/images/815/concerta-coupons.html concerta coupons,  6329, http://near-newburgh-airport.com/links/35/firelands-regional-medical-center.html firelands regional medical center,  8))), http://kgoody.com/cp/63/time-magazine-archives.html time magazine archives,  >:-), http://blackfridaylaptopdeals.info/images/62/logan-huffman-shirtless.html logan huffman shirtless,  710481, http://solarnightindustries.in/Download/25/bra-sizing.html bra sizing,  5048,
 
 == Logical connectives ==
 
