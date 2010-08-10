@@ -358,6 +358,12 @@ We can transform a quantified formula by substituting each of the occurences of 
 stmt (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((((value x) = (value y)) → (φx ↔ φy))) ((∃ x φx) ↔ (∃ y φy)))
 </jh>
 
+== Quantifiability ==
+Although the above results do imply the [[Interface:Axiom of quantifiability|axiom of quantifiability]], at least on occasion it is useful directly.
+<jh>
+stmt (Quantifiability () () (∃ x ((value x) = s)) )
+</jh>
+
 == What else? ==
 This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
 
