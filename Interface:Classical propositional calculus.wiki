@@ -485,6 +485,7 @@ stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent
 These are variants of ''modus tollens'' where we detach a portion of a formula which is more complicated than just a single implication.
 <jh>
 stmt (negatedDetachImplicationBiconditionalRight () ((¬ r) (p → (q ↔ r))) (p → (¬ q)))
+stmt (negatedDetachImplicationBiconditional () ((¬ q) (p → (q ↔ r))) (p → (¬ r))
 </jh>
 
 === Commutation of antecedents ===
