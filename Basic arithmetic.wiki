@@ -1162,7 +1162,13 @@ To get the induction step, we just need to introduce some antecedents.
 ))
 </jh>
 
-=== Transitivity of ≤ ===
+=== Total order ===
+We'll show that ≤ has the [[w:Total order|expected properties of a total order]].
+* If a ≤ b and b ≤ c then a ≤ c (transitivity)
+* If a ≤ b and b ≤ a then a = b (antisymmetry)
+* a ≤ b or b ≤ a (totality). 
+
+==== Transitivity of ≤ ====
 
 Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + ab + bc = c</code>.  That implies <code>∃ ac a + ac = c</code> (because <code>ab + bc</code> is a specific value for <code>ac</code> and we can apply <code>ThereExistsIntroduction</code>), which is just <code>a ≤ c</code> by the definition.
 
@@ -1272,6 +1278,165 @@ And picking up <code>∃ ab a + ab = b ∧ ∃ bc b + bc = c → ∃ ab ∃ bc a
 
         eliminateBiconditionalForward
         applyModusPonens
+))
+</jh>
+
+==== Antisymmetry ====
+Before we prove antisymmetry, we prove several lemmas. The first is a substitution (think of it as substituting zero for <code>b</code> in the left hand conjunct).
+<jh>
+thm (LessEqualAntisymmetry-1 () () ((((a + b) = c) ∧ (b = 0)) → (a = c)) (
+</jh>
+We start with <code>b = 0 → a + b = a + 0</code>.
+<jh>
+        b (0) a EqualityBuilderRR
+</jh>
+Next is <code>b = 0 → (a + b = c → a + 0 = c)</code>.
+<jh>
+        c buildEqualityRRInConsequent
+        ((a + b) = c) ((a + 0) = c) BiconditionalReverseElimination
+        applySyllogism
+</jh>
+We turn that into <code>a + b = c ∧ b = 0 → a + 0 = c</code>,
+<jh>
+        applyComm
+        import
+</jh>
+and all that remains is removing the extra addition of zero.
+<jh>
+        a AdditiveIdentity
+        c buildEqualityRR
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Our second lemma is <code>a + b = 0 → a = 0</code>.
+<jh>
+thm (LessEqualAntisymmetry-2 () () (((a + b) = 0) → (a = 0)) (
+</jh>
+The idea of the proof is not too complicated: if <code>a</code> is not zero, <code>a + b</code> can be written as the successor of something (namely the predecessor of <code>a</code> added to <code>b</code>).  But this is not possible if <code>a + b</code> is zero.
+
+Near the end of the proof we'll need <code>¬ ∃ n 0 = S(n + b)</code>, so we stick it on the proof stack. It is a consequence of the axiom that zero is not the successor of anything.
+<jh>
+        (n + b) ZeroNotSuccessor
+        n generalize
+        n ((0) = (succ (n + b))) NotThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+Setting that aside, we start with <code>a ≠ 0 → ∃ n Sn = a</code>.
+<jh>
+        a n Predecessor
+</jh>
+Working with the <code>Sn = a</code> part of that, we show it implies <code>Sn + b = a + b</code>, then <code>S(n + b) = a + b</code>, then <code>0 = S(n + b) ↔ 0 = a + b</code>, then <code>0 = a + b → 0 = S(n + b)</code>.
+<jh>
+        (succ (value n)) a b AdditionBuilderRR
+
+        (value n) b AdditionCommuted
+        (a + b) buildEqualityRR
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (succ ((value n) + b)) (a + b) (0) EqualityBuilderLL
+        applySyllogism
+
+        ((0) = (succ ((value n) + b))) ((0) = (a + b)) BiconditionalForwardElimination
+        applySyllogism
+</jh>
+It is now time to add the quantifier and combine with the previous result to get <code>a ≠ 0 → ∃ n (0 = a + b → 0 = S(n + b))</code>
+<jh>
+        n addThereExists
+        applySyllogism
+</jh>
+Since <code>0 = a + b</code> does not contain <code>n</code>, we can move it out of the quantifier, which gets us <code>a ≠ 0 → (0 = a + b → ∃ n 0 = S(n + b))</code>.
+<jh>
+        n ((0) = (a + b)) ((0) = (succ ((value n) + b)))ThereExistsAntecedentMovement
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Pulling <code>¬ ∃ n 0 = S(n + b)</code> off the proof stack, we turn this into <code>a ≠ 0 → 0 ≠ a + b</code>
+<jh>
+        negatedDetachImplicationImplication
+</jh>
+Now we just switch the order of one the equalities and transpose.
+<jh>
+        (0) (a + b) EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        eliminateTransposition
+))
+</jh>
+
+The next lemma is <code>a + n = b ∧ b + m = a → a = b</code>. The proof proceeds by rearranging the terms to get <code>n + m = 0</code>, and using that to get <code>n = 0</code>.
+<jh>
+thm (LessEqualAntisymmetry-3 () () ((((a + (value n)) = b) ∧ ((b + (value m)) = a)) → (a = b)) (
+</jh>
+Although we won't need it for a while, we put <code>a + n = b ∧ b + m = a → a + n = b</code> on the proof stack.
+<jh>
+        ((a + (value n)) = b) ((b + (value m)) = a) ConjunctionRightElimination
+</jh>
+Now we start again with <code>a + n = b ∧ b + m = a</code>.
+<jh>
+        (a + (value n)) b m AdditionBuilderRR
+        ((b + (value m)) = a) buildConjunctionRR
+        eliminateBiconditionalReverse
+</jh>
+So far we have <code>a + n + m = b + m ∧ b + m = a</code>. Applying transitivity gives us <code>a + n + m = a</code>.
+<jh>
+        ((a + (value n)) + (value m)) (b + (value m)) a EqualityTransitivity
+        applySyllogism
+</jh>
+We now turn the right-hand <code>a</code> into <code>a + 0</code>, and reassociate the left-hand side from <code>(a + n) + m</code> to <code>a + (n + m)</code>.
+<jh>
+        a AdditiveIdentity swapEquality
+        a (value n) (value m) AdditionAssociativity
+        buildEquality
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We have <code>a + (n + m) = a + 0</code> and cancelling the <code>a</code> gives us <code>n + m = 0</code>.
+<jh>
+        a ((value n) + (value m)) (0) AdditionLeftCancellation
+        applySyllogism
+</jh>
+That in turn implies <code>n = 0</code>
+<jh>
+        (value n) (value m) LessEqualAntisymmetry-2
+        applySyllogism
+</jh>
+The entire statement on the proof stack is <code>a + n = b ∧ b + m = a → n = 0</code>.  Combining that with our statement from the start of the proof, we get <code>a + n = b ∧ b + m = a → a + n = b ∧ n = 0</code>.  But the right hand side is, of course, just <code>LessEqualAntisymmetry-1</code> away from our desired <code>a = b</code>.
+<jh>
+        composeConjunction
+
+        a (value n) b LessEqualAntisymmetry-1
+        applySyllogism
+))
+</jh>
+
+That lemma gets us most of the way. We just need to deal with a bit of predicate logic to finish our proof of antisymmetry, <code>a ≤ b ∧ b ≤ a → a = b</code>
+<jh>
+thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
+        a b n LessEqual
+        b a m LessEqual
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        n m ((a + (value n)) = b) ((b + (value m)) = a) ThereExistsScattering
+        eliminateBiconditionalForward
+        applySyllogism
+
+        a n b m LessEqualAntisymmetry-3
+        m addThereExists
+        n addThereExists
+        applySyllogism
+
+        n (∃ m (a = b)) NullThereExists eliminateBiconditionalReverse
+        applySyllogism
+
+        m (a = b) NullThereExists eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
