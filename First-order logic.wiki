@@ -943,7 +943,7 @@ thm (moveAntecedentIntoForAll ()
 
 The corresponding theorem for ∃ is similar:<ref>[http://us.metamath.org/mpeuni/19.37.html 19.37] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
-thm (ThereExistsImplicationAntecedentMovement () ((H (x is-not-free-in φ))) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
+thm (ThereExistsAntecedentMovementNotFree () ((H (x is-not-free-in φ))) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
         x φ ψ ThereExistsImplication
 
         H ForAllAddRemove
@@ -1022,7 +1022,7 @@ thm (ThereExistsDisjunctionMovement () ((H (x is-not-free-in φ))) ((∃ x (φ �
         φ ψ DisjunctionImplication x buildThereExists
 
         H negateNotFree
-        ψ ThereExistsImplicationAntecedentMovement applyBiconditionalTransitivity
+        ψ ThereExistsAntecedentMovementNotFree applyBiconditionalTransitivity
 
         φ (∃ x ψ) DisjunctionImplication swapBiconditional applyBiconditionalTransitivity
 ))
@@ -1095,6 +1095,10 @@ thm (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((
         applyBiconditionalTransitivity
 ))
 
+thm (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsAntecedentMovementNotFree
+))
 </jh>
 
 === Adding ∃ to the antecedent of a theorem ===
