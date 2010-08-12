@@ -877,6 +877,11 @@ thm (ThereExistsAddRemove () ((H (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
 
         introduceBiconditionalFromImplications
 ))
+
+thm (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ) (
+        x φ DistinctNotFree
+        ThereExistsAddRemove
+))
 </jh>
 
 The same is true of ∀:<ref>[http://us.metamath.org/mpeuni/19.3.html 19.3] in metamath's set.mm, accessed February 21, 2010</ref>
