@@ -152,7 +152,7 @@ An existential quantifier can be added unconditionally,
 stmt (ThereExistsIntroduction () () (φ → (∃ x φ)))
 </jh>
 
-and can be removed if the variable does not exist in the formula.
+and can be removed if the variable does not occur in the formula.
 <jh>
 stmt (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ))
 </jh>

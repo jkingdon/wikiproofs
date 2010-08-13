@@ -59,3 +59,5 @@ Don't export TheoremNotFree
 
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
 
+Rename the ThereExistsIntroduction which has a subst to ThereExistsIntroductionFromObject or ThereExistsIntroductionObject or some such. Then apply the changes from git for the subst-less ThereExistsIntroduction.
+
