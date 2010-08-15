@@ -1116,6 +1116,52 @@ That in turn implies <code>∃ n 0 + n = a</code>, which is <code>0 ≤ a</code>
 ))
 </jh>
 
+=== Predecessor ===
+Any nonzero natural number has a predecessor. We express this as <code>a ≠ 0 → ∃ m Sm = a</code>. The proof will be by induction on <code>a</code>, and we start with the substitution.
+<jh>
+thm (Predecessor-sub ((m n) (m sub)) () (
+  ((value n) = sub) → (
+    (((value n) ≠ (0)) → (∃ m ((succ (value m)) = (value n)))) ↔ 
+    ((sub ≠ (0)) → (∃ m ((succ (value m)) = sub)))
+  )) (
+        (value n) sub (0) EqualityBuilderRR
+        addNegationInConsequent
+        (value n) sub (succ (value m)) EqualityBuilderLL
+        m buildThereExistsInConsequent
+        buildImplicationInConsequent
+))
+
+thm (Predecessor ((n m) (m k) (m a) (n k) (n a)) () ((a ≠ (0)) → (∃ m ((succ (value m)) = a))) (
+        n (0) m Predecessor-sub
+        n (value k) m Predecessor-sub
+        n (succ (value k)) m Predecessor-sub
+        n a m Predecessor-sub
+</jh>
+The base case is <code>0 ≠ 0 → ∃ m Sm = 0</code>, which follows from <code>0 = 0</code>.
+<jh>
+        (0) EqualityReflexivity
+        (¬ (∃ m ((succ (value m)) = (0)))) introduceAntecedent
+        transposeWithNegatedAntecedent
+</jh>
+The induction step is <code>(k ≠ 0 → ∃ m Sm = k) → (Sk ≠ 0 → ∃ m Sm = Sk)</code>.  We first show <code>∃ m Sm = Sk</code> (one way of thinking of this is that we could choose <code>k</code> as the value for <code>m</code>, but our proof short-cuts that a bit by resorting to the <code>Quantifiability</code> axiom).
+<jh>
+        m (value k) Quantifiability
+
+        (value m) (value k) Successor
+        eliminateBiconditionalForward
+        m addThereExists
+
+        applyModusPonens
+</jh>
+To get the induction step, we just need to introduce some antecedents.
+<jh>
+        ((succ (value k)) ≠ (0)) introduceAntecedent
+        (((value k) ≠ (0)) → (∃ m ((succ (value m)) = (value k)))) introduceAntecedent
+
+        Induction6S
+))
+</jh>
+
 === Transitivity of ≤ ===
 
 Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + ab + bc = c</code>.  That implies <code>∃ ac a + ac = c</code> (because <code>ab + bc</code> is a specific value for <code>ac</code> and we can apply <code>ThereExistsIntroduction</code>), which is just <code>a ≤ c</code> by the definition.
