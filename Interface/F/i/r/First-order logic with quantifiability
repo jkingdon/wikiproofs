@@ -147,6 +147,11 @@ stmt (Generalization ((x φ)) () (φ → (∀ x φ)))
 stmt (generalize () (φ) (∀ x φ))
 </jh>
 
+An existential quantifier can be removed if the variable does not exist in the formula.
+<jh>
+stmt (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ))
+</jh>
+
 == Equality ==
 Equality is reflexive, symmetry, and transitive.
 <jh>
