@@ -279,7 +279,7 @@ stmt (moveAntecedentIntoForAll ()
   ((φ → (∀ x ψ)) (x is-not-free-in φ)) 
   (∀ x (φ → ψ)))
 
-stmt (ThereExistsImplicationAntecedentMovement () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
+stmt (ThereExistsAntecedentMovementNotFree () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)))
 stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
 
@@ -290,6 +290,7 @@ stmt (ThereExistsConjunctionMovementNotFree () ((x is-not-free-in φ)) ((∃ x (
 <jh>
 stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
+stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
 ==== Scattering and gathering ====
