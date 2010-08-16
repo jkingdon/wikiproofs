@@ -19,69 +19,8 @@ thm (warmup ((y φ)) () (φ → (∀ y φ)) (
 
 def ((constx) x)
 
-# blows up with "Required distinct variable constraints are not a subset of actual distinct variable constraints":
+# blows up with "Required distinct variable constraints are not a subset of actual distinct variable constraints". That's because (constx) automatically expands to a variable which is not listed in distinct variable constraints.
 #thm (badth () () (φ → (∀ (constx) φ)) (
 #        φ (constx) Generalization
 #))
-</jh>
-
-== what's up with the distinct variables in this? ==
-We are now ready to prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.
-<jh>
-thm (debug1 (
-  (vab vbc) (vab a) (vab b) (vab c)
-  (vbc a) (vbc b) (vbc c)
-  ) () (((a ≤ b) ∧ (b ≤ c)) → (∃ vab (∃ vbc (((a + (value vab)) = b) ∧ ((b + (value vbc)) = c))))) (
-        a b vab LessEqual
-        b c vbc LessEqual
-        buildConjunction
-        eliminateBiconditionalReverse
-
-        vab vbc ((a + (value vab)) = b) ((b + (value vbc)) = c) ThereExistsScattering
-        eliminateBiconditionalForward
-        applySyllogism
-))
-
-thm (LessEqualTransitivity (
-  (vab vbc) (vab a) (vab b) (vab c)
-  (vbc a) (vbc b) (vbc c)
-  ) () 
-  (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
-</jh>
-We start by expanding <code>a ≤ b</code> and <code>b ≤ c</code> according to the definition and gathering the quantifiers at the start of the formula.
-<jh>
-        a b vab LessEqual
-        b c vbc LessEqual
-        buildConjunction
-        eliminateBiconditionalReverse
-
-        vab vbc ((a + (value vab)) = b) ((b + (value vbc)) = c) ThereExistsScattering
-        eliminateBiconditionalForward
-        applySyllogism
-</jh>
-That gives us <code>∃ ab ∃ bc a + ab = b ∧ b + bc = c</code>.
-
-The <code>a + ab = b ∧ b + bc = c</code> part of this implies first <code>a + (ab + bc) = c</code>,
-<jh>
-        a (value vab) b (value vbc) c LessEqualTransitivity-1
-</jh>
-and then <code>a ≤ c</code>.
-<jh>
-        a ((value vab) + (value vbc)) c LessEqualObject
-        applySyllogism
-</jh>
-Adding back the quantifiers gives us <code>a ≤ b ∧ b ≤ c → ∃ ab ∃ bc a ≤ c</code>.
-<jh>
-        vbc addThereExists
-        vab addThereExists
-        applySyllogism
-</jh>
-and then we can remove the quantifiers because the variables they quantify over are gone.
-<jh>
-        vab (∃ vbc (a ≤ c)) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
-
-        vbc (a ≤ c) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
-))
 </jh>
