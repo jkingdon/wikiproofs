@@ -487,6 +487,7 @@ These are variants of ''modus tollens'' where we detach a portion of a formula w
 <jh>
 stmt (negatedDetachImplicationBiconditionalRight () ((¬ r) (p → (q ↔ r))) (p → (¬ q)))
 stmt (negatedDetachImplicationBiconditional () ((¬ q) (p → (q ↔ r))) (p → (¬ r)))
+stmt (negatedDetachImplicationImplication () ((¬ r) (p → (q → r))) (p → (¬ q)))
 </jh>
 
 === Commutation of antecedents ===
