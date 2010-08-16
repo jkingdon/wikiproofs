@@ -396,7 +396,7 @@ thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
 === Adding existential quantifier ===
 We can add ∃ to the start of a formula:<ref>[http://us.metamath.org/mpeuni/19.8a.html 19.8a] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
-thm (19.8a () () (φ → (∃ x φ)) (
+thm (ThereExistsIntroduction () () (φ → (∃ x φ)) (
         x (¬ φ) Specialization
         transposeWithNegatedConsequent
 ))
@@ -871,7 +871,7 @@ thm (ThereExistsAddRemove () ((H (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
         negateNotFree
         transposeWithNegatedAntecedent
 
-        φ x 19.8a
+        φ x ThereExistsIntroduction
 
         introduceBiconditionalFromImplications
 ))
@@ -976,7 +976,7 @@ The reverse direction is somewhat more complicated.  We start by proving <code>(
 </jh>
 Then we show that <code>((∃ x φ) → ψ) → (φ → ψ)</code>
 <jh>
-        φ x 19.8a
+        φ x ThereExistsIntroduction
         ψ addCommonConsequent
 
 </jh>
@@ -1467,7 +1467,7 @@ The proof is going to show that <code>x = y ∧ φ</code> implies <code>(substVa
 </jh>
 The other half is <code>∃x(x = y ∧ φ)</code>:
 <jh>
-        (((value x) = (value y)) ∧ φ) x 19.8a
+        (((value x) = (value y)) ∧ φ) x ThereExistsIntroduction
 </jh>
 Now we combine the two:
 <jh>
