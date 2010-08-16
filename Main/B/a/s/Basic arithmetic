@@ -1176,14 +1176,14 @@ To get the induction step, we just need to introduce some antecedents.
 ))
 </jh>
 
-=== Transitivity of ≤ ===
+==== Transitivity of ≤ ====
 
-Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + ab + bc = c</code>.  That implies <code>∃ ac a + ac = c</code> (because <code>ab + bc</code> is a specific value for <code>ac</code> and we can apply <code>ThereExistsIntroduction</code>), which is just <code>a ≤ c</code> by the definition.
+Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + (ab + bc) = c</code>.  That implies <code>a ≤ c</code>, by <code>LessEqualObject</code>.
 
-Formalizing the proof is somewhat tedious, because both "rearranging the terms and cancelling" and the first-order logic (substitution in particular) expand to many steps, but the idea is unchanged.
+Formalizing the proof is somewhat tedious, because "rearranging the terms and cancelling" expands to many steps, but the idea is unchanged (and <code>LessEqualObject</code> takes care of much of the predicate logic which might otherwise clutter this sort of proof).
 
 <jh>
-var (object ab bc ac)
+var (object ab bc)
 var (variable vab vbc vac)
 
 </jh>
@@ -1227,65 +1227,57 @@ Now we just apply associativity to the left hand side of that equality:
 ))
 
 </jh>
-This lemma is one of our usual substitution statements:
-<jh>
-thm (LessEqualTransitivity-sub () ()
-  ((ac = (ab + bc)) → (((a + ac) = c) ↔ ((a + (ab + bc)) = c))) (
-        ac (ab + bc) a AdditionBuilderLL
-        (a + ac) (a + (ab + bc)) c EqualityBuilderRR
-        applySyllogism
-))
-</jh>
 
 We are now ready to prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.
 <jh>
 thm (LessEqualTransitivity (
-  (vab vbc) (vab vac) (vab a) (vab b) (vab c)
-  (vbc a) (vbc b) (vbc c) (vbc vac)
-  (vac a) (vac c)) () 
+  (vab vbc) (vab a) (vab b) (vab c)
+  (vbc a) (vbc b) (vbc c)
+  (vab vac) (vbc vac) (vac a) (vac c)
+  ) () 
   (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
 </jh>
-To assemble the proof, we first stick a statement on the proof stack which we'll use at the very end:
+We start by expanding <code>a ≤ b</code> and <code>b ≤ c</code> according to the definition and gathering the quantifiers at the start of the formula.
 <jh>
-        vab vbc ((a + (value vab)) = b) ((b + (value vbc)) = c) ThereExistsScattering
-        eliminateBiconditionalForward
-</jh>
-Leaving that aside, we now start with <code>LessEqualTransitivity-1</code>.
-<jh>
-        a (value vab) b (value vbc) c LessEqualTransitivity-1
-</jh>
-Turning <code>LessEqualTransitivity-sub</code> into an explicit substitution gives us <code>([ab + bc / ac] a + ac = c) ↔ a + (ab + bc = c</code>,
-<jh>
-        (value vac) (value vab) (value vbc) a c LessEqualTransitivity-sub
-        makeSubstExplicit
-</jh>
-and we combine this with our previous result.
-<jh>
-        eliminateBiconditionalForward
-        applySyllogism
-</jh>
-Using the substitution to prove there exists, we get <code>a + ab = b ∧ b + bc = c → ∃ ac a + ac = c</code>.
-<jh>
-        ((value vab) + (value vbc)) vac ((a + (value vac)) = c) ThereExistsIntroduction
-        applySyllogism
-</jh>
-We add ∃ ab ∃ bc to the antecedent:
-<jh>
-        vbc addThereExistsToAntecedent
-        vab addThereExistsToAntecedent
-</jh>
-And picking up <code>∃ ab a + ab = b ∧ ∃ bc b + bc = c → ∃ ab ∃ bc a + ab = b ∧ b + bc = c</code> from the proof stack, we now have everything (except applying the definition of ≤).
-<jh>
-        applySyllogism
-
         a b vab LessEqual
         b c vbc LessEqual
         buildConjunction
-        a c vac LessEqual
-        buildImplication
+        eliminateBiconditionalReverse
 
+        vab vbc ((a + (value vab)) = b) ((b + (value vbc)) = c) ThereExistsScattering
         eliminateBiconditionalForward
-        applyModusPonens
+        applySyllogism
+</jh>
+That gives us <code>∃ ab ∃ bc a + ab = b ∧ b + bc = c</code>.
+
+The <code>a + ab = b ∧ b + bc = c</code> part of this implies first <code>a + (ab + bc) = c</code>,
+<jh>
+        a (value vab) b (value vbc) c LessEqualTransitivity-1
+</jh>
+and then <code>a ≤ c</code>.
+<jh>
+        a ((value vab) + (value vbc)) c LessEqualObject
+        applySyllogism
+</jh>
+Adding back the quantifiers gives us <code>a ≤ b ∧ b ≤ c → ∃ ab ∃ bc a ≤ c</code>.
+<jh>
+        vbc addThereExists
+        vab addThereExists
+        applySyllogism
+</jh>
+and then we can remove the quantifiers because the variables they quantify over are gone. One detail (at least as long as JHilbert continues to automatically apply definitions): we need to rewrite <code>a ≤ c</code> as <code>∃ ac a + ac = c</code> so that we can express the distinct variable constraint between <code>ab</code> and <code>ac</code>.
+<jh>
+        a c vac LessEqual
+        vbc buildThereExists
+        vab buildThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        vab (∃ vbc (∃ vac ((a + (value vac)) = c))) NullThereExists eliminateBiconditionalReverse
+        applySyllogism
+
+        vbc (∃ vac ((a + (value vac)) = c)) NullThereExists eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
