@@ -1106,7 +1106,7 @@ and take the reverse implication.
 </jh>
 That in turn implies <code>∃ n a + n = b</code>, which is <code>a ≤ b</code> by the definition of <code>≤</code>.
 <jh>
-        c n ((a + (value n)) = b) ThereExistsIntroduction
+        c n ((a + (value n)) = b) ThereExistsIntroductionFromObject
         applySyllogism
 
         a b n LessEqual
