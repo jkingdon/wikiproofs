@@ -131,6 +131,23 @@ thm (negatedDetachImplicationBiconditional ()
 ))
 </jh>
 
+Here's one for two implications.
+<jh>
+thm (negatedDetachImplicationImplication () 
+  ((H (¬ r)) 
+   (HIMP (p → (q → r))))
+  (p → (¬ q)) (
+        H
+
+        HIMP
+        q r Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        detachImplicationImplication
+))
+</jh>
+
 == Transforming parts of formula ==
 By "transforming", we mean applying a biconditional to replace part of a formula.
 <jh>
