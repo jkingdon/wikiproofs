@@ -14,7 +14,17 @@ Statements can be added if necessary, but then the exporting modules have to be 
 | exportedby = [[Convenience theorems of propositional logic]]
 }}
 
-nkABT2 Fnfdi nfdf duowlvndd jrbyazlw kretydudec jgsnppiquf ssmixirn yogsi embdsk sdhfishcon hsxcnttp.
+== Well-formed formulas ==
+
+We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.
+<jh>
+kind (wff)
+var (wff p q r s)
+</jh>
+Some authors just use the term ''formula'' instead of ''wff'', so we define <code>formula</code> to be an alias of <code>wff</code>
+<jh>
+kindbind (wff formula)
+</jh>
 
 == Logical connectives ==
 
