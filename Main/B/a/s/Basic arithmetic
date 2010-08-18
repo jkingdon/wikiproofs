@@ -1445,6 +1445,60 @@ thm (LessEqualAntisymmetry ((n a) (n b) (n m) (m a) (m b)) () (((a ≤ b) ∧ (b
 ))
 </jh>
 
+==== Totality ====
+This section proves <code>a ≤ b ∨ b ≤ a</code>. The outline of the proof is as follows.  Proceed by induction on <code>b</code>. The base case follows from <code>0 ≤ a</code>. The induction step, <code>a ≤ k ∨ k ≤ a → a ≤ Sk ∨ Sk ≤ a</code>, has two cases. The <code>a ≤ k</code> case is easy: if <code>a</code> is less than <code>k</code>, it is also less than <code>Sk</code>. The <code>k ≤ a</code> case in turn has two cases, which amount to <code>k = a</code> and <code>k < a</code> (although our formal machinery isn't advanced enough to refer to them exactly that way in the proof).  In the first case, <code>k = a</code> easily implies <code>a ≤ Sk</code>. In the <code>k < a</code> case, we will show <code>Sk ≤ a</code> (via several steps, of which applying <code>Predecessor</code> is a key one).
+
+Our first lemma is just working around a problem with JHilbert, as it exists now, and distinct variables. In a just world, it would just be an instance of <code>NullThereExists</code>, but JHilbert expands the definition of <code>a ≤ b</code>, thus introducing a variable which we need a distinct variable constraint for. The proof is just a matter of applying <code>LessEqual</code> so we can name the variable and the constraint.
+<jh>
+thm (NullThereExistsLessEqual ((n a) (n b) (n m) (a m) (b m)) () ((∃ n (a ≤ b)) ↔ (a ≤ b)) (
+        a b m LessEqual
+        n buildThereExists
+
+        n (∃ m ((a + (value m)) = b)) NullThereExists
+        applyBiconditionalTransitivity
+
+        a b m LessEqual
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+We next prove the <code>a ≤ k</code> case as a lemma, <code>a ≤ k → a ≤ Sk ∨ Sk ≤ a</code>.
+<jh>
+thm (TotalityLemmaALessEqualK ((k a) (k n) (n a)) () ((a ≤ (value k)) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
+        a (value k) n LessEqual
+        eliminateBiconditionalReverse
+</jh>
+So far we have <code>a ≤ k → ∃ n a + n = k</code>. We take the successor of both sides of the equality and rearrange to get <code>a + Sn = Sk</code>
+<jh>
+        (a + (value n)) (value k) Successor
+        eliminateBiconditionalForward
+
+        a (value n) Addition
+        (succ (value k)) buildEqualityRR
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+But <code>a + Sn = Sk</code> implies <code>a ≤ Sk</code> and a bit of work with the quantifier gives us <code>a ≤ k → a ≤ Sk</code>.
+<jh>
+        a (succ (value n)) (succ (value k)) LessEqualObject
+        applySyllogism
+
+        n addThereExists
+        applySyllogism
+
+        n a (succ (value k)) NullThereExistsLessEqual
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We add <code>Sk ≤ a</code> to the consequent as that's what we'll need later.
+<jh>
+        (a ≤ (succ (value k))) ((succ (value k)) ≤ a) DisjunctionRightIntroduction
+        applySyllogism
+))
+</jh>
+
+{{under construction}}
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
