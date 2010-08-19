@@ -170,6 +170,11 @@ stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
 stmt (applyEqualityTransitivity () ((s = t) (t = u)) (s = u))
 </jh>
 
+Here are convenience theorems which are closely related to those:
+<jh>
+stmt (applyEqualityTransitivityInConsequent () ((φ → (s = t)) (φ → (t = u))) (φ → (s = u)))
+</jh>
+
 There is also the principle of "equals can be substituted for equals". In our system, this is done via builders, and here we provide one for equals itself. Theories which build on first-order logic will provide builders for additional expressions such as <code>∈</code> (is an element of) for set theory or <code>+</code> (addition) for Peano arithmetic.
 <jh>
 stmt (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))))
