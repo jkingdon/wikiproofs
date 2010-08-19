@@ -62,6 +62,14 @@ thm (applyEqualityTransitivity () ((H1 (s = t)) (H2 (t = u))) (s = u) (
         s t u EqualityTransitivity
         applyModusPonens
 ))
+
+thm (applyEqualityTransitivityInConsequent () ((H1 (φ → (s = t))) (H2 (φ → (t = u)))) (φ → (s = u)) (
+        H1
+        H2
+        composeConjunction
+        s t u EqualityTransitivity
+        applySyllogism
+))
 </jh>
 
 === Builder ===
