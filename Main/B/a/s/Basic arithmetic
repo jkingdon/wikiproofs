@@ -1498,6 +1498,21 @@ We add <code>Sk ≤ a</code> to the consequent as that's what we'll need later.
 ))
 </jh>
 
+The <code>a = k</code> case we express as <code>m = 0 → (k + m = a → a ≤ Sk ∨ Sk ≤ a)</code>. We prove it via several lemmas.
+<jh>
+thm (TotalityLemmaAEqualK-1 () () (((value m) = (0)) → ((((value k) + (value m)) = a) → ((value k) = a))) (
+        (value m) (0) (value k) AdditionBuilderLL
+
+        (value k) AdditiveIdentity
+        ((value m) = (0)) introduceAntecedent
+
+        applyEqualityTransitivityInConsequent
+
+        a buildEqualityRRInConsequent
+        eliminateBiconditionalReverseInConsequent
+))
+</jh>
+
 {{under construction}}
 == Adding one and successor ==
 
