@@ -5,8 +5,6 @@
  | right    = 
  | shortcut = 
  | notes    = The purpose of this page is to prove the statements of [[Interface:First-order logic with quantifiability]] from [[Interface:First-order logic]] and the [[Interface:Axiom of quantifiability]]. In particular, it adds substitution of an object (term) for a variable.
-
-{{under construction}}
 }}
 {{interfaces
 | imports = [[Interface:First-order logic]] [[Interface:Axiom of quantifiability]]
@@ -113,7 +111,7 @@ One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a p
 
 In our notation, this idea is expressed via <code>subst</code>:
 <jh>
-thm (ThereExistsIntroduction ((y φ) (y x)) () ((subst s x φ) → (∃ x φ)) (
+thm (ThereExistsIntroductionFromObject ((y φ) (y x)) () ((subst s x φ) → (∃ x φ)) (
 </jh>
 The proof takes the definition of <code>subst</code>, <code>(∃ y (y = s ∧ (∃ x (x = y ∧ φ))))</code> and pares it down by eliminating the parts we don't need.
 
@@ -145,9 +143,9 @@ Now we just need to apply the definition of <code>subst</code> and we are done:
         swapBiconditional transformAntecedent
 ))
 
-thm (introduceThereExists () ((H (subst s x φ))) (∃ x φ) (
+thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
         H
-        s x φ ThereExistsIntroduction
+        s x φ ThereExistsIntroductionFromObject
         applyModusPonens
 ))
 </jh>

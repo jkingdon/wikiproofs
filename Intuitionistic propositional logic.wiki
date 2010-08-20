@@ -1343,38 +1343,6 @@ thm (collectRightConjunction () ((H ((p ∧ r) ∨ (q ∧ r)))) ((p ∨ q) ∧ r
 ))
 </jh>
 
-=== Distribution of implication over biconditional ===
-
-The proof of this result from [[Principia Mathematica propositional logic]] applies verbatim.
-<jh>
-thm (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))) (
-        (p → q) (p → r) BiconditionalImplication
-
-        p q r AntecedentDistribution swapBiconditional
-        p r q AntecedentDistribution swapBiconditional
-
-        buildConjunction
-
-        applyBiconditionalTransitivity
-
-        p (q → r) (r → q) ConjunctionComposition
-        applyBiconditionalTransitivity
-
-        p BiconditionalReflexivity
-        q r BiconditionalImplication swapBiconditional
-        buildImplication
-        applyBiconditionalTransitivity
-
-        swapBiconditional
-))
-
-thm (distributeImplicationOverBiconditional () ((H (p → (q ↔ r)))) ((p → q) ↔ (p → r)) (
-        H
-        p q r ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
-        applyModusPonens
-))
-</jh>
-
 == Modus Ponens ==
 This is just an implication corresponding to the modus ponens rule:
 <jh>
@@ -1831,6 +1799,38 @@ thm (BiconditionalFunction () () (((p ↔ q) ∧ (r ↔ s)) → ((p ↔ r) ↔ (
 thm (buildBiconditional () ((HPQ (p ↔ q)) (HRS (r ↔ s))) ((p ↔ r) ↔ (q ↔ s)) (
         HPQ HRS introduceConjunction
         p q r s BiconditionalFunction
+        applyModusPonens
+))
+</jh>
+
+== Distribution of implication over biconditional ==
+
+The proof of this result from [[Principia Mathematica propositional logic]] applies verbatim.
+<jh>
+thm (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))) (
+        (p → q) (p → r) BiconditionalImplication
+
+        p q r AntecedentDistribution swapBiconditional
+        p r q AntecedentDistribution swapBiconditional
+
+        buildConjunction
+
+        applyBiconditionalTransitivity
+
+        p (q → r) (r → q) ConjunctionComposition
+        applyBiconditionalTransitivity
+
+        p BiconditionalReflexivity
+        q r BiconditionalImplication swapBiconditional
+        buildImplication
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
+
+thm (distributeImplicationOverBiconditional () ((H (p → (q ↔ r)))) ((p → q) ↔ (p → r)) (
+        H
+        p q r ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
         applyModusPonens
 ))
 </jh>

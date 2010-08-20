@@ -170,6 +170,11 @@ stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
 stmt (applyEqualityTransitivity () ((s = t) (t = u)) (s = u))
 </jh>
 
+Here are convenience theorems which are closely related to those:
+<jh>
+stmt (applyEqualityTransitivityInConsequent () ((φ → (s = t)) (φ → (t = u))) (φ → (s = u)))
+</jh>
+
 There is also the principle of "equals can be substituted for equals". In our system, this is done via builders, and here we provide one for equals itself. Theories which build on first-order logic will provide builders for additional expressions such as <code>∈</code> (is an element of) for set theory or <code>+</code> (addition) for Peano arithmetic.
 <jh>
 stmt (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))))
@@ -277,6 +282,8 @@ stmt (moveAntecedentIntoForAll ()
 stmt (ThereExistsAntecedentMovementNotFree () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)))
 stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
+
+stmt (ThereExistsConjunctionMovementNotFree () ((x is-not-free-in φ)) ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 </jh>
 
 ==== Versions with distinct variables ====
@@ -284,6 +291,14 @@ stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ 
 stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
+</jh>
+
+==== Scattering and gathering ====
+If we have two formulas joined by a conjunction, one quantified over one variable and the other quantified over another, we can express the quantifiers either at the beginning or with the formulas they apply to.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed August 8, 2010</ref> We name the propositions <code>φx</code> and <code>ψy</code> to express the idea that <code>φx</code> will typically contain <code>x</code> and <code>ψy</code> will typically contain <code>y</code>.
+<jh>
+var (formula ψy)
+stmt (ThereExistsScattering ((φx y) (ψy x)) ()
+  ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))))
 </jh>
 
 ==== Adding quantifiers to theorems which are implications ====
@@ -359,8 +374,8 @@ stmt (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ))
 === Turning substitution into there-exists ===
 One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
 <jh>
-stmt (ThereExistsIntroduction () () ((subst s x φ) → (∃ x φ)))
-stmt (introduceThereExists () ((subst s x φ)) (∃ x φ))
+stmt (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)))
+stmt (introduceThereExistsFromObject () ((subst s x φ)) (∃ x φ))
 </jh>
 
 === Changing the quantified variable ===

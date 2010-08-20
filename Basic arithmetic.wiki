@@ -1082,7 +1082,7 @@ We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is eno
 === Proving inequality with an object ===
 We can prove <code>a ≤ b</code> by proving <code>∃ n a + n = b</code>. Well, the usual way to do this is to provide a value for <code>n</code>.
 <jh>
-thm (LessEqualObject ((c n) (a n) (b n)) () (a + c = b → a ≤ b) (
+thm (LessEqualObject ((c n) (a n) (b n)) () (((a + c) = b) → (a ≤ b)) (
 </jh>
 The proof is basically substitution machinery. We start with <code>n = c → (a + n = b ↔ a + c = b)</code>:
 <jh>
@@ -1106,7 +1106,7 @@ and take the reverse implication.
 </jh>
 That in turn implies <code>∃ n a + n = b</code>, which is <code>a ≤ b</code> by the definition of <code>≤</code>.
 <jh>
-        c n (a + (value n) = b) ThereExistsIntroduction
+        c n ((a + (value n)) = b) ThereExistsIntroductionFromObject
         applySyllogism
 
         a b n LessEqual
@@ -1133,28 +1133,28 @@ To prove this inequality, we need to find a number ''n'' such that <code>0 + ''n
 === Predecessor ===
 Any nonzero natural number has a predecessor. We express this as <code>a ≠ 0 → ∃ m Sm = a</code>. The proof will be by induction on <code>a</code>, and we start with the substitution.
 <jh>
-thm (Predecessor-sub () () (
+thm (Predecessor-sub ((m n) (m sub)) () (
   ((value n) = sub) → (
-    (((value n) ≠ (0)) → (∃ m ((succ m) = (value n)))) ↔ 
-    ((sub ≠ (0)) → (∃ m ((succ m) = sub)))
+    (((value n) ≠ (0)) → (∃ m ((succ (value m)) = (value n)))) ↔ 
+    ((sub ≠ (0)) → (∃ m ((succ (value m)) = sub)))
   )) (
         (value n) sub (0) EqualityBuilderRR
         addNegationInConsequent
-        (value n) sub (succ m) EqualityBuilderLL
-        m addThereExistsInConsequent
+        (value n) sub (succ (value m)) EqualityBuilderLL
+        m buildThereExistsInConsequent
         buildImplicationInConsequent
 ))
 
-thm (Predecessor () () ((a ≠ (0)) → (∃ m ((succ m) = a))) (
+thm (Predecessor ((n m) (m k) (m a) (n k) (n a)) () ((a ≠ (0)) → (∃ m ((succ (value m)) = a))) (
         n (0) m Predecessor-sub
         n (value k) m Predecessor-sub
         n (succ (value k)) m Predecessor-sub
         n a m Predecessor-sub
 </jh>
-The base case is <code>0 ≠ 0 → ∃ m Sm = a</code>, which follows from <code>0 = 0</code>.
+The base case is <code>0 ≠ 0 → ∃ m Sm = 0</code>, which follows from <code>0 = 0</code>.
 <jh>
         (0) EqualityReflexivity
-        (¬ (∃ m ((succ m) = a))) introduceAntecedent
+        (¬ (∃ m ((succ (value m)) = (0)))) introduceAntecedent
         transposeWithNegatedAntecedent
 </jh>
 The induction step is <code>(k ≠ 0 → ∃ m Sm = k) → (Sk ≠ 0 → ∃ m Sm = Sk)</code>.  We first show <code>∃ m Sm = Sk</code> (one way of thinking of this is that we could choose <code>k</code> as the value for <code>m</code>, but our proof short-cuts that a bit by resorting to the <code>Quantifiability</code> axiom).
@@ -1170,7 +1170,7 @@ The induction step is <code>(k ≠ 0 → ∃ m Sm = k) → (Sk ≠ 0 → ∃ m S
 To get the induction step, we just need to introduce some antecedents.
 <jh>
         ((succ (value k)) ≠ (0)) introduceAntecedent
-        (((value k) ≠ (0)) → (∃ m ((succ m) = (value k)))) introduceAntecedent
+        (((value k) ≠ (0)) → (∃ m ((succ (value m)) = (value k)))) introduceAntecedent
 
         Induction6S
 ))
@@ -1182,7 +1182,7 @@ We'll show that ≤ has the [[w:Total order|expected properties of a total order
 * If a ≤ b and b ≤ a then a = b (antisymmetry)
 * a ≤ b or b ≤ a (totality). 
 
-==== Transitivity of ≤ ====
+==== Transitivity ====
 
 Here we prove that <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.  The proof is simple to sketch out: by the definition of <code>≤</code>, we have <code>∃ ab a + ab = b</code> and <code>∃ bc b + bc = c</code>. Applying the addition builder, we get <code>a + ab + b + bc = b + c</code>.  Rearranging the terms and cancelling the <code>b</code>, we get <code>a + (ab + bc) = c</code>.  That implies <code>a ≤ c</code>, by <code>LessEqualObject</code>.
 
@@ -1190,7 +1190,7 @@ Formalizing the proof is somewhat tedious, because "rearranging the terms and ca
 
 <jh>
 var (object ab bc)
-var (variable vab vbc)
+var (variable vab vbc vac)
 
 </jh>
 The following lemma includes the rearrangements we will need. It is a straightforward application of commutativity, associativity, and cancellation.
@@ -1239,6 +1239,7 @@ We are now ready to prove <code>a ≤ b ∧ b ≤ c → a ≤ c</code>.
 thm (LessEqualTransitivity (
   (vab vbc) (vab a) (vab b) (vab c)
   (vbc a) (vbc b) (vbc c)
+  (vab vac) (vbc vac) (vac a) (vac c)
   ) () 
   (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
 </jh>
@@ -1247,6 +1248,7 @@ We start by expanding <code>a ≤ b</code> and <code>b ≤ c</code> according to
         a b vab LessEqual
         b c vbc LessEqual
         buildConjunction
+        eliminateBiconditionalReverse
 
         vab vbc ((a + (value vab)) = b) ((b + (value vbc)) = c) ThereExistsScattering
         eliminateBiconditionalForward
@@ -1269,12 +1271,18 @@ Adding back the quantifiers gives us <code>a ≤ b ∧ b ≤ c → ∃ ab ∃ bc
         vab addThereExists
         applySyllogism
 </jh>
-and then we can remove the quantifiers because the variables they quantify over are gone.
+and then we can remove the quantifiers because the variables they quantify over are gone. One detail (at least as long as JHilbert continues to automatically apply definitions): we need to rewrite <code>a ≤ c</code> as <code>∃ ac a + ac = c</code> so that we can express the distinct variable constraint between <code>ab</code> and <code>ac</code>.
 <jh>
-        vab (∃ vbc (a ≤ c)) NullThereExists eliminateBiconditionalReverse
+        a c vac LessEqual
+        vbc buildThereExists
+        vab buildThereExists
+        eliminateBiconditionalReverse
         applySyllogism
 
-        vbc (a ≤ c) NullThereExists eliminateBiconditionalReverse
+        vab (∃ vbc (∃ vac ((a + (value vac)) = c))) NullThereExists eliminateBiconditionalReverse
+        applySyllogism
+
+        vbc (∃ vac ((a + (value vac)) = c)) NullThereExists eliminateBiconditionalReverse
         applySyllogism
 ))
 </jh>
@@ -1282,16 +1290,16 @@ and then we can remove the quantifiers because the variables they quantify over 
 ==== Antisymmetry ====
 Before we prove antisymmetry, we prove several lemmas. The first is a substitution (think of it as substituting zero for <code>b</code> in the left hand conjunct).
 <jh>
-thm (LessEqualAntisymmetry-1 () () ((((a + b) = c) ∧ (b = 0)) → (a = c)) (
+thm (LessEqualAntisymmetry-1 () () ((((a + b) = c) ∧ (b = (0))) → (a = c)) (
 </jh>
 We start with <code>b = 0 → a + b = a + 0</code>.
 <jh>
-        b (0) a EqualityBuilderRR
+        b (0) a AdditionBuilderLL
 </jh>
 Next is <code>b = 0 → (a + b = c → a + 0 = c)</code>.
 <jh>
         c buildEqualityRRInConsequent
-        ((a + b) = c) ((a + 0) = c) BiconditionalReverseElimination
+        ((a + b) = c) ((a + (0)) = c) BiconditionalReverseElimination
         applySyllogism
 </jh>
 We turn that into <code>a + b = c ∧ b = 0 → a + 0 = c</code>,
@@ -1310,15 +1318,15 @@ and all that remains is removing the extra addition of zero.
 
 Our second lemma is <code>a + b = 0 → a = 0</code>.
 <jh>
-thm (LessEqualAntisymmetry-2 () () (((a + b) = 0) → (a = 0)) (
+thm (LessEqualAntisymmetry-2 ((a n) (b n)) () (((a + b) = (0)) → (a = (0))) (
 </jh>
 The idea of the proof is not too complicated: if <code>a</code> is not zero, <code>a + b</code> can be written as the successor of something (namely the predecessor of <code>a</code> added to <code>b</code>).  But this is not possible if <code>a + b</code> is zero.
 
 Near the end of the proof we'll need <code>¬ ∃ n 0 = S(n + b)</code>, so we stick it on the proof stack. It is a consequence of the axiom that zero is not the successor of anything.
 <jh>
-        (n + b) ZeroNotSuccessor
+        ((value n) + b) ZeroNotSuccessor
         n generalize
-        n ((0) = (succ (n + b))) NotThereExists
+        n ((0) = (succ ((value n) + b))) NotThereExists
         eliminateBiconditionalForward
         applyModusPonens
 </jh>
@@ -1348,7 +1356,7 @@ It is now time to add the quantifier and combine with the previous result to get
 </jh>
 Since <code>0 = a + b</code> does not contain <code>n</code>, we can move it out of the quantifier, which gets us <code>a ≠ 0 → (0 = a + b → ∃ n 0 = S(n + b))</code>.
 <jh>
-        n ((0) = (a + b)) ((0) = (succ ((value n) + b)))ThereExistsAntecedentMovement
+        n ((0) = (a + b)) ((0) = (succ ((value n) + b))) ThereExistsAntecedentMovement
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
@@ -1377,9 +1385,8 @@ Although we won't need it for a while, we put <code>a + n = b ∧ b + m = a → 
 </jh>
 Now we start again with <code>a + n = b ∧ b + m = a</code>.
 <jh>
-        (a + (value n)) b m AdditionBuilderRR
-        ((b + (value m)) = a) buildConjunctionRR
-        eliminateBiconditionalReverse
+        (a + (value n)) b (value m) AdditionBuilderRR
+        ((b + (value m)) = a) conjoinRR
 </jh>
 So far we have <code>a + n + m = b + m ∧ b + m = a</code>. Applying transitivity gives us <code>a + n + m = a</code>.
 <jh>
@@ -1388,15 +1395,15 @@ So far we have <code>a + n + m = b + m ∧ b + m = a</code>. Applying transitivi
 </jh>
 We now turn the right-hand <code>a</code> into <code>a + 0</code>, and reassociate the left-hand side from <code>(a + n) + m</code> to <code>a + (n + m)</code>.
 <jh>
-        a AdditiveIdentity swapEquality
         a (value n) (value m) AdditionAssociativity
+        a AdditiveIdentity swapEquality
         buildEquality
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
 We have <code>a + (n + m) = a + 0</code> and cancelling the <code>a</code> gives us <code>n + m = 0</code>.
 <jh>
-        a ((value n) + (value m)) (0) AdditionLeftCancellation
+        a ((value n) + (value m)) (0) AdditionCancellationLeft
         applySyllogism
 </jh>
 That in turn implies <code>n = 0</code>
@@ -1415,7 +1422,7 @@ The entire statement on the proof stack is <code>a + n = b ∧ b + m = a → n =
 
 That lemma gets us most of the way. We just need to deal with a bit of predicate logic to finish our proof of antisymmetry, <code>a ≤ b ∧ b ≤ a → a = b</code>
 <jh>
-thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
+thm (LessEqualAntisymmetry ((n a) (n b) (n m) (m a) (m b)) () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
         a b n LessEqual
         b a m LessEqual
         buildConjunction
@@ -1441,7 +1448,22 @@ thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
 ==== Totality ====
 This section proves <code>a ≤ b ∨ b ≤ a</code>. The outline of the proof is as follows.  Proceed by induction on <code>b</code>. The base case follows from <code>0 ≤ a</code>. The induction step, <code>a ≤ k ∨ k ≤ a → a ≤ Sk ∨ Sk ≤ a</code>, has two cases. The <code>a ≤ k</code> case is easy: if <code>a</code> is less than <code>k</code>, it is also less than <code>Sk</code>. The <code>k ≤ a</code> case in turn has two cases, which amount to <code>k = a</code> and <code>k < a</code> (although our formal machinery isn't advanced enough to refer to them exactly that way in the proof).  In the first case, <code>k = a</code> easily implies <code>a ≤ Sk</code>. In the <code>k < a</code> case, we will show <code>Sk ≤ a</code> (via several steps, of which applying <code>Predecessor</code> is a key one).
 
-We first prove the <code>a ≤ k</code> case as a lemma, <code>a ≤ k → a ≤ Sk ∨ Sk ≤ a</code>.
+Our first lemma is just working around a problem with JHilbert, as it exists now, and distinct variables. In a just world, it would just be an instance of <code>NullThereExists</code>, but JHilbert expands the definition of <code>a ≤ b</code>, thus introducing a variable which we need a distinct variable constraint for. The proof is just a matter of applying <code>LessEqual</code> so we can name the variable and the constraint.
+<jh>
+thm (NullThereExistsLessEqual ((n a) (n b) (n m) (a m) (b m)) () ((∃ n (a ≤ b)) ↔ (a ≤ b)) (
+        a b m LessEqual
+        n buildThereExists
+
+        n (∃ m ((a + (value m)) = b)) NullThereExists
+        applyBiconditionalTransitivity
+
+        a b m LessEqual
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+We next prove the <code>a ≤ k</code> case as a lemma, <code>a ≤ k → a ≤ Sk ∨ Sk ≤ a</code>.
 <jh>
 thm (TotalityLemmaALessEqualK ((k a) (k n) (n a)) () ((a ≤ (value k)) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
         a (value k) n LessEqual
@@ -1465,7 +1487,7 @@ But <code>a + Sn = Sk</code> implies <code>a ≤ Sk</code> and a bit of work wit
         n addThereExists
         applySyllogism
 
-        n (a ≤ (succ (value k))) NullThereExists
+        n a (succ (value k)) NullThereExistsLessEqual
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
@@ -1474,7 +1496,21 @@ We add <code>Sk ≤ a</code> to the consequent as that's what we'll need later.
         (a ≤ (succ (value k))) ((succ (value k)) ≤ a) DisjunctionRightIntroduction
         applySyllogism
 ))
-# This fails for distinct variables because in NullThereExists, n is not distinct from the dummy variable in (a ≤ (succ (value k))) (may also need to look for similar problems).
+</jh>
+
+The <code>a = k</code> case we express as <code>m = 0 → (k + m = a → a ≤ Sk ∨ Sk ≤ a)</code>. We prove it via several lemmas.
+<jh>
+thm (TotalityLemmaAEqualK-1 () () (((value m) = (0)) → ((((value k) + (value m)) = a) → ((value k) = a))) (
+        (value m) (0) (value k) AdditionBuilderLL
+
+        (value k) AdditiveIdentity
+        ((value m) = (0)) introduceAntecedent
+
+        applyEqualityTransitivityInConsequent
+
+        a buildEqualityRRInConsequent
+        eliminateBiconditionalReverseInConsequent
+))
 </jh>
 
 {{under construction}}

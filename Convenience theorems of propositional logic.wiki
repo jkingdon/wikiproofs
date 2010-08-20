@@ -131,6 +131,23 @@ thm (negatedDetachImplicationBiconditional ()
 ))
 </jh>
 
+Here's one for two implications.
+<jh>
+thm (negatedDetachImplicationImplication () 
+  ((H (¬ r)) 
+   (HIMP (p → (q → r))))
+  (p → (¬ q)) (
+        H
+
+        HIMP
+        q r Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        detachImplicationImplication
+))
+</jh>
+
 == Transforming parts of formula ==
 By "transforming", we mean applying a biconditional to replace part of a formula.
 <jh>
@@ -140,7 +157,7 @@ thm (transformAntecedent () ((HIMP (p → q)) (HEQ (p ↔ r))) (r → q) (
         applySyllogism
 ))
 
-thm (transformBiconditionalLeftInConsequent () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
+thm (transformImplicationBiconditionalLeft () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
         HEQ
         swapBiconditional
         antecedent introduceAntecedent
@@ -154,7 +171,7 @@ thm (transformBiconditionalLeftInConsequent () ((HIMP (antecedent → (p ↔ q))
         applySyllogism
 ))
 
-thm (transformBiconditionalRightInConsequent () ((HIMP (antecedent → (p ↔ q))) (HEQ (q ↔ r))) (antecedent → (p ↔ r)) (
+thm (transformImplicationBiconditionalRight () ((HIMP (antecedent → (p ↔ q))) (HEQ (q ↔ r))) (antecedent → (p ↔ r)) (
         HIMP
 
         HEQ
@@ -411,6 +428,22 @@ thm (buildBiconditionalRRInConsequent ()
 ))
 </jh>
 
+== Additional transformations ==
+<jh>
+thm (transformImplicationDisjunctionLeft () ((HIMP (antecedent → (p ∨ q))) (HEQ (p ↔ r))) (antecedent → (r ∨ q)) (
+        HIMP
+
+        antecedent BiconditionalReflexivity
+        HEQ
+        q buildDisjunctionRR
+        buildImplication
+
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
 == Additional theorems in the consequent ==
 The various *InConsequent theorems are generally easy consequences of <code>composeConjunction</code>.
 <jh>
@@ -427,9 +460,17 @@ thm (introduceBiconditionalFromImplicationsInConsequent ()
         applySyllogism
 ))
 
+thm (eliminateBiconditionalReverseInConsequent ()
+  ((HIMP (antecedent → (p ↔ q))))
+  (antecedent → (p → q)) (
+        HIMP
+        p q BiconditionalReverseElimination
+        applySyllogism
+))
+
 thm (applyModusPonensInConsequent ()
-  ((H (antecedent → p)
-   (HIMP (antecedent → (p → q)))
+  ((H (antecedent → p))
+   (HIMP (antecedent → (p → q))))
   (antecedent → q) (
         H
         HIMP

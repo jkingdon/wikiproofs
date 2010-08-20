@@ -6,15 +6,11 @@
 
 == First order logic todos ==
 
-* [[First-order logic]], [[Interface:First-order logic]]
-* [[First-order logic with quantifiability]], [[Interface:First-order logic with quantifiability]]
-
 === Worth proving? ===
 
 * Not sure whether these are the most salient subst theorems (perhaps better to see what we end up needing), but some interesting-looking ones are:
 :*[http://us.metamath.org/mpeuni/sbcom2.html sbcom2]
 :*[http://us.metamath.org/mpeuni/sbid2v.html sbid2v]
-:*[http://us.metamath.org/mpeuni/sbf.html sbf] - the metamath proof would appear to carry over directly
 :*[http://us.metamath.org/mpeuni/hbs1f.html hbs1f]
 :*[http://us.metamath.org/mpeuni/hbsb2a.html hbsb2a]
 
@@ -26,10 +22,6 @@
 === Others? ===
 [http://us.metamath.org/mpeuni/19.29.html 19.29]
 [http://us.metamath.org/mpeuni/19.2.html 19.2]
-
-In general, stretch from 19.12 (currently at [http://us.metamath.org/mpeuni/mmtheorems11.html]) to qexmid (next page), but I don't know what is important and what isn't.
-
-[http://us.metamath.org/mpeuni/eeanv.html eeanv]
 
 == Peano arithmetic ==
 === Theorems ===
@@ -67,7 +59,7 @@ Probably can base some of these on [http://code.google.com/p/ghilbert/source/bro
 Shouldn't ThereExistsConjunctionCombining be called ThereExistsConjunctionCombination and likewise for any other *Combining theorems?
 
 === Basic arithmetic ===
-[[Interface:Basic arithmetic]] does not currently have anything which needs to be proved with the ZeroNotSuccessor axiom (in fact, I'm pretty sure that modular arithmetic can model it). We should have one or more such.
+[[Interface:Basic arithmetic]] did not until recently have anything which needs to be proved with the ZeroNotSuccessor axiom. The issue is which theorems we can use to prove ZeroNotSuccessor in that page where we do such things.
 
 * The total order properties might rule out modular arithmetic (?), when combined with "5. Inequality is preserved by addition: x ≤ y → x + z ≤ y + z"
 

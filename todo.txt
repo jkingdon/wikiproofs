@@ -8,6 +8,16 @@ Items which may be doable without a network connection:
 * look at whether Raph's proof of ceqsex simplifies our development
   (I think it might enable omitting a bunch of strange little
   theorems).
+  - the proof does need Quantifiability but nothing else we don't have.
+  - ceqsex is ImplicitThereExists.
+    - ImplicitSubstitutionThereExists
+      - ImplicitSubstitutionForAll
+        - ax9oc (see also equs4c)
+          - ax6o (see also NegationNotFree, ax9o)
+        - a5i
+
+  * ax9o is only used by equs4.
+
 * naming convention for implication builders
   a. addImplicationAntecedent (from addCommonAntecedent)
      ImplicationConsequentAddition (from CommonConsequentAddition)
@@ -37,27 +47,9 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-Download files
-  * Interface:Classical propositional calculus
-  * Convenience theorems of propositional logic
-  * First-order logic
-  * First-order logic with quantifiability
-  * Interface:First-order logic
-  * Interface:First-order logic with quantifiability
-  * Wikiproofs:Scattered propositional logic theorems‎
-  * Interface:Principia Mathematica propositional logic theorems
-  * Intuitionistic propositional logic‎
-  * Principia Mathematica propositional logic
-  * Axioms of general set theory
-  * General set theory
-  * Basic operations of general set theory
-  * User:Kingdon
-
 nomenclature: combining vs combination from User:Kingdon
 
 Don't export TheoremNotFree
 
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
-
-Rename the ThereExistsIntroduction which has a subst to ThereExistsIntroductionFromObject or ThereExistsIntroductionObject or some such. Then apply the changes from git for the subst-less ThereExistsIntroduction.
 

@@ -1,0 +1,39 @@
+{{interfaces
+| imports = [[Interface:Basic arithmetic]]
+| exports = [[Interface:Peano axioms]]
+}}
+
+{{under construction}}
+The idea behind [[Interface:Basic arithmetic]] is that it should include everything we need to conveniently do arithmetic. This module provides a minimal baseline: basic arithmetic should at least be sufficient to prove the Peano axioms.  This is not trivially true because basic arithmetic lacks a successor operation and contains few of the axioms in their original form.
+
+We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic]], and [[Interface:Basic arithmetic]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (BASIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
+
+var (formula φ)
+var (variable k n)
+var (nat a b c d a0 a1 b0 b1)
+</jh>
+
+== Successor ==
+We define the successor operation as adding one:
+
+<jh>
+def ((succ a) (a + (1)))
+</jh>
+
+== Export ==
+
+We're now ready to export [[Interface:Peano axioms]]. Or rather, we will be, when this file is done.
+
+<jh>
+#export (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Elementary number theory|{{PAGENAME}}]]
+
