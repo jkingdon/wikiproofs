@@ -1463,9 +1463,21 @@ thm (NullThereExistsLessEqual ((n a) (n b) (n m) (a m) (b m)) () ((∃ n (a ≤ 
 ))
 </jh>
 
-We next prove the <code>a ≤ k</code> case as a lemma, <code>a ≤ k → a ≤ Sk ∨ Sk ≤ a</code>.
+While we're at it, we prove another similar lemma we'll need later in the proof of totality.
 <jh>
-thm (TotalityLemmaALessEqualK ((k a) (k n) (n a)) () ((a ≤ (value k)) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
+thm (NullThereExistsDisjunctionLessEqual ((n a) (n b) (n c) (n d)) () ((∃ n ((a ≤ b) ∨ (c ≤ d))) ↔ ((a ≤ b) ∨ (c ≤ d))) (
+        n (a ≤ b) (c ≤ d) ThereExistsDisjunction
+
+        n (a ≤ b) NullThereExistsLessEqual
+        n (c ≤ d) NullThereExistsLessEqual
+        buildDisjunction
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The key result for the <code>a ≤ k</code> case is <code>a ≤ k → a ≤ Sk</code>.
+<jh>
+thm (LessEqualSuccessor ((k a) (k n) (n a)) () ((a ≤ (value k)) → (a ≤ (succ (value k)))) (
         a (value k) n LessEqual
         eliminateBiconditionalReverse
 </jh>
@@ -1490,9 +1502,14 @@ But <code>a + Sn = Sk</code> implies <code>a ≤ Sk</code> and a bit of work wit
         n a (succ (value k)) NullThereExistsLessEqual
         eliminateBiconditionalReverse
         applySyllogism
+))
 </jh>
-We add <code>Sk ≤ a</code> to the consequent as that's what we'll need later.
+
+What we actually need for the <code>a ≤ k</code> case is a slight variation of that, <code>a ≤ k → a ≤ Sk ∨ Sk ≤ a</code>.
 <jh>
+thm (TotalityLemmaALessEqualK () () ((a ≤ (value k)) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
+        a k LessEqualSuccessor
+
         (a ≤ (succ (value k))) ((succ (value k)) ≤ a) DisjunctionRightIntroduction
         applySyllogism
 ))
@@ -1511,7 +1528,130 @@ thm (TotalityLemmaAEqualK-1 () () (((value m) = (0)) → ((((value k) + (value m
         a buildEqualityRRInConsequent
         eliminateBiconditionalReverseInConsequent
 ))
+
+thm (TotalityLemmaAEqualK-2a () () ((a = (value k)) → (a ≤ (value k))) (
+        a (value k) (0) EqualityBuilderRR
+        (value k) AdditiveIdentity
+        (a + (0)) buildEqualityLL
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
+That gives us <code>a = k → a + 0 = k</code>.
+<jh>
+        a (0) (value k) LessEqualObject
+        applySyllogism
+))
+
+thm (TotalityLemmaAEqualK-2 () () ((a = (value k)) → (a ≤ (succ (value k)))) (
+        a k TotalityLemmaAEqualK-2a
+        a k LessEqualSuccessor
+        applySyllogism
+))
+
+thm (TotalityLemmaAEqualK () () (((value m) = (0)) → ((((value k) + (value m)) = a) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a)))) (
+        m k a TotalityLemmaAEqualK-1
+
+        (value k) a EqualitySymmetry eliminateBiconditionalReverse
+        a k TotalityLemmaAEqualK-2
+        applySyllogism
+
+        (a ≤ (succ (value k))) ((succ (value k)) ≤ a) DisjunctionRightIntroduction
+        applySyllogism
+
+        (((value k) + (value m)) = a) addCommonAntecedent
+        applySyllogism
+))
+</jh>
+
+The <code>k < a</code> case we express as <code>m ≠ 0 → (k + m = a → a ≤ Sk ∨ Sk ≤ a)</code>. Here is an outline of the proof of this case. We will be proving that <code>m ≠ 0</code> and <code>k + m = a</code> imply <code>Sk ≤ a</code>. To do this we need a number <code>n</code> for which <code>Sk + n = a</code>. The predecessor of <code>m</code> is the value we choose.
+<jh>
+thm (TotalityLemmaKLessThanA ((n m) (n k) (n a)) () (((value m) ≠ (0)) → ((((value k) + (value m)) = a) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a)))) (
+        (value m) n Predecessor
+</jh>
+Next we show <code>Sn = m → (k + m = a → k + Sn = a)</code>
+<jh>
+        (succ (value n)) (value m) (value k) AdditionBuilderLL
+        a buildEqualityRRInConsequent
+        eliminateBiconditionalReverseInConsequent
+</jh>
+Adding ∃ and combining with the previous step gives <code>m ≠ 0 → ∃ n (k + m = a → k + Sn = a)</code>
+<jh>
+        n addThereExists
+        applySyllogism
+</jh>
+We move <code>k + m = a</code> out of the quantifier.
+<jh>
+        n (((value k) + (value m)) = a) (((value k) + (succ (value n))) = a) ThereExistsAntecedentMovement
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We have <code>m ≠ 0 → (k + m = a → ∃ n k + Sn = a)</code>. We transform <code>k + Sn = a</code> into <code>Sk + n = a</code>.
+<jh>
+        k n Addition
+
+        (value k) (value n) AdditionCommutativity
+        addSuccessor
+        applyBiconditionalTransitivity
+
+        n k Addition
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        (value n) (succ (value k)) AdditionCommutativity
+        applyBiconditionalTransitivity
+
+        n buildThereExists
+        transformImplicationImplicationConsequent
+</jh>
+Now we show that <code>∃ n Sk + n = a</code> implies <code>a ≤ Sk ∨ Sk ≤ a</code>,
+<jh>
+        (succ (value k)) a n LessEqual eliminateBiconditionalForward
+        ((succ (value k)) ≤ a) (a ≤ (succ (value k))) DisjunctionLeftIntroduction
+        applySyllogism
+</jh>
+and assemble the result.
+<jh>
+        (((value k) + (value m)) = a) addCommonAntecedent
+        ((value m) ≠ (0)) addCommonAntecedent
+        applyModusPonens
+))
+</jh>
+
+Taking one step back, the combination of the <code>a = k</code> and <code>k < a</code> cases is the <code>k ≤ a</code> case, <code>k ≤ a → a ≤ Sk ∨ Sk ≤ a</code>.
+<jh>
+thm (TotalityLemmaKLessEqualA () () (((value k) ≤ a) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
+</jh>
+We start with <code>k ≤ a → ∃ m k + m = a</code>.
+<jh>
+        (value k) a m LessEqual
+        eliminateBiconditionalReverse
+</jh>
+That <code>k + m = a → a ≤ Sk ∨ Sk ≤ a</code> is just the combination of the <code>a = k</code> and <code>k < a</code> cases.
+<jh>
+        m k a TotalityLemmaAEqualsK
+        m k a TotalityLemmaKLessThanA
+        eliminateCases
+</jh>
+Now we just add ∃ and combine with the previous result to get <code>k ≤ a → ∃ m a ≤ Sk ∨ Sk ≤ a</code>.
+<jh>
+        m addThereExists
+        applySyllogism
+</jh>
+Since m does not occur in <code>a ≤ Sk ∨ Sk ≤ a</code>, the quantifier is unnecessary, and we are done.
+<jh>
+        m a (succ (value k)) (succ (value k)) a NullThereExistsDisjunctionLessEqual
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+We are ready to return the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution.
+<jh>
+#thm (Totality-sub () () (((value n) = sub) → (((a ≤ (value n)) ∨ ((value n) ≤ a)) ↔ ((a ≤ sub) ∨ (sub ≤ a))) (
+        # TODO: need to prove builders for ≤
+#))
+</jh>
+And here is the proof, by induction on <code>b</code>.
 
 {{under construction}}
 == Adding one and successor ==
