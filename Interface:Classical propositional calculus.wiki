@@ -470,6 +470,7 @@ stmt (buildBiconditionalRRInConsequent () ((antecedent → (p ↔ q))) (antecede
 <jh>
 stmt (introduceBiconditionalFromImplicationsInConsequent () ((antecedent → (p → q)) (antecedent → (q → p))) (antecedent → (p ↔ q)))
 stmt (eliminateBiconditionalReverseInConsequent () ((antecedent → (p ↔ q))) (antecedent → (p → q)))
+stmt (eliminateBiconditionalForwardInConsequent () ((antecedent → (p ↔ q))) (antecedent → (q → p)))
 stmt (applyModusPonensInConsequent () ((antecedent → p) (antecedent → (p → q))) (antecedent → q))
 </jh>
 

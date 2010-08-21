@@ -1468,8 +1468,8 @@ While we're at it, we prove another similar lemma we'll need later in the proof 
 thm (NullThereExistsDisjunctionLessEqual ((n a) (n b) (n c) (n d)) () ((∃ n ((a ≤ b) ∨ (c ≤ d))) ↔ ((a ≤ b) ∨ (c ≤ d))) (
         n (a ≤ b) (c ≤ d) ThereExistsDisjunction
 
-        n (a ≤ b) NullThereExistsLessEqual
-        n (c ≤ d) NullThereExistsLessEqual
+        n a b NullThereExistsLessEqual
+        n c d NullThereExistsLessEqual
         buildDisjunction
         applyBiconditionalTransitivity
 ))
@@ -1507,7 +1507,7 @@ But <code>a + Sn = Sk</code> implies <code>a ≤ Sk</code> and a bit of work wit
 
 What we actually need for the <code>a ≤ k</code> case is a slight variation of that, <code>a ≤ k → a ≤ Sk ∨ Sk ≤ a</code>.
 <jh>
-thm (TotalityLemmaALessEqualK () () ((a ≤ (value k)) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
+thm (TotalityLemmaALessEqualK ((a k)) () ((a ≤ (value k)) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
         a k LessEqualSuccessor
 
         (a ≤ (succ (value k))) ((succ (value k)) ≤ a) DisjunctionRightIntroduction
@@ -1530,7 +1530,7 @@ thm (TotalityLemmaAEqualK-1 () () (((value m) = (0)) → ((((value k) + (value m
 ))
 
 thm (TotalityLemmaAEqualK-2a () () ((a = (value k)) → (a ≤ (value k))) (
-        a (value k) (0) EqualityBuilderRR
+        a (value k) (0) AdditionBuilderRR
         (value k) AdditiveIdentity
         (a + (0)) buildEqualityLL
         eliminateBiconditionalReverse
@@ -1542,13 +1542,13 @@ That gives us <code>a = k → a + 0 = k</code>.
         applySyllogism
 ))
 
-thm (TotalityLemmaAEqualK-2 () () ((a = (value k)) → (a ≤ (succ (value k)))) (
+thm (TotalityLemmaAEqualK-2 ((a k)) () ((a = (value k)) → (a ≤ (succ (value k)))) (
         a k TotalityLemmaAEqualK-2a
         a k LessEqualSuccessor
         applySyllogism
 ))
 
-thm (TotalityLemmaAEqualK () () (((value m) = (0)) → ((((value k) + (value m)) = a) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a)))) (
+thm (TotalityLemmaAEqualK ((a k)) () (((value m) = (0)) → ((((value k) + (value m)) = a) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a)))) (
         m k a TotalityLemmaAEqualK-1
 
         (value k) a EqualitySymmetry eliminateBiconditionalReverse
@@ -1572,7 +1572,7 @@ Next we show <code>Sn = m → (k + m = a → k + Sn = a)</code>
 <jh>
         (succ (value n)) (value m) (value k) AdditionBuilderLL
         a buildEqualityRRInConsequent
-        eliminateBiconditionalReverseInConsequent
+        eliminateBiconditionalForwardInConsequent
 </jh>
 Adding ∃ and combining with the previous step gives <code>m ≠ 0 → ∃ n (k + m = a → k + Sn = a)</code>
 <jh>
@@ -1587,18 +1587,20 @@ We move <code>k + m = a</code> out of the quantifier.
 </jh>
 We have <code>m ≠ 0 → (k + m = a → ∃ n k + Sn = a)</code>. We transform <code>k + Sn = a</code> into <code>Sk + n = a</code>.
 <jh>
-        k n Addition
+        (value k) (value n) Addition
 
         (value k) (value n) AdditionCommutativity
         addSuccessor
-        applyBiconditionalTransitivity
+        applyEqualityTransitivity
 
-        n k Addition
-        swapBiconditional
-        applyBiconditionalTransitivity
+        (value n) (value k) Addition
+        swapEquality
+        applyEqualityTransitivity
 
         (value n) (succ (value k)) AdditionCommutativity
-        applyBiconditionalTransitivity
+        applyEqualityTransitivity
+
+        a buildEqualityRR
 
         n buildThereExists
         transformImplicationImplicationConsequent
@@ -1619,7 +1621,7 @@ and assemble the result.
 
 Taking one step back, the combination of the <code>a = k</code> and <code>k < a</code> cases is the <code>k ≤ a</code> case, <code>k ≤ a → a ≤ Sk ∨ Sk ≤ a</code>.
 <jh>
-thm (TotalityLemmaKLessEqualA () () (((value k) ≤ a) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
+thm (TotalityLemmaKLessEqualA ((a k) (m a) (m k)) () (((value k) ≤ a) → ((a ≤ (succ (value k))) ∨ ((succ (value k)) ≤ a))) (
 </jh>
 We start with <code>k ≤ a → ∃ m k + m = a</code>.
 <jh>
@@ -1628,7 +1630,7 @@ We start with <code>k ≤ a → ∃ m k + m = a</code>.
 </jh>
 That <code>k + m = a → a ≤ Sk ∨ Sk ≤ a</code> is just the combination of the <code>a = k</code> and <code>k < a</code> cases.
 <jh>
-        m k a TotalityLemmaAEqualsK
+        m k a TotalityLemmaAEqualK
         m k a TotalityLemmaKLessThanA
         eliminateCases
 </jh>
