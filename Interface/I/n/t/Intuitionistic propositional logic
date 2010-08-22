@@ -259,6 +259,12 @@ Negation as implication.  This one holds as in classical logic.
 stmt (NegationImplication () () ((¬ p) ↔ (p → (⊥))))
 </jh>
 
+==== Antecedent distribution ====
+Here is a version of <code>AntecedentDistribution</code> with one of the implications replaced by a biconditional.
+<jh>
+stmt (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))))
+</jh>
+
 == Rules ==
 
 Here we supply rules corresponding to many of the theorems above, including those rules from [[Interface:Principia Mathematica propositional logic theorems]] which hold intuitionistically.
@@ -353,7 +359,7 @@ stmt (convertFromDisjunctionToImplication () ((p ∨ q)) ((¬ p) → q))
 stmt (convertToImplicationFromDisjunction () (((¬ p) ∨ q)) (p → q))
 stmt (convertFromNegationToImplication () ((¬ p)) (p → (⊥)))
 stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
-</jh>
+stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) ↔ (p → r)))</jh>
 
 == Footnotes ==
 
