@@ -478,6 +478,14 @@ thm (eliminateBiconditionalReverseInConsequent ()
         applySyllogism
 ))
 
+thm (eliminateBiconditionalForwardInConsequent ()
+  ((HIMP (antecedent → (p ↔ q))))
+  (antecedent → (q → p)) (
+        HIMP
+        p q BiconditionalForwardElimination
+        applySyllogism
+))
+
 thm (applyModusPonensInConsequent ()
   ((H (antecedent → p))
    (HIMP (antecedent → (p → q))))
