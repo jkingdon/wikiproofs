@@ -359,7 +359,8 @@ stmt (convertFromDisjunctionToImplication () ((p ∨ q)) ((¬ p) → q))
 stmt (convertToImplicationFromDisjunction () (((¬ p) ∨ q)) (p → q))
 stmt (convertFromNegationToImplication () ((¬ p)) (p → (⊥)))
 stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
-stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) ↔ (p → r)))</jh>
+stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) ↔ (p → r)))
+</jh>
 
 == Footnotes ==
 
