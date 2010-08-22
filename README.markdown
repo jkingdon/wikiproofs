@@ -11,3 +11,5 @@ me not even knowing whether 0.3 is supported by http://github.com/sbober/levitat
 similar tool, can be made to work on wikiproofs, this repository could be generated from levitation which would
 be a whole lot easier than what I have been doing.
 
+Mediawiki XML format 0.3 is at http://www.mediawiki.org/xml/export-0.3.xsd .  Compare with http://www.mediawiki.org/xml/export-0.4.xsd
+
