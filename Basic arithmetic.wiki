@@ -1079,10 +1079,39 @@ We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is eno
 ))
 </jh>
 
+=== Builders ===
+The builders for <code>≤</code> follow readily from the builders for addition, equality, and so on.
+<jh>
+thm (LessEqualBuilderRR ((a0 n) (a1 n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
+</jh>
+What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = b)</code>.  The right hand side basically consists of the desired theorem with ≤ expanded, but with a twist: here it holds with the same variable for both quantifiers.
+<jh>
+        a0 a1 (value n) AdditionBuilderRR
+        b buildEqualityRRInConsequent
+
+        n addForAllToConsequent
+        n ((a0 + (value n)) = b) ((a1 + (value n)) = b) ForAllBiconditionalThereExists
+        applySyllogism
+
+        a0 b n LessEqual
+        a1 b n LessEqual
+        buildBiconditional
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+#thm (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))) (
+#thm (buildLessEqual
+#thm (buildLessEqualRR
+#thm (LessEqualBuilderLL
+#thm (buildLessEqualLL
+</jh>
+
 === Proving inequality with an object ===
 We can prove <code>a ≤ b</code> by proving <code>∃ n a + n = b</code>. Well, the usual way to do this is to provide a value for <code>n</code>.
 <jh>
 thm (LessEqualObject ((c n) (a n) (b n)) () (((a + c) = b) → (a ≤ b)) (
+
 </jh>
 The proof is basically substitution machinery. We start with <code>n = c → (a + n = b ↔ a + c = b)</code>:
 <jh>
@@ -1103,6 +1132,7 @@ We turn that into <code>(subst c n (a + n = b)) ↔ a + c = b</code>,
 and take the reverse implication.
 <jh>
         eliminateBiconditionalForward
+
 </jh>
 That in turn implies <code>∃ n a + n = b</code>, which is <code>a ≤ b</code> by the definition of <code>≤</code>.
 <jh>
