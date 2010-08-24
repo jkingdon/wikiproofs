@@ -1079,6 +1079,28 @@ We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is eno
 ))
 </jh>
 
+=== Builders ===
+The builders for <code>≤</code> follow readily from the builders for addition, equality, and so on.
+<jh>
+thm (LessEqualBuilderRR ((a0 n) (a1 n) (b n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
+</jh>
+What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = b)</code>.  The right hand side basically consists of the desired theorem with ≤ expanded, but with a twist: here it holds with the same variable for both quantifiers.
+<jh>
+        a0 a1 (value n) AdditionBuilderRR
+        b buildEqualityRRInConsequent
+
+        n addForAllToConsequent
+        n ((a0 + (value n)) = b) ((a1 + (value n)) = b) ForAllBiconditionalThereExists
+        applySyllogism
+
+        a0 b n LessEqual
+        a1 b n LessEqual
+        buildBiconditional
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 === Proving inequality with an object ===
 We can prove <code>a ≤ b</code> by proving <code>∃ n a + n = b</code>. Well, the usual way to do this is to provide a value for <code>n</code>.
 <jh>
@@ -1647,7 +1669,7 @@ Since m does not occur in <code>a ≤ Sk ∨ Sk ≤ a</code>, the quantifier is 
 ))
 </jh>
 
-We are ready to return the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution.
+We are ready to return to the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution.
 <jh>
 #thm (Totality-sub () () (((value n) = sub) → (((a ≤ (value n)) ∨ ((value n) ≤ a)) ↔ ((a ≤ sub) ∨ (sub ≤ a))) (
         # TODO: need to prove builders for ≤
