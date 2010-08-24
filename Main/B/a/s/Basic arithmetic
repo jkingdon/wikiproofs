@@ -1101,6 +1101,23 @@ What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = 
 ))
 </jh>
 
+The builder for adding a common number to the left is similar, and is proved in the same way.
+<jh>
+thm (LessEqualBuilderLL ((a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))) (
+        b0 b1 (a + (value n)) EqualityBuilderLL
+
+        n addForAllToConsequent
+        n ((a + (value n)) = b0) ((a + (value n)) = b1) ForAllBiconditionalThereExists
+        applySyllogism
+
+        a b0 n LessEqual
+        a b1 n LessEqual
+        buildBiconditional
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 === Proving inequality with an object ===
 We can prove <code>a ≤ b</code> by proving <code>∃ n a + n = b</code>. Well, the usual way to do this is to provide a value for <code>n</code>.
 <jh>
