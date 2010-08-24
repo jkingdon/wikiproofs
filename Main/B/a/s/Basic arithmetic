@@ -1727,9 +1727,11 @@ Since m does not occur in <code>a ≤ Sk ∨ Sk ≤ a</code>, the quantifier is 
 
 We are ready to return to the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution.
 <jh>
-#thm (Totality-sub () () (((value n) = sub) → (((a ≤ (value n)) ∨ ((value n) ≤ a)) ↔ ((a ≤ sub) ∨ (sub ≤ a))) (
-        # TODO: need to prove builders for ≤
-#))
+thm (Totality-sub () () (((value n) = sub) → (((a ≤ (value n)) ∨ ((value n) ≤ a)) ↔ ((a ≤ sub) ∨ (sub ≤ a)))) (
+        (value n) sub a LessEqualBuilderLL
+        (value n) sub a LessEqualBuilderRR
+        buildDisjunctionInConsequent
+))
 </jh>
 And here is the proof, by induction on <code>b</code>.
 
