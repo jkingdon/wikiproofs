@@ -1118,6 +1118,45 @@ thm (LessEqualBuilderLL ((a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔ 
 ))
 </jh>
 
+Combining <code>LessEqualBuilderLL</code> and <code>LessEqualBuilderRR</code> gives us the full builder.
+
+<jh>
+thm (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))) (
+        (a0 = a1) (b0 = b1) ConjunctionRightElimination
+        a0 a1 b0 LessEqualBuilderRR
+        applySyllogism
+
+        (a0 = a1) (b0 = b1) ConjunctionLeftElimination
+        b0 b1 a1 LessEqualBuilderLL
+        applySyllogism
+
+        composeConjunction
+
+        (a0 ≤ b0) (a1 ≤ b0) (a1 ≤ b1) BiconditionalTransitivity
+        applySyllogism
+))
+
+thm (buildLessEqual () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 ≤ b0) ↔ (a1 ≤ b1)) (
+        HA
+        HB
+        introduceConjunction
+        a0 a1 b0 b1 LessEqualBuilder
+        applyModusPonens
+))
+
+thm (buildLessEqualRR () ((H (a0 = a1))) ((a0 ≤ b) ↔ (a1 ≤ b)) (
+        H
+        a0 a1 b LessEqualBuilderRR
+        applyModusPonens
+))
+
+thm (buildLessEqualLL () ((H (b0 = b1))) ((a ≤ b0) ↔ (a ≤ b1)) (
+        H
+        b0 b1 a LessEqualBuilderLL
+        applyModusPonens
+))
+</jh>
+
 === Proving inequality with an object ===
 We can prove <code>a ≤ b</code> by proving <code>∃ n a + n = b</code>. Well, the usual way to do this is to provide a value for <code>n</code>.
 <jh>
