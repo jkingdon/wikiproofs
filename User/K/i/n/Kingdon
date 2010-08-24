@@ -4,6 +4,11 @@
 *[[User interface:Kingdon/Sandbox]]
 *[[User module:Kingdon/Sandbox]]
 
+== Geometry ==
+See [[w:Category:Axiomatics of Euclidean geometry]]. Tarski's system would appear to be most within reach, especially if restricting to Tarski's first-order (elementary) version, rather than adding the second-order axiom which produces full Euclidean geometry.
+
+Think about (or find a work describing) how to, from these axioms, introduce more familiar notation such as the line AB, the angle ∠ABC, the triangle ABC, etc.
+
 == First order logic todos ==
 
 === Worth proving? ===
