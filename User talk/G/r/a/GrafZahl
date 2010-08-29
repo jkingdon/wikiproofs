@@ -1,0 +1,3 @@
+== sessions ==
+
+Is there something wrong with the way session data is being stored?  If I log in, I'm just logged in for one page view, and clicking anything returns me to not logged in. It seems to work for wikipedia, so I don't think it is a setting with cookies in my browser. Kingdon. [[Special:Contributions/97.73.64.167|97.73.64.167]] 01:38, 29 August 2010 (UTC)
