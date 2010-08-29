@@ -216,7 +216,80 @@ I've now split <code>object</code> in two everywhere.  I'd especially appreciate
 
 ::::::OK, I think I've figured it out.The way that quantification, sets, and classes work in set.mm is just different from the way it works in Raph's peano_thms.gh (as shown by the extra hypothesis in vtocl; more discussion at [[Interface:Axiom of quantifiability]]). Raph's way is probably better for Peano arithmetic and ZF set theory, although some other set theories might find it too constraining.  I've separated them into different pages, although at least for the present I plan to build on top of [[Interface:First-order logic with quantifiability]] rather than [[Interface:First-order logic]]. Feedback would be most welcome (in particular, I just made up the name "axiom of quantifiability" and don't really know whether there is something similar in the literature). [[User:Kingdon|Kingdon]] 22:30, 11 May 2010 (UTC)
 
-iyVYav  <a href="http://slkkbpnahrqj.com/">slkkbpnahrqj</a>, [url=http://zxlerguplkpt.com/]zxlerguplkpt[/url], [link=http://xldbcnpfubba.com/]xldbcnpfubba[/link], http://uiuuukvtsjpd.com/
+== Abstract versus Concrete Syntax ==
+
+Hi Grafzahl and friends...
+
+I finally found your note at http://wiki.planetmath.org/AsteroidMeta/ocat
+Thanks for the heads up! I have busied myself during the last 14 months
+with earning my keep, and frankly, a bit of a rest up from my mmj2 exertions.
+Going forward I am undecided about where to focus my programming energies,
+but there are aspects of Metamath-related work that interest me. I think
+some of these may be relevant to your J/Ghilbert work, though I do not
+presume to know anything more than I have already coded and tested in mmj2 :-)
+
+One primary topic concerns the grammars -- i.e. syntax and presentation,
+on input, output and internal. By "abstract" I mean the "normal" form
+used internally after unambiguous parsing into tree form. "Concrete"
+refers to external forms, which for example, may include redundant parentheses.
+An example of concrete is 'a + b + c' and 'a + (b + c)' being equivalent 
+to '(( a + b) + c)' (which is the abstract form) -- noting that '(a + (b + c))'
+may be equal to '((a + b) + c) but that is something that must be proved
+or given as a "law" or axiom. 
+
+What we see in Metamath is that the abstract (internal) grammar/syntax is
+identical to the concrete grammar/syntax. Metamath cannot tolerate 
+redundant parentheses, and even if it could somehow ignore them in
+specific cases there is no defined mechanism for translating between
+abstract and concrete grammatical forms; a 'concrete' parse tree would
+require a different proof than an equivalent 'abstract' parse tree, absent
+a grammatical translator.
+
+So, for ease of use we would like to see abstract and concrete grammars
+available. Concrete syntax(es) statements would be parse and then
+translated to abstract form for processing by the proof engine(s), and
+then a reverse translation(s) would be performed for presentation output.
+
+In addition, it might be very useful to develop a grammar generator
+which would accept as input the typical sort of operator hierarchy
+table and output context free grammars -- both abstract and concrete.
+
+Finally, symbol translation tables could be developed to map between
+different languages. 
+
+p.s. you can email me in the future at k900f73 via yahoo. 
+
+[[User:Mellocat|Mellocat]] 18:13, 27 March 2010 (UTC)Mellocat 27-Mar-2010
+
+:Good to see you here!
+
+:I have to say, I'm a little confused by the distinction between abstract and concrete grammar. To me, the meaningful distinction is between the low-level grammar, which is (hopefully) pretty easy to parse and unambiguous, and the presentation layer that may sit above it, which is designed to be much closer to traditional mathematics. In some cases, the low-level grammar makes some concessions towards being more readable (i.e. both JHilbert and Metamath use infix), but in other cases not. Perhaps your distinction is more relevant in HOL, where there is both an accessible internal representation (using mk_abs to construct a lambda abstraction, for example) and a more palatable printed syntax used in virtually all communication with the user, still ASCII-based though.
+
+:Further, in presentation you can do quite a bit more than just grammar. For one, you can use 2-d layout, like <math>\Sigma_{i=1}^\infty</math> or <math>e^{i\pi}</math>. It's possible to imagine a number of different input methods that would generate these types of results,  You can also tweak the spacing to make operator precedence more visually distinct (as I have done for the math typesetting in my interactive app, as well as the experiments generating PDF).
+
+:I think the big confusion for me is: what do you expect to be stored in files? You can't store the full 2D graphical representation, so perhaps there's an intermediate grammar, something with Unicode and maybe markup <code>"e<sup>iπ</sup>"</code>, for example. Or another possibility (pretty much what I'm doing so far) is to store everything in the low-level representation, and do the presentation on-the-fly. 
+
+:Anyway, these are just some random thoughts. Nice to have you as part of the conversation, and hope to see you around more. [[User:Raph|Raph]] 00:58, 28 March 2010 (UTC)
+
+:: Hi. I should have said "syntax" instead of "grammar", perhaps. 
+
+:: This link has a discussion of abstract vs. concrete: http://nat.truemesh.com/archives/000531.html
+
+:: The important quality for syntaxes is that the parse tree is unambiguous to the intended audience, whether a human or a program. Internally the abstract syntax is boiled down to, say, for '->', just the name/code of implication and the names/codes of the two operands, in a specific order. Externally there may be multiple input and output syntaxes, just so long as their meaning is unambiguous. Redundant parentheses may be present, or as you mention, the output syntax may be MathML, Tex, or whatever. There is a necessary transformation from/to abstract and concrete, and there is a necessary rendering layer for concrete syntax representations, as well as an input parser for each time language/data must be input, validated and converted into syntax trees in memory. 
+
+:: What is stored in the file/database is up for discussion. I would probably want to be able to store the specifications for abstract and concrete syntaxes separately from the math content. Like "normal form" in database design. That facilitates gathering math content from different sources and sharing without having to modify program code.
+
+:: This all sounds laborious and cruel, but going back and making changes later is worse.
+
+[[User:Mellocat|Mellocat]] 14:19, 28 March 2010 (UTC)Mellocat
+
+:::Ah, I think I understand better. Unless I'm still not getting it, the concrete syntax is what's in the file, and the abstract syntax is the data structure used in the implementation. In Ghilbert, I've been extremely careful to separate the interchange format from the implementation; the latter is basically free to do whatever it likes as long as it gets the proof validity predicate right. In particular, there's no programmatic API for accessing terms. This approach is in stark contrast with [http://sourceforge.net/projects/hol/files/hol/kananaskis-5-description.pdf/download HOL] (see p. 16 for a 12-line expression representing the abstract syntax of the expression <code>``\x. x+1``</code>). In any case, I'd like to continue this discussion further in [[Wikiproofs:Syntax_Discussions]], and have no problems with anyone refactoring the syntax discussion thread on this page over there. -- [[User:Raph|Raph]] 22:38, 28 March 2010 (UTC)
+
+:::: A good example of the main "problem" (not that Metamath isn't perfect :-) I am first discussing is seen in the ramifications of defining the ternary "and" syntax axiom w3a (vs. binary "and" syntax axiom "wa".) And, because Metamath requires the concrete to be identical to the abstract syntax, extra parentheses introduced by the user for readability are prohibited. Also (then I would switch to your new page), compare the Metamath "operator" syntax to say, Python's (e.g. SageMath) -- I don't expect an individual to master multiple syntaxes, but different syntaxes might/ought be available, depending on the user's preference. Finally...the are 4 unary boolean operators, 16 binary boolean operators, and yada-yada ternary boolean operators -- their "names" are essentially arbitrary, but their identities are established across the world of math/computer science via their truth tables, so translations between different systems/languages should be programmatic (i.e. I shouldn't care that Norm refers to "wi" while you refer to "->" while Grafzahl refers to Unicode somthing-or-other, just so long as I have a translation table and syntax converter code.) [[User:Mellocat|Mellocat]] 00:03, 29 March 2010 (UTC)Mellocat
+
+:: P.S. As an interesting side note about what can feasibly be done, about six months ago I upgraded my computer system to a dual Pentium R S5300 2.60GHz 64 bit processor/OS with 6GB RAM, and what is surely a faster hard drive. I also downloaded the latest JDK, 1.6.18, 64 bit version and recompiled mmj2 (though recompilation was not necessary.) Initial startup including starting the JVM, verifying all Metamath proofs, parsing, and display of the mmj2 GUI screen took 5.554 seconds. With my old machine that process took about 16 seconds. And consider that my new machine, a desktop, cost only $400. 
+
+[[User:Mellocat|Mellocat]] 14:38, 28 March 2010 (UTC)Mellocat
 
 == pointer to more thoughts on definitions ==
 
