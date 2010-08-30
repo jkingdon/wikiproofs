@@ -1826,6 +1826,62 @@ The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a 
 ))
 </jh>
 
+==== Strict order ====
+Here we define <code><nowiki><</nowiki></code>, as well as <code><nowiki>></nowiki></code> and <code>≥</code>.
+<jh>
+def ((< a b) ((a ≤ b) ∧ (a ≠ b)))
+def ((> b a) (a < b))
+def ((≥ b a) (a ≤ b))
+</jh>
+
+We next prove <code>a ≤ b ↔ a < b ∨ a = b</code> (finally justifying the informal name "less than or equal to" for <code>≤</code>). The proof is fairly straightforward expansion of the definition and rearrangement, but it will be easier to break out part of the proof into a lemma.
+<jh>
+thm (LessEqualLessThanLemma () () ((a ≤ b) ↔ (((a ≤ b) ∨ (a = b)) ∧ ((a ≠ b) ∨ (a = b)))) (
+</jh>
+We start with the forward implication. The first half is <code>a ≤ b → a ≤ b ∨ a = b</code>
+<jh>
+        (a ≤ b) (a = b) DisjunctionRightIntroduction
+</jh>
+The second half is <code>a ≤ b → a ≠ b ∨ a = b</code>
+<jh>
+        (a = b) TertiumNonDatur swapDisjunction
+        (a ≤ b) introduceAntecedent
+</jh>
+Combining these gives us the forward implication.
+<jh>
+        composeConjunction
+</jh>
+Moving on to the reverse implication, we start with <code>(a ≤ b ∨ a = b) ∧ (a ≠ b ∨ a = b) → a ≤ b ∨ a = b</code>
+<jh>
+        ((a ≤ b) ∨ (a = b)) ((a ≠ b) ∨ (a = b)) ConjunctionRightElimination
+</jh>
+Then we show <code>a ≤ b ∨ a = b → a ≤ b</code>.
+<jh>
+        (a ≤ b) ImplicationReflexivity
+        a b EqualityLessEqual
+        composeDisjunction
+</jh>
+Combining these gives the reverse implication,
+<jh>
+        applySyllogism
+</jh>
+and combining forward and reverse implications completes the proof.
+<jh>
+        introduceBiconditionalFromImplications
+))
+
+thm (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))) (
+        a b LessEqualLessThanLemma
+
+        (a ≤ b) (a ≠ b) (a = b) DisjunctionRightDistribution
+        swapBiconditional
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <code>a ≤ b ∧ a ≠ b</code> is just the definition of <code><nowiki><</nowiki></code>, so this is enough.
+<jh>
+))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
