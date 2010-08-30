@@ -111,6 +111,23 @@ stmt (MultiplicativeIdentityLeft () ()
   (((1) · a) = a))
 </jh>
 
+== Order ==
+We define a formula <code>≤</code> and supply the usual builders (including some convenience builders).
+<jh>
+term (formula (≤ nat nat))
+
+stmt (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))))
+stmt (LessEqualBuilderLL () () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))))
+stmt (LessEqualBuilderRR () () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))))
+</jh>
+
+It has the [[w:total order|properties of a total order]]:
+<jh>
+stmt (LessEqualTransitivity () () (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)))
+stmt (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)))
+stmt (LessEqualTotality () () ((a ≤ b) ∨ (b ≤ a)))
+</jh>
+
 == Induction ==
 There are a number of ways to state [[w:mathematical induction|induction]].
 
