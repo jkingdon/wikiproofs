@@ -1813,6 +1813,19 @@ thm (LessEqualReflexivity () () (a ≤ a) (
 ))
 </jh>
 
+Equality implies <code>≤</code>.
+<jh>
+thm (EqualityLessEqual () () ((a = b) → (a ≤ b)) (
+        a LessEqualReflexivity
+
+        a b a LessEqualBuilderLL
+</jh>
+The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a ≤ a</code> is a theorem, so we are done.
+<jh>
+        detachImplicationBiconditional
+))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
