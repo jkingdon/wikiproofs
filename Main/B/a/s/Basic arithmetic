@@ -1725,48 +1725,84 @@ Since m does not occur in <code>a ≤ Sk ∨ Sk ≤ a</code>, the quantifier is 
 ))
 </jh>
 
-{{under construction}}
-
 We are ready to return to the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution. Conceptually, it is <code>n = sub → (a ≤ n ∨ n ≤ a ↔ a ≤ sub ∨ sub ≤ a</code>.  However, as long as JHilbert automatically expands definitions, we need to expand each definition of <code>≤</code> so that we can express the distinct variable constraints with the dummy variables.
- (jh)
- var (variable an na)
- thm (Totality-sub ((an n) (an sub) (na n) (na sub)) () (((value n) = sub) → ((∃ an ((a + (value an)) = (value n))) ∨ (∃ na (((value n) + (value na)) = a))) ↔ ((∃ an ((a + (value an)) = sub)) ∨ (∃ na ((sub + (value na)) = a))))) (
+<jh>
+var (variable an na)
+thm (Totality-sub ((an n) (an sub) (na n) (na sub)) () (
+  ((value n) = sub) → (
+    ((∃ an ((a + (value an)) = (value n))) ∨ (∃ na (((value n) + (value na)) = a))) ↔ 
+    ((∃ an ((a + (value an)) = sub)) ∨ (∃ na ((sub + (value na)) = a)))
+  )) (
  # Without the need to expand ≤, this would be:
  #        (value n) sub a LessEqualBuilderLL
  #        (value n) sub a LessEqualBuilderRR
  #        buildDisjunctionInConsequent
         (value n) sub (a + (value an)) EqualityBuilderLL
-        an addThereExistsToConsequent
+        an addForAllToConsequent
+        an ((a + (value an)) = (value n)) ((a + (value an)) = sub) ForAllBiconditionalThereExists
+        applySyllogism
 
         (value n) sub (value na) AdditionBuilderRR
         a buildEqualityRRInConsequent
-        na addThereExistsToConsequent
+        na addForAllToConsequent
+        na (((value n) + (value na)) = a) ((sub + (value na)) = a) ForAllBiconditionalThereExists
+        applySyllogism
 
         buildDisjunctionInConsequent
- ))
- (/jh)
+))
+</jh>
 And here is the proof, by induction on <code>b</code>.
- (jh)
- thm (LessEqualTotality ((n k) (n a) (n b) (k a)) () ((a ≤ b) ∨ (b ≤ a)) (
-        n (0) a Totality-sub
-        n (value k) a Totality-sub
-        n (succ (value k)) a Totality-sub
-        n b a Totality-sub
- (/jh)
- The base case is <code>a ≤ 0 ∨ 0 ≤ a</code>.
- (jh)
+<jh>
+thm (LessEqualTotality ((n k an na) (n a an na) (n b an na) (k a)) () ((a ≤ b) ∨ (b ≤ a)) (
+        n (0) an a na Totality-sub
+        n (value k) an a na Totality-sub
+        n (succ (value k)) an a na Totality-sub
+        n b an a na Totality-sub
+</jh>
+The base case is <code>a ≤ 0 ∨ 0 ≤ a</code>.
+<jh>
         a ZeroSmallest
         (a ≤ (0)) introduceLeftDisjunction
- (/jh)
- The induction step is <code>a ≤ k ∨ k ≤ a → a ≤ Sk ∨ Sk ≤ a</code>.
- (jh)
+</jh>
+Due to the issue with distinct variables discussed at <code>Totality-sub</code>, we need to expand the inequalities.
+<jh>
+        a (0) an LessEqual
+        (0) a na LessEqual
+        buildDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+The induction step is <code>a ≤ k ∨ k ≤ a → a ≤ Sk ∨ Sk ≤ a</code>.
+<jh>
         a k TotalityLemmaALessEqualK
         k a TotalityLemmaKLessEqualA
         composeDisjunction
+</jh>
+Due to the issue with distinct variables discussed at <code>Totality-sub</code>, we need to expand the inequalities.
+<jh>
+        a (value k) an LessEqual
+        (value k) a na LessEqual
+        buildDisjunction
+
+        a (succ (value k)) an LessEqual
+        (succ (value k)) a na LessEqual
+        buildDisjunction
+
+        buildImplication
+        eliminateBiconditionalReverse
+        applyModusPonens
 
         Induction6S
- ))
- (/jh)
+</jh>
+Due to the issue with distinct variables discussed at <code>Totality-sub</code>, we unexpand the inequalities.
+<jh>
+        a b an LessEqual
+        b a na LessEqual
+        buildDisjunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
 
 == Adding one and successor ==
 
