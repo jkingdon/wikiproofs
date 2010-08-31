@@ -1882,6 +1882,39 @@ That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <co
 ))
 </jh>
 
+==== Strict order totality ====
+Exactly one of <code><nowiki>a < b</nowiki></code>, <code>a = b</code>, or <code><nowiki>a > b</nowiki></code> holds. We start with the proposition that at least one of the three holds.
+<jh>
+thm (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)) (
+</jh>
+The meat of the proof is <code>(a < b ∨ a = b) ∨ (b < a ∨ b = a)</code>.
+<jh>
+        a b LessEqualTotality
+
+        a b LessEqualLessThan
+        b a LessEqualLessThan
+        buildDisjunction
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+We just need to do some rearranging to finish.
+<jh>
+        swap23ofDisjunction4
+
+        b a EqualitySymmetry
+        (a = b) buildDisjunctionLL
+
+        (a = b) DisjunctionIdempotence
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        transformDisjunctionRight
+
+        swap23ofDisjunction3
+))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
