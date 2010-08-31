@@ -1827,7 +1827,7 @@ The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a 
 </jh>
 
 ==== Strict order ====
-Here we define <code><nowiki><</nowiki></code>, as well as <code><nowiki>></nowiki></code> and <code>≥</code>.
+Here we define <code><</code>, as well as <code>></code> and <code>≥</code>.
 <jh>
 def ((< a b) ((a ≤ b) ∧ (a ≠ b)))
 def ((> b a) (a < b))
@@ -1877,8 +1877,21 @@ thm (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))) (
         swapBiconditional
         applyBiconditionalTransitivity
 </jh>
-That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <code>a ≤ b ∧ a ≠ b</code> is just the definition of <code><nowiki><</nowiki></code>, so this is enough.
+That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <code>a ≤ b ∧ a ≠ b</code> is just the definition of <code><</code>, so this is enough.
 <jh>
+))
+</jh>
+
+The builder for <code><</code> is a consequence of the one for <code>≤</code>.
+
+<jh>
+thm (LessThanBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 < b0) ↔ (a1 < b1))) (
+        a0 a1 b0 b1 LessEqualBuilder
+
+        a0 a1 b0 b1 EqualityBuilder
+        addNegationInConsequent
+
+        buildConjunctionInConsequent
 ))
 </jh>
 
