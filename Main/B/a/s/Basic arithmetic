@@ -470,7 +470,7 @@ thm (AdditionCancellationRight-substitution () () (
 
 Now we can prove our addition cancellation theorem:
 <jh>
-thm (AdditionCancellationRight ((n a) (n b) (n c) (n k) (k a) (k b)) () (((a + c) = (b + c)) → (a = b)) (
+thm (AdditionCancellationRightForward ((n a) (n b) (n c) (n k) (k a) (k b)) () (((a + c) = (b + c)) → (a = b)) (
 </jh>
 We proceed by induction on <code>c</code>.
 
@@ -505,10 +505,20 @@ So far we have <code>a + Sk = b + Sk → a + k = b + k</code>.  We just need to 
 
         Induction6S
 ))
+</jh>
+
+As we tend to do with theorems which hold in both directions, we provide the biconditionalized version.
+<jh>
+thm (AdditionCancellationRight () () (((a + c) = (b + c)) ↔ (a = b)) (
+        a c b AdditionCancellationRightForward
+        a b c AdditionBuilderRR
+        introduceBiconditionalFromImplications
+))
 
 thm (cancelAdditionRight () ((H ((a + c) = (b + c)))) (a = b) (
         H
         a c b AdditionCancellationRight
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 </jh>
@@ -517,14 +527,13 @@ A commuted version is an easy consequence, but will be convenient to have:
 
 <jh>
 thm (AdditionCancellationLeft () () 
-  (((c + a) = (c + b)) → (a = b)) (
+  (((c + a) = (c + b)) ↔ (a = b)) (
         c a AdditionCommutativity
         c b AdditionCommutativity
         buildEquality
-        eliminateBiconditionalReverse
 
         a c b AdditionCancellationRight
-        applySyllogism
+        applyBiconditionalTransitivity
 ))
 
 thm (cancelAdditionLeft () 
@@ -532,6 +541,7 @@ thm (cancelAdditionLeft ()
   (a = b) (
         H
         c a b AdditionCancellationLeft
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 </jh>
@@ -794,7 +804,7 @@ Now we combine these, to get <code>k · b = b · k → Sk · b = b · Sk</code>.
 </jh>
 
 == Rearrangement ==
-Although there are a wide varieties of ways that a term could be rearranged by commutativity and associativity, the following rearrangement turns out to be one of the common ones:
+Although there are a wide varieties of ways that a term could be rearranged by commutativity and associativity, the following rearrangements turn out to be common:
 <jh>
 thm (Addition4 () () (((a + b) + (c + d)) = ((a + c) + (b + d))) (
         a b (c + d) AdditionAssociativity
@@ -813,6 +823,18 @@ thm (Addition4 () () (((a + b) + (c + d)) = ((a + c) + (b + d))) (
         applyEqualityTransitivity
 
         a c (b + d) AdditionAssociativity swapEquality
+        applyEqualityTransitivity
+))
+
+thm (Addition3 () () (((a + b) + c) = ((a + c) + b)) (
+        a b c AdditionAssociativity
+
+        b c AdditionCommutativity
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        a c b AdditionAssociativity
+        swapEquality
         applyEqualityTransitivity
 ))
 </jh>
@@ -1300,6 +1322,7 @@ Combining the two sides and cancelling the <code>b</code> gives <code>(a + ab) +
         applySyllogism
 
         ((a + ab) + bc) b c AdditionCancellationRight
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 Now we just apply associativity to the left hand side of that equality:
@@ -1482,6 +1505,7 @@ We now turn the right-hand <code>a</code> into <code>a + 0</code>, and reassocia
 We have <code>a + (n + m) = a + 0</code> and cancelling the <code>a</code> gives us <code>n + m = 0</code>.
 <jh>
         a ((value n) + (value m)) (0) AdditionCancellationLeft
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 That in turn implies <code>n = 0</code>
@@ -1925,6 +1949,35 @@ We just need to do some rearranging to finish.
         transformDisjunctionRight
 
         swap23ofDisjunction3
+))
+</jh>
+
+=== This order is consistent with addition ===
+<jh>
+thm (LessEqualAdditionRR ((a n) (b n) (c n)) () ((a ≤ b) ↔ ((a + c) ≤ (b + c))) (
+        a b n LessEqual
+</jh>
+The right hand side is now <code>∃ n a + n = b</code>. We add <code>c</code> to both sides of the equality,
+<jh>
+        (a + (value n)) c b AdditionCancellationRight
+        swapBiconditional
+</jh>
+rewrite it as <code>(a + c) + n = b + c</code>,
+<jh>
+        a (value n) c Addition3
+        (b + c) buildEqualityRR
+        applyBiconditionalTransitivity
+</jh>
+and reinstate the quantifier to get <code>a ≤ b ↔ ∃ n (a + c) + n = b + c</code>.
+<jh>
+        n buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+Applying <code>LessEqual</code> we are done.
+<jh>
+        (a + c) (b + c) n LessEqual
+        swapBiconditional
+        applyBiconditionalTransitivity
 ))
 </jh>
 
