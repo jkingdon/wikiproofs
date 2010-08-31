@@ -18,7 +18,7 @@ import (PRINCIPIA Interface:Principia_Mathematica_propositional_logic_theorems (
 
 As usual, <code>p</code>, <code>q</code>, and <code>r</code> are formulas. We also define some longer names which will make the formulas with a lot of variables more readable.
 <jh>
-var (formula p q r antecedent common)
+var (formula p q r s antecedent common)
 </jh>
 
 == Detachment ==
@@ -191,6 +191,16 @@ thm (transformImplicationBiconditionalRight () ((HIMP (antecedent → (p ↔ q))
         p q r BiconditionalTransitivity
 
         applySyllogism
+))
+
+thm (transformDisjunctionRight () ((H (p ∨ q)) (HEQ (q ↔ r))) (p ∨ r) (
+        H
+
+        HEQ
+        eliminateBiconditionalReverse
+        p disjoinLL
+
+        applyModusPonens
 ))
 </jh>
 
@@ -497,6 +507,56 @@ thm (applyModusPonensInConsequent ()
         p q ModusPonens
 
         applySyllogism
+))
+</jh>
+
+== Combinations of commutativity and associativity ==
+Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
+<jh>
+thm (Disjunction4 () () (((p ∨ q) ∨ (r ∨ s)) ↔ ((p ∨ r) ∨ (q ∨ s))) (
+        p q (r ∨ s) DisjunctionAssociativity
+
+        q r s DisjunctionAssociativity swapBiconditional
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        q r DisjunctionCommutativity
+        s buildDisjunctionRR
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        r q s DisjunctionAssociativity
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        p r (q ∨ s) DisjunctionAssociativity swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (swap23ofDisjunction4 () ((H ((p ∨ q) ∨ (r ∨ s)))) ((p ∨ r) ∨ (q ∨ s)) (
+        H
+        p q r s Disjunction4
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (Disjunction3 () () (((p ∨ q) ∨ r) ↔ ((p ∨ r) ∨ q)) (
+        p q r DisjunctionAssociativity
+
+        q r DisjunctionCommutativity
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        p r q DisjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (swap23ofDisjunction3 () ((H ((p ∨ q) ∨ r))) ((p ∨ r) ∨ q) (
+        H
+        p q r Disjunction3
+        eliminateBiconditionalReverse
+        applyModusPonens
 ))
 </jh>
 
