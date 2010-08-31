@@ -1,0 +1,80 @@
+{{header
+ | title    = Tarski's axioms
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Since [[w:Euclid|Euclid]], compass-and-straightedge geometry has been presented as following from postulates. However, it was not until the 20th century that a complete set of postulates were put forward. This page is for one such set, the first-order axiomization by Tarski.  It makes reference to points (not directly to lines, angles, or circles), and has two relationships between points: betweenness and congruence.
+}}
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
+| importedby = None yet
+| exportedby = None yet.
+}}
+
+First, we adopt the axioms of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+The kind <code>object</code>, defined in first-order logic, represents a point:
+<jh>
+kindbind (object point)
+var (point x y z w u v)
+
+var (variable a b c)
+</jh>
+
+== Congruence ==
+We introduce congruence; <code>(x y ≡ w z)</code> means that the line segment xy is the same length as the line segment wz.
+<jh>
+term (formula (≡ point point point point))
+</jh>
+
+The distance from x to y is the same as the distance from y to x.  This property is called reflexivity.
+<jh>
+stmt (CongruenceReflexivity () () (x y ≡ y x))
+</jh>
+
+A segment which has zero length starts and ends at the same point (although saying "zero length" is a bit of a shortcut, as the axioms are not based on real numbers or any other numbers).
+<jh>
+stmt (CongruenceIdentity () () ((x y ≡ z z) → (x = y)))
+</jh>
+
+Two segments which are congruent to a common segment are congruent to each other.
+<jh>
+stmt (CongruenceTransitivity () () (((x y ≡ z u) ∧ (x y ≡ v w)) → (z u ≡ v w)))
+</jh>
+
+== Betweenness ==
+The other fundamental formula is betweenness; <code>(between x y z)</code> signifies "y is between x and z".
+
+<jh>
+term (formula (between point point point))
+</jh>
+
+There are no other points between x and x.
+<jh>
+stmt (Indivisibility () () ((between x y x) → (x = y)))
+</jh>
+
+[[File:Pasch.svg|right|150px|Axiom of Pasch]]
+[[w:Axiom of Pasch]]
+<jh>
+stmt (Pasch () () (((between x u z) ∧ (between y v z)) → (∃ a ((between u (value a) y) ∧ (between v (value a) x)))))
+</jh>
+
+Continuity
+<jh>
+var (formula φx ψy)
+#stmt (Continuity ((φx y) (φx a) (φx b) (ψy x) (ψy a) (ψy b)) () ())
+</jh>
+
+{{under construction}}
+
+== References ==
+* [[w:Tarski's axioms]], citing Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+
+[[Category:Geometry|{{PAGENAME}}]]
