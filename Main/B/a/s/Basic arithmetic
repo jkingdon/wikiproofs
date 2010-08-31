@@ -1804,6 +1804,15 @@ Due to the issue with distinct variables discussed at <code>Totality-sub</code>,
 ))
 </jh>
 
+=== Consequences of total order properties ===
+Reflexivity follows from totality:
+<jh>
+thm (LessEqualReflexivity () () (a ≤ a) (
+        a a LessEqualTotality
+        conflateDisjunction
+))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
