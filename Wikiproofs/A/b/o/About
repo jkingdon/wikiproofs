@@ -27,6 +27,11 @@ JHilbert is the continuation of Ghilbert. It started out as a clone and is still
 
 Without David Hilbert, Norman Megill and Raph Levien, the Wikiproofs project would not have been possible.
 
+== Proofs live in wiki pages ==
+Putting proofs in wiki pages is not just a convenient way of getting proofs up on the web. A wiki is built for collaboration, and getting a sufficient body of collaborators is key to the success of any formalized math project.
+
+Another key goal of the wiki is that we want to be able to intersperse formal proofs with text (formatted using italics, headers, etc), images (for example, diagrams in geometry proofs), formulas (in TeX or unicode text), and anything else that can be done by mediawiki (the wiki which we use, which is also used for wikipedia and many other wikis).
+
 == Links ==
 
 * [[WP:SCOPE|Project scope]]
