@@ -1,4 +1,4 @@
-This is a small '''tutorial''' on how to use the [[mw:Extensions:JHilbert|JHilbert]], the automated proof verifier driving this wiki. We shall prove the statement "two plus two equals four" from a small set of simple axioms.
+This is a small '''tutorial''' on how to use the [[mw:Extension:JHilbert|JHilbert]], the automated proof verifier driving this wiki. We shall prove the statement "two plus two equals four" from a small set of simple axioms.
 
 If you're really, ''really'' impatient, you can skip all the preliminary blah blah and jump right to the [[Interface:Tutorial|implementation of some of the Peano axioms]].
 
