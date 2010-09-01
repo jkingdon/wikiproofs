@@ -60,13 +60,15 @@ There are no other points between x and x.
 stmt (Indivisibility () () ((between x y x) → (x = y)))
 </jh>
 
-[[File:Pasch.svg|right|150px|Axiom of Pasch]]
-[[w:Axiom of Pasch]]
+=== Pasch's axiom ===
+[[File:Tarski's formulation of Pasch's axiom.svg|left|thumb]]
+Tarski's version of the [[w:Axiom of Pasch]].
+{{clear}}
 <jh>
 stmt (Pasch () () (((between x u z) ∧ (between y v z)) → (∃ a ((between u (value a) y) ∧ (between v (value a) x)))))
 </jh>
 
-Continuity
+=== Continuity ===
 <jh>
 var (formula φx ψy)
 #stmt (Continuity ((φx y) (φx a) (φx b) (ψy x) (ψy a) (ψy b)) () ())
