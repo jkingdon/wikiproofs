@@ -4,7 +4,7 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = Since [[w:Euclid|Euclid]], compass-and-straightedge geometry has been presented as following from postulates. However, it was not until the 20th century that a complete set of postulates were put forward. This page is for one such set, the first-order axiomization by Tarski.  It makes reference to points (not directly to lines, angles, or circles), and has two relationships between points: betweenness and congruence.
+ | notes    = Since [[w:Euclid|Euclid]], compass-and-straightedge geometry has been presented as following from postulates. However, it was not until the 20th century that a complete set of postulates were put forward. This page is for one such set, the [[w:Tarski's axioms|first-order axiomization by Tarski]].  It makes reference to points (not directly to lines, angles, or circles), and has two relationships between points: betweenness and congruence.
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
