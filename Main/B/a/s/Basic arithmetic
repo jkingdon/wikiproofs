@@ -1981,6 +1981,42 @@ Applying <code>LessEqual</code> we are done.
 ))
 </jh>
 
+Here is the same theorem with the additions commuted.
+<jh>
+thm (LessEqualAdditionLL () () ((b0 ≤ b1) ↔ ((a + b0) ≤ (a + b1))) (
+        b0 b1 a LessEqualAdditionRR
+
+        b0 a AdditionCommutativity
+        b1 a AdditionCommutativity
+        buildLessEqual
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Combining the two gives the full theorem.
+<jh>
+thm (LessEqualAddition () () (((a0 ≤ a1) ∧ (b0 ≤ b1)) → ((a0 + b0) ≤ (a1 + b1))) (
+        (a0 ≤ a1) (b0 ≤ b1) ConjunctionRightElimination
+        a0 a1 b0 LessEqualAdditionRR
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+That gives us <code>a0 ≤ a1 ∧ b0 ≤ b1 → a0 + b0 ≤ a1 + b0</code>. Now we apply a similar technique to also get <code>a0 ≤ a1 ∧ b0 ≤ b1 → a1 + b0 ≤ a1 + b1</code>.
+<jh>
+        (a0 ≤ a1) (b0 ≤ b1) ConjunctionLeftElimination
+        b0 b1 a1 LessEqualAdditionLL
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Combining these two finishes the proof.
+<jh>
+        composeConjunction
+        (a0 + b0) (a1 + b0) (a1 + b1) LessEqualTransitivity
+        applySyllogism
+))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).
