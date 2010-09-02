@@ -1917,7 +1917,80 @@ thm (LessThanBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 < b0) ↔ (a1 < b
 
         buildConjunctionInConsequent
 ))
+
+thm (LessThanBuilderLL () () ((b0 = b1) → ((a < b0) ↔ (a < b1))) (
+        a EqualityReflexivity
+        a a b0 b1 LessThanBuilder
+        detach1of2
+))
 </jh>
+
+==== Transitivity ====
+We start by proving that <code>a ≤ b ∧ b < c → a < c</code>. This has transitivity for <code><</code> as an immediate consequence, but will occasionally be useful in its own right.
+
+The first lemma constitutes the easy part of the proof.
+<jh>
+thm (LessEqualLessThanTransitivity-1 () () (((a ≤ b) ∧ (b < c)) → (a ≤ c)) (
+        (b ≤ c) (b ≠ c) ConjunctionRightElimination
+        (a ≤ b) conjoinLL
+
+        a b c LessEqualTransitivity
+        applySyllogism
+))
+</jh>
+
+The harder part of the proof is that <code>a ≤ b ∧ b < c → a ≠ c</code>.  This is fairly easy to sketch out: suppose that <code>a ≤ b ∧ b < c</code> and that <code>a = c</code>. Applying <code>a = c</code> to the first formula gives <code>a ≤ b ∧ b ≤ a</code>, and thus <code>a = b</code> by antisymmetry. But <code>a = b</code> and <code>a = c</code> imply <code>b = c</code>, and this contradicts <code>b < c</code>.  Here is one way to formalize that argument.
+<jh>
+thm (LessEqualLessThanTransitivity-2 () () (((a ≤ b) ∧ (b < c)) → (a ≠ c)) (
+</jh>
+We start with a substitution, <code>a = c → (a ≤ b ∧ b < a ↔ a ≤ b ∧ b < c)</code>
+<jh>
+        a c b LessThanBuilderLL
+        (a ≤ b) buildConjunctionLLInConsequent
+</jh>
+Taking the reverse direction of the biconditional, expanding the definition of <code>b < a</code> and assocating the conjunctions gives <code>a = c → (a ≤ b ∧ b < c → (a ≤ b ∧ b ≤ a) ∧ b ≠ a)</code>
+<jh>
+        eliminateBiconditionalForwardInConsequent
+
+        (a ≤ b) (b ≤ a) (b ≠ a) ConjunctionAssociativity
+        swapBiconditional
+        transformImplicationImplicationConsequent
+</jh>
+But <code>a ≤ b ∧ b ≤ a</code> implies <code>b = a</code>,
+<jh>
+        a b LessEqualAntisymmetry
+
+        a b EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+so <code>(a ≤ b ∧ b ≤ a) ∧ b ≠ a</code> implies <code>⊥</code> (false).
+<jh>
+        (b ≠ a) conjoinRR
+
+        (b = a) Contradiction
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The next step is <code>(a ≤ b ∧ b < c → (a ≤ b ∧ b ≤ a) ∧ b ≠ a) → ¬ (a ≤ b ∧ b < c)</code>.
+<jh>
+        ((a ≤ b) ∧ (b < c)) addCommonAntecedent
+
+        ((a ≤ b) ∧ (b < c)) NegationImplication
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Combining that with the previous result gives <code>a = c → ¬ (a ≤ b ∧ b < c)</code>.
+<jh>
+        applySyllogism
+</jh>
+And a transposition finishes the job.
+<jh>
+        transposeWithNegatedConsequent
+))
+</jh>
+
+{{under construction}}
 
 ==== Strict order totality ====
 Exactly one of <code><nowiki>a < b</nowiki></code>, <code>a = b</code>, or <code><nowiki>a > b</nowiki></code> holds. We start with the proposition that at least one of the three holds.
