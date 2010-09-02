@@ -363,6 +363,15 @@ thm (buildConjunctionRRInConsequent ()
         applySyllogism
 ))
 
+thm (buildConjunctionLLInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common ∧ p) ↔ (common ∧ q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q ConjunctionFunction detach1of2
+        applySyllogism
+))
+
 thm (buildDisjunctionRRInConsequent ()
   ((H (antecedent → (p ↔ q))))
   (antecedent → ((p ∨ common) ↔ (q ∨ common))) (
