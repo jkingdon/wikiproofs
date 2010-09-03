@@ -111,6 +111,11 @@ stmt (MultiplicativeIdentityLeft () ()
   (((1) · a) = a))
 </jh>
 
+As with a [[w:Field (mathematics)|field]], the additive identity does not equal the multiplicative identity.
+<jh>
+#stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
 == Order ==
 We define a formula <code>≤</code> and supply the usual builders (including some convenience builders).
 <jh>
@@ -126,6 +131,26 @@ It has the [[w:total order|properties of a total order]]:
 stmt (LessEqualTransitivity () () (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)))
 stmt (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)))
 stmt (LessEqualTotality () () ((a ≤ b) ∨ (b ≤ a)))
+</jh>
+
+A number of other properties follow from those.
+<jh>
+stmt (LessEqualReflexivity () () (a ≤ a))
+
+term (formula (< nat nat))
+def ((> b a) (a < b))
+def ((≥ b a) (a ≤ b))
+
+stmt (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))))
+#stmt (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))))
+
+stmt (LessThanBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 < b0) ↔ (a1 < b1))))
+stmt (LessThanBuilderLL () () ((b0 = b1) → ((a < b0) ↔ (a < b1))))
+# LessThanBuilderRR
+
+# LessEqualLessThanTransitivity
+# LessThanTransitivity
+stmt (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)))
 </jh>
 
 == Induction ==
