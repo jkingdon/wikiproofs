@@ -50,6 +50,14 @@ stmt (buildMultiplicationLL () ((b0 = b1)) ((a · b0) = (a · b1)))
 stmt (buildMultiplicationRR () ((a0 = a1)) ((a0 · b) = (a1 · b)))
 </jh>
 
+The converse of some of the builders hold and are known as cancellation laws.
+<jh>
+stmt (AdditionCancellationRight () () (((a + c) = (b + c)) ↔ (a = b)))
+stmt (cancelAdditionRight () (((a + c) = (b + c))) (a = b))
+stmt (AdditionCancellationLeft () () (((c + a) = (c + b)) ↔ (a = b)))
+stmt (cancelAdditionLeft () (((c + a) = (c + b))) (a = b))
+</jh>
+
 == Commutative, associative, and distributive ==
 
 Both addition and multiplication are commutative and associative:
@@ -113,7 +121,7 @@ stmt (MultiplicativeIdentityLeft () ()
 
 As with a [[w:Field (mathematics)|field]], the additive identity does not equal the multiplicative identity.
 <jh>
-#stmt (ZeroOne () () ((0) ≠ (1)))
+stmt (ZeroOne () () ((0) ≠ (1)))
 </jh>
 
 == Order ==
@@ -142,14 +150,15 @@ def ((> b a) (a < b))
 def ((≥ b a) (a ≤ b))
 
 stmt (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))))
-#stmt (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))))
+stmt (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))))
 
 stmt (LessThanBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 < b0) ↔ (a1 < b1))))
 stmt (LessThanBuilderLL () () ((b0 = b1) → ((a < b0) ↔ (a < b1))))
-# LessThanBuilderRR
+stmt (LessThanBuilderRR () () ((a0 = a1) → ((a0 < b) ↔ (a1 < b))))
 
-# LessEqualLessThanTransitivity
-# LessThanTransitivity
+stmt (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)))
+stmt (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)))
+
 stmt (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)))
 </jh>
 
