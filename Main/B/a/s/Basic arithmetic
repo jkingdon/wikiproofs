@@ -1070,6 +1070,13 @@ thm (MultiplicativeIdentityLeft () ()
 ))
 </jh>
 
+One does not equal zero.
+<jh>
+thm (ZeroOne () () ((0) ≠ (1)) (
+        (0) ZeroNotSuccessor
+))
+</jh>
+
 == Inequality ==
 We define an order on natural numbers:
 
