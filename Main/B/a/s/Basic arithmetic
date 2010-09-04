@@ -1937,6 +1937,12 @@ thm (LessThanBuilderLL () () ((b0 = b1) → ((a < b0) ↔ (a < b1))) (
         a a b0 b1 LessThanBuilder
         detach1of2
 ))
+
+thm (LessThanBuilderRR () () ((a0 = a1) → ((a0 < b) ↔ (a1 < b))) (
+        b EqualityReflexivity
+        a0 a1 b b LessThanBuilder
+        detach2of2
+))
 </jh>
 
 ==== Transitivity ====
