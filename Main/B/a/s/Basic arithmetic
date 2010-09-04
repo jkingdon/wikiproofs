@@ -1997,7 +1997,31 @@ And a transposition finishes the job.
 ))
 </jh>
 
-{{under construction}}
+Combining the two lemmas gives us transitivity for <code>a ≤ b ∧ b < c</code>.
+<jh>
+thm (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)) (
+        a b c  LessEqualLessThanTransitivity-1
+        a b c  LessEqualLessThanTransitivity-2
+        composeConjunction
+))
+</jh>
+
+Transitivity for <code><</code> is an immediate consequence.
+<jh>
+thm (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)) (
+</jh>
+We start with <code>a < b → a ≤ b</code>.
+<jh>
+        (a ≤ b) (a ≠ b) ConjunctionRightElimination
+</jh>
+Adding that to a builders and <code>LessEqualLessThanTransitivity</code> finishes the proof.
+<jh>
+        (b < c) conjoinRR
+
+        a b c LessEqualLessThanTransitivity
+        applySyllogism
+))
+</jh>
 
 ==== Strict order totality ====
 Exactly one of <code><nowiki>a < b</nowiki></code>, <code>a = b</code>, or <code><nowiki>a > b</nowiki></code> holds. We start with the proposition that at least one of the three holds.
