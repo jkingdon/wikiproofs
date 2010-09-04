@@ -1913,6 +1913,13 @@ That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <co
 ))
 </jh>
 
+For parallelism, we also provide the definition of <code><</code> as a theorem.
+<jh>
+thm (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))) (
+        (a < b) BiconditionalReflexivity
+))
+</jh>
+
 The builder for <code><</code> is a consequence of the one for <code>≤</code>.
 
 <jh>
