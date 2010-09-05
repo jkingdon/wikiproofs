@@ -1943,6 +1943,26 @@ thm (LessThanBuilderRR () () ((a0 = a1) → ((a0 < b) ↔ (a1 < b))) (
         a0 a1 b b LessThanBuilder
         detach2of2
 ))
+
+thm (buildLessThan () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 < b0) ↔ (a1 < b1)) (
+        HA
+        HB
+        introduceConjunction
+        a0 a1 b0 b1 LessThanBuilder
+        applyModusPonens
+))
+
+thm (buildLessThanLL () ((HB (b0 = b1))) ((a < b0) ↔ (a < b1)) (
+        HB
+        b0 b1 a LessThanBuilderLL
+        applyModusPonens
+))
+
+thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
+        HA
+        a0 a1 b LessThanBuilderRR
+        applyModusPonens
+))
 </jh>
 
 ==== Transitivity ====
