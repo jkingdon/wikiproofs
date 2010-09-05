@@ -162,6 +162,26 @@ stmt (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)))
 stmt (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)))
 </jh>
 
+=== Smallest element ===
+Zero is the smallest natural number.
+<jh>
+stmt (ZeroSmallest () () ((0) ≤ a))
+</jh>
+
+=== Addition is consistent with the order ===
+Assuming one of these implies the others fairly directly, but we supply them all as convenience theorems.
+<jh>
+stmt (LessEqualAddition () () (((a0 ≤ a1) ∧ (b0 ≤ b1)) → ((a0 + b0) ≤ (a1 + b1))))
+stmt (LessEqualAdditionRR () () ((a0 ≤ a1) ↔ ((a0 + b) ≤ (a1 + b))))
+stmt (LessEqualAdditionLL () () ((b0 ≤ b1) ↔ ((a + b0) ≤ (a + b1))))
+
+stmt (LessThanAddition () () (((a0 < a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))))
+stmt (LessThanAdditionRR () () ((a0 < a1) ↔ ((a0 + b) < (a1 + b))))
+stmt (LessThanAdditionLL () () ((b0 < b1) ↔ ((a + b0) < (a + b1))))
+
+stmt (LessEqualLessThanAddition () () (((a0 ≤ a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))))
+</jh>
+
 == Induction ==
 There are a number of ways to state [[w:mathematical induction|induction]].
 
