@@ -31,46 +31,19 @@ Think about (or find a work describing) how to, from these axioms, introduce mor
 == Peano arithmetic ==
 === Theorems ===
 Sample theorems from Hirst &amp; Hirst:
- 4. Strict inequality is transitive: x < y → (y < z → x < z)
- 5. Inequality is preserved by addition: x ≤ y → x + z ≤ y + z (one direction of leadd1)
- 6. Strict inequality is preserved by addition: x < y → x + z < y + z
  7. Inequality is preserved by multiplication: x ≤ y → x · z ≤ y · z (lemul2, commuted)
  8. Strict inequality is preserved by nonzero multiplication:
     z ≠ 0 → (x < y → x · z < y · z)
- 9. Inequalities can be added: (w ≤ x ∧ y ≤ z) → w + y ≤ x + z
  10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
 
 No zero divisors: a · b = 0 → (a = 0 ∨ b = 0)
-
-Some definitions:
-
-* x < y ↔ x ≤ y ∧ x ≠ y
-* x > y ↔ y < x
-* x ≥ y ↔ y ≤ x
 
 More theorems:
 
 * x ≠ 0 ↔ x > 0
 
-We'll show that it has the [[w:Total order|expected properties of an order]].
-* If a ≤ b and b ≤ a then a = b (antisymmetry);
-* If a ≤ b and b ≤ c then a ≤ c (transitivity); (done)
-* a ≤ b or b ≤ a (totality). 
-* (probably reflexivity too, although that is a consequence of totality) (leid)
-
-Probably can base some of these on [http://code.google.com/p/ghilbert/source/browse/trunk/peano/peano_thms.gh peano_thms.gh]
-
 === nomenclature: combining vs combination ===
 Shouldn't ThereExistsConjunctionCombining be called ThereExistsConjunctionCombination and likewise for any other *Combining theorems?
-
-=== Basic arithmetic ===
-[[Interface:Basic arithmetic]] did not until recently have anything which needs to be proved with the ZeroNotSuccessor axiom. The issue is which theorems we can use to prove ZeroNotSuccessor in that page where we do such things.
-
-* The total order properties might rule out modular arithmetic (?), when combined with "5. Inequality is preserved by addition: x ≤ y → x + z ≤ y + z"
-
-* x ≤ y → x · z ≤ y · z (or ZeroSmallest, or I think some of the others) would rule out integer arithmetic.
-
-* 1 ≠ 0 needs ZeroNotSuccessor (without it the universe with one object can model the system).
 
 == More axiomizations of propositional logic ==
 Reducing the Principia axioms from 5 to 4 (unless I missed something, the change is to omit Assoc and change Add from <code>q → (p ∨ q)</code> to <code>q → (q ∨ p)</code>).  This is the axiomization used by [http://qedeq.org/0_03_11/doc/math/qedeq_logic_v1_en.pdf Elements of Mathematical Logic], Michael Meyling, August 2, 2008.
