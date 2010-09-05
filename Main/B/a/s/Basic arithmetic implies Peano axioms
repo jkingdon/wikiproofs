@@ -3,7 +3,6 @@
 | exports = [[Interface:Peano axioms]]
 }}
 
-{{under construction}}
 The idea behind [[Interface:Basic arithmetic]] is that it should include everything we need to conveniently do arithmetic. This module provides a minimal baseline: basic arithmetic should at least be sufficient to prove the Peano axioms.  This is not trivially true because basic arithmetic lacks a successor operation and contains few of the axioms in their original form.
 
 We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic]], and [[Interface:Basic arithmetic]] and define some variables:
@@ -24,12 +23,101 @@ We define the successor operation as adding one:
 def ((succ a) (a + (1)))
 </jh>
 
-== Export ==
+Then <code>Successor</code> is a consequence of the addition builder.
+<jh>
+thm (Successor () () (((succ a) = (succ b)) ↔ (a = b)) (
+        a (1) b AdditionCancellationRight
+))
+</jh>
 
-We're now ready to export [[Interface:Peano axioms]]. Or rather, we will be, when this file is done.
+== Addition and multiplication ==
+
+The defining properties of addition and multiplication exist as theorems, or easy consequences of theorems.
 
 <jh>
-#export (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+thm (AdditiveIdentity () () ((a + (0)) = a) (
+        a AdditiveIdentityRight
+))
+
+thm (Addition () () ((a + (succ b)) = (succ (a + b))) (
+        a b (1) AdditionAssociativity
+        swapEquality
+))
+
+thm (MultiplicativeZero () () ((a · (0)) = (0)) (
+        a MultiplicativeZeroRight
+))
+
+thm (Multiplication () () ((a · (succ b)) = (a + (a · b))) (
+        b (1) AdditionCommutativity
+        a buildMultiplicationLL
+
+        a (1) b LeftDistribution
+        applyEqualityTransitivity
+
+        a MultiplicativeIdentityRight
+        (a · b) buildAdditionRR
+        applyEqualityTransitivity
+))
+</jh>
+
+== Induction ==
+
+The only thing we need to do with induction is deal with successor versus adding one.
+<jh>
+thm (Induction () () 
+  (((subst (0) n φ) ∧ 
+    (∀ k ((subst (value k) n φ) → (subst (succ (value k)) n φ)))) 
+   → (∀ n φ)) (
+        n φ k InductionSubst
+))
+</jh>
+
+== Zero is not the successor of any number ==
+We have saved <code>ZeroNotSuccessor</code> for last, as it is the most difficult and deepest (in terms of distinguishing natural numbers from other structures).
+
+In particular, this proof relies both on <code>0 ≤ a</code>, which rules out negative numbers, and <code>0 ≠ 1</code>, which is needed to establish that more than one number exists.
+<jh>
+thm (ZeroNotSuccessor () () (¬ ((0) = (succ a))) (
+</jh>
+We start with <code>0 ≤ a</code> and <code>0 < 1</code>.
+<jh>
+        a ZeroSmallest
+
+        (1) ZeroSmallest
+        ZeroOne
+        introduceConjunction
+
+        (0) (1) LessThanLessEqual
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+Combining these produces <code>0 + 0 < a + 1</code>.
+<jh>
+        introduceConjunction
+        (0) a (0) (1) LessEqualLessThanAddition
+        applyModusPonens
+</jh>
+Simplifyng the left hand side gives <code>0 < a + 1</code>.
+<jh>
+        (0) AdditiveIdentityLeft
+        (a + (1)) buildLessThanRR
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+And strict inequality and equality cannot both hold.
+<jh>
+        (0) (a + (1)) LessThanEquality
+        applyModusPonens
+))
+</jh>
+
+== Export ==
+
+We're now ready to export [[Interface:Peano axioms]].
+
+<jh>
+export (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
