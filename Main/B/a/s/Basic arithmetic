@@ -2056,7 +2056,7 @@ thm (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)) (
 </jh>
 
 ==== Strict order totality ====
-Exactly one of <code><nowiki>a < b</nowiki></code>, <code>a = b</code>, or <code><nowiki>a > b</nowiki></code> holds. We start with the proposition that at least one of the three holds.
+Exactly one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> holds. We start with the proposition that at least one of the three holds.
 <jh>
 thm (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)) (
 </jh>
@@ -2085,6 +2085,48 @@ We just need to do some rearranging to finish.
         transformDisjunctionRight
 
         swap23ofDisjunction3
+))
+</jh>
+
+The following theorems imply that no more than one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> holds.
+<jh>
+thm (LessThanEquality () () ((a < b) → (a ≠ b)) (
+        a b LessThanLessEqual
+        eliminateBiconditionalReverse
+
+        (a ≤ b) (a ≠ b) ConjunctionLeftElimination
+
+        applySyllogism
+))
+
+thm (LessThanGreaterThan () () ((a < b) → (¬ (a > b))) (
+        a EqualityReflexivity
+
+</jh>
+We start with <code>a < b ∧ b < a → a < a</code>.
+<jh>
+        a b a LessThanTransitivity
+</jh>
+Using the previous theorem we turn this into <code>a < b ∧ b < a → a ≠ a</code>.
+<jh>
+        a a LessThanEquality
+        applySyllogism
+
+</jh>
+Since <code>a = a</code> is a theorem, this gives us <code>¬ (a < b ∧ b < a)</code>
+<jh>
+        transposeWithNegatedConsequent
+        applyModusPonens
+</jh>
+A bit of propositional logic turns this into what we need.
+<jh>
+        distributeNegationPCP
+        convertToImplicationFromDisjunction
+))
+
+thm (EqualityLessThan () () ((a = b) → (¬ (a < b))) (
+        a b LessThanEquality
+        transposeWithNegatedConsequent
 ))
 </jh>
 
