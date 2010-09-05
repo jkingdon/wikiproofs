@@ -162,6 +162,13 @@ stmt (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)))
 stmt (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)))
 </jh>
 
+We also provide some rules, for convenience.
+<jh>
+stmt (buildLessThan () ((a0 = a1) (b0 = b1)) ((a0 < b0) ↔ (a1 < b1)))
+stmt (buildLessThanLL () ((b0 = b1)) ((a < b0) ↔ (a < b1)))
+stmt (buildLessThanRR () ((a0 = a1)) ((a0 < b) ↔ (a1 < b)))
+</jh>
+
 === Smallest element ===
 Zero is the smallest natural number.
 <jh>
