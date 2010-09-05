@@ -2021,14 +2021,13 @@ thm (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)) (
 
 Transitivity for <code><</code> is an immediate consequence.
 <jh>
-thm (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)) (
-</jh>
-We start with <code>a < b → a ≤ b</code>.
-<jh>
+thm (LessThanLessEqualImplication () () ((a < b) → (a ≤ b)) (
         (a ≤ b) (a ≠ b) ConjunctionRightElimination
-</jh>
-Adding that to a builders and <code>LessEqualLessThanTransitivity</code> finishes the proof.
-<jh>
+))
+
+thm (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)) (
+        a b LessThanLessEqualImplication
+
         (b < c) conjoinRR
 
         a b c LessEqualLessThanTransitivity
@@ -2130,6 +2129,61 @@ Combining these two finishes the proof.
 <jh>
         composeConjunction
         (a0 + b0) (a1 + b0) (a1 + b1) LessEqualTransitivity
+        applySyllogism
+))
+</jh>
+
+Here we prove the analogous theorems for the strict order.
+<jh>
+thm (LessThanAdditionRR () () ((a0 < a1) ↔ ((a0 + b) < (a1 + b))) (
+        a0 a1 b LessEqualAdditionRR
+
+        a0 b a1 AdditionCancellationRight
+        swapBiconditional
+        addNegation
+
+        buildConjunction
+))
+
+thm (LessThanAdditionLL () () ((b0 < b1) ↔ ((a + b0) < (a + b1))) (
+        b0 b1 a LessEqualAdditionLL
+
+        a b0 b1 AdditionCancellationLeft
+        swapBiconditional
+        addNegation
+
+        buildConjunction
+))
+
+thm (LessEqualLessThanAddition () () (((a0 ≤ a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))) (
+</jh>
+First we show <code>a0 ≤ a1 ∧ b0 < b1 → a0 + b0 ≤ a1 + b0</code>.
+<jh>
+        (a0 ≤ a1) (b0 < b1) ConjunctionRightElimination
+        a0 a1 b0 LessEqualAdditionRR
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>a0 ≤ a1 ∧ b0 < b1 → a1 + b0 < a1 + b1</code>.
+<jh>
+        (a0 ≤ a1) (b0 < b1) ConjunctionLeftElimination
+        b0 b1 a1 LessThanAdditionLL
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Combining the two finishes the proof.
+<jh>
+        composeConjunction
+        (a0 + b0) (a1 + b0) (a1 + b1) LessEqualLessThanTransitivity
+        applySyllogism
+))
+
+thm (LessThanAddition () () (((a0 < a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))) (
+        a0 a1 LessThanLessEqualImplication
+        (b0 < b1) conjoinRR
+
+        a0 a1 b0 b1 LessEqualLessThanAddition
+
         applySyllogism
 ))
 </jh>
