@@ -55,4 +55,4 @@ Reducing the Principia axioms from 5 to 4 (unless I missed something, the change
 Stanley Burris (1997), [http://www.math.uwaterloo.ca/~snburris/htdocs/scav/hilbert/hilbert.html Hilbert and Ackermann's 1928 Logic Book], describing work by [[w:Paul Bernays|Bernays]] in 1926 and adopted by, for example, D. Hilbert and W. Ackermann, Grundzüge der theoretischen Logik. Springer-Verlag, 1928.
 
 === Robbins algebra ===
-[[w:Robbins algebra]] and Huntington's axiom seem to form two axiomizations (unless I'm missing some detail in the translation from algebras to logical systems). We'd need some more axioms for =.  Conjunction and implication would be defined in terms of ∨ and ¬ in the usual Principia way I assume. Note that Huntington's axiom is a biconditionalized CaseElimination (assuming only the definitions of ∧ and →).
+[[w:Robbins algebra]] and Huntington's axiom seem to form two axiomizations (unless I'm missing some detail in the translation from algebras to logical systems). We'd need some more axioms for =.  Conjunction and implication would be defined in terms of ∨ and ¬ in the usual Principia way I assume.
