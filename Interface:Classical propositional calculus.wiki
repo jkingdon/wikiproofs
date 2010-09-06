@@ -441,8 +441,15 @@ stmt (addNegationInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((
 stmt (buildConjunctionRRInConsequent ()
   ((antecedent → (p ↔ q)))
   (antecedent → ((p ∧ common) ↔ (q ∧ common))))
+stmt (buildConjunctionLLInConsequent ()
+  ((antecedent → (p ↔ q)))
+  (antecedent → ((common ∧ p) ↔ (common ∧ q))))
 stmt (buildDisjunctionRRInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((p ∨ common) ↔ (q ∨ common))))
 stmt (buildDisjunctionLLInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((common ∨ p) ↔ (common ∨ q))))
+stmt (buildConjunctionInConsequent ()
+  ((antecedent → (p0 ↔ q0))
+   (antecedent → (p1 ↔ q1)))
+  (antecedent → ((p0 ∧ p1) ↔ (q0 ∧ q1))))
 stmt (buildDisjunctionInConsequent ()
   ((antecedent → (p0 ↔ q0))
    (antecedent → (p1 ↔ q1)))
@@ -506,6 +513,7 @@ stmt (transformImplicationImplicationConsequent () ((antecedent → (p → q)) (
 stmt (transformImplicationBiconditionalLeft () ((antecedent → (p ↔ q)) (p ↔ r)) (antecedent → (r ↔ q)))
 stmt (transformImplicationBiconditionalRight () ((antecedent → (p ↔ q)) (q ↔ r)) (antecedent → (p ↔ r)))
 stmt (transformImplicationDisjunctionLeft () ((antecedent → (p ∨ q)) (p ↔ r)) (antecedent → (r ∨ q)))
+stmt (transformDisjunctionRight () ((p ∨ q) (q ↔ r)) (p ∨ r))
 </jh>
 
 === Additional relationships between connectives ===
@@ -514,6 +522,13 @@ stmt (ConjunctionImplication () () ((p ∧ q) ↔ (¬ (p → (¬ q)))))
 stmt (ImplicationConjunction () () ((p → q) ↔ (¬ (p ∧ (¬ q)))))
 
 stmt (NegationBiconditional () () ((¬ p) ↔ (p ↔ (⊥))))
+</jh>
+
+=== Combinations of commutativity and associativity ===
+Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
+<jh>
+stmt (swap23ofDisjunction4 () (((p ∨ q) ∨ (r ∨ s))) ((p ∨ r) ∨ (q ∨ s)))
+stmt (swap23ofDisjunction3 () (((p ∨ q) ∨ r)) ((p ∨ r) ∨ q))
 </jh>
 
 == References ==

@@ -50,6 +50,14 @@ stmt (buildMultiplicationLL () ((b0 = b1)) ((a · b0) = (a · b1)))
 stmt (buildMultiplicationRR () ((a0 = a1)) ((a0 · b) = (a1 · b)))
 </jh>
 
+The converse of some of the builders hold and are known as cancellation laws.
+<jh>
+stmt (AdditionCancellationRight () () (((a + c) = (b + c)) ↔ (a = b)))
+stmt (cancelAdditionRight () (((a + c) = (b + c))) (a = b))
+stmt (AdditionCancellationLeft () () (((c + a) = (c + b)) ↔ (a = b)))
+stmt (cancelAdditionLeft () (((c + a) = (c + b))) (a = b))
+</jh>
+
 == Commutative, associative, and distributive ==
 
 Both addition and multiplication are commutative and associative:
@@ -109,6 +117,82 @@ stmt (MultiplicativeIdentityRight () ()
   ((a · (1)) = a))
 stmt (MultiplicativeIdentityLeft () ()
   (((1) · a) = a))
+</jh>
+
+As with a [[w:Field (mathematics)|field]], the additive identity does not equal the multiplicative identity.
+<jh>
+stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
+== Order ==
+We define a formula <code>≤</code> and supply the usual builders (including some convenience builders).
+<jh>
+term (formula (≤ nat nat))
+
+stmt (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))))
+stmt (LessEqualBuilderLL () () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))))
+stmt (LessEqualBuilderRR () () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))))
+</jh>
+
+It has the [[w:total order|properties of a total order]]:
+<jh>
+stmt (LessEqualTransitivity () () (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)))
+stmt (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)))
+stmt (LessEqualTotality () () ((a ≤ b) ∨ (b ≤ a)))
+</jh>
+
+A number of other properties follow from those.
+<jh>
+stmt (LessEqualReflexivity () () (a ≤ a))
+
+term (formula (< nat nat))
+def ((> b a) (a < b))
+def ((≥ b a) (a ≤ b))
+
+stmt (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))))
+stmt (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))))
+
+stmt (LessThanBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 < b0) ↔ (a1 < b1))))
+stmt (LessThanBuilderLL () () ((b0 = b1) → ((a < b0) ↔ (a < b1))))
+stmt (LessThanBuilderRR () () ((a0 = a1) → ((a0 < b) ↔ (a1 < b))))
+
+stmt (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)))
+stmt (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)))
+</jh>
+
+Exactly one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> hold.
+<jh>
+stmt (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)))
+stmt (LessThanEquality () () ((a < b) → (a ≠ b)))
+stmt (LessThanGreaterThan () () ((a < b) → (¬ (a > b))))
+stmt (EqualityLessThan () () ((a = b) → (¬ (a < b))))
+</jh>
+
+We also provide some rules, for convenience.
+<jh>
+stmt (buildLessThan () ((a0 = a1) (b0 = b1)) ((a0 < b0) ↔ (a1 < b1)))
+stmt (buildLessThanLL () ((b0 = b1)) ((a < b0) ↔ (a < b1)))
+stmt (buildLessThanRR () ((a0 = a1)) ((a0 < b) ↔ (a1 < b)))
+</jh>
+
+=== Smallest element ===
+Zero is the smallest natural number.
+<jh>
+stmt (ZeroSmallest () () ((0) ≤ a))
+</jh>
+
+=== Addition is consistent with the order ===
+Assuming one of these implies the others fairly directly, but we supply them all as convenience theorems.
+<jh>
+stmt (LessEqualAddition () () (((a0 ≤ a1) ∧ (b0 ≤ b1)) → ((a0 + b0) ≤ (a1 + b1))))
+stmt (LessEqualAdditionRR () () ((a0 ≤ a1) ↔ ((a0 + b) ≤ (a1 + b))))
+stmt (LessEqualAdditionLL () () ((b0 ≤ b1) ↔ ((a + b0) ≤ (a + b1))))
+
+stmt (LessThanAddition () () (((a0 < a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))))
+stmt (LessThanAdditionRR () () ((a0 < a1) ↔ ((a0 + b) < (a1 + b))))
+stmt (LessThanAdditionLL () () ((b0 < b1) ↔ ((a + b0) < (a + b1))))
+
+stmt (LessEqualLessThanAddition () () (((a0 ≤ a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))))
 </jh>
 
 == Induction ==

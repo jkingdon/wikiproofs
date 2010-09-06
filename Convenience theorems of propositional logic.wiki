@@ -18,7 +18,7 @@ import (PRINCIPIA Interface:Principia_Mathematica_propositional_logic_theorems (
 
 As usual, <code>p</code>, <code>q</code>, and <code>r</code> are formulas. We also define some longer names which will make the formulas with a lot of variables more readable.
 <jh>
-var (formula p q r antecedent common)
+var (formula p q r s antecedent common)
 </jh>
 
 == Detachment ==
@@ -192,6 +192,16 @@ thm (transformImplicationBiconditionalRight () ((HIMP (antecedent → (p ↔ q))
 
         applySyllogism
 ))
+
+thm (transformDisjunctionRight () ((H (p ∨ q)) (HEQ (q ↔ r))) (p ∨ r) (
+        H
+
+        HEQ
+        eliminateBiconditionalReverse
+        p disjoinLL
+
+        applyModusPonens
+))
 </jh>
 
 == More relationships between connectives ==
@@ -353,6 +363,15 @@ thm (buildConjunctionRRInConsequent ()
         applySyllogism
 ))
 
+thm (buildConjunctionLLInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common ∧ p) ↔ (common ∧ q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q ConjunctionFunction detach1of2
+        applySyllogism
+))
+
 thm (buildDisjunctionRRInConsequent ()
   ((H (antecedent → (p ↔ q))))
   (antecedent → ((p ∨ common) ↔ (q ∨ common))) (
@@ -372,6 +391,15 @@ thm (buildDisjunctionLLInConsequent ()
 ))
 
 var (formula p0 q0 p1 q1)
+thm (buildConjunctionInConsequent ()
+  ((H0 (antecedent → (p0 ↔ q0)))
+   (H1 (antecedent → (p1 ↔ q1))))
+  (antecedent → ((p0 ∧ p1) ↔ (q0 ∧ q1))) (
+        H0 H1 composeConjunction
+        p0 q0 p1 q1 ConjunctionFunction
+        applySyllogism
+))
+
 thm (buildDisjunctionInConsequent ()
   ((H0 (antecedent → (p0 ↔ q0)))
    (H1 (antecedent → (p1 ↔ q1))))
@@ -497,6 +525,56 @@ thm (applyModusPonensInConsequent ()
         p q ModusPonens
 
         applySyllogism
+))
+</jh>
+
+== Combinations of commutativity and associativity ==
+Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
+<jh>
+thm (Disjunction4 () () (((p ∨ q) ∨ (r ∨ s)) ↔ ((p ∨ r) ∨ (q ∨ s))) (
+        p q (r ∨ s) DisjunctionAssociativity
+
+        q r s DisjunctionAssociativity swapBiconditional
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        q r DisjunctionCommutativity
+        s buildDisjunctionRR
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        r q s DisjunctionAssociativity
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        p r (q ∨ s) DisjunctionAssociativity swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (swap23ofDisjunction4 () ((H ((p ∨ q) ∨ (r ∨ s)))) ((p ∨ r) ∨ (q ∨ s)) (
+        H
+        p q r s Disjunction4
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (Disjunction3 () () (((p ∨ q) ∨ r) ↔ ((p ∨ r) ∨ q)) (
+        p q r DisjunctionAssociativity
+
+        q r DisjunctionCommutativity
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        p r q DisjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (swap23ofDisjunction3 () ((H ((p ∨ q) ∨ r))) ((p ∨ r) ∨ q) (
+        H
+        p q r Disjunction3
+        eliminateBiconditionalReverse
+        applyModusPonens
 ))
 </jh>
 

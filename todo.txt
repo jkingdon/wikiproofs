@@ -45,16 +45,6 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-download files:
-  Basic arithmetic
-  Convenience theorems
-  classical propositional
-  Peano axioms
-  Tarski's geometry axioms
-  First-order logic
-  Interface:First-order logic
-  Interface:First-order logic with quantifiability
-
 nomenclature: combining vs combination from User:Kingdon
 
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).

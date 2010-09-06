@@ -470,7 +470,7 @@ thm (AdditionCancellationRight-substitution () () (
 
 Now we can prove our addition cancellation theorem:
 <jh>
-thm (AdditionCancellationRight ((n a) (n b) (n c) (n k) (k a) (k b)) () (((a + c) = (b + c)) → (a = b)) (
+thm (AdditionCancellationRightForward ((n a) (n b) (n c) (n k) (k a) (k b)) () (((a + c) = (b + c)) → (a = b)) (
 </jh>
 We proceed by induction on <code>c</code>.
 
@@ -505,10 +505,20 @@ So far we have <code>a + Sk = b + Sk → a + k = b + k</code>.  We just need to 
 
         Induction6S
 ))
+</jh>
+
+As we tend to do with theorems which hold in both directions, we provide the biconditionalized version.
+<jh>
+thm (AdditionCancellationRight () () (((a + c) = (b + c)) ↔ (a = b)) (
+        a c b AdditionCancellationRightForward
+        a b c AdditionBuilderRR
+        introduceBiconditionalFromImplications
+))
 
 thm (cancelAdditionRight () ((H ((a + c) = (b + c)))) (a = b) (
         H
         a c b AdditionCancellationRight
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 </jh>
@@ -517,14 +527,13 @@ A commuted version is an easy consequence, but will be convenient to have:
 
 <jh>
 thm (AdditionCancellationLeft () () 
-  (((c + a) = (c + b)) → (a = b)) (
+  (((c + a) = (c + b)) ↔ (a = b)) (
         c a AdditionCommutativity
         c b AdditionCommutativity
         buildEquality
-        eliminateBiconditionalReverse
 
         a c b AdditionCancellationRight
-        applySyllogism
+        applyBiconditionalTransitivity
 ))
 
 thm (cancelAdditionLeft () 
@@ -532,6 +541,7 @@ thm (cancelAdditionLeft ()
   (a = b) (
         H
         c a b AdditionCancellationLeft
+        eliminateBiconditionalReverse
         applyModusPonens
 ))
 </jh>
@@ -794,7 +804,7 @@ Now we combine these, to get <code>k · b = b · k → Sk · b = b · Sk</code>.
 </jh>
 
 == Rearrangement ==
-Although there are a wide varieties of ways that a term could be rearranged by commutativity and associativity, the following rearrangement turns out to be one of the common ones:
+Although there are a wide varieties of ways that a term could be rearranged by commutativity and associativity, the following rearrangements turn out to be common:
 <jh>
 thm (Addition4 () () (((a + b) + (c + d)) = ((a + c) + (b + d))) (
         a b (c + d) AdditionAssociativity
@@ -813,6 +823,18 @@ thm (Addition4 () () (((a + b) + (c + d)) = ((a + c) + (b + d))) (
         applyEqualityTransitivity
 
         a c (b + d) AdditionAssociativity swapEquality
+        applyEqualityTransitivity
+))
+
+thm (Addition3 () () (((a + b) + c) = ((a + c) + b)) (
+        a b c AdditionAssociativity
+
+        b c AdditionCommutativity
+        a buildAdditionLL
+        applyEqualityTransitivity
+
+        a c b AdditionAssociativity
+        swapEquality
         applyEqualityTransitivity
 ))
 </jh>
@@ -1048,6 +1070,13 @@ thm (MultiplicativeIdentityLeft () ()
 ))
 </jh>
 
+One does not equal zero.
+<jh>
+thm (ZeroOne () () ((0) ≠ (1)) (
+        (0) ZeroNotSuccessor
+))
+</jh>
+
 == Inequality ==
 We define an order on natural numbers:
 
@@ -1082,7 +1111,7 @@ We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is eno
 === Builders ===
 The builders for <code>≤</code> follow readily from the builders for addition, equality, and so on.
 <jh>
-thm (LessEqualBuilderRR ((a0 n) (a1 n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
+thm (LessEqualBuilderRR ((a0 n) (a1 n) (b n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
 </jh>
 What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = b)</code>.  The right hand side basically consists of the desired theorem with ≤ expanded, but with a twist: here it holds with the same variable for both quantifiers.
 <jh>
@@ -1099,19 +1128,68 @@ What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = 
         eliminateBiconditionalForward
         applySyllogism
 ))
+</jh>
 
-#thm (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))) (
-#thm (buildLessEqual
-#thm (buildLessEqualRR
-#thm (LessEqualBuilderLL
-#thm (buildLessEqualLL
+The builder for adding a common number to the left is similar, and is proved in the same way.
+<jh>
+thm (LessEqualBuilderLL ((a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))) (
+        b0 b1 (a + (value n)) EqualityBuilderLL
+
+        n addForAllToConsequent
+        n ((a + (value n)) = b0) ((a + (value n)) = b1) ForAllBiconditionalThereExists
+        applySyllogism
+
+        a b0 n LessEqual
+        a b1 n LessEqual
+        buildBiconditional
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+Combining <code>LessEqualBuilderLL</code> and <code>LessEqualBuilderRR</code> gives us the full builder.
+
+<jh>
+thm (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))) (
+        (a0 = a1) (b0 = b1) ConjunctionRightElimination
+        a0 a1 b0 LessEqualBuilderRR
+        applySyllogism
+
+        (a0 = a1) (b0 = b1) ConjunctionLeftElimination
+        b0 b1 a1 LessEqualBuilderLL
+        applySyllogism
+
+        composeConjunction
+
+        (a0 ≤ b0) (a1 ≤ b0) (a1 ≤ b1) BiconditionalTransitivity
+        applySyllogism
+))
+
+thm (buildLessEqual () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 ≤ b0) ↔ (a1 ≤ b1)) (
+        HA
+        HB
+        introduceConjunction
+        a0 a1 b0 b1 LessEqualBuilder
+        applyModusPonens
+))
+
+thm (buildLessEqualRR () ((H (a0 = a1))) ((a0 ≤ b) ↔ (a1 ≤ b)) (
+        H
+        a0 a1 b LessEqualBuilderRR
+        applyModusPonens
+))
+
+thm (buildLessEqualLL () ((H (b0 = b1))) ((a ≤ b0) ↔ (a ≤ b1)) (
+        H
+        b0 b1 a LessEqualBuilderLL
+        applyModusPonens
+))
 </jh>
 
 === Proving inequality with an object ===
 We can prove <code>a ≤ b</code> by proving <code>∃ n a + n = b</code>. Well, the usual way to do this is to provide a value for <code>n</code>.
 <jh>
 thm (LessEqualObject ((c n) (a n) (b n)) () (((a + c) = b) → (a ≤ b)) (
-
 </jh>
 The proof is basically substitution machinery. We start with <code>n = c → (a + n = b ↔ a + c = b)</code>:
 <jh>
@@ -1132,7 +1210,6 @@ We turn that into <code>(subst c n (a + n = b)) ↔ a + c = b</code>,
 and take the reverse implication.
 <jh>
         eliminateBiconditionalForward
-
 </jh>
 That in turn implies <code>∃ n a + n = b</code>, which is <code>a ≤ b</code> by the definition of <code>≤</code>.
 <jh>
@@ -1252,6 +1329,7 @@ Combining the two sides and cancelling the <code>b</code> gives <code>(a + ab) +
         applySyllogism
 
         ((a + ab) + bc) b c AdditionCancellationRight
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 Now we just apply associativity to the left hand side of that equality:
@@ -1434,6 +1512,7 @@ We now turn the right-hand <code>a</code> into <code>a + 0</code>, and reassocia
 We have <code>a + (n + m) = a + 0</code> and cancelling the <code>a</code> gives us <code>n + m = 0</code>.
 <jh>
         a ((value n) + (value m)) (0) AdditionCancellationLeft
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 That in turn implies <code>n = 0</code>
@@ -1677,15 +1756,500 @@ Since m does not occur in <code>a ≤ Sk ∨ Sk ≤ a</code>, the quantifier is 
 ))
 </jh>
 
-We are ready to return the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution.
+We are ready to return to the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution. Conceptually, it is <code>n = sub → (a ≤ n ∨ n ≤ a ↔ a ≤ sub ∨ sub ≤ a</code>.  However, as long as JHilbert automatically expands definitions, we need to expand each definition of <code>≤</code> so that we can express the distinct variable constraints with the dummy variables.
 <jh>
-#thm (Totality-sub () () (((value n) = sub) → (((a ≤ (value n)) ∨ ((value n) ≤ a)) ↔ ((a ≤ sub) ∨ (sub ≤ a))) (
-        # TODO: need to prove builders for ≤
-#))
+var (variable an na)
+thm (Totality-sub ((an n) (an sub) (na n) (na sub)) () (
+  ((value n) = sub) → (
+    ((∃ an ((a + (value an)) = (value n))) ∨ (∃ na (((value n) + (value na)) = a))) ↔ 
+    ((∃ an ((a + (value an)) = sub)) ∨ (∃ na ((sub + (value na)) = a)))
+  )) (
+ # Without the need to expand ≤, this would be:
+ #        (value n) sub a LessEqualBuilderLL
+ #        (value n) sub a LessEqualBuilderRR
+ #        buildDisjunctionInConsequent
+        (value n) sub (a + (value an)) EqualityBuilderLL
+        an addForAllToConsequent
+        an ((a + (value an)) = (value n)) ((a + (value an)) = sub) ForAllBiconditionalThereExists
+        applySyllogism
+
+        (value n) sub (value na) AdditionBuilderRR
+        a buildEqualityRRInConsequent
+        na addForAllToConsequent
+        na (((value n) + (value na)) = a) ((sub + (value na)) = a) ForAllBiconditionalThereExists
+        applySyllogism
+
+        buildDisjunctionInConsequent
+))
 </jh>
 And here is the proof, by induction on <code>b</code>.
+<jh>
+thm (LessEqualTotality ((n k an na) (n a an na) (n b an na) (k a)) () ((a ≤ b) ∨ (b ≤ a)) (
+        n (0) an a na Totality-sub
+        n (value k) an a na Totality-sub
+        n (succ (value k)) an a na Totality-sub
+        n b an a na Totality-sub
+</jh>
+The base case is <code>a ≤ 0 ∨ 0 ≤ a</code>.
+<jh>
+        a ZeroSmallest
+        (a ≤ (0)) introduceLeftDisjunction
+</jh>
+Due to the issue with distinct variables discussed at <code>Totality-sub</code>, we need to expand the inequalities.
+<jh>
+        a (0) an LessEqual
+        (0) a na LessEqual
+        buildDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+The induction step is <code>a ≤ k ∨ k ≤ a → a ≤ Sk ∨ Sk ≤ a</code>.
+<jh>
+        a k TotalityLemmaALessEqualK
+        k a TotalityLemmaKLessEqualA
+        composeDisjunction
+</jh>
+Due to the issue with distinct variables discussed at <code>Totality-sub</code>, we need to expand the inequalities.
+<jh>
+        a (value k) an LessEqual
+        (value k) a na LessEqual
+        buildDisjunction
 
-{{under construction}}
+        a (succ (value k)) an LessEqual
+        (succ (value k)) a na LessEqual
+        buildDisjunction
+
+        buildImplication
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        Induction6S
+</jh>
+Due to the issue with distinct variables discussed at <code>Totality-sub</code>, we unexpand the inequalities.
+<jh>
+        a b an LessEqual
+        b a na LessEqual
+        buildDisjunction
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Consequences of total order properties ===
+Reflexivity follows from totality:
+<jh>
+thm (LessEqualReflexivity () () (a ≤ a) (
+        a a LessEqualTotality
+        conflateDisjunction
+))
+</jh>
+
+Equality implies <code>≤</code>.
+<jh>
+thm (EqualityLessEqual () () ((a = b) → (a ≤ b)) (
+        a LessEqualReflexivity
+
+        a b a LessEqualBuilderLL
+</jh>
+The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a ≤ a</code> is a theorem, so we are done.
+<jh>
+        detachImplicationBiconditional
+))
+</jh>
+
+==== Strict order ====
+Here we define <code>&lt;</code>, as well as <code>&gt;</code> and <code>≥</code>.
+<jh>
+def ((< a b) ((a ≤ b) ∧ (a ≠ b)))
+def ((> b a) (a < b))
+def ((≥ b a) (a ≤ b))
+</jh>
+
+We next prove <code>a ≤ b ↔ a < b ∨ a = b</code> (finally justifying the informal name "less than or equal to" for <code>≤</code>). The proof is fairly straightforward expansion of the definition and rearrangement, but it will be easier to break out part of the proof into a lemma.
+<jh>
+thm (LessEqualLessThanLemma () () ((a ≤ b) ↔ (((a ≤ b) ∨ (a = b)) ∧ ((a ≠ b) ∨ (a = b)))) (
+</jh>
+We start with the forward implication. The first half is <code>a ≤ b → a ≤ b ∨ a = b</code>
+<jh>
+        (a ≤ b) (a = b) DisjunctionRightIntroduction
+</jh>
+The second half is <code>a ≤ b → a ≠ b ∨ a = b</code>
+<jh>
+        (a = b) TertiumNonDatur swapDisjunction
+        (a ≤ b) introduceAntecedent
+</jh>
+Combining these gives us the forward implication.
+<jh>
+        composeConjunction
+</jh>
+Moving on to the reverse implication, we start with <code>(a ≤ b ∨ a = b) ∧ (a ≠ b ∨ a = b) → a ≤ b ∨ a = b</code>
+<jh>
+        ((a ≤ b) ∨ (a = b)) ((a ≠ b) ∨ (a = b)) ConjunctionRightElimination
+</jh>
+Then we show <code>a ≤ b ∨ a = b → a ≤ b</code>.
+<jh>
+        (a ≤ b) ImplicationReflexivity
+        a b EqualityLessEqual
+        composeDisjunction
+</jh>
+Combining these gives the reverse implication,
+<jh>
+        applySyllogism
+</jh>
+and combining forward and reverse implications completes the proof.
+<jh>
+        introduceBiconditionalFromImplications
+))
+
+thm (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))) (
+        a b LessEqualLessThanLemma
+
+        (a ≤ b) (a ≠ b) (a = b) DisjunctionRightDistribution
+        swapBiconditional
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <code>a ≤ b ∧ a ≠ b</code> is just the definition of <code>&lt;</code>, so this is enough.
+<jh>
+))
+</jh>
+
+For parallelism, we also provide the definition of <code>&lt;</code> as a theorem.
+<jh>
+thm (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))) (
+        (a < b) BiconditionalReflexivity
+))
+</jh>
+
+The builder for <code>&lt;</code> is a consequence of the one for <code>≤</code>.
+
+<jh>
+thm (LessThanBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 < b0) ↔ (a1 < b1))) (
+        a0 a1 b0 b1 LessEqualBuilder
+
+        a0 a1 b0 b1 EqualityBuilder
+        addNegationInConsequent
+
+        buildConjunctionInConsequent
+))
+
+thm (LessThanBuilderLL () () ((b0 = b1) → ((a < b0) ↔ (a < b1))) (
+        a EqualityReflexivity
+        a a b0 b1 LessThanBuilder
+        detach1of2
+))
+
+thm (LessThanBuilderRR () () ((a0 = a1) → ((a0 < b) ↔ (a1 < b))) (
+        b EqualityReflexivity
+        a0 a1 b b LessThanBuilder
+        detach2of2
+))
+
+thm (buildLessThan () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 < b0) ↔ (a1 < b1)) (
+        HA
+        HB
+        introduceConjunction
+        a0 a1 b0 b1 LessThanBuilder
+        applyModusPonens
+))
+
+thm (buildLessThanLL () ((HB (b0 = b1))) ((a < b0) ↔ (a < b1)) (
+        HB
+        b0 b1 a LessThanBuilderLL
+        applyModusPonens
+))
+
+thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
+        HA
+        a0 a1 b LessThanBuilderRR
+        applyModusPonens
+))
+</jh>
+
+==== Transitivity ====
+We start by proving that <code>a ≤ b ∧ b < c → a < c</code>. This has transitivity for <code>&lt;</code> as an immediate consequence, but will occasionally be useful in its own right.
+
+The first lemma constitutes the easy part of the proof.
+<jh>
+thm (LessEqualLessThanTransitivity-1 () () (((a ≤ b) ∧ (b < c)) → (a ≤ c)) (
+        (b ≤ c) (b ≠ c) ConjunctionRightElimination
+        (a ≤ b) conjoinLL
+
+        a b c LessEqualTransitivity
+        applySyllogism
+))
+</jh>
+
+The harder part of the proof is that <code>a ≤ b ∧ b < c → a ≠ c</code>.  This is fairly easy to sketch out: suppose that <code>a ≤ b ∧ b < c</code> and that <code>a = c</code>. Applying <code>a = c</code> to the first formula gives <code>a ≤ b ∧ b ≤ a</code>, and thus <code>a = b</code> by antisymmetry. But <code>a = b</code> and <code>a = c</code> imply <code>b = c</code>, and this contradicts <code>b < c</code>.  Here is one way to formalize that argument.
+<jh>
+thm (LessEqualLessThanTransitivity-2 () () (((a ≤ b) ∧ (b < c)) → (a ≠ c)) (
+</jh>
+We start with a substitution, <code>a = c → (a ≤ b ∧ b < a ↔ a ≤ b ∧ b < c)</code>
+<jh>
+        a c b LessThanBuilderLL
+        (a ≤ b) buildConjunctionLLInConsequent
+</jh>
+Taking the reverse direction of the biconditional, expanding the definition of <code>b < a</code> and assocating the conjunctions gives <code>a = c → (a ≤ b ∧ b < c → (a ≤ b ∧ b ≤ a) ∧ b ≠ a)</code>
+<jh>
+        eliminateBiconditionalForwardInConsequent
+
+        (a ≤ b) (b ≤ a) (b ≠ a) ConjunctionAssociativity
+        swapBiconditional
+        transformImplicationImplicationConsequent
+</jh>
+But <code>a ≤ b ∧ b ≤ a</code> implies <code>b = a</code>,
+<jh>
+        a b LessEqualAntisymmetry
+
+        a b EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+so <code>(a ≤ b ∧ b ≤ a) ∧ b ≠ a</code> implies <code>⊥</code> (false).
+<jh>
+        (b ≠ a) conjoinRR
+
+        (b = a) Contradiction
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The next step is <code>(a ≤ b ∧ b < c → (a ≤ b ∧ b ≤ a) ∧ b ≠ a) → ¬ (a ≤ b ∧ b < c)</code>.
+<jh>
+        ((a ≤ b) ∧ (b < c)) addCommonAntecedent
+
+        ((a ≤ b) ∧ (b < c)) NegationImplication
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Combining that with the previous result gives <code>a = c → ¬ (a ≤ b ∧ b < c)</code>.
+<jh>
+        applySyllogism
+</jh>
+And a transposition finishes the job.
+<jh>
+        transposeWithNegatedConsequent
+))
+</jh>
+
+Combining the two lemmas gives us transitivity for <code>a ≤ b ∧ b &lt; c</code>.
+<jh>
+thm (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)) (
+        a b c  LessEqualLessThanTransitivity-1
+        a b c  LessEqualLessThanTransitivity-2
+        composeConjunction
+))
+</jh>
+
+Transitivity for <code>&lt;</code> is an immediate consequence.
+<jh>
+thm (LessThanLessEqualImplication () () ((a < b) → (a ≤ b)) (
+        (a ≤ b) (a ≠ b) ConjunctionRightElimination
+))
+
+thm (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)) (
+        a b LessThanLessEqualImplication
+
+        (b < c) conjoinRR
+
+        a b c LessEqualLessThanTransitivity
+        applySyllogism
+))
+</jh>
+
+==== Strict order totality ====
+Exactly one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> holds. We start with the proposition that at least one of the three holds.
+<jh>
+thm (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)) (
+</jh>
+The meat of the proof is <code>(a < b ∨ a = b) ∨ (b < a ∨ b = a)</code>.
+<jh>
+        a b LessEqualTotality
+
+        a b LessEqualLessThan
+        b a LessEqualLessThan
+        buildDisjunction
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+We just need to do some rearranging to finish.
+<jh>
+        swap23ofDisjunction4
+
+        b a EqualitySymmetry
+        (a = b) buildDisjunctionLL
+
+        (a = b) DisjunctionIdempotence
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        transformDisjunctionRight
+
+        swap23ofDisjunction3
+))
+</jh>
+
+The following theorems imply that no more than one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> holds.
+<jh>
+thm (LessThanEquality () () ((a < b) → (a ≠ b)) (
+        a b LessThanLessEqual
+        eliminateBiconditionalReverse
+
+        (a ≤ b) (a ≠ b) ConjunctionLeftElimination
+
+        applySyllogism
+))
+
+thm (LessThanGreaterThan () () ((a < b) → (¬ (a > b))) (
+        a EqualityReflexivity
+
+</jh>
+We start with <code>a < b ∧ b < a → a < a</code>.
+<jh>
+        a b a LessThanTransitivity
+</jh>
+Using the previous theorem we turn this into <code>a < b ∧ b < a → a ≠ a</code>.
+<jh>
+        a a LessThanEquality
+        applySyllogism
+
+</jh>
+Since <code>a = a</code> is a theorem, this gives us <code>¬ (a < b ∧ b < a)</code>
+<jh>
+        transposeWithNegatedConsequent
+        applyModusPonens
+</jh>
+A bit of propositional logic turns this into what we need.
+<jh>
+        distributeNegationPCP
+        convertToImplicationFromDisjunction
+))
+
+thm (EqualityLessThan () () ((a = b) → (¬ (a < b))) (
+        a b LessThanEquality
+        transposeWithNegatedConsequent
+))
+</jh>
+
+=== This order is consistent with addition ===
+<jh>
+thm (LessEqualAdditionRR ((a n) (b n) (c n)) () ((a ≤ b) ↔ ((a + c) ≤ (b + c))) (
+        a b n LessEqual
+</jh>
+The right hand side is now <code>∃ n a + n = b</code>. We add <code>c</code> to both sides of the equality,
+<jh>
+        (a + (value n)) c b AdditionCancellationRight
+        swapBiconditional
+</jh>
+rewrite it as <code>(a + c) + n = b + c</code>,
+<jh>
+        a (value n) c Addition3
+        (b + c) buildEqualityRR
+        applyBiconditionalTransitivity
+</jh>
+and reinstate the quantifier to get <code>a ≤ b ↔ ∃ n (a + c) + n = b + c</code>.
+<jh>
+        n buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+Applying <code>LessEqual</code> we are done.
+<jh>
+        (a + c) (b + c) n LessEqual
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Here is the same theorem with the additions commuted.
+<jh>
+thm (LessEqualAdditionLL () () ((b0 ≤ b1) ↔ ((a + b0) ≤ (a + b1))) (
+        b0 b1 a LessEqualAdditionRR
+
+        b0 a AdditionCommutativity
+        b1 a AdditionCommutativity
+        buildLessEqual
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Combining the two gives the full theorem.
+<jh>
+thm (LessEqualAddition () () (((a0 ≤ a1) ∧ (b0 ≤ b1)) → ((a0 + b0) ≤ (a1 + b1))) (
+        (a0 ≤ a1) (b0 ≤ b1) ConjunctionRightElimination
+        a0 a1 b0 LessEqualAdditionRR
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+That gives us <code>a0 ≤ a1 ∧ b0 ≤ b1 → a0 + b0 ≤ a1 + b0</code>. Now we apply a similar technique to also get <code>a0 ≤ a1 ∧ b0 ≤ b1 → a1 + b0 ≤ a1 + b1</code>.
+<jh>
+        (a0 ≤ a1) (b0 ≤ b1) ConjunctionLeftElimination
+        b0 b1 a1 LessEqualAdditionLL
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Combining these two finishes the proof.
+<jh>
+        composeConjunction
+        (a0 + b0) (a1 + b0) (a1 + b1) LessEqualTransitivity
+        applySyllogism
+))
+</jh>
+
+Here we prove the analogous theorems for the strict order.
+<jh>
+thm (LessThanAdditionRR () () ((a0 < a1) ↔ ((a0 + b) < (a1 + b))) (
+        a0 a1 b LessEqualAdditionRR
+
+        a0 b a1 AdditionCancellationRight
+        swapBiconditional
+        addNegation
+
+        buildConjunction
+))
+
+thm (LessThanAdditionLL () () ((b0 < b1) ↔ ((a + b0) < (a + b1))) (
+        b0 b1 a LessEqualAdditionLL
+
+        a b0 b1 AdditionCancellationLeft
+        swapBiconditional
+        addNegation
+
+        buildConjunction
+))
+
+thm (LessEqualLessThanAddition () () (((a0 ≤ a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))) (
+</jh>
+First we show <code>a0 ≤ a1 ∧ b0 < b1 → a0 + b0 ≤ a1 + b0</code>.
+<jh>
+        (a0 ≤ a1) (b0 < b1) ConjunctionRightElimination
+        a0 a1 b0 LessEqualAdditionRR
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>a0 ≤ a1 ∧ b0 < b1 → a1 + b0 < a1 + b1</code>.
+<jh>
+        (a0 ≤ a1) (b0 < b1) ConjunctionLeftElimination
+        b0 b1 a1 LessThanAdditionLL
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Combining the two finishes the proof.
+<jh>
+        composeConjunction
+        (a0 + b0) (a1 + b0) (a1 + b1) LessEqualLessThanTransitivity
+        applySyllogism
+))
+
+thm (LessThanAddition () () (((a0 < a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))) (
+        a0 a1 LessThanLessEqualImplication
+        (b0 < b1) conjoinRR
+
+        a0 a1 b0 b1 LessEqualLessThanAddition
+
+        applySyllogism
+))
+</jh>
+
 == Adding one and successor ==
 
 Before we export to [[Interface:Basic arithmetic]], we have one style point to clear up.  The induction theorems there are stated in terms of <code>k + 1</code> (as that file does not have the successor operation).

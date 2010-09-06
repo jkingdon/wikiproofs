@@ -668,7 +668,7 @@ The conventional treatment of [[w:free variable|free variables]] is syntactic; v
 def ((is-not-free-in x φ) (φ → (∀ x φ)))
 </jh>
 
-This differs slightly from the syntactic definition of free variables, and so might better be termed ''effectively free'' than simply ''free''. For example, this definition does not consider <code>x</code> to be free in <code>x = x</code>.<ref>[http://us.metamath.org/mpeuni/mmset.html#traditional Appendix 2: Traditional Textbook Axioms of Predicate Calculus with Equality], Metamath Proof Explorer, accessed February 20, 2010.</ref> In fact, this relationship is true of any theorem:<ref>[http://us.metamath.org/mpeuni/hbth.html hbth] in metamath's set.mm, accessed February 20, 2010.</ref>
+This differs slightly from the syntactic definition of free variables, and so might better be termed ''effectively free'' than simply ''free''. For example, this definition does not consider <code>x</code> to be free in <code>x = x</code>.<ref>[http://us.metamath.org/mpeuni/mmset.html#traditional Appendix 2: Traditional Textbook Axioms of Predicate Calculus with Equality], Metamath Proof Explorer, accessed February 20, 2010.</ref> In fact, this relationship is true of any theorem.<ref>[http://us.metamath.org/mpeuni/hbth.html hbth] in metamath's set.mm, accessed February 20, 2010.</ref> There is little need to actually use <code>TheoremNotFree</code> for anything, but we show it here to demonstrate the implications of our definition.
 <jh>
 thm (TheoremNotFree () ((H φ)) (x is-not-free-in φ) (
         H
