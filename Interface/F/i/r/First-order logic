@@ -205,21 +205,13 @@ def ((≠ s t) (¬ (s = t)))
 </jh>
 
 == Free variables ==
-The conventional treatment of [[w:free variable|free variables]] is syntactic; variables are defined as free depending on where they occur in a formula relative to the quantifiers over that variable. Our concept of free variable is similar (and can be used in applying first-order logic in exactly the same way), although we do provide one additional way to consider a variable "free" which would not be present in most systems.
+We provide a variety of ways to prove that a variable is not [[w:free variable|free]] in a formula, and a variety of conclusions that follow from this. These theorems do not depend on the details of how <code>is-not-free-in</code> is defined.
 
 <jh>
 term (formula (is-not-free-in variable formula))
 </jh>
 
-=== Showing a variable is (effectively) free ===
-The key way that our concept of free variable differs from the syntactic one is that we consider <code>is-not-free-in</code> to be true for any theorem (that is, unconditionally true statement), even if the variable occurs in the theorem without a quantifier. There is probably little need to use the next statement (since most treatments of first-order logic do not have it); it is here to underscore that it would not be possible to prove a statement such as <code>(¬ (x is-not-free-in (x = x)))</code>.
-<jh>
-stmt (TheoremNotFree () (φ) (x is-not-free-in φ))
-</jh>
-
 === Showing a variable is free ===
-Using the syntactic definition of free variable, the equivalent of <code>is-not-free-in</code> would be true for all the reasons described in this section.
-
 A variable is not free in a formula if it does not occur in the formula:
 <jh>
 stmt (DistinctNotFree ((x φ)) () (x is-not-free-in φ))
