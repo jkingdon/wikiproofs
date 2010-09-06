@@ -1,8 +1,5 @@
 Items which may be doable without a network connection:
 
-* arithmetic
-  - a ≤ a (leid in peano_thms)
-
 * convenience theorems of propositional logic
   - any more in Basic Arithmetic?
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -44,12 +41,21 @@ Items which may be doable without a network connection:
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
+* Don't need to define Subst as an axiom (see peano_thms.gh for how to avoid it)
 
 To do with network:
 
-nomenclature: combining vs combination from User:Kingdon
+download files:
+  Basic arithmetic
+  Convenience theorems
+  classical propositional
+  Peano axioms
+  Tarski's geometry axioms
+  First-order logic
+  Interface:First-order logic
+  Interface:First-order logic with quantifiability
 
-Don't export TheoremNotFree
+nomenclature: combining vs combination from User:Kingdon
 
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
 
