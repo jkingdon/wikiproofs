@@ -1,7 +1,7 @@
 Items which may be doable without a network connection:
 
 * convenience theorems of propositional logic
-  - any more in Basic Arithmetic?
+  - joinConsequents (do without, probably)
 * look at whether Raph's proof of ceqsex simplifies our development
   (I think it might enable omitting a bunch of strange little
   theorems).
@@ -15,14 +15,6 @@ Items which may be doable without a network connection:
 
   * ax9o is only used by equs4.
 
-* naming convention for implication builders
-  a. addImplicationAntecedent (from addCommonAntecedent)
-     ImplicationConsequentAddition (from CommonConsequentAddition)
-     ImplicationConsequentBuilder (from ImplicationBuilderRR)
-     ImplicationConsequentBuilderInConsequent
-     buildImplicationAntecedent
-     buildImplication
-     buildImplicationConsequentInConsequent (from buildCommonConsequentInConsequent)
 * General set theory
   - ordered pair
   - definitions and consequences: union?,
@@ -48,4 +40,7 @@ To do with network:
 nomenclature: combining vs combination from User:Kingdon
 
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
+
+download:
+  * wikipedia page for Tarski's geometry axioms
 
