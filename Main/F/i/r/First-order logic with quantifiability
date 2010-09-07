@@ -647,20 +647,8 @@ If we have a theorem, we can add a variable substitution onto it.
 <jh>
 thm (introduceSubst () ((H φ)) (subst s x φ) (
         H
-        ((value x) = (value y)) introduceAntecedent
         x generalize
-
-        x (value y) φ equs4c
-        applyModusPonens
-
-        ((value y) = s) introduceAntecedent
-        y generalize
-
-        y s (∃ x (((value x) = (value y)) ∧ φ)) equs4c
-        applyModusPonens
-
-        s x φ y Subst
-        eliminateBiconditionalForward
+        x φ s SpecializationToObject
         applyModusPonens
 ))
 </jh>
