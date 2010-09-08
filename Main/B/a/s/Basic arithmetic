@@ -2251,9 +2251,9 @@ thm (LessThanAddition () () (((a0 < a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1
 </jh>
 
 === This order is consistent with multiplication ===
-In systems admitting negative numbers, such as the integers or reals, the term "multiplication is consistent with ≤" will generally refer to a weaker result, such as <code>0 ≤ b ∧ 0 ≤ c → 0 ≤ b · c</code>. But we prove a more powerful theorem, <code>a ≤ b → a · c ≤ b · c</code>
+In systems admitting negative numbers, such as the integers or reals, the term "multiplication is consistent with ≤" will generally refer to a weaker result, such as <code>0 ≤ b ∧ 0 ≤ c → 0 ≤ b · c</code>. But we prove a more powerful theorem, <code>a ≤ b → a · c ≤ b · c</code>. The converse only holds if <code>c ≠ 0</code>.
 <jh>
-thm (LessEqualAdditionRRForward ((a n) (b n) (c n)) () ((a ≤ b) → ((a · c) ≤ (b · c))) (
+thm (LessEqualMultiplicationRR ((a n) (b n) (c n)) () ((a ≤ b) → ((a · c) ≤ (b · c))) (
         a b n LessEqual
         eliminateBiconditionalReverse
 
