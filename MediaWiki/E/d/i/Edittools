@@ -12,9 +12,13 @@
 <charinsert>≤ ≥ · ℙ ℕ ℤ ℚ ℝ ℂ ℍ</charinsert>
 </p>
 
-<p class="specialbasic" id="Greek letters"><!-- Should be from #1D400 onwards, but many fonts and browsers don't correctly render characters beyond the BMP yet-->
+<p class="specialbasic" id="Greek letters"><!-- Perhaps should be from #1D400 onwards, but many fonts and browsers don't correctly render characters beyond the BMP yet, and making distinctions which would only sometimes be visually apparent can be dubious -->
 <charinsert>Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω</charinsert>
 <br />
 <charinsert>α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω</charinsert>
+</p>
+
+<p class="specialbasic" id="Identifiers"><!-- more letters and letter-like punctuation -->
+<charinsert>ℵ ′</charinsert>
 </p>
 </div>
