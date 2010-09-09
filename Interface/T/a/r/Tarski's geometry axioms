@@ -24,7 +24,7 @@ The kind <code>object</code>, defined in first-order logic, represents a point:
 kindbind (object point)
 var (point x y z w u v)
 
-var (variable a b c)
+var (variable a b c xx yy)
 </jh>
 
 == Congruence ==
@@ -69,9 +69,13 @@ stmt (Pasch () () (((between x u z) ∧ (between y v z)) → (∃ a ((between u 
 </jh>
 
 === Continuity ===
+[[File:Tarski's continuity axiom.svg|left|thumb]]
+The variables <code>xx</code> and <code>yy</code> correspond with <code>x</code> and <code>y</code> in the diagram and [[w:Tarski's axioms|wikipedia]]. (We can't just call them <code>x</code> and <code>y</code> because we've declared them as objects, not variables, so they can't be subject to quantification).
 <jh>
 var (formula φx ψy)
-#stmt (Continuity ((φx y) (φx a) (φx b) (ψy x) (ψy a) (ψy b)) () ())
+stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b)) () 
+  ((∃ a (∀ xx (∀ yy ((φx ∧ ψy) → (between (value a) (value xx) (value yy))))))
+  → (∃ b (∀ xx (∀ yy ((φx ∧ ψy) → (between (value xx) (value b) (value yy))))))))
 </jh>
 
 {{under construction}}
