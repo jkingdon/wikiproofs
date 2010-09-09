@@ -7,7 +7,7 @@
 == Geometry ==
 See [[w:Category:Axiomatics of Euclidean geometry]]. Tarski's system would appear to be most within reach, especially if restricting to Tarski's first-order (elementary) version, rather than adding the second-order axiom which produces full Euclidean geometry.
 
-Think about (or find a work describing) how to, from these axioms, introduce more familiar notation such as the line AB, the angle ∠ABC, the triangle △ABC, triangle congruence △ABC ≅ △DEF, etc.
+Think about (or find a work describing) how to, from these axioms, introduce more familiar notation such as the line AB, the angle ∠ABC, the triangle △ABC, triangle congruence △ABC ≅ △DEF, etc. Perhaps based on [http://dpt-info.u-strasbg.fr/~narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] (definitely seems like a good start, although I can't tell how far they get).
 
 Don't yet know if this is easy or hard, but [http://www.jimloy.com/geometry/17-gon.htm the 17-gon] might be a cute result to prove.
 
