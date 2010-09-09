@@ -1,0 +1,18 @@
+== Todos ==
+
+Variants of LessEqualMultiplicationRR
+* LessEqualMultiplicationLL: a ≤ b → c · a ≤ c · b (lemul2 in peano_thms)
+* LessEqualMultiplication: a0 ≤ a1 ∧ b0 ≤ b1 → a0 · b0 ≤ a1 · b1 (listed in Hirst & Hirst as "Inequalities can be multiplied")
+* Strict inequality versions, for example b ≠ 0 → (a0 < a1 → a0 · b < a1 · b) ("Strict inequality is preserved by nonzero multiplication" in Hirst & Hirst)
+
+No zero divisors: a · b = 0 → (a = 0 ∨ b = 0)
+
+More generic total order properties:
+* ¬ (a < b) ↔ a ≥ b
+* ¬ (a ≤ b) ↔ a > b
+
+Maybes:
+
+* a ≠ 0 ↔ a > 0 (easy consequence of ZeroSmallest and LessThanLessEqual)
+
+[[User:Kingdon|Kingdon]] 14:13, 8 September 2010 (UTC)
