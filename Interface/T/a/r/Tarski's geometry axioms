@@ -70,7 +70,7 @@ stmt (Pasch () () (((between x u z) ∧ (between y v z)) → (∃ a ((between u 
 
 === Continuity ===
 [[File:Tarski's continuity axiom.svg|left|thumb]]
-The variables <code>xx</code> and <code>yy</code> correspond with <code>x</code> and <code>y</code> in the diagram and [[w:Tarski's axioms|wikipedia]]. (We can't just call them <code>x</code> and <code>y</code> because we've declared them as objects, not variables, so they can't be subject to quantification).
+The variables <code>xx</code> and <code>yy</code> correspond with <code>x</code> and <code>y</code> in the diagram and [[w:Tarski's axioms|wikipedia]]. (We can't just call them <code>x</code> and <code>y</code> because we've declared <code>x</code> and <code>y</code> as objects, which unlike variables cannot be subject to quantification).
 <jh>
 var (formula φx ψy)
 stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b)) () 
