@@ -4,7 +4,7 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = Since [[w:Euclid|Euclid]], geometry has been presented as following from postulates. However, it was not until the 20th century that a complete set of postulates were put forward. This page is for one such set, the [[w:Tarski's axioms|first-order axiomization by Tarski]]. It is a subsystem of full Euclidian geometry and a supersystem of compass-and-straightedge geometry.<ref>footnote 5 on page 191 of Tarski and Givant (1999)</ref> It makes reference to points (not directly to lines, angles, or circles), and has two relationships between points: betweenness and congruence. The version here is for two dimensions, although only slight modifications are needed for one dimension or more than two dimensions.
+ | notes    = Since [[w:Euclid|Euclid]], geometry has been presented as following from postulates. However, it was not until the 20th century that a complete set of postulates were put forward. This page is for one such set, the [[w:Tarski's axioms|first-order axiomization by Tarski]]. It is less powerful than full Euclidian geometry and more powerful than compass-and-straightedge geometry.<ref>footnote 5 on page 191 of Tarski and Givant (1999)</ref> It makes reference to points (not directly to lines, angles, or circles), and has two relationships between points: betweenness and congruence. The version here is for two dimensions, although only slight modifications are needed for one dimension or more than two dimensions.
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
