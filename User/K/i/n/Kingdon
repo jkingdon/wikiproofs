@@ -30,20 +30,6 @@ Don't yet know if this is easy or hard, but [http://www.jimloy.com/geometry/17-g
 [http://us.metamath.org/mpeuni/19.29.html 19.29]
 [http://us.metamath.org/mpeuni/19.2.html 19.2]
 
-== Peano arithmetic ==
-=== Theorems ===
-Sample theorems from Hirst & Hirst:
- 7. Inequality is preserved by multiplication: x ≤ y → x · z ≤ y · z (lemul2, commuted)
- 8. Strict inequality is preserved by nonzero multiplication:
-    z ≠ 0 → (x < y → x · z < y · z)
- 10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
-
-No zero divisors: a · b = 0 → (a = 0 ∨ b = 0)
-
-More theorems:
-
-* x ≠ 0 ↔ x > 0
-
 == More axiomizations of propositional logic ==
 
 === Four-axiom variation of Principia axioms ===
