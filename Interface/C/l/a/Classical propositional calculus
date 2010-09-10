@@ -483,6 +483,18 @@ stmt (introduceAntecedentInConsequent () ((antecedent → p)) (antecedent → (q
 stmt (importInConsequent ()
   ((antecedent → (p → (q → r))))
   (antecedent → ((p ∧ q) → r)))
+stmt (exportInConsequent ()
+  ((antecedent → ((p ∧ q) → r)))
+  (antecedent → (p → (q → r))) )
+</jh>
+
+== Theorems in the antecedent ==
+
+There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent. But there are a few for the latter.
+<jh>
+stmt (exportInAntecedent ()
+  ((((p ∧ q) → r) → consequent))
+  ((p → (q → r)) → consequent))
 </jh>
 
 === Detachment ===
