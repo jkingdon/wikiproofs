@@ -155,6 +155,9 @@ stmt (ThereExistsIntroduction () () (φ → (∃ x φ)))
 and can be removed if the variable does not occur in the formula.
 <jh>
 stmt (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ))
+stmt (removeThereExists ((x φ)) ((∃ x φ)) φ)
+var (formula antecedent)
+stmt (removeThereExistsInConsequent ((x φ)) ((antecedent → (∃ x φ))) (antecedent → φ))
 </jh>
 
 == Equality ==
