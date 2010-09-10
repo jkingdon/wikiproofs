@@ -422,7 +422,7 @@ stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) �
 
 === Additional builders ===
 <jh>
-var (formula antecedent common p0 q0 p1 q1)
+var (formula antecedent consequent common p0 q0 p1 q1)
 
 stmt (DisjunctionBuilderLL () () ((p ↔ q) → ((common ∨ p) ↔ (common ∨ q))))
 stmt (buildDisjunctionLL () ((p ↔ q)) ((common ∨ p) ↔ (common ∨ q)))
@@ -486,6 +486,7 @@ These are analogues to modus ponens, but where some other portion of the formula
 <jh>
 stmt (detach1of2 () (p ((p ∧ q) → r)) (q → r))
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
+stmt (detach1of4 () (p ((((p ∧ q) ∧ r) ∧ s) → consequent)) (((q ∧ r) ∧ s) → consequent))
 stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
 stmt (detachImplicationBiconditionalRight () (r (p → (q ↔ r))) (p → q))
 stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent → q))
