@@ -480,6 +480,9 @@ stmt (eliminateBiconditionalReverseInConsequent () ((antecedent → (p ↔ q))) 
 stmt (eliminateBiconditionalForwardInConsequent () ((antecedent → (p ↔ q))) (antecedent → (q → p)))
 stmt (applyModusPonensInConsequent () ((antecedent → p) (antecedent → (p → q))) (antecedent → q))
 stmt (introduceAntecedentInConsequent () ((antecedent → p)) (antecedent → (q → p)))
+stmt (importInConsequent ()
+  ((antecedent → (p → (q → r))))
+  (antecedent → ((p ∧ q) → r)))
 </jh>
 
 === Detachment ===
