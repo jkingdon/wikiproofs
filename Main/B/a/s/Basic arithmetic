@@ -1387,11 +1387,9 @@ and then we can remove the quantifiers because the variables they quantify over 
         eliminateBiconditionalReverse
         applySyllogism
 
-        vab (∃ vbc (∃ vac ((a + (value vac)) = c))) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 
-        vbc (∃ vac ((a + (value vac)) = c)) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 ))
 </jh>
 
@@ -1546,11 +1544,9 @@ thm (LessEqualAntisymmetry ((n a) (n b) (n m) (m a) (m b)) () (((a ≤ b) ∧ (b
         n addThereExists
         applySyllogism
 
-        n (∃ m (a = b)) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 
-        m (a = b) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 ))
 </jh>
 
