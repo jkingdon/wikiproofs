@@ -91,7 +91,7 @@ thm (CongruenceRightCommutativity () () ((x y ≡ z w) ↔ (x y ≡ w z)) (
 ))
 </jh>
 
-A line segment with the same point as start and end is congruent to another such segment. To prove this, start with the line segment x x. Extend x y beyond y to another point a such that y a ≡ x x. Then we show that a must equal y.<ref>Lemma cong_trivial_identity in Narboux</ref>
+A line segment with the same point as both of its endpoints is congruent to another such segment. To prove this, start with the line segment x x. Extend x y beyond y to another point a such that y a ≡ x x. Then we show that a must equal y.<ref>Lemma cong_trivial_identity in Narboux</ref>
 <jh>
 thm (CongruenceTrivialIdentity ((a x) (a y)) () (y y ≡ x x) (
         a x y x x SegmentConstruction
@@ -130,6 +130,141 @@ Taking the reverse implication and combining with the previous result gives us <
 The quantifier is no longer needed, and removing it finishes the proof.
 <jh>
         removeThereExists
+))
+</jh>
+
+Here is a version of <code>CongruenceIdentity</code> with left and right sides swapped.<ref>Lemma cong_reverse_identity in Narboux</ref>
+<jh>
+thm (CongruenceIdentityLeft () () ((x x ≡ y z) → (y = z)) (
+        x x y z CongruenceSymmetry
+        eliminateBiconditionalReverse
+
+        y z x CongruenceIdentity
+        applySyllogism
+))
+</jh>
+
+Congruence is unaffected by exchanging the endpoints of both line segments.<ref>Lemma cong_commutativity in Narboux</ref>
+<jh>
+thm (CongruenceCommutativity () () ((x y ≡ z w) ↔ (y x ≡ w z)) (
+        x y z w CongruenceLeftCommutativity
+        y x z w CongruenceRightCommutativity
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The next lemma is a convenience form of <code>CongruenceIdentity</code>.<ref>not in Narboux</ref>
+<jh>
+thm (CongruenceIdentityFromEquality () () ((x = y) → ((x y ≡ z w) → (z = w))) (
+</jh>
+This is just a substitution away from <code>CongruenceIdentityLeft</code>.  The substitution is <code>x = y → (x x ≡ z w ↔ x y ≡ z w)</code>.
+<jh>
+        z EqualityReflexivity
+        w EqualityReflexivity
+        x EqualityReflexivity
+        x x x y z z w w CongruenceBuilder
+        detach1of4
+        detach2of2
+        detach2of2
+
+        eliminateBiconditionalForwardInConsequent
+
+        x z w CongruenceIdentityLeft
+        (x = y) introduceAntecedent
+        applySyllogismInConsequent
+))
+</jh>
+
+== Five segment ==
+The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ → x z ≡ x′ z′</code>, is basically a degenerate case of the five segment axiom.<ref>Lemma l2_11 in Narboux</ref> There are two cases. If <code>x ≠ y</code>, then applying five segments to x y z and x yields the desired result (the additional two antecedents are fulfilled because one becomes <code>x x ≡ x′ x′</code> and the other <code>y x ≡ y′ x′</code>). If <code>x = y</code>, then <code>x z ≡ x′ z′</code> follows from <code>y z ≡ y′ z′</code> (and <code>x′ = y′</code>, which follows from <code>x y ≡ x′ y′</code>).
+
+We first prove the <code>x = y</code> case as a lemma.
+<jh>
+var (point x′ y′ z′ u′)
+thm (ThreeSegmentXEqualsY () () ((x = y) → (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′))) (
+</jh>
+We start with <code>x = y → (x y ≡ x′ y′ → x′ = y′)</code>
+<jh>
+        x y x′ y′ CongruenceIdentityFromEquality
+</jh>
+Using <code>x′ = y′</code> for something takes this form: <code>x = y → (x′ = y′ → (y z ≡ y′ z′ → x z ≡ x′ z′))</code>.
+<jh>
+        z EqualityReflexivity
+        z′ EqualityReflexivity
+        x y z z x′ y′ z′ z′ CongruenceBuilder
+        detach2of2
+        detach2of3
+        eliminateBiconditionalForwardInConsequent
+        export
+</jh>
+We combine those to get <code>x = y → (x y ≡ x′ y′ → (y z ≡ y′ z′ → x z ≡ x′ z′))</code>.
+<jh>
+        applySyllogismInConsequent
+</jh>
+Adding two more antecedents and importing several times gives us the complete <code>x = y</code> case.
+<jh>
+        (between x′ y′ z′) introduceAntecedentInConsequent
+        (between x y z) introduceAntecedentInConsequent
+        importInConsequent
+        importInConsequent
+        importInConsequent
+))
+</jh>
+Now, the <code>x ≠ y</code> case.
+<jh>
+thm (ThreeSegmentXNotEqualY () () ((x ≠ y) → (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′))) (
+</jh>
+Applying the five segment axiom gives us <code>x ≠ y ∧ between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ ∧ x x ≡ x′ x′ ∧ y x ≡ y′ x′ → z x ≡ z′ x′</code>. First we detach <code>x x ≡ x′ x′</code>
+<jh>
+        x x′ CongruenceTrivialIdentity
+        x y z x′ y′ z′ x x′ FiveSegment
+        detach2of3
+</jh>
+Next we commute <code>z x ≡ z′ x′</code> to <code>x z ≡ x′ z′</code>.
+<jh>
+        z x z′ x′ CongruenceCommutativity eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We are still facing <code>x ≠ y ∧ between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ ∧ y x ≡ y′ x′ → x z ≡ x′ z′</code>. We need to remove the <code>y x ≡ y′ x′</code> (because it is redundant with <code>x y ≡ x′ y′</code>).
+
+We get most of the way with <code>x y ≡ x′ y′ ∧ y z ≡ y′ z′ → (x y ≡ x′ y′ ∧ y z ≡ y′ z′) ∧ y x ≡ y′ x′</code>:
+<jh>
+        ((x y ≡ x′ y′) ∧ (y z ≡ y′ z′)) ImplicationReflexivity
+
+        (x y ≡ x′ y′) (y z ≡ y′ z′) ConjunctionRightElimination
+        x y x′ y′ CongruenceCommutativity eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Now we just add the rest of the antecedents and combine to finish the <code>x ≠ y</code> case.
+<jh>
+        (x z ≡ x′ z′) addCommonConsequent
+        exportInAntecedent
+        exportInAntecedent
+        exportInConsequent
+        (between x′ y′ z′) addCommonAntecedent
+        (between x y z) addCommonAntecedent
+        (x ≠ y) addCommonAntecedent
+
+        importInAntecedent
+        importInAntecedent
+        importInAntecedent
+        importInAntecedent
+        importInAntecedent
+
+        applyModusPonens
+
+        importInConsequent
+        importInConsequent
+        importInConsequent
+))
+
+thm (ThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′)) (
+        x y z x′ y′ z′ ThreeSegmentXEqualsY
+        x y z x′ y′ z′ ThreeSegmentXNotEqualY
+        eliminateCases
 ))
 </jh>
 
