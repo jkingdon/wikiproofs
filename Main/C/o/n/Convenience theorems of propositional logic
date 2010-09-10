@@ -569,6 +569,26 @@ thm (importInConsequent ()
         p q r Transportation eliminateBiconditionalReverse
         applySyllogism
 ))
+
+thm (exportInConsequent ()
+  ((H (antecedent → ((p ∧ q) → r))))
+  (antecedent → (p → (q → r))) (
+        H
+        p q r Transportation eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+== Theorems in the antecedent ==
+There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent.  But there are a few for the latter.
+<jh>
+thm (exportInAntecedent ()
+  ((H (((p ∧ q) → r) → consequent)))
+  ((p → (q → r)) → consequent) (
+        p q r Transportation eliminateBiconditionalReverse
+        H
+        applySyllogism
+))
 </jh>
 
 == Combinations of commutativity and associativity ==
