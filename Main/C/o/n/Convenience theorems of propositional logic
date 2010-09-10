@@ -582,6 +582,14 @@ thm (exportInConsequent ()
 == Theorems in the antecedent ==
 There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent.  But there are a few for the latter.
 <jh>
+thm (importInAntecedent ()
+  ((H ((p → (q → r)) → consequent)))
+  (((p ∧ q) → r) → consequent) (
+        p q r Transportation eliminateBiconditionalForward
+        H
+        applySyllogism
+))
+
 thm (exportInAntecedent ()
   ((H (((p ∧ q) → r) → consequent)))
   ((p → (q → r)) → consequent) (
