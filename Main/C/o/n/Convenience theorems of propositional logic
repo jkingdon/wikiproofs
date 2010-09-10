@@ -561,6 +561,14 @@ thm (introduceAntecedentInConsequent () ((H (antecedent → p))) (antecedent →
         p q AntecedentIntroduction
         applySyllogism
 ))
+
+thm (importInConsequent ()
+  ((H (antecedent → (p → (q → r)))))
+  (antecedent → ((p ∧ q) → r)) (
+        H
+        p q r Transportation eliminateBiconditionalReverse
+        applySyllogism
+))
 </jh>
 
 == Combinations of commutativity and associativity ==
