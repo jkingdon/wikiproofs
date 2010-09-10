@@ -42,5 +42,14 @@ nomenclature: combining vs combination from User:Kingdon
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
 
 download:
-  * wikipedia page for Tarski's geometry axioms
+  * Convenience theorems of propositional logic
+  * Interface:Classical_propositional_calculus
+  * Basic geometry
+  * Basic arithmetic
+  * Interface:First-order logic with quantifiability
+  * Interface:First-order logic
+  * First-order logic‎
+  * Interface:Tarski's geometry axioms
+  * User:Kingdon
+  * Interface:Basic arithmetic
 
