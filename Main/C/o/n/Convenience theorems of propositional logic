@@ -555,6 +555,12 @@ thm (applyModusPonensInConsequent ()
 
         applySyllogism
 ))
+
+thm (introduceAntecedentInConsequent () ((H (antecedent → p))) (antecedent → (q → p)) (
+        H
+        p q AntecedentIntroduction
+        applySyllogism
+))
 </jh>
 
 == Combinations of commutativity and associativity ==
