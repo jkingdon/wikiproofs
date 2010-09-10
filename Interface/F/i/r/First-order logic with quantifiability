@@ -10,7 +10,7 @@ Statements can be added if necessary, but then the exporting modules have to be 
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus]]
-| importedby = [[Interface:Peano axioms]]
+| importedby = [[Interface:Peano axioms]] [[Interface:Tarski's geometry axioms]] and others
 | exportedby = [[First-order logic with quantifiability]]
 }}
 
