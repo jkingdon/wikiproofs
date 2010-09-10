@@ -888,6 +888,19 @@ thm (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ) (
         x φ DistinctNotFree
         ThereExistsAddRemove
 ))
+
+thm (removeThereExists ((x φ)) ((H (∃ x φ))) φ (
+        H
+        x φ NullThereExists eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+var (formula antecedent)
+thm (removeThereExistsInConsequent ((x φ)) ((H (antecedent → (∃ x φ)))) (antecedent → φ) (
+        H
+        x φ NullThereExists eliminateBiconditionalReverse
+        applySyllogism
+))
 </jh>
 
 The same is true of ∀:<ref>[http://us.metamath.org/mpeuni/19.3.html 19.3] in metamath's set.mm, accessed February 21, 2010</ref>
