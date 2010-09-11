@@ -494,6 +494,49 @@ thm (BetweennessSymmetry () () ((between A B C) ↔ (between C B A)) (
 ))
 </jh>
 
+Symmetry lets us easily prove the other degenerate case.<ref>beetween_trivial2 in Narboux</ref>
+<jh>
+thm (BetweenAAB () () (between A A B) (
+        B A BetweenABB
+        B A A BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
+=== Equality ===
+If <code>B</code> is between <code>A</code> and <code>C</code>, and <code>A</code> is between <code>B</code> and <code>C</code>, then <code>A</code> and <code>B</code> must be equal.<ref>between_egality in Narboux</ref>
+
+This property is analogous to antisymmetry for an [[w:Partial_order|order relation]].
+<jh>
+thm (BetweennessEquality ((a A) (a B)) () (((between A B C) ∧ (between B A C)) → (A = B)) (
+        A B C B A a Pasch
+</jh>
+That gives us <code>∃ a (between B a B ∧ between A a A)</code>. But <code>between B a B</code> implies that <code>B = a</code> and likewise for <code>A</code>. We apply those, and switch the order of the second one, to get <code>∃ a (B = a ∧ a = A)</code>
+<jh>
+        B (value a) Indivisibility
+
+        A (value a) Indivisibility
+        A (value a) EqualitySymmetry eliminateBiconditionalReverse
+        applySyllogism
+
+        conjoin
+        a addThereExists
+        applySyllogism
+</jh>
+A bit more logic and we're done.
+<jh>
+        B (value a) A EqualityTransitivity
+        a addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+
+        B A EqualitySymmetry eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == References ==
 <references/>
 
