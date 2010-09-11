@@ -11,7 +11,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
-var (point x y z w u v A B C Q)
+var (point x y z w u v A B C D E Q)
 var (variable a b c)
 </jh>
 
@@ -450,22 +450,17 @@ And now we just remove the quantifier, which is no longer needed.
 </jh>
 
 === Betweenness symmetry ===
-Exchanging the endpoints of a betweenness formula has no effect. In other words, B is between A and C implies B is between C and A.<ref>between_symmetry in Narboux</ref><ref>Axiom 14 in Givant and Tarski (1999)</ref>
+Exchanging the endpoints of a betweenness formula has no effect. In other words, B is between A and C implies B is between C and A.<ref>between_symmetry in Narboux</ref><ref>Symmetry Axiom for Betweenness in Givant and Tarski (1999)</ref>
+
+We move much of the proof into a lemma because it will be useful in other similar proofs.
 <jh>
-thm (BetweennessSymmetryImplication ((a A) (a B) (a C)) () ((between A B C) → (between C B A)) (
+thm (BetweenSubstitution ((a A) (a B) (a C)) () ((∃ a ((between B (value a) B) ∧ (between C (value a) A))) → (between C B A)) (
 </jh>
-We'll be applying the <code>Pasch</code> axiom with <code>between A B C</code> and <code>between B C C</code> as the antecedents. The second of those is a theorem.
-<jh>
-        B C BetweenABB
-        A B C B C a Pasch
-        detach2of2
-</jh>
-That gives us <code>between A B C → ∃ a (between B a B ∧ between C a A)</code>. We start by noting that <code>between B a B</code> implies <code>B = a</code>, which lets us derive <code>between A B C → ∃ a (B = a ∧ between C a A)</code>.
+We start by noting that <code>between B a B</code> implies <code>B = a</code>, which lets us derive <code>∃ a (between B a B ∧ between C a A) → ∃ a (B = a ∧ between C a A)</code>.
 <jh>
         B (value a) Indivisibility
         (between C (value a) A) conjoinRR
         a addThereExists
-        applySyllogism
 </jh>
 Now we apply a substitution to reduce <code>B = a ∧ between C a A</code> to <code>between C B A</code>. We start with the substitution <code>B = a → (between C B A ↔ between C a A)</code>
 <jh>
@@ -475,7 +470,7 @@ Now we apply a substitution to reduce <code>B = a ∧ between C a A</code> to <c
         detach2of2
         detach1of2
 </jh>
-We eliminating the forward implication, import, and combine with the previous result to get <code>between A B C → ∃ a between C B A</code>
+We eliminating the forward implication, import, and combine with the previous result to get <code>∃ a (between B a B ∧ between C a A) → ∃ a between C B A</code>
 <jh>
         eliminateBiconditionalForwardInConsequent
         import
@@ -485,6 +480,20 @@ We eliminating the forward implication, import, and combine with the previous re
 Removing the unnecessary quantifier is all that remains.
 <jh>
         removeThereExistsInConsequent
+))
+
+thm (BetweennessSymmetryImplication ((a A) (a B) (a C)) () ((between A B C) → (between C B A)) (
+</jh>
+We'll be applying the <code>Pasch</code> axiom with <code>between A B C</code> and <code>between B C C</code> as the antecedents. The second of those is a theorem.
+<jh>
+        B C BetweenABB
+        A B C B C a Pasch
+        detach2of2
+</jh>
+That gives us <code>between A B C → ∃ a (between B a B ∧ between C a A)</code>. Applying our lemma is all we need.
+<jh>
+        a B C A BetweenSubstitution
+        applySyllogism
 ))
 
 thm (BetweennessSymmetry () () ((between A B C) ↔ (between C B A)) (
@@ -512,27 +521,31 @@ This property is analogous to antisymmetry for an [[w:Partial_order|order relati
 thm (BetweennessEquality ((a A) (a B)) () (((between A B C) ∧ (between B A C)) → (A = B)) (
         A B C B A a Pasch
 </jh>
-That gives us <code>∃ a (between B a B ∧ between A a A)</code>. But <code>between B a B</code> implies that <code>B = a</code> and likewise for <code>A</code>. We apply those, and switch the order of the second one, to get <code>∃ a (B = a ∧ a = A)</code>
+That gives us <code>∃ a (between B a B ∧ between A a A)</code>. We just need to apply the <code>BetweenSubstitution</code> lemma to get <code>between A B A</code>,
 <jh>
-        B (value a) Indivisibility
-
-        A (value a) Indivisibility
-        A (value a) EqualitySymmetry eliminateBiconditionalReverse
-        applySyllogism
-
-        conjoin
-        a addThereExists
+        a B A A BetweenSubstitution
         applySyllogism
 </jh>
-A bit more logic and we're done.
+which in turn implies <code>A = B</code>
 <jh>
-        B (value a) A EqualityTransitivity
-        a addThereExists
+        A B Indivisibility
+        applySyllogism
+))
+</jh>
+
+=== Inner transitivity ===
+The next result is known as inner transitivity.<ref>Inner Transitivity Axiom for Betweenness in Givant and Tarski, 1999</ref><ref>between_inner_transitivity in Narboux</ref>
+<jh>
+thm (BetweennessInnerTransitivity ((a A) (a B) (a C)) () (((between A B D) ∧ (between B C D)) → (between A B C)) (
+        A B D B C a Pasch
+</jh>
+That gives us <code>∃ a (between B a B ∧ between C a A)</code>. The <code>BetweenSubstitution</code> lemma turns this into <code>between C B A</code>, and we just need to switch the order of the endpoints to be done.
+<jh>
+        a B C A BetweenSubstitution
         applySyllogism
 
-        removeThereExistsInConsequent
-
-        B A EqualitySymmetry eliminateBiconditionalReverse
+        C B A BetweennessSymmetry
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 </jh>
