@@ -449,6 +449,51 @@ And now we just remove the quantifier, which is no longer needed.
 ))
 </jh>
 
+=== Betweenness symmetry ===
+Exchanging the endpoints of a betweenness formula has no effect. In other words, B is between A and C implies B is between C and A.<ref>between_symmetry in Narboux</ref><ref>Axiom 14 in Givant and Tarski (1999)</ref>
+<jh>
+thm (BetweennessSymmetryImplication ((a A) (a B) (a C)) () ((between A B C) → (between C B A)) (
+</jh>
+We'll be applying the <code>Pasch</code> axiom with <code>between A B C</code> and <code>between B C C</code> as the antecedents. The second of those is a theorem.
+<jh>
+        B C BetweenABB
+        A B C B C a Pasch
+        detach2of2
+</jh>
+That gives us <code>between A B C → ∃ a (between B a B ∧ between C a A)</code>. We start by noting that <code>between B a B</code> implies <code>B = a</code>, which lets us derive <code>between A B C → ∃ a (B = a ∧ between C a A)</code>.
+<jh>
+        B (value a) Indivisibility
+        (between C (value a) A) conjoinRR
+        a addThereExists
+        applySyllogism
+</jh>
+Now we apply a substitution to reduce <code>B = a ∧ between C a A</code> to <code>between C B A</code>. We start with the substitution <code>B = a → (between C B A ↔ between C a A)</code>
+<jh>
+        C EqualityReflexivity
+        A EqualityReflexivity
+        C C B (value a) A A BetweenBuilder
+        detach2of2
+        detach1of2
+</jh>
+We eliminating the forward implication, import, and combine with the previous result to get <code>between A B C → ∃ a between C B A</code>
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        import
+        a addThereExists
+        applySyllogism
+</jh>
+Removing the unnecessary quantifier is all that remains.
+<jh>
+        removeThereExistsInConsequent
+))
+
+thm (BetweennessSymmetry () () ((between A B C) ↔ (between C B A)) (
+        A B C BetweennessSymmetryImplication
+        C B A BetweennessSymmetryImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == References ==
 <references/>
 
