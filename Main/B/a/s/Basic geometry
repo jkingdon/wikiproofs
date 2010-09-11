@@ -11,7 +11,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
-var (point x y z w u v)
+var (point x y z w u v A B C Q)
 var (variable a b c)
 </jh>
 
@@ -265,6 +265,146 @@ thm (ThreeSegment () ()
         x y z x′ y′ z′ ThreeSegmentXEqualsY
         x y z x′ y′ z′ ThreeSegmentXNotEqualY
         eliminateCases
+))
+</jh>
+
+== Uniqueness of segment construction ==
+Here we prove that the segment constructed by the segment construction axiom is unique. We state this as <code>Q ≠ A ∧ between Q A x ∧ A x ≡ B C ∧ between Q A y ∧ A y ≡ B C → x = y</code>. The proof is first that <code>A x ≡ A y</code> (because both are congruent to <code>B C</code>), and between that and <code>Q A ≡ Q A</code> we can apply <code>ThreeSegment</code> to <code>Q A x</code> and <code>Q A y</code> to get <code>Q x ≡ Q y</code>. Then we will apply <code>FiveSegment</code> with the lines <code>Q A x</code> and <code>Q A x</code> and the points <code>x</code> and <code>y</code>. The four congruences we need are <code>Q A ≡ Q A</code>, <code>A x ≡ A x</code>, <code>Q x ≡ Q y</code>, and <code>A x ≡ A y</code>, and then <code>FiveSegment</code> gives us <code>x x ≡ x y</code>. This congruence yields <code>x = y</code> by <code>CongruenceIdentityLeft</code>.<ref>construction_unicity in Narboux</ref>
+
+The only real difficulty in formalizing this is juggling all those conjunctions and multiple antecedents. The first lemma shows <code>A x ≡ A y</code>.
+<jh>
+thm (SegmentConstructionUniquenessAxAy () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (A x ≡ A y)) (
+</jh>
+First we extract the two pieces we care about, first showing that big long antecedent implies <code>A x ≡ B C</code>,
+<jh>
+        ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
+        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
+        applySyllogism
+        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionLeftElimination
+        applySyllogism
+
+</jh>
+And then that it implies <code>A y ≡ B C</code>.
+<jh>
+        ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionLeftElimination
+</jh>
+We apply symmetry to turn that into <code>B C ≡ A y</code>.
+<jh>
+        A y B C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We combine the two to get <code>A x ≡ B C ∧ B C ≡ A y</code>, and apply transitivity to finish.
+<jh>
+        composeConjunction
+
+        A x B C A y CongruenceTransitivity
+        applySyllogism
+))
+</jh>
+The next lemma shows <code>Q x ≡ Q y</code>.
+<jh>
+thm (SegmentConstructionUniquenessQxQy () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (Q x ≡ Q y)) (
+</jh>
+To apply <code>ThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
+<jh>
+        ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
+        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
+        applySyllogism
+        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
+        applySyllogism
+        (Q ≠ A) (between Q A x) ConjunctionLeftElimination
+        applySyllogism
+</jh>
+The second is <code>between Q A y</code>.
+<jh>
+        ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
+        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The third is <code>Q A ≡ Q A</code>.
+<jh>
+        Q A CongruenceReflexivity
+        (((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) introduceAntecedent
+
+        composeConjunction
+</jh>
+The fourth is <code>A x ≡ A y</code>.
+<jh>
+        Q A x B C y SegmentConstructionUniquenessAxAy
+
+        composeConjunction
+</jh>
+Applying <code>ThreeSegment</code> we are done.
+<jh>
+        Q A x Q A y ThreeSegment
+        applySyllogism
+))
+</jh>
+
+The next lemma gets us most of the way. It shows <code>x x ≡ x y</code>.
+<jh>
+thm (SegmentConstructionUniquenessxxxy () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (x x ≡ x y)) (
+</jh>
+We'll be applying <code>FiveSegment</code> which has seven antecedents. The first two we can do together, <code>Q ≠ A ∧ between Q A x</code>.
+<jh>
+        ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
+        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
+        applySyllogism
+        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
+        applySyllogism
+</jh>
+The next is <code>between Q A x</code>.
+<jh>
+        ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
+        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
+        applySyllogism
+        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
+        applySyllogism
+        (Q ≠ A) (between Q A x) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+We now need four congruences. The first is <code>Q A ≡ Q A</code>.
+<jh>
+        Q A CongruenceReflexivity
+        (((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) introduceAntecedent
+
+        composeConjunction
+</jh>
+The second congruence is <code>A x ≡ A x</code>.
+<jh>
+        A x CongruenceReflexivity
+        (((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) introduceAntecedent
+
+        composeConjunction
+</jh>
+The third congruence is <code>Q x ≡ Q y</code>.
+<jh>
+        Q A x B C y SegmentConstructionUniquenessQxQy
+        composeConjunction
+</jh>
+The fourth congruence is <code>A x ≡ A y</code>.
+<jh>
+        Q A x B C y SegmentConstructionUniquenessAxAy
+        composeConjunction
+</jh>
+We are ready to apply <code>FiveSegment</code>.
+<jh>
+        Q A x Q A x x y FiveSegment
+        applySyllogism
+))
+</jh>
+
+The final theorem is only a small step further.
+<jh>
+thm (SegmentConstructionUniqueness () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (x = y)) (
+        Q A x B C y SegmentConstructionUniquenessxxxy
+        x x y CongruenceIdentityLeft
+        applySyllogism
 ))
 </jh>
 
