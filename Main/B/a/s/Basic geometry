@@ -408,6 +408,47 @@ thm (SegmentConstructionUniqueness () () ((((((Q ≠ A) ∧ (between Q A x)) ∧
 ))
 </jh>
 
+== Betweenness ==
+We start with a degenerate case of betweenness. It illustrates that we follow Tarski's definition of betweenness, in which the points need not be distinct, rather than Hilbert's, in which they do need to be.<ref>Discussion at Bet in Narboux</ref>
+
+The proof extends the line segment <code>A B</code> beyond <code>B</code> to a point <code>a</code> such that <code>B a ≡ B B</code>. But <code>B a ≡ B B</code> implies <code>B = a</code>, so we have in fact shown <code>between A B B</code>.<ref>beetween_trivial in Narboux</ref>
+<jh>
+thm (BetweenABB ((a A) (a B)) () (between A B B) (
+        a A B B B SegmentConstruction
+</jh>
+That gives us <code>∃ a (between A B a ∧ B a ≡ B B)</code>. We apply the theorem <code>B a ≡ B B → B = a</code> to get <code>∃ a (between A B a ∧ B = a)</code>.
+<jh>
+        B (value a) B CongruenceIdentity
+        (between A B (value a)) conjoinLL
+        a addThereExists
+
+        applyModusPonens
+</jh>
+We now need to handle the substitution of <code>B</code> for <code>a</code>. We start with <code>B = a → (between A B B ↔ between A B a)</code>.
+<jh>
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B B (value a) BetweenBuilder
+        detach2of3
+        detach1of2
+</jh>
+Eliminating the forward direction of the biconditional and rearranging gets <code>between A B a ∧ B = a → between A B B</code>.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+        import
+</jh>
+Combining with our previous result we have <code>∃ a between A B B</code>.
+<jh>
+        a addThereExists
+        applyModusPonens
+</jh>
+And now we just remove the quantifier, which is no longer needed.
+<jh>
+        removeThereExists
+))
+</jh>
+
 == References ==
 <references/>
 
