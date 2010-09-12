@@ -533,10 +533,13 @@ which in turn implies <code>A = B</code>
 ))
 </jh>
 
-=== Inner transitivity ===
-The next result is known as inner transitivity.<ref>Inner Transitivity Axiom for Betweenness in Givant and Tarski, 1999</ref><ref>between_inner_transitivity in Narboux</ref>
+=== Transitivity ===
+In this section we prove six similar theorems which involve four points on a line. Given two betweenness relationships, we conclude a third. Three of the six are just versions of the other three which are flipped left-to-right.
+
+The first one is known as inner transitivity.<ref>Inner Transitivity Axiom for Betweenness in Givant and Tarski, 1999</ref><ref>between_inner_transitivity in Narboux</ref>
 <jh>
-thm (BetweennessInnerTransitivity ((a A) (a B) (a C)) () (((between A B D) ∧ (between B C D)) → (between A B C)) (
+thm (BetweennessInnerTransitivity ((a A) (a B) (a C)) ()
+  (((between A B D) ∧ (between B C D)) → (between A B C)) (
         A B D B C a Pasch
 </jh>
 That gives us <code>∃ a (between B a B ∧ between C a A)</code>. The <code>BetweenSubstitution</code> lemma turns this into <code>between C B A</code>, and we just need to switch the order of the endpoints to be done.
@@ -548,6 +551,44 @@ That gives us <code>∃ a (between B a B ∧ between C a A)</code>. The <code>Be
         eliminateBiconditionalReverse
         applySyllogism
 ))
+</jh>
+
+Reflecting this left-to-right gives our next theorem.<ref>between_exchange3 in Narboux</ref>
+<jh>
+thm (BetweennessInnerTransitivityFlipped () () (((between A B C) ∧ (between A C D)) → (between B C D)) (
+</jh>
+We first rewrite <code>between A B C</code> into <code>between C B A</code> and <code>between A C D</code> into <code>between D C A</code>
+<jh>
+        A B C BetweennessSymmetry
+        A C D BetweennessSymmetry
+        buildConjunction
+        eliminateBiconditionalReverse
+</jh>
+Now we switch the order of the conjuncts.
+<jh>
+        (between C B A) (between D C A) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+</jh>
+Now we are ready to apply inner transitivity (which, when expanded with these variables, works out to <code>between D C A ∧ between C B A → between D C B</code>)
+<jh>
+        D C A B BetweennessInnerTransitivity
+        applySyllogism
+</jh>
+Turning <code>between D C B</code> into <code>between B C D</code> finishes the proof.
+<jh>
+        D C B BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+For outer transitivity, we prove the "flipped" version first (with our reference for which one to consider flipped being Givant and Tarski (1999)).<ref>outer_transitivity_between2 in Narboux</ref>
+<jh>
+#thm (BetweennessOuterTransitivityFlipped () () ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between B C D)) (
+        
+#))
 </jh>
 
 == References ==
