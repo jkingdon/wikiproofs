@@ -584,9 +584,11 @@ Turning <code>between D C B</code> into <code>between B C D</code> finishes the 
 ))
 </jh>
 
-For outer transitivity, we prove the "flipped" version first (with our reference for which one to consider flipped being Givant and Tarski (1999)).<ref>outer_transitivity_between2 in Narboux</ref>
+For outer transitivity, we prove the "flipped" version first (where we consider the "non-flipped" one to be the one in Givant and Tarski (1999)).
+
+We are proving <code>between A B C ∧ between B C D ∧ B ≠ C → between A C D</code>. First we extend <code>A C</code> beyond <code>C</code> to a point <code>a</code> such that <code>C a ≡ C D</code>. Then <code>between A B C</code> and <code>between A C a</code> give us <code>between B C a</code> by <code>BetweennessInnerTransitivityFlipped</code>. That's part of what we need to apply uniqueness of segment construction, which gives us <code>a = D</code>. Then we can substitute <code>between A C a</code> to get <code>between A C D</code>, which is what we want.<ref>outer_transitivity_between2 in Narboux</ref>
 <jh>
-#thm (BetweennessOuterTransitivityFlipped () () ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between B C D)) (
+#thm (BetweennessOuterTransitivityFlipped () () ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between A C D)) (
         
 #))
 </jh>
