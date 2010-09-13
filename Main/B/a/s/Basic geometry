@@ -536,6 +536,7 @@ which in turn implies <code>A = B</code>
 === Transitivity ===
 In this section we prove six similar theorems which involve four points on a line. Given two betweenness relationships, we conclude a third. Three of the six are just versions of the other three which are flipped left-to-right.
 
+==== Inner transitivity, regular and flipped ====
 The first one is known as inner transitivity.<ref>Inner Transitivity Axiom for Betweenness in Givant and Tarski, 1999</ref><ref>between_inner_transitivity in Narboux</ref>
 <jh>
 thm (BetweennessInnerTransitivity ((a A) (a B) (a C)) ()
@@ -584,13 +585,184 @@ Turning <code>between D C B</code> into <code>between B C D</code> finishes the 
 ))
 </jh>
 
+==== Outer transitivity, flipped ====
 For outer transitivity, we prove the "flipped" version first (where we consider the "non-flipped" one to be the one in Givant and Tarski (1999)).
 
-We are proving <code>between A B C ∧ between B C D ∧ B ≠ C → between A C D</code>. First we extend <code>A C</code> beyond <code>C</code> to a point <code>a</code> such that <code>C a ≡ C D</code>. Then <code>between A B C</code> and <code>between A C a</code> give us <code>between B C a</code> by <code>BetweennessInnerTransitivityFlipped</code>. That's part of what we need to apply uniqueness of segment construction, which gives us <code>a = D</code>. Then we can substitute <code>between A C a</code> to get <code>between A C D</code>, which is what we want.<ref>outer_transitivity_between2 in Narboux</ref>
+To be specific, the flipped outer transitivity is <code>between A B C ∧ between B C D ∧ B ≠ C → between A C D</code>. First we extend <code>A C</code> beyond <code>C</code> to a point <code>a</code> such that <code>C a ≡ C D</code>. Then <code>between A B C</code> and <code>between A C a</code> give us <code>between B C a</code> by <code>BetweennessInnerTransitivityFlipped</code>. That's part of what we need to apply uniqueness of segment construction, which gives us <code>a = D</code>. Then we can substitute <code>between A C a</code> to get <code>between A C D</code>, which is what we want.<ref>outer_transitivity_between2 in Narboux</ref>
+
+The first two lemmas get as far as <code>between B C a</code> in the proof sketch above.
 <jh>
-#thm (BetweennessOuterTransitivityFlipped () () ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between A C D)) (
-        
-#))
+thm (BetweennessOuterTransitivityFlipped-1 () () ((((between A C x) ∧ (C x ≡ C D)) ∧ (between A B C)) → (((between A C x) ∧ (C x ≡ C D)) ∧ (between B C x))) (
+        ((between A C x) ∧ (C x ≡ C D)) (between A B C) ConjunctionRightElimination
+
+        ((between A C x) ∧ (C x ≡ C D)) (between A B C) ConjunctionLeftElimination
+
+        ((between A C x) ∧ (C x ≡ C D)) (between A B C) ConjunctionRightElimination
+        (between A C x) (C x ≡ C D) ConjunctionRightElimination
+        applySyllogism
+
+        composeConjunction
+
+        A B C x BetweennessInnerTransitivityFlipped
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (BetweennessOuterTransitivityFlipped-bca ((A a) (B a) (C a)) ()
+  ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C))
+   → (∃ a (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))))) (
+        a A C C D SegmentConstruction
+        (((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) introduceAntecedent
+
+        ((between A B C) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
+        (between A B C) (between B C D) ConjunctionRightElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The consequent is now <code>∃ a (between A C a ∧ C a ≡ C D) ∧ between A B C</code>.  We move <code>between A B C</code> inside the quantifier.
+<jh>
+        a ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between A B C) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Now we just replace <code>between A B C</code> with <code>between B C a</code>.
+<jh>
+        A C (value a) D B BetweennessOuterTransitivityFlipped-1
+        a addThereExists
+        applySyllogism
+))
+</jh>
+The next lemma is just a way of getting everything inside the quantifier.
+<jh>
+thm (BetweennessOuterTransitivityFlipped-2 ((A a) (B a) (C a) (D a)) ()
+  ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C))
+   → (∃ a (((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) ∧ (B ≠ C)))) (
+</jh>
+First, <code>C a ≡ C D ∧ between B C a</code>.
+<jh>
+        A B C D a BetweennessOuterTransitivityFlipped-bca
+</jh>
+Next, <code>between B C D</code>
+<jh>
+        ((between A B C) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
+        (between A B C) (between B C D) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+
+        a (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Finally, <code>B ≠ C</code>
+<jh>
+        ((between A B C) ∧ (between B C D)) (B ≠ C) ConjunctionLeftElimination
+
+        composeConjunction
+
+        a ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+The following lemma is where we show that <code>a = D</code>.
+<jh>
+thm (BetweennessOuterTransitivityFlipped-ad () () ((((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) ∧ (B ≠ C)) → ((value a) = D)) (
+</jh>
+We'll be applying <code>SegmentConstructionUniqueness</code>. It has five antecedents. The first is <code>B ≠ C</code>.
+<jh>
+        ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionLeftElimination
+</jh>
+The second is <code>between B C a</code>
+<jh>
+        ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
+        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
+        applySyllogism
+        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The third is <code>C a ≡ C D</code>
+<jh>
+        ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
+        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
+        applySyllogism
+        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionRightElimination
+        applySyllogism
+        (between A C (value a)) (C (value a) ≡ C D) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fourth is <code>between B C D</code>
+<jh>
+        ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
+        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fifth is <code>C D ≡ C D</code>
+<jh>
+        C D CongruenceReflexivity
+        (((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) ∧ (B ≠ C)) introduceAntecedent
+
+        composeConjunction
+</jh>
+Applying <code>SegmentConstructionUniqueness</code> we can conclude <code>a = D</code>.
+<jh>
+        B C (value a) C D D SegmentConstructionUniqueness
+        applySyllogism
+))
+</jh>
+Here we combine the <code>a = D</code> result with picking <code>between A C a</code> out of the antecedent.
+<jh>
+thm (BetweennessOuterTransitivityFlipped-aca-ad () () ((((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) ∧ (B ≠ C)) → (((value a) = D) ∧ (between A C (value a)))) (
+        A C a D B BetweennessOuterTransitivityFlipped-ad
+
+        ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
+        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
+        applySyllogism
+        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionRightElimination
+        applySyllogism
+        (between A C (value a)) (C (value a) ≡ C D) ConjunctionRightElimination
+        applySyllogism
+
+        composeConjunction
+))
+</jh>
+Now our substitution.
+<jh>
+thm (BetweennessOuterTransitivityFlipped-sub () () ((((value a) = D) ∧ (between A C (value a))) → (between A C D)) (
+        A EqualityReflexivity
+        C EqualityReflexivity
+        A A C C (value a) D BetweenBuilder
+        detach2of3
+        detach1of2
+</jh>
+That gives us <code>a = D → (between A C a ↔ between A C D)</code>.
+<jh>
+        eliminateBiconditionalReverseInConsequent
+        import
+))
+</jh>
+We're ready to combine the various pieces.
+<jh>
+thm (BetweennessOuterTransitivityFlipped ((A a) (B a) (C a) (D a)) () ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between A C D)) (
+        A B C D a BetweennessOuterTransitivityFlipped-2
+
+        A C a D B BetweennessOuterTransitivityFlipped-aca-ad
+        a D A C BetweennessOuterTransitivityFlipped-sub
+        applySyllogism
+
+        a addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
 
 == References ==
