@@ -816,6 +816,33 @@ thm (BetweennessMiddleTransitivity () () (((between A B D) ∧ (between B C D)) 
 ))
 </jh>
 
+==== Outer transitivity, non-flipped ====
+The non-flipped outer transitivity is <code>between A B C ∧ between B C D ∧ B ≠ C → between A B D</code>.<ref>outer_transitivity_between in Narboux</ref><ref>Axiom 16 in Givant and Tarski, 1999</ref>
+
+<jh>
+thm (BetweennessOuterTransitivity () () ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between A B D)) (
+        A B C BetweennessSymmetry
+        B C D BetweennessSymmetry
+        buildConjunction
+
+        (between C B A) (between D C B) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+
+        B C EqualitySymmetry
+        addNegation
+
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        D C B A BetweennessOuterTransitivityFlipped
+        applySyllogism
+
+        D B A BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == References ==
 <references/>
 
