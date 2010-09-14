@@ -1143,7 +1143,7 @@ thm (addThereExistsToAntecedent ((x ψ))
 </jh>
 
 === Scattering and gathering ===
-This is a variation of movement of formulas in and out of quantification.
+This is a variation of movement of formulas in and out of quantification.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
 var (formula φx ψy)
 thm (ThereExistsScattering ((φx y) (ψy x)) ()
