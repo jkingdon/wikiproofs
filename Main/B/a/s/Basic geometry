@@ -817,7 +817,7 @@ thm (BetweennessMiddleTransitivity () () (((between A B D) ∧ (between B C D)) 
 </jh>
 
 ==== Outer transitivity, non-flipped ====
-The non-flipped outer transitivity is <code>between A B C ∧ between B C D ∧ B ≠ C → between A B D</code>.<ref>outer_transitivity_between in Narboux</ref><ref>Axiom 16 in Givant and Tarski, 1999</ref>
+The non-flipped outer transitivity is <code>between A B C ∧ between B C D ∧ B ≠ C → between A B D</code>.<ref>outer_transitivity_between in Narboux</ref><ref>Axiom 16 in Givant and Tarski, 1999</ref> Our proof just takes <code>BetweennessOuterTransitivityFlipped</code> and flips it, whereas Narboux's proof also invokes <code>BetweennessMiddleTransitivity</code>.
 
 <jh>
 thm (BetweennessOuterTransitivity () () ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between A B D)) (
@@ -835,6 +835,28 @@ thm (BetweennessOuterTransitivity () () ((((between A B C) ∧ (between B C D)) 
         eliminateBiconditionalReverse
 
         D C B A BetweennessOuterTransitivityFlipped
+        applySyllogism
+
+        D B A BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+==== Middle transitivity, flipped ====
+Here we prove <code>between A B C ∧ between A C D → between A B D</code>.<ref>between_exchange4 in Narboux</ref>
+<jh>
+thm (BetweennessMiddleTransitivityFlipped () () (((between A B C) ∧ (between A C D)) → (between A B D)) (
+        A B C BetweennessSymmetry
+        A C D BetweennessSymmetry
+        buildConjunction
+
+        (between C B A) (between D C A) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+
+        eliminateBiconditionalReverse
+
+        D C A B BetweennessMiddleTransitivity
         applySyllogism
 
         D B A BetweennessSymmetry
