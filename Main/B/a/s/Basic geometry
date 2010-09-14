@@ -865,6 +865,156 @@ thm (BetweennessMiddleTransitivityFlipped () () (((between A B C) ∧ (between A
 ))
 </jh>
 
+=== Betweenness of more than three points ===
+Narboux defines the concept of a betweenness relationship between four points, but we omit it here as Narboux does not use it anywhere.<ref>Bet_4 and l_3_9_4 in Narboux</ref>
+
+== Twoness ==
+There exist two distinct points. The proof is based on the <code>LowerDimension</code> axiom. There are two cases. If <code>a ≠ b</code>, we are done. If <code>a = b</code>, then we can take <code>¬ between b c a</code> from the axiom and turn it into <code>¬ between b c b</code> which in turn implies <code>b ≠ c</code>.
+
+Formalizing this proof has two parts. The first one follows the informal proof above and gets us as far as showing <code>a ≠ b</code> or <code>b ≠ c</code>. The second part does the predicate logic needed to switch variables and combine the two inequalities.
+
+The first thing is a lemma bidirectionalizing <code>Indivisibility</code>.
+<jh>
+thm (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)) (
+        x y Indivisibility
+
+        x x BetweenAAB
+
+        x EqualityReflexivity
+        x EqualityReflexivity
+        x x x y x x BetweenBuilder
+        detach2of2
+        detach1of2
+
+        detachImplicationBiconditional
+
+        introduceBiconditionalFromImplications
+))
+
+thm (TwonessLemma () () (∃ a (∃ b (∃ c (((value a) ≠ (value b)) ∨ ((value b) ≠ (value c)))))) (
+        a b c LowerDimension
+</jh>
+The <code>a = b</code> case involves first picking out <code>¬ between b c a</code>.
+<jh>
+        ((¬ (between (value a) (value b) (value c)))
+          ∧ (¬ (between (value b) (value c) (value a))))
+        (¬ (between (value c) (value a) (value b)))
+        ConjunctionRightElimination
+
+        (¬ (between (value a) (value b) (value c))) (¬ (between (value b) (value c) (value a))) ConjunctionLeftElimination
+        applySyllogism
+
+        ((value a) = (value b)) introduceAntecedent
+</jh>
+Now we prove a substitution, <code>a = b → (¬ between b c a ↔ ¬ between b c b)</code>
+<jh>
+        (value b) EqualityReflexivity
+        (value c) EqualityReflexivity
+        (value b) (value b) (value c) (value c) (value a) (value b) BetweenBuilder
+        detach2of3
+        detach1of2
+
+        addNegationInConsequent
+</jh>
+We combine the substitution with our previous result to get <code>a = b → (¬ between a b c ∧ ¬ between b c a ∧ ¬ between c a b → ¬ between b c b)</code>.
+<jh>
+        eliminateBiconditionalReverseInConsequent
+        applySyllogismInConsequent
+</jh>
+Now we turn the consequent into <code>b ≠ c</code>,
+<jh>
+        (value b) (value c) IndivisibilityBidirectional
+        addNegation
+        eliminateBiconditionalReverse
+        ((value a) = (value b)) introduceAntecedent
+        applySyllogismInConsequent
+</jh>
+and add the <code>a ≠ b</code> disjunct.
+<jh>
+        ((value b) ≠ (value c)) ((value a) ≠ (value b)) DisjunctionLeftIntroduction
+        ((value a) = (value b)) introduceAntecedent
+        applySyllogismInConsequent
+</jh>
+The <code>a ≠ b</code> case is just a matter of arranging formulas for the case elimination and hooking to <code>LowerDimension</code>.
+<jh>
+        ((value a) ≠ (value b)) ((value b) ≠ (value c)) DisjunctionRightIntroduction
+        (((value a) ≠ (value b)) ∨ ((value b) ≠ (value c)))
+        (((¬ (between (value a) (value b) (value c)))
+          ∧ (¬ (between (value b) (value c) (value a))))
+          ∧ (¬ (between (value c) (value a) (value b)))
+        ) AntecedentIntroduction
+        applySyllogism
+</jh>
+We combine the cases and finish the proof.
+<jh>
+        eliminateCases
+        c addThereExists
+        b addThereExists
+        a addThereExists
+        applyModusPonens
+))
+</jh>
+That's the first part of the proof. Now for the predicate logic. First is a lemma which expresses the variable change which is at the heart of all this rearrangement.
+<jh>
+thm (TwonessLemma2 ((a b c)) () ((∃ a (∃ b ((value a) ≠ (value b)))) ↔ (∃ b (∃ c ((value b) ≠ (value c))))) (
+</jh>
+Starting from the inside, our first substitution is <code>b = c → (a ≠ b ↔ a ≠ c)</code>
+<jh>
+        (value b) (value c) (value a) EqualityBuilderLL
+        addNegationInConsequent
+</jh>
+That leads to the variable change <code>∃ b a ≠ b ↔ ∃ c a ≠ c</code>.
+<jh>
+        ChangeVariableThereExists
+        a buildThereExists
+</jh>
+We repeat the process with the outer quantifiers. The substitution is <code>a = b → (∃ c a ≠ c ↔ ∃ c b ≠ c)</code>.
+<jh>
+        (value a) (value b) (value c) EqualityBuilderRR
+        addNegationInConsequent
+        c buildThereExistsInConsequent
+</jh>
+The corresponding variable change is <code>∃ a ∃ c a ≠ c ↔ ∃ b ∃ c b ≠ c</code>. Combining this with the first variable change proves our lemma.
+<jh>
+        ChangeVariableThereExists
+        applyBiconditionalTransitivity
+))
+
+thm (Twoness ((a b c)) () (∃ a (∃ b ((value a) ≠ (value b)))) (
+        a b c TwonessLemma
+
+        c ((value a) ≠ (value b)) ((value b) ≠ (value c)) ThereExistsDisjunctionMovement
+        eliminateBiconditionalReverse
+        b addThereExists
+        a addThereExists
+        applyModusPonens
+</jh>
+We now have <code>∃ a ∃ b (a ≠ b ∨ ∃ c b ≠ c)</code>. We distribute <code>b</code> across the disjunction.
+<jh>
+        b ((value a) ≠ (value b)) (∃ c ((value b) ≠ (value c))) ThereExistsDisjunction
+        eliminateBiconditionalReverse
+        a addThereExists
+        applyModusPonens
+</jh>
+We have <code>∃ a (∃ b a ≠ b ∨ ∃ b ∃ c b ≠ c)</code>. We move the second disjunct outside of the quantifier for <code>a</code> to get <code>∃ a ∃ b a ≠ b ∨ ∃ b ∃ c b ≠ c</code>
+<jh>
+        a (∃ b ((value a) ≠ (value b))) (∃ b (∃ c ((value b) ≠ (value c)))) ThereExistsDisjunctionRightMovement
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+At this point, we can change the variables in the latter disjunct.
+<jh>
+        a b c TwonessLemma2
+        eliminateBiconditionalForward
+        (∃ a (∃ b ((value a) ≠ (value b)))) disjoinLL
+        applyModusPonens
+</jh>
+Having gotten both disjuncts to use the same variables, we are done.
+<jh>
+        conflateDisjunction
+))
+</jh>
+
 == References ==
 <references/>
 
