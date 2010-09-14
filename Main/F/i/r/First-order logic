@@ -1042,13 +1042,29 @@ thm (ForAllDisjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∨ ψ
 To move a disjunct in or out of ∃:<ref>[http://us.metamath.org/mpeuni/19.45.html 19.45] in metamath's set.mm, accessed March 17, 2010</ref>
 
 <jh>
-thm (ThereExistsDisjunctionMovement () ((H (x is-not-free-in φ))) ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+thm (ThereExistsDisjunctionMovementNotFree () ((H (x is-not-free-in φ))) ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
         φ ψ DisjunctionImplication x buildThereExists
 
         H negateNotFree
         ψ ThereExistsAntecedentMovementNotFree applyBiconditionalTransitivity
 
         φ (∃ x ψ) DisjunctionImplication swapBiconditional applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsDisjunctionMovementNotFree
+))
+
+thm (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        φ ψ DisjunctionCommutativity
+        x buildThereExists
+
+        x ψ φ ThereExistsDisjunctionMovement
+        applyBiconditionalTransitivity
+
+        ψ (∃ x φ) DisjunctionCommutativity
+        applyBiconditionalTransitivity
 ))
 </jh>
 
