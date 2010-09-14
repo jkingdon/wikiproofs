@@ -4,7 +4,7 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = [[w:General set theory|General set theory]] consists of only three axioms, but suffices to establish set theory for finite sets. It also can serve as the basis for more powerful set theories, such as [[w:Zermelo–Fraenkel set theory|ZFC]], as the axioms of general set theory are also axioms or theorems of most set theories.
+ | notes    = [[w:General set theory|General set theory]] consists of only three axioms, but suffices to establish set theory for finite sets. It also can serve as the basis for more powerful set theories, such as [[Interface:Zermelo–Fraenkel set theory|ZF]], as the axioms of general set theory are also axioms or theorems of most set theories.
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
