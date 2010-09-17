@@ -16,7 +16,6 @@ Items which may be doable without a network connection:
   * ax9o is only used by equs4.
 
 * General set theory
-  - ordered pair
   - definitions and consequences: union?,
     intersection, difference (e.g. eldifi and similar), subset
   - do both directions of A = B ↔ { A } = { B } hold? (think so)
