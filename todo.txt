@@ -20,14 +20,33 @@ Items which may be doable without a network connection:
     intersection, difference (e.g. eldifi and similar), subset
   - do both directions of A = B ↔ { A } = { B } hold? (think so)
   - indexed union or intersection? (if needed for functions)
-  - binary relations. Notation (relates s R t) ?
   - prove Peano axioms from them
     - suc11
   - finite induction (e.g. peano5 in set.mm)
   - functions and relations (e.g. cxp and following in set.mm)
+    - binary relations.
+      - releq
+      (mkrelation a A b B φ) (A, B object; a, b variable; φ formula)
+        ≝ {〈a, b〉| a ∈ A ∧ b ∈ B ∧ φ }
+        e.g. (mkrelation ℕ ℕ a b (∃ n ∈ ℕ a + n = b))
+      - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
+    - domain and range: dfdm3 and dfrn2 or some such (need to prove existence)
+      - dmeq
+      - breldm, brelrn
+      - (domain (mkrelation a A b B φ)) ⊆ A
+      - (range (mkrelation a A b B φ)) ⊆ B
+    - functions
+      - dffun2 (how to deal with the distinct variables?), funrel
+      (lambda x t)
+        e.g. (lambda x A 〈x, 1〉)
+        ≝ {〈x, result〉| x ∈ A ∧ result = φ }
+      - [s / x](apply (lambda x A t) s) = t
+        this reads oddly, because [/] only applies to formulas, not terms
     - cross products, e.g. cxp, df-xp, elxp, opelxp1, opelxp
       xpss regarding existence of cross products (note dependence on
-      ax-pow, which is more explicit in xpsspw).
+      ax-pow, which is more explicit in xpsspw). Also note dependence on defn of
+      ordered pair.
+      - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
     - note dmex depends on ax-pow and ax-un, but doesn't need replacement.
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
@@ -43,12 +62,10 @@ We refer to this process as gathering (that is, gathering the quantifiers togeth
 download:
   * Convenience theorems of propositional logic
   * Interface:Classical_propositional_calculus
-  * Basic geometry
   * Basic arithmetic
   * Interface:First-order logic with quantifiability
   * Interface:First-order logic
   * First-order logic‎
-  * Interface:Tarski's geometry axioms
   * User:Kingdon
   * Interface:Basic arithmetic
 

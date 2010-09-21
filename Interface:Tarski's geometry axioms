@@ -4,11 +4,11 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = Since [[w:Euclid|Euclid]], compass-and-straightedge geometry has been presented as following from postulates. However, it was not until the 20th century that a complete set of postulates were put forward. This page is for one such set, the [[w:Tarski's axioms|first-order axiomization by Tarski]].  It makes reference to points (not directly to lines, angles, or circles), and has two relationships between points: betweenness and congruence.
+ | notes    = Since [[w:Euclid|Euclid]], geometry has been presented as following from postulates. However, it was not until the 20th century that a complete set of postulates were put forward. This page is for one such set, the [[w:Tarski's axioms|first-order axiomization by Tarski]]. It is less powerful than full Euclidian geometry and more powerful than compass-and-straightedge geometry.<ref>footnote 5 on page 191 of Tarski and Givant (1999)</ref> It makes reference to points (not directly to lines, angles, or circles), and has two relationships between points: betweenness and congruence. The version here is for two dimensions. Adapting the axioms for one dimension is complicated,<ref>Tarski and Givant (1999), pages 204–209</ref> but only slight modifications are needed for more than two dimensions.<ref>Tarski and Givant (1999), page 195</ref>
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
-| importedby = None yet
+| importedby = [[Basic geometry]]
 | exportedby = None yet.
 }}
 
@@ -24,18 +24,18 @@ The kind <code>object</code>, defined in first-order logic, represents a point:
 kindbind (object point)
 var (point x y z w u v)
 
-var (variable a b c)
+var (variable a b c xx yy)
 </jh>
 
 == Congruence ==
-We introduce congruence; <code>(x y ≡ w z)</code> means that the line segment xy is the same length as the line segment wz.
+We introduce congruence of line segments; <code>(x y ≡ w z)</code> means that the line segment xy is the same length as the line segment wz. This property is also known as equidistance.<ref>Tarski and Givant, 1999, page 177</ref>
 <jh>
 term (formula (≡ point point point point))
 </jh>
 
-The distance from x to y is the same as the distance from y to x.  This property is called reflexivity.
+The distance from x to y is the same as the distance from y to x.  This property is called reflexivity by Tarski and Givant<ref>Tarski and Givant, 1999, page 177</ref> and symmetry by Narboux.<ref>Narboux, 2007, page 141</ref>
 <jh>
-stmt (CongruenceReflexivity () () (x y ≡ y x))
+stmt (CongruenceReflexivityAxiom () () (x y ≡ y x))
 </jh>
 
 A segment which has zero length starts and ends at the same point (although saying "zero length" is a bit of a shortcut, as the axioms are not based on real numbers or any other numbers).
@@ -45,7 +45,7 @@ stmt (CongruenceIdentity () () ((x y ≡ z z) → (x = y)))
 
 Two segments which are congruent to a common segment are congruent to each other.
 <jh>
-stmt (CongruenceTransitivity () () (((x y ≡ z u) ∧ (x y ≡ v w)) → (z u ≡ v w)))
+stmt (CongruenceTransitivityAxiom () () (((x y ≡ z u) ∧ (x y ≡ v w)) → (z u ≡ v w)))
 </jh>
 
 == Betweenness ==
@@ -69,15 +69,76 @@ stmt (Pasch () () (((between x u z) ∧ (between y v z)) → (∃ a ((between u 
 </jh>
 
 === Continuity ===
+[[File:Tarski's continuity axiom.svg|left|thumb]]
+The variables <code>xx</code> and <code>yy</code> correspond with <code>x</code> and <code>y</code> in the diagram and [[w:Tarski's axioms|wikipedia]]. (We can't just call them <code>x</code> and <code>y</code> because we've declared <code>x</code> and <code>y</code> as objects, which unlike variables cannot be subject to quantification).
 <jh>
 var (formula φx ψy)
-#stmt (Continuity ((φx y) (φx a) (φx b) (ψy x) (ψy a) (ψy b)) () ())
+stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b)) () 
+  ((∃ a (∀ xx (∀ yy ((φx ∧ ψy) → (between (value a) (value xx) (value yy))))))
+  → (∃ b (∀ xx (∀ yy ((φx ∧ ψy) → (between (value xx) (value b) (value yy))))))))
 </jh>
 
-{{under construction}}
+== Dimension ==
+[[File:Points in a plane equidistant to two given points lie on a line.svg|thumb|right|Upper dimension]]
+The dimension is greater than one,
+<jh>
+stmt (LowerDimension () ()
+  (∃ a (∃ b (∃ c
+    (((¬ (between (value a) (value b) (value c)))
+     ∧ (¬ (between (value b) (value c) (value a))))
+     ∧ (¬ (between (value c) (value a) (value b)))
+)))))
+</jh>
+
+and less than three.
+<jh>
+stmt (UpperDimension () ()
+  (((((x u ≡ x v) ∧ (y u ≡ y v)) ∧ (z u ≡ z v)) ∧ (u ≠ v))
+  → (((between x y z) ∨ (between y z x)) ∨ (between z x y))))
+</jh>
+
+== Axiom of Euclid ==
+[[File:Tarski's axiom of Euclid C.svg|thumb|right]]
+There are quite a variety of ways to state Euclid's [[w:parallel postulate]]. Here we adopt one which says that if a point u is in the interior of ∠yxz (in the sense of being on the line segment yz drawn across the angle), then any point v which is further out (that is, u is between v and the vertex of the angle) will also be in the interior (in the sense that a line segment containing v can be drawn across the angle).
+<jh>
+stmt (AxiomEuclid () () (
+  (((between x u v) ∧ (between y u z)) ∧ (x ≠ u))
+  → (∃ a (∃ b (((between x y (value a)) ∧ (between x z (value b))) ∧ (between (value a) v (value b)))))))
+</jh>
+
+== Five Segment ==
+<jh>
+var (point x′ y′ z′ u′)
+stmt (FiveSegment () ()
+  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′)) → (z u ≡ z′ u′))
+)
+</jh>
+
+== Segment Construction ==
+Given a line segment wx and a line segment yz, construct an extension of wx which is as long as yz is.
+<jh>
+stmt (SegmentConstruction () () (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
+</jh>
+
+== Builders ==
+Being able to substitute equals for equals is generally taken as a logical axiom, but we need to provide it for every operator.
+<jh>
+var (point x0 x1 x2 x3 y0 y1 y2 y3)
+stmt (CongruenceBuilder () () (
+  ((((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2)) ∧ (x3 = y3))
+  → ((x0 x1 ≡ x2 x3) ↔ (y0 y1 ≡ y2 y3))
+))
+stmt (BetweenBuilder () () (
+  (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+  → ((between x0 x1 x2) ↔ (between y0 y1 y2))
+))
+</jh>
 
 == References ==
-* [[w:Tarski's axioms]], citing Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+<references/>
+* [[w:Tarski's axioms]]
+* Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+* Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Euclidean geometries (general) and generalizations]]
