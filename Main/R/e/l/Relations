@@ -325,7 +325,12 @@ thm (OrderedPairTheorem () () (((orderedPair A0 B0) = (orderedPair A1 B1)) ↔ (
 == Relations ==
 A relation is a set of ordered pairs. We typically use the letters R, S, T, and U for relations.
 <jh>
-def ((relation A) ((B ∈ A) → (∃ x (∃ y (B = (orderedPair (value x) (value y)))))))
+# This needs fixups: B needs to be a variable (with ∀ in front as 
+# we may be nested inside a larger formula), and we also need some
+# distinct variable constraints (analogous to 
+# http://us.metamath.org/mpeuni/dfss2.html ), which is a more fundamental
+# issue in terms of JHilbert's definition mechanism.
+#def ((relation A) ((B ∈ A) → (∃ x (∃ y (B = (orderedPair (value x) (value y)))))))
 var (object R S T U)
 </jh>
 
