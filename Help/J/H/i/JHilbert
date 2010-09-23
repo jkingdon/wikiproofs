@@ -104,6 +104,10 @@ If you do not see an obvious cause for this kind of syntax error, try seeing whe
 
 This means that you are trying to invoke a theorem which has a distinct variable constraint but there is a variable which appears in the two terms which are supposed to be distinct. See [[Example of distinct variable constraint violation: Intersection of cartesian product factors is not empty]].
 
+ Required distinct variable constraints are not a subset of actual distinct variable constraints 
+
+This means that somewhere in the proof there is an invocation of a theorem which has a distinct variable constraint, but the theorem you are trying to prove does not have a distinct variable constraint which assures that the invocation is OK.  See [[Example of required distinct variable constraints are not a subset of actual distinct variable constraint]].
+
 == External links ==
 
 There's another partial JHilbert manual at:
