@@ -1,0 +1,27 @@
+The easiest way to get some statements to work with is going to be to import one of our existing interfaces; here we pick [[Interface:Classical_propositional_calculus]].
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+The only statement we care about from that file is:
+ stmt (AntecedentIntroduction () () (p → (q → p)))
+
+Here's a valid proof:
+
+<jh>
+var (formula r s)
+thm (valid () () (r → (s → r)) (
+        r s AntecedentIntroduction
+))
+</jh>
+
+Here's one which produces a statement which does not have the right form.  It will blow up with an error message, probably "Consequent of theorem does not match proof result".
+
+<jh>
+thm (invalid () () ((r → s) → r) (
+        r s AntecedentIntroduction
+))
+</jh>
+
+[[Category:Help]]
+[[Category:JHilbert]]
