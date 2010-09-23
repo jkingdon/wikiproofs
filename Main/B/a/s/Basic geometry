@@ -1,6 +1,6 @@
 {{interfaces
 | imports = [[Interface:Tarski's geometry axioms]]
-| exports = None yet
+| exports = [[Interface:Basic geometry]]
 }}
 
 Here we prove a variety of basic geometrical theorems involving collinearity, midpoints, perpendiculars, and the like, starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
@@ -869,7 +869,7 @@ thm (BetweennessMiddleTransitivityFlipped () () (((between A B C) ∧ (between A
 Narboux defines the concept of a betweenness relationship between four points, but we omit it here as Narboux does not use it anywhere.<ref>Bet_4 and l_3_9_4 in Narboux</ref>
 
 == Twoness ==
-There exist two distinct points. The proof is based on the <code>LowerDimension</code> axiom. There are two cases. If <code>a ≠ b</code>, we are done. If <code>a = b</code>, then we can take <code>¬ between b c a</code> from the axiom and turn it into <code>¬ between b c b</code> which in turn implies <code>b ≠ c</code>.
+There exist two distinct points. In symbols, <code>∃ a ∃ b a ≠ b</code>.<ref>two_distinct_points in Narboux</ref> The proof is based on the <code>LowerDimension</code> axiom. There are two cases. If <code>a ≠ b</code>, we are done. If <code>a = b</code>, then we can take <code>¬ between b c a</code> from the axiom and turn it into <code>¬ between b c b</code> which in turn implies <code>b ≠ c</code>.
 
 Formalizing this proof has two parts. The first one follows the informal proof above and gets us as far as showing <code>a ≠ b</code> or <code>b ≠ c</code>. The second part does the predicate logic needed to switch variables and combine the two inequalities.
 
@@ -989,7 +989,7 @@ thm (Twoness ((a b c)) () (∃ a (∃ b ((value a) ≠ (value b)))) (
         a addThereExists
         applyModusPonens
 </jh>
-We now have <code>∃ a ∃ b (a ≠ b ∨ ∃ c b ≠ c)</code>. We distribute <code>b</code> across the disjunction.
+We now have <code>∃ a ∃ b (a ≠ b ∨ ∃ c b ≠ c)</code>. We distribute <code>∃ b</code> across the disjunction.
 <jh>
         b ((value a) ≠ (value b)) (∃ c ((value b) ≠ (value c))) ThereExistsDisjunction
         eliminateBiconditionalReverse
@@ -1013,6 +1013,26 @@ Having gotten both disjuncts to use the same variables, we are done.
 <jh>
         conflateDisjunction
 ))
+</jh>
+
+=== Extending a line segment to a distinct point ===
+Any line segment <code>A B</code> can be extended beyond <code>B</code> to a point <code>c</code> which does not equal <code>B</code>.<ref>point_construction_different in Narboux</ref>
+
+First we prove a lemma.
+<jh>
+#thm (PointConstructionDifferentLemma () () (((A B ≡ C D) ∧ (C ≠ D)) → (A ≠ B)) (
+        
+#))
+
+#thm (PointConstructionDifferent () () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
+#))
+</jh>
+
+{{under construction}}
+
+== Export ==
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
