@@ -100,6 +100,10 @@ This means that the statement left on the proof stack at the end of the proof ha
 
 If you do not see an obvious cause for this kind of syntax error, try seeing whether any parentheses are unbalanced.
 
+ Distinct variable constraint violation: Intersection of cartesian product factors is not empty 
+
+This means that you are trying to invoke a theorem which has a distinct variable constraint but there is a variable which appears in the two terms which are supposed to be distinct. For example, if you import [[Interface:First-order logic]] and then attempt <code>x (y = z) ((value x) = z) ThereExistsConjunctionRightMovement</code> you'll get this error because <code>x</code> appears in both the first and third arguments, and they are supposed to be distinct.
+
 == External links ==
 
 There's another partial JHilbert manual at:
