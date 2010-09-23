@@ -1020,9 +1020,16 @@ Any line segment <code>A B</code> can be extended beyond <code>B</code> to a poi
 
 First we prove a lemma.
 <jh>
-#thm (PointConstructionDifferentLemma () () (((A B ≡ C D) ∧ (C ≠ D)) → (A ≠ B)) (
-        
-#))
+thm (PointConstructionDifferentLemma () () (((A B ≡ C D) ∧ (C ≠ D)) → (A ≠ B)) (
+        A B C D CongruenceIdentityFromEquality
+        applyComm
+
+        (A = B) (C = D) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+))
 
 #thm (PointConstructionDifferent () () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
 #))
