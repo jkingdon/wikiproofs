@@ -3,7 +3,7 @@ The easiest way to get some statements to work with is going to be to import one
 import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 </jh>
 
-The only thing we care about from that file is:
+The only statement we care about from that file is:
  stmt (AntecedentIntroduction () () (p → (q → p)))
 
 Here's a valid proof:
