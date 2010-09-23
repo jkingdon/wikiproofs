@@ -1,0 +1,28 @@
+The easiest way to get some statements to work with is going to be to import one of our existing interfaces; here we pick [[Interface:First-order logic]].
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (FIRST Interface:First-order_logic (PROPOSITIONAL) ())
+</jh>
+
+The only thing we care about from that file is:
+ stmt (Generalization ((x φ)) () (φ → (∀ x φ)))
+
+Here's a valid proof:
+
+<jh>
+var (variable x y)
+thm (valid ((x y)) () (((value x) = (value x)) → (∀ y ((value x) = (value x)))) (
+        ((value x) = (value x)) y Generalization
+))
+</jh>
+
+Here's one which violates the distinct variable constraint, because the variable x appears in both the formula <code>x = x</code> and the variable.  It will blow up with an error message, probably "Distinct variable constraint violation: Intersection of cartesian product factors is not empty".
+
+<jh>
+thm (invalid () () (((value x) = (value x)) → (∀ x ((value x) = (value x)))) (
+        ((value x) = (value x)) x Generalization
+))
+</jh>
+
+[[Category:Help]]
+[[Category:JHilbert]]
