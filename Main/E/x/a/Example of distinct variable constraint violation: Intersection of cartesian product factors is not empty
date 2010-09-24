@@ -4,7 +4,7 @@ import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 import (FIRST Interface:First-order_logic (PROPOSITIONAL) ())
 </jh>
 
-The only thing we care about from that file is:
+The important thing from that file is:
  stmt (Generalization ((x φ)) () (φ → (∀ x φ)))
 
 Here's a valid proof:
