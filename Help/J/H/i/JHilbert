@@ -95,6 +95,10 @@ This generally means there is another more informative error somewhere else on t
 
 This means that the statement left on the proof stack at the end of the proof has the same arrangement of terms as what you are trying to prove, but the variables don't line up. It can be something as mundane as proving <code>x = y</code> when what you need is <code>y = x</code> (see [[Illegal dummy assignment example]]).
 
+ Consequent of theorem does not match proof result
+
+The statement left on the proof stack does not have the same arrangement of terms as what you are trying to prove. For an example, see [[Example of consequent of theorem does not match proof result]].
+
  No functor found in expression
  Non-variable symbol in expression
 
