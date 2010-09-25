@@ -1018,7 +1018,7 @@ Having gotten both disjuncts to use the same variables, we are done.
 === Extending a line segment to a distinct point ===
 Any line segment <code>A B</code> can be extended beyond <code>B</code> to a point <code>c</code> which does not equal <code>B</code>.<ref>point_construction_different in Narboux</ref>
 
-First we prove a lemma.
+First we prove a lemma which just rearranges <code>CongruenceIdentityFromEquality</code>.
 <jh>
 thm (PointConstructionDifferentLemma () () (((A B ≡ C D) ∧ (C ≠ D)) → (A ≠ B)) (
         A B C D CongruenceIdentityFromEquality
@@ -1030,12 +1030,86 @@ thm (PointConstructionDifferentLemma () () (((A B ≡ C D) ∧ (C ≠ D)) → (A
 
         import
 ))
-
-#thm (PointConstructionDifferent () () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
-#))
 </jh>
+The next lemma is just rearranging conjuncts and applying the previous lemma.
+<jh>
+thm (PointConstructionDifferentLemma2 () () ((((between A B C) ∧ (B C ≡ x y)) ∧ (x ≠ y)) → ((between A B C) ∧ (B ≠ C))) (
+</jh>
+First we pick out <code>between A B C</code>.
+<jh>
+        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
+        (between A B C) (B C ≡ x y) ConjunctionRightElimination
+        applySyllogism
+</jh>
+Next we pick out <code>B C ≡ x y</code>.
+<jh>
+        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
+        (between A B C) (B C ≡ x y) ConjunctionLeftElimination
+        applySyllogism
+</jh>
+Next we pick out <code>x ≠ y</code>.
+<jh>
+        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionLeftElimination
+</jh>
+Combining the second two results and applying the previous lemma gives us <code>B ≠ C</code>.
+<jh>
+        composeConjunction
+        B C x y PointConstructionDifferentLemma
+        applySyllogism
+</jh>
+Combining <code>between A B C</code> and <code>B ≠ C</code> finishes the proof.
+<jh>
+        composeConjunction
+))
 
-{{under construction}}
+thm (PointConstructionDifferent ((a b A) (a b B) (a b c)) () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
+</jh>
+The proof of our main theorem will proceed by constructing two different points <code>a</code> and <code>b</code>, and using them to extend the segment <code>A B</code> to a distinct point.
+
+We start with the extension of <code>A B</code> beyond <code>B</code> to a point <code>c</code>.
+<jh>
+        c A B (value a) (value b) SegmentConstruction
+</jh>
+That gives us <code>∃ c (between A B c ∧ B c ≡ a b)</code>. This a relationship which holds for any values of <code>a</code> and <code>b</code>
+<jh>
+        b generalize
+        a generalize
+</jh>
+Now we put in the construction of the two distinct points,
+<jh>
+        a b Twoness
+</jh>
+and combine the two statements and gather the quantifiers at the beginning to get <code>∃ a ∃ b ∃ c ((between A B c ∧ B c ≡ a b) ∧ a ≠ b)</code>
+<jh>
+        introduceConjunction
+
+        a (∀ b (∃ c ((between A B (value c)) ∧ (B (value c) ≡ (value a) (value b))))) (∃ b ((value a) ≠ (value b))) ThereExistsConjunctionCombining
+        applyModusPonens
+
+        b (∃ c ((between A B (value c)) ∧ (B (value c) ≡ (value a) (value b)))) ((value a) ≠ (value b)) ThereExistsConjunctionCombining
+        a addThereExists
+        applyModusPonens
+
+        c ((between A B (value c)) ∧ (B (value c) ≡ (value a) (value b))) ((value a) ≠ (value b)) ThereExistsConjunctionRightMovement
+        b buildThereExists
+        a buildThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+Applying our lemma, we get <code>∃ a ∃ b ∃ c (between A B c ∧ B ≠ c)</code>
+<jh>
+        A B (value c) (value a) (value b) PointConstructionDifferentLemma2
+        c addThereExists
+        b addThereExists
+        a addThereExists
+        applyModusPonens
+</jh>
+The first two quantifiers are no longer needed, and that finishes the proof.
+<jh>
+        removeThereExists
+        removeThereExists
+))
+</jh>
 
 == Export ==
 <jh>
