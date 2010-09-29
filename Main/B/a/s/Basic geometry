@@ -1111,6 +1111,17 @@ The first two quantifiers are no longer needed, and that finishes the proof.
 ))
 </jh>
 
+=== A point distinct from a given point exists ===
+Given a point <code>A</code>, there exists a point <code>b</code> distinct from it.<ref>another_point in Narboux</ref> Here's the sketch of Narboux's proof: apply <code>Twoness</code> to get <code>x</code> and <code>y</code> such that <code>x ≠ y</code>. If <code>A ≠ x</code>, we are done (<code>x</code> is the desired point). If <code>A = x</code>, then subsituting into <code>x ≠ y</code> gives us <code>A ≠ y</code>, and <code>y</code> is the desired point. It would be possible (although somewhat cumbersome) to formalize this argument here, but it will be easier just to prove this theorem as a special case of <code>PointConstructionDifferent</code>.
+<jh>
+thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
+        b A A PointConstructionDifferent
+        (between A A (value b)) (A ≠ (value b)) ConjunctionLeftElimination
+        b addThereExists
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 <jh>
 export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
