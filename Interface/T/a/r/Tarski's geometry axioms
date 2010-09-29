@@ -107,6 +107,7 @@ stmt (AxiomEuclid () () (
 </jh>
 
 == Five Segment ==
+[[File:Five segment.svg|thumb|right]]
 <jh>
 var (point x′ y′ z′ u′)
 stmt (FiveSegment () ()
