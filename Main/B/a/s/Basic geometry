@@ -11,8 +11,8 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
-var (point x y z w u v A B C D E Q)
-var (variable a b c)
+var (point x y z w u v A B C D E P Q A′ B′)
+var (variable a b c q q′)
 </jh>
 
 == Collinearity ==
@@ -1119,6 +1119,106 @@ thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
         (between A A (value b)) (A ≠ (value b)) ConjunctionLeftElimination
         b addThereExists
         applyModusPonens
+))
+</jh>
+
+== Lemma l3_17 (Pasch variant) ==
+[[File:Lemma l3_17 from Narboux.svg|thumb|right|Top: statement of the lemma; Middle: construction of <code>q′</code>; Bottom: construction of <code>q</code>]]
+This lemma is a variant of Pasch's axiom.  The lemma is <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q (between P q C ∧ between B q B′)</code>. The proof consists of two applications of Pasch's axiom. The first one uses the triangle <code>A A′ C</code> (with points <code>P</code> and <code>B′</code>) to construct a point <code>q′</code>. The second uses the triangle <code>A C B′</code> (with points <code>B</code> and <code>q′</code>) to construct the point <code>q</code>.
+<jh>
+thm (PaschLine ((q P) (q C) (q′ q) (q′ P) (q′ C) (q′ B) (q′ A) (q′ B′)) () ((((between A B C) ∧ (between A′ B′ C)) ∧ (between A P A′)) → (∃ q ((between P (value q) C) ∧ (between B (value q) B′)))) (
+</jh>
+To construct <code>q′</code>, we need <code>between A P A′</code> and <code>between C B′ A′</code>, and Pasch's axiom will give us <code>between P q′ C</code> and <code>between B′ q′ A</code>.
+<jh>
+        ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionLeftElimination
+
+        ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
+        (between A B C) (between A′ B′ C) ConjunctionLeftElimination
+        applySyllogism
+        A′ B′ C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A P A′ C B′ q′ Pasch
+        applySyllogism
+</jh>
+That gives us <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A)</code>. We'll need <code>between C B A</code> in the next step, so we put <code>between C B A</code> inside the quantifier to get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code>.
+<jh>
+        ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
+        (between A B C) (between A′ B′ C) ConjunctionRightElimination
+        applySyllogism
+        A B C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        q′ ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+To construct <code>q</code>, we need <code>between C B A</code> and <code>between B′ q′ A</code>, and Pasch's axiom will give us <code>between B q B′</code> and <code>between q′ q C</code>.
+<jh>
+        ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionLeftElimination
+
+        ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
+        (between P (value q′) C) (between B′ (value q′) A) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+
+        C B A B′ (value q′) q Pasch
+        applySyllogism
+</jh>
+We're getting close. Right now there are two things on the proof stack, <code><code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code> and <code>between P q′ C ∧ between B′ q′ A ∧ between C B A → ∃ q between B q B′ ∧ between q′ q C</code>. Half of what we need is <code>between B q B′</code>. We'll need to fish out <code>between q′ q C</code> and <code>between P q′ C</code> to get <code>between P q C</code>, so start by putting <code>between P q′ C</code> inside the <code>∃ q</code>
+<jh>
+        ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
+        (between P (value q′) C) (between B′ (value q′) A) ConjunctionRightElimination
+        applySyllogism
+
+        composeConjunction
+
+        q ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Combining with the previous results we get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ ∃ q (between B q B′ ∧ between q′ q C ∧ P q′ C)</code>
+<jh>
+        q′ addThereExists
+        applySyllogism
+</jh>
+Now we can extract <code>between P q′ C</code> and <code>between q′ q C</code>, and apply <code>BetweennessMiddleTransitivity</code>.
+<jh>
+        ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionLeftElimination
+
+        ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
+        (between B (value q) B′) (between (value q′) (value q) C) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+
+        P (value q′) C (value q) BetweennessMiddleTransitivity
+        applySyllogism
+</jh>
+The other half of what we need is <code>between B q B′</code>
+<jh>
+        ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
+        (between B (value q) B′) (between (value q′) (value q) C) ConjunctionRightElimination
+        applySyllogism
+</jh>
+Combining we get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ ∃ q (between P q C ∧ between B q B′)</code>.
+<jh>
+        composeConjunction
+
+        q addThereExists
+        q′ addThereExists
+        applySyllogism
+</jh>
+The <code>∃ q′</code> quantifier is now unneeded, so remove it.
+<jh>
+        removeThereExistsInConsequent
 ))
 </jh>
 
