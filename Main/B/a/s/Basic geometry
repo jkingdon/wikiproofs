@@ -1340,6 +1340,12 @@ Now we transform <code>x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code> into <
         applySyllogism
         export
 ))
+</jh>
+[[File:Inner five segment proof.svg|thumb|right|The <code>w ≠ z</code> case. <code>w z ≡ w′ z′</code> by construction. <code>w u ≡ w′ u′</code> by applying outer five segment to <code>x z w u</code>. <code>y u ≡ y′ u′</code> by applying outer five segment to <code>w z y u</code>.]]
+The <code>w ≠ z</code> case is proved by two applications of outer five segment. First extend the line segment <code>x z</code> beyond <code>z</code> to a distinct point <code>w</code>. Extend <code>x′ z′</code> beyond <code>z′</code> to a point <code>w′</code> such that <code>w z ≡ w′ z′</code>. We can now apply outer five segment to <code>x z w u</code> to get <code>w u ≡ w′ u′</code>. Then we apply outer five segment to <code>w z y u</code> to get <code>y u ≡ y′ u′</code>.
+<jh>
+#thm (InnerFiveSegmentCaseXNotEqualZ () () ((x ≠ z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
+#))
 
 #thm (InnerFiveSegment () ()
 #  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
