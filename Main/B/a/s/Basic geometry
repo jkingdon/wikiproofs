@@ -1222,6 +1222,16 @@ The <code>∃ q′</code> quantifier is now unneeded, so remove it.
 ))
 </jh>
 
+== Inner five segment ==
+[[File:Inner five segment.svg|thumb|Inner five segment]]
+The five segment axiom can be thought of as an "outer five segment" statement, as one is given a set of congruences and concludes a congruence for a segment outside the given ones. The inner five segment theorem is similar, but the given set of congruences are for the outer segments and the theorem supplies a congruence inside those. Specifically, comparing the axiom/theorem and diagrams, the congruence for <code>z u</code> is moved from the consequent to the antecedent, and the congruence for <code>y u</code> is moved from the antecedent to the consequent.<ref>Lemma l4_2 in Narboux</ref>
+<jh>
+#var (point x′ y′ z′ u′)
+#thm (InnerFiveSegment () ()
+#  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
+#))
+</jh>
+
 == Export ==
 <jh>
 export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
