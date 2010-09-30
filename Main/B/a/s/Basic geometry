@@ -12,6 +12,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
 var (point x y z w u v A B C D E P Q A′ B′)
+var (point x′ y′ z′ u′)
 var (variable a b c q q′)
 </jh>
 
@@ -180,7 +181,6 @@ The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x�
 
 We first prove the <code>x = y</code> case as a lemma.
 <jh>
-var (point x′ y′ z′ u′)
 thm (ThreeSegmentXEqualsY () () ((x = y) → (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′))) (
 </jh>
 We start with <code>x = y → (x y ≡ x′ y′ → x′ = y′)</code>
@@ -1224,11 +1224,125 @@ The <code>∃ q′</code> quantifier is now unneeded, so remove it.
 
 == Inner five segment ==
 [[File:Inner five segment.svg|thumb|Inner five segment]]
-The five segment axiom can be thought of as an "outer five segment" statement, as one is given a set of congruences and concludes a congruence for a segment outside the given ones. The inner five segment theorem is similar, but the given set of congruences are for the outer segments and the theorem supplies a congruence inside those. Specifically, comparing the axiom/theorem and diagrams, the congruence for <code>z u</code> is moved from the consequent to the antecedent, and the congruence for <code>y u</code> is moved from the antecedent to the consequent.<ref>Lemma l4_2 in Narboux</ref>
+The five segment axiom can be thought of as an "outer five segment" statement, as one is given a set of congruences and concludes a congruence for a segment outside the given ones. The inner five segment theorem is similar, but the given set of congruences are for the outer segments and the theorem supplies a congruence inside those. The key change, comparing the axiom/theorem and diagrams, is to move the congruence for <code>z u</code> from the consequent to the antecedent, and the congruence for <code>y u</code> from the antecedent to the consequent.<ref>Lemma l4_2 in Narboux</ref>
+
+The proof has two cases.  The first case is <code>x = z</code>. From <code>between x y z</code> we get <code>x = y</code>. Likewise, <code>x z ≡ x′ z′</code> implies <code>x′ = z′</code>, which in turn implies <code>x′ = y′</code>. Thus, we can turn <code>x u ≡ x′ u′</code> into <code>y u ≡ y u′</code>.
 <jh>
-#var (point x′ y′ z′ u′)
+thm (IndivisibilityFromEquality () () (((x = z) ∧ (between x y z)) → (x = y)) (
+        x EqualityReflexivity
+        y EqualityReflexivity
+        x x y y x z BetweenBuilder
+        detach2of3
+        detach1of2
+
+        eliminateBiconditionalForwardInConsequent
+
+        x y Indivisibility
+        (x = z) introduceAntecedent
+
+        applySyllogismInConsequent
+
+        import
+))
+
+thm (InnerFiveSegmentCaseXEqualsZ () () ((x = z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
+</jh>
+First we pick out <code>between x y z</code>.
+<jh>
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
+        applySyllogism
+
+        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionRightElimination
+        applySyllogism
+
+        (between x y z) (between x′ y′ z′) ConjunctionRightElimination
+        applySyllogism
+</jh>
+Then we apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x = y</code>.
+<jh>
+        (x = z) conjoinLL
+
+        x z y IndivisibilityFromEquality
+        applySyllogism
+</jh>
+Now we pick out <code>x z ≡ x′ z′</code> and apply <code>CongruenceIdentityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = z′</code>.
+<jh>
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
+        applySyllogism
+
+        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionLeftElimination
+        applySyllogism
+
+        (x = z) conjoinLL
+        x z x′ z′ CongruenceIdentityFromEquality
+        import
+        applySyllogism
+</jh>
+Now we pick out <code>between x′ y′ z′</code> and apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = y′</code>.
+<jh>
+        (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
+
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
+        applySyllogism
+
+        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionRightElimination
+        applySyllogism
+
+        (between x y z) (between x′ y′ z′) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+
+        x′ z′ y′ IndivisibilityFromEquality
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next we pick out <code>x u ≡ x′ u′</code> and combine with the previous results to get <code>x = z ∧ ''many conjuncts'' → x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code>
+<jh>
+        (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
+
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+Now we transform <code>x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code> into <code>y u ≡ y′ u′</code>.
+<jh>
+        u EqualityReflexivity
+        u′ EqualityReflexivity
+        x y u u x′ y′ u′ u′ CongruenceBuilder
+        detach2of2
+        detach2of3
+
+        eliminateBiconditionalReverseInConsequent
+        import
+
+        applySyllogism
+        export
+))
+
 #thm (InnerFiveSegment () ()
-#  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
+#  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
 #))
 </jh>
 
