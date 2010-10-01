@@ -577,6 +577,22 @@ thm (exportInConsequent ()
         p q r Transportation eliminateBiconditionalForward
         applySyllogism
 ))
+
+thm (eliminateLeftConjunctionInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → q) (
+        H
+        p q ConjunctionLeftElimination
+        applySyllogism
+))
+
+thm (eliminateRightConjunctionInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → p) (
+        H
+        p q ConjunctionRightElimination
+        applySyllogism
+))
 </jh>
 
 == Theorems in the antecedent ==
