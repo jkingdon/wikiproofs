@@ -13,7 +13,7 @@ import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
 var (point x y z w u v A B C D E P Q A′ B′)
 var (point x′ y′ z′ w′ u′)
-var (variable a b c q q′)
+var (variable a b c q q′ ww ww′)
 </jh>
 
 == Collinearity ==
@@ -1607,9 +1607,31 @@ Applying outer five segment, we conclude <code>y u ≡ y′ u′</code>.
         w z y w′ z′ y′ u u′ FiveSegment
         applySyllogism
 ))
+</jh>
+Now it is time to assemble the <code>x ≠ z</code> case. It basically consists of predicate logic. There might be an clearer way to arrange this proof, but the basic idea is to construct <code>w′</code> (which we call <code>ww′</code> when we need a variable) with <code>SegmentConstruction</code>, to construct <code>w</code> (which we call <code>ww</code> when we need a variable) using <code>PointConstructionDifferent</code>, and to use those constructions to remove antecedents from the formula we get from <code>InnerFiveSegmentYU</code>.
+<jh>
+thm (InnerFiveSegmentCaseXNotEqualZ
+  ((ww′ x) (ww′ y) (ww′ z) (ww′ x′) (ww′ y′) (ww′ z′) (ww′ u) (ww′ u′) (ww′ ww) (ww x) (ww y) (ww z) (ww x′) (ww y′) (ww z′) (ww u) (ww u′))
+  ()
+  ((x ≠ z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
+        ww x z PointConstructionDifferent
 
-#thm (InnerFiveSegmentCaseXNotEqualZ () () ((x ≠ z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
-#))
+        ww′ x′ z′ z (value ww) SegmentConstruction
+
+        x z (value ww) x′ z′ (value ww′) y y′ u u′ InnerFiveSegmentYU
+        export
+        exportInConsequent
+        applyComm
+        ww′ addThereExistsToAntecedent
+
+        applyModusPonens
+
+        ww addThereExistsToAntecedent
+
+        applyModusPonens
+
+        export
+))
 
 #thm (InnerFiveSegment () ()
 #  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
