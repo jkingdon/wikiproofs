@@ -176,7 +176,7 @@ This is just a substitution away from <code>CongruenceIdentityLeft</code>.  The 
 ))
 </jh>
 
-== Five segment ==
+== Three segment ==
 The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ → x z ≡ x′ z′</code>, is basically a degenerate case of the five segment axiom.<ref>Lemma l2_11 in Narboux</ref><ref>Axiom 23 in Givant and Tarski, 1999</ref> There are two cases. If <code>x ≠ y</code>, then applying five segments to x y z and x yields the desired result (the additional two antecedents are fulfilled because one becomes <code>x x ≡ x′ x′</code> and the other <code>y x ≡ y′ x′</code>). If <code>x = y</code>, then <code>x z ≡ x′ z′</code> follows from <code>y z ≡ y′ z′</code> (and <code>x′ = y′</code>, which follows from <code>x y ≡ x′ y′</code>).
 
 We first prove the <code>x = y</code> case as a lemma.
