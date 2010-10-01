@@ -108,10 +108,13 @@ stmt (AxiomEuclid () () (
 
 == Five Segment ==
 [[File:Five segment.svg|thumb|right]]
+This is a version of familiar theorems concerning congruent triangles (without any explicit reference to angles, of course).
 <jh>
 var (point x′ y′ z′ u′)
-stmt (FiveSegment () ()
-  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′)) → (z u ≡ z′ u′))
+stmt (OuterFiveSegment () ()
+  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′))
+     ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′))
+   → (z u ≡ z′ u′))
 )
 </jh>
 
