@@ -486,6 +486,9 @@ stmt (importInConsequent ()
 stmt (exportInConsequent ()
   ((antecedent → ((p ∧ q) → r)))
   (antecedent → (p → (q → r))) )
+
+stmt (eliminateLeftConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
+stmt (eliminateRightConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
 </jh>
 
 == Theorems in the antecedent ==
