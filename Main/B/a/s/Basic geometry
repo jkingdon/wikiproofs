@@ -278,11 +278,8 @@ thm (SegmentConstructionUniquenessAxAy () () ((((((Q ≠ A) ∧ (between Q A x))
 First we extract the two pieces we care about, first showing that big long antecedent implies <code>A x ≡ B C</code>,
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionLeftElimination
-        applySyllogism
-
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 </jh>
 And then that it implies <code>A y ≡ B C</code>.
 <jh>
@@ -309,18 +306,14 @@ thm (SegmentConstructionUniquenessQxQy () () ((((((Q ≠ A) ∧ (between Q A x))
 To apply <code>ThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
-        applySyllogism
-        (Q ≠ A) (between Q A x) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 </jh>
 The second is <code>between Q A y</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -351,20 +344,15 @@ thm (SegmentConstructionUniquenessxxxy () () ((((((Q ≠ A) ∧ (between Q A x))
 We'll be applying <code>OuterFiveSegment</code> which has seven antecedents. The first two we can do together, <code>Q ≠ A ∧ between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 </jh>
 The next is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
-        applySyllogism
-        (Q ≠ A) (between Q A x) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -647,8 +635,7 @@ First, <code>C a ≡ C D ∧ between B C a</code>.
 Next, <code>between B C D</code>
 <jh>
         ((between A B C) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (between A B C) (between B C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 
@@ -678,30 +665,24 @@ We'll be applying <code>SegmentConstructionUniqueness</code>. It has five antece
 The second is <code>between B C a</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
-        applySyllogism
-        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
 The third is <code>C a ≡ C D</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
-        applySyllogism
-        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionRightElimination
-        applySyllogism
-        (between A C (value a)) (C (value a) ≡ C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
 The fourth is <code>between B C D</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -724,12 +705,9 @@ thm (BetweennessOuterTransitivityFlipped-aca-ad () () ((((((between A C (value a
         A C a D B BetweennessOuterTransitivityFlipped-ad
 
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
-        applySyllogism
-        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionRightElimination
-        applySyllogism
-        (between A C (value a)) (C (value a) ≡ C D) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 
         composeConjunction
 ))
@@ -794,8 +772,7 @@ To apply <code>BetweennessOuterTransitivityFlipped</code> we need three things. 
 The second is <code>between B C D</code>
 <jh>
         (B ≠ C) ((between A B D) ∧ (between B C D)) ConjunctionLeftElimination
-        (between A B D) (between B C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -1038,14 +1015,12 @@ thm (PointConstructionDifferentLemma2 () () ((((between A B C) ∧ (B C ≡ x y)
 First we pick out <code>between A B C</code>.
 <jh>
         ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
-        (between A B C) (B C ≡ x y) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
 </jh>
 Next we pick out <code>B C ≡ x y</code>.
 <jh>
         ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
-        (between A B C) (B C ≡ x y) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 </jh>
 Next we pick out <code>x ≠ y</code>.
 <jh>
@@ -1116,8 +1091,10 @@ Given a point <code>A</code>, there exists a point <code>b</code> distinct from 
 <jh>
 thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
         b A A PointConstructionDifferent
+
         (between A A (value b)) (A ≠ (value b)) ConjunctionLeftElimination
         b addThereExists
+
         applyModusPonens
 ))
 </jh>
@@ -1133,8 +1110,7 @@ To construct <code>q′</code>, we need <code>between A P A′</code> and <code>
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionLeftElimination
 
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
-        (between A B C) (between A′ B′ C) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
         A′ B′ C BetweennessSymmetry
         eliminateBiconditionalReverse
         applySyllogism
@@ -1147,8 +1123,7 @@ To construct <code>q′</code>, we need <code>between A P A′</code> and <code>
 That gives us <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A)</code>. We'll need <code>between C B A</code> in the next step, so we put <code>between C B A</code> inside the quantifier to get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code>.
 <jh>
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
-        (between A B C) (between A′ B′ C) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
         A B C BetweennessSymmetry
         eliminateBiconditionalReverse
         applySyllogism
@@ -1164,8 +1139,7 @@ To construct <code>q</code>, we need <code>between C B A</code> and <code>betwee
         ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionLeftElimination
 
         ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
-        (between P (value q′) C) (between B′ (value q′) A) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 
@@ -1175,8 +1149,7 @@ To construct <code>q</code>, we need <code>between C B A</code> and <code>betwee
 We're getting close. Right now there are two things on the proof stack, <code><code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code> and <code>between P q′ C ∧ between B′ q′ A ∧ between C B A → ∃ q between B q B′ ∧ between q′ q C</code>. Half of what we need is <code>between B q B′</code>. We'll need to fish out <code>between q′ q C</code> and <code>between P q′ C</code> to get <code>between P q C</code>, so start by putting <code>between P q′ C</code> inside the <code>∃ q</code>
 <jh>
         ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
-        (between P (value q′) C) (between B′ (value q′) A) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
 
         composeConjunction
 
@@ -1194,8 +1167,7 @@ Now we can extract <code>between P q′ C</code> and <code>between q′ q C</cod
         ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionLeftElimination
 
         ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
-        (between B (value q) B′) (between (value q′) (value q) C) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 
@@ -1205,8 +1177,7 @@ Now we can extract <code>between P q′ C</code> and <code>between q′ q C</cod
 The other half of what we need is <code>between B q B′</code>
 <jh>
         ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
-        (between B (value q) B′) (between (value q′) (value q) C) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
 </jh>
 Combining we get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ ∃ q (between P q C ∧ between B q B′)</code>.
 <jh>
@@ -1250,18 +1221,10 @@ thm (InnerFiveSegmentXEqualsZ () () ((x = z) → (((((((between x y z) ∧ (betw
 First we pick out <code>between x y z</code>.
 <jh>
         (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-
-        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
-        applySyllogism
-
-        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionRightElimination
-        applySyllogism
-
-        (between x y z) (between x′ y′ z′) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 </jh>
 Then we apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x = y</code>.
 <jh>
@@ -1273,15 +1236,9 @@ Then we apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''m
 Now we pick out <code>x z ≡ x′ z′</code> and apply <code>CongruenceIdentityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = z′</code>.
 <jh>
         (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-
-        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
-        applySyllogism
-
-        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         (x = z) conjoinLL
         x z x′ z′ CongruenceIdentityFromEquality
@@ -1291,21 +1248,11 @@ Now we pick out <code>x z ≡ x′ z′</code> and apply <code>CongruenceIdentit
 Now we pick out <code>between x′ y′ z′</code> and apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = y′</code>.
 <jh>
         (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
-
-        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
-        applySyllogism
-
-        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionRightElimination
-        applySyllogism
-
-        (between x y z) (between x′ y′ z′) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 
@@ -1317,12 +1264,8 @@ Now we pick out <code>between x′ y′ z′</code> and apply <code>Indivisibili
 Next we pick out <code>x u ≡ x′ u′</code> and combine with the previous results to get <code>x = z ∧ ''many conjuncts'' → x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code>
 <jh>
         (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
-
-        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -1361,67 +1304,41 @@ thm (InnerFiveSegmentWU () () ((
 The first thing we need to apply outer five segment to <code>x z w u</code> is <code>x ≠ z</code>
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-
-        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
-        applySyllogism
-
-        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionRightElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 </jh>
 The second thing we need is <code>between x z w</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionRightElimination
-
-        (between x z w) (z ≠ w) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
 
         composeConjunction
 </jh>
 The third thing we need is <code>between x′ z′ w′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-
-        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionRightElimination
-        applySyllogism
-
-        (between x′ z′ w′) (z′ w′ ≡ z w) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 
         composeConjunction
 </jh>
 The fourth thing we need is <code>x z ≡ x′ z′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-
-        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
-        applySyllogism
-
-        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
-        applySyllogism
-
-        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
-        applySyllogism
-
-        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
 The fifth thing we need is <code>z w ≡ z′ w′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-
-        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionRightElimination
-        applySyllogism
-
-        (between x′ z′ w′) (z′ w′ ≡ z w) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         z′ w′ z w CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -1432,33 +1349,19 @@ The fifth thing we need is <code>z w ≡ z′ w′</code>.
 The sixth thing we need is <code>x u ≡ x′ u′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-
-        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
-        applySyllogism
-
-        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
-        applySyllogism
-
-        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-        applySyllogism
-
-        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
 The last thing we need is <code>z u ≡ z′ u′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-
-        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
-        applySyllogism
-
-        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
-        applySyllogism
-
-        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
