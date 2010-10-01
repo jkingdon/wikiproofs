@@ -17,6 +17,7 @@ The kind <code>object</code>, defined in first-order logic, represents a point. 
 <jh>
 kindbind (object point)
 var (point x y z w u v A B C D Q)
+var (point x′ y′ z′ u′)
 
 var (variable a b c)
 </jh>
@@ -108,6 +109,24 @@ Here we can construct a point distinct from a given point, or a point distinct f
 <jh>
 stmt (PointConstructionDifferent () () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
 stmt (AnotherPoint () () (∃ b (A ≠ (value b))))
+</jh>
+
+== Five segment ==
+<gallery>
+File:Five segment.svg|Outer five segment
+File:Inner five segment.svg|Inner five segment
+</gallery>
+The five segment theorems are variations of the familiar congruences for triangles (although without any explicit reference to angles).
+<jh>
+stmt (OuterFiveSegment () ()
+  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′))
+     ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′))
+   → (z u ≡ z′ u′))
+)
+stmt (InnerFiveSegment () ()
+  (((((((between x y z) ∧ (between x′ y′ z′))
+    ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))
+  → (y u ≡ y′ u′)))
 </jh>
 
 == Builders ==
