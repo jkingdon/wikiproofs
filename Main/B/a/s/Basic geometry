@@ -1245,7 +1245,7 @@ thm (IndivisibilityFromEquality () () (((x = z) ∧ (between x y z)) → (x = y)
         import
 ))
 
-thm (InnerFiveSegmentCaseXEqualsZ () () ((x = z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
+thm (InnerFiveSegmentXEqualsZ () () ((x = z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
 </jh>
 First we pick out <code>between x y z</code>.
 <jh>
@@ -1610,7 +1610,7 @@ Applying outer five segment, we conclude <code>y u ≡ y′ u′</code>.
 </jh>
 Now it is time to assemble the <code>x ≠ z</code> case. It basically consists of predicate logic. There might be an clearer way to arrange this proof, but the basic idea is to construct <code>w′</code> (which we call <code>ww′</code> when we need a variable) with <code>SegmentConstruction</code>, to construct <code>w</code> (which we call <code>ww</code> when we need a variable) using <code>PointConstructionDifferent</code>, and to use those constructions to remove antecedents from the formula we get from <code>InnerFiveSegmentYU</code>.
 <jh>
-thm (InnerFiveSegmentCaseXNotEqualZ
+thm (InnerFiveSegmentXNotEqualZ
   ((ww′ x) (ww′ y) (ww′ z) (ww′ x′) (ww′ y′) (ww′ z′) (ww′ u) (ww′ u′) (ww′ ww) (ww x) (ww y) (ww z) (ww x′) (ww y′) (ww z′) (ww u) (ww u′))
   ()
   ((x ≠ z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
@@ -1633,9 +1633,12 @@ thm (InnerFiveSegmentCaseXNotEqualZ
         export
 ))
 
-#thm (InnerFiveSegment () ()
-#  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
-#))
+thm (InnerFiveSegment () ()
+  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
+        x z y x′ y′ z′ u u′ InnerFiveSegmentXEqualsZ
+        x z y x′ y′ z′ u u′ InnerFiveSegmentXNotEqualZ
+        eliminateCases
+))
 </jh>
 
 == Export ==
