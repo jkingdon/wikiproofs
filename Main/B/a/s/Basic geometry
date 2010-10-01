@@ -1468,6 +1468,146 @@ Applying outer five segment, we conclude <code>w u ≡ w′ u′</code>.
         applySyllogism
 ))
 
+thm (InnerFiveSegmentYU () () ((
+    ((between x z w) ∧ (z ≠ w)) ∧ (
+    ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ (
+    (x ≠ z) ∧ (
+    (((((between x y z) ∧
+      (between x′ y′ z′)) ∧
+      (x z ≡ x′ z′)) ∧
+      (y z ≡ y′ z′)) ∧
+      (x u ≡ x′ u′)) ∧
+      (z u ≡ z′ u′)))))
+  → (y u ≡ y′ u′)) (
+</jh>
+The first thing we need to apply outer five segment to <code>w z y u</code> is <code>w ≠ z</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        z w EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The second thing we need is <code>between w z y</code>. This follows from <code>between w z x</code> and <code>between z y x</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        x z w BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        x y z BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        w z x y BetweennessInnerTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+The third thing we need is <code>between w′ z′ y′</code>. This follows from <code>between w′ z′ x′</code> and <code>between z′ y′ x′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        x′ z′ w′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        x′ y′ z′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        w′ z′ x′ y′ BetweennessInnerTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fourth thing we need is <code>w z ≡ w′ z′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        z′ w′ z w CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        z w z′ w′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fifth thing we need is <code>z y ≡ z′ y′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        y z y′ z′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The sixth thing we need is <code>w u ≡ w′ u′</code>.
+<jh>
+        x z w x′ z′ w′ y y′ u u′ InnerFiveSegmentWU
+        composeConjunction
+</jh>
+The last thing we need is <code>z u ≡ z′ u′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+Applying outer five segment, we conclude <code>y u ≡ y′ u′</code>.
+<jh>
+        w z y w′ z′ y′ u u′ FiveSegment
+        applySyllogism
+))
+
 #thm (InnerFiveSegmentCaseXNotEqualZ () () ((x ≠ z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
 #))
 
