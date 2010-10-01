@@ -12,7 +12,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
 var (point x y z w u v A B C D E P Q A′ B′)
-var (point x′ y′ z′ u′)
+var (point x′ y′ z′ w′ u′)
 var (variable a b c q q′)
 </jh>
 
@@ -1343,7 +1343,131 @@ Now we transform <code>x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code> into <
 </jh>
 [[File:Inner five segment proof.svg|thumb|right|The <code>w ≠ z</code> case. <code>w z ≡ w′ z′</code> by construction. <code>w u ≡ w′ u′</code> by applying outer five segment to <code>x z w u</code>. <code>y u ≡ y′ u′</code> by applying outer five segment to <code>w z y u</code>.]]
 The <code>w ≠ z</code> case is proved by two applications of outer five segment. First extend the line segment <code>x z</code> beyond <code>z</code> to a distinct point <code>w</code>. Extend <code>x′ z′</code> beyond <code>z′</code> to a point <code>w′</code> such that <code>w z ≡ w′ z′</code>. We can now apply outer five segment to <code>x z w u</code> to get <code>w u ≡ w′ u′</code>. Then we apply outer five segment to <code>w z y u</code> to get <code>y u ≡ y′ u′</code>.
+
+The bulk of the proof consists of picking out conjuncts to satisfy the antecedents of the outer five segment invocations. We break it out into two lemmas, which start after the construction of <code>w</code> and <code>w′</code> and go from there. The first lemma proves <code>w u ≡ w′ u′</code> and the second applies the first and proves <code>y u ≡ y′ u′</code>. The two lemmas have the same antecedent, which is parenthesized in the following way. It consists of four conjuncts, the first of which corresponds to the construction of <code>w</code>, the second of which corresponds to the construction of <code>w′</code>, the third of which is <code>w ≠ z</code>, and the fourth of which is the antecedent of the eventual <code>InnerFiveSegment</code> theorem we are working towards.
 <jh>
+thm (InnerFiveSegmentWU () () ((
+    ((between x z w) ∧ (z ≠ w)) ∧ (
+    ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ (
+    (x ≠ z) ∧ (
+    (((((between x y z) ∧
+      (between x′ y′ z′)) ∧
+      (x z ≡ x′ z′)) ∧
+      (y z ≡ y′ z′)) ∧
+      (x u ≡ x′ u′)) ∧
+      (z u ≡ z′ u′)))))
+  → (w u ≡ w′ u′)) (
+</jh>
+The first thing we need to apply outer five segment to <code>x z w u</code> is <code>x ≠ z</code>
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+
+        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
+        applySyllogism
+
+        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionRightElimination
+        applySyllogism
+</jh>
+The second thing we need is <code>between x z w</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionRightElimination
+
+        (between x z w) (z ≠ w) ConjunctionRightElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The third thing we need is <code>between x′ z′ w′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+
+        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionRightElimination
+        applySyllogism
+
+        (between x′ z′ w′) (z′ w′ ≡ z w) ConjunctionRightElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fourth thing we need is <code>x z ≡ x′ z′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+
+        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
+        applySyllogism
+
+        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
+        applySyllogism
+
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        (((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) (y z ≡ y′ z′) ConjunctionRightElimination
+        applySyllogism
+
+        ((between x y z) ∧ (between x′ y′ z′)) (x z ≡ x′ z′) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fifth thing we need is <code>z w ≡ z′ w′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+
+        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionRightElimination
+        applySyllogism
+
+        (between x′ z′ w′) (z′ w′ ≡ z w) ConjunctionLeftElimination
+        applySyllogism
+
+        z′ w′ z w CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The sixth thing we need is <code>x u ≡ x′ u′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+
+        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
+        applySyllogism
+
+        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
+        applySyllogism
+
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+        applySyllogism
+
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) (x u ≡ x′ u′) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+The last thing we need is <code>z u ≡ z′ u′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+
+        ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))) ConjunctionLeftElimination
+        applySyllogism
+
+        (x ≠ z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
+        applySyllogism
+
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying outer five segment, we conclude <code>w u ≡ w′ u′</code>.
+<jh>
+        x z w x′ z′ w′ u u′ FiveSegment
+        applySyllogism
+))
+
 #thm (InnerFiveSegmentCaseXNotEqualZ () () ((x ≠ z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
 #))
 
