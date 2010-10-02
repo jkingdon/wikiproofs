@@ -1,26 +1,16 @@
-[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]].
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]].
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
-import (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 #import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 #import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
 #import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
+#import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
+import (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (formula p q φ ψ)
 var (variable x y x0 y0 x1 y1 k n)
 var (object s t u)
 
-var (nat a b c)
-
-thm (warmup ((y φ)) () (φ → (∀ y φ)) (
-        φ y Generalization
-))
-
-def ((constx) x)
-
-# blows up with "Required distinct variable constraints are not a subset of actual distinct variable constraints". That's because (constx) automatically expands to a variable which is not listed in distinct variable constraints.
-#thm (badth () () (φ → (∀ (constx) φ)) (
-#        φ (constx) Generalization
-#))
 </jh>
