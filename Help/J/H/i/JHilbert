@@ -29,7 +29,7 @@ For example, <code>term (formula (¬ formula))</code> defines a term called ¬ o
  def (''new-defined'' ''definition'')
 For example, 
  def ((¬ p) (p | p))
-defines ¬ in terms of |.  A variable which appears on the right hand side but not the left hand side is called a ''dummy'' (As of early 2010, the functioning of dummies is unsafe and subject to change; see discussion at [[User:GrafZahl/Definitions in JHilbert]]).
+defines ¬ in terms of |.  A variable which appears on the right hand side but not the left hand side is called a ''dummy'' and is given unique variables (As of 2010, the functioning of dummies is unsafe and subject to change; see [[Wikiproofs:JHilbert definition soundness]]).
 
 * Statements.  Statements are either axioms (in which case there will be no modules which exports this interface, as axioms cannot be proved) or statements to be proved (in which case, some module will prove the statement and export the interface).
  stmt (''new-statement'' (''distinct-variables'') (''hypothesis'') (''consequent''))
