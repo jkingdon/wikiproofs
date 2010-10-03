@@ -789,7 +789,10 @@ thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H (((value x) = 
         ChangeVariableThereExistsReverse
 ))
 
-thm (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ x φx) ↔ (∃ y φy)) (
+thm (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
         H
         ChangeVariableThereExistsForward
 
@@ -797,6 +800,34 @@ thm (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((H (((value x) = (value 
         ChangeVariableThereExistsReverse
 
         introduceBiconditionalFromImplications
+))
+</jh>
+
+The corresponding result for ∀ is an easy consequence.
+<jh>
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        H
+
+        φx φy NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableThereExists
+
+        y φy NotForAll
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+        x φx NotForAll
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        removeNegation
+
+        swapBiconditional
 ))
 </jh>
 
