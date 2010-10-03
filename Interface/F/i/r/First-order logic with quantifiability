@@ -380,7 +380,13 @@ stmt (introduceThereExistsFromObject () ((subst s x φ)) (∃ x φ))
 === Changing the quantified variable ===
 We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly.
 <jh>
-stmt (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((((value x) = (value y)) → (φx ↔ φy))) ((∃ x φx) ↔ (∃ y φy)))
+stmt (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((∃ x φx) ↔ (∃ y φy)))
+stmt (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((∀ x φx) ↔ (∀ y φy)))
 </jh>
 
 == Quantifiability ==
