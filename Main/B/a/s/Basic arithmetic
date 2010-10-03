@@ -1086,7 +1086,7 @@ def ((≤ a b) (∃ n ((a + (value n)) = b)))
 
 ===Definition as an equivalence===
 
-The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side. It also allows specifying the distinct variable constraints between <code>a</code> and <code>n</code> and <code>b</code> and <code>n</code>, which are needed for soundness but which cannot be expressed using JHilbert's [[Wikiproofs:JHilbert definition soundness|deficient definition mechanism]].
+The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side. Also note that <code>LessEqual</code> has (and needs) distinct variable constraints between <code>a</code> and <code>n</code> and <code>b</code> and <code>n</code>, whereas the definition ensures that dummy variables are distinct because they are created internally by JHilbert. (See [[Wikiproofs:JHilbert definition soundness]] for more discussion of the definition mechanism).
 
 <jh>
 var (variable m)
