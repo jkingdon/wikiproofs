@@ -1,9 +1,9 @@
 This is an interface to hold various results, e.g. potential axioms, proofs which aren't currently exported, or proofs which I think I can prove, but haven't yet.
 
-[[Interface:Classical propositional calculus]], [[Interface:First-order logic]], [[Interface:Peano axioms]].
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]].
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
-param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 
 var (formula φ ψ χ θ)
@@ -14,4 +14,10 @@ stmt (sbc56 ((x s)) () ((∃ x (((value x) = s) ∧ φ)) ↔ (∀ x (((value x) 
 
 stmt (equs3 () () 
   ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))) )
+
+# This is in metamath, just need to figure out how to prove it
+stmt (sb8e ((y φ)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
+
+# Not sure whether this is quite right, but looks plausible
+stmt (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))))
 </jh>
