@@ -556,6 +556,38 @@ thm (SubstNegation ((y x) (y s)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))
 ))
 </jh>
 
+=== Disjunction ===
+We can prove the ability to move substitution across a disjunction by expanding the definition and applying theorems which let us move ∃ and ∧ across disjunctions.
+<jh>
+thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))) (
+        s x (φ ∨ ψ) y Subst
+
+        ((value x) = (value y)) φ ψ ConjunctionLeftDistribution
+        x buildThereExists
+        ((value y) = s) buildConjunctionLL
+        y buildThereExists
+        applyBiconditionalTransitivity
+
+        x (((value x) = (value y)) ∧ φ) (((value x) = (value y)) ∧ ψ) ThereExistsDisjunction
+        ((value y) = s) buildConjunctionLL
+        y buildThereExists
+        applyBiconditionalTransitivity
+
+        ((value y) = s) (∃ x (((value x) = (value y)) ∧ φ)) (∃ x (((value x) = (value y)) ∧ ψ)) ConjunctionLeftDistribution
+        y buildThereExists
+        applyBiconditionalTransitivity
+
+        y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ))) (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ ψ))) ThereExistsDisjunction
+        applyBiconditionalTransitivity
+
+        s x φ y Subst
+        s x ψ y Subst
+        buildDisjunction
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Composition ==
 If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 12 Jun 2010. I don't know why the (x y) distinct variable constraint is missing from that version; the second invocation of sbc5 would seem to require it.</ref>
 <jh>
