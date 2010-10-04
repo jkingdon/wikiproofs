@@ -3,14 +3,16 @@
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-#import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
-#import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
+import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
 #import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 #import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 import (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (formula p q φ ψ)
-var (variable x y x0 y0 x1 y1 k n)
+var (variable x y x0 y0 x1 y1 z k n)
 var (object s t u)
 
+#thm (DefinitionJusticiationExplicit () () ((∃ x0 (∃ y0 (subst (value x0) x1 (subst (value y0) y1 (((value x1) + s) = (value y1)))))) ↔ (∃ x1 (∃ y1 (((value x1) + s) = (value y1))))) (
+#))
 </jh>
