@@ -13,6 +13,20 @@ var (formula p q φ ψ)
 var (variable x y x0 y0 x1 y1 z k n)
 var (object s t u)
 
-#thm (DefinitionJusticiationExplicit () () ((∃ x0 (∃ y0 (subst (value x0) x1 (subst (value y0) y1 (((value x1) + s) = (value y1)))))) ↔ (∃ x1 (∃ y1 (((value x1) + s) = (value y1))))) (
-#))
+# x0 is distinct from everything
+# y0 is distinct from everything
+# and then there is (x1 y1)
+thm (DefinitionJustificationExplicit ((x0 y1) (x0 x1) (x0 s) (x0 y1) (y0 x0) (y0 x1) (y0 s) (y0 y1) (x1 y1)) ()
+  ((∃ x1 (∃ y1 (((value x1) + s) = (value y1))))
+  ↔ (∃ x0 (∃ y0 (subst (value y0) y1 (subst (value x0) x1 (((value x1) + s) = (value y1))))))) (
+        x1 (∃ y1 (((value x1) + s) = (value y1))) x0 sb8e
+
+        (value x0) x1 y1 (((value x1) + s) = (value y1)) SubstThereExists
+        x0 buildThereExists
+        applyBiconditionalTransitivity
+
+        y1 (subst (value x0) x1 (((value x1) + s) = (value y1))) y0 sb8e
+        x0 buildThereExists
+        applyBiconditionalTransitivity
+))
 </jh>
