@@ -3,9 +3,9 @@
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
-import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER PEANO) ())
-#import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
+#import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
+import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER) ())
 #import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 import (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
@@ -27,6 +27,32 @@ thm (DefinitionJustificationExplicit ((x0 y1) (x0 x1) (x0 s) (x0 y1) (y0 x0) (y0
 
         y1 (subst (value x0) x1 (((value x1) + s) = (value y1))) y0 sb8e
         x0 buildThereExists
+        applyBiconditionalTransitivity
+))
+
+# Adds (x1 s) (y1 s)
+thm (DefinitionJustification ((x0 y1) (x0 x1) (x0 s) (x0 y1) (y0 x0) (y0 x1) (y0 s) (y0 y1) (x1 y1) (x1 s) (y1 s)) ()
+  ((∃ x1 (∃ y1 (((value x1) + s) = (value y1))))
+  ↔ (∃ x0 (∃ y0 (((value x0) + s) = (value y0))))) (
+        x1 y1 s x0 y0 DefinitionJustificationExplicit
+# Will need x1 = x0 → (x1 + s = y1 ↔ x0 + s = y1)
+        (value x1) (value x0) s AdditionBuilderRR
+        (value y1) buildEqualityRRInConsequent
+        makeSubstExplicit
+
+        (value y0) y1 buildSubst
+        y0 buildThereExists
+        x0 buildThereExists
+
+        applyBiconditionalTransitivity
+
+# Second substitution: y1 = y0 → x0 + s = y1 ↔ x0 + s = y0
+        (value y1) (value y0) ((value x0) + s) EqualityBuilderLL
+        makeSubstExplicit
+
+        y0 buildThereExists
+        x0 buildThereExists
+
         applyBiconditionalTransitivity
 ))
 </jh>
