@@ -611,6 +611,22 @@ thm (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (su
         (subst s x φ) (subst s x ψ) DeMorganNDN
         applyBiconditionalTransitivity
 ))
+
+thm (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) (
+        φ ψ ImplicationDisjunction
+        s x buildSubst
+
+        s x (¬ φ) ψ SubstDisjunction
+        applyBiconditionalTransitivity
+
+        s x φ SubstNegation
+        (subst s x ψ) buildDisjunctionRR
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) ImplicationDisjunction
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Composition ==
