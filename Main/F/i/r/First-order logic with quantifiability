@@ -588,6 +588,31 @@ thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (su
 ))
 </jh>
 
+=== Others ===
+The corresponding theorems for the other three connectives follow from those for negation and disjunction.
+<jh>
+thm (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))) (
+        φ ψ DeMorganNDN swapBiconditional
+        s x buildSubst
+
+        s x ((¬ φ) ∨ (¬ ψ)) SubstNegation
+        applyBiconditionalTransitivity
+
+        s x (¬ φ) (¬ ψ) SubstDisjunction
+        addNegation
+        applyBiconditionalTransitivity
+
+        s x φ SubstNegation
+        s x ψ SubstNegation
+        buildDisjunction
+        addNegation
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) DeMorganNDN
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Composition ==
 If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 12 Jun 2010. I don't know why the (x y) distinct variable constraint is missing from that version; the second invocation of sbc5 would seem to require it.</ref>
 <jh>
