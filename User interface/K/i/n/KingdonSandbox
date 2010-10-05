@@ -4,16 +4,11 @@ This is an interface to hold various results, e.g. potential axioms, proofs whic
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
 param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+#param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 
 var (formula φ ψ χ θ)
 var (variable x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
 var (object s t u)
-
-stmt (sbc56 ((x s)) () ((∃ x (((value x) = s) ∧ φ)) ↔ (∀ x (((value x) = s) → φ))) )
-
-stmt (equs3 () () 
-  ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))) )
 
 # This is in metamath, just need to figure out how to prove it
 stmt (sb8e ((y φ)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
