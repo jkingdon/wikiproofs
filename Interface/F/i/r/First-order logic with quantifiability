@@ -365,6 +365,15 @@ stmt (addSubst () ((φ → ψ)) ((subst s x φ) → (subst s x ψ)))
 stmt (buildSubst () ((φ ↔ ψ)) ((subst s x φ) ↔ (subst s x ψ)))
 </jh>
 
+We can move <code>subst</code> across logical connectives:
+<jh>
+stmt (SubstNegation () () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))))
+stmt (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))))
+stmt (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))))
+stmt (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))))
+stmt (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (subst s x ψ))) )
+</jh>
+
 === Substitution of a variable which does not appear ===
 <jh>
 stmt (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ))
