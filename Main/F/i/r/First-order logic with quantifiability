@@ -627,6 +627,23 @@ thm (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (su
         swapBiconditional
         applyBiconditionalTransitivity
 ))
+
+thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalImplication
+        s x buildSubst
+
+        s x (φ → ψ) (ψ → φ) SubstConjunction
+        applyBiconditionalTransitivity
+
+        s x φ ψ SubstImplication
+        s x ψ φ SubstImplication
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Composition ==
