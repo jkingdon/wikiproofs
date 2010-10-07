@@ -841,24 +841,32 @@ The antecedent is similar but has one more step because of the substitution.
 ))
 </jh>
 
-Here is a version with implicit substitution. Think of <code>φx</code> and <code>φy</code> as two versions of the same formula, but where <code>x</code> has been changed to <code>y</code>. More formally, <code>y</code> does not appear in <code>φx</code>, <code>x</code> does not appear in <code>φy</code>, and <code>x = y → (φx ↔ φy)</code>. This lets us conclude <code>∃ y φy ↔ ∃ x φx</code>.
+Here is a version with implicit substitution. Think of <code>φx</code> and <code>φy</code> as two versions of the same formula, but where <code>x</code> has been changed to <code>y</code>. More formally, <code>y</code> is not free in <code>φx</code>, <code>x</code> is not free in <code>φy</code>, and <code>x = y → (φx ↔ φy)</code>. This lets us conclude <code>∃ y φy ↔ ∃ x φx</code>.
 
 The <code>(x y)</code> distinct variable constraint is subject to the same commentary as <code>(x s)</code> in <code>makeSubstExplicit</code> (that is, that it might not be necessary).
 
 We first prove the reverse implication.
 <jh>
 var (formula φy)
-thm (ChangeVariableThereExistsReverse ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ y φy) → (∃ x φx)) (
+thm (ChangeVariableThereExistsReverseNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ y φy) → (∃ x φx)) (
 </jh>
 First we show <code>∃ y φy → ∃ y [ y / x ] φx</code>.
 <jh>
-        H makeSubstExplicit
+        HFREEX
+        H
+        convertImplicitToSubst
+
         eliminateBiconditionalForward
         y addThereExists
 </jh>
 We then transform the right hand side to <code>∃ x φx</code>, and we are done.
 <jh>
-        y φx DistinctNotFree
+        HFREEY
         x sb8eReverseNotFree
         applySyllogism
 ))
@@ -866,7 +874,13 @@ We then transform the right hand side to <code>∃ x φx</code>, and we are done
 
 The other direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
 <jh>
-thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ x φx) → (∃ y φy)) (
+thm (ChangeVariableThereExistsForwardNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) → (∃ y φy)) (
+        HFREEY HFREEX
+
         H
 
         (value x) (value y) EqualitySymmetry
@@ -876,20 +890,32 @@ thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H (((value x) = 
         eliminateBiconditionalReverse
         applyModusPonens
 
-        ChangeVariableThereExistsReverse
+        ChangeVariableThereExistsReverseNotFree
+))
+
+thm (ChangeVariableThereExistsNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        HFREEX HFREEY H
+        ChangeVariableThereExistsForwardNotFree
+
+        HFREEX HFREEY H
+        ChangeVariableThereExistsReverseNotFree
+
+        introduceBiconditionalFromImplications
 ))
 
 thm (ChangeVariableThereExists
   ((y φx) (x φy) (x y))
   ((H (((value x) = (value y)) → (φx ↔ φy))))
   ((∃ x φx) ↔ (∃ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
         H
-        ChangeVariableThereExistsForward
-
-        H
-        ChangeVariableThereExistsReverse
-
-        introduceBiconditionalFromImplications
+        ChangeVariableThereExistsNotFree
 ))
 </jh>
 
