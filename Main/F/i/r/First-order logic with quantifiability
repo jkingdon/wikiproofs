@@ -794,6 +794,7 @@ thm (makeSubstExplicit ((x s) (x ψ))
 == Substituting one quantified variable for another ==
 If we have a quantified formula, and we substitute the quantified variable for another (using <code>subst</code>), the formula holds with the substituted variable in the quantifier.  In symbols, this is <code>∀ x φ ↔ ∀ y [ y / x ] φ</code> and <code>∃ x φ ↔ ∃ y [ y / x ] φ</code>, where <code>y</code> is not free in <code>φ</code>.<ref>[http://us.metamath.org/mpeuni/sb8.html sb8] and [http://us.metamath.org/mpeuni/sb8e.html sb8e] in metamath's set.mm, accessed June 24, 2010</ref>
 
+=== One direction ===
 For now, we just prove one direction of these.
 <jh>
 thm (sb8ForwardNotFree () ((HFREE (y is-not-free-in φ))) ((∀ x φ) → (∀ y (subst (value y) x φ))) (
@@ -841,6 +842,7 @@ The antecedent is similar but has one more step because of the substitution.
 ))
 </jh>
 
+=== With implicit substitution ===
 Here is a version with implicit substitution. Think of <code>φx</code> and <code>φy</code> as two versions of the same formula, but where <code>x</code> has been changed to <code>y</code>. More formally, <code>y</code> is not free in <code>φx</code>, <code>x</code> is not free in <code>φy</code>, and <code>x = y → (φx ↔ φy)</code>. This lets us conclude <code>∃ y φy ↔ ∃ x φx</code>.
 
 The <code>(x y)</code> distinct variable constraint is subject to the same commentary as <code>(x s)</code> in <code>makeSubstExplicit</code> (that is, that it might not be necessary).
@@ -946,6 +948,11 @@ thm (ChangeVariableForAll ((y φx) (x φy) (x y))
         swapBiconditional
 ))
 </jh>
+
+=== A theorem relating a substituted formula to equality ===
+Here we prove <code>x = y → (φ ↔ [ y / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12], metamath's set.mm, accessed October 6, 2010</ref>
+
+{{under construction}}
 
 == Export ==
 That gives us [[Interface:First-order logic with quantifiability]], which we now export.
