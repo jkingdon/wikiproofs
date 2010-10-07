@@ -952,7 +952,54 @@ thm (ChangeVariableForAll ((y φx) (x φy) (x y))
 === A theorem relating a substituted formula to equality ===
 Here we prove <code>x = y → (φ ↔ [ y / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12], metamath's set.mm, accessed October 6, 2010</ref>
 
-{{under construction}}
+We start with the forward direction.
+<jh>
+thm (sbequ12Forward ((x s)  (z x) (z s) (z φ)) () (((value x) = s) → (φ → (subst s x φ))) (
+</jh>
+The proof consists of gradually building up the definition of <code>subst</code>. It is somewhat similar to the proof in metamath<ref>[http://us.metamath.org/mpeuni/sbequ1.html sbequ1]</ref> although the details are different because we have a different definition of <code>subst</code>.
+
+We're going to start with <code>x = s ∧ φ → ∃ x (x = s ∧ φ)</code>, and then we want to change the innermost <code>s</code> to <code>z</code> (under the condition that <code>z = s</code>). The mechanics of this is we use <code>(x = s ∧ φ) ∧ z = s</code> as an antecedent in both cases.
+<jh>
+        (((value x) = s) ∧ φ) ((value z) = s) ConjunctionRightElimination
+        (((value x) = s) ∧ φ) x ThereExistsIntroduction
+        applySyllogism
+</jh>
+The next bit is centered around the substitution <code>z = s → (∃ x (x = z ∧ φ) ↔ ∃ x (x = s ∧ φ))</code>. When combined with conjunction elimination and getting rid of half of the biconditional, it becomes <code>(x = s ∧ φ) ∧ z = s → (∃ x (x = s ∧ φ) → ∃ x (x = z ∧ φ))</code>.
+<jh>
+        (((value x) = s) ∧ φ) ((value z) = s) ConjunctionLeftElimination
+
+        (value z) s (value x) EqualityBuilderLL
+        φ buildConjunctionRRInConsequent
+        x buildThereExistsInConsequent
+
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+</jh>
+Combining those two formulas and exporting gives <code>x = s ∧ φ → (z = s → ∃ x (x = z ∧ φ))</code>.
+<jh>
+        applyModusPonensInConsequent
+        export
+</jh>
+It is easy to add <code>∀ z</code> because <code>z</code> is distinct from everything else. This gives us <code>x = s ∧ φ → ∀ z (z = s → ∃ x (x = z ∧ φ))</code>.
+<jh>
+        z addForAllToConsequent
+</jh>
+Again, <code>z</code> being distinct makes life easy as we turn the consequent into the definition of subst and apply the definition.
+<jh>
+        z s (∃ x (((value x) = (value z)) ∧ φ)) ThereExistsForAll
+        eliminateBiconditionalForward
+        applySyllogism
+
+        s x φ z Subst
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+That gives us <code>x = s ∧ φ → [s / x] φ</code> which is just an export from our desired theorem.
+<jh>
+        export
+))
+</jh>
 
 == Export ==
 That gives us [[Interface:First-order logic with quantifiability]], which we now export.
