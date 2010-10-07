@@ -19,13 +19,13 @@ var (object s t u)
 thm (DefinitionJustificationExplicit ((x0 y1) (x0 x1) (x0 s) (x0 y1) (y0 x0) (y0 x1) (y0 s) (y0 y1) (x1 y1)) ()
   ((∃ x1 (∃ y1 (((value x1) + s) = (value y1))))
   ↔ (∃ x0 (∃ y0 (subst (value y0) y1 (subst (value x0) x1 (((value x1) + s) = (value y1))))))) (
-        x1 (∃ y1 (((value x1) + s) = (value y1))) x0 sb8e
+        x1 (∃ y1 (((value x1) + s) = (value y1))) x0 ChangeVariableExplicitThereExists
 
         (value x0) x1 y1 (((value x1) + s) = (value y1)) SubstThereExists
         x0 buildThereExists
         applyBiconditionalTransitivity
 
-        y1 (subst (value x0) x1 (((value x1) + s) = (value y1))) y0 sb8e
+        y1 (subst (value x0) x1 (((value x1) + s) = (value y1))) y0 ChangeVariableExplicitThereExists
         x0 buildThereExists
         applyBiconditionalTransitivity
 ))
