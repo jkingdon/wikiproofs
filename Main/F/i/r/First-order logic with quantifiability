@@ -516,7 +516,7 @@ Combining the forward and reverse directions finishes the proof.
 ))
 </jh>
 
-== Substitution can be moved across connectives ==
+== Substitution can be moved across connectives and quantifiers ==
 Substituting a formula consisting of a logical connective is equivalent to substituting each of the operands of that connective.
 
 === Negation ===
@@ -588,7 +588,7 @@ thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (su
 ))
 </jh>
 
-=== Others ===
+=== Other connectives ===
 The corresponding theorems for the other three connectives follow from those for negation and disjunction.
 <jh>
 thm (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))) (
@@ -641,6 +641,42 @@ thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (
         applyBiconditionalTransitivity
 
         (subst s x φ) (subst s x ψ) BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Quantifiers ===
+We can move substitution across a quantifier to a distinct variable: <code>[s / x] ∃ y φ ↔ ∃ y [s / x] φ</code>.<ref>[http://us.metamath.org/mpeuni/sbex.html sbex], metamath's set.mm</ref>
+<jh>
+thm (SubstThereExists ((x y s z)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
+</jh>
+To prove this, we simply expand the definition of <code>subst</code> and move <code>∃ y</code> across each piece of it. The expansion is <code>∃ z (z = s ∧ ∃ x (x = z ∧ ∃ y φ))</code>
+<jh>
+        s x (∃ y φ) z Subst
+
+        y ((value x) = (value z)) φ ThereExistsConjunctionMovement
+        x buildThereExists
+        ((value z) = s) buildConjunctionLL
+        z buildThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        x y (((value x) = (value z)) ∧ φ) ThereExistsCommutation
+        ((value z) = s) buildConjunctionLL
+        z buildThereExists
+        applyBiconditionalTransitivity
+
+        y ((value z) = s) (∃ x (((value x) = (value z)) ∧ φ)) ThereExistsConjunctionMovement
+        z buildThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        z y (((value z) = s) ∧ (∃ x (((value x) = (value z)) ∧ φ))) ThereExistsCommutation
+        applyBiconditionalTransitivity
+
+        s x φ z Subst
+        y buildThereExists
         swapBiconditional
         applyBiconditionalTransitivity
 ))
