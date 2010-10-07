@@ -1001,6 +1001,37 @@ That gives us <code>x = s ∧ φ → [s / x] φ</code> which is just an export f
 ))
 </jh>
 
+The reverse direction is basically a transposition away.
+<jh>
+thm (sbequ12Reverse ((x s)) () (((value x) = s) → ((subst s x φ) → φ)) (
+        x s (¬ φ) sbequ12Forward
+
+        s x φ SubstNegation
+        transformImplicationImplicationConsequent
+
+        (subst s x φ) φ Transposition
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (sbequ12 ((x s)) () (((value x) = s) → (φ ↔ (subst s x φ))) (
+        x s φ sbequ12Forward
+        x s φ sbequ12Reverse
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
+=== Change variable with explicit substitution ===
+We can now prove the version of the change variable theorem with explicit substitutions.
+<jh>
+thm (ChangeVariableExplicitThereExists ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ sbequ12
+        ChangeVariableThereExistsNotFree
+))
+</jh>
+
 == Export ==
 That gives us [[Interface:First-order logic with quantifiability]], which we now export.
 <jh>
