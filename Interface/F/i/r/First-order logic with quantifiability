@@ -380,7 +380,7 @@ stmt (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ))
 </jh>
 
 === Turning substitution into there-exists ===
-One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
+One way to prove a formula of the form <code>∃ x φ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
 <jh>
 stmt (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)))
 stmt (introduceThereExistsFromObject () ((subst s x φ)) (∃ x φ))
