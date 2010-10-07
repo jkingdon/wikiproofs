@@ -10,8 +10,8 @@ var (formula φ ψ χ θ)
 var (variable x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
 var (object s t u)
 
-# This is in metamath, just need to figure out how to prove it
-stmt (sb8e ((y φ)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
+# mostly proved in mainspace
+stmt (sb8e ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
 
 # Not sure whether this is quite right, but looks plausible
 stmt (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))))
