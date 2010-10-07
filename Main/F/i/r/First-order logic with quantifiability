@@ -864,7 +864,7 @@ We then transform the right hand side to <code>∃ x φx</code>, and we are done
 ))
 </jh>
 
-The reverse direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
+The other direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
 <jh>
 thm (ChangeVariableThereExistsForward ((y φx) (x φy) (x y)) ((H (((value x) = (value y)) → (φx ↔ φy)))) ((∃ x φx) → (∃ y φy)) (
         H
