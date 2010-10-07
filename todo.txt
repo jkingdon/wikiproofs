@@ -12,8 +12,10 @@ Items which may be doable without a network connection:
         - ax9oc (see also equs4c)
           - ax6o (see also NegationNotFree, ax9o)
         - a5i
+  - ceqsex also has the distinct variable constraint x s.
 
   * ax9o is only used by equs4.
+* Probably don't need to define Subst as an axiom (see peano_thms.gh for how to avoid it)
 
 * General set theory
   - definitions and consequences: union?,
@@ -51,11 +53,8 @@ Items which may be doable without a network connection:
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
-* Don't need to define Subst as an axiom (see peano_thms.gh for how to avoid it)
 
 To do with network:
-
-nomenclature: combining vs combination from User:Kingdon
 
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
 
@@ -65,7 +64,11 @@ download:
   * Basic arithmetic
   * Interface:First-order logic with quantifiability
   * Interface:First-order logic
-  * First-order logic‎
+  * First-order logic
+  * First-order logic with quantifiability
   * User:Kingdon
   * Interface:Basic arithmetic
+  * Basic geometry
+  * Interface:Basic geometry
+  * Relations
 
