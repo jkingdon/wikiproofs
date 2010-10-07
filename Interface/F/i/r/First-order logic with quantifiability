@@ -365,13 +365,18 @@ stmt (addSubst () ((φ → ψ)) ((subst s x φ) → (subst s x ψ)))
 stmt (buildSubst () ((φ ↔ ψ)) ((subst s x φ) ↔ (subst s x ψ)))
 </jh>
 
-We can move <code>subst</code> across logical connectives:
+We can move <code>subst</code> across logical connectives,
 <jh>
 stmt (SubstNegation () () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))))
 stmt (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))))
 stmt (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))))
 stmt (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))))
 stmt (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (subst s x ψ))) )
+</jh>
+
+and quantifiers (to distinct variables).
+<jh>
+stmt (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))))
 </jh>
 
 === Substitution of a variable which does not appear ===
@@ -387,7 +392,7 @@ stmt (introduceThereExistsFromObject () ((subst s x φ)) (∃ x φ))
 </jh>
 
 === Changing the quantified variable ===
-We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly.
+We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly. Here is a version with implicit substitution,
 <jh>
 stmt (ChangeVariableThereExists
   ((y φx) (x φy) (x y))
@@ -396,6 +401,12 @@ stmt (ChangeVariableThereExists
 stmt (ChangeVariableForAll ((y φx) (x φy) (x y))
   ((((value x) = (value y)) → (φx ↔ φy)))
   ((∀ x φx) ↔ (∀ y φy)))
+</jh>
+
+and one with explicit substitution.
+<jh>
+stmt (ChangeVariableExplicitThereExists ((y φ) (x y)) ()
+  ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
 </jh>
 
 == Quantifiability ==
