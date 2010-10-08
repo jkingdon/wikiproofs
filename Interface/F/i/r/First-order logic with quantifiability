@@ -407,6 +407,8 @@ and one with explicit substitution.
 <jh>
 stmt (ChangeVariableExplicitThereExists ((y φ) (x y)) ()
   ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
+stmt (ChangeVariableExplicitForAll ((y φ) (x y)) ()
+  ((∀ x φ) ↔ (∀ y (subst (value y) x φ))))
 </jh>
 
 == Quantifiability ==
