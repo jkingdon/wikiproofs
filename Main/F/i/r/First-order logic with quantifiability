@@ -957,18 +957,26 @@ thm (ChangeVariableThereExists
 ))
 </jh>
 
-The corresponding result for ∀ is an easy consequence.
+The corresponding result for ∀ is an easy consequence. The proof consists of the usual pushing negations around until all the ∃ turn into ∀.
 <jh>
-thm (ChangeVariableForAll ((y φx) (x φy) (x y))
-  ((H (((value x) = (value y)) → (φx ↔ φy))))
+thm (ChangeVariableForAllNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
   ((∀ x φx) ↔ (∀ y φy)) (
+        HFREEX
+        negateNotFree
+
+        HFREEY
+        negateNotFree
+
         H
 
         φx φy NegationFunction
         eliminateBiconditionalReverse
         applySyllogism
 
-        ChangeVariableThereExists
+        ChangeVariableThereExistsNotFree
 
         y φy NotForAll
         swapBiconditional
@@ -982,6 +990,15 @@ thm (ChangeVariableForAll ((y φx) (x φy) (x y))
         removeNegation
 
         swapBiconditional
+))
+
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableForAllNotFree
 ))
 </jh>
 
@@ -1065,6 +1082,13 @@ thm (ChangeVariableExplicitThereExists ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y 
         y φ DistinctNotFree
         x (value y) φ sbequ12
         ChangeVariableThereExistsNotFree
+))
+
+thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ sbequ12
+        ChangeVariableForAllNotFree
 ))
 </jh>
 
