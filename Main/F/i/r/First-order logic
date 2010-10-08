@@ -187,6 +187,14 @@ thm (buildEqualityRRInConsequent ()
         t EqualityReflexivity φ introduceAntecedent
         buildEqualityInConsequent
 ))
+
+thm (buildEqualityLLInConsequent ()
+  ((H (φ → (t0 = t1))))
+  (φ → ((s = t0) ↔ (s = t1))) (
+        s EqualityReflexivity φ introduceAntecedent
+        H
+        buildEqualityInConsequent
+))
 </jh>
 
 === Not equal ===
