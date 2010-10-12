@@ -56,5 +56,4 @@ Items which may be doable without a network connection:
 
 To do with network:
 
-We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
 
