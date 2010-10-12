@@ -1354,6 +1354,98 @@ Adding ∃ to the antecedent finishes the proof.
 ))
 </jh>
 
+The other direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
+<jh>
+thm (ChangeVariableThereExistsForwardNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) → (∃ y φy)) (
+        HFREEY HFREEX
+
+        H
+
+        (value x) (value y) EqualitySymmetry
+        φx φy BiconditionalSymmetry
+        buildImplication
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        ChangeVariableThereExistsReverseNotFree
+))
+
+thm (ChangeVariableThereExistsNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        HFREEX HFREEY H
+        ChangeVariableThereExistsForwardNotFree
+
+        HFREEX HFREEY H
+        ChangeVariableThereExistsReverseNotFree
+
+        introduceBiconditionalFromImplications
+))
+
+thm (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableThereExistsNotFree
+))
+</jh>
+
+The corresponding result for ∀ is an easy consequence. The proof consists of the usual pushing negations around until all the ∃ turn into ∀.
+<jh>
+thm (ChangeVariableForAllNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        HFREEX
+        negateNotFree
+
+        HFREEY
+        negateNotFree
+
+        H
+
+        φx φy NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableThereExistsNotFree
+
+        y φy NotForAll
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+        x φx NotForAll
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        removeNegation
+
+        swapBiconditional
+))
+
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableForAllNotFree
+))
+</jh>
+
 == Substitution of variables ==
 We now move to proper substitution via <code>substVariable</code>.
 
