@@ -28,6 +28,11 @@ var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
+We also define some variables which suggest which variables are likely to be included. For example, <code>φx</code> is likely to include the variable <code>x</code> (of course, it is the distinct variable constraints which really specify what variables are allowed). This is similar in intent to the notation <code>φ(x)</code> which is sometimes used in treatments of predicate logic.
+<jh>
+var (formula φx φy ψy)
+</jh>
+
 == ForAllImplication ==
 
 The ∀ quantifier can be distributed across an implication. This is one of our axioms, so we just provide an additional name and a rule:
@@ -1169,7 +1174,6 @@ thm (addThereExistsToAntecedent ((x ψ))
 === Scattering and gathering ===
 This is a variation of movement of formulas in and out of quantification.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
-var (formula φx ψy)
 thm (ThereExistsScattering ((φx y) (ψy x)) ()
   ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))) (
 </jh>
@@ -1295,6 +1299,58 @@ thm (equs3 () ()
   ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))) (
         x ((value x) = s) φ alinexa
         transposeBiconditionalWithNegatedRight
+))
+</jh>
+
+== Change variable ==
+We can change the variable in a quantifier and the expression which it quantifies. For example, in [[Basic arithmetic]] we will need to prove <code>∃ n a + n = b ↔ ∃ m a + m = b</code>. Here we state a theorem which lets us do this: given <code>x = y → (φx ↔ φy)</code>, where <code>x</code> is not free in <code>φy</code> and <code>y</code> is not free in <code>φx</code>, conclude <code>∃ x φx ↔ ∃ y φy</code>.
+
+We start by proving <code>∃ y φy → ∃ x φx</code> (subject to the same hypotheses).<ref>The proof is based on exalpha1 in [http://code.google.com/p/ghilbert/ ghilbert]'s [http://code.google.com/p/ghilbert/source/browse/trunk/peano/peano_thms.gh peano_thms.gh], accessed October 12, 2010</ref>
+<jh>
+thm (ChangeVariableThereExistsReverseNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ y φy) → (∃ x φx)) (
+        HFREEX
+
+        H
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+</jh>
+That gives us <code>φy → (x = y → φx)</code>. Adding ∀ to the consequent gives <code>φy → ∀ x (x = y → φx)</code>.
+<jh>
+        addForAllToConsequentNotFree
+</jh>
+The next part of the proof derives <code>∀ x (x = y → φx) → ∃ x φx</code>. The first step is to go from <code>∃ x x = y</code> (by the <code>Existence</code> axiom) to <code>∃ x ((x = y → φx) → φx)</code>.
+<jh>
+        x y Existence
+
+        ((value x) = (value y)) φx ModusPonens
+        export
+        x addThereExists
+
+        applyModusPonens
+</jh>
+Now we just distribute the quantification to get <code>∀ x (x = y → φx) → ∃ x φx</code>.
+<jh>
+        distributeThereExistsImplication
+</jh>
+Combining this with the previous result gives <code>φy → ∃ x φx</code>
+<jh>
+        applySyllogism
+</jh>
+Adding ∃ to the antecedent finishes the proof.
+<jh>
+        y generalize
+
+        HFREEY
+        x addThereExistsNotFree
+        φy ForAllImplicationConsequentMovement
+        eliminateBiconditionalReverse
+
+        applyModusPonens
 ))
 </jh>
 
