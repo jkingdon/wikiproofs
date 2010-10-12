@@ -422,7 +422,7 @@ stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) �
 
 === Additional builders ===
 <jh>
-var (formula antecedent common p0 q0 p1 q1)
+var (formula antecedent consequent common p0 q0 p1 q1)
 
 stmt (DisjunctionBuilderLL () () ((p ↔ q) → ((common ∨ p) ↔ (common ∨ q))))
 stmt (buildDisjunctionLL () ((p ↔ q)) ((common ∨ p) ↔ (common ∨ q)))
@@ -479,6 +479,28 @@ stmt (introduceBiconditionalFromImplicationsInConsequent () ((antecedent → (p 
 stmt (eliminateBiconditionalReverseInConsequent () ((antecedent → (p ↔ q))) (antecedent → (p → q)))
 stmt (eliminateBiconditionalForwardInConsequent () ((antecedent → (p ↔ q))) (antecedent → (q → p)))
 stmt (applyModusPonensInConsequent () ((antecedent → p) (antecedent → (p → q))) (antecedent → q))
+stmt (introduceAntecedentInConsequent () ((antecedent → p)) (antecedent → (q → p)))
+stmt (importInConsequent ()
+  ((antecedent → (p → (q → r))))
+  (antecedent → ((p ∧ q) → r)))
+stmt (exportInConsequent ()
+  ((antecedent → ((p ∧ q) → r)))
+  (antecedent → (p → (q → r))) )
+
+stmt (eliminateLeftConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
+stmt (eliminateRightConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
+</jh>
+
+== Theorems in the antecedent ==
+
+There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent. But there are a few for the latter.
+<jh>
+stmt (importInAntecedent ()
+  (((p → (q → r)) → consequent))
+  (((p ∧ q) → r) → consequent))
+stmt (exportInAntecedent ()
+  ((((p ∧ q) → r) → consequent))
+  ((p → (q → r)) → consequent))
 </jh>
 
 === Detachment ===
@@ -486,6 +508,8 @@ These are analogues to modus ponens, but where some other portion of the formula
 <jh>
 stmt (detach1of2 () (p ((p ∧ q) → r)) (q → r))
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
+stmt (detach2of3 () (q (((p ∧ q) ∧ r) → consequent)) ((p ∧ r) → consequent))
+stmt (detach1of4 () (p ((((p ∧ q) ∧ r) ∧ s) → consequent)) (((q ∧ r) ∧ s) → consequent))
 stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
 stmt (detachImplicationBiconditionalRight () (r (p → (q ↔ r))) (p → q))
 stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent → q))

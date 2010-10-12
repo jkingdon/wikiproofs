@@ -58,17 +58,3 @@ To do with network:
 
 We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
 
-download:
-  * Convenience theorems of propositional logic
-  * Interface:Classical_propositional_calculus
-  * Basic arithmetic
-  * Interface:First-order logic with quantifiability
-  * Interface:First-order logic
-  * First-order logic
-  * First-order logic with quantifiability
-  * User:Kingdon
-  * Interface:Basic arithmetic
-  * Basic geometry
-  * Interface:Basic geometry
-  * Relations
-

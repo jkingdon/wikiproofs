@@ -24,6 +24,11 @@ By convention we use φ, ψ, χ, and θ to represent formulas:
 var (formula φ ψ χ θ)
 </jh>
 
+We also define some variables which suggest which variables are likely to occur in a formula. For example, <code>φx</code> is likely to include the variable <code>x</code> (of course, it is the distinct variable constraints which really specify what variables are allowed). This is similar in intent to the notation <code>φ(x)</code> which is sometimes used in treatments of predicate logic.
+<jh>
+var (formula φx φy ψy)
+</jh>
+
 We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is a valid object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
 
 <jh>
@@ -160,6 +165,9 @@ stmt (ThereExistsIntroduction () () (φ → (∃ x φ)))
 and can be removed if the variable does not occur in the formula.
 <jh>
 stmt (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ))
+stmt (removeThereExists ((x φ)) ((∃ x φ)) φ)
+var (formula antecedent)
+stmt (removeThereExistsInConsequent ((x φ)) ((antecedent → (∃ x φ))) (antecedent → φ))
 </jh>
 
 == Equality ==
@@ -194,8 +202,16 @@ stmt (buildEqualityRR () ((s0 = s1)) ((s0 = t) ↔ (s1 = t)))
 stmt (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))))
 stmt (buildEqualityLL () ((t0 = t1)) ((s = t0) ↔ (s = t1)))
 
-stmt (buildEqualityInConsequent () ((φ → (s0 = s1)) (φ → (t0 = t1))) (φ → ((s0 = t0) ↔ (s1 = t1))))
-stmt (buildEqualityRRInConsequent () ((φ → (s0 = s1))) (φ → ((s0 = t) ↔ (s1 = t))))
+stmt (buildEqualityInConsequent ()
+  ((φ → (s0 = s1))
+   (φ → (t0 = t1)))
+  (φ → ((s0 = t0) ↔ (s1 = t1))))
+stmt (buildEqualityRRInConsequent ()
+  ((φ → (s0 = s1)))
+  (φ → ((s0 = t) ↔ (s1 = t))))
+stmt (buildEqualityLLInConsequent ()
+  ((φ → (t0 = t1)))
+  (φ → ((s = t0) ↔ (s = t1))))
 </jh>
 
 We also define <code>≠</code>, which is just an abbreviation for negation and equality.
@@ -287,13 +303,16 @@ stmt (ThereExistsConjunctionMovementNotFree () ((x is-not-free-in φ)) ((∃ x (
 <jh>
 stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
+
+stmt (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))))
+stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) )
+
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
 ==== Scattering and gathering ====
 If we have two formulas joined by a conjunction, one quantified over one variable and the other quantified over another, we can express the quantifiers either at the beginning or with the formulas they apply to.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed August 8, 2010</ref> We name the propositions <code>φx</code> and <code>ψy</code> to express the idea that <code>φx</code> will typically contain <code>x</code> and <code>ψy</code> will typically contain <code>y</code>.
 <jh>
-var (formula φx ψy)
 stmt (ThereExistsScattering ((φx y) (ψy x)) ()
   ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))))
 </jh>
@@ -310,6 +329,30 @@ stmt (addForAllToConsequent ((x φ))
   (φ → (∀ x ψ)))
 
 stmt (addForAllToConsequentNotFree () ((x is-not-free-in φ) (φ → ψ)) (φ → (∀ x ψ)))
+</jh>
+
+=== Changing the quantified variable ===
+We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly. Here is a version with implicit substitution.
+<jh>
+stmt (ChangeVariableThereExistsNotFree
+  ((x y))
+  ((x is-not-free-in φy)
+   (y is-not-free-in φx)
+   (((value x) = (value y)) → (φx ↔ φy)))
+  ((∃ x φx) ↔ (∃ y φy)))
+stmt (ChangeVariableForAllNotFree ((x y))
+  ((x is-not-free-in φy)
+   (y is-not-free-in φx)
+   (((value x) = (value y)) → (φx ↔ φy)))
+  ((∀ x φx) ↔ (∀ y φy)))
+
+stmt (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((∃ x φx) ↔ (∃ y φy)))
+stmt (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((∀ x φx) ↔ (∀ y φy)))
 </jh>
 
 === Other theorems related to substitution ===

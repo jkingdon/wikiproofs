@@ -195,6 +195,11 @@ stmt (LessThanAdditionLL () () ((b0 < b1) ↔ ((a + b0) < (a + b1))))
 stmt (LessEqualLessThanAddition () () (((a0 ≤ a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))))
 </jh>
 
+=== Multiplication is consistent with the order ===
+<jh>
+stmt (LessEqualMultiplicationRR () () ((a ≤ b) → ((a · c) ≤ (b · c))))
+</jh>
+
 == Induction ==
 There are a number of ways to state [[w:mathematical induction|induction]].
 

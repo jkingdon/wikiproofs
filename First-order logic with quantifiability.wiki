@@ -516,7 +516,7 @@ Combining the forward and reverse directions finishes the proof.
 ))
 </jh>
 
-== Substitution can be moved across connectives ==
+== Substitution can be moved across connectives and quantifiers ==
 Substituting a formula consisting of a logical connective is equivalent to substituting each of the operands of that connective.
 
 === Negation ===
@@ -588,7 +588,7 @@ thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (su
 ))
 </jh>
 
-=== Others ===
+=== Other connectives ===
 The corresponding theorems for the other three connectives follow from those for negation and disjunction.
 <jh>
 thm (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))) (
@@ -641,6 +641,42 @@ thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (
         applyBiconditionalTransitivity
 
         (subst s x φ) (subst s x ψ) BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Quantifiers ===
+We can move substitution across a quantifier to a distinct variable: <code>[s / x] ∃ y φ ↔ ∃ y [s / x] φ</code>.<ref>[http://us.metamath.org/mpeuni/sbex.html sbex], metamath's set.mm</ref>
+<jh>
+thm (SubstThereExists ((x y s z)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
+</jh>
+To prove this, we simply expand the definition of <code>subst</code> and move <code>∃ y</code> across each piece of it. The expansion is <code>∃ z (z = s ∧ ∃ x (x = z ∧ ∃ y φ))</code>
+<jh>
+        s x (∃ y φ) z Subst
+
+        y ((value x) = (value z)) φ ThereExistsConjunctionMovement
+        x buildThereExists
+        ((value z) = s) buildConjunctionLL
+        z buildThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        x y (((value x) = (value z)) ∧ φ) ThereExistsCommutation
+        ((value z) = s) buildConjunctionLL
+        z buildThereExists
+        applyBiconditionalTransitivity
+
+        y ((value z) = s) (∃ x (((value x) = (value z)) ∧ φ)) ThereExistsConjunctionMovement
+        z buildThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        z y (((value z) = s) ∧ (∃ x (((value x) = (value z)) ∧ φ))) ThereExistsCommutation
+        applyBiconditionalTransitivity
+
+        s x φ z Subst
+        y buildThereExists
         swapBiconditional
         applyBiconditionalTransitivity
 ))
@@ -794,161 +830,6 @@ thm (makeSubstExplicit ((x s) (x ψ))
 == Substituting one quantified variable for another ==
 If we have a quantified formula, and we substitute the quantified variable for another (using <code>subst</code>), the formula holds with the substituted variable in the quantifier.  In symbols, this is <code>∀ x φ ↔ ∀ y [ y / x ] φ</code> and <code>∃ x φ ↔ ∃ y [ y / x ] φ</code>, where <code>y</code> is not free in <code>φ</code>.<ref>[http://us.metamath.org/mpeuni/sb8.html sb8] and [http://us.metamath.org/mpeuni/sb8e.html sb8e] in metamath's set.mm, accessed June 24, 2010</ref>
 
-=== One direction ===
-For now, we just prove one direction of these.
-<jh>
-thm (sb8ForwardNotFree () ((HFREE (y is-not-free-in φ))) ((∀ x φ) → (∀ y (subst (value y) x φ))) (
-</jh>
-An application of <code>SpecializationToObject</code> gives us <code>∀ x φ → [ y / x ] φ</code>; we just need to observe that <code>y</code> is not free in <code>∀ x φ</code>, which enables us to add the missing <code>∀ y</code>.
-<jh>
-        HFREE
-        x addForAllNotFree
-
-        x φ (value y) SpecializationToObject
-
-        addForAllToConsequentNotFree
-))
-
-thm (sb8eReverseNotFree () ((HFREE (y is-not-free-in φ))) ((∃ y (subst (value y) x φ)) → (∃ x φ)) (
-        HFREE
-        negateNotFree
-        x sb8ForwardNotFree
-
-        introduceTransposition
-</jh>
-That gives us <code>¬ ∀ y [ y / x ] ¬ φ → ¬ ∀ x ¬ φ</code>, and we just need to move around the negations to get our desired result.  We start with the consequent.
-<jh>
-        x (¬ φ) NotForAll
-        φ DoubleNegation x buildThereExists swapBiconditional
-        applyBiconditionalTransitivity
-
-        eliminateBiconditionalReverse
-        applySyllogism
-</jh>
-The antecedent is similar but has one more step because of the substitution.
-<jh>
-        y (subst (value y) x (¬ φ)) NotForAll
-
-        (value y) x (¬ φ) SubstNegation swapBiconditional
-        y buildThereExists
-        applyBiconditionalTransitivity
-
-        φ DoubleNegation swapBiconditional
-        (value y) x buildSubst
-        y buildThereExists
-        applyBiconditionalTransitivity
-
-        transformAntecedent
-))
-</jh>
-
-=== With implicit substitution ===
-Here is a version with implicit substitution. Think of <code>φx</code> and <code>φy</code> as two versions of the same formula, but where <code>x</code> has been changed to <code>y</code>. More formally, <code>y</code> is not free in <code>φx</code>, <code>x</code> is not free in <code>φy</code>, and <code>x = y → (φx ↔ φy)</code>. This lets us conclude <code>∃ y φy ↔ ∃ x φx</code>.
-
-The <code>(x y)</code> distinct variable constraint is subject to the same commentary as <code>(x s)</code> in <code>makeSubstExplicit</code> (that is, that it might not be necessary).
-
-We first prove the reverse implication.
-<jh>
-var (formula φy)
-thm (ChangeVariableThereExistsReverseNotFree
-  ((x y))
-  ((HFREEX (x is-not-free-in φy))
-   (HFREEY (y is-not-free-in φx))
-   (H (((value x) = (value y)) → (φx ↔ φy))))
-  ((∃ y φy) → (∃ x φx)) (
-</jh>
-First we show <code>∃ y φy → ∃ y [ y / x ] φx</code>.
-<jh>
-        HFREEX
-        H
-        convertImplicitToSubst
-
-        eliminateBiconditionalForward
-        y addThereExists
-</jh>
-We then transform the right hand side to <code>∃ x φx</code>, and we are done.
-<jh>
-        HFREEY
-        x sb8eReverseNotFree
-        applySyllogism
-))
-</jh>
-
-The other direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
-<jh>
-thm (ChangeVariableThereExistsForwardNotFree ((x y))
-  ((HFREEX (x is-not-free-in φy))
-   (HFREEY (y is-not-free-in φx))
-   (H (((value x) = (value y)) → (φx ↔ φy))))
-  ((∃ x φx) → (∃ y φy)) (
-        HFREEY HFREEX
-
-        H
-
-        (value x) (value y) EqualitySymmetry
-        φx φy BiconditionalSymmetry
-        buildImplication
-
-        eliminateBiconditionalReverse
-        applyModusPonens
-
-        ChangeVariableThereExistsReverseNotFree
-))
-
-thm (ChangeVariableThereExistsNotFree
-  ((x y))
-  ((HFREEX (x is-not-free-in φy))
-   (HFREEY (y is-not-free-in φx))
-   (H (((value x) = (value y)) → (φx ↔ φy))))
-  ((∃ x φx) ↔ (∃ y φy)) (
-        HFREEX HFREEY H
-        ChangeVariableThereExistsForwardNotFree
-
-        HFREEX HFREEY H
-        ChangeVariableThereExistsReverseNotFree
-
-        introduceBiconditionalFromImplications
-))
-
-thm (ChangeVariableThereExists
-  ((y φx) (x φy) (x y))
-  ((H (((value x) = (value y)) → (φx ↔ φy))))
-  ((∃ x φx) ↔ (∃ y φy)) (
-        x φy DistinctNotFree
-        y φx DistinctNotFree
-        H
-        ChangeVariableThereExistsNotFree
-))
-</jh>
-
-The corresponding result for ∀ is an easy consequence.
-<jh>
-thm (ChangeVariableForAll ((y φx) (x φy) (x y))
-  ((H (((value x) = (value y)) → (φx ↔ φy))))
-  ((∀ x φx) ↔ (∀ y φy)) (
-        H
-
-        φx φy NegationFunction
-        eliminateBiconditionalReverse
-        applySyllogism
-
-        ChangeVariableThereExists
-
-        y φy NotForAll
-        swapBiconditional
-        applyBiconditionalTransitivity
-
-        swapBiconditional
-        x φx NotForAll
-        swapBiconditional
-        applyBiconditionalTransitivity
-
-        removeNegation
-
-        swapBiconditional
-))
-</jh>
-
 === A theorem relating a substituted formula to equality ===
 Here we prove <code>x = y → (φ ↔ [ y / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12], metamath's set.mm, accessed October 6, 2010</ref>
 
@@ -998,6 +879,44 @@ Again, <code>z</code> being distinct makes life easy as we turn the consequent i
 That gives us <code>x = s ∧ φ → [s / x] φ</code> which is just an export from our desired theorem.
 <jh>
         export
+))
+</jh>
+
+The reverse direction is basically a transposition away.
+<jh>
+thm (sbequ12Reverse ((x s)) () (((value x) = s) → ((subst s x φ) → φ)) (
+        x s (¬ φ) sbequ12Forward
+
+        s x φ SubstNegation
+        transformImplicationImplicationConsequent
+
+        (subst s x φ) φ Transposition
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (sbequ12 ((x s)) () (((value x) = s) → (φ ↔ (subst s x φ))) (
+        x s φ sbequ12Forward
+        x s φ sbequ12Reverse
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
+=== Change variable with explicit substitution ===
+We can now prove the version of the change variable theorem with explicit substitutions.
+<jh>
+thm (ChangeVariableExplicitThereExists ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ sbequ12
+        ChangeVariableThereExistsNotFree
+))
+
+thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ sbequ12
+        ChangeVariableForAllNotFree
 ))
 </jh>
 

@@ -10,7 +10,7 @@ Statements can be added if necessary, but then the exporting modules have to be 
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus]]
-| importedby = [[Interface:Peano axioms]]
+| importedby = [[Interface:Peano axioms]] [[Interface:Tarski's geometry axioms]] and others
 | exportedby = [[First-order logic with quantifiability]]
 }}
 
@@ -155,6 +155,9 @@ stmt (ThereExistsIntroduction () () (φ → (∃ x φ)))
 and can be removed if the variable does not occur in the formula.
 <jh>
 stmt (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ))
+stmt (removeThereExists ((x φ)) ((∃ x φ)) φ)
+var (formula antecedent)
+stmt (removeThereExistsInConsequent ((x φ)) ((antecedent → (∃ x φ))) (antecedent → φ))
 </jh>
 
 == Equality ==
@@ -189,8 +192,16 @@ stmt (buildEqualityRR () ((s0 = s1)) ((s0 = t) ↔ (s1 = t)))
 stmt (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))))
 stmt (buildEqualityLL () ((t0 = t1)) ((s = t0) ↔ (s = t1)))
 
-stmt (buildEqualityInConsequent () ((φ → (s0 = s1)) (φ → (t0 = t1))) (φ → ((s0 = t0) ↔ (s1 = t1))))
-stmt (buildEqualityRRInConsequent () ((φ → (s0 = s1))) (φ → ((s0 = t) ↔ (s1 = t))))
+stmt (buildEqualityInConsequent ()
+  ((φ → (s0 = s1))
+   (φ → (t0 = t1)))
+  (φ → ((s0 = t0) ↔ (s1 = t1))))
+stmt (buildEqualityRRInConsequent ()
+  ((φ → (s0 = s1)))
+  (φ → ((s0 = t) ↔ (s1 = t))))
+stmt (buildEqualityLLInConsequent ()
+  ((φ → (t0 = t1)))
+  (φ → ((s = t0) ↔ (s = t1))))
 </jh>
 
 We also define <code>≠</code>, which is just an abbreviation for negation and equality.
@@ -282,6 +293,10 @@ stmt (ThereExistsConjunctionMovementNotFree () ((x is-not-free-in φ)) ((∃ x (
 <jh>
 stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
+
+stmt (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))))
+stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) )
+
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
@@ -358,22 +373,50 @@ stmt (addSubst () ((φ → ψ)) ((subst s x φ) → (subst s x ψ)))
 stmt (buildSubst () ((φ ↔ ψ)) ((subst s x φ) ↔ (subst s x ψ)))
 </jh>
 
+We can move <code>subst</code> across logical connectives,
+<jh>
+stmt (SubstNegation () () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))))
+stmt (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))))
+stmt (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))))
+stmt (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))))
+stmt (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (subst s x ψ))) )
+</jh>
+
+and quantifiers (to distinct variables).
+<jh>
+stmt (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))))
+</jh>
+
 === Substitution of a variable which does not appear ===
 <jh>
 stmt (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ))
 </jh>
 
 === Turning substitution into there-exists ===
-One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
+One way to prove a formula of the form <code>∃ x φ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.
 <jh>
 stmt (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)))
 stmt (introduceThereExistsFromObject () ((subst s x φ)) (∃ x φ))
 </jh>
 
 === Changing the quantified variable ===
-We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly.
+We can transform a quantified formula by substituting each of the occurences of the variable we are quantifying over to another variable, and changing the variable in the quantifier accordingly. Here is a version with implicit substitution,
 <jh>
-stmt (ChangeVariableThereExists ((y φx) (x φy) (x y)) ((((value x) = (value y)) → (φx ↔ φy))) ((∃ x φx) ↔ (∃ y φy)))
+stmt (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((∃ x φx) ↔ (∃ y φy)))
+stmt (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((∀ x φx) ↔ (∀ y φy)))
+</jh>
+
+and one with explicit substitution.
+<jh>
+stmt (ChangeVariableExplicitThereExists ((y φ) (x y)) ()
+  ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
+stmt (ChangeVariableExplicitForAll ((y φ) (x y)) ()
+  ((∀ x φ) ↔ (∀ y (subst (value y) x φ))))
 </jh>
 
 == Quantifiability ==

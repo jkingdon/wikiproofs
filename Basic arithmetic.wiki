@@ -1086,7 +1086,7 @@ def ((≤ a b) (∃ n ((a + (value n)) = b)))
 
 ===Definition as an equivalence===
 
-The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side.
+The following theorem looks just like the definition for <code>≤</code>.  However, at least as JHilbert is right now, it is subtly different, as it enables one to specify the bound variable on the right hand side. Also note that <code>LessEqual</code> has (and needs) distinct variable constraints between <code>a</code> and <code>n</code> and <code>b</code> and <code>n</code>, whereas the definition ensures that dummy variables are distinct because they are created internally by JHilbert. (See [[Wikiproofs:JHilbert definition soundness]] for more discussion of the definition mechanism).
 
 <jh>
 var (variable m)
@@ -1387,11 +1387,9 @@ and then we can remove the quantifiers because the variables they quantify over 
         eliminateBiconditionalReverse
         applySyllogism
 
-        vab (∃ vbc (∃ vac ((a + (value vac)) = c))) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 
-        vbc (∃ vac ((a + (value vac)) = c)) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 ))
 </jh>
 
@@ -1546,11 +1544,9 @@ thm (LessEqualAntisymmetry ((n a) (n b) (n m) (m a) (m b)) () (((a ≤ b) ∧ (b
         n addThereExists
         applySyllogism
 
-        n (∃ m (a = b)) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 
-        m (a = b) NullThereExists eliminateBiconditionalReverse
-        applySyllogism
+        removeThereExistsInConsequent
 ))
 </jh>
 
@@ -2246,6 +2242,40 @@ thm (LessThanAddition () () (((a0 < a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1
 
         a0 a1 b0 b1 LessEqualLessThanAddition
 
+        applySyllogism
+))
+</jh>
+
+=== This order is consistent with multiplication ===
+In systems admitting negative numbers, such as the integers or reals, the term "multiplication is consistent with ≤" will generally refer to a weaker result, such as <code>0 ≤ b ∧ 0 ≤ c → 0 ≤ b · c</code>. But we prove a more powerful theorem, <code>a ≤ b → a · c ≤ b · c</code>. The converse only holds if <code>c ≠ 0</code>.
+<jh>
+thm (LessEqualMultiplicationRR ((a n) (b n) (c n)) () ((a ≤ b) → ((a · c) ≤ (b · c))) (
+        a b n LessEqual
+        eliminateBiconditionalReverse
+
+        (a + (value n)) b c MultiplicationBuilderRR
+</jh>
+That gives <code>a + n = b → (a + n) · c = b · c</code>. Distributivity turns <code>(a + n) · c</code> into <code>a · c + n · c</code>.
+<jh>
+        a (value n) c RightDistribution
+        (b · c) buildEqualityRR
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+But <code>a · c + n · c = b · c</code> implies <code>a · c ≤ b · c</code>.
+<jh>
+        (a · c) ((value n) · c) (b · c) LessEqualObject
+        applySyllogism
+</jh>
+Adding back the quantifier and reassembling, we get <code><code>a ≤ b → ∃ n a · c ≤ b · c</code>.
+<jh>
+        n addThereExists
+        applySyllogism
+</jh>
+Removing the quantifier we are done.
+<jh>
+        n (a · c) (b · c) NullThereExistsLessEqual
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 </jh>

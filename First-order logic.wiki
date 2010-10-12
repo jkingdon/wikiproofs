@@ -28,6 +28,11 @@ var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
+We also define some variables which suggest which variables are likely to be included. For example, <code>φx</code> is likely to include the variable <code>x</code> (of course, it is the distinct variable constraints which really specify what variables are allowed). This is similar in intent to the notation <code>φ(x)</code> which is sometimes used in treatments of predicate logic.
+<jh>
+var (formula φx φy ψy)
+</jh>
+
 == ForAllImplication ==
 
 The ∀ quantifier can be distributed across an implication. This is one of our axioms, so we just provide an additional name and a rule:
@@ -185,6 +190,14 @@ thm (buildEqualityRRInConsequent ()
   (φ → ((s0 = t) ↔ (s1 = t))) (
         H
         t EqualityReflexivity φ introduceAntecedent
+        buildEqualityInConsequent
+))
+
+thm (buildEqualityLLInConsequent ()
+  ((H (φ → (t0 = t1))))
+  (φ → ((s = t0) ↔ (s = t1))) (
+        s EqualityReflexivity φ introduceAntecedent
+        H
         buildEqualityInConsequent
 ))
 </jh>
@@ -888,6 +901,19 @@ thm (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ) (
         x φ DistinctNotFree
         ThereExistsAddRemove
 ))
+
+thm (removeThereExists ((x φ)) ((H (∃ x φ))) φ (
+        H
+        x φ NullThereExists eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+var (formula antecedent)
+thm (removeThereExistsInConsequent ((x φ)) ((H (antecedent → (∃ x φ)))) (antecedent → φ) (
+        H
+        x φ NullThereExists eliminateBiconditionalReverse
+        applySyllogism
+))
 </jh>
 
 The same is true of ∀:<ref>[http://us.metamath.org/mpeuni/19.3.html 19.3] in metamath's set.mm, accessed February 21, 2010</ref>
@@ -1029,13 +1055,29 @@ thm (ForAllDisjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∨ ψ
 To move a disjunct in or out of ∃:<ref>[http://us.metamath.org/mpeuni/19.45.html 19.45] in metamath's set.mm, accessed March 17, 2010</ref>
 
 <jh>
-thm (ThereExistsDisjunctionMovement () ((H (x is-not-free-in φ))) ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+thm (ThereExistsDisjunctionMovementNotFree () ((H (x is-not-free-in φ))) ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
         φ ψ DisjunctionImplication x buildThereExists
 
         H negateNotFree
         ψ ThereExistsAntecedentMovementNotFree applyBiconditionalTransitivity
 
         φ (∃ x ψ) DisjunctionImplication swapBiconditional applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsDisjunctionMovementNotFree
+))
+
+thm (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        φ ψ DisjunctionCommutativity
+        x buildThereExists
+
+        x ψ φ ThereExistsDisjunctionMovement
+        applyBiconditionalTransitivity
+
+        ψ (∃ x φ) DisjunctionCommutativity
+        applyBiconditionalTransitivity
 ))
 </jh>
 
@@ -1130,9 +1172,8 @@ thm (addThereExistsToAntecedent ((x ψ))
 </jh>
 
 === Scattering and gathering ===
-This is a variation of movement of formulas in and out of quantification.
+This is a variation of movement of formulas in and out of quantification.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
-var (formula φx ψy)
 thm (ThereExistsScattering ((φx y) (ψy x)) ()
   ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))) (
 </jh>
@@ -1258,6 +1299,150 @@ thm (equs3 () ()
   ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))) (
         x ((value x) = s) φ alinexa
         transposeBiconditionalWithNegatedRight
+))
+</jh>
+
+== Change variable ==
+We can change the variable in a quantifier and the expression which it quantifies. For example, in [[Basic arithmetic]] we will need to prove <code>∃ n a + n = b ↔ ∃ m a + m = b</code>. Here we state a theorem which lets us do this: given <code>x = y → (φx ↔ φy)</code>, where <code>x</code> is not free in <code>φy</code> and <code>y</code> is not free in <code>φx</code>, conclude <code>∃ x φx ↔ ∃ y φy</code>.
+
+We start by proving <code>∃ y φy → ∃ x φx</code> (subject to the same hypotheses).<ref>The proof is based on exalpha1 in [http://code.google.com/p/ghilbert/ ghilbert]'s [http://code.google.com/p/ghilbert/source/browse/trunk/peano/peano_thms.gh peano_thms.gh], accessed October 12, 2010</ref>
+<jh>
+thm (ChangeVariableThereExistsReverseNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ y φy) → (∃ x φx)) (
+        HFREEX
+
+        H
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+</jh>
+That gives us <code>φy → (x = y → φx)</code>. Adding ∀ to the consequent gives <code>φy → ∀ x (x = y → φx)</code>.
+<jh>
+        addForAllToConsequentNotFree
+</jh>
+The next part of the proof derives <code>∀ x (x = y → φx) → ∃ x φx</code>. The first step is to go from <code>∃ x x = y</code> (by the <code>Existence</code> axiom) to <code>∃ x ((x = y → φx) → φx)</code>.
+<jh>
+        x y Existence
+
+        ((value x) = (value y)) φx ModusPonens
+        export
+        x addThereExists
+
+        applyModusPonens
+</jh>
+Now we just distribute the quantification to get <code>∀ x (x = y → φx) → ∃ x φx</code>.
+<jh>
+        distributeThereExistsImplication
+</jh>
+Combining this with the previous result gives <code>φy → ∃ x φx</code>
+<jh>
+        applySyllogism
+</jh>
+Adding ∃ to the antecedent finishes the proof.
+<jh>
+        y generalize
+
+        HFREEY
+        x addThereExistsNotFree
+        φy ForAllImplicationConsequentMovement
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
+The other direction is an easy consequence, but to prove it we do need to commute the equality and the biconditional.
+<jh>
+thm (ChangeVariableThereExistsForwardNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) → (∃ y φy)) (
+        HFREEY HFREEX
+
+        H
+
+        (value x) (value y) EqualitySymmetry
+        φx φy BiconditionalSymmetry
+        buildImplication
+
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        ChangeVariableThereExistsReverseNotFree
+))
+
+thm (ChangeVariableThereExistsNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        HFREEX HFREEY H
+        ChangeVariableThereExistsForwardNotFree
+
+        HFREEX HFREEY H
+        ChangeVariableThereExistsReverseNotFree
+
+        introduceBiconditionalFromImplications
+))
+
+thm (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableThereExistsNotFree
+))
+</jh>
+
+The corresponding result for ∀ is an easy consequence. The proof consists of the usual pushing negations around until all the ∃ turn into ∀.
+<jh>
+thm (ChangeVariableForAllNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        HFREEX
+        negateNotFree
+
+        HFREEY
+        negateNotFree
+
+        H
+
+        φx φy NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableThereExistsNotFree
+
+        y φy NotForAll
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+        x φx NotForAll
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        removeNegation
+
+        swapBiconditional
+))
+
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableForAllNotFree
 ))
 </jh>
 

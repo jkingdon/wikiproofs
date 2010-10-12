@@ -14,13 +14,19 @@ We first import [[Interface:Classical propositional calculus|propositional logic
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+We also import [[Interface:Basic operations of general set theory]], which is the current home of some of the basic results involving singletons, unordered pairs, and the like. 
+<jh>
 import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
+
+In the future we may import [[Interface:Zermelo–Fraenkel set theory]] for the axioms of union and power set (which in the context of relations are particularly relevant for proving the existence of the Cartesian product of two sets).
 
 As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
 <jh>
 var (object A B C D A0 A1 B0 B1)
-var (variable x y z w)
+var (variable x y z w x′ y′ z′)
 </jh>
 
 == Singletons ==
@@ -320,6 +326,110 @@ thm (OrderedPairTheorem () () (((orderedPair A0 B0) = (orderedPair A1 B1)) ↔ (
         A0 A1 B0 B1 OrderedPairBuilder
         introduceBiconditionalFromImplications
 ))
+</jh>
+
+== Relations ==
+A relation is a set of ordered pairs. We typically use the letters R, S, T, and U for relations.
+<jh>
+def ((relation A) (∀ z (((value z) ∈ A) → (∃ x (∃ y ((value z) = (orderedPair (value x) (value y))))))))
+var (object R S T U)
+</jh>
+
+Here we prove a theorem form of the definition. The distinct variable constraints are needed for soundness (analogous to the distinct variable constraints in, for example, metamath's dfss2<ref>[http://us.metamath.org/mpeuni/dfss2.html dfss2], metamath's set.mm, accessed 1 Oct 2010</ref>).
+<jh>
+thm (Relation ((x y z A) (x′ y′ z′ x y z A)) ()
+  ((relation A) ↔ (∀ z (((value z) ∈ A) → (∃ x (∃ y ((value z) = (orderedPair (value x) (value y)))))))) (
+</jh>
+To prove this we need to prove that the truth of the formula doesn't depend on the choice of variables for <code>x</code>, <code>y</code>, and <code>z</code>. In other words, <code>∀ z′ (z′ ∈ A → ∃ x′ ∃ y′ z′ = 〈x′, y′〉) ↔ ∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉)</code>
+
+We'll first worry about the explicit substitutions and getting them in the right place relative to the quantifiers. We work from the outside in, so the first step is <code>∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉) ↔ ∀ z′ [z′ / z] (z ∈ A → ∃ x ∃ y z = 〈x, y〉)</code>
+<jh>
+        z (((value z) ∈ A) → (∃ x (∃ y ((value z) = (orderedPair (value x) (value y)))))) z′ ChangeVariableExplicitForAll
+</jh>
+We now move the substitution inside all quantifiers.
+<jh>
+        (value z′) z ((value z) ∈ A) (∃ x (∃ y ((value z) = (orderedPair (value x) (value y))))) SubstImplication
+        z′ buildForAll
+        applyBiconditionalTransitivity
+
+        (value z′) z x (∃ y ((value z) = (orderedPair (value x) (value y)))) SubstThereExists
+        (subst (value z′) z ((value z) ∈ A)) buildImplicationAntecedent
+        z′ buildForAll
+        applyBiconditionalTransitivity
+
+        (value z′) z y ((value z) = (orderedPair (value x) (value y))) SubstThereExists
+        x buildThereExists
+        (subst (value z′) z ((value z) ∈ A)) buildImplicationAntecedent
+        z′ buildForAll
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉) ↔ ∀ z′ ([z′ / z] z ∈ A → ∃ x ∃ y [z′ / z] z = 〈x, y〉)</code>. The next step is to add the substitution for <code>x′</code>.
+<jh>
+        x (∃ y (subst (value z′) z ((value z) = (orderedPair (value x) (value y))))) x′ ChangeVariableExplicitThereExists
+        (subst (value z′) z ((value z) ∈ A)) buildImplicationAntecedent
+        z′ buildForAll
+        applyBiconditionalTransitivity
+
+        (value x′) x y (subst (value z′) z ((value z) = (orderedPair (value x) (value y)))) SubstThereExists
+        x′ buildThereExists
+        (subst (value z′) z ((value z) ∈ A)) buildImplicationAntecedent
+        z′ buildForAll
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉) ↔ ∀ z′ ([z′ / z] z ∈ A → ∃ x′ ∃ y [x′ / x] [z′ / z] z = 〈x, y〉)</code>. The next step is to add the substitution for <code>y′</code>.
+<jh>
+        y (subst (value x′) x (subst (value z′) z ((value z) = (orderedPair (value x) (value y))))) y′ ChangeVariableExplicitThereExists
+        x′ buildThereExists
+        (subst (value z′) z ((value z) ∈ A)) buildImplicationAntecedent
+        z′ buildForAll
+        applyBiconditionalTransitivity
+</jh>
+Now we perform the substitutions. The first one is <code>[z′ / z] z ∈ A ↔ z′ ∈ A</code>.
+<jh>
+        (value z) (value z′) A IsElementBuilderRR
+        makeSubstExplicit
+</jh>
+The next is <code>[z′ / z] z = 〈x, y〉 ↔ z′ = 〈x, y〉</code>.
+<jh>
+        (value z) (value z′) (orderedPair (value x) (value y)) EqualityBuilderRR
+        makeSubstExplicit
+
+        (value x′) x buildSubst
+</jh>
+The next is <code>[x′ / x] z′ = 〈x, y〉 ↔ z′ = 〈x′, y〉</code>.
+<jh>
+        (value x) (value x′) (value y) OrderedPairBuilderRR
+        (value z′) buildEqualityLLInConsequent
+        makeSubstExplicit
+        applyBiconditionalTransitivity
+
+        (value y′) y buildSubst
+</jh>
+The next is <code>[y′ / y] z′ = 〈x′, y〉 ↔ z′ = 〈x′, y′〉</code>.
+<jh>
+        (value y) (value y′) (value x′) OrderedPairBuilderLL
+        (value z′) buildEqualityLLInConsequent
+        makeSubstExplicit
+        applyBiconditionalTransitivity
+</jh>
+We combine with the <code>z ∈ A</code> substitution.
+<jh>
+        y′ buildThereExists
+        x′ buildThereExists
+
+        buildImplication
+        z′ buildForAll
+        applyBiconditionalTransitivity
+</jh>
+We have proved <code>∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉) ↔ ∀ z′ (z′ ∈ A → ∃ x′ ∃ y′ z′ = 〈x′, y′〉)</code>. JHilbert will unify the one with the primes with <code>(relation A)</code>, if we just put it on the left hand side.
+<jh>
+        swapBiconditional
+))
+</jh>
+
+A relation for two objects holds if and only if the corresponding ordered pair is an element of the relation. A more conventional notation would just write this as <code>A R B</code> rather than <code>relates A R B</code>,<ref>[http://us.metamath.org/mpeuni/wbr.html wbr], metamath's set.mm, accessed September 18, 2010</ref> but JHilbert does not offer that option.
+<jh>
+def ((relates A R B) ((orderedPair A B) ∈ R))
 </jh>
 
 == To be added ==

@@ -4,10 +4,11 @@
 *[[User interface:Kingdon/Sandbox]]
 *[[User module:Kingdon/Sandbox]]
 
-== Geometry ==
-See [[w:Category:Axiomatics of Euclidean geometry]]. Tarski's system would appear to be most within reach, especially if restricting to Tarski's first-order (elementary) version, rather than adding the second-order axiom which produces full Euclidean geometry.
+== Naming convention ==
+In [[Interface:Classical propositional calculus]], perhaps should rename detach2of2 to detachLastConjunct (as it also serves for 3 of 3, 4 of 4, etc) and detach2of3 to detachPenultimateConjunct (e.g. 3 of 4). However, this is a bit strange as detach1of(anything) is a different case (detach1of2 is not the same as detachPenultimateConjunct although the name detachPenultimateConjunct would suggest it would be).
 
-Think about (or find a work describing) how to, from these axioms, introduce more familiar notation such as the line AB, the angle ∠ABC, the triangle ABC, etc.
+== Geometry ==
+Do we want/need/know how to get more familiar notation such as the line AB, the angle ∠ABC, the triangle △ABC, triangle congruence △ABC ≅ △DEF, etc?
 
 Don't yet know if this is easy or hard, but [http://www.jimloy.com/geometry/17-gon.htm the 17-gon] might be a cute result to prove.
 
@@ -30,23 +31,6 @@ Don't yet know if this is easy or hard, but [http://www.jimloy.com/geometry/17-g
 [http://us.metamath.org/mpeuni/19.29.html 19.29]
 [http://us.metamath.org/mpeuni/19.2.html 19.2]
 
-== Peano arithmetic ==
-=== Theorems ===
-Sample theorems from Hirst &amp; Hirst:
- 7. Inequality is preserved by multiplication: x ≤ y → x · z ≤ y · z (lemul2, commuted)
- 8. Strict inequality is preserved by nonzero multiplication:
-    z ≠ 0 → (x < y → x · z < y · z)
- 10. Inequalities can be multiplied: (w ≤ x ∧ y ≤ z) → w · y ≤ x · z
-
-No zero divisors: a · b = 0 → (a = 0 ∨ b = 0)
-
-More theorems:
-
-* x ≠ 0 ↔ x > 0
-
-=== nomenclature: combining vs combination ===
-Shouldn't ThereExistsConjunctionCombining be called ThereExistsConjunctionCombination and likewise for any other *Combining theorems?
-
 == More axiomizations of propositional logic ==
 
 === Four-axiom variation of Principia axioms ===
@@ -56,4 +40,7 @@ Stanley Burris (1997), [http://www.math.uwaterloo.ca/~snburris/htdocs/scav/hilbe
 
 === Robbins algebra ===
 [[w:Robbins algebra]] and Huntington's axiom seem to form two axiomizations (unless I'm missing some detail in the translation from algebras to logical systems). We'd need some more axioms for =.  Conjunction and implication would be defined in terms of ∨ and ¬ in the usual Principia way I assume.
+
+== Set theory ==
+The obvious notation for power set is <code>(𝒫 x)</code> but I don't know how widely available U+1D4AB MATHEMATICAL SCRIPT CAPITAL P is. If not, metamath uses ℘ (the [[w:Weierstrass p]]), but I'd lean towards just <code>(power x)</code>. Using <code>(P x)</code> mimics the P(x) use you sometimes see but it probably is a mistake to start defining single-letter operators like this.
 

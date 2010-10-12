@@ -1,6 +1,6 @@
 {{interfaces
 | imports = [[Interface:Tarski's geometry axioms]]
-| exports = None yet
+| exports = [[Interface:Basic geometry]]
 }}
 
 Here we prove a variety of basic geometrical theorems involving collinearity, midpoints, perpendiculars, and the like, starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
@@ -11,8 +11,9 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
-var (point x y z w u v A B C D E Q)
-var (variable a b c)
+var (point x y z w u v A B C D E P Q A′ B′)
+var (point x′ y′ z′ w′ u′)
+var (variable a b c q q′ ww ww′)
 </jh>
 
 == Collinearity ==
@@ -175,12 +176,11 @@ This is just a substitution away from <code>CongruenceIdentityLeft</code>.  The 
 ))
 </jh>
 
-== Five segment ==
+== Three segment ==
 The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ → x z ≡ x′ z′</code>, is basically a degenerate case of the five segment axiom.<ref>Lemma l2_11 in Narboux</ref><ref>Axiom 23 in Givant and Tarski, 1999</ref> There are two cases. If <code>x ≠ y</code>, then applying five segments to x y z and x yields the desired result (the additional two antecedents are fulfilled because one becomes <code>x x ≡ x′ x′</code> and the other <code>y x ≡ y′ x′</code>). If <code>x = y</code>, then <code>x z ≡ x′ z′</code> follows from <code>y z ≡ y′ z′</code> (and <code>x′ = y′</code>, which follows from <code>x y ≡ x′ y′</code>).
 
 We first prove the <code>x = y</code> case as a lemma.
 <jh>
-var (point x′ y′ z′ u′)
 thm (ThreeSegmentXEqualsY () () ((x = y) → (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′))) (
 </jh>
 We start with <code>x = y → (x y ≡ x′ y′ → x′ = y′)</code>
@@ -217,7 +217,7 @@ thm (ThreeSegmentXNotEqualY () () ((x ≠ y) → (((((between x y z) ∧ (betwee
 Applying the five segment axiom gives us <code>x ≠ y ∧ between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ ∧ x x ≡ x′ x′ ∧ y x ≡ y′ x′ → z x ≡ z′ x′</code>. First we detach <code>x x ≡ x′ x′</code>
 <jh>
         x x′ CongruenceTrivialIdentity
-        x y z x′ y′ z′ x x′ FiveSegment
+        x y z x′ y′ z′ x x′ OuterFiveSegment
         detach2of3
 </jh>
 Next we commute <code>z x ≡ z′ x′</code> to <code>x z ≡ x′ z′</code>.
@@ -269,7 +269,7 @@ thm (ThreeSegment () ()
 </jh>
 
 == Uniqueness of segment construction ==
-Here we prove that the segment constructed by the segment construction axiom is unique. We state this as <code>Q ≠ A ∧ between Q A x ∧ A x ≡ B C ∧ between Q A y ∧ A y ≡ B C → x = y</code>. The proof is first that <code>A x ≡ A y</code> (because both are congruent to <code>B C</code>), and between that and <code>Q A ≡ Q A</code> we can apply <code>ThreeSegment</code> to <code>Q A x</code> and <code>Q A y</code> to get <code>Q x ≡ Q y</code>. Then we will apply <code>FiveSegment</code> with the lines <code>Q A x</code> and <code>Q A x</code> and the points <code>x</code> and <code>y</code>. The four congruences we need are <code>Q A ≡ Q A</code>, <code>A x ≡ A x</code>, <code>Q x ≡ Q y</code>, and <code>A x ≡ A y</code>, and then <code>FiveSegment</code> gives us <code>x x ≡ x y</code>. This congruence yields <code>x = y</code> by <code>CongruenceIdentityLeft</code>.<ref>construction_unicity in Narboux</ref>
+Here we prove that the segment constructed by the segment construction axiom is unique. We state this as <code>Q ≠ A ∧ between Q A x ∧ A x ≡ B C ∧ between Q A y ∧ A y ≡ B C → x = y</code>. The proof is first that <code>A x ≡ A y</code> (because both are congruent to <code>B C</code>), and between that and <code>Q A ≡ Q A</code> we can apply <code>ThreeSegment</code> to <code>Q A x</code> and <code>Q A y</code> to get <code>Q x ≡ Q y</code>. Then we will apply <code>OuterFiveSegment</code> with the lines <code>Q A x</code> and <code>Q A x</code> and the points <code>x</code> and <code>y</code>. The four congruences we need are <code>Q A ≡ Q A</code>, <code>A x ≡ A x</code>, <code>Q x ≡ Q y</code>, and <code>A x ≡ A y</code>, and then <code>OuterFiveSegment</code> gives us <code>x x ≡ x y</code>. This congruence yields <code>x = y</code> by <code>CongruenceIdentityLeft</code>.<ref>construction_unicity in Narboux</ref>
 
 The only real difficulty in formalizing this is juggling all those conjunctions and multiple antecedents. The first lemma shows <code>A x ≡ A y</code>.
 <jh>
@@ -278,11 +278,8 @@ thm (SegmentConstructionUniquenessAxAy () () ((((((Q ≠ A) ∧ (between Q A x))
 First we extract the two pieces we care about, first showing that big long antecedent implies <code>A x ≡ B C</code>,
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionLeftElimination
-        applySyllogism
-
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 </jh>
 And then that it implies <code>A y ≡ B C</code>.
 <jh>
@@ -309,18 +306,14 @@ thm (SegmentConstructionUniquenessQxQy () () ((((((Q ≠ A) ∧ (between Q A x))
 To apply <code>ThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
-        applySyllogism
-        (Q ≠ A) (between Q A x) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 </jh>
 The second is <code>between Q A y</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -348,23 +341,18 @@ The next lemma gets us most of the way. It shows <code>x x ≡ x y</code>.
 <jh>
 thm (SegmentConstructionUniquenessxxxy () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (x x ≡ x y)) (
 </jh>
-We'll be applying <code>FiveSegment</code> which has seven antecedents. The first two we can do together, <code>Q ≠ A ∧ between Q A x</code>.
+We'll be applying <code>OuterFiveSegment</code> which has seven antecedents. The first two we can do together, <code>Q ≠ A ∧ between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 </jh>
 The next is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        (((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) (between Q A y) ConjunctionRightElimination
-        applySyllogism
-        ((Q ≠ A) ∧ (between Q A x)) (A x ≡ B C) ConjunctionRightElimination
-        applySyllogism
-        (Q ≠ A) (between Q A x) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -392,9 +380,9 @@ The fourth congruence is <code>A x ≡ A y</code>.
         Q A x B C y SegmentConstructionUniquenessAxAy
         composeConjunction
 </jh>
-We are ready to apply <code>FiveSegment</code>.
+We are ready to apply <code>OuterFiveSegment</code>.
 <jh>
-        Q A x Q A x x y FiveSegment
+        Q A x Q A x x y OuterFiveSegment
         applySyllogism
 ))
 </jh>
@@ -647,8 +635,7 @@ First, <code>C a ≡ C D ∧ between B C a</code>.
 Next, <code>between B C D</code>
 <jh>
         ((between A B C) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (between A B C) (between B C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 
@@ -678,30 +665,24 @@ We'll be applying <code>SegmentConstructionUniqueness</code>. It has five antece
 The second is <code>between B C a</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
-        applySyllogism
-        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
 The third is <code>C a ≡ C D</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
-        applySyllogism
-        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionRightElimination
-        applySyllogism
-        (between A C (value a)) (C (value a) ≡ C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
 The fourth is <code>between B C D</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -724,12 +705,9 @@ thm (BetweennessOuterTransitivityFlipped-aca-ad () () ((((((between A C (value a
         A C a D B BetweennessOuterTransitivityFlipped-ad
 
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) (between B C D) ConjunctionRightElimination
-        applySyllogism
-        ((between A C (value a)) ∧ (C (value a) ≡ C D)) (between B C (value a)) ConjunctionRightElimination
-        applySyllogism
-        (between A C (value a)) (C (value a) ≡ C D) ConjunctionRightElimination
-        applySyllogism
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 
         composeConjunction
 ))
@@ -794,8 +772,7 @@ To apply <code>BetweennessOuterTransitivityFlipped</code> we need three things. 
 The second is <code>between B C D</code>
 <jh>
         (B ≠ C) ((between A B D) ∧ (between B C D)) ConjunctionLeftElimination
-        (between A B D) (between B C D) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -869,7 +846,7 @@ thm (BetweennessMiddleTransitivityFlipped () () (((between A B C) ∧ (between A
 Narboux defines the concept of a betweenness relationship between four points, but we omit it here as Narboux does not use it anywhere.<ref>Bet_4 and l_3_9_4 in Narboux</ref>
 
 == Twoness ==
-There exist two distinct points. The proof is based on the <code>LowerDimension</code> axiom. There are two cases. If <code>a ≠ b</code>, we are done. If <code>a = b</code>, then we can take <code>¬ between b c a</code> from the axiom and turn it into <code>¬ between b c b</code> which in turn implies <code>b ≠ c</code>.
+There exist two distinct points. In symbols, <code>∃ a ∃ b a ≠ b</code>.<ref>two_distinct_points in Narboux</ref> The proof is based on the <code>LowerDimension</code> axiom. There are two cases. If <code>a ≠ b</code>, we are done. If <code>a = b</code>, then we can take <code>¬ between b c a</code> from the axiom and turn it into <code>¬ between b c b</code> which in turn implies <code>b ≠ c</code>.
 
 Formalizing this proof has two parts. The first one follows the informal proof above and gets us as far as showing <code>a ≠ b</code> or <code>b ≠ c</code>. The second part does the predicate logic needed to switch variables and combine the two inequalities.
 
@@ -989,7 +966,7 @@ thm (Twoness ((a b c)) () (∃ a (∃ b ((value a) ≠ (value b)))) (
         a addThereExists
         applyModusPonens
 </jh>
-We now have <code>∃ a ∃ b (a ≠ b ∨ ∃ c b ≠ c)</code>. We distribute <code>b</code> across the disjunction.
+We now have <code>∃ a ∃ b (a ≠ b ∨ ∃ c b ≠ c)</code>. We distribute <code>∃ b</code> across the disjunction.
 <jh>
         b ((value a) ≠ (value b)) (∃ c ((value b) ≠ (value c))) ThereExistsDisjunction
         eliminateBiconditionalReverse
@@ -1013,6 +990,563 @@ Having gotten both disjuncts to use the same variables, we are done.
 <jh>
         conflateDisjunction
 ))
+</jh>
+
+=== Extending a line segment to a distinct point ===
+Any line segment <code>A B</code> can be extended beyond <code>B</code> to a point <code>c</code> which does not equal <code>B</code>.<ref>point_construction_different in Narboux</ref>
+
+First we prove a lemma which just rearranges <code>CongruenceIdentityFromEquality</code>.
+<jh>
+thm (PointConstructionDifferentLemma () () (((A B ≡ C D) ∧ (C ≠ D)) → (A ≠ B)) (
+        A B C D CongruenceIdentityFromEquality
+        applyComm
+
+        (A = B) (C = D) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+))
+</jh>
+The next lemma is just rearranging conjuncts and applying the previous lemma.
+<jh>
+thm (PointConstructionDifferentLemma2 () () ((((between A B C) ∧ (B C ≡ x y)) ∧ (x ≠ y)) → ((between A B C) ∧ (B ≠ C))) (
+</jh>
+First we pick out <code>between A B C</code>.
+<jh>
+        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+</jh>
+Next we pick out <code>B C ≡ x y</code>.
+<jh>
+        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+</jh>
+Next we pick out <code>x ≠ y</code>.
+<jh>
+        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionLeftElimination
+</jh>
+Combining the second two results and applying the previous lemma gives us <code>B ≠ C</code>.
+<jh>
+        composeConjunction
+        B C x y PointConstructionDifferentLemma
+        applySyllogism
+</jh>
+Combining <code>between A B C</code> and <code>B ≠ C</code> finishes the proof.
+<jh>
+        composeConjunction
+))
+
+thm (PointConstructionDifferent ((a b A) (a b B) (a b c)) () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
+</jh>
+The proof of our main theorem will proceed by constructing two different points <code>a</code> and <code>b</code>, and using them to extend the segment <code>A B</code> to a distinct point.
+
+We start with the extension of <code>A B</code> beyond <code>B</code> to a point <code>c</code>.
+<jh>
+        c A B (value a) (value b) SegmentConstruction
+</jh>
+That gives us <code>∃ c (between A B c ∧ B c ≡ a b)</code>. This a relationship which holds for any values of <code>a</code> and <code>b</code>
+<jh>
+        b generalize
+        a generalize
+</jh>
+Now we put in the construction of the two distinct points,
+<jh>
+        a b Twoness
+</jh>
+and combine the two statements and gather the quantifiers at the beginning to get <code>∃ a ∃ b ∃ c ((between A B c ∧ B c ≡ a b) ∧ a ≠ b)</code>
+<jh>
+        introduceConjunction
+
+        a (∀ b (∃ c ((between A B (value c)) ∧ (B (value c) ≡ (value a) (value b))))) (∃ b ((value a) ≠ (value b))) ThereExistsConjunctionCombining
+        applyModusPonens
+
+        b (∃ c ((between A B (value c)) ∧ (B (value c) ≡ (value a) (value b)))) ((value a) ≠ (value b)) ThereExistsConjunctionCombining
+        a addThereExists
+        applyModusPonens
+
+        c ((between A B (value c)) ∧ (B (value c) ≡ (value a) (value b))) ((value a) ≠ (value b)) ThereExistsConjunctionRightMovement
+        b buildThereExists
+        a buildThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+Applying our lemma, we get <code>∃ a ∃ b ∃ c (between A B c ∧ B ≠ c)</code>
+<jh>
+        A B (value c) (value a) (value b) PointConstructionDifferentLemma2
+        c addThereExists
+        b addThereExists
+        a addThereExists
+        applyModusPonens
+</jh>
+The first two quantifiers are no longer needed, and that finishes the proof.
+<jh>
+        removeThereExists
+        removeThereExists
+))
+</jh>
+
+=== A point distinct from a given point exists ===
+Given a point <code>A</code>, there exists a point <code>b</code> distinct from it.<ref>another_point in Narboux</ref> Here's the sketch of Narboux's proof: apply <code>Twoness</code> to get <code>x</code> and <code>y</code> such that <code>x ≠ y</code>. If <code>A ≠ x</code>, we are done (<code>x</code> is the desired point). If <code>A = x</code>, then subsituting into <code>x ≠ y</code> gives us <code>A ≠ y</code>, and <code>y</code> is the desired point. It would be possible (although somewhat cumbersome) to formalize this argument here, but it will be easier just to prove this theorem as a special case of <code>PointConstructionDifferent</code>.
+<jh>
+thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
+        b A A PointConstructionDifferent
+
+        (between A A (value b)) (A ≠ (value b)) ConjunctionLeftElimination
+        b addThereExists
+
+        applyModusPonens
+))
+</jh>
+
+== Lemma l3_17 (Pasch variant) ==
+[[File:Lemma l3_17 from Narboux.svg|thumb|right|Top: statement of the lemma; Middle: construction of <code>q′</code>; Bottom: construction of <code>q</code>]]
+This lemma is a variant of Pasch's axiom.  The lemma is <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q (between P q C ∧ between B q B′)</code>. The proof consists of two applications of Pasch's axiom. The first one uses the triangle <code>A A′ C</code> (with points <code>P</code> and <code>B′</code>) to construct a point <code>q′</code>. The second uses the triangle <code>A C B′</code> (with points <code>B</code> and <code>q′</code>) to construct the point <code>q</code>.
+<jh>
+thm (PaschLine ((q P) (q C) (q′ q) (q′ P) (q′ C) (q′ B) (q′ A) (q′ B′)) () ((((between A B C) ∧ (between A′ B′ C)) ∧ (between A P A′)) → (∃ q ((between P (value q) C) ∧ (between B (value q) B′)))) (
+</jh>
+To construct <code>q′</code>, we need <code>between A P A′</code> and <code>between C B′ A′</code>, and Pasch's axiom will give us <code>between P q′ C</code> and <code>between B′ q′ A</code>.
+<jh>
+        ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionLeftElimination
+
+        ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+        A′ B′ C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A P A′ C B′ q′ Pasch
+        applySyllogism
+</jh>
+That gives us <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A)</code>. We'll need <code>between C B A</code> in the next step, so we put <code>between C B A</code> inside the quantifier to get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code>.
+<jh>
+        ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        A B C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        q′ ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+To construct <code>q</code>, we need <code>between C B A</code> and <code>between B′ q′ A</code>, and Pasch's axiom will give us <code>between B q B′</code> and <code>between q′ q C</code>.
+<jh>
+        ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionLeftElimination
+
+        ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+
+        C B A B′ (value q′) q Pasch
+        applySyllogism
+</jh>
+We're getting close. Right now there are two things on the proof stack, <code><code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code> and <code>between P q′ C ∧ between B′ q′ A ∧ between C B A → ∃ q between B q B′ ∧ between q′ q C</code>. Half of what we need is <code>between B q B′</code>. We'll need to fish out <code>between q′ q C</code> and <code>between P q′ C</code> to get <code>between P q C</code>, so start by putting <code>between P q′ C</code> inside the <code>∃ q</code>
+<jh>
+        ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+
+        q ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Combining with the previous results we get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ ∃ q (between B q B′ ∧ between q′ q C ∧ P q′ C)</code>
+<jh>
+        q′ addThereExists
+        applySyllogism
+</jh>
+Now we can extract <code>between P q′ C</code> and <code>between q′ q C</code>, and apply <code>BetweennessMiddleTransitivity</code>.
+<jh>
+        ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionLeftElimination
+
+        ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+
+        P (value q′) C (value q) BetweennessMiddleTransitivity
+        applySyllogism
+</jh>
+The other half of what we need is <code>between B q B′</code>
+<jh>
+        ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+</jh>
+Combining we get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ ∃ q (between P q C ∧ between B q B′)</code>.
+<jh>
+        composeConjunction
+
+        q addThereExists
+        q′ addThereExists
+        applySyllogism
+</jh>
+The <code>∃ q′</code> quantifier is now unneeded, so remove it.
+<jh>
+        removeThereExistsInConsequent
+))
+</jh>
+
+== Inner five segment ==
+[[File:Inner five segment.svg|thumb|Inner five segment]]
+The five segment axiom can be thought of as an "outer five segment" statement, as one is given a set of congruences and concludes a congruence for a segment outside the given ones. The inner five segment theorem is similar, but the given set of congruences are for the outer segments and the theorem supplies a congruence inside those. The key change, comparing the axiom/theorem and diagrams, is to move the congruence for <code>z u</code> from the consequent to the antecedent, and the congruence for <code>y u</code> from the antecedent to the consequent.<ref>Lemma l4_2 in Narboux</ref>
+
+The proof has two cases.  The first case is <code>x = z</code>. From <code>between x y z</code> we get <code>x = y</code>. Likewise, <code>x z ≡ x′ z′</code> implies <code>x′ = z′</code>, which in turn implies <code>x′ = y′</code>. Thus, we can turn <code>x u ≡ x′ u′</code> into <code>y u ≡ y u′</code>.
+<jh>
+thm (IndivisibilityFromEquality () () (((x = z) ∧ (between x y z)) → (x = y)) (
+        x EqualityReflexivity
+        y EqualityReflexivity
+        x x y y x z BetweenBuilder
+        detach2of3
+        detach1of2
+
+        eliminateBiconditionalForwardInConsequent
+
+        x y Indivisibility
+        (x = z) introduceAntecedent
+
+        applySyllogismInConsequent
+
+        import
+))
+
+thm (InnerFiveSegmentXEqualsZ () () ((x = z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
+</jh>
+First we pick out <code>between x y z</code>.
+<jh>
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+</jh>
+Then we apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x = y</code>.
+<jh>
+        (x = z) conjoinLL
+
+        x z y IndivisibilityFromEquality
+        applySyllogism
+</jh>
+Now we pick out <code>x z ≡ x′ z′</code> and apply <code>CongruenceIdentityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = z′</code>.
+<jh>
+        (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        (x = z) conjoinLL
+        x z x′ z′ CongruenceIdentityFromEquality
+        import
+        applySyllogism
+</jh>
+Now we pick out <code>between x′ y′ z′</code> and apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = y′</code>.
+<jh>
+        (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+
+        x′ z′ y′ IndivisibilityFromEquality
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next we pick out <code>x u ≡ x′ u′</code> and combine with the previous results to get <code>x = z ∧ ''many conjuncts'' → x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code>
+<jh>
+        (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+Now we transform <code>x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code> into <code>y u ≡ y′ u′</code>.
+<jh>
+        u EqualityReflexivity
+        u′ EqualityReflexivity
+        x y u u x′ y′ u′ u′ CongruenceBuilder
+        detach2of2
+        detach2of3
+
+        eliminateBiconditionalReverseInConsequent
+        import
+
+        applySyllogism
+        export
+))
+</jh>
+[[File:Inner five segment proof.svg|thumb|right|The <code>x ≠ z</code> case. <code>w z ≡ w′ z′</code> by construction. <code>w u ≡ w′ u′</code> by applying outer five segment to <code>x z w u</code>. <code>y u ≡ y′ u′</code> by applying outer five segment to <code>w z y u</code>.]]
+The <code>x ≠ z</code> case is proved by two applications of outer five segment. First extend the line segment <code>x z</code> beyond <code>z</code> to a distinct point <code>w</code>. Extend <code>x′ z′</code> beyond <code>z′</code> to a point <code>w′</code> such that <code>w z ≡ w′ z′</code>. We can now apply outer five segment to <code>x z w u</code> to get <code>w u ≡ w′ u′</code>. Then we apply outer five segment to <code>w z y u</code> to get <code>y u ≡ y′ u′</code>.
+
+The bulk of the proof consists of picking out conjuncts to satisfy the antecedents of the outer five segment invocations. We break it out into two lemmas, which start after the construction of <code>w</code> and <code>w′</code> and go from there. The first lemma proves <code>w u ≡ w′ u′</code> and the second applies the first and proves <code>y u ≡ y′ u′</code>. The two lemmas have the same antecedent, which is parenthesized in the following way. It consists of four conjuncts, the first of which corresponds to the construction of <code>w</code>, the second of which corresponds to the construction of <code>w′</code>, the third of which is <code>w ≠ z</code>, and the fourth of which is the antecedent of the eventual <code>InnerFiveSegment</code> theorem we are working towards.
+<jh>
+thm (InnerFiveSegmentWU () () ((
+    ((between x z w) ∧ (z ≠ w)) ∧ (
+    ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ (
+    (x ≠ z) ∧ (
+    (((((between x y z) ∧
+      (between x′ y′ z′)) ∧
+      (x z ≡ x′ z′)) ∧
+      (y z ≡ y′ z′)) ∧
+      (x u ≡ x′ u′)) ∧
+      (z u ≡ z′ u′)))))
+  → (w u ≡ w′ u′)) (
+</jh>
+The first thing we need to apply outer five segment to <code>x z w u</code> is <code>x ≠ z</code>
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+</jh>
+The second thing we need is <code>between x z w</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+</jh>
+The third thing we need is <code>between x′ z′ w′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+</jh>
+The fourth thing we need is <code>x z ≡ x′ z′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+The fifth thing we need is <code>z w ≡ z′ w′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        z′ w′ z w CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The sixth thing we need is <code>x u ≡ x′ u′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+The last thing we need is <code>z u ≡ z′ u′</code>.
+<jh>
+        ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+Applying outer five segment, we conclude <code>w u ≡ w′ u′</code>.
+<jh>
+        x z w x′ z′ w′ u u′ OuterFiveSegment
+        applySyllogism
+))
+
+thm (InnerFiveSegmentYU () () ((
+    ((between x z w) ∧ (z ≠ w)) ∧ (
+    ((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ (
+    (x ≠ z) ∧ (
+    (((((between x y z) ∧
+      (between x′ y′ z′)) ∧
+      (x z ≡ x′ z′)) ∧
+      (y z ≡ y′ z′)) ∧
+      (x u ≡ x′ u′)) ∧
+      (z u ≡ z′ u′)))))
+  → (y u ≡ y′ u′)) (
+</jh>
+The first thing we need to apply outer five segment to <code>w z y u</code> is <code>w ≠ z</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        z w EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The second thing we need is <code>between w z y</code>. This follows from <code>between w z x</code> and <code>between z y x</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        x z w BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        x y z BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        w z x y BetweennessInnerTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+The third thing we need is <code>between w′ z′ y′</code>. This follows from <code>between w′ z′ x′</code> and <code>between z′ y′ x′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        x′ z′ w′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        x′ y′ z′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        w′ z′ x′ y′ BetweennessInnerTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fourth thing we need is <code>w z ≡ w′ z′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        z′ w′ z w CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        z w z′ w′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fifth thing we need is <code>z y ≡ z′ y′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        y z y′ z′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The sixth thing we need is <code>w u ≡ w′ u′</code>.
+<jh>
+        x z w x′ z′ w′ y y′ u u′ InnerFiveSegmentWU
+        composeConjunction
+</jh>
+The last thing we need is <code>z u ≡ z′ u′</code>.
+<jh>
+        (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+Applying outer five segment, we conclude <code>y u ≡ y′ u′</code>.
+<jh>
+        w z y w′ z′ y′ u u′ OuterFiveSegment
+        applySyllogism
+))
+</jh>
+Now it is time to assemble the <code>x ≠ z</code> case. It basically consists of predicate logic. There might be an clearer way to arrange this proof, but the basic idea is to construct <code>w′</code> (which we call <code>ww′</code> when we need a variable) with <code>SegmentConstruction</code>, to construct <code>w</code> (which we call <code>ww</code> when we need a variable) using <code>PointConstructionDifferent</code>, and to use those constructions to remove antecedents from the formula we get from <code>InnerFiveSegmentYU</code>.
+<jh>
+thm (InnerFiveSegmentXNotEqualZ
+  ((ww′ x) (ww′ y) (ww′ z) (ww′ x′) (ww′ y′) (ww′ z′) (ww′ u) (ww′ u′) (ww′ ww) (ww x) (ww y) (ww z) (ww x′) (ww y′) (ww z′) (ww u) (ww u′))
+  ()
+  ((x ≠ z) → (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′))) (
+        ww x z PointConstructionDifferent
+
+        ww′ x′ z′ z (value ww) SegmentConstruction
+
+        x z (value ww) x′ z′ (value ww′) y y′ u u′ InnerFiveSegmentYU
+        export
+        exportInConsequent
+        applyComm
+        ww′ addThereExistsToAntecedent
+
+        applyModusPonens
+
+        ww addThereExistsToAntecedent
+
+        applyModusPonens
+
+        export
+))
+
+thm (InnerFiveSegment () ()
+  (((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) → (y u ≡ y′ u′)) (
+        x z y x′ y′ z′ u u′ InnerFiveSegmentXEqualsZ
+        x z y x′ y′ z′ u u′ InnerFiveSegmentXNotEqualZ
+        eliminateCases
+))
+</jh>
+
+== Export ==
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
