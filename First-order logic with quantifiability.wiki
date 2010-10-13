@@ -32,13 +32,37 @@ We now turn to substitution of an object for a variable.
 In some formulations of predicate logic, this kind of substitution (known as ''proper substitution'' as there are some rules about what kinds of substitution are valid) is performed syntactically and the rules governing it are expressed in English or a meta-theory.  JHilbert does not have a feature to do syntactic proper substitution, but we are able to build up equivalent mechanisms from equality. The theorems in [[Interface:First-order logic with quantifiability]] could be proven from either the syntactic definition or ours.
 
 We define a formula <code>(subst s x φ)</code> which means, roughly, that <code>φ</code> is true if ocurrences of <code>x</code> are replaced by <code>s</code> ("roughly" because we have not tried to define proper substitution precisely). In dicussion, we also use the notation <code>[ s / x ] φ</code> (which is not legal JHilbert syntax) for the same thing. The definition is <code>[ s / x ] φ ≝ ∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code>. The definition contains a dummy variable <code>y</code> to give the expected results if <code>x</code> and <code>s</code> are not distinct.<ref>It resembles [http://us.metamath.org/mpeuni/dfsb7.html dfsb7] in metamath's set.mm, accessed March 8, 2010, except that <code>s</code> (the replacement) is an <code>object</code> rather than a <code>variable</code>.</ref>
-
-Currently, the definition of <code>subst</code> is an axiom in [[Interface:Axiom of quantifiability]].  Therefore, we import that interface now, even though we aren't going to use the axiom of quantifiability itself for a little while.
 <jh>
-import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
+def ((subst s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
 </jh>
 
 This section contains a few of the preliminary results, which we can prove without the axiom of quantifiability.
+
+=== Definition as theorem ===
+We first prove a theorem form of the definition.
+<jh>
+thm (Subst ((x y) (y s) (y φ)  (z x) (y z) (z s) (z φ)) () (
+  (subst s x φ) ↔ 
+    (∃ y (((value y) = s) ∧ 
+      (∃ x (((value x) = (value y)) ∧ φ))
+    ))
+) (
+</jh>
+What we need to prove is <code>∃ z (z = s ∧ ∃ x (x = z ∧ φ)) ↔ ∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code>.  The first step is <code>z = y → (z = s ∧ ∃ x (x = z ∧ φ) ↔ y = s ∧ ∃ x (x = y ∧ φ))</code>
+<jh>
+        (value z) (value y) s EqualityBuilderRR
+
+        (value z) (value y) (value x) EqualityBuilderLL
+        φ buildConjunctionRRInConsequent
+        x buildThereExistsInConsequent
+
+        buildConjunctionInConsequent
+</jh>
+Then we just apply our change-variable theorem and we are done.
+<jh>
+        ChangeVariableThereExists
+))
+</jh>
 
 === Builders ===
 We can build up formulas based on equivalences or equalities of the the substituted proposition or the replacement (that is, <code>φ</code> or <code>s</code> in <code>(subst s x φ)</code>, respectively).
@@ -171,7 +195,11 @@ The proof consists of just applying our not-free theorems to each piece of the d
 </jh>
 
 == Axiom of quantifiability ==
-Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now start proving some consequences of it (because that file also contains the definition of subst, we have already imported it).
+Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now start proving some consequences of it.
+
+<jh>
+import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
+</jh>
 
 == Specialization with substitution ==
 The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref><ref>Hirst and Hirst, axiom 4 on page 51</ref>
