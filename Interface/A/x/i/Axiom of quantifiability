@@ -35,20 +35,6 @@ First-order logic with quantifiability works fine for Peano arithmetic (see for 
 == Similar axioms/theorems in other systems ==
 Metamath's set.mm has a theorem <code>A ∈ B → ∃x x = A</code> (where <code>A</code> and <code>B</code> are classes and <code>x</code> is a variable),<ref>[http://us.metamath.org/mpeuni/elex.html elex], accessed 31 May 2010</ref> which closely resembles our axiom of quantifiability except for A ∈ B (which means "A is not a proper class").
 
-== Definition of proper substitution ==
-The definition mechanism in JHilbert is [[Wikiproofs:JHilbert definition soundness|known to be deficient]]. Until it is redesigned, it is expedient/necessary to present some definitions as axioms, rather than via JHilbert's <code>def</code> mechanism. The following definition, for proper substitution, is discussed at more length at [[Interface:First-order logic with quantifiability]] and [[First-order logic with quantifiability]].
-<jh>
-term (formula (subst object variable formula))
-var (formula φ)
-var (variable y)
-stmt (Subst () () (
-  (subst s x φ) ↔ 
-    (∃ y (((value y) = s) ∧ 
-      (∃ x (((value x) = (value y)) ∧ φ))
-    ))
-))
-</jh>
-
 == References ==
 <references/>
 
