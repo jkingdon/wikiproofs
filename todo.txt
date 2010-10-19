@@ -15,7 +15,6 @@ Items which may be doable without a network connection:
   - ceqsex also has the distinct variable constraint x s.
 
   * ax9o is only used by equs4.
-* Probably don't need to define Subst as an axiom (see peano_thms.gh for how to avoid it)
 
 * General set theory
   - definitions and consequences: union?,
@@ -44,6 +43,7 @@ Items which may be doable without a network connection:
         ≝ {〈x, result〉| x ∈ A ∧ result = φ }
       - [s / x](apply (lambda x A t) s) = t
         this reads oddly, because [/] only applies to formulas, not terms
+        (metamath has underlined [/] for terms; do we want that?)
     - cross products, e.g. cxp, df-xp, elxp, opelxp1, opelxp
       xpss regarding existence of cross products (note dependence on
       ax-pow, which is more explicit in xpsspw). Also note dependence on defn of
@@ -53,6 +53,22 @@ Items which may be doable without a network connection:
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
+
+* Needed to derive geometry axioms from reals (page 201 of Givant1999)
+  - cartesian products
+  - subtraction
+  - ≤ for reals (defined in terms of <)
+  - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceReflexivityAxiom)
+  - builders for +, ·
+  - For CongruenceIdentity
+    • x - x = 0
+    • x - y = 0 → x = y
+    • x ∈ ℝ → 0 ≤ x · x
+    • 0 ≤ x & 0 ≤ y & x + y = 0 → x = 0 (or some such)
+  - For Indivisibility
+    • (x - y) · (y - x) ≤ 0
+    • antisymmetry
+    • (x - y) · (y - x) = 0 → x = y (follows from x · y = 0 → x = 0 or y = 0)
 
 To do with network:
 
