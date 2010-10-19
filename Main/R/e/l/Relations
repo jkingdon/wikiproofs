@@ -449,6 +449,12 @@ thm (Subset ((x A) (x B)  (y A) (y B) (y x)) ()
 == To be added ==
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
+== Export ==
+We're ready to export to [[Interface:Set theory]].
+<jh>
+export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+</jh>
+
 == References ==
 <references/>
 
