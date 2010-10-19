@@ -14,7 +14,17 @@ Statements can be added if necessary, but then the exporting modules have to be 
 | exportedby = [[Convenience theorems of propositional logic]]
 }}
 
-http://centurygrovedentalcare.com/slideshow/37/fucked-for-the-first-time.html fucked for the first time,  9524, http://mijnfotos.info/newport/997/hairy-pussy-free.html hairy pussy free,  270037, http://best-island-resorts.com/cgi-bin/577/interracial-videos.html interracial videos,  hzam, http://relationship-articles.com/admin/69/free-mature-rape-fantasies.html free mature rape fantasies,  %-]], http://gdapride.com/App_Themes/92/troubled-teen-boot-camp.html troubled teen boot camp,  2182, http://best-no-credit-check-credit-cards.com/aspnet_client/356/financial-analyst-skills.html financial analyst skills,  2491, http://vicerex-compared-to-capatrex.com/pagepeel/484/boy-slave-gay-video.html boy slave gay video,  169, http://solargfx.com/images/09/index.html marksbookmark sex,  :-D, http://craigslistpersonals.org/webalizer/346/suck-my-cock-bitch.html suck my cock bitch,  :-DD, http://buzztrender.com/cp/33/extra-fat-ebony.html extra fat ebony,  ytye, http://getridofmice.org/webalizer/37/housewives-sex-clubs.html housewives sex clubs,  jqhyzv, http://millionlinkmarketing.com/cp/21/preteen-free-mode-photos.html preteen free mode photos,  fph, http://guysdatingplaybook.com/webalizer/54/japaness-boobs.html japaness boobs,  8OOO,
+== Well-formed formulas ==
+
+We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.
+<jh>
+kind (wff)
+var (wff p q r s)
+</jh>
+Some authors just use the term ''formula'' instead of ''wff'', so we define <code>formula</code> to be an alias of <code>wff</code>
+<jh>
+kindbind (wff formula)
+</jh>
 
 == Logical connectives ==
 
