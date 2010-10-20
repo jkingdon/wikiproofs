@@ -58,6 +58,11 @@ Axiom of replacement. Metamath has a number of variants of this axiom, but at le
 stmt (Replacement ((x y z w)) () ((∀ w (∃ y (∀ z ((∀ y φ) → ((value z) = (value y)))))) → (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∃ w (((value w) ∈ (value x)) ∧ (∀ y φ))))))))
 </jh>
 
+Axiom of pairing. There exists a set which contains two given sets as elements. Although pairing can be proved by applying the axiom of replacement to any set with two elements (the existence of which can be proved using the power set axiom), for now we omit that proof by assuming pairing as an axiom.<ref>[http://us.metamath.org/mpeuni/ax-pr.html ax-pr], metamath's set.mm</ref>
+<jh>
+stmt (Pairing ((x z w) (y z w)) () (∃ z (∀ w ((((value w) = (value x)) ∨ ((value w) = (value y))) → ((value w) ∈ (value z))))))
+</jh>
+
 Axiom of power sets. This variant asserts a set which contains the power set (of course, the power set itself can be derived from that).<ref>[http://us.metamath.org/mpeuni/ax-pow.html ax-pow], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
 stmt (PowerSet ((x y z w)) () (∃ y (∀ z ((∀ w (((value w) ∈ (value z)) → ((value w) ∈ (value x)))) → ((value z) ∈ (value y))))))
