@@ -4,7 +4,7 @@
 | exportedby = none yet
 }}
 
-The complex numbers can be described, on top of set theory, by the axioms in this file. They are "axioms" in the sense that they are sufficient to define the complex (and real) numbers, but are theorems in the sense that it is possible to prove them from the [[Interface:Zermelo–Fraenkel set theory|Zermelo–Fraenkel axioms]] (by the usual construction of natural numbers, rational numbers as ratios, real numbers as Dedekind cuts, negative numbers, and complex numbers as pairs of real numbers). The form of the axioms in this file closely follows metamath (modulo a few details involving notation and the fact that we exclude proper classes while metamath does not).<ref>[http://us.metamath.org/mpeuni/mmcomplex.html Real and Complex Numbers], last updated on 6-May-2008</ref>
+The complex numbers can be described, on top of set theory, by the axioms in this file. They are "axioms" in the sense that they are sufficient to define the complex (and real) numbers, but are theorems in the sense that it is possible to prove them from the [[Interface:Zermelo–Fraenkel set theory|axioms of set theory]] (by the usual construction of natural numbers, rational numbers as ratios, real numbers as Dedekind cuts, negative numbers, and complex numbers as pairs of real numbers). The form of the axioms in this file closely follows metamath (modulo a few details involving notation and the fact that we exclude proper classes while metamath does not).<ref>[http://us.metamath.org/mpeuni/mmcomplex.html Real and Complex Numbers], last updated on 6-May-2008</ref>
 
 We build on [[Interface:Classical propositional calculus|propositional logic]], [[Interface:First-order logic with quantifiability|first-order logic]], and [[Interface:Set theory|set theory]].
 
