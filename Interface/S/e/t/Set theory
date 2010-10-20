@@ -71,6 +71,7 @@ stmt (UnorderedPairFirstMembersEqual () () (((unorderedPair A C) = (unorderedPai
 stmt (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPair C B)) → (A = B)))
 </jh>
 
+== Ordered pair ==
 An ordered pair has a first element and a second element, and two ordered pairs are equal if and only if their first elements are equal and their second elements are equal.
 <jh>
 term (object (orderedPair object object))
