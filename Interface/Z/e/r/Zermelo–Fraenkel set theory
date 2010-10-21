@@ -58,19 +58,19 @@ Axiom of replacement. Metamath has a number of variants of this axiom, but at le
 stmt (Replacement ((x y z w)) () ((∀ w (∃ y (∀ z ((∀ y φ) → ((value z) = (value y)))))) → (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∃ w (((value w) ∈ (value x)) ∧ (∀ y φ))))))))
 </jh>
 
-Axiom of pairing. There exists a set which contains two given sets as elements. Although pairing can be proved by applying the axiom of replacement to any set with two elements (the existence of which can be proved using the power set axiom), for now we omit that proof by assuming pairing as an axiom.<ref>[http://us.metamath.org/mpeuni/ax-pr.html ax-pr], metamath's set.mm</ref>
+Axiom of pairing. There exists a set whose elements are two given sets. Although pairing can be proved by applying the axiom of replacement to any set with two elements (the existence of which can be proved using the power set axiom), for now we omit that proof by assuming pairing as an axiom. Some formulations, such as the one in metamath, merely assert the existence of a set containing the pair, not the pair itself.<ref>[http://us.metamath.org/mpeuni/ax-pr.html ax-pr], metamath's set.mm</ref>
 <jh>
-stmt (Pairing ((x z w) (y z w)) () (∃ z (∀ w ((((value w) = (value x)) ∨ ((value w) = (value y))) → ((value w) ∈ (value z))))))
+stmt (Pairing ((x z w) (y z w)) () (∃ z (∀ w (((value w) ∈ (value z)) ↔ (((value w) = (value x)) ∨ ((value w) = (value y)))))))
 </jh>
 
-Axiom of power sets. This variant asserts a set which contains the power set (of course, the power set itself can be derived from that).<ref>[http://us.metamath.org/mpeuni/ax-pow.html ax-pow], metamath's set.mm, accessed September 13, 2010</ref>
+Axiom of power sets. As with pairing, the metamath version asserts a set which contains the power set but we assert the power set itself.<ref>[http://us.metamath.org/mpeuni/ax-pow.html ax-pow], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
-stmt (PowerSet ((x y z w)) () (∃ y (∀ z ((∀ w (((value w) ∈ (value z)) → ((value w) ∈ (value x)))) → ((value z) ∈ (value y))))))
+stmt (PowerSet ((x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∀ w (((value w) ∈ (value z)) → ((value w) ∈ (value x))))))))
 </jh>
 
-Axiom of union. This variant asserts a set which contains the union of a set (of course, the union itself can be derived from that).<ref>[http://us.metamath.org/mpeuni/ax-un.html ax-un], metamath's set.mm, accessed September 13, 2010</ref>
+Axiom of union. As with pairing, the metamath version asserts a set which contains the union but we assert the union itself.<ref>[http://us.metamath.org/mpeuni/ax-un.html ax-un], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
-stmt (Union ((x y z w)) () (∃ y (∀ z ((∃ w (((value z) ∈ (value w)) ∧ ((value w) ∈ (value x)))) → ((value z) ∈ (value y))))))
+stmt (Union ((x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∃ w (((value z) ∈ (value w)) ∧ ((value w) ∈ (value x))))))))
 </jh>
 
 Axiom of regularity.<ref>[http://us.metamath.org/mpeuni/ax-reg.html ax-reg], metamath's set.mm, accessed September 13, 2010</ref>
