@@ -44,6 +44,13 @@ term (object (unorderedPair object object))
 stmt (UnorderedPair () () ((B ∈ (unorderedPair A0 A1)) ↔ ((B = A0) ∨ (B = A1))))
 </jh>
 
+We define the subset relationship.
+<jh>
+term (formula (⊆ object object))
+stmt (Subset ((x A) (x B)) ()
+  ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))))
+</jh>
+
 == Builders ==
 Equals can be substituted for equals, in the context of set operations.
 
