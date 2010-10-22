@@ -1,1 +1,170 @@
-#REDIRECT [[w:Wikipedia:Cheatsheet]]
+For non-wikiproofs-specific items (italics, bold, section headings, etc), see [[w:Wikipedia:Cheatsheet]].
+
+== Characters ==
+Here are the characters commonly used on wikiproofs which are not found on most keyboards. You can click on these characters below the edit window to insert them. The RFC1345 column below is an abbrevation which may help you input the character via your operating system's input method, but details will depend on your system.
+
+{| 
+|-
+||Character
+||RFC1345
+||Usual meaning
+||Examples
+|-
+|⊤ || || true || [[Interface:Classical propositional calculus|propositional logic]]
+|-
+|⊥ || -T || false || [[Interface:Classical propositional calculus|propositional logic]]
+|-
+|¬ || NO || not || [[Interface:Classical propositional calculus|propositional logic]]
+|-
+|∧ || AN || and || [[Interface:Classical propositional calculus|propositional logic]]
+|-
+|∨ || OR || or || [[Interface:Classical propositional calculus|propositional logic]]
+|-
+|→ || -> || implies || [[Interface:Classical propositional calculus|propositional logic]]
+|-
+|↔ || <> || biconditional || [[Interface:Classical propositional calculus|propositional logic]]
+|-
+|∀ || FA || for all || [[Interface:First-order logic with quantifiability|predicate logic]]
+|-
+|∃ || TE || there exists || [[Interface:First-order logic with quantifiability|predicate logic]]
+|-
+|≠ || != || not equal || [[Interface:First-order logic with quantifiability|predicate logic]]
+|-
+|≡ || =3 || congruent || [[Interface:Tarski's geometry axioms|geometry]]
+|-
+|∈ || (- || is element || [[Interface:Set theory|set theory]]
+|-
+|∉ || || not element || [[Interface:Set theory|set theory]]
+|-
+|⊆ || (_ || subset || [[Interface:Set theory|set theory]]
+|-
+|⊊ || || proper subset || [[Interface:Set theory|set theory]]
+|-
+|⊈ || || not subset || [[Interface:Set theory|set theory]]
+|-
+|∩ || (U || 2-way intersection || [[Interface:Set theory|set theory]]
+|-
+|∪ || )U || 2-way union || [[Interface:Set theory|set theory]]
+|-
+|⋂ || || intersection of a set || [[Interface:Set theory|set theory]]
+|-
+|⋃ || || union of a set || [[Interface:Set theory|set theory]]
+|-
+|≤ || =< || less than or equal || [[Interface:Basic arithmetic|arithmetic]]
+|-
+|≥ || >= || greater than or equal || [[Interface:Basic arithmetic|arithmetic]]
+|-
+|· || .M || multiplication || [[Interface:Basic arithmetic|arithmetic]], [[Interface:Complex number axioms|complex numbers]]
+|-
+|ℙ || || || subset of [[Interface:Complex number axioms|complex numbers]]
+|-
+|ℕ || || natural numbers || subset of [[Interface:Complex number axioms|complex numbers]]
+|-
+|ℤ || || integers || subset of [[Interface:Complex number axioms|complex numbers]]
+|-
+|ℚ || || rationals || subset of [[Interface:Complex number axioms|complex numbers]]
+|-
+|ℂ || || complex numbers || [[Interface:Complex number axioms|complex numbers]]
+|-
+|ℍ || || quaternions ||
+|-
+|Α || A* || Alpha ||
+|-
+|Β || B* || Beta ||
+|-
+|Γ || G* || Gamma ||
+|-
+|Δ || D* || Delta ||
+|-
+|Ε || E* || Epsilon ||
+|-
+|Ζ || Z* || Zeta ||
+|-
+|Η || Y* || Eta ||
+|-
+|Θ || H* || Theta ||
+|-
+|Ι || I* || Iota ||
+|-
+|Κ || K* || Kappa ||
+|-
+|Λ || L* || Lambda ||
+|-
+|Μ || M* || Mu ||
+|-
+|Ν || N* || Nu ||
+|-
+|Ξ || C* || Xi ||
+|-
+|Ο || O* || Omicron ||
+|-
+|Π || P* || Pi ||
+|-
+|Ρ || R* || Rho ||
+|-
+|Σ || S* || Sigma ||
+|-
+|Τ || T* || Tau ||
+|-
+|Υ || U* || Upsilon ||
+|-
+|Φ || F* || Phi ||
+|-
+|Χ || X* || Chi ||
+|-
+|Ψ || Q* || Psi ||
+|-
+|Ω || W* || Omega ||
+|-
+|α || a* || alpha ||
+|-
+|β || b* || beta ||
+|-
+|γ || g* || gamma ||
+|-
+|δ || d* || delta ||
+|-
+|ε || e* || epsilon ||
+|-
+|ζ || z* || zeta ||
+|-
+|η || y* || eta ||
+|-
+|θ || h* || theta || [[Interface:First-order logic with quantifiability|predicate logic]]
+|-
+|ι || i* || iota ||
+|-
+|κ || k* || kappa ||
+|-
+|λ || l* || lambda ||
+|-
+|μ || m* || mu ||
+|-
+|ν || n* || nu ||
+|-
+|ξ || c* || xi ||
+|-
+|ο || o* || omicron ||
+|-
+|π || p* || pi ||
+|-
+|ρ || r* || rho ||
+|-
+|σ || s* || sigma ||
+|-
+|τ || t* || tau ||
+|-
+|υ || u* || upsilon ||
+|-
+|φ || f* || phi || [[Interface:First-order logic with quantifiability|predicate logic]]
+|-
+|χ || x* || chi || [[Interface:First-order logic with quantifiability|predicate logic]]
+|-
+|ψ || q* || psi || [[Interface:First-order logic with quantifiability|predicate logic]]
+|-
+|ω || w* || omega ||
+|-
+|ℵ || || aleph ||
+|-
+|′ || 1' || prime || [[Interface:Tarski's geometry axioms|geometry]]
+|}
