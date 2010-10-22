@@ -1752,7 +1752,7 @@ Since m does not occur in <code>a ≤ Sk ∨ Sk ≤ a</code>, the quantifier is 
 ))
 </jh>
 
-We are ready to return to the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution. Conceptually, it is <code>n = sub → (a ≤ n ∨ n ≤ a ↔ a ≤ sub ∨ sub ≤ a</code>.  However, as long as JHilbert automatically expands definitions, we need to expand each definition of <code>≤</code> so that we can express the distinct variable constraints with the dummy variables.
+We are ready to return to the proof of <code>a ≤ b ∨ b ≤ a</code> by induction. We first prove the substitution. Conceptually, it is <code>n = sub → (a ≤ n ∨ n ≤ a ↔ a ≤ sub ∨ sub ≤ a)</code>.  However, as long as JHilbert automatically expands definitions, we need to expand each definition of <code>≤</code> so that we can express the distinct variable constraints with the dummy variables.
 <jh>
 var (variable an na)
 thm (Totality-sub ((an n) (an sub) (na n) (na sub)) () (
