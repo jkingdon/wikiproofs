@@ -442,6 +442,20 @@ thm (UnorderedPairBuilder ((a A0) (a A1)) () (((A0 = B0) ∧ (A1 = B1)) → ((un
 ))
 </jh>
 
+== Subset ==
+A set is a subset of another (<code>A ⊆ B</code>) if and only if being an element of the first set implies being a member of the second.
+<jh>
+def ((⊆ A B) (∀ x (((value x) ∈ A) → ((value x) ∈ B))))
+
+thm (Subset ((x A) (x B)  (y A) (y B) (y x)) ()
+  ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))) (
+        (value y) (value x) A IsElementBuilderRR
+        (value y) (value x) B IsElementBuilderRR
+        buildImplicationInConsequent
+        ChangeVariableForAll
+))
+</jh>
+
 == Done ==
 We have now proved all the theorems in [[Interface:Basic operations of general set theory]]j, and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
 
