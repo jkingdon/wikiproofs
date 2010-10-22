@@ -16,12 +16,10 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 </jh>
 
-We also import [[Interface:Basic operations of general set theory]], which is the current home of some of the basic results involving singletons, unordered pairs, and the like. 
+We also import [[Interface:Basic operations of Zermelo–Fraenkel set theory]], which is the current home of some of the basic results involving singletons, unordered pairs, and the like. 
 <jh>
-import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
+import (BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
-
-In the future we may import [[Interface:Zermelo–Fraenkel set theory]] for the axioms of union and power set (which in the context of relations are particularly relevant for proving the existence of the Cartesian product of two sets).
 
 As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
 <jh>
@@ -430,20 +428,6 @@ We have proved <code>∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉) ↔ ∀ z′
 A relation for two objects holds if and only if the corresponding ordered pair is an element of the relation. A more conventional notation would just write this as <code>A R B</code> rather than <code>relates A R B</code>,<ref>[http://us.metamath.org/mpeuni/wbr.html wbr], metamath's set.mm, accessed September 18, 2010</ref> but JHilbert does not offer that option.
 <jh>
 def ((relates A R B) ((orderedPair A B) ∈ R))
-</jh>
-
-== Subset ==
-Although it isn't particularly connected to relations, this is a convenient place to define the subset relationship <code>⊆</code>.
-<jh>
-def ((⊆ A B) (∀ x (((value x) ∈ A) → ((value x) ∈ B))))
-
-thm (Subset ((x A) (x B)  (y A) (y B) (y x)) ()
-  ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))) (
-        (value y) (value x) A IsElementBuilderRR
-        (value y) (value x) B IsElementBuilderRR
-        buildImplicationInConsequent
-        ChangeVariableForAll
-))
 </jh>
 
 == To be added ==
