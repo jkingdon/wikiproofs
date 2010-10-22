@@ -443,10 +443,11 @@ thm (UnorderedPairBuilder ((a A0) (a A1)) () (((A0 = B0) ∧ (A1 = B1)) → ((un
 </jh>
 
 == Done ==
-We have now proved all the theorems in [[Interface:Basic operations of general set theory]].
+We have now proved all the theorems in [[Interface:Basic operations of general set theory]]j, and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
 
 <jh>
 export (GENERAL Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
+export (ZF_BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ()) 
 </jh>
 
 == References ==
