@@ -51,6 +51,12 @@ stmt (Subset ((x A) (x B)) ()
   ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))))
 </jh>
 
+The union of a set has as its elements everything which is an element of some set in the given set.
+<jh>
+#term (object (⋃ object))
+#stmt (Union ((x A) (x B)) () ((A ∈ (⋃ B)) ↔ (∃ x ((A ∈ (value x)) ∧ ((value x) ∈ B)))))
+</jh>
+
 == Builders ==
 Equals can be substituted for equals, in the context of set operations.
 
