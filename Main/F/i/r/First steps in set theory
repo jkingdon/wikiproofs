@@ -176,6 +176,68 @@ To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableT
 ))
 </jh>
 
+== Introducing a notation for a set ==
+Many of the axioms (or theorems) of set theory assert the existence of certain sets. That is, they take the form that there is a set whose elements are those which satisfy a certain formula. In symbols, <code>∃ result ∀ y (y ∈ result ↔ φy)</code>. For each of these, we want to introduce a notation for the set <code>result</code>. Most of the work of doing this is some substitution machinery, which can be in part factored out to the following theorems.
+<jh>
+var (formula φy φz φC)
+thm (SetVariable
+  ((result y φz) (result y z) (z φy))
+  ((HSUBZ (((value z) = (value y)) → (φz ↔ φy)))
+   (HEXISTS (∃ result (∀ y (((value y) ∈ (value result)) ↔ φy)))))
+  (((value y) ∈ (abstract z φz)) ↔ φy) (
+        HEXISTS
+</jh>
+The first step is <code>[y / z]φz ↔ φy</code>.
+<jh>
+        HSUBZ
+        makeSubstExplicit
+</jh>
+We now apply builders to get <code>∃ result ∀ y (y ∈ result ↔ [y / z]φz) ↔ ∃ result ∀ y (y ∈ result ↔ φy)</code>
+<jh>
+        ((value y) ∈ (value result)) buildBiconditionalLL
+        y buildForAll
+        result buildThereExists
+</jh>
+The right hand side of this is just our existence theorem, though (which we had left on the proof stack), so we detach it.
+<jh>
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+Applying <code>Abstraction</code> to <code><code>∃ result ∀ y (y ∈ result ↔ [y / z]φz)</code> gives <code>y ∈ {z | φz} ↔ [y / z]φz</code> and simplying the last part gives us <code>y ∈ {z | φz} ↔ φy</code>.
+<jh>
+        Abstraction
+
+        HSUBZ
+        makeSubstExplicit
+
+        applyBiconditionalTransitivity
+))
+</jh>
+Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
+<jh>
+thm (SetObject
+  ((y C) (result y φz) (result y z) (z φy) (y φz) (y φC))
+  ((HSUBZ (((value z) = (value y)) → (φz ↔ φy)))
+   (HSUBC (((value y) = C) → (φy ↔ φC)))
+   (HEXISTS (∃ result (∀ y (((value y) ∈ (value result)) ↔ φy)))))
+  ((C ∈ (abstract z φz)) ↔ φC) (
+</jh>
+Our substitution is <code>y = C → ((y ∈ {z | φz} ↔ φy) ↔ (C ∈ {z | φz} ↔ φC))</code>.
+<jh>
+        (value y) C (abstract z φz) IsElementBuilderRR
+        HSUBC
+        buildBiconditionalInConsequent
+
+        HSUBZ
+        HEXISTS
+        SetVariable
+
+        VariableToObject
+))
+</jh>
+
+TODO: Use this theorem to simplify the singleton and unordered pair proofs below.
+
 == Singletons ==
 Given a set (object) <code>A</code>, here we construct a set <code>{ A }</code> which has <code>s</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { A } ↔ y = A</code>.
 
