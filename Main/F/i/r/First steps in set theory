@@ -236,101 +236,45 @@ Our substitution is <code>y = C → ((y ∈ {z | φz} ↔ φy) ↔ (C ∈ {z | �
 ))
 </jh>
 
-TODO: Use this theorem to simplify the singleton and unordered pair proofs below.
-
 == Singletons ==
-Given a set (object) <code>A</code>, here we construct a set <code>{ A }</code> which has <code>s</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { A } ↔ y = A</code>.
+Given a set (object) <code>A</code>, here we construct a set <code>{ A }</code> which has <code>A</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { A } ↔ y = A</code>.
 
-Our first lemma is <code>y = A ↔ y = A ∨ y = A</code>, which is the first step towards applying the pairing axiom to singletons. To avoid having to write <code>(value y)</code> everywhere, we use <code>yy</code> for an object which corresponds to the variable <code>y</code>.
+We first apply pairing via <code>SetObject</code>.
 <jh>
-var (object yy)
-thm (Singleton-1 () () ((yy = A) ↔ ((yy = A) ∨ (yy = A))) (
-        (yy = A) DisjunctionIdempotence
+thm (Singleton-sub () () ((B = C) → ((B = A) ↔ (C = A))) (
+        B C A EqualityBuilderRR
 ))
-</jh>
 
-In a few places we'll need <code>[y / z]z = A ↔ y = A</code>.
-<jh>
-thm (Singleton-eq ((yy z) (z A)) () ((subst yy z ((value z) = A)) ↔ (yy = A)) (
-</jh>
-Our substitution is <code>z = y → (z = A ↔ y = A)</code>.
-<jh>
-        ((value z) = yy) ImplicationReflexivity
-        A buildEqualityRRInConsequent
-</jh>
-Making this explicit gives us our result.
-<jh>
-        makeSubstExplicit
-))
-</jh>
+thm (SingletonObject ((y B) (result y A z)) () ((B ∈ (abstract z ((value z) = A))) ↔ (B = A)) (
+        (value z) (value y) A Singleton-sub
 
-Applying <code>Singleton-eq</code> to the left hand side of <code>Singleton-1</code> gets us <code>[y / z]z = A ↔ y = A ∨ y = A</code>.
-<jh>
-thm (Singleton-2 ((yy z) (z A)) () ((subst yy z ((value z) = A)) ↔ ((yy = A) ∨ (yy = A))) (
-        yy z A Singleton-eq
-        yy A Singleton-1
-        applyBiconditionalTransitivity
-))
-</jh>
+        (value y) B A Singleton-sub
 
-The next step is to take <code>Singleton-2</code> and apply builders until we get <code>∃ result ∀ y (y ∈ result ↔ [y / z]z = A) ↔ ∃ result ∀ y (y ∈ result ↔ (y = A ∨ y = A))</code>
+</jh>
+The existence theorem we need is <code>∃ result ∀ y (y ∈ result ↔ y = A)</code> which is a result of supplying <code>A</code> for both of the given sets in <code>PairingObject</code>.
 <jh>
-thm (Singleton-3 ((y z) (z A)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = A))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) = A) ∨ ((value y) = A)))))) (
-        (value y) z A Singleton-2
+        result y A A PairingObject
+
+        ((value y) = A) DisjunctionIdempotence
         ((value y) ∈ (value result)) buildBiconditionalLL
         y buildForAll
         result buildThereExists
-))
-</jh>
-
-The right hand side of <code>Singleton-3</code> holds by pairing, so we can conclude the left hand side as a theorem.
-<jh>
-thm (Singleton-4 ((y z) (z A) (result y A)) () (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z ((value z) = A))))) (
-        result y A A PairingObject
-
-        result y z A Singleton-3
         eliminateBiconditionalForward
 
         applyModusPonens
+</jh>
+We're ready to apply <code>SetObject</code>
+<jh>
+        SetObject
 ))
 </jh>
 
 Because the notation <code>{ A }</code> is not available, we call it <code>(singleton A)</code>.
 <jh>
 def ((singleton A) (abstract y ((value y) = A)))
-</jh>
 
-We can now prove that <code>y ∈ { A } ↔ y = A</code>
-<jh>
-var (variable singletonElement)
-thm (SingletonVariable ((result z y A)) () (((value y) ∈ (abstract z ((value z) = A))) ↔ ((value y) = A)) (
-        result y z A Singleton-4
-        Abstraction
-
-        (value y) z A Singleton-eq
-        applyBiconditionalTransitivity
-))
-</jh>
-
-Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
-
-One detail is that if we specified the singleton of A as <code>{ A }</code>, the definition would expand to a dummy variable which we are unable to express a distinct variable constraint for.  By writing <code>{ singletonElement | singletonElement = A }</code> instead we get to include the distinct variable constraints on <code>singletonElement</code>.  In our informal descriptions we will continue to say <code>{ A }</code> in such situations.
-<jh>
-thm (SingletonObject ((y B) (y A singletonElement)) () ((B ∈ (abstract singletonElement ((value singletonElement) = A))) ↔ (B = A)) (
-</jh>
-Our substitution is <code>y = B → ((y ∈ { A } ↔ y = A) ↔ (B ∈ { A } ↔ B = A))</code>.
-<jh>
-        (value y) B (abstract singletonElement ((value singletonElement) = A)) IsElementBuilderRR
-        (value y) B A EqualityBuilderRR
-        buildBiconditionalInConsequent
-
-        y singletonElement A SingletonVariable
-
-        VariableToObject
-))
-
-thm (Singleton ((singletonElement A)) () ((B ∈ (singleton A)) ↔ (B = A)) (
-        B singletonElement A SingletonObject
+thm (Singleton ((z A)) () ((B ∈ (singleton A)) ↔ (B = A)) (
+        B z A SingletonObject
 ))
 </jh>
 
@@ -374,84 +318,29 @@ thm (SingletonBuilder ((B b)) () ((A = B) → ((singleton A) = (singleton B))) (
 
 == Unordered pair ==
 
-The unordered pair <code>{A, B}</code> has <code>A</code> and <code>B</code> as elements.  That is, we seek to prove <code>y ∈ {A, B} ↔ y = A ∨ y = B</code>. The idea of the proof is easy: apply pairing to <code>A</code> and <code>B</code>, but formalizing this involves much the same substitution machinery that we saw with singletons.
+The unordered pair <code>{A, B}</code> has <code>A</code> and <code>B</code> as elements.  That is, we seek to prove <code>y ∈ {A, B} ↔ y = A ∨ y = B</code>. We apply pairing to <code>A</code> and <code>B</code> (again via <code>SetObject</code>).
 
-The next lemma, <code>[y / z](z = A ∨ z = B) ↔ y = A ∨ y = B</code>, is a substitution that we'll use two places.
 <jh>
-thm (UnorderedPair-sub ((z yy) (z A) (z B)) () ((subst yy z (((value z) = A) ∨ ((value z) = B))) ↔ ((yy = A) ∨ (yy = B))) (
-</jh>
-We construct the substitution <code>z = y → (z = A ∨ z = B ↔ y = A ∨ y = B)</code> and then make it explicit.
-<jh>
-        (value z) yy A EqualityBuilderRR
-        (value z) yy B EqualityBuilderRR
+thm (UnorderedPair-sub () () ((C = D) → (((C = A) ∨ (C = B)) ↔ ((D = A) ∨ (D = B)))) (
+        C D A EqualityBuilderRR
+        C D B EqualityBuilderRR
         buildDisjunctionInConsequent
-
-        makeSubstExplicit
 ))
-</jh>
 
-We now take the previous result and apply some builders to get <code>∃ result ∀ y (y ∈ result ↔ [y / z](z = A ∨ z = B)) ↔ ∃ result ∀ y (y ∈ result ↔ y = A ∨ y = B)</code>
-<jh>
-thm (UnorderedPair-3 ((z y) (z A) (z B)) () ((∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = A) ∨ ((value z) = B)))))) ↔ (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) = A) ∨ ((value y) = B)))))) (
-        (value y) z A B UnorderedPair-sub
-
-        ((value y) ∈ (value result)) buildBiconditionalLL
-        y buildForAll
-        result buildThereExists
-))
-</jh>
-
-The right hand side of <code>UnorderedPair-3</code> holds by pairing, so we can conclude the left hand side as a theorem.
-<jh>
-thm (UnorderedPair-4 ((y z) (z A) (z B) (result y A) (result y B)) ()
-  (∃ result (∀ y (((value y) ∈ (value result)) ↔ (subst (value y) z (((value z) = A) ∨ ((value z) = B)))))) (
+thm (UnorderedPairObject ((y C) (result y A z) (result y B z)) () ((C ∈ (abstract z (((value z) = A) ∨ ((value z) = B)))) ↔ ((C = A) ∨ (C = B))) (
+        (value z) (value y) A B UnorderedPair-sub
+        (value y) C A B UnorderedPair-sub
         result y A B PairingObject
-
-        result y z A B UnorderedPair-3
-        eliminateBiconditionalForward
-
-        applyModusPonens
+        SetObject
 ))
 </jh>
 
 Because the notation <code>{ A, B }</code> is not available, we call it <code>(unorderedPair A B)</code>.
 <jh>
 def ((unorderedPair A B) (abstract y (((value y) = A) ∨ ((value y) = B))))
-</jh>
 
-We can now prove that <code>y ∈ { A, B } ↔ y = A ∨ y = B</code>
-<jh>
-var (variable pairElement)
-thm (UnorderedPairVariable ((result z y A) (result z y B)) ()
-  (((value y) ∈ (abstract z (((value z) = A) ∨ ((value z) = B)))) ↔ (((value y) = A) ∨ ((value y) = B))) (
-        result y z A B UnorderedPair-4
-        Abstraction
-
-        (value y) z A B UnorderedPair-sub
-        applyBiconditionalTransitivity
-))
-</jh>
-
-Getting rid of the distinct variable constraint and changing <code>y</code> from a variable to an object are accomplished by invoking <code>VariableToObject</code>.
-<jh>
-thm (UnorderedPairObject ((y C) (y A pairElement) (y B pairElement)) () ((C ∈ (abstract pairElement (((value pairElement) = A) ∨ ((value pairElement) = B)))) ↔ ((C = A) ∨ (C = B))) (
-</jh>
-Our substitution is <code>y = C → ((y ∈ { A, B } ↔ y = A ∨ y = B) ↔ (C ∈ { A, B } ↔ C = A ∨ C = B))</code>.
-<jh>
-        (value y) C (abstract pairElement (((value pairElement) = A) ∨ ((value pairElement) = B))) IsElementBuilderRR
-
-        (value y) C A EqualityBuilderRR
-        (value y) C B EqualityBuilderRR
-        buildDisjunctionInConsequent
-        buildBiconditionalInConsequent
-
-        y pairElement A B UnorderedPairVariable
-
-        VariableToObject
-))
-
-thm (UnorderedPair ((pairElement A) (pairElement B)) () ((C ∈ (unorderedPair A B)) ↔ ((C = A) ∨ (C = B))) (
-        C pairElement A B UnorderedPairObject
+thm (UnorderedPair ((z A) (z B)) () ((C ∈ (unorderedPair A B)) ↔ ((C = A) ∨ (C = B))) (
+        C z A B UnorderedPairObject
 ))
 </jh>
 
