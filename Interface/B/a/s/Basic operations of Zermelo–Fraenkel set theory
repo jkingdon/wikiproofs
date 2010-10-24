@@ -53,8 +53,8 @@ stmt (Subset ((x A) (x B)) ()
 
 The union of a set has as its elements everything which is an element of some set in the given set.
 <jh>
-#term (object (⋃ object))
-#stmt (Union ((x A) (x B)) () ((A ∈ (⋃ B)) ↔ (∃ x ((A ∈ (value x)) ∧ ((value x) ∈ B)))))
+term (object (⋃ object))
+#stmt (Union ((x A) (x B)) () ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))))
 </jh>
 
 == Builders ==
