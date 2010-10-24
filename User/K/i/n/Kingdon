@@ -40,6 +40,3 @@ Stanley Burris (1997), [http://www.math.uwaterloo.ca/~snburris/htdocs/scav/hilbe
 
 === Robbins algebra ===
 [[w:Robbins algebra]] and Huntington's axiom seem to form two axiomizations (unless I'm missing some detail in the translation from algebras to logical systems). We'd need some more axioms for =.  Conjunction and implication would be defined in terms of ∨ and ¬ in the usual Principia way I assume.
-
-== Set theory ==
-The obvious notation for power set is <code>(𝒫 x)</code> but I don't know how widely available U+1D4AB MATHEMATICAL SCRIPT CAPITAL P is. If not, metamath uses ℘ (the [[w:Weierstrass p]]), but I'd lean towards just <code>(power x)</code>. Using <code>(P x)</code> mimics the P(x) use you sometimes see but it probably is a mistake to start defining single-letter operators like this.
