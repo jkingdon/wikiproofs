@@ -10,7 +10,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (AXIOMS Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
-var (variable x y z w result)
+var (variable x y z w result x′)
 var (object A B C D A0 A1 B0 B1)
 </jh>
 
@@ -407,13 +407,13 @@ thm (UnionAxiomObject ((A x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) 
         z buildForAllInConsequent
         y buildThereExistsInConsequent
 
-        y z w x Union
+        y z w x UnionAxiom
 
         VariableToObject
 ))
 </jh>
 
-Then we prove <code>B ∈ ⋃ A ↔ ∃ x (B ∈ x ∧ x ∈ A)</code> using <code>SetObject</code> in the usual way.
+Then we prove <code>B ∈ ⋃ A ↔ ∃ x (B ∈ x ∧ x ∈ A)</code> using <code>SetObject</code> in the usual way. The main complication we didn't have with unordered pairs is the need to change the variable of quantification via <code>Union-changeVariable</code>.
 
 <jh>
 thm (Union-sub ((x C) (x D)) () ((C = D) → ((∃ x ((C ∈ (value x)) ∧ ((value x) ∈ A))) ↔ (∃ x ((D ∈ (value x)) ∧ ((value x) ∈ A))))) (
@@ -422,21 +422,34 @@ thm (Union-sub ((x C) (x D)) () ((C = D) → ((∃ x ((C ∈ (value x)) ∧ ((va
         x buildThereExistsInConsequent
 ))
 
-thm (UnionObject ((y B) (x B) (z result y x A)) () ((B ∈ (abstract z (∃ x (((value z) ∈ (value x)) ∧ ((value x) ∈ A))))) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
+thm (Union-changeVariable ((x′ C) (x′ x) (x′ A) (x C) (x A)) ()
+  ((∃ x ((C ∈ (value x)) ∧ ((value x) ∈ A))) ↔
+    (∃ x′ ((C ∈ (value x′)) ∧ ((value x′) ∈ A)))) (
+        (value x) (value x′) C IsElementBuilderLL
+        (value x) (value x′) A IsElementBuilderRR
+        buildConjunctionInConsequent
+
+        ChangeVariableThereExists
+))
+
+thm (UnionObject ((y B) (x B) (z result y x A x′)) () ((B ∈ (abstract z (∃ x′ (((value z) ∈ (value x′)) ∧ ((value x′) ∈ A))))) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
         (value z) (value y) x A Union-sub
+        x (value z) A x′ Union-changeVariable
+        transformImplicationBiconditionalLeft
+
         (value y) B x A Union-sub
+
         result y x A UnionAxiomObject
+
         SetObject
 ))
 
 def ((⋃ A) (abstract z (∃ x (((value z) ∈ (value x)) ∧ ((value x) ∈ A)))))
 
-# This is close, but it needs an alpha conversion (UnionObject should use the same
-# variable x in two different quantifiers).
-#thm (Union ((x A) (x B)  (z A)) ()
-#  ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
-#        B z x A UnionObject
-#))
+thm (Union ((x A) (x B)  (z A) (z x) (z x′) (x′ x) (x′ A)) ()
+  ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
+        B z x′ A x UnionObject
+))
 </jh>
 
 == Subset ==
