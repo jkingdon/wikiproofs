@@ -4,13 +4,22 @@
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 #import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
-import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
-import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER) ())
+#import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 #import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
 import (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
+
+import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER ZF) ())
 
 var (formula p q φ ψ)
 var (variable x y x0 y0 x1 y1 z k n)
 var (object s t u)
+var (variable result x′)
+var (object A B C D)
 
+def ((⋃ A) (abstract z (∃ x (((value z) ∈ (value x)) ∧ ((value x) ∈ A)))))
+
+thm (UnionFoo ((x A) (x B)  (z x A)) ()
+  ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
+        B z x′ A x UnionObject
+))
 </jh>
