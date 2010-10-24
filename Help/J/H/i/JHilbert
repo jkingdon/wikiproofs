@@ -99,6 +99,10 @@ This means that the statement left on the proof stack at the end of the proof ha
 
 The statement left on the proof stack does not have the same arrangement of terms as what you are trying to prove. For an example, see [[Example of consequent of theorem does not match proof result]].
 
+ Unification error while popping hypotheses from proof stack: Invalid change of variable assignment 
+
+This happens when you are invoking a proof step with hypotheses but the hypotheses don't match. (TODO: elaborate on this a bit more, with at least one example).
+
  No functor found in expression
  Non-variable symbol in expression
 
