@@ -54,7 +54,13 @@ stmt (Subset ((x A) (x B)) ()
 The union of a set has as its elements everything which is an element of some set in the given set.
 <jh>
 term (object (⋃ object))
-#stmt (Union ((x A) (x B)) () ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))))
+stmt (Union ((x A) (x B)) () ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))))
+</jh>
+
+The power set of a set has as its elements all of the subsets of the given set.
+<jh>
+term (object (power object))
+stmt (PowerSet () () ((B ∈ (power A)) ↔ (B ⊆ A)))
 </jh>
 
 == Builders ==
