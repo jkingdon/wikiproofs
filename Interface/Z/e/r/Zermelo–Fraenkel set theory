@@ -65,12 +65,12 @@ stmt (Pairing ((x z w) (y z w)) () (∃ z (∀ w (((value w) ∈ (value z)) ↔ 
 
 Axiom of power sets. As with pairing, the metamath version asserts a set which contains the power set but we assert the power set itself.<ref>[http://us.metamath.org/mpeuni/ax-pow.html ax-pow], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
-stmt (PowerSet ((x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∀ w (((value w) ∈ (value z)) → ((value w) ∈ (value x))))))))
+stmt (PowerSetAxiom ((x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∀ w (((value w) ∈ (value z)) → ((value w) ∈ (value x))))))))
 </jh>
 
 Axiom of union. As with pairing, the metamath version asserts a set which contains the union but we assert the union itself.<ref>[http://us.metamath.org/mpeuni/ax-un.html ax-un], metamath's set.mm, accessed September 13, 2010</ref>
 <jh>
-stmt (Union ((x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∃ w (((value z) ∈ (value w)) ∧ ((value w) ∈ (value x))))))))
+stmt (UnionAxiom ((x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∃ w (((value z) ∈ (value w)) ∧ ((value w) ∈ (value x))))))))
 </jh>
 
 Axiom of regularity.<ref>[http://us.metamath.org/mpeuni/ax-reg.html ax-reg], metamath's set.mm, accessed September 13, 2010</ref>
