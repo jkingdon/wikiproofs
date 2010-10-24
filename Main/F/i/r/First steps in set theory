@@ -1,6 +1,6 @@
 {{interfaces
 | imports = [[Interface:Zermelo–Fraenkel set theory]]
-| exports = [[Interface:Basic operations of general set theory]]
+| exports = [[Interface:Basic operations of Zermelo–Fraenkel set theory]]
 }}
 Here we start with the axioms of Zermelo–Fraenkel set theory and prove theorems for a few of the basic concepts: empty set, singletons, and unordered pairs.  Other topics of set theory are treated elsewhere, such as ordered pairs, relations, functions, some kinds of unions, intersection, set difference, and so on.
 
@@ -391,52 +391,6 @@ thm (UnorderedPairBuilder-2 ((a A0) (a A1) (b B0) (b B1)) () (((A0 = B0) ∧ (A1
 thm (UnorderedPairBuilder ((a A0) (a A1)) () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))) (
         A0 B0 A1 B1 a UnorderedPairBuilder-2
 ))
-</jh>
-
-== Union ==
-This section introduces the union of a set, <code>⋃ A</code>. We go through much the same process as for unordered pairs, but based on the axiom of union.
-
-First is a version of the axiom of union for <code>object</code> rather than <code>variable</code>.
-
-<jh>
-thm (UnionAxiomObject ((A x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∃ w (((value z) ∈ (value w)) ∧ ((value w) ∈ A)))))) (
-        (value x) A (value w) IsElementBuilderLL
-        ((value z) ∈ (value w)) buildConjunctionLLInConsequent
-        w buildThereExistsInConsequent
-        ((value z) ∈ (value y)) buildBiconditionalLLInConsequent
-        z buildForAllInConsequent
-        y buildThereExistsInConsequent
-
-        y z w x Union
-
-        VariableToObject
-))
-</jh>
-
-Then we prove <code>B ∈ ⋃ A ↔ ∃ x (B ∈ x ∧ x ∈ A)</code> using <code>SetObject</code> in the usual way.
-
-<jh>
-thm (Union-sub ((x C) (x D)) () ((C = D) → ((∃ x ((C ∈ (value x)) ∧ ((value x) ∈ A))) ↔ (∃ x ((D ∈ (value x)) ∧ ((value x) ∈ A))))) (
-        C D (value x) IsElementBuilderRR
-        ((value x) ∈ A) buildConjunctionRRInConsequent
-        x buildThereExistsInConsequent
-))
-
-thm (UnionObject ((y B) (x B) (z result y x A)) () ((B ∈ (abstract z (∃ x (((value z) ∈ (value x)) ∧ ((value x) ∈ A))))) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
-        (value z) (value y) x A Union-sub
-        (value y) B x A Union-sub
-        result y x A UnionAxiomObject
-        SetObject
-))
-
-def ((⋃ A) (abstract z (∃ x (((value z) ∈ (value x)) ∧ ((value x) ∈ A)))))
-
-# This is close, but it needs an alpha conversion (UnionObject should use the same
-# variable x in two different quantifiers).
-#thm (Union ((x A) (x B)  (z A)) ()
-#  ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
-#        B z x A UnionObject
-#))
 </jh>
 
 == Subset ==
