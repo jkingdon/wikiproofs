@@ -466,6 +466,74 @@ thm (Subset ((x A) (x B)  (y A) (y B) (y x)) ()
 ))
 </jh>
 
+== Power set ==
+Introducing a notation for power set is much like union. Because of issues with distinct variable declarations, we won't be able to to use the subset notation until the very end.
+
+First is a version of the axiom of power set for <code>object</code> rather than <code>variable</code>.
+
+<jh>
+thm (PowerSetAxiomObject ((A x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∀ w (((value w) ∈ (value z)) → ((value w) ∈ A)))))) (
+        (value x) A (value w) IsElementBuilderLL
+        ((value w) ∈ (value z)) buildCommonAntecedentInConsequent
+        w buildForAllInConsequent
+        ((value z) ∈ (value y)) buildBiconditionalLLInConsequent
+        z buildForAllInConsequent
+        y buildThereExistsInConsequent
+
+        y z w x PowerSetAxiom
+
+        VariableToObject
+))
+</jh>
+
+Then we prove <code>B ∈ (power A) ↔ ∀ x (x ∈ B → x ∈ A)</code> using <code>SetObject</code> in the usual way. Similarly to the proof for unions, we will need to change the variable of quantification, in our case via <code>PowerSet-changeVariable</code>.
+
+<jh>
+thm (PowerSet-sub ((x C) (x D)) () ((C = D) → ((∀ x (((value x) ∈ C) → ((value x) ∈ A))) ↔ (∀ x (((value x) ∈ D) → ((value x) ∈ A))))) (
+        C D (value x) IsElementBuilderLL
+        ((value x) ∈ A) buildCommonConsequentInConsequent
+        x buildForAllInConsequent
+))
+
+thm (PowerSet-changeVariable ((x′ C) (x′ x) (x′ A) (x C) (x A)) ()
+  ((∀ x (((value x) ∈ C) → ((value x) ∈ A))) ↔
+    (∀ x′ (((value x′) ∈ C) → ((value x′) ∈ A)))) (
+        (value x) (value x′) C IsElementBuilderRR
+        (value x) (value x′) A IsElementBuilderRR
+        buildImplicationInConsequent
+
+        ChangeVariableForAll
+))
+
+thm (PowerSetObject ((y B) (x B) (z result y x A x′)) () ((B ∈ (abstract z (∀ x′ (((value x′) ∈ (value z)) → ((value x′) ∈ A))))) ↔ (∀ x (((value x) ∈ B) → ((value x) ∈ A)))) (
+        (value z) (value y) x A PowerSet-sub
+        x (value z) A x′ PowerSet-changeVariable
+        transformImplicationBiconditionalLeft
+
+        (value y) B x A PowerSet-sub
+
+        result y x A PowerSetAxiomObject
+
+        SetObject
+))
+
+def ((power A) (abstract z (∀ x (((value x) ∈ (value z)) → ((value x) ∈ A)))))
+
+thm (PowerSetForAll ((x A) (x B)  (z A) (z x) (z x′) (x′ x) (x′ A)) ()
+  ((B ∈ (power A)) ↔ (∀ x (((value x) ∈ B) → ((value x) ∈ A)))) (
+        B z x′ A x PowerSetObject
+))
+
+thm (PowerSet ( (x A) (x B)) () ((B ∈ (power A)) ↔ (B ⊆ A)) (
+        B A x PowerSetForAll
+
+        B A x Subset
+        swapBiconditional
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Done ==
 We have now proved all the theorems in [[Interface:Basic operations of general set theory]]j, and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
 
