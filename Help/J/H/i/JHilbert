@@ -101,7 +101,7 @@ The statement left on the proof stack does not have the same arrangement of term
 
  Unification error while popping hypotheses from proof stack: Invalid change of variable assignment 
 
-This happens when you are invoking a proof step with hypotheses but the hypotheses don't match. (TODO: elaborate on this a bit more, with at least one example).
+This happens when you are invoking a proof step with hypotheses but the hypotheses don't match. Example: change the last occurrence of buildThereExistsInConsequent to buildForAllInConsequent in <code>UnionAxiomObject</code> at [http://www.wikiproofs.de/w/index.php?title=First_steps_in_set_theory&oldid=1586]. (TODO: elaborate on this a bit more, with a better explained example, in the style of the others on this page).
 
  No functor found in expression
  Non-variable symbol in expression
