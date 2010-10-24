@@ -5,9 +5,13 @@ This is an interface to hold various results, e.g. potential axioms, proofs whic
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
 param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 #param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
+param (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (formula φ ψ χ θ)
 var (variable x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
-var (object s t u)
+var (variable result x′)
+var (object s t u A B C D)
+
+stmt (UnionObject ((y B) (x B) (z result y x A)) () ((B ∈ (abstract z (∃ x′ (((value z) ∈ (value x′)) ∧ ((value x′) ∈ A))))) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))))
 
 </jh>
