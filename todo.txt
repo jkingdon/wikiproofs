@@ -29,7 +29,7 @@ Items which may be doable without a network connection:
       - releq
       (mkrelation a A b B φ) (A, B object; a, b variable; φ formula)
         ≝ {〈a, b〉| a ∈ A ∧ b ∈ B ∧ φ }
-        e.g. (mkrelation ℕ ℕ a b (∃ n ∈ ℕ a + n = b))
+        e.g. (mkrelation a ℕ b ℕ (∃ n ∈ ℕ a + n = b))
       - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
     - domain and range: dfdm3 and dfrn2 or some such (need to prove existence)
       - dmeq
@@ -45,9 +45,19 @@ Items which may be doable without a network connection:
         this reads oddly, because [/] only applies to formulas, not terms
         (metamath has underlined [/] for terms; do we want that?)
     - cross products, e.g. cxp, df-xp, elxp, opelxp1, opelxp
-      xpss regarding existence of cross products (note dependence on
-      ax-pow, which is more explicit in xpsspw). Also note dependence on defn of
-      ordered pair.
+      xpexg regarding existence of cross products
+        relies on xpsspw
+        Also note dependence on defn of ordered pair.
+      A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
+        then the interesting part is proving opelxp, elxp, or something else useful
+        a ∈ A ↔ {a} ⊆ A
+        a0 ∈ A ∧ a1 ∈ A ↔ {a0, a1} ⊆ A
+        A ∈ B → A ∈ B 
+        perhaps something like z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B) is one step
+        (φ → z ∈ A) → (y ∈ {z ∈ A | φ} ↔ [y / z]φ)  (could be helpful but has the subst)
+          then next step is y ∈ A × B ↔ [y / z](z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
+          then y ∈ A × B ↔ y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B
+          and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B
       - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
     - note dmex depends on ax-pow and ax-un, but doesn't need replacement.
   - recursion theorem (see downloaded wikipedia page, Joedit)
@@ -64,7 +74,7 @@ Items which may be doable without a network connection:
     • x - x = 0
     • x - y = 0 → x = y
     • x ∈ ℝ → 0 ≤ x · x
-    • 0 ≤ x & 0 ≤ y & x + y = 0 → x = 0 (or some such)
+    • 0 ≤ x ∧ 0 ≤ y ∧ x + y = 0 → x = 0 (or some such)
   - For Indivisibility
     • (x - y) · (y - x) ≤ 0
     • antisymmetry
