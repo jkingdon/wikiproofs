@@ -71,7 +71,7 @@ We can build up formulas based on equivalences or equalities of the the substitu
 In this section we will prove <code>s = t → ((subst s x φ) ↔ (subst t x φ))</code>. This is like dfsbcq in set.mm.<ref>[http://us.metamath.org/mpeuni/dfsbcq.html dfsbcq] in metamath's set.mm, accessed March 7, 2010</ref> The set.mm analogue for substituting a <code>variable</code> (rather than an <code>object</code>) is sbequ.<ref>[http://us.metamath.org/mpeuni/sbequ.html sbequ] in metamath's set.mm, accessed June 20, 2010</ref>
 
 <jh>
-thm (SubstBuilderReplacement ((s y) (t y)) ()
+thm (SubstBuilderReplacement ((s y) (t y) (φ y) (x y)) ()
   ((s = t) → ((subst s x φ) ↔ (subst t x φ))) (
         s t (value y) EqualityBuilderLL
         (∃ x (((value x) = (value y)) ∧ φ)) buildConjunctionRRInConsequent
@@ -99,7 +99,7 @@ thm (buildSubstReplacement () ((H (s = t)))
 ==== Implication builder ====
 Analogous to our other implication builders, this theorem takes an implication and lets us add <code>subst</code> to both sides. The proof is just a straightforward application of the existing builders for conjunction and ∃.
 <jh>
-thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
+thm (addSubst ((y s) (y x) (y ψ) (y φ)) ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
         H
         ((value x) = (value y)) conjoinLL
         x addThereExists
@@ -135,7 +135,7 @@ One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a p
 
 In our notation, this idea is expressed via <code>subst</code>:
 <jh>
-thm (ThereExistsIntroductionFromObject ((y φ) (y x)) () ((subst s x φ) → (∃ x φ)) (
+thm (ThereExistsIntroductionFromObject ((y φ) (y x) (y s)) () ((subst s x φ) → (∃ x φ)) (
 </jh>
 The proof takes the definition of <code>subst</code>, <code>(∃ y (y = s ∧ (∃ x (x = y ∧ φ))))</code> and pares it down by eliminating the parts we don't need.
 
@@ -177,7 +177,7 @@ thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
 == Free variables and substitution ==
 A substitution acts like a quantifier in the sense that it binds the variable being substituted. So this variable is not free in the substituted formula (provided it is not free in the object being substituted for the variable).
 <jh>
-thm (SubstNotFree ((x s) (x y)) () (x is-not-free-in (subst s x φ)) (
+thm (SubstNotFree ((x s)  (y x) (y s) (y φ)) () (x is-not-free-in (subst s x φ)) (
 </jh>
 The proof consists of just applying our not-free theorems to each piece of the definition of <code>subst</code>
 <jh>
@@ -559,7 +559,7 @@ thm (SubstNegationLemma () ()
         transposeBiconditionalWithNegatedRight
 ))
 
-thm (SubstNegation ((y x) (y s)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+thm (SubstNegation ((y x) (y s) (y φ)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
         s x (¬ φ) y Subst
 
         y s (∃ x (((value x) = (value y)) ∧ (¬ φ))) ThereExistsForAll
@@ -587,7 +587,7 @@ thm (SubstNegation ((y x) (y s)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))
 === Disjunction ===
 We can prove the ability to move substitution across a disjunction by expanding the definition and applying theorems which let us move ∃ and ∧ across disjunctions.
 <jh>
-thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))) (
+thm (SubstDisjunction ( (y s) (y x) (y φ) (y ψ)) () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))) (
         s x (φ ∨ ψ) y Subst
 
         ((value x) = (value y)) φ ψ ConjunctionLeftDistribution
@@ -677,7 +677,7 @@ thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (
 === Quantifiers ===
 We can move substitution across a quantifier to a distinct variable: <code>[s / x] ∃ y φ ↔ ∃ y [s / x] φ</code>.<ref>[http://us.metamath.org/mpeuni/sbex.html sbex], metamath's set.mm</ref>
 <jh>
-thm (SubstThereExists ((x y s z)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
+thm (SubstThereExists ((x y s z) (z φ)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
 </jh>
 To prove this, we simply expand the definition of <code>subst</code> and move <code>∃ y</code> across each piece of it. The expansion is <code>∃ z (z = s ∧ ∃ x (x = z ∧ ∃ y φ))</code>
 <jh>
@@ -798,7 +798,7 @@ A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code>
 Although the distinct variable constraint between <code>x</code> and <code>s</code> should not be necessary (if we wanted to require that <code>x</code> and <code>s</code> are distinct we could have a simpler definition of <code>subst</code>), even the version with the constraint can be useful.
 
 <jh>
-thm (convertImplicitToSubst ((x s) (y ψ) (x y)) 
+thm (convertImplicitToSubst ((x s)  (y ψ) (x y) (y s) (y φ)) 
   ((HFREE (x is-not-free-in ψ))
    (HEQ (((value x) = s) → (φ ↔ ψ)))
   )
