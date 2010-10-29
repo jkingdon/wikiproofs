@@ -50,7 +50,7 @@ The axiom of separation is <code>∃ y ∀ x (x ∈ y ↔ x ∈ z ∧ φ)</code>
 
 TODO: Prove this from the axiom of replacement and then we won't need it as an axiom here.
 <jh>
-stmt (Separation ((x y z) (φ y z)) () (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ (value z)) ∧ φ)))))
+stmt (SeparationThereExists ((x y z) (φ y z)) () (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ (value z)) ∧ φ)))))
 </jh>
 
 Axiom of replacement. Metamath has a number of variants of this axiom, but at least for now we choose this one, which has an odd feature of the apparently pointless <code>∀ y</code> (whose function is in fact to reduce the number of distinct variable constraints needed).<ref>[http://us.metamath.org/mpeuni/ax-rep.html ax-rep], metamath's set.mm, accessed September 13, 2010</ref>
