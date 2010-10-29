@@ -15,7 +15,7 @@ var (object A B C D A0 A1 B0 B1)
 </jh>
 
 == Empty set ==
-The [[w:empty set|empty set]], or null set, is the set with no elements. We start with the conventional form of the [[w:Axiom of empty set|axiom of empty set]], which is a theorem rather than an axiom for us (and for many other axiomizations of set theory).<ref>[http://us.metamath.org/mpeuni/axnul.html axnul], metamath's set.mm, accessed July 19, 2010</ref>
+The [[w:empty set|empty set]], or null set, is the set with no elements. We start with the conventional form of the [[w:Axiom of empty set|axiom of empty set]]. For us (and for many other axiomizations of set theory), this "axiom" is a theorem rather than an axiom.<ref>[http://us.metamath.org/mpeuni/axnul.html axnul], metamath's set.mm, accessed July 19, 2010</ref>
 <jh>
 thm (axnul ((x y z)) () (∃ x (∀ y (¬ ((value y) ∈ (value x))))) (
 </jh>
