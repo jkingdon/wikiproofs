@@ -81,9 +81,11 @@ Items which may be doable without a network connection:
     • (x - y) · (y - x) = 0 → x = y (follows from x · y = 0 → x = 0 or y = 0)
 
 == Separation ==
-[this section is having trouble with the subst]
+[problem with this section as written is that when we invoke SetObject we violate
+the distinct variable constraint between y and φz. Probably the best fix is via
+sbid but maybe there are other options]
 
-Here we provide the ability to form a set containing those elements of a given set which satisfy an arbitrary formula. In other words, we can form the set of all <code>x</code> in <code>A</code> such that <code>φ</code>, which is commonly notated as <code>{x ∈ A | φ }</code>. We will use that notation in discussion but JHilbert's syntax is not that flexible, so for JHilbert we will call it <code>(separate x A φ)</code>. The term '''restricted set abstraction''' is one term for this (contrasted with the '''unrestricted set abstraction''' of <code>{x | φ}</code>).<ref>Michael R. Genesereth and Richard E. Fikes (1994), "[http://logic.stanford.edu/kif/Hypertext/node25.html Paradoxes]", Knowledge Interchange Format Version 3.0 Reference Manual, also available as Stanford Logic Group Technical Report Logic-92-1.</ref>
+Here we provide the ability to form a set containing those elements of a given set which satisfy an arbitrary formula. In other words, we can form the set of all <code>x</code> in <code>A</code> such that <code>φ</code>, which is commonly notated as <code>{x ∈ A | φ }</code>. We will use that notation in discussion but JHilbert's syntax is not that flexible, so for JHilbert we will call it <code>(separate x A φ)</code>. ''Restricted set abstraction'' is one term for this (contrasted with the ''unrestricted set abstraction'' of <code>{x | φ}</code>).<ref>Michael R. Genesereth and Richard E. Fikes (1994), "[http://logic.stanford.edu/kif/Hypertext/node25.html Paradoxes]", Knowledge Interchange Format Version 3.0 Reference Manual, also available as Stanford Logic Group Technical Report Logic-92-1.</ref>
 
 Introducing this notation follows much the process as for the other existence theorems/axioms, in this case working from <code>SeparationThereExists</code>. We are trying to prove <code>y ∈ {x ∈ A | φ } ↔ y ∈ A ∧ [y / x] φ</code>.
 
@@ -101,32 +103,33 @@ thm (SeparationThereExistsObject ((x y A) (φ y A)  (z x y A) (z φ)) ()
 
         VariableToObject
 ))
+</jh>
 
-thm (Separation-sub () () ((C = D) → (((C ∈ A) ∧ (subst C x φ)) ↔ ((D ∈ A) ∧ (subst D x φ)))) (
-        C D A IsElementBuilderRR
-        C D x φ SubstBuilderReplacement
+From here we applying <code>SetObject</code> in much the usual way, with one exception. The usual patttern would supply <code>y ∈ A ∧ [ y / y ] φ</code> for <code>φy</code> in <code>SetObject</code>. However, we supply <code>y ∈ A ∧ φ</code> instead (to match the way that <code>SeparationThereExistsObject</code> is written).
+<jh>
+thm (Separation-sub-yC ((C y)) () (((value y) = C) → ((((value y) ∈ A) ∧ φ) ↔ ((C ∈ A) ∧ (subst C y φ)))) (
+        (value y) C A IsElementBuilderRR
+        y C φ EqualitySubst
         buildConjunctionInConsequent
 ))
 
-thm (Separation-sub-fixed () () ((C = (value y)) → (((C ∈ A) ∧ (subst C y φ)) ↔ (((value y) ∈ A) ∧ φ))) (
-))
-
-thm (Separation-sub-fixed-flipped () () (((value y) = C) → ((((value y) ∈ A) ∧ φ) ↔ ((C ∈ A) ∧ (subst C y φ)))) (
-        (value y) C EqualitySymmetry
+thm (Separation-sub-Cy ((C y)) () ((C = (value y)) → (((C ∈ A) ∧ (subst C y φ)) ↔ (((value y) ∈ A) ∧ φ))) (
+        C (value y) EqualitySymmetry
         eliminateBiconditionalReverse
 
-        (value y) C A x φ Separation-sub-fixed
+        y C A φ Separation-sub-yC
         applySyllogism
 
-        ((C ∈ A) ∧ (subst C y φ)) (((value y) ∈ A) ∧ φ) BiconditionalSymmetry
+        (((value y) ∈ A) ∧ φ) ((C ∈ A) ∧ (subst C y φ)) BiconditionalSymmetry
         eliminateBiconditionalReverse
         applySyllogism
 ))
 
-thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z)) () ((C ∈ (abstract z (((value z) ∈ A) ∧ (subst (value z) x φ)))) ↔ ((C ∈ A) ∧ (subst C x φ))) (
-        (value z) y A x φ Separation-sub-fixed
+thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z)) ()
+  ((C ∈ (abstract z (((value z) ∈ A) ∧ (subst (value z) x φ)))) ↔ ((C ∈ A) ∧ (subst C x φ))) (
+        (value z) y A φ Separation-sub-Cy
 
-        y C A x φ Separation-sub-fixed-flipped
+        y C A φ Separation-sub-yC
 
         result y A φ SeparationThereExistsObject
         SetObject
@@ -135,7 +138,7 @@ thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z)) () (
 def ((separate x A φ) (abstract y (((value y) ∈ A) ∧ (subst (value y) x φ))))
 
 thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))) (
-        C z A x φ UnorderedPairObject
+        C z A x φ SeparationObject
 ))
 </jh>
 
