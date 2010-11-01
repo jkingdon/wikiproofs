@@ -1,7 +1,5 @@
 [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]].
 
-The obvious notation for power set is (𝒫 x) but I don't know how widely available U+1D4AB MATHEMATICAL SCRIPT CAPITAL P is. If not, metamath uses ℘ (the w:Weierstrass p), but I'd lean towards just (power x). Using (P x) mimics the P(x) use you sometimes see but it probably is a mistake to start defining single-letter operators like this.
-
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
@@ -17,11 +15,4 @@ var (variable x y x0 y0 x1 y1 z k n)
 var (object s t u)
 var (variable result x′)
 var (object A B C D)
-
-def ((⋃ A) (abstract z (∃ x (((value z) ∈ (value x)) ∧ ((value x) ∈ A)))))
-
-thm (UnionFoo ((x A) (x B)  (z x A)) ()
-  ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))) (
-        B z x′ A x UnionObject
-))
 </jh>
