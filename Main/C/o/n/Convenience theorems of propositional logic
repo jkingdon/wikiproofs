@@ -556,6 +556,19 @@ thm (applyModusPonensInConsequent ()
         applySyllogism
 ))
 
+thm (applyBiconditionalTransitivityInConsequent ()
+  ((H1 (antecedent → (p ↔ q)))
+   (H2 (antecedent → (q ↔ r))))
+  (antecedent → (p ↔ r)) (
+        H1
+        H2
+        composeConjunction
+
+        p q r BiconditionalTransitivity
+
+        applySyllogism
+))
+
 thm (introduceAntecedentInConsequent () ((H (antecedent → p))) (antecedent → (q → p)) (
         H
         p q AntecedentIntroduction
