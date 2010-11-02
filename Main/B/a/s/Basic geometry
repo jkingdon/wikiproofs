@@ -176,8 +176,10 @@ This is just a substitution away from <code>CongruenceIdentityLeft</code>.  The 
 ))
 </jh>
 
-== Three segment ==
-The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ → x z ≡ x′ z′</code>, is basically a degenerate case of the five segment axiom.<ref>Lemma l2_11 in Narboux</ref><ref>Axiom 23 in Givant and Tarski, 1999</ref> There are two cases. If <code>x ≠ y</code>, then applying five segments to x y z and x yields the desired result (the additional two antecedents are fulfilled because one becomes <code>x x ≡ x′ x′</code> and the other <code>y x ≡ y′ x′</code>). If <code>x = y</code>, then <code>x z ≡ x′ z′</code> follows from <code>y z ≡ y′ z′</code> (and <code>x′ = y′</code>, which follows from <code>x y ≡ x′ y′</code>).
+== Outer three segment ==
+The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ → x z ≡ x′ z′</code>, is basically a degenerate case of the five segment axiom.<ref>Lemma l2_11 in Narboux</ref><ref>Axiom 23 in Givant and Tarski, 1999</ref> We call it ''outer'' three segment because we are given congruences for the inner line segments, and conclude a congruence for the outer segments. We will later prove an inner variant in which which the reverse is true.
+
+There are two cases. If <code>x ≠ y</code>, then applying five segments to x y z and x yields the desired result (the additional two antecedents are fulfilled because one becomes <code>x x ≡ x′ x′</code> and the other <code>y x ≡ y′ x′</code>). If <code>x = y</code>, then <code>x z ≡ x′ z′</code> follows from <code>y z ≡ y′ z′</code> (and <code>x′ = y′</code>, which follows from <code>x y ≡ x′ y′</code>).
 
 We first prove the <code>x = y</code> case as a lemma.
 <jh>
@@ -260,7 +262,7 @@ Now we just add the rest of the antecedents and combine to finish the <code>x �
         importInConsequent
 ))
 
-thm (ThreeSegment () ()
+thm (OuterThreeSegment () ()
   (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′)) (
         x y z x′ y′ z′ ThreeSegmentXEqualsY
         x y z x′ y′ z′ ThreeSegmentXNotEqualY
@@ -269,7 +271,7 @@ thm (ThreeSegment () ()
 </jh>
 
 == Uniqueness of segment construction ==
-Here we prove that the segment constructed by the segment construction axiom is unique. We state this as <code>Q ≠ A ∧ between Q A x ∧ A x ≡ B C ∧ between Q A y ∧ A y ≡ B C → x = y</code>. The proof is first that <code>A x ≡ A y</code> (because both are congruent to <code>B C</code>), and between that and <code>Q A ≡ Q A</code> we can apply <code>ThreeSegment</code> to <code>Q A x</code> and <code>Q A y</code> to get <code>Q x ≡ Q y</code>. Then we will apply <code>OuterFiveSegment</code> with the lines <code>Q A x</code> and <code>Q A x</code> and the points <code>x</code> and <code>y</code>. The four congruences we need are <code>Q A ≡ Q A</code>, <code>A x ≡ A x</code>, <code>Q x ≡ Q y</code>, and <code>A x ≡ A y</code>, and then <code>OuterFiveSegment</code> gives us <code>x x ≡ x y</code>. This congruence yields <code>x = y</code> by <code>CongruenceIdentityLeft</code>.<ref>construction_unicity in Narboux</ref>
+Here we prove that the segment constructed by the segment construction axiom is unique. We state this as <code>Q ≠ A ∧ between Q A x ∧ A x ≡ B C ∧ between Q A y ∧ A y ≡ B C → x = y</code>. The proof is first that <code>A x ≡ A y</code> (because both are congruent to <code>B C</code>), and between that and <code>Q A ≡ Q A</code> we can apply <code>OuterThreeSegment</code> to <code>Q A x</code> and <code>Q A y</code> to get <code>Q x ≡ Q y</code>. Then we will apply <code>OuterFiveSegment</code> with the lines <code>Q A x</code> and <code>Q A x</code> and the points <code>x</code> and <code>y</code>. The four congruences we need are <code>Q A ≡ Q A</code>, <code>A x ≡ A x</code>, <code>Q x ≡ Q y</code>, and <code>A x ≡ A y</code>, and then <code>OuterFiveSegment</code> gives us <code>x x ≡ x y</code>. This congruence yields <code>x = y</code> by <code>CongruenceIdentityLeft</code>.<ref>construction_unicity in Narboux</ref>
 
 The only real difficulty in formalizing this is juggling all those conjunctions and multiple antecedents. The first lemma shows <code>A x ≡ A y</code>.
 <jh>
@@ -303,7 +305,7 @@ The next lemma shows <code>Q x ≡ Q y</code>.
 <jh>
 thm (SegmentConstructionUniquenessQxQy () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (Q x ≡ Q y)) (
 </jh>
-To apply <code>ThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
+To apply <code>OuterThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
@@ -330,9 +332,9 @@ The fourth is <code>A x ≡ A y</code>.
 
         composeConjunction
 </jh>
-Applying <code>ThreeSegment</code> we are done.
+Applying <code>OuterThreeSegment</code> we are done.
 <jh>
-        Q A x Q A y ThreeSegment
+        Q A x Q A y OuterThreeSegment
         applySyllogism
 ))
 </jh>
@@ -1541,6 +1543,46 @@ thm (InnerFiveSegment () ()
         x z y x′ y′ z′ u u′ InnerFiveSegmentXEqualsZ
         x z y x′ y′ z′ u u′ InnerFiveSegmentXNotEqualZ
         eliminateCases
+))
+</jh>
+
+== Inner three segment ==
+The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x z ≡ x′ z′ ∧ y z ≡ y′ z′ → x y ≡ x′ y′</code>, is analogous to the three segment theorem we proved earlier, except that we are given the outer congruence and conclude an inner one.<ref>Lemma l4_3 in Narboux</ref><ref>Axiom 24 in Givant and Tarski, 1999</ref> The proof is a straightforward application of inner five segments; there is no need to treat any degenerate cases separately (as we did with outer three segment).
+
+<jh>
+thm (InnerThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) → (x y ≡ x′ y′)) (
+</jh>
+To apply inner five segment we will need <code>between x y z ∧ between x′ y′ z′ ∧ x z ≡ x′ z′ ∧ y z ≡ y′ z′ ∧ x x ≡ x′ x′ ∧ z x ≡ z′ x′</code>. The first four conjuncts are identical.
+<jh>
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ImplicationReflexivity
+</jh>
+The next is <code>x x ≡ x′ x′</code>.
+<jh>
+        x x′ CongruenceTrivialIdentity
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) introduceAntecedent
+        composeConjunction
+</jh>
+The last conjunct is <code>z x ≡ z′ x′</code>
+<jh>
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        x z x′ z′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying inner five segment gives us <code>y x ≡ y′ x′</code>, and we just need to flip it to <code>x y ≡ x′ y′</code>.
+<jh>
+        x y z x′ y′ z′ x x′ InnerFiveSegment
+        applySyllogism
+
+        y x y′ x′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
