@@ -1586,6 +1586,12 @@ Applying inner five segment gives us <code>y x ≡ y′ x′</code>, and we just
 ))
 </jh>
 
+== Congruence of three points ==
+We call one set of three points congruent to a second set if each of the three corresponding congruences hold. In other words, two triangles are congruent if their corresponding sides are congruent (side-side-side) (except that our definition also holds for degenerate cases, where not all three points are distinct). The conventional notation is <code>△ABC ≅ △DEF</code> but because of the degenerate cases and JHilbert limitations, we just call it <code>A B C ≅ D E F</code>.
+<jh>
+def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)))
+</jh>
+
 == Export ==
 <jh>
 export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
