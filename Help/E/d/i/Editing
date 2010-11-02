@@ -30,7 +30,9 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |≠ || != || not equal || [[Interface:First-order logic with quantifiability|predicate logic]]
 |-
-|≡ || =3 || congruent || [[Interface:Tarski's geometry axioms|geometry]]
+|≡ || =3 || congruent || [[Interface:Basic geometry|geometry]]
+|-
+|≅ || ?= || congruent || [[Interface:Basic geometry|geometry]]
 |-
 |∈ || (- || is element || [[Interface:Set theory|set theory]]
 |-
