@@ -129,6 +129,15 @@ stmt (InnerFiveSegment () ()
   → (y u ≡ y′ u′)))
 </jh>
 
+=== Three segment ===
+The three segment theorems can be thought of as degenerate cases of five segment, or as basic properties of points on a line.
+<jh>
+stmt (OuterThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′)))
+stmt (InnerThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) → (x y ≡ x′ y′)))
+</jh>
+
 == Builders ==
 Being able to substitute equals for equals needs to be stated for every operator.
 <jh>
