@@ -58,6 +58,8 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |· || .M || multiplication || [[Interface:Basic arithmetic|arithmetic]], [[Interface:Complex number axioms|complex numbers]]
 |-
+|× || *X || product || [[Interface:Set theory]]
+|-
 |ℙ || || || subset of [[Interface:Complex number axioms|complex numbers]]
 |-
 |ℕ || || natural numbers || subset of [[Interface:Complex number axioms|complex numbers]]
