@@ -119,4 +119,7 @@ Sets with the same elements are equal.
 stmt (ExtensionalityObject ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)))
 </jh>
 
+== References ==
+<references/>
+
 [[Category:Set theory|{{PAGENAME}}]]
