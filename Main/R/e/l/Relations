@@ -434,9 +434,9 @@ def ((relates A R B) ((orderedPair A B) ∈ R))
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
 == Export ==
-We're ready to export to [[Interface:Set theory]].
+When we've proved everything in it, we'll export to [[Interface:Set theory]].
 <jh>
-export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+#export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
