@@ -1,0 +1,37 @@
+{{interfaces
+| imports = [[Interface:Complex number axioms]]
+| exports = [[Interface:Tarski's geometry axioms]]
+}}
+
+The [[Interface:Tarski's geometry axioms|geometry axioms]] of Tarski can be constructed from real numbers.
+
+TODO: real closed fields, page number for std Euclidean construction in Givant1999 paper.
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], [[Interface:Set theory|set theory]] and the [[Interface:Complex number axioms|complex numbers]].
+
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (SETS Interface:Set_theory (CLASSICAL) ())
+import (COMPLEX Interface:Complex_number_axioms (CLASSICAL FIRSTORDER SETS) ())
+</jh>
+
+The quantifiers we just imported range over sets. When it comes time to export, we'll need quantifiers which range over points.
+
+== Option One ==
+<jh>
+import (FIRSTORDER_POINTS Interface:First-order_logic_with_quantifiability (CLASSICAL) (Points.))
+</jh>
+
+== Export ==
+<jh>
+export (GEOMETRY Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER_POINTS) ())
+</jh>
+
+== References ==
+<references/>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
+
