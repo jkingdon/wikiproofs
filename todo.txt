@@ -80,6 +80,10 @@ Items which may be doable without a network connection:
     • antisymmetry
     • (x - y) · (y - x) = 0 → x = y (follows from x · y = 0 → x = 0 or y = 0)
 
+• Almost every axiom in [[Interface:Tarski's geometry axioms]] which contains a quantifier is missing needed distinct variable constraints.
+
 To do with network:
 
+* add double prime to MediaWiki:Edittools and Help:Editing.
+  Either that or use prime twice, but I guess double prime... (?)
 

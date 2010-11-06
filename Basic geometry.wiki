@@ -13,7 +13,7 @@ import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
 var (point x y z w u v A B C D E P Q A′ B′)
 var (point x′ y′ z′ w′ u′)
-var (variable a b c q q′ ww ww′)
+var (variable a b b′ c q q′ ww ww′)
 </jh>
 
 == Collinearity ==
@@ -1541,6 +1541,17 @@ thm (InnerFiveSegment () ()
         x z y x′ y′ z′ u u′ InnerFiveSegmentXEqualsZ
         x z y x′ y′ z′ u u′ InnerFiveSegmentXNotEqualZ
         eliminateCases
+))
+</jh>
+
+=== Constructing a degenerate congruent triangle ===
+Given two congruent line segments <code>A C</code> and <code>A′ C′</code>, where <code>B</code> is on the former, we construct a point <code>b′</code> on the latter line segment such that the degenerate triangles <code>A B C</code> and <code>A′ b′ C′</code/'> are congruent.<ref>Lemma l4_5 in Narboux</ref> In symbols this is <code>between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ b′ C′ ∧ A B C ≅ A′ b′ C′)</code>
+
+Here is a sketch of the proof: Extend <code>C′ A′</code> to a distinct point <code>d′</code>. Extend <code>d′ A′</code> to a point <code>b′</code> such that <code>A B ≡ A′ b′</code>. Extend <code>d′ b′</code> to a point <code>c″</code> such that <code>b′ c″ ≡ B C</code>. From <code>between d′ A′ b′</code> and <code>between d′ b′ c″</code> we can conclude <code>between A′ b′ c″</code> (by <code>BetweennessInnerTransitivityFlipped</code>). Applying outer three segment to <code>A B C</code> and <code>A′ b′ c″</code> gives us <code>A C ≡ A′ c″</code>. By the uniqueness of segment construction, applied to <code>d′ A′ C′</code> and <code>d′ A′ c″</code>, we conclude that <code>C′ = c″</code>. Given this equality, we merely need to do some substitution to prove each of the three congruences which make up <code>A B C ≅ A′ b′ C′</code>.
+
+<jh>
+thm (InnerDegenerateTriangle () ()
+  (between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ (value b′) C′ ∧ A B C ≅ A′ (value b′) C′)) (
 ))
 </jh>
 
