@@ -508,7 +508,7 @@ If <code>B</code> is between <code>A</code> and <code>C</code>, and <code>A</cod
 
 This property is analogous to antisymmetry for an [[w:Partial_order|order relation]].
 <jh>
-thm (BetweennessEquality ((a A) (a B)) () (((between A B C) ∧ (between B A C)) → (A = B)) (
+thm (BetweennessEquality ( (a A) (a B) (a C)) () (((between A B C) ∧ (between B A C)) → (A = B)) (
         A B C B A a Pasch
 </jh>
 That gives us <code>∃ a (between B a B ∧ between A a A)</code>. We just need to apply the <code>BetweenSubstitution</code> lemma to get <code>between A B A</code>,
@@ -529,7 +529,7 @@ In this section we prove six similar theorems which involve four points on a lin
 ==== Inner transitivity, regular and flipped ====
 The first one is known as inner transitivity.<ref>Inner Transitivity Axiom for Betweenness in Givant and Tarski, 1999</ref><ref>between_inner_transitivity in Narboux</ref>
 <jh>
-thm (BetweennessInnerTransitivity ((a A) (a B) (a C)) ()
+thm (BetweennessInnerTransitivity ( (a A) (a B) (a C) (a D)) ()
   (((between A B D) ∧ (between B C D)) → (between A B C)) (
         A B D B C a Pasch
 </jh>
@@ -599,7 +599,7 @@ thm (BetweennessOuterTransitivityFlipped-1 () () ((((between A C x) ∧ (C x ≡
         composeConjunction
 ))
 
-thm (BetweennessOuterTransitivityFlipped-bca ((A a) (B a) (C a)) ()
+thm (BetweennessOuterTransitivityFlipped-bca ( (A a) (B a) (C a) (D a)) ()
   ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C))
    → (∃ a (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))))) (
         a A C C D SegmentConstruction
@@ -870,7 +870,7 @@ thm (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)) (
         introduceBiconditionalFromImplications
 ))
 
-thm (TwonessLemma () () (∃ a (∃ b (∃ c (((value a) ≠ (value b)) ∨ ((value b) ≠ (value c)))))) (
+thm (TwonessLemma ((a b c)) () (∃ a (∃ b (∃ c (((value a) ≠ (value b)) ∨ ((value b) ≠ (value c)))))) (
         a b c LowerDimension
 </jh>
 The <code>a = b</code> case involves first picking out <code>¬ between b c a</code>.
@@ -1039,7 +1039,7 @@ Combining <code>between A B C</code> and <code>B ≠ C</code> finishes the proof
         composeConjunction
 ))
 
-thm (PointConstructionDifferent ((a b A) (a b B) (a b c)) () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
+thm (PointConstructionDifferent ((c A) (c B)  (a b A) (a b B) (a b c)) () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
 </jh>
 The proof of our main theorem will proceed by constructing two different points <code>a</code> and <code>b</code>, and using them to extend the segment <code>A B</code> to a distinct point.
 
@@ -1091,7 +1091,7 @@ The first two quantifiers are no longer needed, and that finishes the proof.
 === A point distinct from a given point exists ===
 Given a point <code>A</code>, there exists a point <code>b</code> distinct from it.<ref>another_point in Narboux</ref> Here's the sketch of Narboux's proof: apply <code>Twoness</code> to get <code>x</code> and <code>y</code> such that <code>x ≠ y</code>. If <code>A ≠ x</code>, we are done (<code>x</code> is the desired point). If <code>A = x</code>, then subsituting into <code>x ≠ y</code> gives us <code>A ≠ y</code>, and <code>y</code> is the desired point. It would be possible (although somewhat cumbersome) to formalize this argument here, but it will be easier just to prove this theorem as a special case of <code>PointConstructionDifferent</code>.
 <jh>
-thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
+thm (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))) (
         b A A PointConstructionDifferent
 
         (between A A (value b)) (A ≠ (value b)) ConjunctionLeftElimination
@@ -1105,7 +1105,8 @@ thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
 [[File:Lemma l3_17 from Narboux.svg|thumb|right|Top: statement of the lemma; Middle: construction of <code>q′</code>; Bottom: construction of <code>q</code>]]
 This lemma is a variant of Pasch's axiom.  The lemma is <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q (between P q C ∧ between B q B′)</code>. The proof consists of two applications of Pasch's axiom. The first one uses the triangle <code>A A′ C</code> (with points <code>P</code> and <code>B′</code>) to construct a point <code>q′</code>. The second uses the triangle <code>A C B′</code> (with points <code>B</code> and <code>q′</code>) to construct the point <code>q</code>.
 <jh>
-thm (PaschLine ((q P) (q C) (q′ q) (q′ P) (q′ C) (q′ B) (q′ A) (q′ B′)) () ((((between A B C) ∧ (between A′ B′ C)) ∧ (between A P A′)) → (∃ q ((between P (value q) C) ∧ (between B (value q) B′)))) (
+thm (PaschLine ((q P) (q C) (q A) (q B) (q B′)  (q′ q) (q′ P) (q′ C) (q′ B) (q′ A) (q′ B′) (q′ A′)) ()
+  ((((between A B C) ∧ (between A′ B′ C)) ∧ (between A P A′)) → (∃ q ((between P (value q) C) ∧ (between B (value q) B′)))) (
 </jh>
 To construct <code>q′</code>, we need <code>between A P A′</code> and <code>between C B′ A′</code>, and Pasch's axiom will give us <code>between P q′ C</code> and <code>between B′ q′ A</code>.
 <jh>
@@ -1593,6 +1594,7 @@ def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) �
 </jh>
 
 == Export ==
+We now export to [[Interface:Basic geometry]].
 <jh>
 export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 </jh>
