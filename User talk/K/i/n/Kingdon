@@ -82,6 +82,8 @@ Hi Kingdon, in case you were wondering, the server crashed at about 1:32 UTC thi
 
 ::Hi Kingdon, once again the server crashed this night at about 5:30 UTC, again due to lack of memory. It seems to be in working order again.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 09:34, 12 November 2010 (UTC)
 
+:::I was getting 500 errors (probably about 01:00 UTC 12 Nov, over a period of an hour or a few). Glad to see it is back up. [[User:Kingdon|Kingdon]] 01:32, 13 November 2010 (UTC)
+
 == wikiproofs.org ==
 
 Hi, today I registered the domain [http://www.wikiproofs.org wikiproofs.org] in addition to wikiproofs.de. The .org domain seems more appropriate for an international non-profit project. My provider tells me that it may take up to 48 hours until the new domain correctly resolves to the Wikiproofs host everywhere in the world. I'd have registered the .org domain earlier but there used to be another site sitting on it (possibly intended as a non-formal proof wiki, but it always looked kinda defunct to me). I'll try to switch MediaWiki and the web server over to use .org by default when the 48 hours have passed.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 16:35, 1 September 2010 (UTC)
