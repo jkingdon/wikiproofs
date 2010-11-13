@@ -157,9 +157,3 @@ To do with network:
   - Interface:First-order logic
   - Interface:First-order logic with quantifiability
 
-* of course, check/fix the proof at
-  - Basic geometry
-
-* try to clear I/O error in:
-  - First-order logic
-
