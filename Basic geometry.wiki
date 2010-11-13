@@ -1544,6 +1544,12 @@ thm (InnerFiveSegment () ()
 ))
 </jh>
 
+== Congruence of three points ==
+We call one set of three points congruent to a second set if each of the three corresponding congruences hold. In other words, two triangles are congruent if their corresponding sides are congruent (side-side-side) (except that our definition also holds for degenerate cases, where not all three points are distinct). The conventional notation is <code>△ABC ≅ △DEF</code> but because of the degenerate cases and JHilbert limitations, we just call it <code>A B C ≅ D E F</code>.
+<jh>
+def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)))
+</jh>
+
 === Constructing a degenerate congruent triangle ===
 Given two congruent line segments <code>A C</code> and <code>A′ C′</code>, where <code>B</code> is on the former, we construct a point <code>b′</code> on the latter line segment such that the degenerate triangles <code>A B C</code> and <code>A′ b′ C′</code/'> are congruent.<ref>Lemma l4_5 in Narboux</ref> In symbols this is <code>between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ b′ C′ ∧ A B C ≅ A′ b′ C′)</code>
 
@@ -1561,18 +1567,35 @@ thm (InnerDegenerateTriangle-1 ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C�
         ((value b′) (value c″) ≡ B C))) ∧
       ((between A B C) ∧ (A C ≡ A′ C′))))))) (
 </jh>
-We start with the theorems <code>∃ d′ between C′ A′ d′ ∧ A′ ≠ d′</code> and <code>∃ b′ between d′ A′ b′ ∧ A′ b′ ≡ A B</code>
+We start with the theorems <code>∀ d′ ∃ b′ between d′ A′ b′ ∧ A′ b′ ≡ A B</code> and <code>∃ d′ between C′ A′ d′ ∧ A′ ≠ d′</code>.
 <jh>
-        d′ C′ A′ PointConstructionDifferent
         b′ (value d′) A′ A B SegmentConstruction
+        d′ generalize
+
+        d′ C′ A′ PointConstructionDifferent
+
         introduceConjunction
 </jh>
 We gather the quantifiers,
 <jh>
-        d′ b′ ((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B)) ThereExistsScattering
+        d′ (∃ b′ ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B))) ((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ThereExistsConjunctionCombining
+        applyModusPonens
+
+        b′ ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B)) ((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ThereExistsConjunctionRightMovement
         eliminateBiconditionalForward
+        d′ addThereExists
         applyModusPonens
 </jh>
+and flip the order of the conjuncts (just because that is the way the rest of the proof is written).
+<jh>
+        ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B)) ((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        b′ addThereExists
+        d′ addThereExists
+        applyModusPonens
+</jh>
+That gives us <code>∃ d′ ∃ b′ ((between C′ A′ d′ ∧ A′ ≠ d′) (between d′ A′ b′ ∧ A′ b′ ≡ A B))</code>. We
+
 and do the same thing with our third construction theorem <code>∃ c″ between d′ b′ c″ ∧ b′ c″ ≡ B C</code>.
 <jh>
         c″ (value d′) (value b′) B C SegmentConstruction

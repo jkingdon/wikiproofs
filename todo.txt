@@ -80,6 +80,10 @@ Items which may be doable without a network connection:
     • antisymmetry
     • (x - y) · (y - x) = 0 → x = y (follows from x · y = 0 → x = 0 or y = 0)
 
+* How much do we use ThereExistsConjunctionRightMovement? Is there room
+  for a convenience theorem or is it something which often has another
+  quantifier outside?
+
 == Separation ==
 [this is an attempt which writes φ as [ x / x ] φ but that, while arguably nicer,
 doesn't solve the problem which makes the proof not work, which is that φ can contain
@@ -148,4 +152,13 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
+* download
+  - First-order logic
+  - Interface:First-order logic
+  - Interface:First-order logic with quantifiability
+  - Interface:Basic geometry
+  - Interface:Tarski's geometry axioms
+
+* try to clear I/O error in:
+  - First-order logic
 
