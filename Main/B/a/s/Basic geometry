@@ -11,9 +11,9 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 
-var (point x y z w u v A B C D E P Q A′ B′)
+var (point x y z w u v A B C D E P Q A′ B′ C′ D′ C″)
 var (point x′ y′ z′ w′ u′)
-var (variable a b c q q′ ww ww′)
+var (variable a b b′ c d′ q q′ ww ww′ c″)
 </jh>
 
 == Collinearity ==
@@ -1591,6 +1591,464 @@ Applying inner five segment gives us <code>y x ≡ y′ x′</code>, and we just
 We call one set of three points congruent to a second set if each of the three corresponding congruences hold. In other words, two triangles are congruent if their corresponding sides are congruent (side-side-side) (except that our definition also holds for degenerate cases, where not all three points are distinct). The conventional notation is <code>△ABC ≅ △DEF</code> but because of the degenerate cases and JHilbert limitations, we just call it <code>A B C ≅ D E F</code>.
 <jh>
 def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)))
+</jh>
+
+=== Constructing a degenerate congruent triangle ===
+Given two congruent line segments <code>A C</code> and <code>A′ C′</code>, where <code>B</code> is on the former, we construct a point <code>b′</code> on the latter line segment such that the degenerate triangles <code>A B C</code> and <code>A′ b′ C′</code/'> are congruent.<ref>Lemma l4_5 in Narboux</ref> In symbols this is <code>between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ b′ C′ ∧ A B C ≅ A′ b′ C′)</code>
+
+Here is a sketch of the proof: Extend <code>C′ A′</code> to a distinct point <code>d′</code>. Extend <code>d′ A′</code> to a point <code>b′</code> such that <code>A B ≡ A′ b′</code>. Extend <code>d′ b′</code> to a point <code>c″</code> such that <code>b′ c″ ≡ B C</code>. From <code>between d′ A′ b′</code> and <code>between d′ b′ c″</code> we can conclude <code>between A′ b′ c″</code> (by <code>BetweennessInnerTransitivityFlipped</code>). Applying outer three segment to <code>A B C</code> and <code>A′ b′ c″</code> gives us <code>A C ≡ A′ c″</code>. By the uniqueness of segment construction, applied to <code>d′ A′ C′</code> and <code>d′ A′ c″</code>, we conclude that <code>C′ = c″</code>. Given this equality, we merely need to do some substitution to prove each of the three congruences which make up <code>A B C ≅ A′ b′ C′</code>.
+
+Our first lemma constructs the points and moves the quantifiers a bit.
+<jh>
+thm (InnerDegenerateTriangle-1 ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)
+    (d′ c″ b′ A) (d′ c″ B) (d′ c″ C) (d′ c″ A′) (d′ c″ C′)) ()
+  (((between A B C) ∧ (A C ≡ A′ C′)) → 
+    (∃ d′ (∃ b′ (∃ c″
+      (((((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ∧
+      ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B))) ∧
+      ((between (value d′) (value b′) (value c″)) ∧
+        ((value b′) (value c″) ≡ B C))) ∧
+      ((between A B C) ∧ (A C ≡ A′ C′))))))) (
+</jh>
+We start with the theorems <code>∃ d′ between C′ A′ d′ ∧ A′ ≠ d′</code> and <code>∀ d′ ∃ b′ between d′ A′ b′ ∧ A′ b′ ≡ A B</code>.
+<jh>
+        d′ C′ A′ PointConstructionDifferent
+
+        b′ (value d′) A′ A B SegmentConstruction
+        d′ generalize
+
+        introduceConjunction
+</jh>
+We gather the quantifiers,
+<jh>
+        d′ ((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) (∃ b′ ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B))) ThereExistsConjunctionRightCombining
+        applyModusPonens
+
+        b′ ((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B)) ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        d′ addThereExists
+        applyModusPonens
+</jh>
+That gives us <code>∃ d′ ∃ b′ ((between C′ A′ d′ ∧ A′ ≠ d′) ∧ (between d′ A′ b′ ∧ A′ b′ ≡ A B))</code>. We now perform similar steps with our third construction theorem <code>∃ c″ between d′ b′ c″ ∧ b′ c″ ≡ B C</code>.
+<jh>
+        c″ (value d′) (value b′) B C SegmentConstruction
+        b′ generalize
+        d′ generalize
+        introduceConjunction
+
+        d′
+          (∃ b′ (((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ∧
+            ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B))))
+          (∀ b′ (∃ c″ ((between (value d′) (value b′) (value c″)) ∧ ((value b′) (value c″) ≡ B C))))
+          ThereExistsConjunctionRightCombining
+        applyModusPonens
+
+        b′
+          (((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ∧
+            ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B)))
+          (∃ c″ ((between (value d′) (value b′) (value c″)) ∧ ((value b′) (value c″) ≡ B C)))
+          ThereExistsConjunctionRightCombining
+        d′ addThereExists
+        applyModusPonens
+
+        c″
+          (((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ∧
+            ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B)))
+          ((between (value d′) (value b′) (value c″)) ∧ ((value b′) (value c″) ≡ B C))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        b′ addThereExists
+        d′ addThereExists
+        applyModusPonens
+</jh>
+Now we have the construction of the three points, with all three quantifiers gathered to the beginning. The only thing left is to add in <code>between A B C ∧ A C ≡ A′ C′</code>,
+<jh>
+        ((between A B C) ∧ (A C ≡ A′ C′)) introduceAntecedent
+
+        ((between A B C) ∧ (A C ≡ A′ C′)) ImplicationReflexivity
+
+        composeConjunction
+</jh>
+and move the quantifiers to the start of the consequent.
+<jh>
+        d′
+          (∃ b′ (∃ c″
+            ((((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ∧
+            ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B))) ∧
+            ((between (value d′) (value b′) (value c″)) ∧ ((value b′) (value c″) ≡ B C)))))
+          ((between A B C) ∧ (A C ≡ A′ C′))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        b′
+          (∃ c″
+            ((((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ∧
+            ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B))) ∧
+            ((between (value d′) (value b′) (value c″)) ∧ ((value b′) (value c″) ≡ B C))))
+          ((between A B C) ∧ (A C ≡ A′ C′))
+          ThereExistsConjunctionRightMovement
+        d′ buildThereExists
+        eliminateBiconditionalForward
+        applySyllogism
+
+        c″
+          ((((between C′ A′ (value d′)) ∧ (A′ ≠ (value d′))) ∧
+            ((between (value d′) A′ (value b′)) ∧ (A′ (value b′) ≡ A B))) ∧
+            ((between (value d′) (value b′) (value c″)) ∧ ((value b′) (value c″) ≡ B C)))
+          ((between A B C) ∧ (A C ≡ A′ C′))
+          ThereExistsConjunctionRightMovement
+        b′ buildThereExists
+        d′ buildThereExists
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+The next few lemmas start after the construction of the points (that is, their antecedent is the consequent of the previous lemma, minus the quantifiers). We use <code>D′</code> as an <code>object</code> which corresponds to the <code>variable</code> <code>d′</code> (and likewise for the other quantified variables). The next lemma proves <code>between A′ B′ C″</code>.
+<jh>
+thm (InnerDegenerateTriangle-abc () () (
+  (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+   ((between A B C) ∧ (A C ≡ A′ C′))) →
+  (between A′ B′ C″)) (
+</jh>
+First we pick out <code>between D′ A′ B′</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+</jh>
+Second we pick out <code>between D′ B′ C″</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+</jh>
+By transitivity, those two imply <code>between A′ B′ C″</code>.
+<jh>
+        D′ A′ B′ C″ BetweennessInnerTransitivityFlipped
+        applySyllogism
+))
+</jh>
+
+The next lemma applies outer three segment to <code>A B C</code> and <code>A′ B′ C″</code> to yield <code>A C ≡ A′ C″</code>.
+<jh>
+thm (InnerDegenerateTriangle-acac () () (
+  (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+   ((between A B C) ∧ (A C ≡ A′ C′))) →
+  (A C ≡ A′ C″)) (
+</jh>
+First we pick out <code>between A B C</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+</jh>
+Second is <code>between A′ B′ C″</code>.
+<jh>
+        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-abc
+        composeConjunction
+</jh>
+Third is <code>A B ≡ A′ B′</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        A′ B′ A B CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Fourth is <code>B C ≡ B′ C″</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        B′ C″ B C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+We apply outer three segment and are done.
+<jh>
+        A B C A′ B′ C″ OuterThreeSegment
+        applySyllogism
+))
+</jh>
+
+The next lemma, <code>between D′ A′ C″</code>, is an obvious consequence of betweenness transitivity.
+<jh>
+thm (InnerDegenerateTriangle-dac () () (
+  (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+   ((between A B C) ∧ (A C ≡ A′ C′))) →
+  (between D′ A′ C″)) (
+</jh>
+First we need <code>between D′ A′ B′</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+</jh>
+Secondly we need <code>between D′ B′ C″</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+</jh>
+Those imply our result.
+<jh>
+        D′ A′ B′ C″ BetweennessMiddleTransitivityFlipped
+        applySyllogism
+))
+</jh>
+
+The next lemma applies uniqueness of segment construction to <code>D′ A′ C′</code> and <code>D′ A′ C″</code> and concludes <code>C′ = C″</code>.
+
+<jh>
+thm (InnerDegenerateTriangle-cc () () (
+  (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+   ((between A B C) ∧ (A C ≡ A′ C′))) →
+  (C′ = C″)) (
+</jh>
+The first antecedent for segment construction uniqueness is <code>D′ ≠ A′</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        A′ D′ EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The second is <code>between D′ A′ C′</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        C′ A′ D′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The third is <code>A′ C′ ≡ A C</code>.
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        A C A′ C′ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The fourth is <code>between D′ A′ C″</code>.
+<jh>
+        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-dac
+        composeConjunction
+</jh>
+And the last is <code>A′ C″ ≡ A C</code>.
+<jh>
+        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-acac
+
+        A C A′ C″ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+That's all we need.
+<jh>
+        D′ A′ C′ A C C″ SegmentConstructionUniqueness
+        applySyllogism
+))
+</jh>
+
+Given this equality, we merely need to do some substitution to prove each of the three congruences which make up <code>A B C ≅ A′ B′ C′</code>.
+
+We start with a lemma which performs the substitution.
+<jh>
+thm (InnerDegenerateTriangle-bcbc () () (((C′ = C″) ∧ (B′ C″ ≡ B C)) → (B′ C′ ≡ B C)) (
+</jh>
+We first apply a builder to get <code>C′ = C″ → (B′ C′ ≡ B C ↔ B′ C″ ≡ B C</code>.
+<jh>
+        B EqualityReflexivity
+        C EqualityReflexivity
+        B′ EqualityReflexivity
+        B′ B′ C′ C″ B B C C CongruenceBuilder
+        detach1of4
+        detach2of2
+        detach2of2
+</jh>
+A bit of rearrangement and we are done.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        import
+))
+</jh>
+
+Now we can proceed to <code>A B C ≅ A′ B′ C′</code>.
+<jh>
+thm (InnerDegenerateTriangle-abcabc () () (
+  (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+   ((between A B C) ∧ (A C ≡ A′ C′))) →
+  (A B C ≅ A′ B′ C′)) (
+</jh>
+<code>A B ≡ A′ B′</code>:
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        A′ B′ A B CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+<code>A C ≡ A′ C′</code>:
+<jh>
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+<code>B C ≡ B′ C′</code>:
+<jh>
+        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-cc
+
+        (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+          ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+          ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+          ((between A B C) ∧ (A C ≡ A′ C′)))
+          ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+
+        C′ C″ B′ B C InnerDegenerateTriangle-bcbc
+        applySyllogism
+
+        B′ C′ B C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+))
+</jh>
+
+{{under construction}}
+
+A similar substitution turns <code>between A′ B′ C″</code> into <code>between A′ B′ C′</code>
+<jh>
+#thm (InnerDegenerateTriangle-abc1-sub () ()
+#  (((C′ = C″) ∧ (between A′ B′ C″)) → (between A′ B′ C′)) (
+#...
+#))
+
+#thm (InnerDegenerateTriangle-abc1 () () (
+#  ((((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+#   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+#   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+#   ((between A B C) ∧ (A C ≡ A′ C′))) →
+#  (between A′ B′ C′)) (
+#        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-abc
+
+#        TODO: invoke InnerDegenerateTriangle-abc1-sub
+#))
+</jh>
+
+We're ready to assemble the result and remove the quantifiers which don't apply once the conclusion is reached.
+<jh>
+#thm (InnerDegenerateTriangle ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)) ()
+#  (between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ (value b′) C′ ∧ A B C ≅ A′ (value b′) #C′)) (
+#...
+#))
 </jh>
 
 == Export ==
