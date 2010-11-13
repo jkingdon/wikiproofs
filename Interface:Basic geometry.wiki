@@ -100,15 +100,16 @@ stmt (BetweennessMiddleTransitivityFlipped () ()
 == Segment construction ==
 A line segment can be extended beyond one of its endpoints by a specified distance (where by "distance" we mean a second line segment, which the constructed segment is to be congruent to). The segment extended this way is unique.
 <jh>
-stmt (SegmentConstruction () () (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
+stmt (SegmentConstruction ((a w) (a x) (a y) (a z)) () (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
 stmt (SegmentConstructionUniqueness () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (x = y)))
 </jh>
 
 == Existence of distinct points ==
 Here we can construct a point distinct from a given point, or a point distinct from a given point extended along a given line segment.
 <jh>
-stmt (PointConstructionDifferent () () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
-stmt (AnotherPoint () () (∃ b (A ≠ (value b))))
+stmt (PointConstructionDifferent ((c A) (c B)) ()
+  (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
+stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
 </jh>
 
 == Five segment ==
@@ -127,6 +128,15 @@ stmt (InnerFiveSegment () ()
   (((((((between x y z) ∧ (between x′ y′ z′))
     ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))
   → (y u ≡ y′ u′)))
+</jh>
+
+=== Three segment ===
+The three segment theorems can be thought of as degenerate cases of five segment, or as basic properties of points on a line.
+<jh>
+stmt (OuterThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′)))
+stmt (InnerThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) → (x y ≡ x′ y′)))
 </jh>
 
 == Builders ==

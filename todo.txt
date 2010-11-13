@@ -156,8 +156,9 @@ To do with network:
   - First-order logic
   - Interface:First-order logic
   - Interface:First-order logic with quantifiability
-  - Interface:Basic geometry
-  - Interface:Tarski's geometry axioms
+
+* of course, check/fix the proof at
+  - Basic geometry
 
 * try to clear I/O error in:
   - First-order logic

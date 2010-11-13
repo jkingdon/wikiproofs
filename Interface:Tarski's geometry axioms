@@ -65,7 +65,7 @@ stmt (Indivisibility () () ((between x y x) → (x = y)))
 Tarski's version of the [[w:Axiom of Pasch]].
 {{clear}}
 <jh>
-stmt (Pasch () () (((between x u z) ∧ (between y v z)) → (∃ a ((between u (value a) y) ∧ (between v (value a) x)))))
+stmt (Pasch ((a x) (a u) (a z) (a y) (a v)) () (((between x u z) ∧ (between y v z)) → (∃ a ((between u (value a) y) ∧ (between v (value a) x)))))
 </jh>
 
 === Continuity ===
@@ -73,7 +73,7 @@ stmt (Pasch () () (((between x u z) ∧ (between y v z)) → (∃ a ((between u 
 The variables <code>xx</code> and <code>yy</code> correspond with <code>x</code> and <code>y</code> in the diagram and [[w:Tarski's axioms|wikipedia]]. (We can't just call them <code>x</code> and <code>y</code> because we've declared <code>x</code> and <code>y</code> as objects, which unlike variables cannot be subject to quantification).
 <jh>
 var (formula φx ψy)
-stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b)) () 
+stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b) (a b xx yy)) () 
   ((∃ a (∀ xx (∀ yy ((φx ∧ ψy) → (between (value a) (value xx) (value yy))))))
   → (∃ b (∀ xx (∀ yy ((φx ∧ ψy) → (between (value xx) (value b) (value yy))))))))
 </jh>
@@ -82,7 +82,7 @@ stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b)) ()
 [[File:Points in a plane equidistant to two given points lie on a line.svg|thumb|right|Upper dimension]]
 The dimension is greater than one,
 <jh>
-stmt (LowerDimension () ()
+stmt (LowerDimension ((a b c)) ()
   (∃ a (∃ b (∃ c
     (((¬ (between (value a) (value b) (value c)))
      ∧ (¬ (between (value b) (value c) (value a))))
@@ -101,23 +101,27 @@ stmt (UpperDimension () ()
 [[File:Tarski's axiom of Euclid C.svg|thumb|right]]
 There are quite a variety of ways to state Euclid's [[w:parallel postulate]]. Here we adopt one which says that if a point u is in the interior of ∠yxz (in the sense of being on the line segment yz drawn across the angle), then any point v which is further out (that is, u is between v and the vertex of the angle) will also be in the interior (in the sense that a line segment containing v can be drawn across the angle).
 <jh>
-stmt (AxiomEuclid () () (
+stmt (AxiomEuclid ((a b x) (a b u) (a b v) (a b y) (a b z)) () (
   (((between x u v) ∧ (between y u z)) ∧ (x ≠ u))
   → (∃ a (∃ b (((between x y (value a)) ∧ (between x z (value b))) ∧ (between (value a) v (value b)))))))
 </jh>
 
 == Five Segment ==
+[[File:Five segment.svg|thumb|right]]
+This is a version of familiar theorems concerning congruent triangles (without any explicit reference to angles, of course).
 <jh>
 var (point x′ y′ z′ u′)
-stmt (FiveSegment () ()
-  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′)) → (z u ≡ z′ u′))
+stmt (OuterFiveSegment () ()
+  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′))
+     ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′))
+   → (z u ≡ z′ u′))
 )
 </jh>
 
 == Segment Construction ==
 Given a line segment wx and a line segment yz, construct an extension of wx which is as long as yz is.
 <jh>
-stmt (SegmentConstruction () () (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
+stmt (SegmentConstruction ((a w) (a x) (a y) (a z)) () (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
 </jh>
 
 == Builders ==
@@ -133,6 +137,11 @@ stmt (BetweenBuilder () () (
   → ((between x0 x1 x2) ↔ (between y0 y1 y2))
 ))
 </jh>
+
+== Comments about the predicate logic ==
+
+There are two related comments to make about translating the predicate logic used in Tarski and Givant to what we use here. The Tarski and Givant paper, except as explicitly noted in axiom schema As. 11, does not contain axiom schemas but instead concrete axioms. The corresponding concept, given our [[Interface:First-order logic with quantifiability|first-order logic]], would be to use <code>variable</code> (rather than <code>object</code>) everywhere with distinct variable constraints between all variables (again, except for As. 11 which has explicit distinct variable constraints in the Tarski and Givant paper).<ref>Tarski and Givant, 1999, page 177 and page 185</ref>
+For convenience, we loosen this in two ways. First of all, we use <code>object</code> instead of <code>variable</code> for all variables not subject to quantification (for comparison, this is similar to the way that metamath handles their complex number axioms<ref>[http://us.metamath.org/mpeuni/mmcomplex.html Real and Complex Numbers], last updated on May 6, 2008, paragraph beginning "In case you are wondering: Why do we use the purple class variables for most postulates instead of the more conventional-looking red set variables?"</ref>). Secondly, we only supply distinct variable constraints where quantifiers are involved (this also parallels metamath, although the metamath page doesn't explicitly discuss it). These changes do not affect the mathematical meaning of the axioms or their strength: for an example of translating axioms stated using <code>variable</code> and distinct variable constraints on everything, to axioms in the style presented here, see [[First steps in set theory]].
 
 == References ==
 <references/>

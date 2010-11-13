@@ -176,8 +176,10 @@ This is just a substitution away from <code>CongruenceIdentityLeft</code>.  The 
 ))
 </jh>
 
-== Three segment ==
-The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ → x z ≡ x′ z′</code>, is basically a degenerate case of the five segment axiom.<ref>Lemma l2_11 in Narboux</ref><ref>Axiom 23 in Givant and Tarski, 1999</ref> There are two cases. If <code>x ≠ y</code>, then applying five segments to x y z and x yields the desired result (the additional two antecedents are fulfilled because one becomes <code>x x ≡ x′ x′</code> and the other <code>y x ≡ y′ x′</code>). If <code>x = y</code>, then <code>x z ≡ x′ z′</code> follows from <code>y z ≡ y′ z′</code> (and <code>x′ = y′</code>, which follows from <code>x y ≡ x′ y′</code>).
+== Outer three segment ==
+The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x y ≡ x′ y′ ∧ y z ≡ y′ z′ → x z ≡ x′ z′</code>, is basically a degenerate case of the five segment axiom.<ref>Lemma l2_11 in Narboux</ref><ref>Axiom 23 in Givant and Tarski, 1999</ref> We call it ''outer'' three segment because we are given congruences for the inner line segments, and conclude a congruence for the outer segments. We will later prove an inner variant in which which the reverse is true.
+
+There are two cases. If <code>x ≠ y</code>, then applying five segments to x y z and x yields the desired result (the additional two antecedents are fulfilled because one becomes <code>x x ≡ x′ x′</code> and the other <code>y x ≡ y′ x′</code>). If <code>x = y</code>, then <code>x z ≡ x′ z′</code> follows from <code>y z ≡ y′ z′</code> (and <code>x′ = y′</code>, which follows from <code>x y ≡ x′ y′</code>).
 
 We first prove the <code>x = y</code> case as a lemma.
 <jh>
@@ -260,7 +262,7 @@ Now we just add the rest of the antecedents and combine to finish the <code>x �
         importInConsequent
 ))
 
-thm (ThreeSegment () ()
+thm (OuterThreeSegment () ()
   (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′)) (
         x y z x′ y′ z′ ThreeSegmentXEqualsY
         x y z x′ y′ z′ ThreeSegmentXNotEqualY
@@ -269,7 +271,7 @@ thm (ThreeSegment () ()
 </jh>
 
 == Uniqueness of segment construction ==
-Here we prove that the segment constructed by the segment construction axiom is unique. We state this as <code>Q ≠ A ∧ between Q A x ∧ A x ≡ B C ∧ between Q A y ∧ A y ≡ B C → x = y</code>. The proof is first that <code>A x ≡ A y</code> (because both are congruent to <code>B C</code>), and between that and <code>Q A ≡ Q A</code> we can apply <code>ThreeSegment</code> to <code>Q A x</code> and <code>Q A y</code> to get <code>Q x ≡ Q y</code>. Then we will apply <code>OuterFiveSegment</code> with the lines <code>Q A x</code> and <code>Q A x</code> and the points <code>x</code> and <code>y</code>. The four congruences we need are <code>Q A ≡ Q A</code>, <code>A x ≡ A x</code>, <code>Q x ≡ Q y</code>, and <code>A x ≡ A y</code>, and then <code>OuterFiveSegment</code> gives us <code>x x ≡ x y</code>. This congruence yields <code>x = y</code> by <code>CongruenceIdentityLeft</code>.<ref>construction_unicity in Narboux</ref>
+Here we prove that the segment constructed by the segment construction axiom is unique. We state this as <code>Q ≠ A ∧ between Q A x ∧ A x ≡ B C ∧ between Q A y ∧ A y ≡ B C → x = y</code>. The proof is first that <code>A x ≡ A y</code> (because both are congruent to <code>B C</code>), and between that and <code>Q A ≡ Q A</code> we can apply <code>OuterThreeSegment</code> to <code>Q A x</code> and <code>Q A y</code> to get <code>Q x ≡ Q y</code>. Then we will apply <code>OuterFiveSegment</code> with the lines <code>Q A x</code> and <code>Q A x</code> and the points <code>x</code> and <code>y</code>. The four congruences we need are <code>Q A ≡ Q A</code>, <code>A x ≡ A x</code>, <code>Q x ≡ Q y</code>, and <code>A x ≡ A y</code>, and then <code>OuterFiveSegment</code> gives us <code>x x ≡ x y</code>. This congruence yields <code>x = y</code> by <code>CongruenceIdentityLeft</code>.<ref>construction_unicity in Narboux</ref>
 
 The only real difficulty in formalizing this is juggling all those conjunctions and multiple antecedents. The first lemma shows <code>A x ≡ A y</code>.
 <jh>
@@ -303,7 +305,7 @@ The next lemma shows <code>Q x ≡ Q y</code>.
 <jh>
 thm (SegmentConstructionUniquenessQxQy () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (Q x ≡ Q y)) (
 </jh>
-To apply <code>ThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
+To apply <code>OuterThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
@@ -330,9 +332,9 @@ The fourth is <code>A x ≡ A y</code>.
 
         composeConjunction
 </jh>
-Applying <code>ThreeSegment</code> we are done.
+Applying <code>OuterThreeSegment</code> we are done.
 <jh>
-        Q A x Q A y ThreeSegment
+        Q A x Q A y OuterThreeSegment
         applySyllogism
 ))
 </jh>
@@ -506,7 +508,7 @@ If <code>B</code> is between <code>A</code> and <code>C</code>, and <code>A</cod
 
 This property is analogous to antisymmetry for an [[w:Partial_order|order relation]].
 <jh>
-thm (BetweennessEquality ((a A) (a B)) () (((between A B C) ∧ (between B A C)) → (A = B)) (
+thm (BetweennessEquality ( (a A) (a B) (a C)) () (((between A B C) ∧ (between B A C)) → (A = B)) (
         A B C B A a Pasch
 </jh>
 That gives us <code>∃ a (between B a B ∧ between A a A)</code>. We just need to apply the <code>BetweenSubstitution</code> lemma to get <code>between A B A</code>,
@@ -527,7 +529,7 @@ In this section we prove six similar theorems which involve four points on a lin
 ==== Inner transitivity, regular and flipped ====
 The first one is known as inner transitivity.<ref>Inner Transitivity Axiom for Betweenness in Givant and Tarski, 1999</ref><ref>between_inner_transitivity in Narboux</ref>
 <jh>
-thm (BetweennessInnerTransitivity ((a A) (a B) (a C)) ()
+thm (BetweennessInnerTransitivity ( (a A) (a B) (a C) (a D)) ()
   (((between A B D) ∧ (between B C D)) → (between A B C)) (
         A B D B C a Pasch
 </jh>
@@ -597,7 +599,7 @@ thm (BetweennessOuterTransitivityFlipped-1 () () ((((between A C x) ∧ (C x ≡
         composeConjunction
 ))
 
-thm (BetweennessOuterTransitivityFlipped-bca ((A a) (B a) (C a)) ()
+thm (BetweennessOuterTransitivityFlipped-bca ( (A a) (B a) (C a) (D a)) ()
   ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C))
    → (∃ a (((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))))) (
         a A C C D SegmentConstruction
@@ -868,7 +870,7 @@ thm (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)) (
         introduceBiconditionalFromImplications
 ))
 
-thm (TwonessLemma () () (∃ a (∃ b (∃ c (((value a) ≠ (value b)) ∨ ((value b) ≠ (value c)))))) (
+thm (TwonessLemma ((a b c)) () (∃ a (∃ b (∃ c (((value a) ≠ (value b)) ∨ ((value b) ≠ (value c)))))) (
         a b c LowerDimension
 </jh>
 The <code>a = b</code> case involves first picking out <code>¬ between b c a</code>.
@@ -1037,7 +1039,7 @@ Combining <code>between A B C</code> and <code>B ≠ C</code> finishes the proof
         composeConjunction
 ))
 
-thm (PointConstructionDifferent ((a b A) (a b B) (a b c)) () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
+thm (PointConstructionDifferent ((c A) (c B)  (a b A) (a b B) (a b c)) () (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))) (
 </jh>
 The proof of our main theorem will proceed by constructing two different points <code>a</code> and <code>b</code>, and using them to extend the segment <code>A B</code> to a distinct point.
 
@@ -1089,7 +1091,7 @@ The first two quantifiers are no longer needed, and that finishes the proof.
 === A point distinct from a given point exists ===
 Given a point <code>A</code>, there exists a point <code>b</code> distinct from it.<ref>another_point in Narboux</ref> Here's the sketch of Narboux's proof: apply <code>Twoness</code> to get <code>x</code> and <code>y</code> such that <code>x ≠ y</code>. If <code>A ≠ x</code>, we are done (<code>x</code> is the desired point). If <code>A = x</code>, then subsituting into <code>x ≠ y</code> gives us <code>A ≠ y</code>, and <code>y</code> is the desired point. It would be possible (although somewhat cumbersome) to formalize this argument here, but it will be easier just to prove this theorem as a special case of <code>PointConstructionDifferent</code>.
 <jh>
-thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
+thm (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))) (
         b A A PointConstructionDifferent
 
         (between A A (value b)) (A ≠ (value b)) ConjunctionLeftElimination
@@ -1103,7 +1105,8 @@ thm (AnotherPoint () () (∃ b (A ≠ (value b))) (
 [[File:Lemma l3_17 from Narboux.svg|thumb|right|Top: statement of the lemma; Middle: construction of <code>q′</code>; Bottom: construction of <code>q</code>]]
 This lemma is a variant of Pasch's axiom.  The lemma is <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q (between P q C ∧ between B q B′)</code>. The proof consists of two applications of Pasch's axiom. The first one uses the triangle <code>A A′ C</code> (with points <code>P</code> and <code>B′</code>) to construct a point <code>q′</code>. The second uses the triangle <code>A C B′</code> (with points <code>B</code> and <code>q′</code>) to construct the point <code>q</code>.
 <jh>
-thm (PaschLine ((q P) (q C) (q′ q) (q′ P) (q′ C) (q′ B) (q′ A) (q′ B′)) () ((((between A B C) ∧ (between A′ B′ C)) ∧ (between A P A′)) → (∃ q ((between P (value q) C) ∧ (between B (value q) B′)))) (
+thm (PaschLine ((q P) (q C) (q A) (q B) (q B′)  (q′ q) (q′ P) (q′ C) (q′ B) (q′ A) (q′ B′) (q′ A′)) ()
+  ((((between A B C) ∧ (between A′ B′ C)) ∧ (between A P A′)) → (∃ q ((between P (value q) C) ∧ (between B (value q) B′)))) (
 </jh>
 To construct <code>q′</code>, we need <code>between A P A′</code> and <code>between C B′ A′</code>, and Pasch's axiom will give us <code>between P q′ C</code> and <code>between B′ q′ A</code>.
 <jh>
@@ -1541,6 +1544,46 @@ thm (InnerFiveSegment () ()
         x z y x′ y′ z′ u u′ InnerFiveSegmentXEqualsZ
         x z y x′ y′ z′ u u′ InnerFiveSegmentXNotEqualZ
         eliminateCases
+))
+</jh>
+
+== Inner three segment ==
+The next theorem, <code>between x y z ∧ between x′ y′ z′ ∧ x z ≡ x′ z′ ∧ y z ≡ y′ z′ → x y ≡ x′ y′</code>, is analogous to the three segment theorem we proved earlier, except that we are given the outer congruence and conclude an inner one.<ref>Lemma l4_3 in Narboux</ref><ref>Axiom 24 in Givant and Tarski, 1999</ref> The proof is a straightforward application of inner five segments; there is no need to treat any degenerate cases separately (as we did with outer three segment).
+
+<jh>
+thm (InnerThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) → (x y ≡ x′ y′)) (
+</jh>
+To apply inner five segment we will need <code>between x y z ∧ between x′ y′ z′ ∧ x z ≡ x′ z′ ∧ y z ≡ y′ z′ ∧ x x ≡ x′ x′ ∧ z x ≡ z′ x′</code>. The first four conjuncts are identical.
+<jh>
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ImplicationReflexivity
+</jh>
+The next is <code>x x ≡ x′ x′</code>.
+<jh>
+        x x′ CongruenceTrivialIdentity
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) introduceAntecedent
+        composeConjunction
+</jh>
+The last conjunct is <code>z x ≡ z′ x′</code>
+<jh>
+        ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ImplicationReflexivity
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        x z x′ z′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying inner five segment gives us <code>y x ≡ y′ x′</code>, and we just need to flip it to <code>x y ≡ x′ y′</code>.
+<jh>
+        x y z x′ y′ z′ x x′ InnerFiveSegment
+        applySyllogism
+
+        y x y′ x′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
