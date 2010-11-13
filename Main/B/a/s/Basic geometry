@@ -2022,33 +2022,64 @@ thm (InnerDegenerateTriangle-abcabc () () (
 ))
 </jh>
 
-{{under construction}}
-
 A similar substitution turns <code>between A′ B′ C″</code> into <code>between A′ B′ C′</code>
 <jh>
-#thm (InnerDegenerateTriangle-abc1-sub () ()
-#  (((C′ = C″) ∧ (between A′ B′ C″)) → (between A′ B′ C′)) (
-#...
-#))
+thm (InnerDegenerateTriangle-abc1-sub () ()
+  (((C′ = C″) ∧ (between A′ B′ C″)) → (between A′ B′ C′)) (
+</jh>
+We first apply a builder to get <code>C′ = C″ → (between A′ B′ C′ ↔ between A′ B′ C″</code>.
+<jh>
+        A′ EqualityReflexivity
+        B′ EqualityReflexivity
+        A′ A′ B′ B′ C′ C″ BetweenBuilder
+        detach2of3
+        detach1of2
+</jh>
+A bit of rearrangement and we are done.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        import
+))
 
-#thm (InnerDegenerateTriangle-abc1 () () (
-#  ((((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
-#   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
-#   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
-#   ((between A B C) ∧ (A C ≡ A′ C′))) →
-#  (between A′ B′ C′)) (
-#        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-abc
+thm (InnerDegenerateTriangle-abc1 () () (
+  (((((between C′ A′ D′) ∧ (A′ ≠ D′)) ∧
+   ((between D′ A′ B′) ∧ (A′ B′ ≡ A B))) ∧
+   ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
+   ((between A B C) ∧ (A C ≡ A′ C′))) →
+  (between A′ B′ C′)) (
+        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-cc
+        C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-abc
+        composeConjunction
 
-#        TODO: invoke InnerDegenerateTriangle-abc1-sub
-#))
+        C′ C″ A′ B′ InnerDegenerateTriangle-abc1-sub
+        applySyllogism
+))
 </jh>
 
 We're ready to assemble the result and remove the quantifiers which don't apply once the conclusion is reached.
 <jh>
-#thm (InnerDegenerateTriangle ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)) ()
-#  (between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ (value b′) C′ ∧ A B C ≅ A′ (value b′) #C′)) (
-#...
-#))
+thm (InnerDegenerateTriangle ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)
+    (d′ c″ b′ A) (d′ c″ B) (d′ c″ C) (d′ c″ A′) (d′ c″ C′)) ()
+  (((between A B C) ∧ (A C ≡ A′ C′)) → (∃ b′ ((between A′ (value b′) C′) ∧ (A B C ≅ A′ (value b′) C′)))) (
+        A B C A′ C′ d′ b′ c″ InnerDegenerateTriangle-1
+
+        C′ A′ (value d′) (value b′) A B (value c″) C InnerDegenerateTriangle-abc1
+        C′ A′ (value d′) (value b′) A B (value c″) C InnerDegenerateTriangle-abcabc
+        composeConjunction
+
+        c″ addThereExists
+        b′ addThereExists
+        d′ addThereExists
+
+        applySyllogism
+
+        removeThereExistsInConsequent
+
+        c″ ((between A′ (value b′) C′) ∧ (A B C ≅ A′ (value b′) C′)) NullThereExists
+        eliminateBiconditionalReverse
+        b′ addThereExists
+        applySyllogism
+))
 </jh>
 
 == Export ==
