@@ -1,18 +1,35 @@
-[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]].
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]]. [[Interface:Tarski's geometry axioms]]
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
-import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (QUANTIFY_OVER_SETS Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
+import (QUANTIFY_OVER_NUMBERS Interface:First-order_logic_with_quantifiability (CLASSICAL) number.)
+import (SETS Interface:Set_theory (CLASSICAL QUANTIFY_OVER_SETS) set.)
+
+#import (TARSKI Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 #import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 #import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
 #import (BASIC Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
-import (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
-
-import (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL FIRSTORDER ZF) ())
+#import (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (formula p q φ ψ)
-var (variable x y x0 y0 x1 y1 z k n)
-var (object s t u)
-var (variable result x′)
-var (object A B C D)
+#var (variable x y x0 y0 x1 y1 z k n)
+#var (object s t u)
+#var (variable result x′)
+#var (object A B C D)
+
+var (set.variable a)
+var (set.object A)
+var (number.variable x)
+var (number.object X Y Z)
+
+def ((number.0) (set.∅))
+def ((number.1) (set.singleton (set.∅)))
+#def ((< X Y) (⊥)) # for now
+
+#thm (seg ((a w) (a x) (a y) (a z)) () (1st.∃ a ((between w x (1st.value a)) ∧ (x #(1st.value a) ≡ y z))) (
+#        a w x y z SegmentConstruction
+#))
+
+export (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL QUANTIFY_OVER_NUMBERS) number.)
 </jh>
