@@ -37,8 +37,9 @@ stmt (AsSetAsNumber () ((A ∈ (universe))) ((asSet (asNumber A)) set.= A))
 stmt (AsNumberAsSet () () ((asNumber (asSet X)) = X))
 
 def ((∀ x φ) (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) ∧ φ)))
+def ((∃ x φ) (¬ (∀ x (¬ φ))))
 </jh>
 
 To think about: Need to justify each of the statements here (unless there is some way to prove them, but I'd need to figure out from what).
 
-To think about: the result should satisfy all the axioms of [[Interface:Axioms of first-order logic]]. Seems like this could probably be proved, but maybe believing it to be possible would suffice for now. I don't think we need that to just get something past JHilbert, though (since statements are not read from params).
+To think about: the result should satisfy all the axioms of [[Interface:Axioms of first-order logic]]. Seems like this could probably be proved, but maybe believing it to be possible would suffice for now. I don't think we need that to just get something past JHilbert, though (since statements are not read from params). Also on the subject of axioms versus the full [[Interface:First-order logic with quantifiability]] is whether we need to mention <code>∃</code> and <code>subst</code>.
