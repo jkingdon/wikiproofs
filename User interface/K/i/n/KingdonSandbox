@@ -18,8 +18,8 @@ var (variable x y z)
 var (object X Y Z)
 term (object (0))
 term (object (1))
-term (formula (< object object))
+#term (formula (< object object))
 
-stmt (NotOne () () (∃ x ((0) < (value x))))
-stmt (OnlyTwo () () (∀ x (((value x) = (0)) ∨ ((value x) = (1)))))
+#stmt (NotOne () () (∃ x ((0) < (value x))))
+#stmt (OnlyTwo () () (∀ x (((value x) = (0)) ∨ ((value x) = (1)))))
 </jh>
