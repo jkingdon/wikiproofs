@@ -4,9 +4,9 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = Here we start with [[Interface:Basic operations of general set theory]] and provide ordered pairs, relations, and functions. }}
+ | notes    = Here we start with [[Interface:Basic operations of Zermelo–Fraenkel set theory]] and provide ordered pairs, relations, and functions. }}
 {{interfaces
-| imports = [[Interface:Basic operations of general set theory]]
+| imports = [[Interface:Basic operations of Zermelo–Fraenkel set theory]]
 | exports = [[Interface:Set theory]]
 }}
 
@@ -28,7 +28,7 @@ var (variable x y z w x′ y′ z′)
 </jh>
 
 == Singletons ==
-Logically, these theorems belong with the other singleton theorems in [[General set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+Logically, these theorems belong with the other singleton theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
 
 === A set is an element of its singleton ===
 Here we show <code>A ∈ {A}</code>.<ref>[http://us.metamath.org/mpeuni/snid.html snid], metamath's set.mm, accessed August 5, 2010</ref>
@@ -44,7 +44,7 @@ thm (SingletonMembership () () (A ∈ (singleton A)) (
 </jh>
 
 == Unordered pairs ==
-Logically, these theorems belong with the other unordered pair theorems in [[General set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+Logically, these theorems belong with the other unordered pair theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
 
 === An unordered pair contains its first member ===
 Here we show that <code>A ∈ {A, B}</code>.<ref>[http://us.metamath.org/mpeuni/prid1.html prid1], metamath's set.mm, accessed August 4, 2010.</ref>
