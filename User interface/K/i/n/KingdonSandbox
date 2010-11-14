@@ -1,17 +1,25 @@
 This is an interface to hold various results, e.g. potential axioms, proofs which aren't currently exported, or proofs which I think I can prove, but haven't yet.
 
+Here we present a simple theory for a universe of two elements (0 and 1). The point is just to prove something, however simple, in terms of set theory and have quantifiers refer to our universe, rather than the set theory universe.
+
 [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]].
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
 param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 #param (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
-param (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
+#param (ZF Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (formula φ ψ χ θ)
-var (variable x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
-var (variable result x′)
-var (object s t u A B C D)
+#var (variable x y z w n m k n0 m0 n1 m1 x0 x1 y0 y1)
+#var (variable result x′)
+#var (object s t u A B C D)
 
-stmt (UnionObject ((y B) (x B) (z result y x A)) () ((B ∈ (abstract z (∃ x′ (((value z) ∈ (value x′)) ∧ ((value x′) ∈ A))))) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))))
+var (variable x y z)
+var (object X Y Z)
+term (object (0))
+term (object (1))
+term (formula (< object object))
 
+stmt (NotOne () () (∃ x ((0) < (value x))))
+stmt (OnlyTwo () () (∀ x (((value x) = (0)) ∨ ((value x) = (1)))))
 </jh>
