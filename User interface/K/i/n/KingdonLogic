@@ -1,0 +1,39 @@
+Part of the experiment into rejigging quantifiers (from a universe of sets to a more restricted universe).
+
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]].
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
+param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+
+var (formula φ ψ χ θ)
+
+# Here we are defining the kinds and terms of first-order logic
+kind (object)
+kind (variable)
+term (object (value variable))
+term (formula (= object object))
+term (formula (subst object variable formula))
+
+var (set.variable a b c)
+var (set.object A B C)
+var (variable x y z)
+var (object X Y Z)
+
+def ((universe) (unorderedPair (∅) (singleton (∅))))
+
+term (set.object (asSet object))
+term (set.variable (asSetVariable variable))
+
+stmt (InUniverse () () ((asSet X) ∈ (universe)))
+stmt (ValueValue () () ((set.value (asSetVariable x)) set.= (asSet (value x))))
+
+stmt (EqualsEquals () () ((X = Y) ↔ ((asSet X) set.= (asSet Y))))
+stmt (SubstSubst () () ((subst Y x φ) ↔ (set.subst (asSet Y) (asSetVariable x) φ)))
+
+def ((∀ x φ) (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) ∧ φ)))
+</jh>
+
+To think about: Need to justify each of the statements here (unless there is some way to prove them, but I'd need to figure out from what).
+
+To think about: the result should satisfy all the axioms of [[Interface:Axioms of first-order logic]]. Seems like this could probably be proved, but maybe believing it to be possible would suffice for now. I don't think we need that to just get something past JHilbert, though (since statements are not read from params).
