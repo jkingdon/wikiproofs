@@ -1,11 +1,12 @@
-[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]]. [[Interface:Tarski's geometry axioms]]
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]]. [[Interface:Tarski's geometry axioms]], [[User interface:Kingdon/Logic]].
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (QUANTIFY_OVER_SETS Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
-import (QUANTIFY_OVER_NUMBERS Interface:First-order_logic_with_quantifiability (CLASSICAL) number.)
+#import (QUANTIFY_OVER_NUMBERS Interface:First-order_logic_with_quantifiability (CLASSICAL) number.)
 import (SETS Interface:Set_theory (CLASSICAL QUANTIFY_OVER_SETS) set.)
 
+import (QUANTIFY_OVER_NUMBERS User_interface:Kingdon/Logic (CLASSICAL QUANTIFY_OVER_SETS SETS) ())
 #import (TARSKI Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 #import (PEANO Interface:Peano_axioms (CLASSICAL FIRSTORDER) ())
 #import (ARITHMETIC Interface:Basic_arithmetic (CLASSICAL FIRSTORDER) ())
@@ -23,13 +24,13 @@ var (set.object A)
 var (number.variable x)
 var (number.object X Y Z)
 
-def ((number.0) (set.∅))
-def ((number.1) (set.singleton (set.∅)))
+def ((0) (asNumber (set.∅)))
+def ((1) (asNumber (set.singleton (set.∅))))
 #def ((< X Y) (⊥)) # for now
 
 #thm (seg ((a w) (a x) (a y) (a z)) () (1st.∃ a ((between w x (1st.value a)) ∧ (x #(1st.value a) ≡ y z))) (
 #        a w x y z SegmentConstruction
 #))
 
-export (SANDBOX User_interface:Kingdon/Sandbox (CLASSICAL QUANTIFY_OVER_NUMBERS) number.)
+export (RESULT User_interface:Kingdon/Sandbox (CLASSICAL QUANTIFY_OVER_NUMBERS) ())
 </jh>
