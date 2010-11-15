@@ -25,11 +25,16 @@ def ((universe) (unorderedPair (∅) (singleton (∅))))
 term (set.object (asSet object))
 term (set.variable (asSetVariable variable))
 
+term (object (asNumber set.object))
+
 stmt (InUniverse () () ((asSet X) ∈ (universe)))
 stmt (ValueValue () () ((set.value (asSetVariable x)) set.= (asSet (value x))))
 
 stmt (EqualsEquals () () ((X = Y) ↔ ((asSet X) set.= (asSet Y))))
 stmt (SubstSubst () () ((subst Y x φ) ↔ (set.subst (asSet Y) (asSetVariable x) φ)))
+
+stmt (AsSetAsNumber () ((A ∈ (universe))) ((asSet (asNumber A)) set.= A))
+stmt (AsNumberAsSet () () ((asNumber (asSet X)) = X))
 
 def ((∀ x φ) (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) ∧ φ)))
 </jh>
