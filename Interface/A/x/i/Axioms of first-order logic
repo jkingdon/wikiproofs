@@ -5,9 +5,15 @@
  | right    = 
  | shortcut = 
  | notes    = Predicate logic builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. More specifically, the kind of predicate logic we define here is known as first-order logic, which is a common basis for theories such as set theory or arithmetic.
+}}
+
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]]
+| importedby = [[First-order logic]]
+| exportedby = none
+}}
 
 The axioms of first-order logic are usually stated in terms of substitution of one variable or constant for another, [[w:free variable|free variables]] and [[w:bound variable|bound variables]]. JHilbert or metamath do not have the ability to perform this kind of substitution or recognize free variables syntactically, so the version of the axioms here is not based on those concepts. JHilbert does have distinct variable constraints, although whether to use them in this context is somewhat a matter of taste; the metamath archive contains versions of many of these axioms either with distinct variable constraints or with other conditions which also make them correct. The axioms as presented here are adapted from metamath (which in turn got many of the ideas from a 1965 paper by Tarski).<ref>[http://us.metamath.org/mpeuni/mmset.html#pcaxioms Predicate calculus], accessed February 24, 2010</ref>
-}}
 
 == Formulas and objects ==
 We build on [[Interface:Classical propositional calculus]]:
