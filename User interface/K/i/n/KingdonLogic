@@ -38,6 +38,7 @@ stmt (AsNumberAsSet () () ((asNumber (asSet X)) = X))
 
 def ((∀ x φ) (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) ∧ φ)))
 def ((∃ x φ) (¬ (∀ x (¬ φ))))
+def ((≠ X Y) (¬ (X = Y)))
 </jh>
 
 To think about: Need to justify each of the statements here (unless there is some way to prove them, but I'd need to figure out from what).
