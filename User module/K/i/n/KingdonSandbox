@@ -21,12 +21,12 @@ var (formula p q φ ψ)
 
 var (set.variable a)
 var (set.object A)
-var (number.variable x)
-var (number.object X Y Z)
+var (variable x)
+var (object X Y Z)
 
 def ((0) (asNumber (set.∅)))
 def ((1) (asNumber (set.singleton (set.∅))))
-#def ((< X Y) (⊥)) # for now
+def ((< X Y) ((asSet X) set.∈ (asSet Y)))
 
 #thm (seg ((a w) (a x) (a y) (a z)) () (1st.∃ a ((between w x (1st.value a)) ∧ (x #(1st.value a) ≡ y z))) (
 #        a w x y z SegmentConstruction
