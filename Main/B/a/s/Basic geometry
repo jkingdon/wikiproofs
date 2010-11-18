@@ -1593,6 +1593,23 @@ We call one set of three points congruent to a second set if each of the three c
 def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)))
 </jh>
 
+The corresponding sides of congruent (possibly degenerate) triangles are congruent.
+<jh>
+thm (Congruence12 () () ((A B C ≅ A′ B′ C′) → (A B ≡ A′ B′)) (
+        ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+))
+
+thm (Congruence23 () () ((A B C ≅ A′ B′ C′) → (B C ≡ B′ C′)) (
+        ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionLeftElimination
+))
+
+thm (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)) (
+        ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+))
+</jh>
+
 === Constructing a degenerate congruent triangle ===
 Given two congruent line segments <code>A C</code> and <code>A′ C′</code>, where <code>B</code> is on the former, we construct a point <code>b′</code> on the latter line segment such that the degenerate triangles <code>A B C</code> and <code>A′ b′ C′</code/'> are congruent.<ref>Lemma l4_5 in Narboux</ref> In symbols this is <code>between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ b′ C′ ∧ A B C ≅ A′ b′ C′)</code>
 
