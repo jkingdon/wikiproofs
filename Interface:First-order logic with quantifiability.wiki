@@ -131,7 +131,11 @@ stmt (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x 
 <jh>
 stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
 stmt (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))))
-stmt (ThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
+
+stmt (ThereExistsConjunctionCombining () ()
+  (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
+stmt (ThereExistsConjunctionRightCombining () ()
+  (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))))
 </jh>
 
 == Generalization and specialization ==
@@ -417,6 +421,12 @@ stmt (ChangeVariableExplicitThereExists ((y φ) (x y)) ()
   ((∃ x φ) ↔ (∃ y (subst (value y) x φ))))
 stmt (ChangeVariableExplicitForAll ((y φ) (x y)) ()
   ((∀ x φ) ↔ (∀ y (subst (value y) x φ))))
+</jh>
+
+=== More theorems involving subst ===
+<jh>
+stmt (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))))
+stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
 </jh>
 
 == Quantifiability ==

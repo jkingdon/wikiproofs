@@ -155,9 +155,11 @@ To do with network:
 * download
   - First-order logic
   - Interface:First-order logic
-  - Interface:First-order logic with quantifiability
-  - Basic geometry
+  - First-order logic with quantifiability
   - Relations
 
 * rename BetweenBuilder to BetweennessBuilder
+    BetweenABB to BetweennessABB
+    BetweenAAB to BetweennessAAB
+  rename eliminateRightConjunctionInConsequent to eliminateRightConjunctInConsequent (I think, and maybe likewise for whatever is in Classical propositional calculus).
 
