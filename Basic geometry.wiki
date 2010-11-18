@@ -1604,6 +1604,33 @@ thm (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)) (
 ))
 </jh>
 
+Rotating the order of the points in a triangle congruence. Narboux does not explicitly state this, presumably because he can just have Coq, his theorem prover, expand the definition and make many of the inferences automatically, as in the proof of <code>l4_13</code>.
+<jh>
+thm (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C′ A′)) (
+</jh>
+We take <code>(A B ≡ A′ B′ ∧ A C ≡ A′ C′) ∧ B C ≡ B′ C′</code> and start by commuting across the second conjunction.
+<jh>
+        ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>B C ≡ B′ C′ ∧ (A B ≡ A′ B′ ∧ A C ≡ A′ C′)</code>. Swapping the points in the latter two congruences gives <code>B C ≡ B′ C′ ∧ (B A ≡ B′ A′ ∧ C A ≡ C′ A′)</code>
+<jh>
+        A B A′ B′ CongruenceCommutativity
+        A C A′ C′ CongruenceCommutativity
+        buildConjunction
+
+        (B C ≡ B′ C′) buildConjunctionLL
+
+        applyBiconditionalTransitivity
+</jh>
+And all we need to do is apply associativity.
+<jh>
+        (B C ≡ B′ C′) (B A ≡ B′ A′) (C A ≡ C′ A′)  ConjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 === Constructing a degenerate congruent triangle ===
 Given two congruent line segments <code>A C</code> and <code>A′ C′</code>, where <code>B</code> is on the former, we construct a point <code>b′</code> on the latter line segment such that the degenerate triangles <code>A B C</code> and <code>A′ b′ C′</code/'> are congruent.<ref>Lemma l4_5 in Narboux</ref> In symbols this is <code>between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ b′ C′ ∧ A B C ≅ A′ b′ C′)</code>
 
@@ -2335,6 +2362,14 @@ thm (BetweennessDegenerateTriangle
 To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
 <jh>
 def ((collinear x y z) (((between x y z) ∨ (between y z x)) ∨ (between z x y)))
+
+thm (BetweennessCollinearity () () ((between x y z) → (collinear x y z)) (
+        (between x y z) (between y z x) DisjunctionRightIntroduction
+        ((between x y z) ∨ (between y z x))
+          (between z x y)
+          DisjunctionRightIntroduction
+        applySyllogism
+))
 </jh>
 
 === Permutations ===
@@ -2412,6 +2447,67 @@ thm (CollinearityABA () () (collinear A B A) (
         A A B Collinearity23
         eliminateBiconditionalReverse
         applyModusPonens
+))
+</jh>
+
+=== Collinearity and degenerate congruent triangles ===
+The analogue to <code>BetweennessDegenerateTriangle</code> also holds for collinearity.<ref>l4_13 in Narboux</ref>
+<jh>
+thm (CollinearityDegenerateTriangle () ()
+  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)) (
+</jh>
+The proof just consists of expanding <code>collinear A B C</code> into a disjunction of three betweenness formulas, and applying <code>BetweennessDegenerateTriangle</code> three times.
+
+We start with <code>between A B C → (A B C ≅ A′ B′ C′ → collinear A′ B′ C′)<code>.
+<jh>
+        A B C A′ B′ C′ BetweennessDegenerateTriangle
+
+        A′ B′ C′ BetweennessCollinearity
+        applySyllogism
+
+        export
+</jh>
+Next is <code>between B C A → (A B C ≅ A′ B′ C′ → collinear A′ B′ C′)<code>. The proof is similar, but involves some additional rotation of both the congruence and the collinearity.
+<jh>
+        A B C A′ B′ C′ CongruenceRotation
+        eliminateBiconditionalReverse
+        (between B C A) multiplyConjunctionLL
+
+        B C A B′ C′ A′ BetweennessDegenerateTriangle
+        applySyllogism
+
+        A′ B′ C′ CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        A′ B′ C′ BetweennessCollinearity
+        applySyllogism
+
+        export
+</jh>
+We combine the <code>between A B C</code> and <code>between B C A</code> cases.
+<jh>
+        composeDisjunction.
+</jh>
+The proof of the <code>between C A B</code> case, <code>between C A B → (A B C ≅ A′ B′ C′ → collinear A′ B′ C′)<code>, is similar.
+<jh>
+        C A B C′ A′ B′ CongruenceRotation
+        eliminateBiconditionalForward
+        (between C A B) multiplyConjunctionLL
+
+        C A B C′ A′ B′ BetweennessDegenerateTriangle
+        applySyllogism
+
+        C′ A′ B′ CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        A′ B′ C′ BetweennessCollinearity
+        applySyllogism
+
+        export
+
+        composeDisjunction.
 ))
 </jh>
 
