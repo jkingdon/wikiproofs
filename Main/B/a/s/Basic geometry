@@ -2390,6 +2390,31 @@ thm (Collinearity13 () () ((collinear x y z) ↔ (collinear z y x)) (
 ))
 </jh>
 
+=== Collinearity of a point, itself, and another point ===
+A point is collinear with itself and any second point. That is, <code>collinear A A B</code>, and likewise for any other order of the three points.<ref>col_trivial_1, col_trivial_2, and col_trivial_3 in Narboux</ref>
+<jh>
+thm (CollinearityAAB () () (collinear A A B) (
+        B A BetweenABB
+        ((between A A B) ∨ (between A B A)) introduceLeftDisjunction
+))
+
+thm (CollinearityABB () () (collinear A B B) (
+        B A CollinearityAAB
+
+        B B A Collinearity13
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (CollinearityABA () () (collinear A B A) (
+        A B CollinearityAAB
+
+        A A B Collinearity23
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Basic geometry]].
 <jh>
