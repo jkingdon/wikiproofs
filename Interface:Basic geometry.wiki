@@ -139,6 +139,55 @@ stmt (InnerThreeSegment () ()
   (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) → (x y ≡ x′ y′)))
 </jh>
 
+== Congruence of three points ==
+Congruence of three points is similar to the notion of congruent triangles, except that it is also meaningful for degenerate cases. Our notation is <code>A B C ≅ D E F</code> (based on the conventional notation <code>△ABC ≅ △DEF</code>).
+<jh>
+term (formula (≅ point point point point point point))
+</jh>
+
+The corresponding sides of congruent (possibly degenerate) triangles are congruent.
+<jh>
+stmt (Congruence12 () () ((A B C ≅ A′ B′ C′) → (A B ≡ A′ B′)))
+stmt (Congruence23 () () ((A B C ≅ A′ B′ C′) → (B C ≡ B′ C′)))
+stmt (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)))
+</jh>
+
+Given two congruent line segments and a point on one of them, we can construct degenerate congruent triangles.
+<jh>
+stmt (InnerDegenerateTriangle
+  ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)) ()
+  (between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ (value b′) C′ ∧ A B C ≅ A′ (value b′) C′)))
+</jh>
+
+Given two (degenerate) congruent triangles, if the points of the first one are in a betweenness relationship, the corresponding points of the second are in a respective betweenness relationship.
+<jh>
+stmt (BetweennessDegenerateTriangle () ()
+  (((between A B C) ∧ (A B C ≅ A′ B′ C′)) → (between A′ B′ C′)))
+</jh>
+
+== Collinearity ==
+To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
+<jh>
+def ((collinear x y z) (((between x y z) ∨ (between y z x)) ∨ (between z x y)))
+stmt (CollinearityRotation () () ((collinear x y z) ↔ (collinear y z x)))
+stmt (Collinearity23 () () ((collinear x y z) ↔ (collinear x z y)))
+stmt (Collinearity12 () () ((collinear x y z) ↔ (collinear y x z)))
+stmt (Collinearity13 () () ((collinear x y z) ↔ (collinear z y x)))
+</jh>
+
+A point, itself, and any second point are collinear.
+<jh>
+stmt (CollinearityAAB () () (collinear A A B))
+stmt (CollinearityABB () () (collinear A B B))
+stmt (CollinearityABA () () (collinear A B A))
+</jh>
+
+Given two (degenerate) congruent triangles, if the points of the first one are collinear, the points of the second are collinear.
+<jh>
+#stmt (CollinearDegenerateTriangle () ()
+#  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
+</jh>
+
 == Builders ==
 Being able to substitute equals for equals needs to be stated for every operator.
 <jh>
