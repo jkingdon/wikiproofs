@@ -1604,6 +1604,32 @@ thm (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)) (
 ))
 </jh>
 
+The next theorem rotates the order of the points in a triangle congruence. Narboux does not explicitly state this, presumably because he can just have Coq, his theorem prover, expand the definition and make many of the inferences automatically, as in the proof of <code>l4_13</code>.
+<jh>
+thm (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C′ A′)) (
+</jh>
+We take <code>(A B ≡ A′ B′ ∧ A C ≡ A′ C′) ∧ B C ≡ B′ C′</code> and start by commuting across the second conjunction.
+<jh>
+        ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionCommutativity
+</jh>
+That gives us <code>B C ≡ B′ C′ ∧ (A B ≡ A′ B′ ∧ A C ≡ A′ C′)</code>. Swapping the points in the latter two congruences gives <code>B C ≡ B′ C′ ∧ (B A ≡ B′ A′ ∧ C A ≡ C′ A′)</code>
+<jh>
+        A B A′ B′ CongruenceCommutativity
+        A C A′ C′ CongruenceCommutativity
+        buildConjunction
+
+        (B C ≡ B′ C′) buildConjunctionLL
+
+        applyBiconditionalTransitivity
+</jh>
+And all we need to do is apply associativity.
+<jh>
+        (B C ≡ B′ C′) (B A ≡ B′ A′) (C A ≡ C′ A′)  ConjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 === Constructing a degenerate congruent triangle ===
 Given two congruent line segments <code>A C</code> and <code>A′ C′</code>, where <code>B</code> is on the former, we construct a point <code>b′</code> on the latter line segment such that the degenerate triangles <code>A B C</code> and <code>A′ b′ C′</code/'> are congruent.<ref>Lemma l4_5 in Narboux</ref> In symbols this is <code>between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ b′ C′ ∧ A B C ≅ A′ b′ C′)</code>
 
