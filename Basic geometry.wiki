@@ -1604,14 +1604,13 @@ thm (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)) (
 ))
 </jh>
 
-Rotating the order of the points in a triangle congruence. Narboux does not explicitly state this, presumably because he can just have Coq, his theorem prover, expand the definition and make many of the inferences automatically, as in the proof of <code>l4_13</code>.
+The next theorem rotates the order of the points in a triangle congruence. Narboux does not explicitly state this, presumably because he can just have Coq, his theorem prover, expand the definition and make many of the inferences automatically, as in the proof of <code>l4_13</code>.
 <jh>
 thm (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C′ A′)) (
 </jh>
 We take <code>(A B ≡ A′ B′ ∧ A C ≡ A′ C′) ∧ B C ≡ B′ C′</code> and start by commuting across the second conjunction.
 <jh>
         ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionCommutativity
-        applyBiconditionalTransitivity
 </jh>
 That gives us <code>B C ≡ B′ C′ ∧ (A B ≡ A′ B′ ∧ A C ≡ A′ C′)</code>. Swapping the points in the latter two congruences gives <code>B C ≡ B′ C′ ∧ (B A ≡ B′ A′ ∧ C A ≡ C′ A′)</code>
 <jh>
