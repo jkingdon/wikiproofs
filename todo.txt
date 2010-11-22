@@ -169,9 +169,14 @@ To do with network:
     BetweenAAB to BetweennessAAB
   rename eliminateRightConjunctionInConsequent to eliminateRightConjunctInConsequent (I think, and maybe likewise for whatever is in Classical propositional calculus).
 
-* split Basic geometry into one module for each chapter? And for each chapter an interface, cumulative, which also includes axioms as appropriate.
-
 * try to find out more about School Mathematics Study Group postulates? Like Euclid's.
 
 * notation for congruent angles. Convention is (angle)ABC ≅ (angle)DEF, right?  Then maybe (A B C (angle)≅ D E F) for us?
+
+* split Basic geometry into one module for each chapter? And for each chapter an interface, cumulative, which also includes axioms as appropriate.
+* Breaking apart Basic geometry notes:
+*[[Line segment congruence]]. Also includes outer three segment and segment construction uniqueness. (chapter 2) (lines 1–394)
+*[[Betweenness of points]], including the existence of distinct points, <code>PaschLine</code> (chapter 3) (lines 395–1192)
+*[[Triangle congruence]] defined and with some basic results for degenerate triangles.  Also includes inner five segment. (first half of chapter 4) (lines 1193–2359)
+*[[Collinearity]] (second half of chapter 4) (lines 2360–2512 and counting - need l4_14, l4_16, l4_17, l4_19)
 
