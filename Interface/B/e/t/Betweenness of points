@@ -104,6 +104,14 @@ stmt (SegmentConstruction ((a w) (a x) (a y) (a z)) () (∃ a ((between w x (val
 stmt (SegmentConstructionUniqueness () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (x = y)))
 </jh>
 
+== Existence of distinct points ==
+Here we can construct a point distinct from a given point, or a point distinct from a given point extended along a given line segment.
+<jh>
+stmt (PointConstructionDifferent ((c A) (c B)) ()
+  (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
+stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
+</jh>
+
 == Tarski's axioms ==
 We repeat those axioms which are not subsumed by the theorems we have proved so far. Explanations are at [[Interface:Tarski's geometry axioms]].
 <jh>
