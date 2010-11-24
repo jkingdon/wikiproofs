@@ -1,0 +1,23 @@
+<span class="outdent-template" style="font-family:DejaVu Sans, sans-serif;"><span style="color:#808080">┌{{#switch:{{{1|}}}
+|1|:={{padleft:┘|4|─}}
+|2|::={{padleft:┘|7|─}}
+|3|:::={{padleft:┘|10|─}}
+|4|::::={{padleft:┘|14|─}}
+|5|:::::={{padleft:┘|17|─}}
+|6|::::::={{padleft:┘|20|─}}
+|7|:::::::={{padleft:┘|24|─}}
+|8|::::::::={{padleft:┘|27|─}}
+|9|:::::::::={{padleft:┘|30|─}}
+|10|::::::::::={{padleft:┘|34|─}}
+|11|:::::::::::={{padleft:┘|37|─}}
+|12|::::::::::::={{padleft:┘|40|─}}
+|13|:::::::::::::={{padleft:┘|44|─}}
+|14|::::::::::::::={{padleft:┘|47|─}}
+|15|:::::::::::::::={{padleft:┘|50|─}}
+|16|::::::::::::::::={{padleft:┘|54|─}}
+|17|:::::::::::::::::={{padleft:┘|57|─}}
+|18|::::::::::::::::::={{padleft:┘|60|─}}
+|19|:::::::::::::::::::={{padleft:┘|64|─}}
+|20|::::::::::::::::::::={{padleft:┘|67|─}}
+|{{padleft:┘|34|─}}
+}}</span><br/>{{#if:{{{2|}}}|([[Wikipedia:Indentation#Outdenting|outdent]])&nbsp;}}</span><noinclude>Used for showing an outdent (unindent) on a talk page, like on wikipedia: [[w:Template:Outdent/doc]].</noinclude>
