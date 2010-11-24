@@ -58,6 +58,26 @@ stmt (SegmentConstruction ((a w) (a x) (a y) (a z)) () (∃ a ((between w x (val
 stmt (SegmentConstructionUniqueness () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (x = y)))
 </jh>
 
+== Five segment ==
+<gallery>
+File:Five segment.svg|Outer five segment
+</gallery>
+The five segment theorems are variations of the familiar congruences for triangles (although without any explicit reference to angles). So far we just have the outer, not inner, forms (see [[Interface:Basic geometry]] for both).
+<jh>
+stmt (OuterFiveSegment () ()
+  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′))
+     ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′))
+   → (z u ≡ z′ u′))
+)
+</jh>
+
+=== Three segment ===
+The three segment theorems can be thought of as degenerate cases of five segment, or as basic properties of points on a line.
+<jh>
+stmt (OuterThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′)))
+</jh>
+
 == Tarski's axioms ==
 We repeat those axioms which are not subsumed by the theorems we have proved so far. Explanations are at [[Interface:Tarski's geometry axioms]].
 <jh>
@@ -79,11 +99,6 @@ stmt (UpperDimension () ()
 stmt (AxiomEuclid ((a b x) (a b u) (a b v) (a b y) (a b z)) () (
   (((between x u v) ∧ (between y u z)) ∧ (x ≠ u))
   → (∃ a (∃ b (((between x y (value a)) ∧ (between x z (value b))) ∧ (between (value a) v (value b)))))))
-stmt (OuterFiveSegment () ()
-  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′))
-     ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′))
-   → (z u ≡ z′ u′))
-)
 var (point x0 x1 x2 x3 y0 y1 y2 y3)
 stmt (CongruenceBuilder () () (
   ((((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2)) ∧ (x3 = y3))
