@@ -4,7 +4,7 @@
 | exportedby = [[Line segment congruence]]
 }}
 
-This is part of a series of modules which prove a variety of geometrical theorems starting with [[Interface:Tarski's geometry axioms|Tarski's axioms for geometry]], culminating in [[Interface:Basic geometry]].
+{{geometry series brief}}
 
 We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
 
