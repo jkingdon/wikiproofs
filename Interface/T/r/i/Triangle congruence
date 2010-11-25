@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
-| importedby = [[Triangle congruence]]
-| exportedby = [[Betweenness of points]]
+| importedby = [[Collinearity]]
+| exportedby = [[Triangle congruence]]
 }}
 
 {{geometry series brief}}
