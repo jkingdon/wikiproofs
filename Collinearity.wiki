@@ -169,6 +169,218 @@ The proof of the <code>between C A B</code> case, <code>between C A B → (A B C
 ))
 </jh>
 
+== Constructing congruent degenerate triangles from collinear points ==
+Given a (degenerate) triangle and a line segment congruent to one of the sides of the triangle, we can construct a second triangle on the line segment which is congruent to the given triangle. Here we prove a degenerate case, in which the points of the given triangle are collinear. In symbols, <code>collinear A B C ∧ A B ≡ A′ B′ → ∃ c′ A B C ≅ A′ B′ c′</code>.<ref>l4_14 in Narboux</ref> This is an analogue to <code>InnerDegenerateTriangle</code> but for collinearity rather than betweenness.
+
+There are three cases, corresponding to the three betweenness predicates which make up the definition of <code>collinear</code>.
+
+The first lemma is basically predicate logic. It enables us to move the two antecedents inside the quantifier.
+<jh>
+thm (CollinearityConstructDegenerateTriangle-1
+  ((c′ x) (c′ y) (c′ z) (c′ A) (c′ B) (c′ A′) (c′ B′))
+  ((H (∃ c′ φ)))
+  (((between x y z) ∧ (A B ≡ A′ B′)) → (∃ c′ ((between x y z) ∧ ((A B ≡ A′ B′) ∧ φ)))) (
+        (A B ≡ A′ B′) ImplicationReflexivity
+        H
+        (A B ≡ A′ B′) introduceAntecedent
+        composeConjunction
+
+        c′ (A B ≡ A′ B′) φ ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+That gives us <code>A B ≡ A′ B′ → ∃ c′ (A B ≡ A′ B′ ∧ φ)</code>. We now need to apply a similar process to <code>between x y z</code>
+<jh>
+        (between x y z) multiplyConjunctionLL
+
+        c′ (between x y z) ((A B ≡ A′ B′) ∧ φ)ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+The next few lemmas form the bulk of the <code>between A B C</code> case. Extend <code>A′ B′</code> to a point <code>C′</code> such that <code>B′ C′ ≡ B C</code>. Between that congruence and <code>A B ≡ A′ B′</code>, we can conclude <code>A C ≡ A′ C′</code>. Those three congruences are what we need for <code>A B C ≅ A′ B′ C′</code>.
+<jh>
+thm (CollinearityConstructDegenerateTriangle-abc-bc () ()
+  (((between A B C) ∧ ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C)))) → (B C ≡ B′ C′)) (
+        (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        B′ C′ B C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (CollinearityConstructDegenerateTriangle-abc-ac () ()
+  (((between A B C) ∧ ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C)))) → (A C ≡ A′ C′)) (
+</jh>
+The proof is an application of <code>OuterThreeSegment</code>. First we need <code>between A B C</code>.
+<jh>
+        (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionRightElimination
+</jh>
+Next, <code>between A′ B′ C′</code>.
+<jh>
+        (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+</jh>
+We need two congruences. The first is <code>A B ≡ A′ B′</code>.
+<jh>
+        (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+</jh>
+The other is <code>B C ≡ B′ C′</code>.
+<jh>
+        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-bc
+
+        composeConjunction
+</jh>
+We can now apply outer three segment.
+<jh>
+        A B C A′ B′ C′ OuterThreeSegment
+        applySyllogism
+))
+
+thm (CollinearityConstructDegenerateTriangle-abc-core () ()
+  (((between A B C) ∧ ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C)))) → (A B C ≅ A′ B′ C′)) (
+        (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+
+        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-ac
+        composeConjunction
+
+        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-bc
+        composeConjunction
+))
+
+thm (CollinearityConstructDegenerateTriangle-abc
+  ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) ()
+  ((between A B C) → ((A B ≡ A′ B′) → (∃ c′ (A B C ≅ A′ B′ (value c′))))) (
+        c′ A′ B′ B C SegmentConstruction
+        A B C A B A′ B′ CollinearityConstructDegenerateTriangle-1
+
+        A B C A′ B′ (value c′) CollinearityConstructDegenerateTriangle-abc-core
+        c′ addThereExists
+        applySyllogism
+
+        export
+))
+
+</jh>
+The second case, <code>between C A B</code>, is similar. Extend <code>B′ A′</code> to a point <code>C′</code> such that <code>A′ C′ ≡ A C</code>. Between that congruence and <code>A B ≡ A′ B′</code>, we can conclude <code>B C ≡ B′ C′</code>. Those three congruences are what we need for <code>A B C ≅ A′ B′ C′</code>.
+<jh>
+thm (CollinearityConstructDegenerateTriangle-cab-ac () ()
+  (((between C A B) ∧ ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C)))) → (C A ≡ C′ A′)) (
+        (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        A′ C′ A C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (CollinearityConstructDegenerateTriangle-cab-bc () ()
+  (((between C A B) ∧ ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C)))) → (B C ≡ B′ C′)) (
+</jh>
+The proof is an application of <code>OuterThreeSegment</code>. First we need <code>between C A B</code>.
+<jh>
+        (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionRightElimination
+</jh>
+Next, <code>between C′ A′ B′</code>.
+<jh>
+        (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        B′ A′ C′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+We need two congruences. The first is <code>C A ≡ C′ A′</code>.
+<jh>
+        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-ac
+
+        A C A′ C′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The other is <code>A B ≡ A′ B′</code>.
+<jh>
+        (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+</jh>
+We can now apply outer three segment.
+<jh>
+        C A B C′ A′ B′ OuterThreeSegment
+        applySyllogism
+))
+
+thm (CollinearityConstructDegenerateTriangle-cab-core () ()
+  (((between C A B) ∧ ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C)))) → (A B C ≅ A′ B′ C′)) (
+        (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+
+        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-ac
+        composeConjunction
+
+        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-bc
+        composeConjunction
+))
+
+thm (CollinearityConstructDegenerateTriangle-cab
+  ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) ()
+  ((between C A B) → ((A B ≡ A′ B′) → (∃ c′ (A B C ≅ A′ B′ (value c′))))) (
+        c′ B′ A′ A C SegmentConstruction
+        C A B A B A′ B′ CollinearityConstructDegenerateTriangle-1
+
+        C A B A′ B′ (value c′) CollinearityConstructDegenerateTriangle-cab-core
+        c′ addThereExists
+        applySyllogism
+
+        export
+))
+</jh>
+The <code>between B C A</code> case is a consequence of <code>InnerDegenerateTriangle</code>.
+<jh>
+thm (CollinearityConstructDegenerateTriangle-bca
+  ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) ()
+  ((between B C A) → ((A B ≡ A′ B′) → (∃ c′ (A B C ≅ A′ B′ (value c′))))) (
+        A B A′ B′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        (between B C A) conjoinLL
+
+        B C A B′ A′ c′ InnerDegenerateTriangle
+        applySyllogism
+
+        A B C A′ B′ (value c′) CongruenceRotation
+        eliminateBiconditionalForward
+        c′ addThereExists
+        applySyllogism
+))
+
+thm (CollinearityConstructDegenerateTriangle () () (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))) (
+        A B C A′ B′ c′ CollinearityConstructDegenerateTriangle-abc
+        B C A A′ B′ c′ CollinearityConstructDegenerateTriangle-bca
+        composeDisjunction
+
+        C A B A′ B′ c′ CollinearityConstructDegenerateTriangle-cab
+        composeDisjunction
+
+        import
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Collinearity]].
 <jh>

@@ -1,56 +1,9 @@
-This is a draft and some ideas for language for wikiproofs articles/blurbs, based on a few emails...
+This is a draft of a short blurb on wikiproofs.
 
+--------- begin text
+Did you always want to take things apart to figure out how they work? Wikiproofs.org lets students (and other interested people) do this with formal mathematical proofs, and also try their hand at writing proofs, which are checked by an automated proof verifier. The proof language is inspired by Norman Megill's metamath, and, like metamath, does not require the reader to guess how any step was performed. Putting the proofs on a wiki enables anyone to contribute and also provides the ability to mix formal proofs with explanatory text, figures, references to sources, and links to other pages on the site. Opportunities for contributing to wikiproofs include fleshing out the mathematical content, improving the existing proofs or their presentation, working on the proof verification software itself, and writing documentation.
 
-Despite several decades of experience, computer-verified proofs are still in their infancy and only a few systems have large libraries of proofs. Will opening up the system to wiki-style collaboration unleash the same creative burst that we have seen in other online collaborations? Only time will tell.
-
->         I suggested (if he finds the piece of interest) that apart from editing
-> it for style, he ask you to say something about how difficult the site is
-> for a novice to use. I'll bet it is not easy. This piece will benefit
-> from a sentence or two (not more) that is evaluative rather than simply
-> factual.
-
-Well, I picked it up as a "novice", with only a modest amount of trial and
-error. I don't have a whole lot of points of comparison, but to do the
-geometry proofs I have been reading proofs formalized using the Coq
-theorem prover. Coq is very different in that you can tell it "OK, figure
-things out from here".  So a Coq proof reads more like an informal proof
-in the sense of just showing the major steps. In some ways this is good
-(one isn't buried with details) but on the whole can be kind of baffling
-(one needs to guess what theorems are being applied at each stage).
-
-Anyway, if he asks I'll try to figure out how to say something like that
-in a sentence or two. In my draft I tried to hint at it with "does not
-require the reader to guess how any step was performed" but perhaps there
-is a more explicit way to make the point.
-
-At least for me the fact that wikiproofs uses unicode rather than ASCII
-also makes a big difference, although not everyone agrees with this point.
-
-
-
-
-
-> --------- begin text
-> Did you always want to take things apart to figure out how they work?
-> Wikiproofs.de lets students (and other interested people) do this with
-> formal mathematical proofs, and also try their hand at writing proofs,
-> which are checked by an automated proof verifier. The proof language is
-> inspired by Norman Megill's metamath, and, like metamath, does not require
-> the reader to guess how any step was performed. Putting the proofs on a
-> wiki enables anyone to contribute and also provides the ability to mix
-> formal proofs with explanatory text, figures, references to sources, and
-> links to other pages on the site.
-> 
-> The proof verifier is modular: each page decides which axioms, or
-> previously proved results, to import. This lets different theories (which
-> need not be consistent with each other) coexist on the website, and also
-> makes it possible to start from different starting points: the axioms of
-> set theory and logic, or any other starting point which can be expressed
-> as a set of axioms. The site currently has well-developed pages for
-> propositional logic, predicate logic, and Peano arithmetic and a good
-> start on geometry and set theory. Opportunities for contributing to
-> wikiproofs.de include fleshing out the mathematical content, improving the
-> existing proofs or their presentation, working on the proof verification
-> software itself, and writing documentation.
-> --------- end text
+The proof verifier is modular: each page decides which axioms, or previously proved results, to import. This lets different theories (which need not be consistent with each other) coexist on the website, and also makes it possible to start from different starting points: the axioms of set theory and logic, or any other starting point which can be expressed as a set of axioms. Wikiproofs currently has well-developed pages for propositional logic, predicate logic, and Peano arithmetic and a good start on geometry and set theory. 
+Computer-verified proofs, and their use in education, are still in their infancy. Will opening up the system to wiki-style collaboration unleash the same creative burst that we have seen in other online collaborations? Only time will tell.
+--------- end text
 
