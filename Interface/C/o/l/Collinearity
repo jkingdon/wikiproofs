@@ -179,8 +179,8 @@ stmt (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C
 stmt (BetweennessDegenerateTriangle
   () ()
   (((between A B C) ∧ (A B C ≅ A′ B′ C′)) → (between A′ B′ C′)))
-stmt (CollinearDegenerateTriangle () ()
-  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
+#stmt (CollinearDegenerateTriangle () ()
+#  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
 stmt (InnerDegenerateTriangle
   ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)) ()
   (((between A B C) ∧ (A C ≡ A′ C′)) → (∃ b′ ((between A′ (value b′) C′) ∧ (A B C ≅ A′ (value b′) C′)))))
