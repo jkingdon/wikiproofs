@@ -182,3 +182,18 @@ DONE*[[Betweenness of points]], including the existence of distinct points, <cod
 
 * rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think. Or rename the unidirectional one to IndivisibilityImplication.
 
+* l4_17 
+        p
+
+  a  b           c
+
+        q
+
+  If two given points are equidistant to two distinct points on a line, they are equidistant to any point on that line.
+
+* l4_18
+  Given two distinct points on a line, and a third point on that line, the third point is uniquely determined by its distances to the given points.
+
+* l4_19
+  A point on a line segment is uniquely determined by its distance to the two endpoints.
+

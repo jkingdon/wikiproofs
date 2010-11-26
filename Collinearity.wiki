@@ -381,6 +381,12 @@ thm (CollinearityConstructDegenerateTriangle () () (((collinear A B C) ∧ (A B 
 ))
 </jh>
 
+== Five segment ==
+This five segment theorem combines inner and outer five segment. It is <code>A ≠ B ∧ collinear A B C ∧ A B C ≅ A′ B′ C′ ∧ A D ≡ A′ D′ ∧ B D ≡ B′ D′ → C D ≡ C′ D′</code>.<ref>l4_16 in Narboux</ref>
+<jh>
+thm (FiveSegment-core () () () ())
+</jh>
+
 == Export ==
 We now export to [[Interface:Collinearity]].
 <jh>
