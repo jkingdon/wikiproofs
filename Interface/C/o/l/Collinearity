@@ -186,8 +186,6 @@ stmt (InnerDegenerateTriangle
   (((between A B C) ∧ (A C ≡ A′ C′)) → (∃ b′ ((between A′ (value b′) C′) ∧ (A B C ≅ A′ (value b′) C′)))))
 </jh>
 
-</jh>
-
 == Tarski's axioms ==
 We repeat those axioms which are not subsumed by the theorems we have proved so far. Explanations are at [[Interface:Tarski's geometry axioms]].
 <jh>
