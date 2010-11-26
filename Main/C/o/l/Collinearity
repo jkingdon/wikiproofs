@@ -1,0 +1,119 @@
+{{interfaces
+| imports = [[Interface:Triangle congruence]]
+| exports = [[Interface:Collinearity]]
+}}
+
+This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Triangle congruence|geometry results so far]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (START Interface:Triangle_congruence (CLASSICAL FIRSTORDER) ())
+
+var (point x y z w u v A B C D E P Q A′ B′ C′ D′ B″ C″)
+var (point x′ y′ z′ w′ u′)
+var (variable a b b′ c d′ q q′ ww ww′ b″ c″)
+</jh>
+
+== Collinearity ==
+To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
+<jh>
+def ((collinear x y z) (((between x y z) ∨ (between y z x)) ∨ (between z x y)))
+</jh>
+
+=== Permutations ===
+One way to express the "in any order" concept is to provide permutation theorems. The first is rotation: <code>collinear x y z ↔ collinear y z x</code>.<ref>col_permutation_1 and col_permutation_2 in Narboux</ref>
+<jh>
+thm (CollinearityRotation () () ((collinear x y z) ↔ (collinear y z x)) (
+        (between x y z) (between y z x) (between z x y) DisjunctionAssociativity
+
+        (between x y z) ((between y z x) ∨ (between z x y)) DisjunctionCommutativity
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The next permutation swaps the second and third points.<ref>col_permutation_5 in Narboux, biconditionalized</ref>
+<jh>
+thm (Collinearity23 () () ((collinear x y z) ↔ (collinear x z y)) (
+</jh>
+The proof starts with <code>between x y z ↔ between z y x</code> and <code>between y z x ↔ between x z y</code>.
+<jh>
+        x y z BetweennessSymmetry
+        y z x BetweennessSymmetry
+</jh>
+We combine those and switch the order to get <code>between x y z ∨ between y z x ↔ between x z y ∨ between z y x</code>.
+<jh>
+        buildDisjunction
+
+        (between z y x) (between x z y) DisjunctionCommutativity
+        applyBiconditionalTransitivity
+</jh>
+Combining that with <code>between z x y ↔ between y x z</code> finishes the task.
+<jh>
+        z x y BetweennessSymmetry
+        buildDisjunction
+))
+</jh>
+
+To swap the first and second points, we rotate and then swap the second and third points.<ref>col_permutation_4 in Narboux, biconditionalized</ref>
+<jh>
+thm (Collinearity12 () () ((collinear x y z) ↔ (collinear y x z)) (
+        x y z CollinearityRotation
+        y z x Collinearity23
+        applyBiconditionalTransitivity
+))
+</jh>
+
+To swap the first and third points, we rotate and then swap the first and second points.<ref>col_permutation_3 in Narboux, biconditionalized</ref>
+<jh>
+thm (Collinearity13 () () ((collinear x y z) ↔ (collinear z y x)) (
+        x y z CollinearityRotation
+        y z x Collinearity12
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Collinearity of a point, itself, and another point ===
+A point is collinear with itself and any second point. That is, <code>collinear A A B</code>, and likewise for any other order of the three points.<ref>col_trivial_1, col_trivial_2, and col_trivial_3 in Narboux</ref>
+<jh>
+thm (CollinearityAAB () () (collinear A A B) (
+        B A BetweenABB
+        ((between A A B) ∨ (between A B A)) introduceLeftDisjunction
+))
+
+thm (CollinearityABB () () (collinear A B B) (
+        B A CollinearityAAB
+
+        B B A Collinearity13
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (CollinearityABA () () (collinear A B A) (
+        A B CollinearityAAB
+
+        A A B Collinearity23
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
+== Export ==
+We now export to [[Interface:Collinearity]].
+<jh>
+export (RESULTS Interface:Collinearity (CLASSICAL FIRSTORDER) ())
+</jh>
+
+Also, since this page is currently the last in the (in-progress) series on basic geometry, we export to [[Interface:Basic geometry]].
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
