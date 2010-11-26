@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
 | importedby = None yet.
-| exportedby = [[Basic geometry]]
+| exportedby = [[Collinearity]]
 }}
 
 Here we state a variety of basic geometrical theorems involving collinearity, midpoints, perpendiculars, and the like.
