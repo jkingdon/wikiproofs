@@ -74,49 +74,21 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |ℍ || || quaternions ||
 |-
-|Α || A* || Alpha ||
-|-
-|Β || B* || Beta ||
-|-
 |Γ || G* || Gamma ||
 |-
 |Δ || D* || Delta ||
 |-
-|Ε || E* || Epsilon ||
-|-
-|Ζ || Z* || Zeta ||
-|-
-|Η || Y* || Eta ||
-|-
 |Θ || H* || Theta ||
-|-
-|Ι || I* || Iota ||
-|-
-|Κ || K* || Kappa ||
 |-
 |Λ || L* || Lambda ||
 |-
-|Μ || M* || Mu ||
-|-
-|Ν || N* || Nu ||
-|-
 |Ξ || C* || Xi ||
-|-
-|Ο || O* || Omicron ||
 |-
 |Π || P* || Pi ||
 |-
-|Ρ || R* || Rho ||
-|-
 |Σ || S* || Sigma ||
 |-
-|Τ || T* || Tau ||
-|-
-|Υ || U* || Upsilon ||
-|-
 |Φ || F* || Phi ||
-|-
-|Χ || X* || Chi ||
 |-
 |Ψ || Q* || Psi ||
 |-
@@ -150,8 +122,6 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |ξ || c* || xi ||
 |-
-|ο || o* || omicron ||
-|-
 |π || p* || pi ||
 |-
 |ρ || r* || rho ||
@@ -176,3 +146,23 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |″ || 2' || double prime || [[Triangle congruence|geometry]]
 |}
+
+=== Omitted characters ===
+The following characters are intentionally omitted from the above list and generally should not be used on wikiproofs.
+{| 
+|-
+||Character
+||Meaning/description
+||Reason for omission
+|-
+|𝒫 || [[Interface:Basic operations of general set theory|power set]] || not supported in enough browsers
+|-
+|Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ || Capital greek letters || Easily confused with latin letters<ref name="confusables">loosely based on the confusables.txt file from unicode.org, but adapated for mathematical conventions</ref>
+|-
+| ο || Lowercase greek omicron || Easily confused with latin letter o<ref name="confusables" />
+|-
+| various || raised dots || The one shown above seems to be the most widely used; see <ref name="confusables" /> for a long list of other raised dot characters.
+|}
+
+== References ==
+<references/>
