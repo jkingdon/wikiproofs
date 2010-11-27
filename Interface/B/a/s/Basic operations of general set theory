@@ -67,4 +67,7 @@ stmt (ExtensionalityObject ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((val
 == To be added ==
 Separation (presumably in the form of defining <code>{y ∈ A | φ}</code>). That might go something like <code>B ∈ {y ∈ A | φ} ↔ B ∈ A ∧ [ B / y ] φ</code>.
 
+== References ==
+<references/>
+
 [[Category:Axiomatics of classical set theory and its fragments|{{PAGENAME}}]]
