@@ -11,9 +11,10 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Triangle_congruence (CLASSICAL FIRSTORDER) ())
 
+var (formula φ)
 var (point x y z w u v A B C D E P Q A′ B′ C′ D′ B″ C″)
 var (point x′ y′ z′ w′ u′)
-var (variable a b b′ c d′ q q′ ww ww′ b″ c″)
+var (variable a b b′ c c′ d′ q q′ ww ww′ b″ c″)
 </jh>
 
 == Collinearity ==
@@ -129,43 +130,44 @@ Next is <code>between B C A → (A B C ≅ A′ B′ C′ → collinear A′ B�
 <jh>
         A B C A′ B′ C′ CongruenceRotation
         eliminateBiconditionalReverse
-        (between B C A) multiplyConjunctionLL
+        (between B C A) conjoinLL
 
         B C A B′ C′ A′ BetweennessDegenerateTriangle
+        applySyllogism
+
+        B′ C′ A′ BetweennessCollinearity
         applySyllogism
 
         A′ B′ C′ CollinearityRotation
         eliminateBiconditionalForward
         applySyllogism
 
-        A′ B′ C′ BetweennessCollinearity
-        applySyllogism
-
         export
 </jh>
 We combine the <code>between A B C</code> and <code>between B C A</code> cases.
 <jh>
-        composeDisjunction.
+        composeDisjunction
 </jh>
 The proof of the <code>between C A B</code> case, <code>between C A B → (A B C ≅ A′ B′ C′ → collinear A′ B′ C′)<code>, is similar.
 <jh>
         C A B C′ A′ B′ CongruenceRotation
         eliminateBiconditionalForward
-        (between C A B) multiplyConjunctionLL
+        (between C A B) conjoinLL
 
         C A B C′ A′ B′ BetweennessDegenerateTriangle
+        applySyllogism
+
+        C′ A′ B′ BetweennessCollinearity
         applySyllogism
 
         C′ A′ B′ CollinearityRotation
         eliminateBiconditionalReverse
         applySyllogism
 
-        A′ B′ C′ BetweennessCollinearity
-        applySyllogism
-
         export
 
-        composeDisjunction.
+        composeDisjunction
+        import
 ))
 </jh>
 
@@ -191,7 +193,7 @@ thm (CollinearityConstructDegenerateTriangle-1
 </jh>
 That gives us <code>A B ≡ A′ B′ → ∃ c′ (A B ≡ A′ B′ ∧ φ)</code>. We now need to apply a similar process to <code>between x y z</code>
 <jh>
-        (between x y z) multiplyConjunctionLL
+        (between x y z) conjoinLL
 
         c′ (between x y z) ((A B ≡ A′ B′) ∧ φ)ThereExistsConjunctionMovement
         eliminateBiconditionalForward
@@ -274,7 +276,7 @@ thm (CollinearityConstructDegenerateTriangle-abc
 The second case, <code>between C A B</code>, is similar. Extend <code>B′ A′</code> to a point <code>C′</code> such that <code>A′ C′ ≡ A C</code>. Between that congruence and <code>A B ≡ A′ B′</code>, we can conclude <code>B C ≡ B′ C′</code>. Those three congruences are what we need for <code>A B C ≅ A′ B′ C′</code>.
 <jh>
 thm (CollinearityConstructDegenerateTriangle-cab-ac () ()
-  (((between C A B) ∧ ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C)))) → (C A ≡ C′ A′)) (
+  (((between C A B) ∧ ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C)))) → (A C ≡ A′ C′)) (
         (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
@@ -305,7 +307,7 @@ Next, <code>between C′ A′ B′</code>.
 </jh>
 We need two congruences. The first is <code>C A ≡ C′ A′</code>.
 <jh>
-        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-ac
+        C A B A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-ac
 
         A C A′ C′ CongruenceCommutativity
         eliminateBiconditionalReverse
@@ -324,6 +326,10 @@ We can now apply outer three segment.
 <jh>
         C A B C′ A′ B′ OuterThreeSegment
         applySyllogism
+
+        C B C′ B′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 
 thm (CollinearityConstructDegenerateTriangle-cab-core () ()
@@ -331,10 +337,10 @@ thm (CollinearityConstructDegenerateTriangle-cab-core () ()
         (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
         eliminateRightConjunctionInConsequent
 
-        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-ac
+        C A B A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-ac
         composeConjunction
 
-        A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-bc
+        C A B A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-bc
         composeConjunction
 ))
 
@@ -363,13 +369,19 @@ thm (CollinearityConstructDegenerateTriangle-bca
         B C A B′ A′ c′ InnerDegenerateTriangle
         applySyllogism
 
+        (between B′ (value c′) A′) (B C A ≅ B′ (value c′) A′) ConjunctionLeftElimination
+        c′ addThereExists
+        applySyllogism
+
         A B C A′ B′ (value c′) CongruenceRotation
         eliminateBiconditionalForward
         c′ addThereExists
         applySyllogism
+
+        export
 ))
 
-thm (CollinearityConstructDegenerateTriangle () () (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))) (
+thm (CollinearityConstructDegenerateTriangle ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) () (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))) (
         A B C A′ B′ c′ CollinearityConstructDegenerateTriangle-abc
         B C A A′ B′ c′ CollinearityConstructDegenerateTriangle-bca
         composeDisjunction
@@ -379,12 +391,6 @@ thm (CollinearityConstructDegenerateTriangle () () (((collinear A B C) ∧ (A B 
 
         import
 ))
-</jh>
-
-== Five segment ==
-This five segment theorem combines inner and outer five segment. It is <code>A ≠ B ∧ collinear A B C ∧ A B C ≅ A′ B′ C′ ∧ A D ≡ A′ D′ ∧ B D ≡ B′ D′ → C D ≡ C′ D′</code>.<ref>l4_16 in Narboux</ref>
-<jh>
-thm (FiveSegment-core () () () ())
 </jh>
 
 == Export ==
