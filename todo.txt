@@ -169,16 +169,9 @@ To do with network:
     BetweenAAB to BetweennessAAB
   rename eliminateRightConjunctionInConsequent to eliminateRightConjunctInConsequent (I think, and maybe likewise for whatever is in Classical propositional calculus).
 
-* try to find out more about School Mathematics Study Group postulates? Like Euclid's.
+* try to find out more about School Mathematics Study Group geometry postulates? Like Euclid's?
 
 * notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
-
-* Breaking apart Basic geometry notes:
-DONE*[[Line segment congruence]]. Also includes outer three segment and segment construction uniqueness. (chapter 2) (lines 1–394)
-DONE*[[Betweenness of points]], including the existence of distinct points, <code>PaschLine</code> (chapter 3) (lines 395–1192)
-(local copy ready to try out)*[[Triangle congruence]] defined and with some basic results for degenerate triangles.  Also includes inner five segment. (first half of chapter 4) (lines 1193–2359)
-(local copy started) *[[Collinearity]] (second half of chapter 4) (lines 2360–2512 and counting - need l4_14, l4_16, l4_17, l4_19)
-*still need to write interfaces, but I think I'd rather do that while online. Current plan is for ≅ to be a def not a term.
 
 * rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think. Or rename the unidirectional one to IndivisibilityImplication.
 
