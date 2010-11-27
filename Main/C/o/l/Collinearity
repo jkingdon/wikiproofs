@@ -108,6 +108,68 @@ thm (CollinearityABA () () (collinear A B A) (
 ))
 </jh>
 
+=== Collinearity and degenerate congruent triangles ===
+The analogue to <code>BetweennessDegenerateTriangle</code> also holds for collinearity.<ref>l4_13 in Narboux</ref>
+<jh>
+thm (CollinearityDegenerateTriangle () ()
+  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)) (
+</jh>
+The proof just consists of expanding <code>collinear A B C</code> into a disjunction of three betweenness formulas, and applying <code>BetweennessDegenerateTriangle</code> three times.
+
+We start with <code>between A B C → (A B C ≅ A′ B′ C′ → collinear A′ B′ C′)<code>.
+<jh>
+        A B C A′ B′ C′ BetweennessDegenerateTriangle
+
+        A′ B′ C′ BetweennessCollinearity
+        applySyllogism
+
+        export
+</jh>
+Next is <code>between B C A → (A B C ≅ A′ B′ C′ → collinear A′ B′ C′)<code>. The proof is similar, but involves some additional rotation of both the congruence and the collinearity.
+<jh>
+        A B C A′ B′ C′ CongruenceRotation
+        eliminateBiconditionalReverse
+        (between B C A) conjoinLL
+
+        B C A B′ C′ A′ BetweennessDegenerateTriangle
+        applySyllogism
+
+        B′ C′ A′ BetweennessCollinearity
+        applySyllogism
+
+        A′ B′ C′ CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        export
+</jh>
+We combine the <code>between A B C</code> and <code>between B C A</code> cases.
+<jh>
+        composeDisjunction
+</jh>
+The proof of the <code>between C A B</code> case, <code>between C A B → (A B C ≅ A′ B′ C′ → collinear A′ B′ C′)<code>, is similar.
+<jh>
+        C A B C′ A′ B′ CongruenceRotation
+        eliminateBiconditionalForward
+        (between C A B) conjoinLL
+
+        C A B C′ A′ B′ BetweennessDegenerateTriangle
+        applySyllogism
+
+        C′ A′ B′ BetweennessCollinearity
+        applySyllogism
+
+        C′ A′ B′ CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        export
+
+        composeDisjunction
+        import
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Collinearity]].
 <jh>
