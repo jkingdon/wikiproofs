@@ -20,6 +20,14 @@ var (variable a b b′ c d′ q q′ ww ww′ b″ c″)
 To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
 <jh>
 def ((collinear x y z) (((between x y z) ∨ (between y z x)) ∨ (between z x y)))
+
+thm (BetweennessCollinearity () () ((between x y z) → (collinear x y z)) (
+        (between x y z) (between y z x) DisjunctionRightIntroduction
+        ((between x y z) ∨ (between y z x))
+          (between z x y)
+          DisjunctionRightIntroduction
+        applySyllogism
+))
 </jh>
 
 === Permutations ===
