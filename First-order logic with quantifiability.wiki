@@ -859,11 +859,11 @@ thm (makeSubstExplicit ((x s) (x ψ))
 If we have a quantified formula, and we substitute the quantified variable for another (using <code>subst</code>), the formula holds with the substituted variable in the quantifier.  In symbols, this is <code>∀ x φ ↔ ∀ y [ y / x ] φ</code> and <code>∃ x φ ↔ ∃ y [ y / x ] φ</code>, where <code>y</code> is not free in <code>φ</code>.<ref>[http://us.metamath.org/mpeuni/sb8.html sb8] and [http://us.metamath.org/mpeuni/sb8e.html sb8e] in metamath's set.mm, accessed June 24, 2010</ref>
 
 === A theorem relating a substituted formula to equality ===
-Here we prove <code>x = y → (φ ↔ [ y / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12], metamath's set.mm, accessed October 6, 2010</ref>
+Here we prove <code>x = s → (φ ↔ [ s / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/sbequ12.html sbequ12], metamath's set.mm, accessed October 6, 2010</ref> One way of understanding this theorem is to compare it with the following instance of <code>SubstBuilderReplacement</code>: <code>x = s → ([ x / x ] φ ↔ [ s / x ] φ)</code>. The similarity should be obvious (although we actually will prove <code>[ x / x ] φ ↔ φ</code> as a consequence of this result rather than the other way around).
 
-We start with the forward direction.
+First we prove the case where <code>x</code> and <code>s</code> are distinct (later we will be able to remove this limitation). We start with the forward direction.
 <jh>
-thm (sbequ12Forward ((x s)  (z x) (z s) (z φ)) () (((value x) = s) → (φ → (subst s x φ))) (
+thm (EqualitySubstForward ((x s)  (z x) (z s) (z φ)) () (((value x) = s) → (φ → (subst s x φ))) (
 </jh>
 The proof consists of gradually building up the definition of <code>subst</code>. It is somewhat similar to the proof in metamath<ref>[http://us.metamath.org/mpeuni/sbequ1.html sbequ1]</ref> although the details are different because we have a different definition of <code>subst</code>.
 
@@ -912,8 +912,8 @@ That gives us <code>x = s ∧ φ → [s / x] φ</code> which is just an export f
 
 The reverse direction is basically a transposition away.
 <jh>
-thm (sbequ12Reverse ((x s)) () (((value x) = s) → ((subst s x φ) → φ)) (
-        x s (¬ φ) sbequ12Forward
+thm (EqualitySubstReverse ((x s)) () (((value x) = s) → ((subst s x φ) → φ)) (
+        x s (¬ φ) EqualitySubstForward
 
         s x φ SubstNegation
         transformImplicationImplicationConsequent
@@ -923,10 +923,73 @@ thm (sbequ12Reverse ((x s)) () (((value x) = s) → ((subst s x φ) → φ)) (
         applySyllogism
 ))
 
-thm (sbequ12 ((x s)) () (((value x) = s) → (φ ↔ (subst s x φ))) (
-        x s φ sbequ12Forward
-        x s φ sbequ12Reverse
+thm (EqualitySubstDistinct ((x s)) () (((value x) = s) → (φ ↔ (subst s x φ))) (
+        x s φ EqualitySubstForward
+        x s φ EqualitySubstReverse
         introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
+=== Substituting a variable for itself ===
+Here we prove <code>[ x / x ] φ ↔ φ</code>. Our proof is slightly more involved than metamath's, because we have a distinct variable constraint on <code>EqualitySubst</code> which is missing from the metamath equivalent thereof.<ref>[http://us.metamath.org/mpeuni/sbid.html sbid] in metamath's set.mm, accessed October 31, 2010</ref>
+<jh>
+thm (SubstItself ( (y x) (y φ) (y z) (z x) (z φ)) () ((subst (value x) x φ) ↔ φ) (
+</jh>
+Before we get started, we leave a statement on the proof stack for later.
+<jh>
+        y (value x) Quantifiability
+</jh>
+The first step is <code>y = x → (φ ↔ [ y / x ] φ)</code>.
+<jh>
+        (value y) (value x) EqualitySymmetry
+        eliminateBiconditionalReverse
+
+        x (value y) φ EqualitySubstDistinct
+        applySyllogism
+</jh>
+The second step is <code>y = x → ([ y / x ] φ ↔ [ x / x ] φ)</code>.
+<jh>
+        (value y) (value x) x φ SubstBuilderReplacement
+</jh>
+The rest of the proof is just combining those two.
+<jh>
+        applyBiconditionalTransitivityInConsequent
+</jh>
+That gives us <code>y = x → (φ ↔ [ x / x ] φ)</code>. Because <code>y</code> is no longer found in the consequent, its value is arbitrary and we can remove it using <code>Quantifiability</code> (actually, the weaker <code>Existence</code> from [[Interface:Axioms of first-order logic]] would suffice, but we didn't bother to export that).
+<jh>
+        y addThereExists
+        applyModusPonens
+
+</jh>
+Because [[Wikiproofs:JHilbert definition soundness|definitions in JHilbert]] are currently automatically expanded, we cannot just leave <code>[ x / x ] φ</code> as itself, but must expand it (so that we can give the variable <code>z</code> a name and declare the distinct variable constraint between <code>y</code> and <code>z</code>).
+<jh>
+        (value x) x φ z Subst
+        φ buildBiconditionalLL
+        y buildThereExists
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+Now we can proceed to remove the quantifier.
+<jh>
+        removeThereExists
+
+        swapBiconditional
+))
+</jh>
+
+=== A version of EqualitySubst without the distinct variable requirement ===
+Now that we have proved that <code>[ x / x ] φ ↔ φ</code>, we can use it to remove the distinct variable constraint from <code>EqualitySubst</code>.
+<jh>
+thm (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))) (
+</jh>
+The first step is <code>x = s → ([ x / x ] φ ↔ [ s / x ] φ)</code>
+<jh>
+        (value x) s x φ SubstBuilderReplacement
+</jh>
+Now we turn <code>[ x / x ] φ</code> into <code>φ</code>.
+<jh>
+        x φ SubstItself
+        transformImplicationBiconditionalLeft
 ))
 </jh>
 
@@ -936,14 +999,14 @@ We can now prove the version of the change variable theorem with explicit substi
 thm (ChangeVariableExplicitThereExists ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))) (
         x (value y) φ SubstNotFree
         y φ DistinctNotFree
-        x (value y) φ sbequ12
+        x (value y) φ EqualitySubst
         ChangeVariableThereExistsNotFree
 ))
 
 thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subst (value y) x φ))) (
         x (value y) φ SubstNotFree
         y φ DistinctNotFree
-        x (value y) φ sbequ12
+        x (value y) φ EqualitySubst
         ChangeVariableForAllNotFree
 ))
 </jh>

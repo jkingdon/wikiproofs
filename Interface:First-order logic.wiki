@@ -141,7 +141,11 @@ stmt (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x 
 <jh>
 stmt (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))))
 stmt (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))))
-stmt (ThereExistsConjunctionCombining () () (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
+
+stmt (ThereExistsConjunctionCombining () ()
+  (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
+stmt (ThereExistsConjunctionRightCombining () ()
+  (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))))
 </jh>
 
 == Generalization and specialization ==

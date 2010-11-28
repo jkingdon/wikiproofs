@@ -14,7 +14,7 @@ import (START Interface:Triangle_congruence (CLASSICAL FIRSTORDER) ())
 var (formula φ)
 var (point x y z w u v A B C D E P Q A′ B′ C′ D′ B″ C″)
 var (point x′ y′ z′ w′ u′)
-var (variable a b b′ c c′ d′ q q′ ww ww′ b″ c″)
+var (variable a b b′ c c′ d′ b″ c″)
 </jh>
 
 == Collinearity ==
@@ -403,14 +403,14 @@ This five segment theorem combines inner and outer five segment. It is <code>A �
 We prove the result separately for each of the three betweenness relationships which make up the definition of <code>collinear</code>. Each of those proofs is just a matter of applying either inner or outer five segment, so it is just a matter of rearranging the many conjuncts which make up the antecedent of each theorem. The first bunch of lemmas are for those rearrangements.
 <jh>
 var (formula p q r s t)
-thm (FiveSegment-anotb () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A ≠ B)) (
+thm (FiveSegment-anotb () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A ≠ B)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
 ))
 
-thm (FiveSegment-ab () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A B ≡ A′ B′)) (
+thm (FiveSegment-ab () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A B ≡ A′ B′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
@@ -421,7 +421,7 @@ thm (FiveSegment-ab () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) 
         applySyllogism
 ))
 
-thm (FiveSegment-bc () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (B C ≡ B′ C′)) (
+thm (FiveSegment-bc () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (B C ≡ B′ C′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
@@ -432,18 +432,18 @@ thm (FiveSegment-bc () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) 
         applySyllogism
 ))
 
-thm (FiveSegment-ad () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A D ≡ A′ D′)) (
+thm (FiveSegment-ad () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A D ≡ A′ D′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
         eliminateRightConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 ))
 
-thm (FiveSegment-bd () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (B D ≡ B′ D′)) (
+thm (FiveSegment-bd () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (B D ≡ B′ D′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
         eliminateLeftConjunctionInConsequent
 ))
 
-thm (FiveSegment-abcabc () () (((between A B C) ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (between A′ B′ C′)) (
+thm (FiveSegment-abcabc () () (((between A B C) ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (between A′ B′ C′)) (
         (between A B C) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionRightElimination
 
         (between A B C) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
@@ -483,7 +483,7 @@ thm (FiveSegment-abc () () ((between A B C) → (((((A ≠ B) ∧ (A B C ≅ A�
         export
 ))
 
-thm (FiveSegment-bcabca () () (((between B C A) ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (between B′ C′ A′)) (
+thm (FiveSegment-bcabca () () (((between B C A) ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (between B′ C′ A′)) (
         (between B C A) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionRightElimination
 
         (between B C A) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
@@ -501,7 +501,7 @@ thm (FiveSegment-bcabca () () (((between B C A) ∧ (((((A ≠ B) ∧ (A B C ≅
         applySyllogism
 ))
 
-thm (FiveSegment-ca () () ((p ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (B C ≡ B′ C′)) (
+thm (FiveSegment-ca () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (C A ≡ C′ A′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
@@ -545,7 +545,7 @@ thm (FiveSegment-bca () () ((between B C A) → (((((A ≠ B) ∧ (A B C ≅ A�
 </jh>
 The third case is <code>between C A B</code> but due to the way that <code>OuterFiveSegment</code> is written, we need to write it as <code>between B A C</code> instead.
 <jh>
-thm (FiveSegment-bacbac () () (((between B A C) ∧ (((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (between B′ A′ C′)) (
+thm (FiveSegment-bacbac () () (((between B A C) ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (between B′ A′ C′)) (
         (between B A C) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionRightElimination
         B A C BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -563,6 +563,10 @@ thm (FiveSegment-bacbac () () (((between B A C) ∧ (((((A ≠ B) ∧ (A B C ≅
         composeConjunction
 
         C A B C′ A′ B′ BetweennessDegenerateTriangle
+        applySyllogism
+
+        C′ A′ B′ BetweennessSymmetry
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 

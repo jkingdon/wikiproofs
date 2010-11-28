@@ -8,8 +8,8 @@
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability]]
-| importedby = [[Basic geometry]]
-| exportedby = None yet.
+| importedby = [[Line segment congruence]]
+| exportedby = [[Tarski's geometry axioms derived from real numbers]]
 }}
 
 First, we adopt the axioms of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):

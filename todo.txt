@@ -152,12 +152,6 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
-* download
-  - First-order logic
-  - Interface:First-order logic
-  - First-order logic with quantifiability
-  - Relations
-
 * See whether "I might have missed some" text is still present
   at Interface:Intuitionistic propositional logic and if not
   download new copy.
@@ -190,14 +184,12 @@ To do with network:
 * l4_19
   A point on a line segment is uniquely determined by its distance to the two endpoints.
 
-* chapter 5: cite Narboux paper (not just coq) for the two lemmas
-  when we get to Connectivity for betweenness, cite section 5.2 of
+* - chapter 5: cite Narboux paper (not just coq) for the two lemmas
+  - when we get to Connectivity for betweenness, cite section 5.2 of
   Narboux paper.
 
 * Look up 
   Quaife, A.: Automated development of Tarski’s geometry. Journal of Automated Reasoning 5(1), 97–118 (1989)
-
-* maybe take a gander at the new syntax in Coq 8.1, just out of curiousity.
 
 * constructive geometry?
   - von Plato, J.: The axioms of constructive geometry. Annals of Pure and Applied Logic 76, 169–200 (1995)

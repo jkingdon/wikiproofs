@@ -661,6 +661,23 @@ The right side, <code>¬ ∀ x (φ → ¬ ψ)</code>, is only slightly more comp
 ))
 </jh>
 
+It will also be convenient to have a commuted version.
+<jh>
+thm (ThereExistsConjunctionRightCombining () ()
+  (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))) (
+        (∃ x φ) (∀ x ψ) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        x ψ φ ThereExistsConjunctionCombining
+        applySyllogism
+
+        ψ φ ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        x addThereExists
+        applySyllogism
+))
+</jh>
+
 == Negation ==
 This relationship between quantification and negation is sometimes taken as an axiom instead of our <code>QuantifiedNegation</code>, but we prove it here:<ref>[http://us.metamath.org/mpeuni/ax6o.html ax6o] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
