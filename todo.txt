@@ -169,15 +169,6 @@ To do with network:
 
 * rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think. Or rename the unidirectional one to IndivisibilityImplication.
 
-* l4_17 
-        p
-
-  a  b           c
-
-        q
-
-  If two given points are equidistant to two distinct points on a line, they are equidistant to any point on that line.
-
 * l4_18
   Given two distinct points on a line, and a third point on that line, the third point is uniquely determined by its distances to the given points.
 
