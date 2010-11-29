@@ -157,6 +157,11 @@ Rotate the order of points in a triangle congruence.
 stmt (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C′ A′)))
 </jh>
 
+Triangle congruence has the properties of an equivalence relation.
+<jh>
+stmt (TriangleCongruenceReflexivity () () (A B C ≅ A B C))
+</jh>
+
 === Some degenerate triangle congruence theorems ===
 <jh>
 stmt (InnerDegenerateTriangle

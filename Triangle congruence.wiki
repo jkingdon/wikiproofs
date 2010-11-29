@@ -456,6 +456,19 @@ And all we need to do is apply associativity.
 ))
 </jh>
 
+=== Reflexivity ===
+Also not stated by Narboux, probably for similar reasons, is reflexivity of triangle congruence.
+<jh>
+thm (TriangleCongruenceReflexivity () () (A B C ≅ A B C) (
+        A B CongruenceReflexivity
+        A C CongruenceReflexivity
+        introduceConjunction
+
+        B C CongruenceReflexivity
+        introduceConjunction
+))
+</jh>
+
 === Constructing a degenerate congruent triangle ===
 Given two congruent line segments <code>A C</code> and <code>A′ C′</code>, where <code>B</code> is on the former, we construct a point <code>b′</code> on the latter line segment such that the degenerate triangles <code>A B C</code> and <code>A′ b′ C′</code/'> are congruent.<ref>Lemma l4_5 in Narboux</ref> In symbols this is <code>between A B C ∧ A C ≡ A′ C′ → ∃ b′ (between A′ b′ C′ ∧ A B C ≅ A′ b′ C′)</code>
 
