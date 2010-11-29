@@ -721,6 +721,76 @@ thm (CollinearTwoDistanceUniqueness () ()
 ))
 </jh>
 
+== A point on a line segment ==
+A point on a line segment is uniquely determined by its distance to the two endpoints. That is, <code>between A C B ∧ A C ≡ A C′ ∧ B C ≡ B C′ → C = C′</code>.<ref>l4_19 in Narboux</ref>
+
+We divide the proof into two cases, <code>A = B</code> and <code>A ≠ B</code>.
+
+The <code>A = B</code> case is easy; <code>C</code> also equals <code>A</code> and so <code>A C ≡ A C′</code> implies <code>C = C′</code>.
+<jh>
+thm (BetweennessTwoDistanceUniqueness-ac () () ((A = B) → ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (A = C))) (
+        (A = B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionRightElimination
+
+        (A = B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        composeConjunction
+
+        A B C IndivisibilityFromEquality
+        import
+        applySyllogism
+
+        export
+))
+
+thm (BetweennessTwoDistanceUniqueness-acprime () () ((A = B) → ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (A = C′))) (
+        A B C C′ BetweennessTwoDistanceUniqueness-ac
+        import
+        
+        (A = B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        A C C′ CongruenceIdentityFromEquality
+        import
+        applySyllogism
+
+        export
+))
+
+thm (BetweennessTwoDistanceUniqueness-eq () () ((A = B) → ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′))) (
+        A B C C′ BetweennessTwoDistanceUniqueness-ac
+        import
+
+        A C EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        A B C C′ BetweennessTwoDistanceUniqueness-acprime
+        import
+
+        composeConjunction
+
+        C A C′ EqualityTransitivity
+        applySyllogism
+        export
+))
+</jh>
+
+The <code>A ≠ B</code> case follows easily from <code>CollinearTwoDistanceUniqueness</code>.
+
+{{under construction}}
+
+We can now assemble the theorem.
+<jh>
+#thm (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)) (
+#        A B C C′ BetweennessTwoDistanceUniqueness-eq
+#        A B C C′ BetweennessTwoDistanceUniqueness-ne
+#        eliminateCases
+#))
+</jh>
+
 == Export ==
 We now export to [[Interface:Collinearity]].
 <jh>
