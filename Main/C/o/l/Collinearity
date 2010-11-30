@@ -708,6 +708,18 @@ Applying five segment is all we need.
 ))
 </jh>
 
+== Uniqueness of a point given distances to two collinear points ==
+On a given line, the distance to two distinct points uniquely determines a point. That is, <code>A ≠ B ∧ collinear A B C ∧ A C ≡ A C′ ∧ B C ≡ B C′ → C = C′</code>. We prove this by applying <code>EquidistantLine</code> to the line <code>A B C</code> and the points <code>C</code> and <code>C′</code>, which gives us <code>C C ≡ C C′</code>.<ref>l4_18 in Narboux</ref>
+<jh>
+thm (CollinearTwoDistanceUniqueness () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)) (
+        A B C C C′ EquidistantLine
+
+        C C C′ CongruenceIdentityLeft
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Collinearity]].
 <jh>
