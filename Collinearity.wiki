@@ -698,7 +698,6 @@ thm (EquidistantLine () ()
 <code>B P ≡ B Q</code>:
 <jh>
         (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -738,7 +737,6 @@ thm (BetweennessTwoDistanceUniqueness-ac () () ((A = B) → ((((between A C B) �
         composeConjunction
 
         A B C IndivisibilityFromEquality
-        import
         applySyllogism
 
         export
@@ -751,8 +749,9 @@ thm (BetweennessTwoDistanceUniqueness-acprime () () ((A = B) → ((((between A C
         (A = B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
         eliminateRightConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
+        composeConjunction
 
-        A C C′ CongruenceIdentityFromEquality
+        A C A C′ CongruenceIdentityFromEquality
         import
         applySyllogism
 

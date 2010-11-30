@@ -152,11 +152,6 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
-* download:
-  Collinearity
-  Interface:Triangle congruence.wiki
-  Triangle congruence.wiki
-
 * See whether "I might have missed some" text is still present
   at Interface:Intuitionistic propositional logic and if not
   download new copy.
@@ -185,4 +180,6 @@ To do with network:
   - von Plato, J.: The axioms of constructive geometry. Annals of Pure and Applied Logic 76, 169–200 (1995)
   - Kahn, G.: Constructive geometry according to Jan von Plato. Coq contribution, Coq V5.10 (1995)
   - presumably depends on constructive first-order logic
+
+* What's that math conference that I missed in Pittsburgh?
 

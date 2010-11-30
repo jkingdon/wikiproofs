@@ -25,13 +25,14 @@ The proof has two cases.  The first case is <code>x = z</code>. From <code>betwe
 thm (IndivisibilityFromEquality () () (((x = z) ∧ (between x y z)) → (x = y)) (
         x EqualityReflexivity
         y EqualityReflexivity
-        x x y y x z BetweenBuilder
+        x x y y x z BetweennessBuilder
         detach2of3
         detach1of2
 
         eliminateBiconditionalForwardInConsequent
 
-        x y Indivisibility
+        x y IndivisibilityBidirectional
+        eliminateBiconditionalReverse
         (x = z) introduceAntecedent
 
         applySyllogismInConsequent
@@ -907,7 +908,7 @@ We first apply a builder to get <code>C′ = C″ → (between A′ B′ C′ �
 <jh>
         A′ EqualityReflexivity
         B′ EqualityReflexivity
-        A′ A′ B′ B′ C′ C″ BetweenBuilder
+        A′ A′ B′ B′ C′ C″ BetweennessBuilder
         detach2of3
         detach1of2
 </jh>
@@ -1170,7 +1171,7 @@ The substitution is <code>B″ = B′ ∧ between A′ B″ C′ → between A�
 <jh>
         A′ EqualityReflexivity
         C′ EqualityReflexivity
-        A′ A′ B″ B′ C′ C′ BetweenBuilder
+        A′ A′ B″ B′ C′ C′ BetweennessBuilder
         detach2of2
         detach1of2
 
@@ -1183,7 +1184,7 @@ The substitution is <code>B″ = B′ ∧ between A′ B″ C′ → between A�
 The final theorem is just a matter of assembling and removing the quantifier.
 <jh>
 thm (BetweennessDegenerateTriangle
-  ((b″ A) (b″ B) (b″ C) (b″ A′) (b″ B′) (b″ C′)) ()
+  ( (b″ A) (b″ B) (b″ C) (b″ A′) (b″ B′) (b″ C′)) ()
   (((between A B C) ∧ (A B C ≅ A′ B′ C′)) → (between A′ B′ C′)) (
         A B C A′ B′ C′ b″ BetweennessDegenerateTriangle-1
 
