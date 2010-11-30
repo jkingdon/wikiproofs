@@ -12,8 +12,6 @@
 | exportedby = [[Intuitionistic propositional logic]]
 }}
 
-[[Image:Zeichen 123.svg|50px]] This page is not yet done.  In particular, parts are copied from [[Interface:Classical propositional calculus]] and although I've tried to find things which don't hold here (or where I'm not sure), I might have missed some.  Until we prove everything here, we won't be sure.
-
 == Well-formed formulas ==
 
 We first introduce the kind of [[w:well-formed formulas|well-formed formulas]] and a few variables for this kind.

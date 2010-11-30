@@ -152,12 +152,6 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
-* See whether "I might have missed some" text is still present
-  at Interface:Intuitionistic propositional logic and if not
-  download new copy.
-  Likewise, at Intuitionistic propositional logic there's still
-    at least one reference to DeMorganPDPForward
-
 * rename BetweenBuilder to BetweennessBuilder
     BetweenABB to BetweennessABB
     BetweenAAB to BetweennessAAB

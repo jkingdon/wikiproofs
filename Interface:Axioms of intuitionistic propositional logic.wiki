@@ -8,7 +8,7 @@
 }}
 {{modules
 | parameters = ''None''
-| importedby = none yet
+| importedby = [[Intuitionistic propositional logic]]
 | exportedby = none
 }}
 
