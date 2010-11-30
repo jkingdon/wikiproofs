@@ -660,6 +660,54 @@ thm (FiveSegment () () ((((((A ≠ B) ∧ (collinear A B C)) ∧ (A B C ≅ A′
 ))
 </jh>
 
+== Points equidistant from two given points ==
+If two distinct points on a line are equidistant to two given points, then any point on that line is equidistant to those points. That is, <code>A ≠ B ∧ collinear A B C ∧ A P ≡ A Q ∧ B P ≡ B Q → C P ≡ C Q</code>.<ref>l4_17 in Narboux</ref>
+
+The proof applies <code>FiveSegment</code> with <code>A B C</code> as the collinear points for both parts and <code>P</code> and <code>Q</code> as the fourth points, respectively.
+<jh>
+thm (EquidistantLine () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) ∧ (B P ≡ B Q)) → (C P ≡ C Q)) (
+</jh>
+<code>A ≠ B</code>:
+<jh>
+        (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+</jh>
+<code>collinear A B C</code>:
+<jh>
+        (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+<code>A B C ≅ A B C</code>:
+<jh>
+        A B C TriangleCongruenceReflexivity
+        ((((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) ∧ (B P ≡ B Q)) introduceAntecedent
+        composeConjunction
+</jh>
+<code>A P ≡ A Q</code>:
+<jh>
+        (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+<code>B P ≡ B Q</code>:
+<jh>
+        (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionLeftElimination
+
+        composeConjunction
+</jh>
+Applying five segment is all we need.
+<jh>
+        A B C A B C P Q FiveSegment
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Collinearity]].
 <jh>
