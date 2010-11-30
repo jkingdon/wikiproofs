@@ -1506,7 +1506,7 @@ thm (NegationCollectionNDN () () (((¬ p) ∨ (¬ q)) → (¬ (p ∧ q))) (
 ))
 </jh>
 
-To prove the converse of <code>DeMorganPDPForward</code>, we start with a lemma which is a rearrangement of <code>DisjunctiveSyllogism</code> plus transposition.
+To prove the converse of <code>NegationDistributionPDP</code>, we start with a lemma which is a rearrangement of <code>DisjunctiveSyllogism</code> plus transposition.
 <jh>
 thm (NegationCollectionNCNLemma () () ((¬ p) → ((¬ q) → (¬ (p ∨ q)))) (
         p q DisjunctiveSyllogism
