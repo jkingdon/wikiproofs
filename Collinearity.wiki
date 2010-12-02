@@ -778,6 +778,7 @@ thm (BetweennessTwoDistanceUniqueness-eq () () ((A = B) → ((((between A C B) �
 </jh>
 
 The <code>A ≠ B</code> case follows easily from <code>CollinearTwoDistanceUniqueness</code>.
+
 <jh>
 thm (BetweennessTwoDistanceUniqueness-ne () () ((A ≠ B) → ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′))) (
 </jh>
@@ -792,7 +793,6 @@ Next, <code>collinear A B C</code>
         eliminateRightConjunctionInConsequent
 
         A C B BetweennessCollinearity
-        eliminateBiconditionalReverse
         applySyllogism
 
         A C B Collinearity23

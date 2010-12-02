@@ -24,7 +24,7 @@ var (variable a b b′ c c′ d′ b″ c″)
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
 <jh>
-export (RESULTS Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
+#export (RESULTS Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 </jh>
 
 Also, since this page is currently the last in the (in-progress) series on basic geometry, we export to [[Interface:Basic geometry]].
