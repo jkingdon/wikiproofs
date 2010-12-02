@@ -116,6 +116,7 @@ stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
 To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
 <jh>
 def ((collinear x y z) (((between x y z) ∨ (between y z x)) ∨ (between z x y)))
+stmt (BetweennessCollinearity () () ((between x y z) → (collinear x y z)))
 stmt (CollinearityRotation () () ((collinear x y z) ↔ (collinear y z x)))
 stmt (Collinearity23 () () ((collinear x y z) ↔ (collinear x z y)))
 stmt (Collinearity12 () () ((collinear x y z) ↔ (collinear y x z)))
@@ -146,6 +147,23 @@ stmt (InnerFiveSegment () ()
   (((((((between x y z) ∧ (between x′ y′ z′))
     ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))
   → (y u ≡ y′ u′)))
+stmt (FiveSegment () ()
+  ((((((A ≠ B) ∧ (collinear A B C)) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))
+   → (C D ≡ C′ D′)))
+</jh>
+
+== Determining lines, or points, by distance to two points ==
+If two given points are equidistant to each of two distinct points on a line, they are equidistant to every point on that line.
+<jh>
+stmt (EquidistantLine () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) ∧ (B P ≡ B Q)) → (C P ≡ C Q)))
+</jh>
+
+On a given line, the distance to two points can uniquely determine a point. We have two versions: one in which the two given points are distinct, and one in which they are endpoints of a line segment on which the point lies.
+<jh>
+stmt (CollinearTwoDistanceUniqueness () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
+stmt (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
 </jh>
 
 === Three segment ===
@@ -179,11 +197,14 @@ stmt (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C
 stmt (BetweennessDegenerateTriangle
   () ()
   (((between A B C) ∧ (A B C ≅ A′ B′ C′)) → (between A′ B′ C′)))
-#stmt (CollinearDegenerateTriangle () ()
-#  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
+stmt (CollinearityDegenerateTriangle () ()
+  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
 stmt (InnerDegenerateTriangle
   ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)) ()
   (((between A B C) ∧ (A C ≡ A′ C′)) → (∃ b′ ((between A′ (value b′) C′) ∧ (A B C ≅ A′ (value b′) C′)))))
+thm (CollinearityConstructDegenerateTriangle
+  ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) ()
+  (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))))
 </jh>
 
 == Tarski's axioms ==
