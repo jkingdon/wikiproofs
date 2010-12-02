@@ -16,8 +16,8 @@ param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) (
 The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined in the obvious way as sets of points, as this is a first-order theory).
 <jh>
 kindbind (object point)
-var (point x y z w u v A B C D Q)
-var (point x′ y′ z′ u′ A′ B′ C′)
+var (point x y z w u v A B C D P Q)
+var (point x′ y′ z′ u′ A′ B′ C′ D′)
 
 var (variable a b c a′ b′ c′)
 </jh>
@@ -116,6 +116,7 @@ stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
 To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
 <jh>
 def ((collinear x y z) (((between x y z) ∨ (between y z x)) ∨ (between z x y)))
+stmt (BetweennessCollinearity () () ((between x y z) → (collinear x y z)))
 stmt (CollinearityRotation () () ((collinear x y z) ↔ (collinear y z x)))
 stmt (Collinearity23 () () ((collinear x y z) ↔ (collinear x z y)))
 stmt (Collinearity12 () () ((collinear x y z) ↔ (collinear y x z)))
@@ -129,7 +130,38 @@ stmt (CollinearityABB () () (collinear A B B))
 stmt (CollinearityABA () () (collinear A B A))
 </jh>
 
+== Determining lines, or points, by distance to two points ==
+If two given points are equidistant to each of two distinct points on a line, they are equidistant to every point on that line.
+<jh>
+stmt (EquidistantLine () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) ∧ (B P ≡ B Q)) → (C P ≡ C Q)))
+</jh>
+
+On a given line, the distance to two points can uniquely determine a point. We have two versions: one in which the two given points are distinct, and one in which they are endpoints of a line segment on which the point lies.
+<jh>
+stmt (CollinearTwoDistanceUniqueness () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
+stmt (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
+</jh>
+
 == Triangle congruence ==
+=== Triangle congruence defined ===
+At least for now, we define triangle congruence here (rather than provide a theorem providing this definition, which corresponds to the familiar side-side-side property of triangle congruence). The definition allows degenerate triangles: the points may be collinear, and need not all be distinct from each other.
+<jh>
+def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)))
+</jh>
+The corresponding sides of congruent (possibly degenerate) triangles are congruent.
+<jh>
+stmt (Congruence12 () () ((A B C ≅ A′ B′ C′) → (A B ≡ A′ B′)))
+stmt (Congruence23 () () ((A B C ≅ A′ B′ C′) → (B C ≡ B′ C′)))
+stmt (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)))
+</jh>
+
+Rotate the order of points in a triangle congruence.
+<jh>
+stmt (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C′ A′)))
+</jh>
+
 === Five segment ===
 <gallery>
 File:Five segment.svg|Outer five segment
@@ -146,6 +178,9 @@ stmt (InnerFiveSegment () ()
   (((((((between x y z) ∧ (between x′ y′ z′))
     ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))
   → (y u ≡ y′ u′)))
+stmt (FiveSegment () ()
+  ((((((A ≠ B) ∧ (collinear A B C)) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))
+   → (C D ≡ C′ D′)))
 </jh>
 
 === Three segment ===
@@ -157,33 +192,19 @@ stmt (InnerThreeSegment () ()
   (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) → (x y ≡ x′ y′)))
 </jh>
 
-=== Triangle congruence defined ===
-At least for now, we define triangle congruence here (rather than provide a theorem providing this definition, which corresponds to the familiar side-side-side property of triangle congruence).
-<jh>
-def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)))
-</jh>
-The corresponding sides of congruent (possibly degenerate) triangles are congruent.
-<jh>
-stmt (Congruence12 () () ((A B C ≅ A′ B′ C′) → (A B ≡ A′ B′)))
-stmt (Congruence23 () () ((A B C ≅ A′ B′ C′) → (B C ≡ B′ C′)))
-stmt (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)))
-</jh>
-
-Rotate the order of points in a triangle congruence.
-<jh>
-stmt (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C′ A′)))
-</jh>
-
 === Some degenerate triangle congruence theorems ===
 <jh>
 stmt (BetweennessDegenerateTriangle
   () ()
   (((between A B C) ∧ (A B C ≅ A′ B′ C′)) → (between A′ B′ C′)))
-#stmt (CollinearDegenerateTriangle () ()
-#  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
+stmt (CollinearityDegenerateTriangle () ()
+  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
 stmt (InnerDegenerateTriangle
   ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)) ()
   (((between A B C) ∧ (A C ≡ A′ C′)) → (∃ b′ ((between A′ (value b′) C′) ∧ (A B C ≅ A′ (value b′) C′)))))
+stmt (CollinearityConstructDegenerateTriangle
+  ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) ()
+  (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))))
 </jh>
 
 == Tarski's axioms ==
