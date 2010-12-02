@@ -779,15 +779,60 @@ thm (BetweennessTwoDistanceUniqueness-eq () () ((A = B) → ((((between A C B) �
 
 The <code>A ≠ B</code> case follows easily from <code>CollinearTwoDistanceUniqueness</code>.
 
-{{under construction}}
+<jh>
+thm (BetweennessTwoDistanceUniqueness-ne () () ((A ≠ B) → ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′))) (
+</jh>
+First, <code>A ≠ B</code>.
+<jh>
+        (A ≠ B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionRightElimination
+</jh>
+Next, <code>collinear A B C</code>
+<jh>
+        (A ≠ B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        A C B BetweennessCollinearity
+        applySyllogism
+
+        A C B Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next, <code>A C ≡ A C′</code>
+<jh>
+        (A ≠ B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+</jh>
+Lastly, <code>B C ≡ B C′</code>
+<jh>
+        (A ≠ B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
+        eliminateLeftConjunctionInConsequent
+
+        composeConjunction
+
+</jh>
+We apply the collinearity two distance uniqueness theorem and export.
+<jh>
+        A B C C′ CollinearTwoDistanceUniqueness
+        applySyllogism
+
+        export
+))
+</jh>
 
 We can now assemble the theorem.
 <jh>
-#thm (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)) (
-#        A B C C′ BetweennessTwoDistanceUniqueness-eq
-#        A B C C′ BetweennessTwoDistanceUniqueness-ne
-#        eliminateCases
-#))
+thm (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)) (
+        A B C C′ BetweennessTwoDistanceUniqueness-eq
+        A B C C′ BetweennessTwoDistanceUniqueness-ne
+        eliminateCases
+))
 </jh>
 
 == Export ==
