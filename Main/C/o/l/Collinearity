@@ -661,6 +661,7 @@ thm (FiveSegment () () ((((((A ≠ B) ∧ (collinear A B C)) ∧ (A B C ≅ A′
 </jh>
 
 == Points equidistant from two given points ==
+[[File:Lemma l4_17 from Narboux.svg|thumb|right|EquidistantLine]]
 If two given points are equidistant to each of two distinct points on a line, they are equidistant to every point on that line. That is, <code>A ≠ B ∧ collinear A B C ∧ A P ≡ A Q ∧ B P ≡ B Q → C P ≡ C Q</code>.<ref>l4_17 in Narboux</ref>
 
 The proof applies <code>FiveSegment</code> with <code>A B C</code> as the collinear points for both parts and <code>P</code> and <code>Q</code> as the fourth points, respectively.
