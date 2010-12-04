@@ -9,17 +9,57 @@ This page is primarily devoted to the proof of one theorem, <code>A ≠ B ∧ be
 
 The proof is not simple; Givant calls it "rather involved" and Narboux devotes two and a half pages to an informal proof (and an explanation of part of the formal proof).<ref>Narboux (2007), pages 151-153</ref>
 
-We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Triangle congruence|geometry results so far]] and define some variables:
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Collinearity|geometry results so far]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-import (START Interface:Triangle_congruence (CLASSICAL FIRSTORDER) ())
+import (START Interface:Collinearity (CLASSICAL FIRSTORDER) ())
 
-var (formula φ)
-var (point x y z w u v A B C D E P Q A′ B′ C′ D′ B″ C″)
-var (point x′ y′ z′ w′ u′)
-var (variable a b b′ c c′ d′ b″ c″)
+var (point A B C D E P Q R A′ B′ C′ D′ B″ C″)
+var (variable a b b′ c c′ d′ e p q r b″ c″)
 </jh>
+
+== Summary ==
+[[File:outer connectivity for betweenness 1|thumb|right|construction of C′, D′, B′, and B″]]
+
+Here's an outline of the proof, illustrating which points we construct but leaving most of the detailed line segment congruences for the detailed formal proof.
+
+We first construct <code>C′ and D′</code> extending the line segments <code>A D</code> and <code>A C</code> by a distance of <code>C D</code> in both cases. Eventually, the proof will show that <code>C = C′</code> or <code>D = D′</code>.
+
+Then extend the line segments <code>A C′</code> and <code>A D′</code> to points <code>B′</code> and <code>B″</code> by distances of <code>C B</code> and <code>D B</code>. The result of this construction is that the distance from <code>B</code> is the same to either <code>B′</code> or <code>B″</code> and thus we can conclude that <code>B′ = B″</code>.
+
+[[File:outer connectivity for betweenness 2|thumb|right|construction of E]]
+The point <code>E</code> lies at the intersection of <code>C C′</code> and <code>D D′</code>.
+
+At this point we assume <code>C ≠ C′</code> and will deduce from that <code>D = D′</code>.
+
+[[File:outer connectivity for betweenness 3|thumb|right|construction of P, Q, and R]]
+Extend <code>C′ C</code> by the distance <code>C D′</code> to a point <code>P</code>. Extend <code>D′ C</code> by the distance <code>C E</code> to a point <code>R</code>. Extend <code>P R</code> by the distance <code>R P</code> to a point <code>Q</code>.
+
+[[File:outer connectivity for betweenness 4|thumb|right|D′ D ≡ P Q and C P ≡ C Q]]
+By some congruences we can show first <code>D′ D ≡ P Q</code>, which we'll need at the end of the proof, and <code>C P ≡ C Q</code>, which leads to the next step.
+
+[[File:outer connectivity for betweenness 5|thumb|right|B P ≡ B Q and B′ P ≡ B′ Q]]
+We can now show that <code>B</code> and <code>B′</code> are each equidistant from <code>P</code> and <code>Q</code>.
+
+TODO: can we expand on the motivation for this, or how it leads to the next step?
+
+[[File:outer connectivity for betweenness 6|thumb|right|C′ P ≡ C′ Q]]
+Similarly, C′ is also equidistant from <code>P</code> and <code>Q</code>.
+
+{{under construction}}
+TODO: What is the picture and the brief summary of the last steps (P P ≡ P Q, P = Q, and D = D′)?
+
+== Construction of C′, D′, B′, and B″ ==
+A ≠ B ∧ between A B C ∧ between A B D → ∃ c′ ∃ d′ ∃ b′ ∃ b″ (stuff1)
+
+(stuff1) → ∃ e (stuff2)
+
+(stuff2) ∧ C ≠ C′ → ∃ p ∃ q ∃ r (stuff3)
+
+(stuff3) → D = D′
+
+Want (stuff2) → (C ≠ C′ → D = D′)
 
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
