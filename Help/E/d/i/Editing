@@ -60,7 +60,7 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |· || .M || multiplication || [[Interface:Basic arithmetic|arithmetic]], [[Interface:Complex number axioms|complex numbers]]
 |-
-|× || *X || product || [[Interface:Set theory]]
+|× || *X || product || [[Interface:Set theory|set theory]]
 |-
 |ℙ || || || subset of [[Interface:Complex number axioms|complex numbers]]
 |-
@@ -155,7 +155,7 @@ The following characters are intentionally omitted from the above list and gener
 ||Meaning/description
 ||Reason for omission
 |-
-|𝒫 || [[Interface:Basic operations of general set theory|power set]] || not supported in enough browsers
+|𝒫 || [[Interface:Basic operations of Zermelo–Fraenkel set theory|power set]] || not supported in enough browsers
 |-
 |Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ || Capital greek letters || Easily confused with latin letters<ref name="confusables">loosely based on the confusables.txt file from unicode.org, but adapated for mathematical conventions</ref>
 |-
