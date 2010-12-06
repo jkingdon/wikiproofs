@@ -51,6 +51,21 @@ thm (SetNotOne () () (set.∃ a ((set.∅) set.∈ (set.value a))) (
         set.introduceThereExistsFromObject
 ))
 
+thm (SetNotOne-2 () () (set.∃ a ((asSet (asNumber (set.∅))) set.∈ (set.value a))) (
+        a SetNotOne
+
+        (set.∅) (set.singleton (set.∅)) set.UnorderedPairLeftMembership
+        AsSetAsNumber
+
+        (asSet (asNumber (set.∅))) (set.∅) (set.value a) set.IsElementBuilderRR
+        applyModusPonens
+
+        a set.buildThereExists
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+
 #thm (NotOne () () (∃ x ((0) < (value x))) (
 #))
 
