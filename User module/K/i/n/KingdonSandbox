@@ -66,6 +66,21 @@ thm (SetNotOne-2 () () (set.∃ a ((asSet (asNumber (set.∅))) set.∈ (set.val
         applyModusPonens
 ))
 
+</jh>
+Here we prove <code>∃ x φ ↔ set.∃ a (a ∈ universe ∧ φ)</code>, where here by <code>a</code> we mean <code>(asSetVariable x)</code>.
+<jh>
+thm (ThereExistsUniverse () () ((∃ x φ) ↔ (set.∃ (asSetVariable x) (((set.value (asSetVariable x)) set.∈ (universe)) ∧ φ))) (
+</jh>
+<code>∃ x φ</code> is, by definition, equivalent to <code>¬ ∀ x ¬ φ</code> and in turn to <code>¬ set.∀ x (a ∈ universe → ¬ φ)</code>. We move the opening negation inside the quantifier to get <code>set.∃ x ¬ (a ∈ universe → ¬ φ)</code>.
+<jh>
+        (asSetVariable x) (((set.value (asSetVariable x)) set.∈ (universe)) → (¬ φ)) set.NotForAll
+
+        ((set.value (asSetVariable x)) set.∈ (universe)) φ ConjunctionImplication
+        (asSetVariable x) set.buildThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
 #thm (NotOne () () (∃ x ((0) < (value x))) (
 #))
 
