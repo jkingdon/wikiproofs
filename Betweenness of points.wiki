@@ -497,9 +497,7 @@ The <code>a = b</code> case involves first picking out <code>¬ between b c a</c
           ∧ (¬ (between (value b) (value c) (value a))))
         (¬ (between (value c) (value a) (value b)))
         ConjunctionRightElimination
-
-        (¬ (between (value a) (value b) (value c))) (¬ (between (value b) (value c) (value a))) ConjunctionLeftElimination
-        applySyllogism
+        eliminateLeftConjunctionInConsequent
 
         ((value a) = (value b)) introduceAntecedent
 </jh>
