@@ -46,10 +46,10 @@ The substitution is <code>a = { ∅ } → (∅ ∈ a ↔ ∅ ∈ { ∅ })</code>
         applyModusPonens
 ))
 
-#thm (SetNotOne () () (set.∃ a ((set.∅) set.∈ (set.value a))) (
-#        a SetEmptyIsElementWithSubst
-#        introduceThereExistsFromObject
-#))
+thm (SetNotOne () () (set.∃ a ((set.∅) set.∈ (set.value a))) (
+        a SetEmptyIsElementWithSubst
+        set.introduceThereExistsFromObject
+))
 
 #thm (NotOne () () (∃ x ((0) < (value x))) (
 #))
