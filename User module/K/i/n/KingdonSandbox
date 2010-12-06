@@ -1,4 +1,4 @@
-[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]]. [[Interface:Tarski's geometry axioms]], [[User interface:Kingdon/Logic]].
+[[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], [[Interface:Peano axioms]], [[User interface:Kingdon/Sandbox]], [[Interface:Basic arithmetic]]. [[Interface:Tarski's geometry axioms]], [[User interface:Kingdon/Logic]], [[Interface:Set theory]].
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
@@ -28,8 +28,17 @@ def ((0) (asNumber (set.∅)))
 def ((1) (asNumber (set.singleton (set.∅))))
 def ((< X Y) ((asSet X) set.∈ (asSet Y)))
 
-#thm (seg ((a w) (a x) (a y) (a z)) () (1st.∃ a ((between w x (1st.value a)) ∧ (x #(1st.value a) ≡ y z))) (
-#        a w x y z SegmentConstruction
+thm (SetEmptyIsElement () () ((set.∅) set.∈ (set.singleton (set.∅))) (
+        (set.∅) set.SingletonMembership
+))
+
+#thm (SetEmptyIsElementWithSubst () () 
+#introduceThereExistsFromObject
+
+#thm (SetNotOne () () (set.∃ a ((set.∅) set.∈ (set.value a))) (
+#))
+
+#thm (NotOne () () (∃ x ((0) < (value x))) (
 #))
 
 export (RESULT User_interface:Kingdon/Sandbox (CLASSICAL QUANTIFY_OVER_NUMBERS) ())
