@@ -32,10 +32,23 @@ thm (SetEmptyIsElement () () ((set.∅) set.∈ (set.singleton (set.∅))) (
         (set.∅) set.SingletonMembership
 ))
 
-#thm (SetEmptyIsElementWithSubst () () 
-#introduceThereExistsFromObject
+thm (SetEmptyIsElementWithSubst () ()
+  (set.subst (set.singleton (set.∅)) a ((set.∅) set.∈ (set.value a))) (
+        SetEmptyIsElement
+
+</jh>
+The substitution is <code>a = { ∅ } → (∅ ∈ a ↔ ∅ ∈ { ∅ })</code>.
+<jh>
+        (set.value a) (set.singleton (set.∅)) (set.∅) set.IsElementBuilderLL
+        set.makeSubstExplicit
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 
 #thm (SetNotOne () () (set.∃ a ((set.∅) set.∈ (set.value a))) (
+#        a SetEmptyIsElementWithSubst
+#        introduceThereExistsFromObject
 #))
 
 #thm (NotOne () () (∃ x ((0) < (value x))) (
