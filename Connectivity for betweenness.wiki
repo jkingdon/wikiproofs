@@ -62,11 +62,102 @@ thm (BetweennessOuterConnectivity-cdbb
   ((A c′ d′ b′ b″) (B c′ d′ b′ b″) (C c′ d′ b′ b″) (D c′ d′ b′ b″)) ()
   ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
     (∃ c′ (∃ d′ (∃ b′ (∃ b″
-      ((((((between A D c′) ∧ (D c′ ≡ C D)) ∧
-      ((between A C d′) ∧ (C d′ ≡ C D))) ∧
-      ((between A c′ b′) ∧ (c′ b′ ≡ C B))) ∧
-      ((between A d′ b″) ∧ (d′ b″ ≡ D B))) ∧
+      ((((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+      ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+      ((between A (value c′) (value b′)) ∧ ((value c′) (value b′) ≡ C B))) ∧
+      ((between A (value d′) (value b″)) ∧ ((value d′) (value b″) ≡ D B))) ∧
       (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))))))) (
+        c′ A D C D SegmentConstruction
+        d′ A C C D SegmentConstruction
+        introduceConjunction
+
+        c′ d′ ((between A D (value c′)) ∧ (D (value c′) ≡ C D))
+          ((between A C (value d′)) ∧ (C (value d′) ≡ C D))
+          ThereExistsScattering
+        eliminateBiconditionalForward
+
+        applyModusPonens
+</jh>
+So far we have the construction of <code>c′</code> and <code>d′</code>, specifically <code>∃ c′ ∃ d′ ((between A D c′ ∧ D c′ ≡ C D) ∧ (between A C d′ ∧ C d′ ≡ C D))</code>. We now turn to <code>b′</code>.
+<jh>
+        b′ A (value c′) C B SegmentConstruction
+        d′ generalize
+        c′ generalize
+
+        introduceConjunction
+
+        c′
+          (∃ d′ (((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D))))
+          (∀ d′ (∃ b′ ((between A (value c′) (value b′))
+            ∧ ((value c′) (value b′) ≡ C B))))
+          ThereExistsConjunctionRightCombining
+        applyModusPonens
+
+        d′
+          (((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D)))
+          (∃ b′ ((between A (value c′) (value b′))
+            ∧ ((value c′) (value b′) ≡ C B)))
+          ThereExistsConjunctionRightCombining
+        c′ addThereExists
+        applyModusPonens
+</jh>
+That gives us <code>∃ c′ ∃ d′ ((between A D c′ ∧ D c′ ≡ C D) ∧ (between A C d′ ∧ C d′ ≡ C D) ∧ ∃ b′ (between A c′ b′ ∧ c′ b′ ≡ C B))</code>. The next step is to move <code>∃ b′</code> to the front.
+<jh>
+        b′
+          (((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D)))
+          ((between A (value c′) (value b′))
+            ∧ ((value c′) (value b′) ≡ C B))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        d′ addThereExists
+        c′ addThereExists
+        applyModusPonens
+</jh>
+Now we construct <code>b″</code>, which starts with <code>∃ b″ (between A d′ b″ ∧ A d′ ≡ D B)</code> and then moves the quantifiers to the front.
+<jh>
+        b″ A (value d′) D B SegmentConstruction
+
+        introduceConjunction
+
+        c′
+          (∃ d′ (∃ b′
+            ((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+              ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+              ((between A (value c′) (value b′))
+                ∧ ((value c′) (value b′) ≡ C B)))
+          ))
+          (∃ b″ ((between A (value d′) (value b″)) ∧ (A (value d′) ≡ D B)))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applyModusPonens
+
+        d′
+          (∃ b′
+            ((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+              ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+              ((between A (value c′) (value b′))
+                ∧ ((value c′) (value b′) ≡ C B)))
+          )
+          (∃ b″ ((between A (value d′) (value b″)) ∧ (A (value d′) ≡ D B)))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        c′ addThereExists
+        applyModusPonens
+
+        b′ b″
+          ((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+            ((between A (value c′) (value b′))
+              ∧ ((value c′) (value b′) ≡ C B)))
+          ((between A (value d′) (value b″)) ∧ (A (value d′) ≡ D B))
+          ThereExistsScattering
+        eliminateBiconditionalForward
+        c′ addThereExists
+        d′ addThereExists
+        applyModusPonens
 ))
 </jh>
 
