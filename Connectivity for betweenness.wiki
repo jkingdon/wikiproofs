@@ -51,9 +51,32 @@ Similarly, C′ is also equidistant from <code>P</code> and <code>Q</code>.
 TODO: What is the picture and the brief summary of the last steps (P P ≡ P Q, P = Q, and D = D′)?
 
 == Construction of C′, D′, B′, and B″ ==
-A ≠ B ∧ between A B C ∧ between A B D → ∃ c′ ∃ d′ ∃ b′ ∃ b″ (stuff1)
+[[File:outer connectivity for betweenness 1|thumb|right|construction of C′, D′, B′, and B″]]
+We construct <code>c′</code> such that <code>between A D c′ ∧ D c′ ≡ C D</code> and <code>d′</code> such that <code>between A C d′ ∧ C d′ ≡ C D</code>.
+
+Then we construct <code>b′</code> such that <code>between A c′ b′ ∧ c′ b′ ≡ C B</code> and <code>b″</code> such that <code>between A d′ b″ ∧ d′ b″ ≡ D B</code>.
+
+The following lemma embodies these constructions, and a bit of rearrangement of the quantifiers.
+<jh>
+thm (BetweennessOuterConnectivity-cdbb
+  ((A c′ d′ b′ b″) (B c′ d′ b′ b″) (C c′ d′ b′ b″) (D c′ d′ b′ b″)) ()
+  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
+    (∃ c′ (∃ d′ (∃ b′ (∃ b″
+      ((((((between A D c′) ∧ (D c′ ≡ C D)) ∧
+      ((between A C d′) ∧ (C d′ ≡ C D))) ∧
+      ((between A c′ b′) ∧ (c′ b′ ≡ C B))) ∧
+      ((between A d′ b″) ∧ (d′ b″ ≡ D B))) ∧
+      (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))))))) (
+))
+</jh>
+
+== Under construction ==
+{{under construction}}
+A ≠ B ∧ between A B C ∧ between A B D →
+  ∃ c′ ∃ d′ ∃ b′ ∃ b″ (stuff1)
 
 (stuff1) → ∃ e (stuff2)
+    between C e C′ ∧ between D e D′
 
 (stuff2) ∧ C ≠ C′ → ∃ p ∃ q ∃ r (stuff3)
 
