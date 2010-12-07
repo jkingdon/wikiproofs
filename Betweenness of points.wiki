@@ -1,6 +1,6 @@
 {{interfaces
-| imports = [[Interface:Tarski's geometry axioms]]
-| exports = [[Interface:Basic geometry]]
+| imports = [[Interface:Line segment congruence]]
+| exports = [[Interface:Betweenness of points]]
 }}
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
@@ -814,7 +814,17 @@ The <code>∃ q′</code> quantifier is now unneeded, so remove it.
 
 == Export ==
 We now export to [[Interface:Betweenness of points]].
+
+We are in the process of renaming <code>BetweenBuilder</code> to <code>BetweennessBuilder</code>. Until it is renamed everywhere, just prove one in terms of the other (they are identical except the name).
 <jh>
+var (point x0 x1 x2 y0 y1 y2)
+thm (BetweennessBuilder () () (
+  (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+  → ((between x0 x1 x2) ↔ (between y0 y1 y2))
+) (
+        x0 y0 x1 y1 x2 y2 BetweenBuilder
+))
+
 export (RESULTS Interface:Betweenness_of_points (CLASSICAL FIRSTORDER) ())
 </jh>
 
