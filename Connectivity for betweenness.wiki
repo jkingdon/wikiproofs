@@ -116,9 +116,10 @@ That gives us <code>∃ c′ ∃ d′ ((between A D c′ ∧ D c′ ≡ C D) ∧
         c′ addThereExists
         applyModusPonens
 </jh>
-Now we construct <code>b″</code>, which starts with <code>∃ b″ (between A d′ b″ ∧ A d′ ≡ D B)</code> and then moves the quantifiers to the front.
+Now we construct <code>b″</code>, which starts with <code>∃ b″ (between A d′ b″ ∧ d′ b″ ≡ D B)</code> and then moves the quantifiers to the front.
 <jh>
         b″ A (value d′) D B SegmentConstruction
+        d′ generalize
 
         introduceConjunction
 
@@ -129,7 +130,7 @@ Now we construct <code>b″</code>, which starts with <code>∃ b″ (between A 
               ((between A (value c′) (value b′))
                 ∧ ((value c′) (value b′) ≡ C B)))
           ))
-          (∃ b″ ((between A (value d′) (value b″)) ∧ (A (value d′) ≡ D B)))
+          (∀ d′ (∃ b″ ((between A (value d′) (value b″)) ∧ ((value d′) (value b″) ≡ D B))))
           ThereExistsConjunctionRightMovement
         eliminateBiconditionalForward
         applyModusPonens
@@ -141,9 +142,8 @@ Now we construct <code>b″</code>, which starts with <code>∃ b″ (between A 
               ((between A (value c′) (value b′))
                 ∧ ((value c′) (value b′) ≡ C B)))
           )
-          (∃ b″ ((between A (value d′) (value b″)) ∧ (A (value d′) ≡ D B)))
-          ThereExistsConjunctionRightMovement
-        eliminateBiconditionalForward
+          (∃ b″ ((between A (value d′) (value b″)) ∧ ((value d′) (value b″) ≡ D B)))
+          ThereExistsConjunctionRightCombining
         c′ addThereExists
         applyModusPonens
 
@@ -152,12 +152,79 @@ Now we construct <code>b″</code>, which starts with <code>∃ b″ (between A 
             ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
             ((between A (value c′) (value b′))
               ∧ ((value c′) (value b′) ≡ C B)))
-          ((between A (value d′) (value b″)) ∧ (A (value d′) ≡ D B))
+          ((between A (value d′) (value b″)) ∧ ((value d′) (value b″) ≡ D B))
           ThereExistsScattering
         eliminateBiconditionalForward
-        c′ addThereExists
         d′ addThereExists
+        c′ addThereExists
         applyModusPonens
+</jh>
+Now we need to add in <code>A ≠ B ∧ between A B C ∧ between A B D</code>, and move it inside all four quantifiers.
+<jh>
+        (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) introduceAntecedent
+
+        (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) ImplicationReflexivity
+        composeConjunction
+
+        c′
+          (∃ d′ (∃ b′ (∃ b″
+            (((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+            ((between A (value c′) (value b′))
+              ∧ ((value c′) (value b′) ≡ C B))) ∧
+            ((between A (value d′) (value b″))
+              ∧ ((value d′) (value b″) ≡ D B)))
+          )))
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+        ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        d′
+          (∃ b′ (∃ b″
+            (((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+            ((between A (value c′) (value b′))
+              ∧ ((value c′) (value b′) ≡ C B))) ∧
+            ((between A (value d′) (value b″))
+              ∧ ((value d′) (value b″) ≡ D B)))
+          ))
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+        ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        c′ addThereExists
+        applySyllogism
+
+        b′
+          (∃ b″
+            (((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+            ((between A (value c′) (value b′))
+              ∧ ((value c′) (value b′) ≡ C B))) ∧
+            ((between A (value d′) (value b″))
+              ∧ ((value d′) (value b″) ≡ D B)))
+          )
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+        ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        b″
+          (((((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
+            ((between A C (value d′)) ∧ (C (value d′) ≡ C D))) ∧
+            ((between A (value c′) (value b′))
+              ∧ ((value c′) (value b′) ≡ C B))) ∧
+            ((between A (value d′) (value b″))
+              ∧ ((value d′) (value b″) ≡ D B)))
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+        ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        b′ addThereExists
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
 ))
 </jh>
 
