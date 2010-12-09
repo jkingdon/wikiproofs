@@ -230,7 +230,7 @@ Now we need to add in <code>A ≠ B ∧ between A B C ∧ between A B D</code>, 
 
 == B′ is equal to B″ ==
 [[File:outer connectivity for betweenness 1|thumb|right|B′ = B″]]
-In this section we'll show that <code>B′ = B″</code>. The idea of the proof is simple: to get from <code>B</code> to <code>B′</code> we go through <code>D</code> and <code>C′</code>, and to get from <code>B</code> to <code>B″</code> we go through <code>C</code> and <code>D′</code>. As can be seen from the way we constructed the points, the three segments in the one case are congruent to the three segments in the other (although in a different order), so the distance from <code>B</code> to either <code>B′</code> or <code>B″</code> is the same. Because <code>A ≠ B</code>, this implies that <code>B′ = B″</code> by the uniqueness of segment construction (applied to <code>A B B′</code> and <code>A B B″</code>).
+In this section we'll show that <code>B′ = B″</code>. The idea of the proof is simple: to get from <code>B</code> to <code>B′</code> we go through <code>D</code> and <code>C′</code>, and to get from <code>B</code> to <code>B″</code> we go through <code>C</code> and <code>D′</code>. As can be seen from the way we constructed the points, the three segments in the one case are congruent to the three segments in the other (although in reverse order), so the distance from <code>B</code> to either <code>B′</code> or <code>B″</code> is the same. Because <code>A ≠ B</code>, this implies that <code>B′ = B″</code> by the uniqueness of segment construction (applied to <code>A B B′</code> and <code>A B B″</code>).
 
 === B C′ ≡ B″ C ===
 Here we prove <code>B C′ ≡ B″ C</code>, starting with a few lemmas which we'll need.
@@ -323,17 +323,47 @@ The other thing we need is <code>between D′ C A</code>.
         applySyllogism
 ))
 
-thm (bdoubleprime-dprime-c
+thm (d-cprime-dprime-c
   () ()
   (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
     ((between A C D′) ∧ (C D′ ≡ C D))) ∧
     ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
-  (between B″ D′ C)) (
+  (D C′ ≡ D′ C)) (
 </jh>
-This is another application of transitivity, starting with <code>between B″ D′ A</code>.
+Each of the segments <code>D C′</code> and <code>D′ C</code> is congruent to <code>C D</code>, so we just need to apply symmetry and transitivity.
 <jh>
+        (((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        (((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        C D′ C D CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        D C′ C D C D′ CongruenceTransitivity
+        applySyllogism
 ))
 
 thm (b-cprime-bdoubleprime-c
@@ -345,7 +375,7 @@ thm (b-cprime-bdoubleprime-c
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
   (B C′ ≡ B″ C)) (
 </jh>
-We prove it by applying <code>OuterThreeSegment</code> to <code>B D C′</code> and <code>B″ D′ C</code>. The first step is <code>between B D C′</code>.
+We prove this theorem by applying <code>OuterThreeSegment</code> to <code>B D C′</code> and <code>B″ D′ C</code>. The first step is <code>between B D C′</code>.
 <jh>
         A D C′ C D′ B′ B B″ b-d-cprime
 </jh>
