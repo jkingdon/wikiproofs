@@ -152,6 +152,9 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
+* download files
+  - Connectivity for betweenness
+
 * rename BetweenBuilder to BetweennessBuilder
     BetweenABB to BetweennessABB
     BetweenAAB to BetweennessAAB
