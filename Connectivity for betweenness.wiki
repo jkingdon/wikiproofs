@@ -20,7 +20,7 @@ var (variable a b b′ c c′ d′ e p q r b″ c″)
 </jh>
 
 == Summary ==
-[[File:outer connectivity for betweenness 1|thumb|right|construction of C′, D′, B′, and B″]]
+[[File:outer connectivity for betweenness 1.svg|thumb|right|construction of C′, D′, B′, and B″]]
 
 Here's an outline of the proof, illustrating which points we construct but leaving most of the detailed line segment congruences for the detailed formal proof.
 
@@ -28,30 +28,30 @@ We first construct <code>C′ and D′</code> extending the line segments <code>
 
 Then extend the line segments <code>A C′</code> and <code>A D′</code> to points <code>B′</code> and <code>B″</code> by distances of <code>C B</code> and <code>D B</code>. The result of this construction is that the distance from <code>B</code> is the same to either <code>B′</code> or <code>B″</code> and thus we can conclude that <code>B′ = B″</code>.
 
-[[File:outer connectivity for betweenness 2|thumb|right|construction of E]]
+[[File:outer connectivity for betweenness 2.svg|thumb|right|construction of E]]
 The point <code>E</code> lies at the intersection of <code>C C′</code> and <code>D D′</code>.
 
 At this point we assume <code>C ≠ C′</code> and will deduce from that <code>D = D′</code>.
 
-[[File:outer connectivity for betweenness 3|thumb|right|construction of P, Q, and R]]
+[[File:outer connectivity for betweenness 3.svg|thumb|right|construction of P, Q, and R]]
 Extend <code>C′ C</code> by the distance <code>C D′</code> to a point <code>P</code>. Extend <code>D′ C</code> by the distance <code>C E</code> to a point <code>R</code>. Extend <code>P R</code> by the distance <code>R P</code> to a point <code>Q</code>.
 
-[[File:outer connectivity for betweenness 4|thumb|right|D′ D ≡ P Q and C P ≡ C Q]]
+[[File:outer connectivity for betweenness 4.svg|thumb|right|D′ D ≡ P Q and C P ≡ C Q]]
 By some congruences we can show first <code>D′ D ≡ P Q</code>, which we'll need at the end of the proof, and <code>C P ≡ C Q</code>, which leads to the next step.
 
-[[File:outer connectivity for betweenness 5|thumb|right|B P ≡ B Q and B′ P ≡ B′ Q]]
+[[File:outer connectivity for betweenness 5.svg|thumb|right|B P ≡ B Q and B′ P ≡ B′ Q]]
 We can now show that <code>B</code> and <code>B′</code> are each equidistant from <code>P</code> and <code>Q</code>.
 
 TODO: can we expand on the motivation for this, or how it leads to the next step?
 
-[[File:outer connectivity for betweenness 6|thumb|right|C′ P ≡ C′ Q]]
+[[File:outer connectivity for betweenness 6.svg|thumb|right|C′ P ≡ C′ Q]]
 Similarly, C′ is also equidistant from <code>P</code> and <code>Q</code>.
 
 {{under construction}}
 TODO: What is the picture and the brief summary of the last steps (P P ≡ P Q, P = Q, and D = D′)?
 
 == Construction of C′, D′, B′, and B″ ==
-[[File:outer connectivity for betweenness 1|thumb|right|construction of C′, D′, B′, and B″]]
+[[File:outer connectivity for betweenness 1.svg|thumb|right|construction of C′, D′, B′, and B″]]
 We construct <code>c′</code> such that <code>between A D c′ ∧ D c′ ≡ C D</code> and <code>d′</code> such that <code>between A C d′ ∧ C d′ ≡ C D</code>.
 
 Then we construct <code>b′</code> such that <code>between A c′ b′ ∧ c′ b′ ≡ C B</code> and <code>b″</code> such that <code>between A d′ b″ ∧ d′ b″ ≡ D B</code>.
@@ -229,11 +229,11 @@ Now we need to add in <code>A ≠ B ∧ between A B C ∧ between A B D</code>, 
 </jh>
 
 == B′ is equal to B″ ==
-[[File:outer connectivity for betweenness 1|thumb|right|B′ = B″]]
+[[File:outer connectivity for betweenness 1.svg|thumb|right|B′ = B″]]
 In this section we'll show that <code>B′ = B″</code>. The idea of the proof is simple: to get from <code>B</code> to <code>B′</code> we go through <code>D</code> and <code>C′</code>, and to get from <code>B</code> to <code>B″</code> we go through <code>C</code> and <code>D′</code>. As can be seen from the way we constructed the points, the three segments in the one case are congruent to the three segments in the other (although in reverse order), so the distance from <code>B</code> to either <code>B′</code> or <code>B″</code> is the same. Because <code>A ≠ B</code>, this implies that <code>B′ = B″</code> by the uniqueness of segment construction (applied to <code>A B B′</code> and <code>A B B″</code>).
 
 === B C′ ≡ B″ C ===
-[[File:outer connectivity for betweenness 1|thumb|right|B C′ ≡ B″ C]]
+[[File:outer connectivity for betweenness 1.svg|thumb|right|B C′ ≡ B″ C]]
 Here we prove <code>B C′ ≡ B″ C</code>, starting with a few lemmas which we'll need.
 <jh>
 thm (b-d-cprime
@@ -267,7 +267,7 @@ Second is <code>between A D C′</code>
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+
 
         composeConjunction
 </jh>
@@ -297,7 +297,7 @@ This is another application of transitivity, starting with <code>between B″ D�
         eliminateLeftConjunctionInConsequent
         eliminateRightConjunctionInConsequent
 
-        B″ D′ A BetweennessSymmetry
+        A D′ B″ BetweennessSymmetry
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
@@ -364,6 +364,10 @@ Each of the segments <code>D C′</code> and <code>D′ C</code> is congruent to
         composeConjunction
 
         D C′ C D C D′ CongruenceTransitivity
+        applySyllogism
+
+        D C′ C D′ CongruenceRightCommutativity
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 
@@ -510,7 +514,7 @@ Here we apply transitivity to <code>between A C D′</code>
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
         eliminateRightConjunctionInConsequent
 </jh>
 and <code>between A D′ B″</code>
@@ -557,7 +561,7 @@ and the previous lemma (<code>between A C B″</code>)
 </jh>
 to produce <code>B C B″</code>. Then we just need to switch the order of the endpoints.
 <jh>
-        A C B″ B BetweennessInnerTransitivityFlipped
+        A B C B″ BetweennessInnerTransitivityFlipped
         applySyllogism
 
         B C B″ BetweennessSymmetry
@@ -616,7 +620,7 @@ thm (a-b-dprime () ()
     ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
-  (A B D′)) (
+  (between A B D′)) (
 </jh>
 <code>between A B C</code>:
 <jh>
@@ -685,6 +689,8 @@ Next is <code>between A B B′</code>, which follows from <code>between A B C′
 
         A B C′ B′ BetweennessMiddleTransitivityFlipped
         applySyllogism
+
+        composeConjunction
 </jh>
 Next is <code>between B B′ ≡ B″ B</code>.
 <jh>
@@ -707,6 +713,8 @@ Next is <code>between A B B″</code>, which follows from <code>between A B D′
 
         A B D′ B″ BetweennessMiddleTransitivityFlipped
         applySyllogism
+
+        composeConjunction
 </jh>
 Finally we need <code>B B″ ≡ B″ B</code>.
 <jh>
