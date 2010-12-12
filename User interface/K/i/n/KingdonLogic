@@ -36,6 +36,7 @@ stmt (SubstSubst () () ((subst Y x φ) ↔ (set.subst (asSet Y) (asSetVariable x
 stmt (AsSetAsNumber () ((A ∈ (universe))) ((asSet (asNumber A)) set.= A))
 stmt (AsNumberAsSet () () ((asNumber (asSet X)) = X))
 
+# TODO: This doesn't look right; it seems to be missing a subst
 def ((∀ x φ) (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) → φ)))
 def ((∃ x φ) (¬ (∀ x (¬ φ))))
 def ((≠ X Y) (¬ (X = Y)))
