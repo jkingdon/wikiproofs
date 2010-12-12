@@ -30,13 +30,3 @@ Don't yet know if this is easy or hard, but [http://www.jimloy.com/geometry/17-g
 === Others? ===
 [http://us.metamath.org/mpeuni/19.29.html 19.29]
 [http://us.metamath.org/mpeuni/19.2.html 19.2]
-
-== More axiomizations of propositional logic ==
-
-=== Four-axiom variation of Principia axioms ===
-Reducing the Principia axioms from 5 to 4 (unless I missed something, the change is to omit Assoc and change Add from <code>q → (p ∨ q)</code> to <code>q → (q ∨ p)</code>).  This is the axiomization used by [http://qedeq.org/0_03_11/doc/math/qedeq_logic_v1_en.pdf Elements of Mathematical Logic], Michael Meyling, August 2, 2008.
-
-Stanley Burris (1997), [http://www.math.uwaterloo.ca/~snburris/htdocs/scav/hilbert/hilbert.html Hilbert and Ackermann's 1928 Logic Book], describing work by [[w:Paul Bernays|Bernays]] in 1926 and adopted by, for example, D. Hilbert and W. Ackermann, Grundzüge der theoretischen Logik. Springer-Verlag, 1928.
-
-=== Robbins algebra ===
-[[w:Robbins algebra]] and Huntington's axiom seem to form two axiomizations (unless I'm missing some detail in the translation from algebras to logical systems). We'd need some more axioms for =.  Conjunction and implication would be defined in terms of ∨ and ¬ in the usual Principia way I assume.
