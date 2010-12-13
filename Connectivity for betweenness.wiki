@@ -1006,6 +1006,161 @@ Applying outer five segment gives us <code>D′ C′ ≡ D C</code>. We flip the
 ))
 </jh>
 
+We now turn to the <code>B = C</code> case. We first note that in this case <code>C′ B′ ≡ C B</code> implies <code>B′ = C′</code>
+<jh>
+thm (cprime-bprime () ()
+  (((B = C) ∧
+    ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))) →
+  (B′ = C′)) (
+        (B = C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionRightElimination
+
+        (B = C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        C′ B′ C B CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        C B C′ B′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B C B′ C′ CongruenceIdentityFromEquality
+        import
+        applySyllogism
+))
+
+thm (cprime-dprime-c-d-case-bc-1 () ()
+  ((((B″ = B′) ∧ (B′ = C′)) ∧ (D′ B″ ≡ D B)) → (C′ D′ ≡ B D)) (
+        B″ B′ C′ EqualityTransitivity
+
+        D′ EqualityReflexivity
+        D EqualityReflexivity
+        B EqualityReflexivity
+        D′ D′ B″ C′ D D B B CongruenceBuilder
+        detach2of2
+        detach2of2
+        detach1of2
+
+        eliminateBiconditionalReverseInConsequent
+</jh>
+The top thing on the proof stack is now <code>B″ = C′ → (D′ B″ ≡ D B → D′ C′ ≡ D B</code>. We just need to combine it with the other thing on the proof stack, import, and adjust the consequent.
+<jh>
+        applySyllogism
+
+        import
+
+        D′ C′ D B CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (cprime-dprime-c-d-case-bc-2 () ()
+  (((((B″ = B′) ∧ (B′ = C′)) ∧ (D′ B″ ≡ D B)) ∧ (B = C))
+    → (C′ D′ ≡ C D)) (
+        (((B″ = B′) ∧ (B′ = C′)) ∧ (D′ B″ ≡ D B)) (B = C)
+          EliminateConjunctionRight
+        B″ B′ C′ D′ D B cprime-dprime-c-d-case-bc-2
+        applySyllogism
+
+        (((B″ = B′) ∧ (B′ = C′)) ∧ (D′ B″ ≡ D B)) (B = C)
+          EliminateConjunctionLeft
+        C′ EqualityReflexivity
+        D′ EqualityReflexivity
+        D EqualityReflexivity
+        C′ C′ D′ D′ B C D D CongruenceBuilder
+        detach2of2
+        detach2of3
+        detach1of2
+        applySyllogism
+
+        eliminateBiconditionalReverseInConsequent
+
+        composeConjunction
+
+        (C′ D′ = B D)
+          ((C′ D′ = B D) → (C′ D′ = C D))
+          ModusPonens
+        applySyllogism
+))
+
+thm (cprime-dprime-c-d-case-bc () ()
+  (((B = C) ∧
+    ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))) →
+  (C′ D′ ≡ C D)) (
+</jh>
+We've proved all the interesting parts. We just need to pick out the various antecedents for <code>cprime-dprime-c-d-case-bc-2</code>. <code>B″ = B′</code>:
+<jh>
+        (B = C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+        A D C′ C D′ B′ B B″ bdoubleprime-bprime
+        applySyllogism
+</jh>
+<code>B′ = C′</code>
+<jh>
+        B C A D C′ D′ B′ B″ bprime-cprime
+        composeConjunction
+</jh>
+<code>D′ B″ ≡ D B</code>
+<jh>
+        (B = C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        composeConjunction
+</jh>
+<code>B = C</code>:
+<jh>
+        (B = C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionRightElimination
+        composeConjunction
+
+        B″ B′ C′ D′ D B C cprime-dprime-c-d-case-bc-2
+        applySyllogism
+))
+</jh>
+
 == Under construction ==
 {{under construction}}
 A ≠ B ∧ between A B C ∧ between A B D →

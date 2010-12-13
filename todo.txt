@@ -152,9 +152,6 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
-* download files
-  - Connectivity for betweenness
-
 * rename BetweenBuilder to BetweennessBuilder
     BetweenABB to BetweennessABB
     BetweenAAB to BetweennessAAB
@@ -175,4 +172,7 @@ To do with network:
   - von Plato, J.: The axioms of constructive geometry. Annals of Pure and Applied Logic 76, 169–200 (1995)
   - Kahn, G.: Constructive geometry according to Jan von Plato. Coq contribution, Coq V5.10 (1995)
   - presumably depends on constructive first-order logic
+
+* CongruenceIdentityFromEquality should be the imported version,
+  shouldn't it?
 
