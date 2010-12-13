@@ -743,6 +743,269 @@ Applying segment construction uniqueness, and then flipping the order of the equ
 ))
 </jh>
 
+== Construction of E ==
+[[File:outer connectivity for betweenness 2.svg|thumb|right|C′ D′ ≡ C D, construction of E, E C ≡ E C′, and E D ≡ E D′]]
+In this section we construct the point <code>E</code> and also prove a number of congruences. First (even before we construct E), we can apply outer five segment to the line segments <code>B C D′</code> and <code>B′ C′ D</code> with points <code>C′</code> and <code>C</code> to give us <code>C′ D′ ≡ C D</code>. Then we construct <code>E</code> as the intersection of <code>C C′</code> and <code>D D′</code> (the axiom of Pasch ensures its existence).
+
+The congruences <code>E C ≡ E C′</code> and <code>E D ≡ E D′</code> may remind us of the familiar theorem that the diagonals of a rhombus bisect each other, but of course to say it that way would get ahead of ourselves. We can readily prove each of those two congruences, however, from a simple invocation of inner five segment.
+
+=== C′ D′ ≡ C D ===
+[[File:outer connectivity for betweenness 1a.svg|thumb|right|C′ D′ ≡ C D]]
+We just said that this follows from inner five segment, but that's a slight oversimplification. That's true for the <code>B ≠ C</code> case (which we'll prove first), but there's a separate <code>B = C</code> case. We'll start with the <code>B ≠ C</code> case, and before the case itself we'll prove a few lemmas which represent the various antecedents of <code>OuterFiveSegment</code>.
+<jh>
+thm (b-c-dprime () ()
+  (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
+  (between B C D′)) (
+</jh>
+We prove this via betweenness transitivity from <code>between B C B″</code>
+<jh>
+        A D C′ C D′ B′ B B″ bdoubleprime-c-b
+
+        B″ C B BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+and <code>between C D′ B″</code>.
+<jh>
+        A D C′ C D′ B′ B B″ bdoubleprime-dprime-c
+
+        B″ D′ C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B C B″ D′ BetweennessInnerTransitivity
+        applySyllogism
+))
+
+thm (bprime-cprime-d () ()
+  (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
+  (between B′ C′ D)) (
+</jh>
+This follows by betweenness transitivity from <code>B′ C′ B</code>
+<jh>
+        A D C′ C D′ B′ B B″ b-cprime-bprime
+
+        B C′ B′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+and <code>C′ D B</code>
+<jh>
+        A D C′ C D′ B′ B B″ b-d-cprime
+
+        B D C′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B′ C′ B D BetweennessInnerTransitivity
+        applySyllogism
+))
+
+</jh>
+The next two lemmas just apply a substitution to turn <code>B C′ ≡ B″ C</code>, which we have already proved, into <code>B C′ ≡ B′ C</code>.
+<jh>
+thm (b-cprime-bprime-c-lemma () ()
+  (((B″ = B′) ∧ (B C′ ≡ B″ C)) → (B C′ ≡ B′ C)) (
+        B EqualityReflexivity
+        C′ EqualityReflexivity
+        C EqualityReflexivity
+        B B C′ C′ B″ B′ C C CongruenceBuilder
+        detach2of2
+        detach2of3
+        detach1of2
+
+        eliminateBiconditionalReverseInConsequent
+
+        import
+))
+
+thm (b-cprime-bprime-c () ()
+  (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
+  (B C′ ≡ B′ C)) (
+        A D C′ C D′ B′ B B″ bdoubleprime-bprime
+        A D C′ C D′ B′ B B″ b-cprime-bdoubleprime-c
+        composeConjunction
+
+        B″ B′ B C′ C b-cprime-bprime-c-lemma
+        applySyllogism
+))
+
+thm (cprime-dprime-c-d-case-bnotc () ()
+  (((B ≠ C) ∧
+    ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))) →
+  (C′ D′ ≡ C D)) (
+</jh>
+For outer five segment, we first need <code>B ≠ C</code>.
+<jh>
+        (B ≠ C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionRightElimination
+</jh>
+Next is <code>between B C D′</code>.
+<jh>
+        (B ≠ C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+
+        A D C′ C D′ B′ B B″ b-c-dprime
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>between B′ C′ D</code>.
+<jh>
+        (B ≠ C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+
+        A D C′ C D′ B′ B B″ bprime-cprime-d
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>B C ≡ B′ C′</code>.
+<jh>
+        (B ≠ C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        C′ B′ C B CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        C B C′ B′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>C D′ ≡ C′ D</code>.
+<jh>
+        (B ≠ C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        (B ≠ C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        D C′ C D CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        C D D C′ CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        C D′ C D C′ D CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>B C′ ≡ B′ C</code>.
+<jh>
+        (B ≠ C)
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ConjunctionLeftElimination
+
+        A D C′ C D′ B′ B B″ b-cprime-bprime-c
+        applySyllogism
+
+        composeConjunction
+</jh>
+Last is <code>C C′ ≡ C′ C</code>.
+<jh>
+        C C′ CongruenceReflexivity
+
+        C C′ C C′ CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        ((B ≠ C) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))))
+          introduceAntecedent
+
+        composeConjunction
+</jh>
+Applying outer five segment gives us <code>D′ C′ ≡ D C</code>. We flip the order of the points to turn that into <code>C′ D′ ≡ C D</code>.
+<jh>
+        B C D′ B′ C′ D C′ C OuterFiveSegment
+        applySyllogism
+
+        D′ C′ D C CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == Under construction ==
 {{under construction}}
 A ≠ B ∧ between A B C ∧ between A B D →
