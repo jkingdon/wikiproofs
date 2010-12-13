@@ -423,7 +423,7 @@ Three segment gives us <code>B C′ B″ C</code>, the desired result.
 </jh>
 
 === B B′ ≡ B″ B ===
-[[File:outer connectivity for betweenness 1|thumb|right|B B′ ≡ B″ B]]
+[[File:outer connectivity for betweenness 1.svg|thumb|right|B B′ ≡ B″ B]]
 Here we extend the congruence from the previous section one more point. This is also an application of <code>OuterThreeSegment</code>, and we again break out some of the pieces into lemmas.
 <jh>
 thm (a-b-cprime
