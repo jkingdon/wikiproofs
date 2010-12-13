@@ -1,6 +1,6 @@
 {{interfaces
-| imports = [[Interface:Triangle congruence]]
-| exports = [[Interface:Collinearity]]
+| imports = [[Interface:Collinearity]]
+| exports = [[Interface:Connectivity for betweenness]]
 }}
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
@@ -761,7 +761,7 @@ thm (b-c-dprime () ()
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
   (between B C D′)) (
 </jh>
-We prove this via betweenness transitivity from <code>B C B″</code>
+We prove this via betweenness transitivity from <code>between B C B″</code>
 <jh>
         A D C′ C D′ B′ B B″ bdoubleprime-c-b
 
@@ -769,9 +769,14 @@ We prove this via betweenness transitivity from <code>B C B″</code>
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
-and <code>C D′ B″</code>.
+and <code>between C D′ B″</code>.
 <jh>
-        A D C′ C D′ B′ B B″ b-c-dprime
+        A D C′ C D′ B′ B B″ bdoubleprime-dprime-c
+
+        B″ D′ C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
         composeConjunction
 
         B C B″ D′ BetweennessInnerTransitivity
@@ -784,7 +789,7 @@ thm (bprime-cprime-d () ()
     ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
-  (between B C D′)) (
+  (between B′ C′ D)) (
 </jh>
 This follows by betweenness transitivity from <code>B′ C′ B</code>
 <jh>
@@ -842,8 +847,8 @@ thm (b-cprime-bprime-c () ()
 ))
 
 thm (cprime-dprime-c-d-case-bnotc () ()
-  ((B ≠ C) ∧
-    (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+  (((B ≠ C) ∧
+    ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
     ((between A C D′) ∧ (C D′ ≡ C D))) ∧
     ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -853,7 +858,7 @@ thm (cprime-dprime-c-d-case-bnotc () ()
 For outer five segment, we first need <code>B ≠ C</code>.
 <jh>
         (B ≠ C)
-          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -863,7 +868,7 @@ For outer five segment, we first need <code>B ≠ C</code>.
 Next is <code>between B C D′</code>.
 <jh>
         (B ≠ C)
-          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -878,7 +883,7 @@ Next is <code>between B C D′</code>.
 Next is <code>between B′ C′ D</code>.
 <jh>
         (B ≠ C)
-          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -893,7 +898,7 @@ Next is <code>between B′ C′ D</code>.
 Next is <code>B C ≡ B′ C′</code>.
 <jh>
         (B ≠ C)
-          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -917,7 +922,7 @@ Next is <code>B C ≡ B′ C′</code>.
 Next is <code>C D′ ≡ C′ D</code>.
 <jh>
         (B ≠ C)
-          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -930,7 +935,7 @@ Next is <code>C D′ ≡ C′ D</code>.
         eliminateLeftConjunctionInConsequent
 
         (B ≠ C)
-          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -950,6 +955,8 @@ Next is <code>C D′ ≡ C′ D</code>.
         eliminateBiconditionalReverse
         applySyllogism
 
+        composeConjunction
+
         C D′ C D C′ D CongruenceTransitivity
         applySyllogism
 
@@ -958,7 +965,7 @@ Next is <code>C D′ ≡ C′ D</code>.
 Next is <code>B C′ ≡ B′ C</code>.
 <jh>
         (B ≠ C)
-          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -976,13 +983,25 @@ Last is <code>C C′ ≡ C′ C</code>.
 
         C C′ C C′ CongruenceRightCommutativity
         eliminateBiconditionalReverse
-        applySyllogism
+        applyModusPonens
+
+        ((B ≠ C) ∧
+          ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))))
+          introduceAntecedent
 
         composeConjunction
 </jh>
-Applying outer five segment gives us <code>D′ C′ ≡ D C</code>. We flip the other of the points to turn that into <code>C′ D′ ≡ C D</code>.
+Applying outer five segment gives us <code>D′ C′ ≡ D C</code>. We flip the order of the points to turn that into <code>C′ D′ ≡ C D</code>.
 <jh>
         B C D′ B′ C′ D C′ C OuterFiveSegment
+        applySyllogism
+
+        D′ C′ D C CongruenceCommutativity
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 </jh>
