@@ -152,6 +152,9 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
+* download:
+ Tarski's formulation of Pasch's axiom.svg
+
 * rename BetweenBuilder to BetweennessBuilder
     BetweenABB to BetweennessABB
     BetweenAAB to BetweennessAAB
