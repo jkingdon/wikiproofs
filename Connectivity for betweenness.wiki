@@ -423,7 +423,7 @@ Three segment gives us <code>B C′ B″ C</code>, the desired result.
 </jh>
 
 === B B′ ≡ B″ B ===
-[[File:outer connectivity for betweenness 1|thumb|right|B B′ ≡ B″ B]]
+[[File:outer connectivity for betweenness 1.svg|thumb|right|B B′ ≡ B″ B]]
 Here we extend the congruence from the previous section one more point. This is also an application of <code>OuterThreeSegment</code>, and we again break out some of the pieces into lemmas.
 <jh>
 thm (a-b-cprime
@@ -1008,7 +1008,7 @@ Applying outer five segment gives us <code>D′ C′ ≡ D C</code>. We flip the
 
 We now turn to the <code>B = C</code> case. We first note that in this case <code>C′ B′ ≡ C B</code> implies <code>B′ = C′</code>
 <jh>
-thm (cprime-bprime () ()
+thm (bprime-cprime () ()
   (((B = C) ∧
     ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
     ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -1080,12 +1080,12 @@ thm (cprime-dprime-c-d-case-bc-2 () ()
   (((((B″ = B′) ∧ (B′ = C′)) ∧ (D′ B″ ≡ D B)) ∧ (B = C))
     → (C′ D′ ≡ C D)) (
         (((B″ = B′) ∧ (B′ = C′)) ∧ (D′ B″ ≡ D B)) (B = C)
-          EliminateConjunctionRight
-        B″ B′ C′ D′ D B cprime-dprime-c-d-case-bc-2
+          ConjunctionRightElimination
+        B″ B′ C′ D′ D B cprime-dprime-c-d-case-bc-1
         applySyllogism
 
         (((B″ = B′) ∧ (B′ = C′)) ∧ (D′ B″ ≡ D B)) (B = C)
-          EliminateConjunctionLeft
+          ConjunctionLeftElimination
         C′ EqualityReflexivity
         D′ EqualityReflexivity
         D EqualityReflexivity
@@ -1099,9 +1099,7 @@ thm (cprime-dprime-c-d-case-bc-2 () ()
 
         composeConjunction
 
-        (C′ D′ = B D)
-          ((C′ D′ = B D) → (C′ D′ = C D))
-          ModusPonens
+        (C′ D′ ≡ B D) (C′ D′ ≡ C D) ModusPonens
         applySyllogism
 ))
 
