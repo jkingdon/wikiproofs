@@ -1309,7 +1309,7 @@ Thirdly we need <code>D D′ ≡ D D′</code>, which is an identity.
           introduceAntecedent
         composeConjunction
 </jh>
-Fourth we need <code>E D′ ≡ E D′/code>, which is an identity.
+Fourth we need <code>E D′ ≡ E D′</code>, which is an identity.
 <jh>
         E D′ CongruenceReflexivity
         (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
@@ -1340,7 +1340,7 @@ Next we need <code>D C ≡ D C′</code>, which is one of our antecedents (sligh
         eliminateBiconditionalReverse
         applySyllogism
 
-        D C′ D C CongruenceSymmetery
+        D C′ D C CongruenceSymmetry
         eliminateBiconditionalReverse
         applySyllogism
 
@@ -1374,6 +1374,8 @@ Finally we need <code>D′ C ≡ D′ C′</code>, which follows from the antece
         C′ D′ C D CongruenceSymmetry
         eliminateBiconditionalReverse
         applySyllogism
+
+        composeConjunction
 
         C D′ C D C′ D′ CongruenceTransitivity
         applySyllogism
