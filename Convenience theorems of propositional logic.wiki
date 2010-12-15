@@ -595,6 +595,27 @@ thm (eliminateRightConjunctionInConsequent ()
 ))
 </jh>
 
+== Theorems partly in the consequent ==
+<jh>
+thm (introduceLeftConjunctToConsequent () ((HIMP (antecedent → p)) (HNEW q)) (antecedent → (q ∧ p)) (
+        HNEW
+        antecedent introduceAntecedent
+
+        HIMP
+
+        composeConjunction
+))
+
+thm (introduceRightConjunctToConsequent () ((HIMP (antecedent → p)) (HNEW q)) (antecedent → (p ∧ q)) (
+        HIMP
+
+        HNEW
+        antecedent introduceAntecedent
+
+        composeConjunction
+))
+</jh>
+
 == Theorems in the antecedent ==
 There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent.  But there are a few for the latter.
 <jh>
