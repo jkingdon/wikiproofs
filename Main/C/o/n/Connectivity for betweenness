@@ -1269,6 +1269,7 @@ thm (e-exists
 </jh>
 
 === E C ≡ E C′ ===
+[[File:outer connectivity for betweenness 2.svg|thumb|right|E C ≡ E C′ and E D ≡ E D′]]
 Here we apply inner five segment to prove <code>E C ≡ E C′</code>. We are applying inner five segment to the line segments <code>D E D′</code> and <code>D E D′</code> and points <code>C</code> and <code>C′</code>.
 <jh>
 thm (e-c-e-cprime () ()
@@ -1389,6 +1390,127 @@ Finally we need <code>D′ C ≡ D′ C′</code>, which follows from the antece
 Applying inner five segment we get <code>E C ≡ E C′</code>
 <jh>
         D E D′ D E D′ C C′ InnerFiveSegment
+        applySyllogism
+))
+</jh>
+
+=== E D ≡ E D′ ===
+The proof that <code>E D ≡ E D′</code> is exactly analogous, but applies inner five segment to the line segments <code>C E C′</code> and <code>C E C′</code> and points <code>D</code> and <code>D′</code>.
+<jh>
+thm (e-d-e-dprime () ()
+  ((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) →
+  (E D ≡ E D′)) (
+</jh>
+First we need <code>between C E C′</code>, which is one of our antecedents.
+<jh>
+        ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ((between C E C′) ∧ (between D E D′))
+          ConjunctionLeftElimination
+        eliminateRightConjunctionInConsequent
+</jh>
+Secondly we need a second copy of <code>between C E C′</code>.
+<jh>
+        (between C E C′) ConjunctionIdempotence
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Thirdly we need <code>C C′ ≡ C C′</code>, which is an identity.
+<jh>
+        C C′ CongruenceReflexivity
+        (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′)))
+          introduceAntecedent
+        composeConjunction
+</jh>
+Fourth we need <code>E C′ ≡ E C′</code>, which is an identity.
+<jh>
+        E C′ CongruenceReflexivity
+        (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′)))
+          introduceAntecedent
+        composeConjunction
+</jh>
+Next we need <code>C D ≡ C D′</code>, which is one of our antecedents (slightly rearranged).
+<jh>
+        ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ((between C E C′) ∧ (between D E D′))
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        C D′ C D CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Finally we need <code>C′ D ≡ C′ D′</code>, which follows from the antecedent <code>D C′ ≡ C D</code> and <code>C′ D′ ≡ C D</code>, which we proved previously.
+<jh>
+        ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ((between C E C′) ∧ (between D E D′))
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
+          ((between C E C′) ∧ (between D E D′))
+          ConjunctionRightElimination
+        A D C′ C D′ B′ B B″ cprime-dprime-c-d
+        applySyllogism
+
+        C′ D′ C D CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        D C′ C D C′ D′ CongruenceTransitivity
+        applySyllogism
+
+        D C′ C′ D′ CongruenceLeftCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying inner five segment we get <code>E D ≡ E D′</code>
+<jh>
+        C E C′ C E C′ D D′ InnerFiveSegment
         applySyllogism
 ))
 </jh>
