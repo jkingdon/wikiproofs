@@ -1515,6 +1515,155 @@ Applying inner five segment we get <code>E D ≡ E D′</code>
 ))
 </jh>
 
+== Construction of P, Q, and R ==
+[[File:outer connectivity for betweenness 3.svg|thumb|right|construction of P, Q, and R]]
+Extend <code>C′ C</code> by the distance <code>C D′</code> to a point <code>P</code>. Extend <code>D′ C</code> by the distance <code>C E</code> to a point <code>R</code>. Extend <code>P R</code> by the distance <code>R P</code> to a point <code>Q</code>.
+
+In other words, we are adding <code>(between C′ C P ∧ C P ≡ C D′) ∧ (between D′ C R ∧ C R ≡ C E) ∧ (between P R Q ∧ R Q ≡ R P)</code>
+<jh>
+thm (p-q-r-exist
+  ((p q r A) (p q r D) (p q r C′) (p q r C) (p q r D′) (p q r B′) (p q r B) (p q r B″) (p q r E)) ()
+  ((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) →
+  (∃ r (∃ p (∃ q (
+    (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))) ∧
+    ((between D′ C (value r)) ∧ (C (value r) ≡ C E))) ∧
+    ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p)))
+  ))))) (
+        (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′)))
+          ImplicationReflexivity
+</jh>
+We're ready to construct <code>p</code>.
+<jh>
+        p C′ C C D′ SegmentConstruction
+        introduceRightConjunctToConsequent
+
+        p
+          (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+            ((between C E C′) ∧ (between D E D′)))
+          ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+</jh>
+The construction of <code>r</code> is similar.
+<jh>
+        r D′ C C E SegmentConstruction
+        introduceRightConjunctToConsequent
+
+        # TODO: this can be simplified via ThereExistsScattering, right?
+        r
+          (∃ p 
+            ((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+            ((between C E C′) ∧ (between D E D′))) ∧
+            ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))))
+          ((between D′ C (value r)) ∧ (C (value r) ≡ C E))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        p
+          ((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+            ((between C E C′) ∧ (between D E D′))) ∧
+            ((between C′ C (value p)) ∧ (C (value p) ≡ C D′)))
+          ((between D′ C (value r)) ∧ (C (value r) ≡ C E))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        r addThereExists
+        applySyllogism
+</jh>
+The construction of <code>q</code> is only slightly different (with the most obvious difference in the logic being that it depends on <code>p</code> and <code>r</code>).
+<jh>
+        q (value p) (value r) (value r) (value p) SegmentConstruction
+        p generalize
+        r generalize
+        introduceRightConjunctToConsequent
+
+        r
+          (∃ p (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+            ((between C E C′) ∧ (between D E D′))) ∧
+            ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))) ∧
+            ((between D′ C (value r)) ∧ (C (value r) ≡ C E))))
+          (∀ p (∃ q ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p)))))
+          ThereExistsConjunctionRightCombining
+        applySyllogism
+
+        p
+          (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+            ((between C E C′) ∧ (between D E D′))) ∧
+            ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))) ∧
+            ((between D′ C (value r)) ∧ (C (value r) ≡ C E)))
+          (∃ q ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p))))
+          ThereExistsConjunctionRightCombining
+        r addThereExists
+        applySyllogism
+
+        q
+          (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+            ((between C E C′) ∧ (between D E D′))) ∧
+            ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))) ∧
+            ((between D′ C (value r)) ∧ (C (value r) ≡ C E)))
+          ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p)))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        p addThereExists
+        r addThereExists
+        applySyllogism
+))
+</jh>
+
+{{under construction}}
+Here's the antecedent we'll use for much of the rest of the proof:
+    ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    (between C′ C P ∧ C P ≡ C D′)) ∧
+    (between D′ C R ∧ C R ≡ C E)) ∧
+    (between P R Q ∧ R Q ≡ R P))
+
 == Under construction ==
 {{under construction}}
 A ≠ B ∧ between A B C ∧ between A B D →
@@ -1523,7 +1672,7 @@ A ≠ B ∧ between A B C ∧ between A B D →
 (stuff1) → ∃ e (stuff2)
     between C e C′ ∧ between D e D′
 
-(stuff2) ∧ C ≠ C′ → ∃ p ∃ q ∃ r (stuff3)
+(stuff2) ∧ C ≠ C′ → ∃ r ∃ p ∃ q (stuff3)
 
 (stuff3) → D = D′
 
