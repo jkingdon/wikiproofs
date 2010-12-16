@@ -1397,14 +1397,14 @@ Applying inner five segment we get <code>E C ≡ E C′</code>
 === E D ≡ E D′ ===
 The proof that <code>E D ≡ E D′</code> is exactly analogous, but applies inner five segment to the line segments <code>C E C′</code> and <code>C E C′</code> and points <code>D</code> and <code>D′</code>.
 <jh>
-thm (e-c-e-cprime () ()
+thm (e-d-e-dprime () ()
   ((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
     ((between A C D′) ∧ (C D′ ≡ C D))) ∧
     ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
     ((between C E C′) ∧ (between D E D′))) →
-  (E C ≡ E C′)) (
+  (E D ≡ E D′)) (
 </jh>
 First we need <code>between C E C′</code>, which is one of our antecedents.
 <jh>
@@ -1529,7 +1529,7 @@ thm (p-q-r-exist
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
     ((between C E C′) ∧ (between D E D′))) →
-  (∃ p (∃ r (∃ q (
+  (∃ r (∃ p (∃ q (
     (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
     ((between A C D′) ∧ (C D′ ≡ C D))) ∧
     ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
@@ -1571,6 +1571,7 @@ The construction of <code>r</code> is similar.
         r D′ C C E SegmentConstruction
         introduceRightConjunctToConsequent
 
+        # TODO: this can be simplified via ThereExistsScattering, right?
         r
           (∃ p 
             ((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
@@ -1584,16 +1585,30 @@ The construction of <code>r</code> is similar.
           ThereExistsConjunctionMovement
         eliminateBiconditionalForward
         applySyllogism
+
+        p
+          ((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+            ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+            ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+            ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+            (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+            ((between C E C′) ∧ (between D E D′))) ∧
+            ((between C′ C (value p)) ∧ (C (value p) ≡ C D′)))
+          ((between D′ C (value r)) ∧ (C (value r) ≡ C E))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        r addThereExists
+        applySyllogism
 </jh>
 The construction of <code>q</code> is only slightly different (with the most obvious difference in the logic being that it depends on <code>p</code> and <code>r</code>).
 <jh>
         q (value p) (value r) (value r) (value p) SegmentConstruction
-        r generalize
         p generalize
+        r generalize
         introduceRightConjunctToConsequent
 
-        p
-          (∃ r (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+        r
+          (∃ p (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
@@ -1601,11 +1616,11 @@ The construction of <code>q</code> is only slightly different (with the most obv
             ((between C E C′) ∧ (between D E D′))) ∧
             ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))) ∧
             ((between D′ C (value r)) ∧ (C (value r) ≡ C E))))
-          (∀ r (∃ q ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p)))))
+          (∀ p (∃ q ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p)))))
           ThereExistsConjunctionRightCombining
         applySyllogism
 
-        r
+        p
           (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
             ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
@@ -1615,7 +1630,8 @@ The construction of <code>q</code> is only slightly different (with the most obv
             ((between C′ C (value p)) ∧ (C (value p) ≡ C D′))) ∧
             ((between D′ C (value r)) ∧ (C (value r) ≡ C E)))
           (∃ q ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p))))
-        p addThereExists
+          ThereExistsConjunctionRightCombining
+        r addThereExists
         applySyllogism
 
         q
@@ -1630,8 +1646,11 @@ The construction of <code>q</code> is only slightly different (with the most obv
           ((between (value p) (value r) (value q)) ∧ ((value r) (value q) ≡ (value r) (value p)))
           ThereExistsConjunctionMovement
         eliminateBiconditionalForward
+        p addThereExists
+        r addThereExists
         applySyllogism
 ))
+</jh>
 
 {{under construction}}
 Here's the antecedent we'll use for much of the rest of the proof:
@@ -1653,7 +1672,7 @@ A ≠ B ∧ between A B C ∧ between A B D →
 (stuff1) → ∃ e (stuff2)
     between C e C′ ∧ between D e D′
 
-(stuff2) ∧ C ≠ C′ → ∃ p ∃ q ∃ r (stuff3)
+(stuff2) ∧ C ≠ C′ → ∃ r ∃ p ∃ q (stuff3)
 
 (stuff3) → D = D′
 
