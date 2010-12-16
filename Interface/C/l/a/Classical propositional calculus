@@ -495,8 +495,14 @@ stmt (eliminateLeftConjunctionInConsequent () ((antecedent → (p ∧ q))) (ante
 stmt (eliminateRightConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
 </jh>
 
-== Theorems in the antecedent ==
+=== Theorems partly in the consequent ===
+We can have a theorem not in the consequent (for example, <code>introduceConjunction</code> derives <code>p ∧ q</code> from hypotheses <code>p</code> and <code>q</code>). We can have a theorem entirely in the consequent–that is, all hypotheses have a common antecedent (for example, <code>composeConjunction</code> derives <code>antecedent → p ∧ q</code> from <code>antecedent → p</code> and <code>antecedent → q</code>). In this section we have some theorems in which some, but not all, hypotheses have a common antecedent which also figures in the conclusion.<ref>introduceLeftConjunctToConsequent is [http://us.metamath.org/mpeuni/jctil jctil] in metamath, accessed December 2010. introduceRightConjunctToConsequent is [http://us.metamath.org/mpeuni/jctir jctir]</ref>
+<jh>
+stmt (introduceLeftConjunctToConsequent () ((antecedent → p) q) (antecedent → (q ∧ p)))
+stmt (introduceRightConjunctToConsequent () ((antecedent → p) q) (antecedent → (p ∧ q)))
+</jh>
 
+=== Theorems in the antecedent ===
 There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent. But there are a few for the latter.
 <jh>
 stmt (importInAntecedent ()
