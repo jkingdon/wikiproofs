@@ -1663,9 +1663,9 @@ thm (dprime-cprime () ()
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
     ((between C E C′) ∧ (between D E D′))) ∧
-    (between C′ C P ∧ C P ≡ C D′)) ∧
-    (between D′ C R ∧ C R ≡ C E)) ∧
-    (between P R Q ∧ R Q ≡ R P)) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
     (C = D′)) →
   (D′ = C′)) (
 </jh>
@@ -1677,9 +1677,9 @@ First we need <code>C = D′</code>.
           ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
           ((between C E C′) ∧ (between D E D′))) ∧
-          (between C′ C P ∧ C P ≡ C D′)) ∧
-          (between D′ C R ∧ C R ≡ C E)) ∧
-          (between P R Q ∧ R Q ≡ R P))
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
           (C = D′)
           ConjunctionLeftElimination
 </jh>
@@ -1691,9 +1691,9 @@ Secondly we need <code>C D′ ≡ D′ C′</code> which we derive from <code>C 
           ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
           ((between C E C′) ∧ (between D E D′))) ∧
-          (between C′ C P ∧ C P ≡ C D′)) ∧
-          (between D′ C R ∧ C R ≡ C E)) ∧
-          (between P R Q ∧ R Q ≡ R P))
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
           (C = D′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
@@ -1712,9 +1712,9 @@ Secondly we need <code>C D′ ≡ D′ C′</code> which we derive from <code>C 
           ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
           ((between C E C′) ∧ (between D E D′))) ∧
-          (between C′ C P ∧ C P ≡ C D′)) ∧
-          (between D′ C R ∧ C R ≡ C E)) ∧
-          (between P R Q ∧ R Q ≡ R P))
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
           (C = D′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
@@ -1728,6 +1728,8 @@ Secondly we need <code>C D′ ≡ D′ C′</code> which we derive from <code>C 
         C′ D′ C D CongruenceSymmetry
         eliminateBiconditionalReverse
         applySyllogism
+
+        composeConjunction
 
         C D′ C D C′ D′ CongruenceTransitivity
         applySyllogism
@@ -1753,9 +1755,9 @@ thm (c-cprime () ()
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
     ((between C E C′) ∧ (between D E D′))) ∧
-    (between C′ C P ∧ C P ≡ C D′)) ∧
-    (between D′ C R ∧ C R ≡ C E)) ∧
-    (between P R Q ∧ R Q ≡ R P)) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
     (C = D′)) →
   (C = C′)) (
         ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
@@ -1764,13 +1766,14 @@ thm (c-cprime () ()
           ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
           ((between C E C′) ∧ (between D E D′))) ∧
-          (between C′ C P ∧ C P ≡ C D′)) ∧
-          (between D′ C R ∧ C R ≡ C E)) ∧
-          (between P R Q ∧ R Q ≡ R P))
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
           (C = D′)
           ConjunctionLeftElimination
 
-        A D C′ C D′ B′ B B″ E P R Q cprime-dprime-c-d
+        A D C′ C D′ B′ B B″ E P R Q dprime-cprime
+
         composeConjunction
 
         C D′ C′ EqualityTransitivity
@@ -1785,9 +1788,9 @@ thm (c-dprime () ()
     ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
     (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
     ((between C E C′) ∧ (between D E D′))) ∧
-    (between C′ C P ∧ C P ≡ C D′)) ∧
-    (between D′ C R ∧ C R ≡ C E)) ∧
-    (between P R Q ∧ R Q ≡ R P)) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
     (C ≠ C′)) →
   (C ≠ D′)) (
         A D C′ C D′ B′ B B″ E P R Q c-cprime
