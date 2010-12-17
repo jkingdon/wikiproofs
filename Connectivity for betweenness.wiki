@@ -1995,6 +1995,78 @@ We can then conclude <code>R P ≡ E D′</code>.
 ))
 </jh>
 
+=== R Q ≡ E D ===
+This is an easy consequence of <code>R P ≡ E D′</code>.
+<jh>
+thm (r-q-e-d () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (R Q ≡ E D)) (
+</jh>
+We start with <code>R Q ≡ R P</code> (from the construction of <code>Q</code>).
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C = D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+</jh>
+Next is <code>R P ≡ E D′</code> (from the previous section).
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q r-p-e-dprime
+        composeConjunction
+
+        R Q R P E D′ CongruenceTransitivity
+        applySyllogism
+</jh>
+Finally is <code>E D′ ≡ E D</code> (which we proved a few sections back).
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C = D′)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        A D C′ C D′ B′ B B″ E e-d-e-dprime
+        applySyllogism
+
+        E D E D′ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        R Q E D′ E D CongruenceTransitivity
+        applySyllogism
+))
+</jh>
+
 == Under construction ==
 {{under construction}}
 A ≠ B ∧ between A B C ∧ between A B D →
