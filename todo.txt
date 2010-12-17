@@ -1,5 +1,8 @@
 Items which may be doable without a network connection:
 
+* A B ≡ B A seems to have some uses (e.g. D′ P ≡ P D′ in r-p-e-dprime;
+  probably at least one more, probably in the same file).
+  
 * convenience theorems of propositional logic
   - joinConsequents (do without, probably)
 * look at whether Raph's proof of ceqsex simplifies our development
