@@ -1830,7 +1830,7 @@ thm (p-c-e () ()
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
@@ -1850,7 +1850,7 @@ thm (p-c-e () ()
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
@@ -1898,7 +1898,7 @@ Next is <code>between D′ C R</code>, from the construction of <code>R</code>.
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
@@ -1922,7 +1922,7 @@ Next is <code>D′ C ≡ P C</code>, from the construction of <code>P</code>.
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
@@ -1950,7 +1950,7 @@ Next is <code>C R ≡ C E</code>, from the construction of <code>R</code>.
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
@@ -1979,7 +1979,7 @@ Next is <code>C P ≡ C D′</code>, from the construction of <code>P</code>.
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
@@ -2023,7 +2023,7 @@ We start with <code>R Q ≡ R P</code> (from the construction of <code>Q</code>)
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
@@ -2047,7 +2047,7 @@ Finally is <code>E D′ ≡ E D</code> (which we proved a few sections back).
           ((between C′ C P) ∧ (C P ≡ C D′))) ∧
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
-          (C = D′)
+          (C ≠ C′)
           ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
