@@ -2393,6 +2393,7 @@ A bit of rearranging and we are done.
 
 === <code>D′ ≠ E</code> case ===
 The more interesting case is <code>D′ ≠ E</code>. It follows from outer five segment on line segments <code>D′ E D</code> and <code>P R Q</code> and points <code>C</code> and <code>C</code>.
+<jh>
 thm (c-q-c-d-case-dprime-not-e () ()
   (
     ((D′ ≠ E) ∧
@@ -2437,12 +2438,12 @@ Next we need <code>between D′ E D</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalLeftInConsequent
-        eliminateBiconditionalLeftInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         D E D′ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -2464,9 +2465,9 @@ Next is <code>between P R Q</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalLeftInConsequent
-        eliminateBiconditionalRightInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
 
         composeConjunction
 </jh>
@@ -2536,11 +2537,11 @@ Here is <code>D′ C ≡ P C</code>, from the construction of <code>P</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalLeftInConsequent
-        eliminateBiconditionalLeftInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         C P C D′ CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -2566,10 +2567,10 @@ Finally we need <code>E C ≡ R C</code>, which comes from the construction of <
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalRightInConsequent
-        eliminateBiconditionalLeftInConsequent
-        eliminateBiconditionalLeftInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
 
         C R C E CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -2585,10 +2586,19 @@ From outer five segment we can conclude <code>D C ≡ Q C</code>.
 <jh>
         D′ E D P R Q C C OuterFiveSegment
         applySyllogism
+
+        D C Q C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Q C D C CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
 === Combining the two cases ===
+<jh>
 thm (c-q-c-d () ()
   (
     (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
