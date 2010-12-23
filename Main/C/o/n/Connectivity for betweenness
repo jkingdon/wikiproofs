@@ -40,15 +40,16 @@ Extend <code>C′ C</code> by the distance <code>C D′</code> to a point <code>
 By some congruences we can show first <code>D′ D ≡ P Q</code>, which we'll need at the end of the proof, and <code>C P ≡ C Q</code>, which leads to the next step.
 
 [[File:outer connectivity for betweenness 5.svg|thumb|right|B P ≡ B Q and B′ P ≡ B′ Q]]
-We can now show that <code>B</code> and <code>B′</code> are each equidistant from <code>P</code> and <code>Q</code>.
-
-TODO: can we expand on the motivation for this, or how it leads to the next step?
-
-[[File:outer connectivity for betweenness 6.svg|thumb|right|C′ P ≡ C′ Q]]
-Similarly, C′ is also equidistant from <code>P</code> and <code>Q</code>.
+At this point we will apply <code>EquidistantLine</code> five times. In every case we will show that <code>x P ≡ x Q</code> (based on two such existing congruences). For the starting point, we already have <code>C P ≡ C Q</code> and <code>R P ≡ R Q</code>. In turn, we will prove a similar congruence for <code>D′</code>, <code>B</code>, <code>B′</code>, and <code>C′</code>. Those cases easily fit the pictures we have been drawing so far. But we don't stop there: because <code>C′</code>, <code>C</code>, and <code>P</code> are collinear, we can also conclude <code>P P ≡ P Q</code>.
 
 {{under construction}}
-TODO: What is the picture and the brief summary of the last steps (P P ≡ P Q, P = Q, and D = D′)?
+[[File:outer connectivity for betweenness 6.svg|thumb|right|C′ P ≡ C′ Q]]
+TODO: fold this into previous diagram?
+TODO: we need some kind of diagram for P P ≡ P Q, but what does it look like?
+
+Of course, <code>P P ≡ P Q</code> implies <code>P = Q</code>, which in turn implies <code>D = D′</code> (via <code>D D′ ≡ P Q</code>).
+
+We have shown that <code>C ≠ C′</code> implies <code>D = D′</code>, or in other words <code>C = C′ ∨ D = D′</code>. The former implies <code>A D C</code> and the latter implies <code>A C D</code>, so we reach the conclusion that <code>between A C D ∨ between A D C</code>.
 
 == Construction of C′, D′, B′, and B″ ==
 [[File:outer connectivity for betweenness 1.svg|thumb|right|construction of C′, D′, B′, and B″]]
