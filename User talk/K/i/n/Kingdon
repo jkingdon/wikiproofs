@@ -127,3 +127,11 @@ The wikiproofs server has experienced several OOM failures during the last 3 day
 ::--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 16:43, 24 November 2010 (UTC)
 :::Dot org is fine with me, so I'll follow your lead on that. As for the site notice, yeah, it is kind of intrusive to leave it there for long (unless/until we implement a "close" button like they have on wikipedia, and I haven't looked into how they do that over there). [[User:Kingdon|Kingdon]] 02:49, 26 November 2010 (UTC)
 ::::Apparently they do it with Javascript/Cookies, see [[mw:Extension:DismissableSiteNotice|Extension:DismissableSiteNotice]]. I've created such a site notice as a test. It can be controlled with [[MediaWiki:Sitenotice]] and [[MediaWiki:Sitenotice id]].--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 10:35, 26 November 2010 (UTC)
+
+== Happy holidays! ==
+
+Hi Kingdon, I'd like to wish you a happy holiday season! I'd also like to congratulate you on your steady progress in geometry formalisation. Without you, Wikiproofs would be a much emptier place.
+
+My boss now has the almost-final draft of my Ph.D. thesis and he won't be due back until 10 January. So I'm hoping to be able to dedicate some time for some JHilbert/Wikiproofs developing in the first week of January.
+
+Enjoy your holidays!--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 12:34, 24 December 2010 (UTC)
