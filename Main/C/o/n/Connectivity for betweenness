@@ -2945,6 +2945,129 @@ Finally is <code>C P ≡ C Q</code>, which lets us apply <code>EquidistantLine</
 ))
 </jh>
 
+=== B′ ===
+The next point is <code>B′</code>, which follows from the results for <code>C</code> and <code>D′</code>. We break out one substitution into a lemma, but other than that we have everything we need.
+
+<jh>
+thm (c-dprime-bprime () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (between C D′ B′)) (
+</jh>
+First we put on the proof stack two things: <code>B″ D′ C</code> and <code>B″ = B′</code>.
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C ≠ C′)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        A D C′ C D′ B′ B B″ bdoubleprime-dprime-c
+        applySyllogism
+
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C ≠ C′)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        A D C′ C D′ B′ B B″ bdoubleprime-bprime
+        applySyllogism
+</jh>
+Next comes our substitution: <code>B″ = B′ → (between B″ D′ C ↔ between B′ D′ C)</code>.
+<jh>
+        D′ EqualityReflexivity
+        C EqualityReflexivity
+        B″ B′ D′ D′ C C BetweennessBuilder
+        detach2of2
+        detach2of2
+</jh>
+We detach that twice to get <code>between B′ D′ C</code>.
+<jh>
+        eliminateBiconditionalReverseInConsequent
+        applySyllogism
+
+        applyModusPonensInConsequent
+</jh>
+We swap the endpoints, as the swapped version will be more convenient later.
+<jh>
+        B′ D′ C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (bprime-p-bprime-q () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (B′ P ≡ B′ Q)) (
+</jh>
+The first part is <code>C ≠ D′</code>.
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q c-dprime
+</jh>
+Next is <code>collinear C D′ B′</code>
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q c-dprime-bprime
+        C D′ B′ BetweennessCollinearity
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>C P ≡ C Q</code>
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q c-p-c-q
+
+        composeConjunction
+</jh>
+Last is <code>D′ P ≡ D′ Q</code>
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q dprime-p-dprime-q
+
+        composeConjunction
+
+        C D′ B′ P Q EquidistantLine
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
 <jh>
