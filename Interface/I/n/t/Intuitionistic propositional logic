@@ -316,8 +316,8 @@ stmt (applyModusTollens () ((¬ q) (p → q)) (¬ p))
 stmt (introduceLeftDisjunction () (p) (q ∨ p))
 stmt (introduceRightDisjunction () (p) (p ∨ q))
 stmt (introduceConjunction () (p q) (p ∧ q))
-stmt (eliminateLeftConjunction () ((p ∧ q)) q)
-stmt (eliminateRightConjunction () ((p ∧ q)) p)
+stmt (eliminateLeftConjunct () ((p ∧ q)) q)
+stmt (eliminateRightConjunct () ((p ∧ q)) p)
 stmt (composeDisjunction () ((p → r) (q → r)) ((p ∨ q) → r))
 stmt (extractLeftDisjunction () (((p ∨ q) → r)) (p → r))
 stmt (extractRightDisjunction () (((p ∨ q) → r)) (q → r))
@@ -358,6 +358,15 @@ stmt (convertToImplicationFromDisjunction () (((¬ p) ∨ q)) (p → q))
 stmt (convertFromNegationToImplication () ((¬ p)) (p → (⊥)))
 stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
 stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) ↔ (p → r)))
+</jh>
+
+=== Deprecated ===
+The rules in this section are deprecated; that is, they are likely to disappear in a future version of this interface.
+
+The following two are synonyms for <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code>.
+<jh>
+stmt (eliminateLeftConjunction () ((p ∧ q)) q)
+stmt (eliminateRightConjunction () ((p ∧ q)) p)
 </jh>
 
 == Footnotes ==
