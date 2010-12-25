@@ -576,8 +576,8 @@ stmt (eliminateRightConjunction () ((p ∧ q)) p)
 
 Likewise for the versions in the consequent:
 <jh>
-stmt (eliminateLeftConjunctionInConsequent () ((p ∧ q)) q)
-stmt (eliminateRightConjunctionInConsequent () ((p ∧ q)) p)
+stmt (eliminateLeftConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
+stmt (eliminateRightConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
 </jh>
 
 == References ==
