@@ -3137,6 +3137,235 @@ Last is <code>D′ P ≡ D′ Q</code>
 ))
 </jh>
 
+=== C′ ===
+The next point is <code>C′</code>, which follows from the results for <code>B</code> and <code>B′</code>. 
+
+Before we get to the main proof of this, we prove a few lemmas. The first one we need is <code>between B′ C B</code>. As we already have 
+<code>between B″ C B</code>, this is just a substitution.
+
+<jh>
+thm (bprime-c-b
+  () ()
+  (((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) →
+  (between B′ C B)) (
+        A D C′ C D′ B′ B B″ bdoubleprime-c-b
+
+        A D C′ C D′ B′ B B″ bdoubleprime-bprime
+
+        C EqualityReflexivity
+        B EqualityReflexivity
+        B″ B′ C C B B BetweennessBuilder
+        detach2of2
+        detach2of2
+
+        eliminateBiconditionalReverseInConsequent
+
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+</jh>
+
+The next lemma is <code>B ≠ B′</code>. As usual, this will be via the contrapositive.
+
+<jh>
+thm (b-bprime-c-cprime () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (B = B′)) →
+  (C = C′)) (
+</jh>
+First we prove <code>C = B</code>, by means of <code>B = B′ ∧ between B C B′ → B = C</code>.
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (B = B′)
+          ConjunctionLeftElimination
+
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (B = B′)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        A D C′ C D′ B′ B B″ bprime-c-b
+        applySyllogism
+
+        B′ C B BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B B′ C IndivisibilityFromEquality
+        applySyllogism
+
+        B C EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Then we prove <code>B = C′</code>, by means of <code>B = B′ ∧ between B C′ B′ → B = C′</code>.
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (B = B′)
+          ConjunctionLeftElimination
+
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (B = B′)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        A D C′ C D′ B′ B B″ b-cprime-bprime
+        applySyllogism
+
+        composeConjunction
+
+        B B′ C′ IndivisibilityFromEquality
+        applySyllogism
+</jh>
+Now we combine <code>C = B</code> and <code>B = C′</code> to produce <code>C = C′</code>.
+<jh>
+        composeConjunction
+
+        C B C′ EqualityTransitivity
+        applySyllogism
+))
+
+thm (b-bprime () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (B ≠ B′)) (
+        A D C′ C D′ B′ B B″ E P R Q b-bprime-c-cprime
+        export
+
+        (B = B′) (C = C′) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+))
+
+thm (cprime-p-cprime-q () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (C′ P ≡ C′ Q)) (
+</jh>
+First is <code>B = B′</code>.
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q b-bprime
+</jh>
+Next is <code>collinear B B′ C′</code>.
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C ≠ C′)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        A D C′ C D′ B′ B B″ b-cprime-bprime
+        applySyllogism
+
+        B C′ B′ BetweennessCollinearity
+        applySyllogism
+
+        B C′ B′ Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>B P ≡ B Q</code>
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q b-p-b-q
+
+        composeConjunction
+</jh>
+Last is <code>B′ P ≡ B′ Q</code>
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q bprime-p-bprime-q
+
+        composeConjunction
+
+        B B′ C′ P Q EquidistantLine
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
 <jh>
