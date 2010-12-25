@@ -659,10 +659,16 @@ This gives us <math>((\neg p)\vee(\neg q))\vee p</math>. All we need now is a do
         applyModusPonens
 ))
 
-thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+thm (eliminateRightConjunct () ((H (p ∧ q))) p (
         H
         p q ConjunctionRightElimination
         applyModusPonens
+))
+
+# deprecated synonym
+thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+        H
+        eliminateRightConjunct
 ))
 
 thm (ConjunctionLeftElimination () () ((p ∧ q) → q) ( # *3.27
@@ -671,10 +677,16 @@ thm (ConjunctionLeftElimination () () ((p ∧ q) → q) ( # *3.27
         applySyllogism
 ))
 
-thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+thm (eliminateLeftConjunct () ((H (p ∧ q))) q (
         H
         p q ConjunctionLeftElimination
         applyModusPonens
+))
+
+# deprecated synonym
+thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+        H
+        eliminateLeftConjunct
 ))
 </jh>
 
