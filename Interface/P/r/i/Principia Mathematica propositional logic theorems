@@ -11,7 +11,8 @@ Statements which are easy consequences of the theorems here should generally go 
 {{modules
 | parameters = ''None''
 | importedby = [[Convenience theorems of propositional logic]]
-| exportedby = [[Principia Mathematica propositional logic]]
+| exportedby = [[Principia Mathematica propositional logic]]<br />
+[[From intuitionistic to classical propositional logic]]
 }}
 
 == Well-formed formulas ==
