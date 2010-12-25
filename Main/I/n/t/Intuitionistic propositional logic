@@ -243,16 +243,28 @@ thm (introduceConjunction ()
 
 Here are rules for the <code>ConjunctionLeftElimination</code> and <code>ConjunctionRightElimination</code> axioms:
 <jh>
-thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+thm (eliminateLeftConjunct () ((H (p ∧ q))) q (
         H
         p q ConjunctionLeftElimination
         applyModusPonens
 ))
 
-thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+# deprecated synonym
+thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
+        H
+        eliminateLeftConjunct
+))
+
+thm (eliminateRightConjunct () ((H (p ∧ q))) p (
         H
         p q ConjunctionRightElimination
         applyModusPonens
+))
+
+# deprecated synonym
+thm (eliminateRightConjunction () ((H (p ∧ q))) p (
+        H
+        eliminateRightConjunct
 ))
 </jh>
 
