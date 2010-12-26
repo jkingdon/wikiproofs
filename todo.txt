@@ -155,19 +155,6 @@ thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (
 
 To do with network:
 
-* download files:
-Interface:Classical propositional calculus
-Convenience theorems of propositional logic
-Interface:Principia Mathematica propositional logic theorems‎
-Interface:Intuitionistic propositional logic
-Intuitionistic propositional logic‎
-Principia Mathematica propositional logic
-Connectivity for betweenness
-
-* rename BetweenBuilder to BetweennessBuilder
-    BetweenABB to BetweennessABB
-    BetweenAAB to BetweennessAAB
-
 * try to find out more about School Mathematics Study Group geometry postulates? Like Euclid's?
 
 * notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
@@ -175,14 +162,6 @@ Connectivity for betweenness
 * rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think. Or rename the unidirectional one to IndivisibilityImplication.
 
 * - chapter 5: cite Narboux paper (not just coq) for the two lemmas
-
-* Look up 
-  Quaife, A.: Automated development of Tarski’s geometry. Journal of Automated Reasoning 5(1), 97–118 (1989)
-
-* constructive geometry?
-  - von Plato, J.: The axioms of constructive geometry. Annals of Pure and Applied Logic 76, 169–200 (1995)
-  - Kahn, G.: Constructive geometry according to Jan von Plato. Coq contribution, Coq V5.10 (1995)
-  - presumably depends on constructive first-order logic
 
 * CongruenceIdentityFromEquality should be the imported version,
   shouldn't it?

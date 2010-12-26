@@ -556,6 +556,19 @@ thm (applyModusPonensInConsequent ()
         applySyllogism
 ))
 
+thm (applyBiconditionalTransitivityInConsequent ()
+  ((H1 (antecedent → (p ↔ q)))
+   (H2 (antecedent → (q ↔ r))))
+  (antecedent → (p ↔ r)) (
+        H1
+        H2
+        composeConjunction
+
+        p q r BiconditionalTransitivity
+
+        applySyllogism
+))
+
 thm (introduceAntecedentInConsequent () ((H (antecedent → p))) (antecedent → (q → p)) (
         H
         p q AntecedentIntroduction
@@ -578,7 +591,7 @@ thm (exportInConsequent ()
         applySyllogism
 ))
 
-thm (eliminateLeftConjunctionInConsequent ()
+thm (eliminateLeftConjunctInConsequent ()
   ((H (antecedent → (p ∧ q))))
   (antecedent → q) (
         H
@@ -586,12 +599,32 @@ thm (eliminateLeftConjunctionInConsequent ()
         applySyllogism
 ))
 
-thm (eliminateRightConjunctionInConsequent ()
+thm (eliminateRightConjunctInConsequent ()
   ((H (antecedent → (p ∧ q))))
   (antecedent → p) (
         H
         p q ConjunctionRightElimination
         applySyllogism
+))
+</jh>
+
+=== Deprecated ===
+These theorems are likely to disappear in a future version of this interface.
+
+The following two are synonyms for <code>eliminateLeftConjunctInConsequent</code> and <code>eliminateRightConjunctInConsequent</code>.
+<jh>
+thm (eliminateLeftConjunctionInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → q) (
+        H
+        eliminateLeftConjunctInConsequent
+))
+
+thm (eliminateRightConjunctionInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → p) (
+        H
+        eliminateRightConjunctInConsequent
 ))
 </jh>
 

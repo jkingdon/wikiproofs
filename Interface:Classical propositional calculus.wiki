@@ -364,8 +364,8 @@ stmt (applyModusTollens () ((¬ q) (p → q)) (¬ p))
 stmt (introduceLeftDisjunction () (p) (q ∨ p))
 stmt (introduceRightDisjunction () (p) (p ∨ q))
 stmt (introduceConjunction () (p q) (p ∧ q))
-stmt (eliminateLeftConjunction () ((p ∧ q)) q)
-stmt (eliminateRightConjunction () ((p ∧ q)) p)
+stmt (eliminateLeftConjunct () ((p ∧ q)) q)
+stmt (eliminateRightConjunct () ((p ∧ q)) p)
 stmt (eliminateCases () ((p → q) ((¬ p) → q)) q)
 stmt (composeDisjunction () ((p → r) (q → r)) ((p ∨ q) → r))
 stmt (extractLeftDisjunction () (((p ∨ q) → r)) (p → r))
@@ -479,6 +479,10 @@ stmt (introduceBiconditionalFromImplicationsInConsequent () ((antecedent → (p 
 stmt (eliminateBiconditionalReverseInConsequent () ((antecedent → (p ↔ q))) (antecedent → (p → q)))
 stmt (eliminateBiconditionalForwardInConsequent () ((antecedent → (p ↔ q))) (antecedent → (q → p)))
 stmt (applyModusPonensInConsequent () ((antecedent → p) (antecedent → (p → q))) (antecedent → q))
+stmt (applyBiconditionalTransitivityInConsequent ()
+  ((antecedent → (p ↔ q))
+   (antecedent → (q ↔ r)))
+  (antecedent → (p ↔ r)))
 stmt (introduceAntecedentInConsequent () ((antecedent → p)) (antecedent → (q → p)))
 stmt (importInConsequent ()
   ((antecedent → (p → (q → r))))
@@ -487,19 +491,18 @@ stmt (exportInConsequent ()
   ((antecedent → ((p ∧ q) → r)))
   (antecedent → (p → (q → r))) )
 
-stmt (eliminateLeftConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
-stmt (eliminateRightConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
+stmt (eliminateLeftConjunctInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
+stmt (eliminateRightConjunctInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
 </jh>
 
 === Theorems partly in the consequent ===
-We can have a theorem not in the consequent (for example, <code>introduceConjunction</code> derives <code>p ∧ q</code> from hypotheses <code>p</code> and <code>q</code>). We can have a theorem entirely in the consequent–that is, all hypotheses have a common antecedent (for example, <code>composeConjunction</code> derives <code>antecedent → p ∧ q</code> from <code>antecedent → p</code> and <code>antecedent → q</code>. In this section we have some theorems in which some, but not all, hypotheses have a common antecedent which also figures in the conclusion.<ref>introduceLeftConjunctToConsequent is [http://us.metamath.org/mpeuni/jctil jctil] in metamath, accessed December 2010. introduceRightConjunctToConsequent is [http://us.metamath.org/mpeuni/jctir jctir]</ref>
+We can have a theorem not in the consequent (for example, <code>introduceConjunction</code> derives <code>p ∧ q</code> from hypotheses <code>p</code> and <code>q</code>). We can have a theorem entirely in the consequent–that is, all hypotheses have a common antecedent (for example, <code>composeConjunction</code> derives <code>antecedent → p ∧ q</code> from <code>antecedent → p</code> and <code>antecedent → q</code>). In this section we have some theorems in which some, but not all, hypotheses have a common antecedent which also figures in the conclusion.<ref>introduceLeftConjunctToConsequent is [http://us.metamath.org/mpeuni/jctil jctil] in metamath, accessed December 2010. introduceRightConjunctToConsequent is [http://us.metamath.org/mpeuni/jctir jctir]</ref>
 <jh>
 stmt (introduceLeftConjunctToConsequent () ((antecedent → p) q) (antecedent → (q ∧ p)))
 stmt (introduceRightConjunctToConsequent () ((antecedent → p) q) (antecedent → (p ∧ q)))
 </jh>
 
 === Theorems in the antecedent ===
-
 There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent. But there are a few for the latter.
 <jh>
 stmt (importInAntecedent ()
@@ -560,6 +563,21 @@ Commutativity and associativity might be combined in any number of ways, but a f
 <jh>
 stmt (swap23ofDisjunction4 () (((p ∨ q) ∨ (r ∨ s))) ((p ∨ r) ∨ (q ∨ s)))
 stmt (swap23ofDisjunction3 () (((p ∨ q) ∨ r)) ((p ∨ r) ∨ q))
+</jh>
+
+=== Deprecated ===
+The rules in this section are deprecated; that is, they are likely to disappear in a future version of this interface.
+
+The following two are synonyms for <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code>. The names <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code> are preferred because the whole conjunction is not being eliminated, just one of the conjuncts.
+<jh>
+stmt (eliminateLeftConjunction () ((p ∧ q)) q)
+stmt (eliminateRightConjunction () ((p ∧ q)) p)
+</jh>
+
+Likewise for the versions in the consequent:
+<jh>
+stmt (eliminateLeftConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
+stmt (eliminateRightConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
 </jh>
 
 == References ==

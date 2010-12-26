@@ -45,7 +45,7 @@ By some congruences we can show first <code>D′ D ≡ P Q</code>, which we'll n
 {{clear}}
 [[File:outer connectivity for betweenness 5.svg|thumb|right|B P ≡ B Q and B′ P ≡ B′ Q]]
 [[File:outer connectivity for betweenness 6.svg|thumb|right|C′ P ≡ C′ Q]]
-At this point we will apply <code>EquidistantLine</code> five times. In every case we will show that <code>x P ≡ x Q</code> (based on two such existing congruences). For the starting point, we already have <code>C P ≡ C Q</code> and <code>R P ≡ R Q</code>. In turn, we will prove a similar congruence for <code>D′</code>, <code>B</code>, <code>B′</code>, and <code>C′</code>. Those cases easily fit the pictures we have been drawing so far. But we don't stop there: because <code>C′</code>, <code>C</code>, and <code>P</code> are collinear, we can also conclude <code>P P ≡ P Q</code> (this last one doesn't quite as ready lend itself to being illustrated in diagram form, but the first four are illustrated in the adjacent figures).
+At this point we will apply <code>EquidistantLine</code> five times. In every case we will show that <code>x P ≡ x Q</code> (based on two such existing congruences). For the starting point, we already have <code>C P ≡ C Q</code> and <code>R P ≡ R Q</code>. In turn, we will prove a similar congruence for <code>D′</code>, <code>B</code>, <code>B′</code>, and <code>C′</code>. Those cases easily fit the pictures we have been drawing so far. But we don't stop there: because <code>C′</code>, <code>C</code>, and <code>P</code> are collinear, we can also conclude <code>P P ≡ P Q</code> (this last one doesn't quite as readily lend itself to being illustrated in diagram form, but the first four are illustrated in the adjacent figures).
 
 Of course, <code>P P ≡ P Q</code> implies <code>P = Q</code>, which in turn implies <code>D = D′</code> (via <code>D D′ ≡ P Q</code>).
 
@@ -3087,13 +3087,30 @@ The first part is <code>C ≠ D′</code>.
 </jh>
 Next is <code>collinear C D′ B</code>
 <jh>
-        A D C′ C D′ B′ B B″ E P R Q b-c-dprime
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C ≠ C′)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        A D C′ C D′ B′ B B″ b-c-dprime
+        applySyllogism
 
         B C D′ BetweennessCollinearity
         applySyllogism
 
         B C D′ CollinearityRotation
-        eliminatBiconditionalReverse
+        eliminateBiconditionalReverse
         applySyllogism
 
         composeConjunction
@@ -3177,7 +3194,7 @@ First we prove <code>C = B</code>, by means of <code>B = B′ ∧ between B C B�
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
           (B = B′)
-          EliminateConjunctionLeft
+          ConjunctionLeftElimination
 
         ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -3189,12 +3206,14 @@ First we prove <code>C = B</code>, by means of <code>B = B′ ∧ between B C B�
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
           (B = B′)
-          EliminateConjunctionRight
+          ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
+
         A D C′ C D′ B′ B B″ bprime-c-b
+        applySyllogism
 
         B′ C B BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -3206,6 +3225,7 @@ First we prove <code>C = B</code>, by means of <code>B = B′ ∧ between B C B�
         applySyllogism
 
         B C EqualitySymmetry
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 Then we prove <code>B = C′</code>, by means of <code>B = B′ ∧ between B C′ B′ → B = C′</code>.
@@ -3220,7 +3240,7 @@ Then we prove <code>B = C′</code>, by means of <code>B = B′ ∧ between B C�
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
           (B = B′)
-          EliminateConjunctionLeft
+          ConjunctionLeftElimination
 
         ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -3232,12 +3252,13 @@ Then we prove <code>B = C′</code>, by means of <code>B = B′ ∧ between B C�
           ((between D′ C R) ∧ (C R ≡ C E))) ∧
           ((between P R Q) ∧ (R Q ≡ R P)))
           (B = B′)
-          EliminateConjunctionRight
+          ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
         A D C′ C D′ B′ B B″ b-cprime-bprime
+        applySyllogism
 
         composeConjunction
 
@@ -3320,6 +3341,8 @@ Next is <code>collinear B B′ C′</code>.
         B C′ B′ Collinearity23
         eliminateBiconditionalReverse
         applySyllogism
+
+        composeConjunction
 </jh>
 Next is <code>B P ≡ B Q</code>
 <jh>
