@@ -5,7 +5,7 @@
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
 
-This page is primarily devoted to the proof of one theorem, <code>A ≠ B ∧ between A B C ∧ between A B D → between A C D ∨ between A D C</code>. This is called outer connectivity for betweenness by Narboux<ref>Narboux (2007), page 144</ref> and Givant.<ref>Tarski and Givant (1999), page 186</ref> It was once considered an axiom of Tarski's system, but was proved from the other axioms by Gupta in 1965<ref>Tarski and Givant (1999), page 190</ref><ref>Narboux (2007), citing Gupta, H.N.: Contributions to the axiomatic foundations of geometry. PhD thesis, University of California, Berkley (1965)</ref>
+This page is devoted to the proof of one theorem, <code>A ≠ B ∧ between A B C ∧ between A B D → between A C D ∨ between A D C</code>. This is called outer connectivity for betweenness by Narboux<ref>Narboux (2007), page 144</ref> and Givant.<ref>Tarski and Givant (1999), page 186</ref> It was once considered an axiom of Tarski's system, but was proved from the other axioms by Gupta in 1965<ref>Tarski and Givant (1999), page 190</ref><ref>Narboux (2007), citing Gupta, H.N.: Contributions to the axiomatic foundations of geometry. PhD thesis, University of California, Berkley (1965)</ref>
 
 The proof is not simple; Givant calls it "rather involved" and Narboux devotes two and a half pages to an informal proof (and an explanation of part of the formal proof).<ref>Narboux (2007), pages 151-153</ref>
 
@@ -3465,6 +3465,7 @@ thm (p-q () ()
 === D = D′ ===
 Here's a variant of <code>CongruenceIdentityFromEquality</code>. Because we (almost?) always want the imported one, the plan is to phase out the exported version in favor of the imported one.
 <jh>
+var (point x y z w)
 thm (CongruenceIdentityFromEqualityImported () () (((x = y) ∧ (x y ≡ z w)) → (z = w)) (
         x y z w CongruenceIdentityFromEquality
         import
@@ -3540,7 +3541,7 @@ thm (a-d-c () ()
     ((between D′ C R) ∧ (C R ≡ C E))) ∧
     ((between P R Q) ∧ (R Q ≡ R P))) ∧
     (C = C′)) →
-    (between A D C) (
+    (between A D C)) (
         (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
           ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
@@ -3568,18 +3569,152 @@ The substitution is <code>C = C′ → (between A D C ↔ between A D C′)</cod
         detach2of3
         detach1of2
 
-        eliminateBiconditionalForward
+        eliminateBiconditionalForwardInConsequent
         applyComm
 
         applySyllogism
         import
+))
+
+thm (a-c-d () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (D = D′)) →
+    (between A C D)) (
+        (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E)))
+          ((between P R Q) ∧ (R Q ≡ R P))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        
+eliminateRightConjunctInConsequent
+</jh>
+The substitution is <code>D = D′ → (between A C D ↔ between A C D′)</code>, which we then apply to prove the desired result.
+<jh>
+        A EqualityReflexivity
+        C EqualityReflexivity
+        A A C C D D′ BetweennessBuilder
+        detach2of3
+        detach1of2
+
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+
+        applySyllogism
+        import
+))
+
+thm (a-c-d-or-a-d-c () ()
+  (
+    ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) →
+    ((between A C D) ∨ (between A D C))) (
+        A D C′ C D′ B′ B B″ E P R Q c-cprime-or-d-dprime
+
+        A D C′ C D′ B′ B B″ E P R Q a-d-c
+        (between A D C) (between A C D) DisjunctionLeftIntroduction
+        applySyllogism
+        export
+
+        A D C′ C D′ B′ B B″ E P R Q a-c-d
+        (between A C D) (between A D C) DisjunctionRightIntroduction
+        applySyllogism
+        export
+
+        composeConjunction
+
+        (C = C′)
+          ((between A C D) ∨ (between A D C))
+          (D = D′)
+          DisjunctionComposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+</jh>
+
+=== Betweenness outer connectivity ===
+We now are prepared to take the various lemmas which represent the construction of the various points, tie them together (basically just syllogisms, with suitable handling of ∃), and then remove the quantifiers once they are no longer needed.
+<jh>
+thm (BetweennessOuterConnectivity
+  ( (A c′ d′ b′ b″ e r p q)
+   (B c′ d′ b′ b″ e r p q)
+   (C c′ d′ b′ b″ e r p q)
+   (D c′ d′ b′ b″ e r p q))
+  ()
+  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) → ((between A C D) ∨ (between A D C)))
+  (
+        A B C D c′ d′ b′ b″ BetweennessOuterConnectivity-cdbb
+
+        A D (value c′) C (value d′) (value b′) B (value b″) e e-exists
+        b″ addThereExists
+        b′ addThereExists
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        A D (value c′) C (value d′) (value b′) B (value b″) (value e) r p q p-q-r-exist
+        e addThereExists
+        b″ addThereExists
+        b′ addThereExists
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        A D (value c′) C (value d′) (value b′) B (value b″) (value e) (value p) (value r) (value q) a-c-d-or-a-d-c
+        q addThereExists
+        p addThereExists
+        r addThereExists
+        e addThereExists
+        b″ addThereExists
+        b′ addThereExists
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
 ))
 </jh>
 
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
 <jh>
-#export (RESULTS Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 </jh>
 
 Also, since this page is currently the last in the (in-progress) series on basic geometry, we export to [[Interface:Basic geometry]].
