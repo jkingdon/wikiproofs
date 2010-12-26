@@ -44,13 +44,8 @@ By some congruences we can show first <code>D′ D ≡ P Q</code>, which we'll n
 
 {{clear}}
 [[File:outer connectivity for betweenness 5.svg|thumb|right|B P ≡ B Q and B′ P ≡ B′ Q]]
-At this point we will apply <code>EquidistantLine</code> five times. In every case we will show that <code>x P ≡ x Q</code> (based on two such existing congruences). For the starting point, we already have <code>C P ≡ C Q</code> and <code>R P ≡ R Q</code>. In turn, we will prove a similar congruence for <code>D′</code>, <code>B</code>, <code>B′</code>, and <code>C′</code>. Those cases easily fit the pictures we have been drawing so far. But we don't stop there: because <code>C′</code>, <code>C</code>, and <code>P</code> are collinear, we can also conclude <code>P P ≡ P Q</code>.
-
-{{clear}}
 [[File:outer connectivity for betweenness 6.svg|thumb|right|C′ P ≡ C′ Q]]
-{{under construction}}
-TODO: fold this into previous diagram?
-TODO: we need some kind of diagram for P P ≡ P Q, but what does it look like?
+At this point we will apply <code>EquidistantLine</code> five times. In every case we will show that <code>x P ≡ x Q</code> (based on two such existing congruences). For the starting point, we already have <code>C P ≡ C Q</code> and <code>R P ≡ R Q</code>. In turn, we will prove a similar congruence for <code>D′</code>, <code>B</code>, <code>B′</code>, and <code>C′</code>. Those cases easily fit the pictures we have been drawing so far. But we don't stop there: because <code>C′</code>, <code>C</code>, and <code>P</code> are collinear, we can also conclude <code>P P ≡ P Q</code> (this last one doesn't quite as readily lend itself to being illustrated in diagram form, but the first four are illustrated in the adjacent figures).
 
 Of course, <code>P P ≡ P Q</code> implies <code>P = Q</code>, which in turn implies <code>D = D′</code> (via <code>D D′ ≡ P Q</code>).
 
