@@ -3505,6 +3505,77 @@ thm (d-dprime () ()
 ))
 </jh>
 
+=== between A C D ∨ between A D C ===
+In this section we prove that the long list of antecedents we have been working with implies <code>between A C D ∨ between A D C</code>. There are a few steps.
+<jh>
+thm (c-cprime-or-d-dprime () ()
+  (
+    ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) →
+    ((C = C′) ∨ (D = D′))) (
+        A D C′ C D′ B′ B B″ E P R Q d-dprime
+        export
+
+        (C = C′) (D = D′) DisjunctionImplication
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (a-d-c () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C = C′)) →
+    (between A D C) (
+        (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E)))
+          ((between P R Q) ∧ (R Q ≡ R P))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+The substitution is <code>C = C′ → (between A D C ↔ between A D C′)</code>, which we then apply to prove the desired result.
+<jh>
+        A EqualityReflexivity
+        D EqualityReflexivity
+        A A D D C C′ BetweennessBuilder
+        detach2of3
+        detach1of2
+
+        eliminateBiconditionalForward
+        applyComm
+
+        applySyllogism
+        import
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
 <jh>
