@@ -16,6 +16,38 @@ import (START Interface:Collinearity (CLASSICAL FIRSTORDER) ())
 var (point A B C D E P Q R A′ B′ C′ D′ B″ C″)
 </jh>
 
+== Corollaries of outer connectivity for betweenness ==
+
+=== Middle connectivity ===
+This one is just like outer connectivity except that the consequent is <code>between B C D ∨ between B D C</code> instead of <code>between A C D ∨ between A D C</code>.
+
+<jh>
+thm (BetweennessMiddleConnectivity-bcd () ()
+  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
+   ((between A C D) → (between B C D))) (
+        (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+          (between A C D)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+          (between A C D)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        A B C D BetweennessInnerTransitivityFlipped
+        applySyllogism
+
+        export
+))
+
+#thm (BetweennessMiddleConnectivity () () ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) → ((between B C D) ∨ (between B D C))) (
+#        A B C D BetweennessOuterConnectivity
+#))
+</jh>
+
 == Export ==
 We now export to [[Interface:Line segment inequality]].
 <jh>
