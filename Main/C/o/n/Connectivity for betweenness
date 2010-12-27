@@ -3438,6 +3438,74 @@ Last is <code>C P ≡ C Q</code>
 ))
 </jh>
 
+== Assembling the result ==
+Having proved <code>P P ≡ P Q</code>, we are most of the way done.
+
+=== P = Q ===
+<jh>
+thm (p-q () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (P = Q)) (
+        A D C′ C D′ B′ B B″ E P R Q p-p-p-q
+        P P Q CongruenceIdentityLeft
+        applySyllogism
+))
+</jh>
+
+=== D = D′ ===
+Here's a variant of <code>CongruenceIdentityFromEquality</code>. Because we (almost?) always want the imported one, the plan is to phase out the exported version in favor of the imported one.
+<jh>
+var (point x y z w)
+thm (CongruenceIdentityFromEqualityImported () () (((x = y) ∧ (x y ≡ z w)) → (z = w)) (
+        x y z w CongruenceIdentityFromEquality
+        import
+))
+</jh>
+
+And <code>D = D′</code> follows from <code>P = Q</code> and <code>P Q ≡ D D′</code>.
+<jh>
+thm (d-dprime () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (D = D′)) (
+        A D C′ C D′ B′ B B″ E P R Q p-q
+
+        A D C′ C D′ B′ B B″ E P R Q dprime-d-p-q
+
+        D′ D P Q CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        P Q D′ D CongruenceIdentityFromEqualityImported
+        applySyllogism
+
+        D′ D EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
 <jh>
