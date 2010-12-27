@@ -7,11 +7,11 @@ This is part of a series of modules which prove a variety of geometrical theorem
 
 This file contains several corollaries to outer connectivity for betweenness (which was proved in [[Connectivity for betweenness]]), a few lemmas, and results relating to line segments being shorter than others.
 
-We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Collinearity|geometry results so far]] and define some variables:
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Connectivity for betweenness|geometry results so far]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-import (START Interface:Collinearity (CLASSICAL FIRSTORDER) ())
+import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E P Q R A′ B′ C′ D′ B″ C″)
 </jh>
@@ -19,12 +19,11 @@ var (point A B C D E P Q R A′ B′ C′ D′ B″ C″)
 == Corollaries of outer connectivity for betweenness ==
 
 === Middle connectivity ===
-This one is just like outer connectivity except that the consequent is <code>between B C D ∨ between B D C</code> instead of <code>between A C D ∨ between A D C</code>.
+This one is just like outer connectivity except that the consequent is <code>between B C D ∨ between B D C</code> instead of <code>between A C D ∨ between A D C</code>.<ref>Lemma l5_2 in Narboux</ref>
 
 <jh>
 thm (BetweennessMiddleConnectivity-bcd () ()
-  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
-   ((between A C D) → (between B C D))) (
+  (((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) ∧ (between A C D)) → (between B C D)) (
         (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           (between A C D)
           ConjunctionRightElimination
@@ -39,13 +38,11 @@ thm (BetweennessMiddleConnectivity-bcd () ()
 
         A B C D BetweennessInnerTransitivityFlipped
         applySyllogism
-
-        export
 ))
 
 thm (BetweennessMiddleConnectivity-bdc () ()
-  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
-   ((between A D C) → (between B D C))) (
+  (((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) ∧ (between A D C)) →
+  (between B D C)) (
         (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           (between A D C)
           ConjunctionRightElimination
@@ -59,24 +56,40 @@ thm (BetweennessMiddleConnectivity-bdc () ()
 
         A B D C BetweennessInnerTransitivityFlipped
         applySyllogism
-
-        export
 ))
 
-#thm (BetweennessMiddleConnectivity () () ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) → ((between B C D) ∨ (between B D C))) (
-#        A B C D BetweennessOuterConnectivity
-#))
+thm (BetweennessMiddleConnectivity () () ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) → ((between B C D) ∨ (between B D C))) (
+        A B C D BetweennessOuterConnectivity
+
+        A B C D BetweennessMiddleConnectivity-bcd
+
+        (between B C D) (between B D C) DisjunctionRightIntroduction
+        applySyllogism
+        export
+
+        A B C D BetweennessMiddleConnectivity-bdc
+
+        (between B D C) (between B C D) DisjunctionLeftIntroduction
+        applySyllogism
+        export
+
+        composeConjunction
+
+        (between A C D)
+          ((between B C D) ∨ (between B D C))
+          (between A D C)
+          DisjunctionComposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
 </jh>
 
 == Export ==
 We now export to [[Interface:Line segment inequality]].
 <jh>
 #export (RESULTS Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
-</jh>
-
-Also, since this page is currently the last in the (in-progress) series on basic geometry, we export to [[Interface:Basic geometry]].
-<jh>
-export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
