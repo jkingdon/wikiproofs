@@ -3661,6 +3661,56 @@ thm (a-c-d-or-a-d-c () ()
 ))
 </jh>
 
+=== Betweenness outer connectivity ===
+We now are prepared to take the various lemmas which represent the construction of the various points, tie them together (basically just syllogisms, with suitable handling of ∃), and then remove the quantifiers once they are no longer needed.
+<jh>
+thm (BetweennessOuterConnectivity
+  ( (A c′ d′ b′ b″ e r p q)
+   (B c′ d′ b′ b″ e r p q)
+   (C c′ d′ b′ b″ e r p q)
+   (D c′ d′ b′ b″ e r p q))
+  ()
+  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) → ((between A C D) ∨ (between A D C)))
+  (
+        A B C D c′ d′ b′ b″ BetweennessOuterConnectivity-cdbb
+
+        A D (value c′) C (value d′) (value b′) B (value b″) e e-exists
+        b″ addThereExists
+        b′ addThereExists
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        A D (value c′) C (value d′) (value b′) B (value b″) (value e) r p q p-q-r-exist
+        e addThereExists
+        b″ addThereExists
+        b′ addThereExists
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        A D (value c′) C (value d′) (value b′) B (value b″) (value e) (value p) (value r) (value q) a-c-d-or-a-d-c
+        q addThereExists
+        p addThereExists
+        r addThereExists
+        e addThereExists
+        b″ addThereExists
+        b′ addThereExists
+        d′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Connectivity for betweenness]].
 <jh>
