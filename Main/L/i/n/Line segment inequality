@@ -14,6 +14,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E P Q R A′ B′ C′ D′ B″ C″)
+var (variable e)
 </jh>
 
 == Corollaries of outer connectivity for betweenness ==
@@ -84,6 +85,33 @@ thm (BetweennessMiddleConnectivity () () ((((A ≠ B) ∧ (between A B C)) ∧ (
 
         applyModusPonensInConsequent
 ))
+</jh>
+
+=== Betweenness inner connectivity ===
+In this section we prove <code>between A B D ∧ between A C D → between A B C ∨ between A C B</code>.<ref>l5_3 in Narboux</ref><ref>Axiom 17 on page 186 of Tarski and Givant (1999)</ref> The proof is in terms of outer connectivity.
+<jh>
+thm (BetweennessInnerConnectivity-1 ((e A) (e B) (e C) (e D)) ()
+  (((between A B D) ∧ (between A C D)) → (∃ e (((between A B D) ∧ (between A C D)) ∧ ((between D A (value e)) ∧ (A ≠ (value e)))))) (
+        ((between A B D) ∧ (between A C D)) ImplicationReflexivity
+</jh>
+Next we extend the line segment <code>D A</code> to a distinct point <code>e</code>.
+<jh>
+        e D A PointConstructionDifferent
+</jh>
+That gives us <code>∃ e (between D A e ∧ A ≠ e)</code>.
+<jh>
+        introduceRightConjunctToConsequent
+
+        e
+          ((between A B D) ∧ (between A C D))
+          ((between D A (value e)) ∧ (A ≠ (value e)))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+#thm (BetweennessInnerConnectivity () () (((between A B D) ∧ (between A C D)) → ((between A B C) ∨ (between A C B))) (
+#))
 </jh>
 
 == Export ==
