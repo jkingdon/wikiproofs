@@ -3310,7 +3310,7 @@ thm (cprime-p-cprime-q () ()
     (C ≠ C′)) →
   (C′ P ≡ C′ Q)) (
 </jh>
-First is <code>B = B′</code>.
+First is <code>B ≠ B′</code>.
 <jh>
         A D C′ C D′ B′ B B″ E P R Q b-bprime
 </jh>
@@ -3357,6 +3357,83 @@ Last is <code>B′ P ≡ B′ Q</code>
         composeConjunction
 
         B B′ C′ P Q EquidistantLine
+        applySyllogism
+))
+</jh>
+
+=== P ===
+The next point is <code>P</code>, which follows from the results for <code>C′</code> and <code>C</code>. It would be harder to draw a diagram for this one (if the diagram were to show the congruences as well as just <code>P</code>, <code>C</code>, and <code>C′</code>), but the proof is much the same as the ones we've done so far.
+
+<jh>
+thm (p-p-p-q () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (C ≠ C′)) →
+  (P P ≡ P Q)) (
+</jh>
+First is <code>C′ ≠ C</code>.
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C ≠ C′)
+          ConjunctionLeftElimination
+
+        C C′ EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>collinear C′ C P</code>.
+<jh>
+        ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E))) ∧
+          ((between P R Q) ∧ (R Q ≡ R P)))
+          (C ≠ C′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctionInConsequent
+
+        C′ C P BetweennessCollinearity
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>C′ P ≡ C′ Q</code>
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q cprime-p-cprime-q
+
+        composeConjunction
+</jh>
+Last is <code>C P ≡ C Q</code>
+<jh>
+        A D C′ C D′ B′ B B″ E P R Q c-p-c-q
+
+        composeConjunction
+
+        C′ C P P Q EquidistantLine
         applySyllogism
 ))
 </jh>
