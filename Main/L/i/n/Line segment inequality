@@ -43,6 +43,26 @@ thm (BetweennessMiddleConnectivity-bcd () ()
         export
 ))
 
+thm (BetweennessMiddleConnectivity-bdc () ()
+  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
+   ((between A D C) → (between B D C))) (
+        (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+          (between A D C)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
+          (between A D C)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        A B D C BetweennessInnerTransitivityFlipped
+        applySyllogism
+
+        export
+))
+
 #thm (BetweennessMiddleConnectivity () () ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) → ((between B C D) ∨ (between B D C))) (
 #        A B C D BetweennessOuterConnectivity
 #))
