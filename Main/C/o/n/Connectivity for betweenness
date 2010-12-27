@@ -3623,6 +3623,42 @@ The substitution is <code>D = D′ → (between A C D ↔ between A C D′)</cod
         applySyllogism
         import
 ))
+
+thm (a-c-d-or-a-d-c () ()
+  (
+    ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) →
+    ((between A C D) ∨ (between A D C))) (
+        A D C′ C D′ B′ B B″ E P R Q c-cprime-or-d-dprime
+
+        A D C′ C D′ B′ B B″ E P R Q a-d-c
+        (between A D C) (between A C D) DisjunctionLeftIntroduction
+        applySyllogism
+        export
+
+        A D C′ C D′ B′ B B″ E P R Q a-c-d
+        (between A C D) (between A D C) DisjunctionRightIntroduction
+        applySyllogism
+        export
+
+        composeConjunction
+
+        (C = C′)
+          ((between A C D) ∨ (between A D C))
+          (D = D′)
+          DisjunctionComposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
 </jh>
 
 == Export ==
