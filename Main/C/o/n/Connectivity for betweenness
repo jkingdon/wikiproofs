@@ -3575,6 +3575,54 @@ The substitution is <code>C = C′ → (between A D C ↔ between A D C′)</cod
         applySyllogism
         import
 ))
+
+thm (a-c-d () ()
+  (
+    (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+    ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+    ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+    ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+    (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+    ((between C E C′) ∧ (between D E D′))) ∧
+    ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+    ((between D′ C R) ∧ (C R ≡ C E))) ∧
+    ((between P R Q) ∧ (R Q ≡ R P))) ∧
+    (D = D′)) →
+    (between A C D)) (
+        (((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
+          ((between A C D′) ∧ (C D′ ≡ C D))) ∧
+          ((between A C′ B′) ∧ (C′ B′ ≡ C B))) ∧
+          ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
+          (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))) ∧
+          ((between C E C′) ∧ (between D E D′))) ∧
+          ((between C′ C P) ∧ (C P ≡ C D′))) ∧
+          ((between D′ C R) ∧ (C R ≡ C E)))
+          ((between P R Q) ∧ (R Q ≡ R P))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        
+eliminateRightConjunctInConsequent
+</jh>
+The substitution is <code>D = D′ → (between A C D ↔ between A C D′)</code>, which we then apply to prove the desired result.
+<jh>
+        A EqualityReflexivity
+        C EqualityReflexivity
+        A A C C D D′ BetweennessBuilder
+        detach2of3
+        detach1of2
+
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+
+        applySyllogism
+        import
+))
 </jh>
 
 == Export ==
