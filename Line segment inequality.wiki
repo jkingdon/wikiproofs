@@ -13,8 +13,8 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E P Q R A′ B′ C′ D′ B″ C″)
-var (variable e)
+var (point A B C D E F P Q R A′ B′ C′ D′ B″ C″)
+var (variable e e′ f)
 </jh>
 
 == Corollaries of outer connectivity for betweenness ==
@@ -87,14 +87,14 @@ thm (BetweennessMiddleConnectivity () () ((((A ≠ B) ∧ (between A B C)) ∧ (
 ))
 </jh>
 
-=== Betweenness inner connectivity ===
+=== Inner connectivity ===
 In this section we prove <code>between A B D ∧ between A C D → between A B C ∨ between A C B</code>.<ref>l5_3 in Narboux</ref><ref>Axiom 17 on page 186 of Tarski and Givant (1999)</ref> The proof is in terms of outer connectivity.
 <jh>
 thm (BetweennessInnerConnectivity-1 ((e A) (e B) (e C) (e D)) ()
   (((between A B D) ∧ (between A C D)) → (∃ e (((between A B D) ∧ (between A C D)) ∧ ((between D A (value e)) ∧ (A ≠ (value e)))))) (
         ((between A B D) ∧ (between A C D)) ImplicationReflexivity
 </jh>
-Next we extend the line segment <code>D A</code> to a distinct point <code>e</code>.
+We extend the line segment <code>D A</code> to a distinct point <code>e</code>.
 <jh>
         e D A PointConstructionDifferent
 </jh>
@@ -110,8 +110,179 @@ That gives us <code>∃ e (between D A e ∧ A ≠ e)</code>.
         applySyllogism
 ))
 
-#thm (BetweennessInnerConnectivity () () (((between A B D) ∧ (between A C D)) → ((between A B C) ∨ (between A C B))) (
-#))
+thm (BetweennessInnerConnectivity-eab () ()
+  ((((between A B D) ∧ (between A C D)) ∧ ((between D A E) ∧ (A ≠ E))) → (between E A B)) (
+        ((between A B D) ∧ (between A C D)) ((between D A E) ∧ (A ≠ E)) ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        D A E BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((between A B D) ∧ (between A C D)) ((between D A E) ∧ (A ≠ E)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        E A D B BetweennessInnerTransitivity
+        applySyllogism
+))
+
+thm (BetweennessInnerConnectivity-eac () ()
+  ((((between A B D) ∧ (between A C D)) ∧ ((between D A E) ∧ (A ≠ E))) → (between E A C)) (
+        ((between A B D) ∧ (between A C D)) ((between D A E) ∧ (A ≠ E)) ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        D A E BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((between A B D) ∧ (between A C D)) ((between D A E) ∧ (A ≠ E)) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        E A D C BetweennessInnerTransitivity
+        applySyllogism
+))
+
+thm (BetweennessInnerConnectivity-abc-acb () ()
+  ((((between A B D) ∧ (between A C D)) ∧ ((between D A E) ∧ (A ≠ E))) → ((between A B C) ∨ (between A C B))) (
+</jh>
+To apply middle transitivity, we first need <code>E ≠ A</code>.
+<jh>
+        ((between A B D) ∧ (between A C D)) ((between D A E) ∧ (A ≠ E)) ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        A E EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Then we need <code>between E A B</code> and <code>between E A C</code>.
+<jh>
+        A B D C E BetweennessInnerConnectivity-eab
+        composeConjunction
+
+        A B D C E BetweennessInnerConnectivity-eac
+        composeConjunction
+
+        E A B C BetweennessMiddleConnectivity
+        applySyllogism
+))
+
+thm (BetweennessInnerConnectivity ( (e A) (e B) (e C) (e D)) ()
+  (((between A B D) ∧ (between A C D)) → ((between A B C) ∨ (between A C B))) (
+        A B D C e BetweennessInnerConnectivity-1
+
+        A B D C (value e) BetweennessInnerConnectivity-abc-acb
+        e addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
+</jh>
+
+== Line segment inequality ==
+Here we define a formula <code>A B ≤ C D</code> to mean that the line segment <code>A B</code> is shorter than or the same length as <code>C D</code>
+
+=== Definition ===
+We define <code>A B ≤ C D</code> to mean that there is a point <code>e</code> in the line segment <code>C D</code> which cuts off a portion of <code>C D</code> which is congruent to <code>A B</code>.<ref>Definition le in Narboux</ref>
+<jh>
+def ((≤ A B C D) (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e)))))
+</jh>
+
+We define <code>≥</code> as just <code>≤</code> with the two sides interchanged.<ref>Definition ge in Narboux</ref>
+<jh>
+def ((≥ A B C D) (C D ≤ A B))
+</jh>
+
+Here we restate that definition as a theorem. As with most such definitions, the proof is just a matter of applying a change of variable, in this case based on <code>e′ = e → (between C e′ D ∧ A B ≡ C e′ ↔ between C e D ∧ A B ≡ C e)</code>.
+<jh>
+thm (LessEqualCutoff
+  ((e A) (e B) (e C) (e D)  (e′ e A) (e′ e B) (e′ e C) (e′ e D)) ()
+  ((A B ≤ C D) ↔ (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e))))) (
+        C EqualityReflexivity
+        D EqualityReflexivity
+        C C (value e′) (value e) D D BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        C EqualityReflexivity
+        A A B B C C (value e′) (value e) CongruenceBuilder
+        detach2of3
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+
+        ChangeVariableThereExists
+))
+</jh>
+
+=== An alternate definition ===
+We could just as well define <code>A B ≤ C D</code> to mean that it is possible to extend <code>A B</code> to a point to produce a line segment which is congruent to <code>C D</code>. In this section we prove that this definition is equivalent to the one in the previous section.
+
+We first tackle the forward implication. From the definition of <code>A B ≤ C D</code>, there is a point <code>E</code> between <code>C</code> and <code>D</code> such that <code>A B ≡ C E</code>. We then extend the line segment <code>A B</code> to a point <code>F</code> such that <code>C E D ≅ A B F</code>. By <code>BetweennessDegenerateTriangle</code>, <code>between A B F</code>.<ref>lemma l5_5_1 in Narboux</ref>
+<jh>
+thm (LessEqualExtensionForward-ced-abf ((f A) (f B) (f C) (f D) (f E)) ()
+  (((between C E D) ∧ (A B ≡ C E)) → (∃ f (C E D ≅ A B (value f)))) (
+        C E D BetweennessCollinearity
+        A B C E CongruenceSymmetry
+        eliminateBiconditionalReverse
+        conjoin
+
+        C E D A B f CollinearityConstructDegenerateTriangle
+        applySyllogism
+))
+
+thm (LessEqualExtensionForward-ced-ced-abf
+  ((f A) (f B) (f C) (f D) (f E)) ()
+  (((between C E D) ∧ (A B ≡ C E)) → (∃ f ((between C E D) ∧ (C E D ≅ A B (value f))))) (
+        (between C E D) (A B ≡ C E) ConjunctionRightElimination
+        C E D A B f LessEqualExtensionForward-ced-abf
+        composeConjunction
+
+        f (between C E D) (C E D ≅ A B (value f)) ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (LessEqualExtensionForward-abf-afcd () ()
+  (((between C E D) ∧ (C E D ≅ A B F)) → ((between A B F) ∧ (A F ≡ C D))) (
+        C E D A B F BetweennessDegenerateTriangle
+
+        (between C E D) (C E D ≅ A B F) ConjunctionLeftElimination
+
+        C E D A B F Congruence13
+        applySyllogism
+
+        C D A F CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (LessEqualExtensionForward
+  ((f A) (f B) (f C) (f D)  (e f A) (e B) (e C) (e D)) ()
+  ((A B ≤ C D) → (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))) (
+        A B C D e LessEqualCutoff
+        eliminateBiconditionalReverse
+
+        C (value e) D A B f LessEqualExtensionForward-ced-ced-abf
+        e addThereExists
+        applySyllogism
+
+        C (value e) D A B (value f) LessEqualExtensionForward-abf-afcd
+        f addThereExists
+        e addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
 
 == Export ==
