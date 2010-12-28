@@ -183,6 +183,15 @@ thm (BetweennessInnerConnectivity ( (e A) (e B) (e C) (e D)) ()
 ))
 </jh>
 
+== Line segment inequality ==
+Here we define a formula <code>A B ≤ C D</code> to mean that the line segment <code>A B</code> is shorter than or the same length as <code>C D</code>
+
+=== Definition ===
+We define <code>A B ≤ C D</code> to mean that there is a point <code>e</code> in the line segment <code>C D</code> which cuts off a portion of <code>C D</code> which is congruent to <code>A B</code>.
+<jh>
+def ((≤ A B C D) (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e)))))
+</jh>
+
 == Export ==
 We now export to [[Interface:Line segment inequality]].
 <jh>
