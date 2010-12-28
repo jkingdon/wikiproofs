@@ -227,9 +227,62 @@ We could just as well define <code>A B ≤ C D</code> to mean that it is possibl
 
 We first tackle the forward implication. From the definition of <code>A B ≤ C D</code>, there is a point <code>E</code> between <code>C</code> and <code>D</code> such that <code>A B ≡ C E</code>. We then extend the line segment <code>A B</code> to a point <code>F</code> such that <code>C E D ≅ A B F</code>. By <code>BetweennessDegenerateTriangle</code>, <code>between A B F</code>.<ref>lemma l5_5_1 in Narboux</ref>
 <jh>
-#thm (LessEqualExtensionForward ((f A) (f B) (f C) (f D)) ()
-#  ((A B ≤ C D) → (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))) (
-#))
+thm (LessEqualExtensionForward-ced-abf ((f A) (f B) (f C) (f D) (f E)) ()
+  (((between C E D) ∧ (A B ≡ C E)) → (∃ f (C E D ≅ A B (value f)))) (
+        C E D BetweennessCollinearity
+        A B C E CongruenceSymmetry
+        eliminateBiconditionalReverse
+        conjoin
+
+        C E D A B f CollinearityConstructDegenerateTriangle
+        applySyllogism
+))
+
+thm (LessEqualExtensionForward-ced-ced-abf
+  ((f A) (f B) (f C) (f D) (f E)) ()
+  (((between C E D) ∧ (A B ≡ C E)) → (∃ f ((between C E D) ∧ (C E D ≅ A B (value f))))) (
+        (between C E D) (A B ≡ C E) ConjunctionRightElimination
+        C E D A B f LessEqualExtensionForward-ced-abf
+        composeConjunction
+
+        f (between C E D) (C E D ≅ A B (value f)) ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (LessEqualExtensionForward-abf-afcd () ()
+  (((between C E D) ∧ (C E D ≅ A B F)) → ((between A B F) ∧ (A F ≡ C D))) (
+        C E D A B F BetweennessDegenerateTriangle
+
+        (between C E D) (C E D ≅ A B F) ConjunctionLeftElimination
+
+        C E D A B F Congruence13
+        applySyllogism
+
+        C D A F CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (LessEqualExtensionForward
+  ((f A) (f B) (f C) (f D)  (e f A) (e B) (e C) (e D)) ()
+  ((A B ≤ C D) → (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))) (
+        A B C D e LessEqualCutoff
+        eliminateBiconditionalReverse
+
+        C (value e) D A B f LessEqualExtensionForward-ced-ced-abf
+        e addThereExists
+        applySyllogism
+
+        C (value e) D A B (value f) LessEqualExtensionForward-abf-afcd
+        f addThereExists
+        e addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
 
 == Export ==
