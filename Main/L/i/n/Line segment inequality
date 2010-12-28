@@ -285,6 +285,38 @@ thm (LessEqualExtensionForward
 ))
 </jh>
 
+The proof of the reverse direction is fairly similar. We are given a point <code>f</code> for which <code>between A B f</code> and <code>A f ≡ C D</code>. Applying <code>InnerDegenerateTriangle</code> to those two formulas gives us a point <code>e</code> such that <code>A B f ≅ C e D</code>. It then follows that <code>between C e D</code> and <code>A B ≡ C e</code>, which are the two things we need for the definition of <code>≤</code>.<ref>l5_5_2 in Narboux</ref>
+<jh>
+thm (LessEqualExtensionReverse
+  ((f A) (f B) (f C) (f D)  (e f A) (e B) (e C) (e D)) ()
+  ((∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D))) → (A B ≤ C D)) (
+        A B (value f) C D e InnerDegenerateTriangle
+        f addThereExists
+</jh>
+At this point we have <code>∃ f ∃ e (between C e D ∧ A B f ≅ C e D)</code>. To satisfy <code>LessEqualCutoff</code> we need <code>∃ e (between C e D ∧ A B ≡ C e)</code>.
+<jh>
+        A B (value f) C (value e) D Congruence12
+        (between C (value e) D) conjoinLL
+        e addThereExists
+        f addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+
+        A B C D e LessEqualCutoff
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (LessEqualExtension
+  ((f A) (f B) (f C) (f D)) ()
+  ((A B ≤ C D) ↔ (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))) (
+        A B C D f LessEqualExtensionForward
+        f A B C D LessEqualExtensionReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Line segment inequality]].
 <jh>
