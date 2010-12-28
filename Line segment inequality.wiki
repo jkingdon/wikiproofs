@@ -290,25 +290,30 @@ The proof of the reverse direction is fairly similar. We are given a point <code
 thm (LessEqualExtensionReverse
   ((f A) (f B) (f C) (f D)  (e f A) (e B) (e C) (e D)) ()
   ((∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D))) → (A B ≤ C D)) (
-        
         A B (value f) C D e InnerDegenerateTriangle
         f addThereExists
 </jh>
-At this point we have <code>∃ e (between C e D ∧ A B F ≅ C e D)</code>. To satisfy <code>LessEqualCutoff</code> we need <code>∃ e (between C e D ∧ A B ≡ C e)</code>.
+At this point we have <code>∃ f ∃ e (between C e D ∧ A B f ≅ C e D)</code>. To satisfy <code>LessEqualCutoff</code> we need <code>∃ e (between C e D ∧ A B ≡ C e)</code>.
 <jh>
-        (between C (value e) D) (A B F ≅ C (value e) D) ConjunctionLeftElimination
-        A B F C (value e) D Congruence12
-        applySyllogism
-
+        A B (value f) C (value e) D Congruence12
         (between C (value e) D) conjoinLL
         e addThereExists
-
-        A B C D e CutoffThereExists
-        eliminateBiconditionalForward
         f addThereExists
         applySyllogism
 
         removeThereExistsInConsequent
+
+        A B C D e LessEqualCutoff
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (LessEqualExtension
+  ((f A) (f B) (f C) (f D)) ()
+  ((A B ≤ C D) ↔ (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))) (
+        A B C D f LessEqualExtensionForward
+        f A B C D LessEqualExtensionReverse
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
