@@ -225,7 +225,7 @@ thm (LessEqualCutoff
 === An alternate definition ===
 We could just as well define <code>A B ≤ C D</code> to mean that it is possible to extend <code>A B</code> to a point to produce a line segment which is congruent to <code>C D</code>. In this section we prove that this definition is equivalent to the one in the previous section.
 
-We first tackle the forward implication. From the definition of <code>A B ≤ C D</code>, there is a point <code>E</code> between <code>C</code> and <code>D</code> such that <code>A B ≡ C E</code>. We then extend the line segment <code>A B</code> to a point <code>F</code> such that <code>C E D ≅ A B F</code>. By <code>BetweennessDegenerateTriangle</code>, <code>between A B F</code>.<ref>lemma l5_5_1 in Narboux</ref>
+We first tackle the forward implication. From the definition of <code>A B ≤ C D</code>, there is a point <code>E</code> between <code>C</code> and <code>D</code> such that <code>A B ≡ C E</code>. We then extend the line segment <code>A B</code> to a point <code>F</code> such that <code>C E D ≅ A B F</code>. This gives us the two things we need: <code>between A B F</code> from <code>BetweennessDegenerateTriangle</code> and <code>C D ≡ A F</code> directly from <code>C E D ≅ A B F</code>.<ref>lemma l5_5_1 in Narboux</ref>
 <jh>
 thm (LessEqualExtensionForward-ced-abf ((f A) (f B) (f C) (f D) (f E)) ()
   (((between C E D) ∧ (A B ≡ C E)) → (∃ f (C E D ≅ A B (value f)))) (
@@ -279,6 +279,33 @@ thm (LessEqualExtensionForward
         C (value e) D A B (value f) LessEqualExtensionForward-abf-afcd
         f addThereExists
         e addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
+</jh>
+
+The proof of the reverse direction is fairly similar. We are given a point <code>f</code> for which <code>between A B f</code> and <code>A f ≡ C D</code>. Applying <code>InnerDegenerateTriangle</code> to those two formulas gives us a point <code>e</code> such that <code>A B f ≅ C e D</code>. It then follows that <code>between C e D</code> and <code>A B ≡ C e</code>, which are the two things we need for the definition of <code>≤</code>.<ref>l5_5_2 in Narboux</ref>
+<jh>
+thm (LessEqualExtensionReverse
+  ((f A) (f B) (f C) (f D)  (e f A) (e B) (e C) (e D)) ()
+  ((∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D))) → (A B ≤ C D)) (
+        
+        A B (value f) C D e InnerDegenerateTriangle
+        f addThereExists
+</jh>
+At this point we have <code>∃ e (between C e D ∧ A B F ≅ C e D)</code>. To satisfy <code>LessEqualCutoff</code> we need <code>∃ e (between C e D ∧ A B ≡ C e)</code>.
+<jh>
+        (between C (value e) D) (A B F ≅ C (value e) D) ConjunctionLeftElimination
+        A B F C (value e) D Congruence12
+        applySyllogism
+
+        (between C (value e) D) conjoinLL
+        e addThereExists
+
+        A B C D e CutoffThereExists
+        eliminateBiconditionalForward
+        f addThereExists
         applySyllogism
 
         removeThereExistsInConsequent
