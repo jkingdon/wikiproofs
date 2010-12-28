@@ -14,7 +14,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F P Q R A′ B′ C′ D′ B″ C″)
-var (variable e f)
+var (variable e e′ f)
 </jh>
 
 == Corollaries of outer connectivity for betweenness ==
@@ -195,6 +195,31 @@ def ((≤ A B C D) (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e)))))
 We define <code>≥</code> as just <code>≤</code> with the two sides interchanged.<ref>Definition ge in Narboux</ref>
 <jh>
 def ((≥ A B C D) (C D ≤ A B))
+</jh>
+
+Here we restate that definition as a theorem. As with most such definitions, the proof is just a matter of applying a change of variable, in this case based on <code>e′ = e → (between C e′ D ∧ A B ≡ C e′ ↔ between C e D ∧ A B ≡ C e)</code>.
+<jh>
+thm (LessEqualCutoff
+  ((e A) (e B) (e C) (e D)  (e′ e A) (e′ e B) (e′ e C) (e′ e D)) ()
+  ((A B ≤ C D) ↔ (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e))))) (
+        C EqualityReflexivity
+        D EqualityReflexivity
+        C C (value e′) (value e) D D BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        C EqualityReflexivity
+        A A B B C C (value e′) (value e) CongruenceBuilder
+        detach2of3
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+
+        ChangeVariableThereExists
+))
 </jh>
 
 === An alternate definition ===
