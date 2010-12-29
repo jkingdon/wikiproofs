@@ -50,30 +50,6 @@ stmt (CongruenceTrivialIdentity () () (y y ≡ x x))
 stmt (CongruenceIdentityFromEquality () () (((x = y) ∧ (x y ≡ z w)) → (z = w)))
 </jh>
 
-=== Inequality of line segments ===
-The formula <code>A B ≤ C D</code> means that the line segment <code>A B</code> is shorter than (or the same length as) the line segment <code>C D</code>.
-<jh>
-term (formula (≤ point point point point))
-def ((≥ A B C D) (C D ≤ A B))
-</jh>
-
-There are two equivalent ways of expressing this concept in terms of congruence. We can either cut off <code>C D</code> with a point <code>e</code> such that <code>A B ≡ C e</code>, or we can extend <code>A B</code> to a point <code>f</code> such that <code>A f ≡ C D</code>.
-<jh>
-stmt (LessEqualCutoff
-  ((e A) (e B) (e C) (e D)) ()
-  ((A B ≤ C D) ↔ (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e))))))
-stmt (LessEqualExtension
-  ((f A) (f B) (f C) (f D)) ()
-  ((A B ≤ C D) ↔ (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))))
-</jh>
-
-Given congruences between two pairs of line segments, a <code>≤</code> relationship between the first pair carries over to the second pair.
-<jh>
-stmt (LessEqualCongruence () ()
-  ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
-    → (A′ B′ ≤ C′ D′)))
-</jh>
-
 == Betweenness ==
 The other fundamental formula is betweenness; <code>(between x y z)</code> signifies "y is between x and z".
 
@@ -148,6 +124,30 @@ Here we can construct a point distinct from a given point, or a point distinct f
 stmt (PointConstructionDifferent ((c A) (c B)) ()
   (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
 stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
+</jh>
+
+=== Inequality of line segments ===
+The formula <code>A B ≤ C D</code> means that the line segment <code>A B</code> is shorter than (or the same length as) the line segment <code>C D</code>.
+<jh>
+term (formula (≤ point point point point))
+def ((≥ A B C D) (C D ≤ A B))
+</jh>
+
+There are two equivalent ways of expressing this concept in terms of congruence. We can either cut off <code>C D</code> with a point <code>e</code> such that <code>A B ≡ C e</code>, or we can extend <code>A B</code> to a point <code>f</code> such that <code>A f ≡ C D</code>.
+<jh>
+stmt (LessEqualCutoff
+  ((e A) (e B) (e C) (e D)) ()
+  ((A B ≤ C D) ↔ (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e))))))
+stmt (LessEqualExtension
+  ((f A) (f B) (f C) (f D)) ()
+  ((A B ≤ C D) ↔ (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))))
+</jh>
+
+Given congruences between two pairs of line segments, a <code>≤</code> relationship between the first pair carries over to the second pair.
+<jh>
+stmt (LessEqualCongruence () ()
+  ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
+    → (A′ B′ ≤ C′ D′)))
 </jh>
 
 == Collinearity ==

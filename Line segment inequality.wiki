@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F P Q R A′ B′ C′ D′ B″ C″)
+var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″)
 var (variable e e′ f)
 </jh>
 
@@ -352,19 +352,17 @@ thm (LessEqualCongruence-1
 In the next lemma, we construct the point <code>e′</code>, apply transitivity to <code>A B ≡ C E</code> and <code>A B ≡ A′ B′</code>, and rearrange the quantifiers a bit.
 <jh>
 thm (LessEqualCongruence-2
-  ((e′ A′) (e′ B′) (e′ C) (e′ E)) ()
+  ((e′ A′) (e′ B′) (e′ C) (e′ E) (e′ D) (e′ C′) (e′ D′)) ()
   (((((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′)) →
   (∃ e′ (((between C′ (value e′) D′) ∧ (C E D ≅ C′ (value e′) D′)) ∧ (A′ B′ ≡ C E)))) (
 </jh>
 We first construct <code>e′</code>.
 <jh>
-        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
-)) ConjunctionRightElimination
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
 
-        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
-)) ConjunctionLeftElimination
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionLeftElimination
 
         composeConjunction
 
@@ -374,8 +372,7 @@ We first construct <code>e′</code>.
 </jh>
 Next is <code>A′ B′ ≡ A B</code>.
 <jh>
-        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
-)) ConjunctionRightElimination
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionRightElimination
         eliminateLeftConjunctInConsequent
 
         A B A′ B′ CongruenceSymmetry
@@ -384,8 +381,7 @@ Next is <code>A′ B′ ≡ A B</code>.
 </jh>
 Then we show <code>A B ≡ C E</code> and apply transitivity to get <code>A′ B′ ≡ C E</code>.
 <jh>
-        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
-)) ConjunctionRightElimination
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionRightElimination
         eliminateRightConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
@@ -437,14 +433,14 @@ And then we combine the two previous results to get <code>A′ B′ ≡ C′ D�
 <jh>
         composeConjunction
 
-        A′ B′ C E C′ D′ CongruenceTransitivity
+        A′ B′ C E C′ E′ CongruenceTransitivity
         applySyllogism
 
         composeConjunction
 ))
 
 thm (LessEqualCongruence
-  ( (e A) (e B) (e C) (e D) (e A′) (e B′) (e C′) (e D′) (e′ A′) (e′ B′) (e′ C) (e′ e)) ()
+  ( (e e′ A) (e e′ B) (e e′ C) (e e′ D) (e e′ A′) (e e′ B′) (e e′ C′) (e e′ D′)) ()
   ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
     → (A′ B′ ≤ C′ D′)) (
         A B C D A′ B′ C′ D′ e LessEqualCongruence-1
@@ -456,6 +452,7 @@ thm (LessEqualCongruence
         C′ (value e′) D′ C (value e) D A′ B′ LessEqualCongruence-3
         e′ addThereExists
         e addThereExists
+        applySyllogism
 
         removeThereExistsInConsequent
         A′ B′ C′ D′ e′ LessEqualCutoff
@@ -468,14 +465,14 @@ thm (LessEqualCongruence
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
 var (point x y z w)
-thm (CongruenceIdentityFromEquality () () (((x = y) ∧ (x y ≡ z w)) → (z = w)))
+thm (CongruenceIdentityFromEquality () () (((x = y) ∧ (x y ≡ z w)) → (z = w)) (
         x y z w CongruenceIdentityFromEqualityImported
 ))
 </jh>
 
 We now export to [[Interface:Line segment inequality]].
 <jh>
-#export (RESULTS Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
