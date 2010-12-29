@@ -355,6 +355,9 @@ thm (LessEqualCongruence-2
   ((e′ A′) (e′ B′) (e′ C) (e′ E)) ()
   (((((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′)) →
   (∃ e′ (((between C′ (value e′) D′) ∧ (C E D ≅ C′ (value e′) D′)) ∧ (A′ B′ ≡ C E)))) (
+</jh>
+We first construct <code>e′</code>.
+<jh>
         (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
 )) ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
@@ -368,19 +371,108 @@ thm (LessEqualCongruence-2
         C E D C′ D′ e′ InnerDegenerateTriangle
         applySyllogism
 
+</jh>
+Next is <code>A′ B′ ≡ A B</code>.
+<jh>
         (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
 )) ConjunctionRightElimination
-        eliminateLeftConjunct
+        eliminateLeftConjunctInConsequent
+
+        A B A′ B′ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Then we show <code>A B ≡ C E</code> and apply transitivity to get <code>A′ B′ ≡ C E</code>.
+<jh>
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
+)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A′ B′ A B C E CongruenceTransitivity
+        applySyllogism
+</jh>
+Finally we can combine the two pieces.
+<jh>
+        composeConjunction
+
+        e′
+          ((between C′ (value e′) D′) ∧ (C E D ≅ C′ (value e′) D′))
+          (A′ B′ ≡ C E)
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
 ))
 
-thm (LessEqualCongruence () ()
+thm (LessEqualCongruence-3 () ()
+  ((((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′)) ∧ (A′ B′ ≡ C E)) →
+    ((between C′ E′ D′) ∧ (A′ B′ ≡ C′ E′))) (
+</jh>
+The easy part is <code>between C′ E′ D′</code>, as it is already in the antecedent.
+<jh>
+        ((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′))
+          (A′ B′ ≡ C E)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+</jh>
+We then pick out <code>A′ B′ ≡ C E</code> which we'll need shortly.
+<jh>
+        ((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′))
+          (A′ B′ ≡ C E)
+          ConjunctionLeftElimination
+</jh>
+From the congruence in the antecedent, we get <code>C E ≡ C′ E′</code>.
+<jh>
+        ((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′))
+          (A′ B′ ≡ C E)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        C E D C′ E′ D′ Congruence12
+        applySyllogism
+</jh>
+And then we combine the two previous results to get <code>A′ B′ ≡ C′ D′</code>.
+<jh>
+        composeConjunction
+
+        A′ B′ C E C′ D′ CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (LessEqualCongruence
+  ( (e A) (e B) (e C) (e D) (e A′) (e B′) (e C′) (e D′) (e′ A′) (e′ B′) (e′ C) (e′ e)) ()
   ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
     → (A′ B′ ≤ C′ D′)) (
-        C (value e) D C′ D′ e′ InnerDegenerateTriangle
+        A B C D A′ B′ C′ D′ e LessEqualCongruence-1
+
+        C (value e) D A B A′ B′ C′ D′ e′ LessEqualCongruence-2
+        e addThereExists
+        applySyllogism
+
+        C′ (value e′) D′ C (value e) D A′ B′ LessEqualCongruence-3
+        e′ addThereExists
+        e addThereExists
+
+        removeThereExistsInConsequent
+        A′ B′ C′ D′ e′ LessEqualCutoff
+        eliminateBiconditionalForward
+        applySyllogism
 ))
 </jh>
 
 == Export ==
+Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
+<jh>
+var (point x y z w)
+thm (CongruenceIdentityFromEquality () () (((x = y) ∧ (x y ≡ z w)) → (z = w)))
+        x y z w CongruenceIdentityFromEqualityImported
+))
+</jh>
+
 We now export to [[Interface:Line segment inequality]].
 <jh>
 #export (RESULTS Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
