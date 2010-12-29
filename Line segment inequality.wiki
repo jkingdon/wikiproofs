@@ -317,6 +317,69 @@ thm (LessEqualExtension
 ))
 </jh>
 
+=== Concluding inequality from the inequality of congruent segments ===
+Here we prove <code>A B ≤ C D ∧ A B ≡ A′ B′ ∧ C D ≡ C′ D′ → A′ B′ ≤ C′ D′</code>. By <code>LessEqualCutoff</code>, there is a point <code>e</code> on the line segment <code>C D</code> such that <code>A B ≡ C e</code>. We apply <code>InnerDegenerateTriangle</code> to <code>C e D</code> and <code>C′ D′</code> to construct a point <code>e′</code> such that <code>C e D ≅ C′ e′ D′</code>. But this point is on <code>C′ D′</code>, and <code>A′ B′ ≡ C′ e′</code>, so it suffices to prove that <code>A′ B′ ≤ C′ D′</code>, as desired.<ref>l5_6 in Narboux</ref>
+
+Our first lemma constructs the point <code>e</code> and rearranges the quantifiers a little bit.
+<jh>
+thm (LessEqualCongruence-1
+  ((e A) (e B) (e C) (e D) (e A′) (e B′) (e C′) (e D′)) ()
+  ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
+    → (∃ e ((((between C (value e) D) ∧ (A B ≡ C (value e))) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′)))) (
+        A B C D e LessEqualCutoff
+        eliminateBiconditionalReverse
+
+        (A B ≡ A′ B′) conjoinRR
+        (C D ≡ C′ D′) conjoinRR
+
+        e
+          ((between C (value e) D) ∧ (A B ≡ C (value e)))
+          (A B ≡ A′ B′)
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        (C D ≡ C′ D′) conjoinRR
+        applySyllogism
+
+        e
+          (((between C (value e) D) ∧ (A B ≡ C (value e))) ∧ (A B ≡ A′ B′))
+          (C D ≡ C′ D′)
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+</jh>
+In the next lemma, we construct the point <code>e′</code>, apply transitivity to <code>A B ≡ C E</code> and <code>A B ≡ A′ B′</code>, and rearrange the quantifiers a bit.
+<jh>
+thm (LessEqualCongruence-2
+  ((e′ A′) (e′ B′) (e′ C) (e′ E)) ()
+  (((((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′)) →
+  (∃ e′ (((between C′ (value e′) D′) ∧ (C E D ≅ C′ (value e′) D′)) ∧ (A′ B′ ≡ C E)))) (
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
+)) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
+)) ConjunctionLeftElimination
+
+        composeConjunction
+
+        C E D C′ D′ e′ InnerDegenerateTriangle
+        applySyllogism
+
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′)
+)) ConjunctionRightElimination
+        eliminateLeftConjunct
+))
+
+thm (LessEqualCongruence () ()
+  ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
+    → (A′ B′ ≤ C′ D′)) (
+        C (value e) D C′ D′ e′ InnerDegenerateTriangle
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Line segment inequality]].
 <jh>
