@@ -954,6 +954,11 @@ thm (LessEqualAntisymmetry ( (c d A0) (c d A1) (c d B0) (c d B1)) ()
 ))
 </jh>
 
+== Constructing a line segment along a ray ==
+Given a ray with endpoint <code>Q</code> heading towards a distinct point <code>A</code>, we can construct a line segment <code>Q x</code> congruent to a given line segment <code>B C</code>. In symbols, <code>A ≠ Q → ∃ x ((between Q A x ∨ between Q x A) ∧ Q x ≡ B C)</code>.
+
+{{under construction}}
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
