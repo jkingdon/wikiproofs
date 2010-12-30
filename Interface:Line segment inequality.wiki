@@ -150,6 +150,23 @@ stmt (LessEqualCongruence () ()
     → (A′ B′ ≤ C′ D′)))
 </jh>
 
+=== Total order ===
+It has the [[w:total order|properties of a total order]]:
+<jh>
+var (point A0 A1 B0 B1 C0 C1)
+stmt (LessEqualTransitivity () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ C0 C1)) → (A0 A1 ≤ C0 C1)))
+#stmt (LessEqualAntisymmetry () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ A0 A1)) → (A0 A1 ≡ B0 B1)))
+#stmt (LessEqualTotality () () ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)))
+</jh>
+
+A number of other properties follow from those.
+<jh>
+stmt (LessEqualReflexivity () () (A0 A1 ≤ A0 A1))
+
+#def ((< A0 A1 B0 B1) ((A0 A1 ≤ B0 B1) ∧ (¬ (A0 A1 ≡ B0 B1))))
+#def ((> B0 B1 A0 A1) (A0 A1 < B0 B1))
+</jh>
+
 == Collinearity ==
 To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
 <jh>
@@ -180,6 +197,12 @@ On a given line, the distance to two points can uniquely determine a point. We h
 stmt (CollinearTwoDistanceUniqueness () ()
   (((((A ≠ B) ∧ (collinear A B C)) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
 stmt (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
+</jh>
+
+For the previous theorems, two distances are needed because the point <code>C′</code> is not known to be on the line containing <code>A</code>, <code>B</code>, and <code>C</code>. If we know that the points which are to be shown equal are on the same line, and the same side of the point <code>A</code>, then one congruence suffices.
+<jh>
+stmt (BetweennessOneDistanceUniqueness () ()
+  (((between A B C) ∧ (A B ≡ A C)) → (B = C)))
 </jh>
 
 == Triangle congruence ==
