@@ -155,7 +155,7 @@ It has the [[w:total order|properties of a total order]]:
 <jh>
 var (point A0 A1 B0 B1 C0 C1)
 stmt (LessEqualTransitivity () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ C0 C1)) → (A0 A1 ≤ C0 C1)))
-#stmt (LessEqualAntisymmetry () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ A0 A1)) → (A0 A1 ≡ B0 B1)))
+stmt (LessEqualAntisymmetry () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ A0 A1)) → (A0 A1 ≡ B0 B1)))
 #stmt (LessEqualTotality () () ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)))
 </jh>
 
