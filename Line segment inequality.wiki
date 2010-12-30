@@ -702,6 +702,53 @@ Combining those gives us <code>B = C</code>.
 ))
 </jh>
 
+=== A similar result ===
+Narboux's second crucial lemma is a similar result in which neither of the two points to be found equal are the endpoint of the line segment, but where they both are on the same line segment.  In symbols, <code>between A D B ∧ between A E B ∧ A D ≡ A E → D = E</code>.<ref>between_cong_2 in Narboux</ref>
+<jh>
+thm (SameSegmentOneDistanceUniqueness () ()
+  ((((between A D B) ∧ (between A E B)) ∧ (A D ≡ A E)) → (D = E)) (
+</jh>
+At the end of the proof we'll need a copy of <code>A D ≡ A E</code>, so stick it on the proof stack now.
+<jh>
+        ((between A D B) ∧ (between A E B)) (A D ≡ A E) ConjunctionLeftElimination
+</jh>
+Next we use inner connectivity to show that <code>between A D E ∨  between A E D</code>.
+<jh>
+        ((between A D B) ∧ (between A E B)) (A D ≡ A E) ConjunctionRightElimination
+        A D B E BetweennessInnerConnectivity
+        applySyllogism
+</jh>
+Then we note that <code>between A D E ∧ A D ≡ A E</code> implies <code>D = E</code> (by the previous lemma).
+<jh>
+        A D E BetweennessOneDistanceUniqueness
+        export
+</jh>
+The similar result for <code>between A E D</code> and a little rearranging gives <code>between A D B ∧ between A E B ∧ A D ≡ A E → (A D ≡ A E → D = E)</code>
+<jh>
+        A D A E CongruenceSymmetry
+        eliminateBiconditionalReverse
+
+        (between A E D) conjoinLL
+
+        A E D BetweennessOneDistanceUniqueness
+        applySyllogism
+
+        E D EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        export
+
+        composeDisjunction
+
+        applySyllogism
+</jh>
+Now we just need to remove the extra <code>A D ≡ A E</code> and we are done.
+<jh>
+        applyModusPonensInConsequent
+))
+</jh>
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
