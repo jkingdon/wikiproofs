@@ -461,6 +461,177 @@ thm (LessEqualCongruence
 ))
 </jh>
 
+=== Reflexivity ===
+Line segment inequality is reflexive.<ref>le_reflexivity in Narboux</ref>
+<jh>
+thm (LessEqualReflexivity ( (e A) (e B)) () (A B ≤ A B) (
+</jh>
+We start with <code>between A B B ∧ A B ≡ A B</code>.
+<jh>
+        A B BetweenABB
+        A B CongruenceReflexivity
+        introduceConjunction
+</jh>
+Next is a substitution, <code>e = B → (between A e B ∧ A B ≡ A e ↔ between A B B ∧ A B ≡ A B)</code>.
+<jh>
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A (value e) B B B BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A EqualityReflexivity
+        A A B B A A (value e) B CongruenceBuilder
+        detach2of3
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+</jh>
+We turn that into <code>∃ e (between A e B ∧ A B ≡ A e)</code>,
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
+        introduceThereExistsFromObject
+</jh>
+which in turn produces <code>A B ≤ A B</code>.
+<jh>
+        A B A B e LessEqualCutoff
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Transitivity ===
+[[File:Line segment inequality transitivity.svg|thumb|right|Proof of transitivity]]
+Here we prove transitivity of <code>≤</code>.<ref>le_transitivity in Narboux</ref>
+<jh>
+var (variable ab bc ac)
+var (point A0 A1 B0 B1 C0 C1)
+
+thm (LessEqualTransitivity
+  ( (ab bc ac A0) (ab bc ac A1) (ab bc ac B0) (ab bc ac B1) (ab bc ac C0) (ab bc ac C1)) ()
+  (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ C0 C1)) → (A0 A1 ≤ C0 C1)) (
+        A0 A1 B0 B1 ab LessEqualCutoff
+        B0 B1 C0 C1 bc LessEqualCutoff
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        ab
+          bc
+          ((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab)))
+          ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc)))
+          ThereExistsScattering
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+So far we have <code>∃ ab ∃ bc ((between B0 ab B1 ∧ A0 A1 ≡ B0 ab) ∧ (between C0 bc C1 ∧ B0 B1 ≡ C0 bc))</code>. We now construct a point <code>ac</code> such that <code>between C0 ac bc ∧ B0 ab B1 ≅ C0 ac bc</code>
+<jh>
+        ((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab)))
+          ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc)))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab)))
+          ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc)))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        B0 (value ab) B1 C0 (value bc) ac InnerDegenerateTriangle
+        applySyllogism
+</jh>
+The next step is to move a copy of the antecedent, <code>(between B0 ab B1 ∧ A0 A1 ≡ B0 ab) ∧ (between C0 bc C1 ∧ B0 B1 ≡ C0 bc)</code> into the quantifier.
+<jh>
+        (((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab))) ∧
+          ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc))))
+          ImplicationReflexivity
+        composeConjunction
+
+        ac
+          ((between C0 (value ac) (value bc)) ∧ (B0 (value ab) B1 ≅ C0 (value ac) (value bc)))
+          (((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab))) ∧
+            ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc))))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+</jh>
+We can now add on the other two quantifiers and combine with the previous result.
+<jh>
+        bc addThereExists
+        ab addThereExists
+        applySyllogism
+</jh>
+We need to prove <code>between C0 ac C1 ∧ A0 A1 ≡ C0 ac</code>. The first conjunct follows from <code>between C0 ac bc</code> and <code>between C0 bc C1</code>.
+<jh>
+        ((between C0 (value ac) (value bc)) ∧
+          (B0 (value ab) B1 ≅ C0 (value ac) (value bc)))
+          (((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab))) ∧
+            ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc))))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((between C0 (value ac) (value bc)) ∧
+          (B0 (value ab) B1 ≅ C0 (value ac) (value bc)))
+          (((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab))) ∧
+            ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        C0 (value ac) (value bc) C1 BetweennessMiddleTransitivityFlipped
+        applySyllogism
+</jh>
+The other conjunct, <code>A0 A1 ≡ C0 ac</code>, follows from <code>A0 A1 ≡ B0 ab</code> and <code>B0 ab ≡ C0 ac</code> (which follows from <code>B0 ab B1 ≅ C0 ac bc</code>).
+<jh>
+        ((between C0 (value ac) (value bc)) ∧
+          (B0 (value ab) B1 ≅ C0 (value ac) (value bc)))
+          (((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab))) ∧
+            ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        ((between C0 (value ac) (value bc)) ∧
+          (B0 (value ab) B1 ≅ C0 (value ac) (value bc)))
+          (((between B0 (value ab) B1) ∧ (A0 A1 ≡ B0 (value ab))) ∧
+            ((between C0 (value bc) C1) ∧ (B0 B1 ≡ C0 (value bc))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        B0 (value ab) B1 C0 (value ac) (value bc) Congruence12
+        applySyllogism
+
+        composeConjunction
+
+        A0 A1 B0 (value ab) C0 (value ac) CongruenceTransitivity
+        applySyllogism
+</jh>
+We can now combine <code>between C0 ac C1</code> and <code>A0 A1 ≡ C0 ac</code>, and then hook it up with the quantifiers and apply <code>LessEqualCutoff</code>.
+<jh>
+        composeConjunction
+
+        ac addThereExists
+        bc addThereExists
+        ab addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+
+        A0 A1 C0 C1 ac LessEqualCutoff
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
