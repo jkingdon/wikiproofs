@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F P Q R A′ B′ C′ D′ B″ C″)
+var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″)
 var (variable e e′ f)
 </jh>
 
@@ -317,10 +317,162 @@ thm (LessEqualExtension
 ))
 </jh>
 
+=== Concluding inequality from the inequality of congruent segments ===
+Here we prove <code>A B ≤ C D ∧ A B ≡ A′ B′ ∧ C D ≡ C′ D′ → A′ B′ ≤ C′ D′</code>. By <code>LessEqualCutoff</code>, there is a point <code>e</code> on the line segment <code>C D</code> such that <code>A B ≡ C e</code>. We apply <code>InnerDegenerateTriangle</code> to <code>C e D</code> and <code>C′ D′</code> to construct a point <code>e′</code> such that <code>C e D ≅ C′ e′ D′</code>. But this point is on <code>C′ D′</code>, and <code>A′ B′ ≡ C′ e′</code>, so it suffices to prove that <code>A′ B′ ≤ C′ D′</code>, as desired.<ref>l5_6 in Narboux</ref>
+
+Our first lemma constructs the point <code>e</code> and rearranges the quantifiers a little bit.
+<jh>
+thm (LessEqualCongruence-1
+  ((e A) (e B) (e C) (e D) (e A′) (e B′) (e C′) (e D′)) ()
+  ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
+    → (∃ e ((((between C (value e) D) ∧ (A B ≡ C (value e))) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′)))) (
+        A B C D e LessEqualCutoff
+        eliminateBiconditionalReverse
+
+        (A B ≡ A′ B′) conjoinRR
+        (C D ≡ C′ D′) conjoinRR
+
+        e
+          ((between C (value e) D) ∧ (A B ≡ C (value e)))
+          (A B ≡ A′ B′)
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        (C D ≡ C′ D′) conjoinRR
+        applySyllogism
+
+        e
+          (((between C (value e) D) ∧ (A B ≡ C (value e))) ∧ (A B ≡ A′ B′))
+          (C D ≡ C′ D′)
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+</jh>
+In the next lemma, we construct the point <code>e′</code>, apply transitivity to <code>A B ≡ C E</code> and <code>A B ≡ A′ B′</code>, and rearrange the quantifiers a bit.
+<jh>
+thm (LessEqualCongruence-2
+  ((e′ A′) (e′ B′) (e′ C) (e′ E) (e′ D) (e′ C′) (e′ D′)) ()
+  (((((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′)) →
+  (∃ e′ (((between C′ (value e′) D′) ∧ (C E D ≅ C′ (value e′) D′)) ∧ (A′ B′ ≡ C E)))) (
+</jh>
+We first construct <code>e′</code>.
+<jh>
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctionInConsequent
+
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionLeftElimination
+
+        composeConjunction
+
+        C E D C′ D′ e′ InnerDegenerateTriangle
+        applySyllogism
+
+</jh>
+Next is <code>A′ B′ ≡ A B</code>.
+<jh>
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        A B A′ B′ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Then we show <code>A B ≡ C E</code> and apply transitivity to get <code>A′ B′ ≡ C E</code>.
+<jh>
+        (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A′ B′ A B C E CongruenceTransitivity
+        applySyllogism
+</jh>
+Finally we can combine the two pieces.
+<jh>
+        composeConjunction
+
+        e′
+          ((between C′ (value e′) D′) ∧ (C E D ≅ C′ (value e′) D′))
+          (A′ B′ ≡ C E)
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (LessEqualCongruence-3 () ()
+  ((((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′)) ∧ (A′ B′ ≡ C E)) →
+    ((between C′ E′ D′) ∧ (A′ B′ ≡ C′ E′))) (
+</jh>
+The easy part is <code>between C′ E′ D′</code>, as it is already in the antecedent.
+<jh>
+        ((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′))
+          (A′ B′ ≡ C E)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+</jh>
+We then pick out <code>A′ B′ ≡ C E</code> which we'll need shortly.
+<jh>
+        ((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′))
+          (A′ B′ ≡ C E)
+          ConjunctionLeftElimination
+</jh>
+From the congruence in the antecedent, we get <code>C E ≡ C′ E′</code>.
+<jh>
+        ((between C′ E′ D′) ∧ (C E D ≅ C′ E′ D′))
+          (A′ B′ ≡ C E)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        C E D C′ E′ D′ Congruence12
+        applySyllogism
+</jh>
+And then we combine the two previous results to get <code>A′ B′ ≡ C′ D′</code>.
+<jh>
+        composeConjunction
+
+        A′ B′ C E C′ E′ CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (LessEqualCongruence
+  ( (e e′ A) (e e′ B) (e e′ C) (e e′ D) (e e′ A′) (e e′ B′) (e e′ C′) (e e′ D′)) ()
+  ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
+    → (A′ B′ ≤ C′ D′)) (
+        A B C D A′ B′ C′ D′ e LessEqualCongruence-1
+
+        C (value e) D A B A′ B′ C′ D′ e′ LessEqualCongruence-2
+        e addThereExists
+        applySyllogism
+
+        C′ (value e′) D′ C (value e) D A′ B′ LessEqualCongruence-3
+        e′ addThereExists
+        e addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        A′ B′ C′ D′ e′ LessEqualCutoff
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 == Export ==
+Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
+<jh>
+var (point x y z w)
+thm (CongruenceIdentityFromEquality () () (((x = y) ∧ (x y ≡ z w)) → (z = w)) (
+        x y z w CongruenceIdentityFromEqualityImported
+))
+</jh>
+
 We now export to [[Interface:Line segment inequality]].
 <jh>
-#export (RESULTS Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
