@@ -461,6 +461,50 @@ thm (LessEqualCongruence
 ))
 </jh>
 
+=== Reflexivity ===
+Line segment inequality is reflexive.<ref>le_reflexivity in Narboux</ref>
+<jh>
+thm (LessEqualReflexivity ( (e A) (e B)) () (A B ≤ A B) (
+</jh>
+We start with <code>between A B B ∧ A B ≡ A B</code>.
+<jh>
+        A B BetweenABB
+        A B CongruenceReflexivity
+        introduceConjunction
+</jh>
+Next is a substitution, <code>e = B → (between A e B ∧ A B ≡ A e ↔ between A B B ∧ A B ≡ A B)</code>.
+<jh>
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A (value e) B B B BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A EqualityReflexivity
+        A A B B A A (value e) B CongruenceBuilder
+        detach2of3
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+</jh>
+We turn that into <code>∃ e (between A e B ∧ A B ≡ A e)</code>,
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
+        introduceThereExistsFromObject
+</jh>
+which in turn produces <code>A B ≤ A B</code>.
+<jh>
+        A B A B e LessEqualCutoff
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
