@@ -121,25 +121,7 @@ thm (BetweenAAB () () (between A A B) (
 ))
 </jh>
 
-=== Equality ===
-If <code>B</code> is between <code>A</code> and <code>C</code>, and <code>A</code> is between <code>B</code> and <code>C</code>, then <code>A</code> and <code>B</code> must be equal.<ref>between_egality in Narboux</ref>
-
-This property is analogous to antisymmetry for an [[w:Partial_order|order relation]].
-<jh>
-thm (BetweennessEquality ( (a A) (a B) (a C)) () (((between A B C) ∧ (between B A C)) → (A = B)) (
-        A B C B A a Pasch
-</jh>
-That gives us <code>∃ a (between B a B ∧ between A a A)</code>. We just need to apply the <code>BetweenSubstitution</code> lemma to get <code>between A B A</code>,
-<jh>
-        a B A A BetweenSubstitution
-        applySyllogism
-</jh>
-which in turn implies <code>A = B</code>
-<jh>
-        A B Indivisibility
-        applySyllogism
-))
-</jh>
+FwtakB  <a href="http://kbtfrtvfdkom.com/">kbtfrtvfdkom</a>, [url=http://ictvrnxwtfap.com/]ictvrnxwtfap[/url], [link=http://xcyctllbwcet.com/]xcyctllbwcet[/link], http://vfyqsmnnluhy.com/
 
 === Transitivity ===
 In this section we prove six similar theorems which involve four points on a line. Given two betweenness relationships, we conclude a third. Three of the six are just versions of the other three which are flipped left-to-right.
