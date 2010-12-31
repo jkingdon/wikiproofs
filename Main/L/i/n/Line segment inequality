@@ -650,7 +650,7 @@ thm (CongruenceABBA () () (A B ≡ B A) (
 
 === between A B C ∧ A B ≡ A C → B = C === 
 
-Our first of the two results from Narboux is <code>between A B C ∧ A B ≡ A C → B = C</code>, which says there cannot be two distinct points on a line which are the same distance of a given point (on the same side of that point). First we prove <code>A B C ≅ A C B</code>. To do so, we need  <code>A B ≡ A C</code>, <code>A C ≡ A B</code>, and <code>B C ≡ C B</code>.
+Our first of the two results from Narboux is <code>between A B C ∧ A B ≡ A C → B = C</code>, which says there cannot be two distinct points on a line which are the same distance of a given point (on the same side of that point). First we prove <code>A B C ≅ A C B</code>. To do so, we need  <code>A B ≡ A C</code>, <code>A C ≡ A B</code>, and <code>B C ≡ C B</code>.<ref>between_cong in Narboux</ref>
 <jh>
 thm (BetweennessOneDistanceUniqueness-abc-acb () ()
   (((between A B C) ∧ (A B ≡ A C)) → (A B C ≅ A C B)) (
