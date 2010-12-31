@@ -632,6 +632,76 @@ We can now combine <code>between C0 ac C1</code> and <code>A0 A1 ≡ C0 ac</code
 ))
 </jh>
 
+== Two crucial lemmas ==
+The two lemmas in this section are presented in Narboux (2007).<ref>Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, section 5.1, pages 147–148</ref> According to Narboux they are missing from the book by Schwabhäuser, Szmielew and Tarski.
+
+=== A variant of congruence commutativity ===
+This was actually an axiom in [[Interface:Tarski's geometry axioms]] and is something we've had use for on occasion. The only real reason we haven't exported it is for the lack of a good name. Narboux (2007) calls it both reflexivity (an odd name) on page 141 and the pseudo-commutativity property of the oriented distance (on page 148) and in his proofs pseudo_reflexivity.
+
+<jh>
+thm (CongruenceABBA () () (A B ≡ B A) (
+        A B CongruenceReflexivity
+
+        A B A B CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
+=== between A B C ∧ A B ≡ A C → B = C === 
+
+Our first of the two results from Narboux is <code>between A B C ∧ A B ≡ A C → B = C</code>, which says there cannot be two distinct points on a line which are the same distance of a given point (on the same side of that point). First we prove <code>A B C ≅ A C B</code>. To do so, we need  <code>A B ≡ A C</code>, <code>A C ≡ A B</code>, and <code>B C ≡ C B</code>.
+<jh>
+thm (BetweennessOneDistanceUniqueness-abc-acb () ()
+  (((between A B C) ∧ (A B ≡ A C)) → (A B C ≅ A C B)) (
+        (between A B C) (A B ≡ A C) ConjunctionLeftElimination
+
+        (between A B C) (A B ≡ A C) ConjunctionLeftElimination
+        A B A C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B C CongruenceABBA
+        introduceRightConjunctToConsequent
+))
+
+thm (BetweennessOneDistanceUniqueness () ()
+  (((between A B C) ∧ (A B ≡ A C)) → (B = C)) (
+</jh>
+Now we derive <code>between A C B</code> (from <code>between A B C</code> and <code>A B C ≅ A C B</code>).
+<jh>
+        (between A B C) (A B ≡ A C) ConjunctionRightElimination
+        A B C BetweennessOneDistanceUniqueness-abc-acb
+        composeConjunction
+
+        A B C A C B BetweennessDegenerateTriangle
+        applySyllogism
+</jh>
+Well, <code>between B C A</code> is the form we'll need it in.
+<jh>
+        A C B BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We also need <code>between C B A</code>.
+<jh>
+        (between A B C) (A B ≡ A C) ConjunctionRightElimination
+
+        A B C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Combining those gives us <code>B = C</code>.
+<jh>
+        B C A BetweennessEquality
+        applySyllogism
+))
+</jh>
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
