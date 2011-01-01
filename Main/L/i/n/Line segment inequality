@@ -749,6 +749,211 @@ Now we just need to remove the extra <code>A D ≡ A E</code> and we are done.
 ))
 </jh>
 
+== Antisymmetry ==
+Here we prove antisymmetry of <code>≤</code>, that is, <code>A0 A1 ≤ B0 B1 ∧ B0 B1 ≤ A0 A1 → A0 A1 ≡ B0 B1</code>. The proof begins by expanding the definition of <code>B0 B1 ≤ A0 A1</code> according to <code>LessEqualExtension</code> (to construct a point <code>c</code> such that <code>between B0 B1 c ∧ B0 c ≡ A0 A1</code>.  We then expand the definition of <code>A0 A1 ≤ B0 B1</code> according to <code>LessEqualCutoff</code> to construct a point <code>d</code> such that <code>between B0 d B1 ∧ B0 d ≡ A0 A1</code>. We now can conclude <code>B0 c ≡ B0 d</code> by congruence transitivity and <code>between B0 d c</code> by betweenness transitivity. These two things together let us apply <code>BetweennessOneDistanceUniqueness</code> to conclude that <code>d = c</code>. Substituting via that equality, we have both <code>between B0 B1 c</code> and <code>between B0 c B1</code>, so <code>c = B1</code>. And substituting that into <code>B0 c ≡ A0 A1</code>, we know that <code>B0 B1 ≡ A0 A1</code>, which is what we seek.<ref>le_anti_symmetry in Narboux</ref>
+
+First, a lemma, which is just <code>BetweennessEquality</code> flipped left to right.
+<jh>
+thm (BetweennessEquality23 () () (((between A B C) ∧ (between A C B)) → (B = C)) (
+        A B C BetweennessSymmetry
+        A C B BetweennessSymmetry
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        C B A BetweennessEquality
+        applySyllogism
+
+        C B EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Returning to antisymmetry, the first part of the proof constructs the points <code>c</code> and <code>d</code> and puts everything inside quantifiers.
+<jh>
+thm (LessEqualAntisymmetry-1 ((c d A0) (c d A1) (c d B0) (c d B1)) ()
+  (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ A0 A1)) →
+    (∃ c (∃ d (
+      ((between B0 B1 (value c)) ∧ (B0 (value c) ≡ A0 A1)) ∧
+      ((between B0 (value d) B1) ∧ (B0 (value d) ≡ A0 A1))
+  )))) (
+        B0 B1 A0 A1 c LessEqualExtension
+        A0 A1 B0 B1 d LessEqualCutoff
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        c
+          d
+          ((between B0 B1 (value c)) ∧ (B0 (value c) ≡ A0 A1))
+          ((between B0 (value d) B1) ∧ (B0 (value d) ≡ A0 A1))
+          ThereExistsScattering
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+</jh>
+
+The next part of the proof makes the inferences sketched out in the informal proof above, as far as <code>D = C</code>.
+<jh>
+thm (LessEqualAntisymmetry-dc () () (
+  (((between B0 B1 C) ∧ (B0 C ≡ A0 A1)) ∧
+    ((between B0 D B1) ∧ (B0 D ≡ A0 A1))) →
+  (D = C)
+  ) (
+</jh>
+First is <code>between B0 D C</code> by betweenness transitivity. 
+<jh>
+        ((between B0 B1 C) ∧ (B0 C ≡ A0 A1))
+          ((between B0 D B1) ∧ (B0 D ≡ A0 A1))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        
+        ((between B0 B1 C) ∧ (B0 C ≡ A0 A1))
+          ((between B0 D B1) ∧ (B0 D ≡ A0 A1))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        B0 D B1 C BetweennessMiddleTransitivityFlipped
+        applySyllogism
+</jh>
+Second is <code>B0 D ≡ B0 C</code> by congruence transitivity.
+<jh>
+        ((between B0 B1 C) ∧ (B0 C ≡ A0 A1))
+          ((between B0 D B1) ∧ (B0 D ≡ A0 A1))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        ((between B0 B1 C) ∧ (B0 C ≡ A0 A1))
+          ((between B0 D B1) ∧ (B0 D ≡ A0 A1))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        B0 C A0 A1 CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B0 D A0 A1 B0 C CongruenceTransitivity
+        applySyllogism
+</jh>
+Combining those two and applying <code>BetweennessOneDistanceUniqueness</code> we get <code>D = C</code>.
+<jh>
+        B0 D C BetweennessOneDistanceUniqueness
+        applySyllogism
+))
+</jh>
+
+The next step applies a substitution and a few more steps to get <code>B1 = C</code>.
+<jh>
+thm (LessEqualAntisymmetry-b1-c () () (
+  (((between B0 B1 C) ∧ (B0 C ≡ A0 A1)) ∧
+    ((between B0 D B1) ∧ (B0 D ≡ A0 A1))) →
+  (B1 = C)
+  ) (
+</jh>
+First is <code>between B0 B1 C</code>
+<jh>
+        ((between B0 B1 C) ∧ (B0 C ≡ A0 A1))
+          ((between B0 D B1) ∧ (B0 D ≡ A0 A1))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+</jh>
+Second is <code>between B0 C B1</code>, which involves a substitution from <code>between B0 D B1</code>. The substitution is <code>D = C → (between B0 D B1 ↔ between B0 C B1)</code>
+<jh>
+        B0 B1 C A0 A1 D LessEqualAntisymmetry-dc
+
+        ((between B0 B1 C) ∧ (B0 C ≡ A0 A1))
+          ((between B0 D B1) ∧ (B0 D ≡ A0 A1))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        B0 EqualityReflexivity
+        B1 EqualityReflexivity
+        B0 B0 D C B1 B1 BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        eliminateBiconditionalReverseInConsequent
+        import
+
+        applyModusPonensInConsequent
+</jh>
+Combining <code>between B0 B1 C</code> and <code>between B0 C B1</code>, we conclude <code>B1 = C</code>.
+<jh>
+        composeConjunction
+
+        B0 B1 C BetweennessEquality23
+        applySyllogism
+))
+</jh>
+
+We only need substitute <code>B1 = C</code> into <code>B0 C ≡ A0 A1</code> to get <code>B0 B1 ≡ A0 A1</code>, which we flip to get <code>A0 A1 = B0 B1</code>
+<jh>
+thm (LessEqualAntisymmetry-a0-a1-b0-b1 () () (
+  (((between B0 B1 C) ∧ (B0 C ≡ A0 A1)) ∧
+    ((between B0 D B1) ∧ (B0 D ≡ A0 A1))) →
+  (A0 A1 = B0 B1)
+  ) (
+</jh>
+First we pick out <code>B0 C ≡ A0 A1</code> and leave it on the proof stack.
+<jh>
+        ((between B0 B1 C) ∧ (B0 C ≡ A0 A1))
+          ((between B0 D B1) ∧ (B0 D ≡ A0 A1))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+</jh>
+Then we put <code>B1 C</code> on the proof stack, which we'll use in a minute.
+<jh>
+        B0 B1 C A0 A1 D LessEqualAntisymmetry-b1-c
+</jh>
+Next is the substitution <code>B1 = C → (B0 B1 ≡ A0 A1 ↔ B0 C ≡ A0 A1)</code>
+<jh>
+        B0 EqualityReflexivity
+        A0 EqualityReflexivity
+        A1 EqualityReflexivity
+        B0 B0 B1 C A0 A0 A1 A1 CongruenceBuilder
+        detach2of2
+        detach2of2
+        detach1of2
+</jh>
+We combine those two results and eliminate one direction of the biconditional so that the consequent is now <code>B0 C ≡ A0 A1 → B0 B1 ≡ A0 A1</code>.
+<jh>
+        applySyllogism
+        eliminateBiconditionalForwardInConsequent
+</jh>
+That's enough to get us <code>B0 B1 ≡ A0 A1</code>,
+<jh>
+        applyModusPonensInConsequent
+</jh>
+which we then flip.
+<jh>
+        B0 B1 A0 A1 CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+We now combine the results to prove antisymmetry.
+<jh>
+thm (LessEqualAntisymmetry ( (c d A0) (c d A1) (c d B0) (c d B1)) ()
+  (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ A0 A1)) →
+    (A0 A1 ≡ B0 B1)) (
+        A0 A1 B0 B1 c d LessEqualAntisymmetry-1
+
+        B0 B1 (value c) A0 A1 (value d) LessEqualAntisymmetry-a0-a1-b0-b1
+        d addThereExists
+        c addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+</jh>
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
