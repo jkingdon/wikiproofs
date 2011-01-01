@@ -14,7 +14,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″)
-var (variable e e′ f)
+var (variable c c′ d d′ e e′ f)
 </jh>
 
 == Corollaries of outer connectivity for betweenness ==
@@ -777,10 +777,20 @@ thm (LessEqualAntisymmetry-1 ((c d A0) (c d A1) (c d B0) (c d B1)) ()
       ((between B0 B1 (value c)) ∧ (B0 (value c) ≡ A0 A1)) ∧
       ((between B0 (value d) B1) ∧ (B0 (value d) ≡ A0 A1))
   )))) (
+        (A0 A1 ≤ B0 B1) (B0 B1 ≤ A0 A1) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
         B0 B1 A0 A1 c LessEqualExtension
+
         A0 A1 B0 B1 d LessEqualCutoff
+        A0 A1 B0 (value d) CongruenceSymmetry
+        (between B0 (value d) B1) buildConjunctionLL
+        d buildThereExists
+        applyBiconditionalTransitivity
+
         buildConjunction
         eliminateBiconditionalReverse
+        applySyllogism
 
         c
           d
@@ -813,6 +823,8 @@ First is <code>between B0 D C</code> by betweenness transitivity.
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
 
+        composeConjunction
+
         B0 D B1 C BetweennessMiddleTransitivityFlipped
         applySyllogism
 </jh>
@@ -836,6 +848,8 @@ Second is <code>B0 D ≡ B0 C</code> by congruence transitivity.
 
         B0 D A0 A1 B0 C CongruenceTransitivity
         applySyllogism
+
+        composeConjunction
 </jh>
 Combining those two and applying <code>BetweennessOneDistanceUniqueness</code> we get <code>D = C</code>.
 <jh>
@@ -879,7 +893,7 @@ Second is <code>between B0 C B1</code>, which involves a substitution from <code
         eliminateBiconditionalReverseInConsequent
         import
 
-        applyModusPonensInConsequent
+        applySyllogism
 </jh>
 Combining <code>between B0 B1 C</code> and <code>between B0 C B1</code>, we conclude <code>B1 = C</code>.
 <jh>
@@ -895,7 +909,7 @@ We only need substitute <code>B1 = C</code> into <code>B0 C ≡ A0 A1</code> to 
 thm (LessEqualAntisymmetry-a0-a1-b0-b1 () () (
   (((between B0 B1 C) ∧ (B0 C ≡ A0 A1)) ∧
     ((between B0 D B1) ∧ (B0 D ≡ A0 A1))) →
-  (A0 A1 = B0 B1)
+  (A0 A1 ≡ B0 B1)
   ) (
 </jh>
 First we pick out <code>B0 C ≡ A0 A1</code> and leave it on the proof stack.
