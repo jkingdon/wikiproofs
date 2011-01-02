@@ -14,7 +14,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″)
-var (variable e e′ f)
+var (variable c c′ d d′ e e′ f p)
 </jh>
 
 == Corollaries of outer connectivity for betweenness ==
@@ -777,10 +777,20 @@ thm (LessEqualAntisymmetry-1 ((c d A0) (c d A1) (c d B0) (c d B1)) ()
       ((between B0 B1 (value c)) ∧ (B0 (value c) ≡ A0 A1)) ∧
       ((between B0 (value d) B1) ∧ (B0 (value d) ≡ A0 A1))
   )))) (
+        (A0 A1 ≤ B0 B1) (B0 B1 ≤ A0 A1) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
         B0 B1 A0 A1 c LessEqualExtension
+
         A0 A1 B0 B1 d LessEqualCutoff
+        A0 A1 B0 (value d) CongruenceSymmetry
+        (between B0 (value d) B1) buildConjunctionLL
+        d buildThereExists
+        applyBiconditionalTransitivity
+
         buildConjunction
         eliminateBiconditionalReverse
+        applySyllogism
 
         c
           d
@@ -813,6 +823,8 @@ First is <code>between B0 D C</code> by betweenness transitivity.
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
 
+        composeConjunction
+
         B0 D B1 C BetweennessMiddleTransitivityFlipped
         applySyllogism
 </jh>
@@ -836,6 +848,8 @@ Second is <code>B0 D ≡ B0 C</code> by congruence transitivity.
 
         B0 D A0 A1 B0 C CongruenceTransitivity
         applySyllogism
+
+        composeConjunction
 </jh>
 Combining those two and applying <code>BetweennessOneDistanceUniqueness</code> we get <code>D = C</code>.
 <jh>
@@ -879,7 +893,7 @@ Second is <code>between B0 C B1</code>, which involves a substitution from <code
         eliminateBiconditionalReverseInConsequent
         import
 
-        applyModusPonensInConsequent
+        applySyllogism
 </jh>
 Combining <code>between B0 B1 C</code> and <code>between B0 C B1</code>, we conclude <code>B1 = C</code>.
 <jh>
@@ -895,7 +909,7 @@ We only need substitute <code>B1 = C</code> into <code>B0 C ≡ A0 A1</code> to 
 thm (LessEqualAntisymmetry-a0-a1-b0-b1 () () (
   (((between B0 B1 C) ∧ (B0 C ≡ A0 A1)) ∧
     ((between B0 D B1) ∧ (B0 D ≡ A0 A1))) →
-  (A0 A1 = B0 B1)
+  (A0 A1 ≡ B0 B1)
   ) (
 </jh>
 First we pick out <code>B0 C ≡ A0 A1</code> and leave it on the proof stack.
@@ -955,9 +969,95 @@ thm (LessEqualAntisymmetry ( (c d A0) (c d A1) (c d B0) (c d B1)) ()
 </jh>
 
 == Constructing a line segment along a ray ==
-Given a ray with endpoint <code>Q</code> heading towards a distinct point <code>A</code>, we can construct a line segment <code>Q x</code> congruent to a given line segment <code>B C</code>. In symbols, <code>A ≠ Q → ∃ x ((between Q A x ∨ between Q x A) ∧ Q x ≡ B C)</code>.
+Starting at a point <code>Q</code>, we can construct a line segment <code>Q x</code> congruent to a given line segment <code>B C</code> and in the direction of a point <code>A</code>. In symbols, <code>∃ p ((between Q A p ∨ between Q p A) ∧ Q p ≡ B C)</code>. Narboux requires that <code>A</code> and <code>Q</code> are distinct but this restriction is unnecessary (although the theorem is more interesting, and the constructed point is unique, only if they are distinct).<ref>segment_construction_2 in Narboux</ref>
 
-{{under construction}}
+<jh>
+thm (InnerSegmentConstruction
+  ((p Q) (p A) (p B) (p C)  (d p A) (d Q) (d B) (d C)) ()
+  (∃ p (((between Q A (value p)) ∨ (between Q (value p) A)) ∧ (Q (value p) ≡ B C))) (
+</jh>
+We begin by extending <code>A Q</code> to a distinct point <code>d</code>. This is slightly streamlined from Narboux's proof, which extends <code>A Q</code> by a distance of <code>A Q</code> (and then deduces <code>Q ≠ d</code> from that).
+<jh>
+        d A Q PointConstructionDifferent
+</jh>
+Now we extend <code>d Q</code> to a point <code>p</code> such that <code>Q p ≡ B C</code>.
+<jh>
+        p (value d) Q B C SegmentConstruction
+        d generalize
+
+        introduceConjunction
+
+        d
+          ((between A Q (value d)) ∧ (Q ≠ (value d)))
+          (∃ p ((between (value d) Q (value p)) ∧ (Q (value p) ≡ B C)))
+          ThereExistsConjunctionRightCombining
+        applyModusPonens
+
+        p
+          ((between A Q (value d)) ∧ (Q ≠ (value d)))
+          ((between (value d) Q (value p)) ∧ (Q (value p) ≡ B C))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        d addThereExists
+        applyModusPonens
+</jh>
+At this point we have <code>∃ d ∃ p ((between A Q d ∧ Q ≠ d) ∧ (between d Q p ∧ Q p ≡ B C))</code>. First we tackle the <code>between Q A p ∨ between Q p A</code> part, which in turn follows from <code>d ≠ Q ∧ between d Q A ∧ between d Q p</code>. We start with <code>d ≠ Q</code>.
+<jh>
+        ((between A Q (value d)) ∧ (Q ≠ (value d)))
+          ((between (value d) Q (value p)) ∧ (Q (value p) ≡ B C))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        Q (value d) EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>between d Q A</code>.
+<jh>
+        ((between A Q (value d)) ∧ (Q ≠ (value d)))
+          ((between (value d) Q (value p)) ∧ (Q (value p) ≡ B C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        A Q (value d) BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>between d Q p</code>.
+<jh>
+        ((between A Q (value d)) ∧ (Q ≠ (value d)))
+          ((between (value d) Q (value p)) ∧ (Q (value p) ≡ B C))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+We're ready to turn that into <code>between Q A p ∨ between Q p A</code>.
+<jh>
+        (value d) Q A (value p) BetweennessMiddleConnectivity
+        applySyllogism
+</jh>
+Now we turn to the other side of the conclusion, <code>Q p ≡ B C</code>.
+<jh>
+        ((between A Q (value d)) ∧ (Q ≠ (value d)))
+          ((between (value d) Q (value p)) ∧ (Q (value p) ≡ B C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Adding the quantifiers, and removing <code>∃ d</code> (which is no longer needed), finishes the job.
+<jh>
+        p addThereExists
+        d addThereExists
+        applyModusPonens
+
+        removeThereExists
+))
+</jh>
 
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.

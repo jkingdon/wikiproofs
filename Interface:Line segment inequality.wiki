@@ -19,7 +19,7 @@ kindbind (object point)
 var (point x y z w u v A B C D E P Q)
 var (point x′ y′ z′ u′ A′ B′ C′ D′)
 
-var (variable a b c a′ b′ c′ e f)
+var (variable a b c a′ b′ c′ e f p)
 </jh>
 
 == Congruence of line segments ==
@@ -114,8 +114,19 @@ stmt (BetweennessInnerConnectivity () ()
 == Segment construction ==
 A line segment can be extended beyond one of its endpoints by a specified distance (where by "distance" we mean a second line segment, which the constructed segment is to be congruent to). The segment extended this way is unique.
 <jh>
-stmt (SegmentConstruction ((a w) (a x) (a y) (a z)) () (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
-stmt (SegmentConstructionUniqueness () () ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) ∧ (A y ≡ B C)) → (x = y)))
+stmt (SegmentConstruction ((a w) (a x) (a y) (a z)) ()
+  (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
+stmt (SegmentConstructionUniqueness () ()
+  ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧
+    (between Q A y)) ∧ (A y ≡ B C)) →
+  (x = y)))
+</jh>
+
+Here is a similar construction, but from one of the given endpoints towards the other one, rather than away from it.
+<jh>
+stmt (InnerSegmentConstruction
+  ((p Q) (p A) (p B) (p C)) ()
+  (∃ p (((between Q A (value p)) ∨ (between Q (value p) A)) ∧ (Q (value p) ≡ B C))))
 </jh>
 
 == Existence of distinct points ==
