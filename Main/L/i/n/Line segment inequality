@@ -1104,6 +1104,105 @@ which is equivalent to <code>A A ≤ B C</code>.
 ))
 </jh>
 
+== Builder for ≤ ==
+The builder for <code>≤</code> follows readily from the builders for quantifiers, logical connectives, etc.
+<jh>
+var (point x0 y0 x1 y1 x2 y2 x3 y3)
+thm (LessEqualBuilder
+  ( (e x0) (e y0) (e x1) (e y1) (e x2) (e y2) (e x3) (e y3)) () (
+  ((((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2)) ∧ (x3 = y3))
+  → ((x0 x1 ≤ x2 x3) ↔ (y0 y1 ≤ y2 y3))) (
+</jh>
+We'll base this on <code>LessEqualCutoff</code>, which says that <code>x0 x1 ≤ x2 x3</code> is equivalent to <code>∃ e (between x2 e x3 ∧ x0 x1 ≡ x2 e)</code>.
+
+We start with <code>x0 = y0 ∧ x1 = y1 ∧ x2 = y2 ∧ x3 = y3 → (between x2 e x3 ↔ between y2 e y3)</code>.
+<jh>
+        (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+          (x3 = y3)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        (value e) EqualityReflexivity
+        introduceRightConjunctToConsequent
+
+        (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+          (x3 = y3)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        x2 y2 (value e) (value e) x3 y3 BetweennessBuilder
+        applySyllogism
+</jh>
+Next is <code>x0 x1 ≡ x2 e ↔ y0 y1 ≡ y2 e</code>.
+<jh>
+        (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+          (x3 = y3)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+          (x3 = y3)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+          (x3 = y3)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (value e) EqualityReflexivity
+        introduceRightConjunctToConsequent
+
+        x0 y0 x1 y1 x2 y2 (value e) (value e) CongruenceBuilder
+        applySyllogism
+</jh>
+We combine those two with a conjunction,
+<jh>
+        buildConjunctionInConsequent
+</jh>
+and deal with the quantifier.
+<jh>
+        e addForAllToConsequent
+        e
+          ((between x2 (value e) x3) ∧ (x0 x1 ≡ x2 (value e)))
+          ((between y2 (value e) y3) ∧ (y0 y1 ≡ y2 (value e)))
+          ForAllBiconditionalThereExists
+        applySyllogism
+
+        x0 x1 x2 x3 e LessEqualCutoff
+        y0 y1 y2 y3 e LessEqualCutoff
+        buildBiconditional
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+== Totality ==
+Given two line segments, one of the two must be longer than or congruent to the other.<ref>le_cases in Narboux</ref>
+
+We start with the case in which <code>A0 = A1</code> in which case <code>A0 A1 ≤ B0 B1</code> is trivially true.
+
+{{under construction}}
+
+<jh>
+#thm (LessEqualTotality-eq () () ((A0 = A1) → ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1))) (
+</jh>
+The substitution is <code>A0 = A1 → (A0 A0 ≤ B0 B1 ↔ A0 A1 ≤ B0 B1)</code>.
+<jh>
+#        A0 A0 A0 A1 B0 B0 B1 B1 LessEqualBuilder
+#))
+
+#thm (LessEqualTotality-ne () () ((A0 ≠ A1) → ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1))) (
+#))
+
+#thm (LessEqualTotality () () ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)) (
+#))
+</jh>
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
