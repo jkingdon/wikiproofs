@@ -1059,6 +1059,51 @@ Adding the quantifiers, and removing <code>∃ d</code> (which is no longer need
 ))
 </jh>
 
+== Any line segment is longer than or congruent to an empty line segment ==
+Here we prove <code>A A ≤ B C</code>.<ref>le_trivial in Narboux</ref>
+<jh>
+thm (ZeroSmallest ( (e A) (e B) (e C)) () (A A ≤ B C) (
+</jh>
+We start by proving <code>between B B C ∧ A A ≡ B B</code>.
+<jh>
+        B C BetweenAAB
+        A B CongruenceTrivialIdentity
+        introduceConjunction
+</jh>
+Then we apply a substitution, <code>e = B → (between B e C ∧ A A ≡ B e ↔ between B B C ∧ A A ≡ B B)</code>.
+<jh>
+        B EqualityReflexivity
+        C EqualityReflexivity
+        B B (value e) B C C BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A EqualityReflexivity
+        A A A A B B (value e) B CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+</jh>
+This is readily turned into <code>∃ e (between B e C ∧ A A ≡ B e)</code>,
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
+
+        introduceThereExistsFromObject
+</jh>
+which is equivalent to <code>A A ≤ B C</code>.
+<jh>
+        A A B C e LessEqualCutoff
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 Before we export, there is one detail to attend to. Because we are halfway through changing <code>CongruenceIdentityFromEquality</code> from the exported version to the imported version, we need to prove <code>CongruenceIdentityFromEquality</code> as a synonym of <code>CongruenceIdentityFromEqualityImported</code>.
 <jh>
