@@ -565,6 +565,22 @@ thm (collectThereExistsDisjunction () ((H ((∃ x φ) ∨ (∃ x ψ)))) (∃ x (
 
 </jh>
 
+=== There-exists across a conjunction ===
+In the last two sections we tackled ∀ across a conjunction and ∃ across a disjunction. The other two similar cases (∃ across a conjunction and ∀ across a disjunction) also hold, but only in one direction, not as biconditionals.<ref>[http://us.metamath.org/mpeuni/19.40.html 19.40] and [http://us.metamath.org/mpeuni/19.33.html 19.33] in metamath's set.mm, accessed 2009<ref>
+
+Here we prove ∃ across a conjunction.
+<jh>
+thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))) (
+        φ ψ ConjunctionRightElimination
+        x addThereExists
+
+        φ ψ ConjunctionLeftElimination
+        x addThereExists
+
+        composeConjunction
+))
+</jh>
+
 === For-all across a biconditional ===
 Distributing <code>∀</code> across an implication also works for the biconditional.  The proof is just expanding the biconditional into conjunctions and implications and distribution of <code>∀</code> across the conjunctions and implications.
 <jh>

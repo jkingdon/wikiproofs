@@ -106,6 +106,7 @@ stmt (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ
 stmt (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))))
 stmt (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))))
 stmt (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))))
+stmt (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))))
 </jh>
 
 We also provide rules for the above theorems:
