@@ -116,6 +116,7 @@ stmt (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ
 stmt (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))))
 stmt (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))))
 stmt (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))))
+stmt (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))))
 </jh>
 
 We also provide rules for the above theorems:
@@ -376,7 +377,7 @@ stmt (joinConsequents ()
   (φ → (¬ (ψ → (¬ χ)))))
 </jh>
 
-== What else? ==
-This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
+== References ==
+<references/>
 
 [[Category:Classical first-order logic|{{PAGENAME}}]]
