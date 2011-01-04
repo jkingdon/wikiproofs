@@ -1160,18 +1160,10 @@ Next is <code>x0 x1 ≡ x2 e ↔ y0 y1 ≡ y2 e</code>.
         x0 y0 x1 y1 x2 y2 (value e) (value e) CongruenceBuilder
         applySyllogism
 </jh>
-We combine those two with a conjunction,
+We combine those two with a conjunction, deal with the quantifier, and fold the definitions.
 <jh>
         buildConjunctionInConsequent
-</jh>
-and deal with the quantifier.
-<jh>
-        e addForAllToConsequent
-        e
-          ((between x2 (value e) x3) ∧ (x0 x1 ≡ x2 (value e)))
-          ((between y2 (value e) y3) ∧ (y0 y1 ≡ y2 (value e)))
-          ForAllBiconditionalThereExists
-        applySyllogism
+        e buildThereExistsInConsequent
 
         x0 x1 x2 x3 e LessEqualCutoff
         y0 y1 y2 y3 e LessEqualCutoff
