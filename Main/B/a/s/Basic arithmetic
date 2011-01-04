@@ -1111,16 +1111,13 @@ We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is eno
 === Builders ===
 The builders for <code>≤</code> follow readily from the builders for addition, equality, and so on.
 <jh>
-thm (LessEqualBuilderRR ((a0 n) (a1 n) (b n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
+thm (LessEqualBuilderRR ( (a0 n) (a1 n) (b n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
 </jh>
-What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = b)</code>.  The right hand side basically consists of the desired theorem with ≤ expanded, but with a twist: here it holds with the same variable for both quantifiers.
+What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = b)</code>.  On the right hand side it is OK to use the same variable for both quantifiers because we are folding the definition explicitly using <code>LessEqual</code>.
 <jh>
         a0 a1 (value n) AdditionBuilderRR
         b buildEqualityRRInConsequent
-
-        n addForAllToConsequent
-        n ((a0 + (value n)) = b) ((a1 + (value n)) = b) ForAllBiconditionalThereExists
-        applySyllogism
+        n buildThereExistsInConsequent
 
         a0 b n LessEqual
         a1 b n LessEqual
@@ -1132,12 +1129,9 @@ What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = 
 
 The builder for adding a common number to the left is similar, and is proved in the same way.
 <jh>
-thm (LessEqualBuilderLL ((a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))) (
+thm (LessEqualBuilderLL ( (a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))) (
         b0 b1 (a + (value n)) EqualityBuilderLL
-
-        n addForAllToConsequent
-        n ((a + (value n)) = b0) ((a + (value n)) = b1) ForAllBiconditionalThereExists
-        applySyllogism
+        n buildThereExistsInConsequent
 
         a b0 n LessEqual
         a b1 n LessEqual
@@ -1765,15 +1759,11 @@ thm (Totality-sub ((an n) (an sub) (na n) (na sub)) () (
  #        (value n) sub a LessEqualBuilderRR
  #        buildDisjunctionInConsequent
         (value n) sub (a + (value an)) EqualityBuilderLL
-        an addForAllToConsequent
-        an ((a + (value an)) = (value n)) ((a + (value an)) = sub) ForAllBiconditionalThereExists
-        applySyllogism
+        an buildThereExistsInConsequent
 
         (value n) sub (value na) AdditionBuilderRR
         a buildEqualityRRInConsequent
-        na addForAllToConsequent
-        na (((value n) + (value na)) = a) ((sub + (value na)) = a) ForAllBiconditionalThereExists
-        applySyllogism
+        na buildThereExistsInConsequent
 
         buildDisjunctionInConsequent
 ))
