@@ -10,7 +10,7 @@ Statements can be added if necessary, but then the exporting modules have to be 
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus]]
-| importedby = [[Interface:First-order logic with quantifiability]]
+| importedby = [[First-order logic with quantifiability]]
 | exportedby = [[First-order logic]]
 }}
 == Formulas, objects, and quantification ==
@@ -377,8 +377,8 @@ stmt (joinConsequents ()
   (φ → (¬ (ψ → (¬ χ)))))
 </jh>
 
-== What else? ==
-This page is not complete.  If you know what should be here, edit the page or suggest it on the talk page.
+== References ==
+<references/>
 
 [[Category:Classical first-order logic|{{PAGENAME}}]]
 

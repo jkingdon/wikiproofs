@@ -566,7 +566,7 @@ thm (collectThereExistsDisjunction () ((H ((∃ x φ) ∨ (∃ x ψ)))) (∃ x (
 </jh>
 
 === There-exists across a conjunction ===
-In the last two sections we tackled ∀ across a conjunction and ∃ across a disjunction. The other two similar cases (∃ across a conjunction and ∀ across a disjunction) also hold, but only in one direction, not as biconditionals.<ref>[http://us.metamath.org/mpeuni/19.40.html 19.40] and [http://us.metamath.org/mpeuni/19.33.html 19.33] in metamath's set.mm, accessed 2009<ref>
+In the last two sections we tackled ∀ across a conjunction and ∃ across a disjunction. The other two similar cases (∃ across a conjunction and ∀ across a disjunction) also hold, but only in one direction, not as biconditionals.<ref>[http://us.metamath.org/mpeuni/19.40.html 19.40] and [http://us.metamath.org/mpeuni/19.33.html 19.33] in metamath's set.mm, accessed January 3, 2011</ref>
 
 Here we prove ∃ across a conjunction.
 <jh>
