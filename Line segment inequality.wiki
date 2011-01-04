@@ -1176,23 +1176,51 @@ We combine those two with a conjunction, deal with the quantifier, and fold the 
 == Totality ==
 Given two line segments, one of the two must be longer than or congruent to the other.<ref>le_cases in Narboux</ref>
 
-We start with the case in which <code>A0 = A1</code> in which case <code>A0 A1 ≤ B0 B1</code> is trivially true.
-
-{{under construction}}
+Narboux's proof requires two cases, <code>A0 = A1</code> and <code>A0 ≠ A1</code>, but since our version of <code>InnerSegmentConstruction</code> does not require <code>A0 ≠ A1</code>, our proof does not.
 
 <jh>
-#thm (LessEqualTotality-eq () () ((A0 = A1) → ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1))) (
+thm (LessEqualTotality ( (e A0) (e A1) (e B0) (e B1)) ()
+  ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)) (
+        e A0 A1 B0 B1 InnerSegmentConstruction
+
+        (between A0 A1 (value e))
+          (between A0 (value e) A1)
+          (A0 (value e) ≡ B0 B1)
+          ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+        e addThereExists
+        applyModusPonens
 </jh>
-The substitution is <code>A0 = A1 → (A0 A0 ≤ B0 B1 ↔ A0 A1 ≤ B0 B1)</code>.
+That gives us <code>∃ e ((between A0 A1 e ∧ A0 e ≡ B0 B1) ∨ (between A0 e A1 ∧ A0 e ≡ B0 B1))</code>. We associate the quantifier so that it covers each disjunct separately.
 <jh>
-#        A0 A0 A0 A1 B0 B0 B1 B1 LessEqualBuilder
-#))
+        e
+          ((between A0 A1 (value e)) ∧ (A0 (value e) ≡ B0 B1))
+          ((between A0 (value e) A1) ∧ (A0 (value e) ≡ B0 B1))
+          ThereExistsDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+</jh>
+The left disjunct is now <code>∃ e (between A0 A1 e ∧ A0 e ≡ B0 B1)</code>, which is just <code>A0 A1 ≤ B0 B1</code>.
+<jh>
+        A0 A1 B0 B1 e LessEqualExtension
+        eliminateBiconditionalForward
+</jh>
+Similarly, the right disjunct <code>∃ e (between A0 e A1 ∧ A0 e ≡ B0 B1)</code> is <code>B0 B1 ≤ A0 A1</code> (once we flip <code>A0 e ≡ B0 B1</code> to <code>B0 B1 ≡ A0 e</code>).
+<jh>
+        A0 (value e) B0 B1 CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (between A0 (value e) A1) conjoinLL
+        e addThereExists
 
-#thm (LessEqualTotality-ne () () ((A0 ≠ A1) → ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1))) (
-#))
-
-#thm (LessEqualTotality () () ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)) (
-#))
+        B0 B1 A0 A1 e LessEqualCutoff
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Combining these two we are done.
+<jh>
+        disjoin
+        applyModusPonens
+))
 </jh>
 
 == Export ==
