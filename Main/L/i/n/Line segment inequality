@@ -1223,6 +1223,22 @@ Combining these two we are done.
 ))
 </jh>
 
+== A segment which is smaller than or congruent to an empty segment ==
+A segment which is smaller than or congruent to an empty segment is itself empty. The proof simply notes that <code>C C ≤ A B</code> is always true and <code>A B ≤ C C</code> is our antecedent. Thus <code>A B ≡ C C</code> by antisymmetry, which in turn implies <code>A = B</code> by <code>CongruenceIdentity</code>.<ref>le_zero in Narboux</ref>
+<jh>
+thm (LessEqualZero () () ((A B ≤ C C) → (A = B)) (
+        C A B ZeroSmallest
+        (C C ≤ A B) (A B ≤ C C) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        A B C C LessEqualAntisymmetry
+        applySyllogism
+
+        A B C CongruenceIdentity
+        applySyllogism
+))
+</jh>
+
 == Strict inequality ==
 Following Narboux, we define <code>&lt;</code> and <code>&gt;</code> in terms of <code>≤</code> and line segment congruence.
 <jh>
