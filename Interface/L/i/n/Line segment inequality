@@ -167,7 +167,7 @@ It has the [[w:total order|properties of a total order]]:
 var (point A0 A1 B0 B1 C0 C1)
 stmt (LessEqualTransitivity () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ C0 C1)) → (A0 A1 ≤ C0 C1)))
 stmt (LessEqualAntisymmetry () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ A0 A1)) → (A0 A1 ≡ B0 B1)))
-#stmt (LessEqualTotality () () ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)))
+stmt (LessEqualTotality () () ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)))
 </jh>
 
 A number of other properties follow from those.
@@ -302,6 +302,11 @@ stmt (UpperDimension () ()
 stmt (AxiomEuclid ((a b x) (a b u) (a b v) (a b y) (a b z)) () (
   (((between x u v) ∧ (between y u z)) ∧ (x ≠ u))
   → (∃ a (∃ b (((between x y (value a)) ∧ (between x z (value b))) ∧ (between (value a) v (value b)))))))
+</jh>
+
+== Builders ==
+As usual, we need to state that equals can be substituted for equals via builders.
+<jh>
 var (point x0 x1 x2 x3 y0 y1 y2 y3)
 stmt (CongruenceBuilder () () (
   ((((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2)) ∧ (x3 = y3))
@@ -310,6 +315,10 @@ stmt (CongruenceBuilder () () (
 stmt (BetweennessBuilder () () (
   (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
   → ((between x0 x1 x2) ↔ (between y0 y1 y2))
+))
+stmt (LessEqualBuilder () () (
+  ((((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2)) ∧ (x3 = y3))
+  → ((x0 x1 ≤ x2 x3) ↔ (y0 y1 ≤ y2 y3))
 ))
 </jh>
 
