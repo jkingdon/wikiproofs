@@ -174,8 +174,8 @@ A number of other properties follow from those.
 <jh>
 stmt (LessEqualReflexivity () () (A0 A1 ≤ A0 A1))
 
-#def ((< A0 A1 B0 B1) ((A0 A1 ≤ B0 B1) ∧ (¬ (A0 A1 ≡ B0 B1))))
-#def ((> B0 B1 A0 A1) (A0 A1 < B0 B1))
+def ((< A0 A1 B0 B1) ((A0 A1 ≤ B0 B1) ∧ (¬ (A0 A1 ≡ B0 B1))))
+def ((> B0 B1 A0 A1) (A0 A1 < B0 B1))
 </jh>
 
 == Collinearity ==
