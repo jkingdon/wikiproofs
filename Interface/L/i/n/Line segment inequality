@@ -137,7 +137,7 @@ stmt (PointConstructionDifferent ((c A) (c B)) ()
 stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
 </jh>
 
-=== Inequality of line segments ===
+== Inequality of line segments ==
 The formula <code>A B ≤ C D</code> means that the line segment <code>A B</code> is shorter than (or the same length as) the line segment <code>C D</code>.
 <jh>
 term (formula (≤ point point point point))
