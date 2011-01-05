@@ -5,7 +5,7 @@
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
 
-This page gets its name from ''out lines'', that is a predicate <code>out P A B</code> which means that <code>P</code> is on the line <code>A B</code> outside the segment <code>A B</code>. We prove a number of results based on that concept, which in turn lead to a number of theorems involving colinearity.
+This page gets its name from ''out lines'', that is a predicate <code>(out P A B)</code> which means that <code>P</code> is on the line <code>A B</code> outside the segment <code>A B</code>. We prove a number of results based on that concept, which in turn lead to a number of theorems involving colinearity.
 
 We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
 <jh>

@@ -1231,7 +1231,7 @@ thm (LessEqualZero () () ((A B ≤ C C) → (A = B)) (
         (C C ≤ A B) (A B ≤ C C) ConjunctionLeftIntroduction
         applyModusPonens
 
-        A B C C LessEqualAntiSymmetry
+        A B C C LessEqualAntisymmetry
         applySyllogism
 
         A B C CongruenceIdentity
