@@ -178,6 +178,12 @@ def ((< A0 A1 B0 B1) ((A0 A1 ≤ B0 B1) ∧ (¬ (A0 A1 ≡ B0 B1))))
 def ((> B0 B1 A0 A1) (A0 A1 < B0 B1))
 </jh>
 
+=== Empty segments and inequality ===
+<jh>
+stmt (ZeroSmallest () () (A A ≤ B C))
+stmt (LessEqualZero () () ((A B ≤ C C) → (A = B)))
+</jh>
+
 == Collinearity ==
 To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
 <jh>
