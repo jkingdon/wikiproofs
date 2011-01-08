@@ -23,6 +23,13 @@ A point <code>P</code> is on the line <code>A B</code> outside the line segment 
 def ((is-outside P A B) (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))
 </jh>
 
+We also state this definition as a theorem.
+<jh>
+thm (OutBetweenness () () ((P is-outside A B) ↔ (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))) (
+        (P is-outside A B) BiconditionalReflexivity
+))
+</jh>
+
 === Relating out lines to existence of a point beyond the outside point ===
 This section (and the next one) have to do with relating <code>P is-outside A B</code> to a point <code>C</code> for which <code>between A P C</code> and <code>between B P C</code>. The first result says that if <code>between A P C</code>, then <code>between B P C</code> is equivalent to <code>P is-outside A B</code>.<ref>l6_2 in Narboux</ref>
 
@@ -200,6 +207,24 @@ thm (BeyondOut () () (((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A 
 
         introduceBiconditionalFromImplicationsInConsequent
 ))
+</jh>
+
+=== The existence of a point beyond the outside point ===
+In this section we show that a point is outside a line segment if and only if there exists a point beyond the outside point.  In symbols, <code>P is-outside A B</code> is equivalent to <code>A ≠ P ∧ B ≠ P ∧ ∃ c (C ≠ P ∧ between A P C ∧ between B P C)</code>.
+
+We start with the forward implication. Extend <code>A P</code> to a distinct point <code>c</code> (that is, a point for which <code>P ≠ c ∧ between A P c</code>. We can then apply <code>BeyondOut</code> to show that <code>between B P c</code>.<ref>l6_3_1 in Narboux</ref>
+
+{{under construction}}
+<jh>
+#thm (ExistsBeyondOutForward ((c A) (c B) (c P)) () ((P is-outside A B) → (((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c)))))) (
+#))
+
+#thm (ExistsBeyondOutReverse ((c A) (c B) (c P)) () ((((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c))))) → (P is-outside A B)) (
+#))
+
+
+#thm (ExistsBeyondOut ((c A) (c B) (c P)) () ((P is-outside A B) ↔ (((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c)))))) (
+#))
 </jh>
 
 == Export ==
