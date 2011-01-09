@@ -20,12 +20,12 @@ var (variable c c′ d d′ e e′ f p)
 == Out lines defined ===
 A point <code>P</code> is on the line <code>A B</code> outside the line segment <code>A B</code> if and only if one of those points is between <code>P</code> and the other and <code>P</code> is not equal to either one.<ref>Definition out in Narboux</ref>
 <jh>
-def ((is-outside P A B) (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))
+def ((is-outside P A B) (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))))
 </jh>
 
 We also state this definition as a theorem.
 <jh>
-thm (OutBetweenness () () ((P is-outside A B) ↔ (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))) (
+thm (OutBetweenness () () ((P is-outside A B) ↔ (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))) (
         (P is-outside A B) BiconditionalReflexivity
 ))
 </jh>
@@ -198,7 +198,8 @@ Now we combine the two.
         applySyllogism
 ))
 
-thm (BeyondOut () () (((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C)) → ((between B P C) ↔ (P is-outside A B))) (
+thm (BeyondOut () () (((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C)) →
+  ((between B P C) ↔ (P is-outside A B))) (
         BeyondOutForward
         export
 
@@ -212,12 +213,132 @@ thm (BeyondOut () () (((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A 
 === The existence of a point beyond the outside point ===
 In this section we show that a point is outside a line segment if and only if there exists a point beyond the outside point.  In symbols, <code>P is-outside A B</code> is equivalent to <code>A ≠ P ∧ B ≠ P ∧ ∃ c (C ≠ P ∧ between A P C ∧ between B P C)</code>.
 
-We start with the forward implication. Extend <code>A P</code> to a distinct point <code>c</code> (that is, a point for which <code>P ≠ c ∧ between A P c</code>. We can then apply <code>BeyondOut</code> to show that <code>between B P c</code>.<ref>l6_3_1 in Narboux</ref>
+We start with the forward implication. Extend <code>A P</code> to a distinct point <code>c</code> (that is, a point for which <code>P ≠ c ∧ between A P c</code>. We can then apply <code>BeyondOut</code> to show that <code>between B P c</code>.<ref>l6_3_1 in Narboux</ref> Below we present the formal version of this proof, broken down into several lemmas.
 
-{{under construction}}
 <jh>
-#thm (ExistsBeyondOutForward ((c A) (c B) (c P)) () ((P is-outside A B) → (((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c)))))) (
-#))
+thm (ExistsBeyondOutForward-bpc () () (((P is-outside A B) ∧ ((C ≠ P) ∧ (between A P C))) → (between B P C)) (
+</jh>
+At the end of the proof we'll need a copy of <code>P is-outside A B</code>, so we stick it on the proof stack.
+<jh>
+        (P is-outside A B) ((C ≠ P) ∧ (between A P C)) ConjunctionRightElimination
+</jh>
+Most of the proof of this lemma consists of an application of  <code>BeyondOut</code>. The first thing we need is <code>A ≠ P</code>.
+<jh>
+        (P is-outside A B) ((C ≠ P) ∧ (between A P C)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+Next is <code>B ≠ P</code>
+<jh>
+        (P is-outside A B) ((C ≠ P) ∧ (between A P C)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Next is <code>C ≠ P</code>
+<jh>
+        (P is-outside A B) ((C ≠ P) ∧ (between A P C)) ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+Last is <code>between A P C</code>.
+<jh>
+        (P is-outside A B) ((C ≠ P) ∧ (between A P C)) ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Applying <code>BeyondOut</code> gives us <code>between B P C ↔ P is-outside A B</code>
+<jh>
+        A P B C BeyondOut
+        applySyllogism
+</jh>
+Now we detach the <code>P is-outside A B</code> part so we just have <code>between B P C</code>.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+))
+
+</jh>
+The next lemma is just <code>PointConstructionDifferent</code>, together with some rearrangements via commutativity and symmetry.
+<jh>
+thm (ExistsBeyondOutForward-c ((c A) (c P)) () (∃ c (((value c) ≠ P) ∧ (between A P (value c)))) (
+        c A P PointConstructionDifferent
+
+        (P ≠ (value c)) (between A P (value c)) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        c addThereExists
+        applyModusPonens
+
+        P (value c) EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        (between A P (value c)) conjoinLL
+        c addThereExists
+        applyModusPonens
+))
+
+thm (ExistsBeyondOutForward-3 ((c A) (c B) (c P)) () ((P is-outside A B) → (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c))))) (
+        P A B (value c) ExistsBeyondOutForward-bpc
+        export
+        c addForAllToConsequent
+</jh>
+We now have <code>P is-outside A B → ∀ c (c ≠ P ∧ between A P c → between B P c)</code>. Combining this with the previous result gives <code>P is-outside A B → ∃ c (c ≠ P ∧ between A P c ∧ (c ≠ P ∧ between A P c → between B P c))</code>.
+<jh>
+        c P A ExistsBeyondOutForward-c
+        introduceLeftConjunctToConsequent
+
+        c
+          (((value c) ≠ P) ∧ (between A P (value c)))
+          ((((value c) ≠ P) ∧ (between A P (value c))) → (between B P (value c)))
+          ThereExistsConjunctionRightCombining
+</jh>
+To get <code>between B P c</code> is just a matter of modus ponens. The one complication is that we want to keep <code>c ≠ P ∧ between A P c</code> around in addition, so we apply idempotence, associativity, and modus ponens, in that order.
+<jh>
+        (((value c) ≠ P) ∧ (between A P (value c))) ConjunctionIdempotence
+        eliminateBiconditionalReverse
+        ((((value c) ≠ P) ∧ (between A P (value c))) → (between B P (value c))) conjoinRR
+        c addThereExists
+        applySyllogism
+
+        (((value c) ≠ P) ∧ (between A P (value c)))
+          (((value c) ≠ P) ∧ (between A P (value c)))
+          ((((value c) ≠ P) ∧ (between A P (value c))) → (between B P (value c)))
+          ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        c addThereExists
+        applySyllogism
+
+        (((value c) ≠ P) ∧ (between A P (value c)))
+          (between B P (value c))
+          ModusPonens
+        (((value c) ≠ P) ∧ (between A P (value c))) conjoinLL
+        c addThereExists
+        applySyllogism
+))
+
+thm (ExistsBeyondOutForward ((c A) (c B) (c P)) () ((P is-outside A B) → (((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c)))))) (
+</jh>
+First is <code>P is-outside A B → A ≠ P</code>
+<jh>
+        (((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A))) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+</jh>
+Next is <code>P is-outside A B → B ≠ P</code>
+<jh>
+        (((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A))) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Next is the remainder.
+<jh>
+        P A B c ExistsBeyondOutForward-3
+        composeConjunction
+))
 
 #thm (ExistsBeyondOutReverse ((c A) (c B) (c P)) () ((((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c))))) → (P is-outside A B)) (
 #))
