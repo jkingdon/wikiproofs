@@ -1,0 +1,168 @@
+Items which may be doable without a network connection:
+
+* A B ≡ B A seems to have some uses (e.g. D′ P ≡ P D′ in r-p-e-dprime;
+  probably at least one more, probably in the same file).
+  
+* convenience theorems of propositional logic
+  - joinConsequents (do without, probably)
+* look at whether Raph's proof of ceqsex simplifies our development
+  (I think it might enable omitting a bunch of strange little
+  theorems).
+  - the proof does need Quantifiability but nothing else we don't have.
+  - ceqsex is ImplicitThereExists.
+    - ImplicitSubstitutionThereExists
+      - ImplicitSubstitutionForAll
+        - ax9oc (see also equs4c)
+          - ax6o (see also NegationNotFree, ax9o)
+        - a5i
+  - ceqsex also has the distinct variable constraint x s.
+
+  * ax9o is only used by equs4.
+
+* General set theory
+  - definitions and consequences: union?,
+    intersection, difference (e.g. eldifi and similar), subset
+  - do both directions of A = B ↔ { A } = { B } hold? (think so)
+  - indexed union or intersection? (if needed for functions)
+  - prove Peano axioms from them
+    - suc11
+  - finite induction (e.g. peano5 in set.mm)
+  - functions and relations (e.g. cxp and following in set.mm)
+    - binary relations.
+      - releq
+      (mkrelation a A b B φ) (A, B object; a, b variable; φ formula)
+        ≝ {〈a, b〉| a ∈ A ∧ b ∈ B ∧ φ }
+        e.g. (mkrelation a ℕ b ℕ (∃ n ∈ ℕ a + n = b))
+      - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
+    - domain and range: dfdm3 and dfrn2 or some such (need to prove existence)
+      - dmeq
+      - breldm, brelrn
+      - (domain (mkrelation a A b B φ)) ⊆ A
+      - (range (mkrelation a A b B φ)) ⊆ B
+    - functions
+      - dffun2 (how to deal with the distinct variables?), funrel
+      (lambda x t)
+        e.g. (lambda x A 〈x, 1〉)
+        ≝ {〈x, result〉| x ∈ A ∧ result = φ }
+      - [s / x](apply (lambda x A t) s) = t
+        this reads oddly, because [/] only applies to formulas, not terms
+        (metamath has underlined [/] for terms; do we want that?)
+    - cross products, e.g. cxp, df-xp, elxp, opelxp1, opelxp
+      xpexg regarding existence of cross products
+        relies on xpsspw
+        Also note dependence on defn of ordered pair.
+      A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
+        then the interesting part is proving opelxp, elxp, or something else useful
+        a ∈ A ↔ {a} ⊆ A
+        a0 ∈ A ∧ a1 ∈ A ↔ {a0, a1} ⊆ A
+        A ∈ B → A ∈ B 
+        perhaps something like z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B) is one step
+        (φ → z ∈ A) → (y ∈ {z ∈ A | φ} ↔ [y / z]φ)  (could be helpful but has the subst)
+          then next step is y ∈ A × B ↔ [y / z](z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
+          then y ∈ A × B ↔ y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B
+          and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B
+      - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
+    - note dmex depends on ax-pow and ax-un, but doesn't need replacement.
+  - recursion theorem (see downloaded wikipedia page, Joedit)
+    = frfnom and friends in set.mm
+      - e.g. http://us.metamath.org/mpeuni/df-rdg.html
+
+* Needed to derive geometry axioms from reals (page 201 of Givant1999)
+  - cartesian products
+  - subtraction
+  - ≤ for reals (defined in terms of <)
+  - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceReflexivityAxiom)
+  - builders for +, ·
+  - For CongruenceIdentity
+    • x - x = 0
+    • x - y = 0 → x = y
+    • x ∈ ℝ → 0 ≤ x · x
+    • 0 ≤ x ∧ 0 ≤ y ∧ x + y = 0 → x = 0 (or some such)
+  - For Indivisibility
+    • (x - y) · (y - x) ≤ 0
+    • antisymmetry
+    • (x - y) · (y - x) = 0 → x = y (follows from x · y = 0 → x = 0 or y = 0)
+
+* How much do we use ThereExistsConjunctionRightMovement? Is there room
+  for a convenience theorem or is it something which often has another
+  quantifier outside?
+
+== Separation ==
+[this is an attempt which writes φ as [ x / x ] φ but that, while arguably nicer,
+doesn't solve the problem which makes the proof not work, which is that φ can contain
+the variable. Maybe we need to be using *NotFree rather than distinct variables?]
+
+Here we provide the ability to form a set containing those elements of a given set which satisfy an arbitrary formula. In other words, we can form the set of all <code>x</code> in <code>A</code> such that <code>φ</code>, which is commonly notated as <code>{x ∈ A | φ }</code>. We will use that notation in discussion but JHilbert's syntax is not that flexible, so for JHilbert we will call it <code>(separate x A φ)</code>. ''Restricted set abstraction'' is one term for this (contrasted with the ''unrestricted set abstraction'' of <code>{x | φ}</code>).<ref>Michael R. Genesereth and Richard E. Fikes (1994), "[http://logic.stanford.edu/kif/Hypertext/node25.html Paradoxes]", Knowledge Interchange Format Version 3.0 Reference Manual, also available as Stanford Logic Group Technical Report Logic-92-1.</ref>
+
+Introducing this notation follows much the process as for the other existence theorems/axioms, in this case working from <code>SeparationThereExists</code>. We are trying to prove <code>y ∈ {x ∈ A | φ } ↔ y ∈ A ∧ [y / x] φ</code>.
+
+First we provide a version of <code>SeparationThereExists</code> where we turn the variable <code>z</code> into the object <code>A</code>
+<jh>
+thm (SeparationThereExistsObject ((x y A) (φ y A)  (z x y A) (z φ)) ()
+  (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ A) ∧ φ)))) (
+        (value z) A (value x) IsElementBuilderLL
+        φ buildConjunctionRRInConsequent
+        ((value x) ∈ (value y)) buildBiconditionalLLInConsequent
+        x buildForAllInConsequent
+        y buildThereExistsInConsequent
+
+        y x z φ SeparationThereExists
+
+        VariableToObject
+))
+</jh>
+
+What we'll actually need is a version of this in which <code>φ</code> is rewritten as <code>[ x / x ] φ</code>.
+<jh>
+thm (SeparationThereExistsSubst ((x y A) (φ y A)  (z x y A) (z φ)) ()
+  (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ A) ∧ (subst (value x) x φ))))) (
+        y x A φ SeparationThereExistsObject
+
+        x φ SubstItself
+        ((value x) ∈ A) buildConjunctionLL
+        ((value x) ∈ (value y)) buildBiconditionalLL
+        x buildForAll
+        y buildThereExists
+
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
+From here we apply <code>SetObject</code> in much the usual way.
+<jh>
+thm (Separation-sub () () ((C = D) → (((C ∈ A) ∧ (subst C x φ)) ↔ ((D ∈ A) ∧ (subst D x φ)))) (
+        C D A IsElementBuilderRR
+        C D x φ SubstBuilderReplacement
+        buildConjunctionInConsequent
+))
+
+thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z)) ()
+  ((C ∈ (abstract z (((value z) ∈ A) ∧ (subst (value z) x φ)))) ↔ ((C ∈ A) ∧ (subst C x φ))) (
+        (value z) (value y) A x φ Separation-sub
+        (value y) C A x φ Separation-sub
+        result y A x φ SeparationThereExistsSubst
+        SetObject
+))
+
+def ((separate x A φ) (abstract y (((value y) ∈ A) ∧ (subst (value y) x φ))))
+
+thm (Separation ((z A) (z B)) () ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))) (
+        C z A x φ SeparationObject
+))
+</jh>
+
+To do with network:
+
+* try to find out more about School Mathematics Study Group geometry postulates? Like Euclid's?
+
+* notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
+
+* rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think. Or rename the unidirectional one to IndivisibilityImplication.
+
+* - chapter 5: cite Narboux paper (not just coq) for the two lemmas
+
+* CongruenceIdentityFromEquality should be the imported version,
+  shouldn't it?
+
