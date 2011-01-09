@@ -2,6 +2,7 @@ Items which may be doable without a network connection:
 
 * A B ≡ B A seems to have some uses (e.g. D′ P ≡ P D′ in r-p-e-dprime;
   probably at least one more, probably in the same file).
+  CongruenceABBA in Main/Line segment inequality
   
 * convenience theorems of propositional logic
   - joinConsequents (do without, probably)
@@ -161,8 +162,5 @@ To do with network:
 
 * rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think. Or rename the unidirectional one to IndivisibilityImplication.
 
-* - chapter 5: cite Narboux paper (not just coq) for the two lemmas
-
-* CongruenceIdentityFromEquality should be the imported version,
-  shouldn't it?
+* Continue changing CongruenceIdentityFromEquality to be the imported version.
 

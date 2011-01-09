@@ -340,12 +340,54 @@ Next is the remainder.
         composeConjunction
 ))
 
-#thm (ExistsBeyondOutReverse ((c A) (c B) (c P)) () ((((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c))))) → (P is-outside A B)) (
-#))
+</jh>
+We now turn to the reverse direction.<ref>l6_3_2 in Narboux</ref>
+<jh>
+thm (ExistsBeyondOutReverse ((c A) (c B) (c P)) () ((((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c))))) → (P is-outside A B)) (
+</jh>
+This proof is basically an application of middle connectivity for betweenness, which in this case is <code>c ≠ P ∧ between c P A ∧ between c P B → between P A B ∨ between P B A</code>. First we need <code>c ≠ P</code>
+<jh>
+        (((value c) ≠ P) ∧ (between A P (value c)))
+          (between B P (value c))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+</jh>
+Next is <code>between c P A</code>.
+<jh>
+        (((value c) ≠ P) ∧ (between A P (value c)))
+          (between B P (value c))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
 
+        A P (value c) BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>between c P B</code>.
+<jh>
+        (((value c) ≠ P) ∧ (between A P (value c)))
+          (between B P (value c))
+          ConjunctionLeftElimination
 
-#thm (ExistsBeyondOut ((c A) (c B) (c P)) () ((P is-outside A B) ↔ (((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c)))))) (
-#))
+        B P (value c) BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We apply connectivity, remove the quantifier from the consequent, and assemble the result.
+<jh>
+        (value c) P A B BetweennessMiddleConnectivity
+        applySyllogism
+
+        removeThereExistsInConsequent
+
+        ((A ≠ P) ∧ (B ≠ P)) conjoinLL
+))
+
+thm (ExistsBeyondOut ((c A) (c B) (c P)) () ((P is-outside A B) ↔ (((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c)))))) (
+        P A B c ExistsBeyondOutForward
+        A P B c ExistsBeyondOutReverse
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 == Export ==
