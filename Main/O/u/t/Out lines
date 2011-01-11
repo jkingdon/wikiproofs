@@ -390,6 +390,98 @@ thm (ExistsBeyondOut ((c A) (c B) (c P)) () ((P is-outside A B) ↔ (((A ≠ P) 
 ))
 </jh>
 
+=== Alternate definition in terms of collinearity ===
+A point is outside a line segment if and only if it is collinear with the endpoints of the segment but not between them. That is, <code>P is-outside A B ↔ collinear A P B ∧ ¬ between A P B</code>.
+
+We first tackle the forward direction.<ref>l6_4_1 in Narboux</ref> The first lemma is <code>P ≠ A ∧ P ≠ B ∧ between P A B → ¬ between A P B</code>.
+<jh>
+thm (OutCollinearityForward-1 () () ((((P ≠ A) ∧ (P ≠ B)) ∧ (between P A B)) → (¬ (between A P B))) (
+</jh>
+First we pick out and rearrange the parts we need, specifically we prove <code>P ≠ A ∧ P ≠ B ∧ between P A B → between P A B ∧ P ≠ A</code>
+<jh>
+        ((P ≠ A) ∧ (P ≠ B)) (between P A B) ConjunctionLeftElimination
+
+        ((P ≠ A) ∧ (P ≠ B)) (between P A B) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+The geometrical content of this proof is <code>between P A B ∧ between A P B → P = A</code>.
+<jh>
+        P A B BetweennessEquality
+</jh>
+Applying some propositional logic, we rearrange this to <code>between P A B ∧ P ≠ A → ¬ between A P B</code>
+<jh>
+        export
+
+        (between A P B) (P = A) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+</jh>
+Combining this with our first rearrangement, we get the desired result.
+<jh>
+        applySyllogism
+))
+
+The second lemma, <code>P ≠ A ∧ P ≠ B ∧ between P B A → ¬ between A P B</code>, is very similar.
+<jh>
+thm (OutCollinearityForward-2 () () ((((P ≠ A) ∧ (P ≠ B)) ∧ (between P B A)) → (¬ (between A P B))) (
+        (P ≠ A) (P ≠ B) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        (between P B A) conjoinRR
+
+        P B A OutCollinearityForward-1
+        applySyllogism
+
+        A P B BetweennessSymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Combining the two previous lemmas we get <code>P is-outside A B → ¬ between A P B</code>.
+<jh>
+thm (OutCollinearityForward-3 () () ((P is-outside A B) → (¬ (between A P B))) (
+        ((P ≠ A) ∧ (P ≠ B)) (between P A B) (between P B A) ConjunctionLeftDistribution
+
+        P A B OutCollinearityForward-1
+        P A B OutCollinearityForward-2
+        composeDisjunction
+
+        applySyllogism
+))
+</jh>
+
+Collinearity is straightforward.
+<jh>
+thm (OutCollinearityForward-collinear () () ((P is-outside A B) → (collinear A P B)) (
+        ((P ≠ A) ∧ (P ≠ B)) ((between P A B) ∨ (between P B A)) ConjunctionLeftElimination
+
+        (between P A B) (between P B A) DisjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A B BetweennessSymmetry
+        eliminateBiconditionalReverse
+        (between P B A) disjoinLL
+        applySyllogism
+
+        ((between P B A) ∨ (between B A P)) (between A P B) DisjunctionLeftIntroduction
+        applySyllogism
+))
+</jh>
+
+Combining the last two results gives the forward direction.
+<jh>
+thm (OutCollinearityForward () () ((P is-outside A B) → ((collinear A P B) ∧ (¬ (between A P B)))) (
+        P A B OutCollinearityForward-collinear
+        P A B OutCollinearityForward-3
+        composeConjunction
+))
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
