@@ -481,6 +481,95 @@ thm (OutCollinearityForward () () ((P is-outside A B) → ((collinear A P B) ∧
         P A B OutCollinearityForward-3
         composeConjunction
 ))
+</jh>
+
+Turning our attention to the reverse direction,<ref>l6_4_2 in Narboux</ref> we have two tasks. The first is to show that <code>P ≠ A</code> and </code>P ≠ B</code>, each of which follows from <code>¬ between A P B</code> (because either equality holding would make <code>between A P B</code> hold trivially).
+<jh>
+thm (OutCollinearityReverse-1 () () (((collinear A P B) ∧ (¬ (between A P B))) → ((P ≠ A) ∧ (P ≠ B))) (
+        (collinear A P B) (¬ (between A P B))
+        ConjunctionLeftElimination
+</jh>
+Next we show <code>P = A → (between P P B ↔ between A P B)</code>, and from it <code>P = A → between A P B</code>.
+<jh>
+        P B BetweenAAB
+
+        P EqualityReflexivity
+        B EqualityReflexivity
+        P A P P B B BetweennessBuilder
+        detach2of2
+        detach2of2
+
+        detachImplicationBiconditional
+
+        introduceTransposition
+</jh>
+Proving <code>P = B → between A P B</code> is similar (via <code>P = B → (between A P P ↔ between A P B)</code>.
+<jh>
+        A P BetweenABB
+
+        A EqualityReflexivity
+        P EqualityReflexivity
+        A A P P P B BetweennessBuilder
+        detach2of3
+        detach1of2
+
+        detachImplicationBiconditional
+
+        introduceTransposition
+
+        composeConjunction
+
+        applySyllogism
+))
+</jh>
+Our other task is to show <code>between P A B ∨ between P B A</code>.
+<jh>
+thm (OutCollinearityReverse-2 () () (((collinear A P B) ∧ (¬ (between A P B))) → ((between P A B) ∨ (between P B A))) (
+        (collinear A P B) (¬ (between A P B))
+        ConjunctionLeftElimination
+
+        (collinear A P B) (¬ (between A P B))
+        ConjunctionRightElimination
+
+        (between A P B) (between P B A) (between B A P) DisjunctionAssociativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (between A P B) ((between P B A) ∨ (between B A P)) DisjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        applyModusPonensInConsequent
+</jh>
+That gives us <code>between P B A ∨ between B A P</code>. We just need to rearrange a bit and we are done.
+<jh>
+        B A P BetweennessSymmetry
+        eliminateBiconditionalReverse
+        (between P B A) disjoinLL
+        applySyllogism
+
+        (between P B A) (between P A B) DisjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Combining our tasks proves the reverse direction, and combining forward and reverse directions proves the equivalence.
+<jh>
+thm (OutCollinearityReverse () () (((collinear A P B) ∧ (¬ (between A P B))) → (P is-outside A B)) (
+        A P B OutCollinearityReverse-1
+        A P B OutCollinearityReverse-2
+        composeConjunction
+))
+
+thm (OutCollinearity () () ((P is-outside A B) → ((collinear A P B) ∧ (¬ (between A P B)))) (
+        P A B OutCollinearityForward
+        A P B OutCollinearityReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
 
 == Export ==
 We now export to [[Interface:Out lines]].
