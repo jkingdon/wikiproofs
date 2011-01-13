@@ -33,9 +33,9 @@ We introduce congruence of line segments; <code>(x y ≡ w z)</code> means that 
 term (formula (≡ point point point point))
 </jh>
 
-The distance from x to y is the same as the distance from y to x.  This property is called reflexivity by Tarski and Givant<ref>Tarski and Givant, 1999, page 177</ref> and symmetry by Narboux.<ref>Narboux, 2007, page 141</ref>
+The distance from x to y is the same as the distance from y to x.  This property is called reflexivity by Tarski and Givant<ref>Tarski and Givant, 1999, page 177</ref> and symmetry by Narboux.<ref>Narboux, 2007, page 141</ref> Narboux also calls it reflexivity on page 141 and the pseudo-commutativity property of the oriented distance (on page 148) and in his proofs pseudo_reflexivity.<ref>Narboux, 2007</ref>
 <jh>
-stmt (CongruenceReflexivityAxiom () () (x y ≡ y x))
+stmt (CongruenceABBA () () (x y ≡ y x))
 </jh>
 
 A segment which has zero length starts and ends at the same point (although saying "zero length" is a bit of a shortcut, as the axioms are not based on real numbers or any other numbers).

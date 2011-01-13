@@ -20,8 +20,8 @@ var (variable a b b′ c d′ q q′ ww ww′ b″ c″)
 A line segment is congruent to itself.<ref>Lemma cong_reflexivity in Narboux</ref>
 <jh>
 thm (CongruenceReflexivity () () (x y ≡ x y) (
-        y x CongruenceReflexivityAxiom
-        y x CongruenceReflexivityAxiom
+        y x CongruenceABBA
+        y x CongruenceABBA
         introduceConjunction
 
         y x x y x y CongruenceTransitivityAxiom
@@ -61,7 +61,7 @@ thm (CongruenceTransitivity () () (((x y ≡ z w) ∧ (z w ≡ u v)) → (x y �
 We can commute the endpoints of the first line segment.<ref>Lemma cong_left_commutativity in Narboux</ref>
 <jh>
 thm (CongruenceLeftCommutativityImplication () () ((x y ≡ z w) → (y x ≡ z w)) (
-        x y CongruenceReflexivityAxiom
+        x y CongruenceABBA
         x y y x z w CongruenceTransitivityAxiom
         detach1of2
 ))

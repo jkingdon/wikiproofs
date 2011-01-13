@@ -1,9 +1,5 @@
 Items which may be doable without a network connection:
 
-* A B ≡ B A seems to have some uses (e.g. D′ P ≡ P D′ in r-p-e-dprime;
-  probably at least one more, probably in the same file).
-  CongruenceABBA in Main/Line segment inequality
-  
 * convenience theorems of propositional logic
   - joinConsequents (do without, probably)
 * look at whether Raph's proof of ceqsex simplifies our development
@@ -72,7 +68,7 @@ Items which may be doable without a network connection:
   - cartesian products
   - subtraction
   - ≤ for reals (defined in terms of <)
-  - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceReflexivityAxiom)
+  - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceABBA)
   - builders for +, ·
   - For CongruenceIdentity
     • x - x = 0
@@ -160,7 +156,10 @@ To do with network:
 
 * notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
 
-* rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think. Or rename the unidirectional one to IndivisibilityImplication.
+* rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think.
 
 * Continue changing CongruenceIdentityFromEquality to be the imported version.
+
+* pkcon install ocaml
+  figure out what else coq needs
 
