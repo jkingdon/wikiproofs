@@ -571,6 +571,183 @@ thm (OutCollinearity () () ((P is-outside A B) → ((collinear A P B) ∧ (¬ (b
 ))
 </jh>
 
+== Reflexive, symmetric, and transitive ==
+Here we present versions of reflexivity, symmetry, and transitivity. You can think of this as dividing a line (excluding the point <code>P</code> itself) into two equivalence classes: those to the left of <code>P</code> and those to the right (we certainly don't have the machinery to say it quite that way, but that is the rough idea).
+
+=== Reflexivity ===
+<jh>
+thm (OutReflexivity () () ((P ≠ A) → (P is-outside A A)) (
+        (P ≠ A) ConjunctionIdempotence
+        eliminateBiconditionalReverse
+
+        P A BetweenABB
+        cloneAsDisjunction
+        introduceRightConjunctToConsequent
+))
+</jh>
+
+=== Symmetry ===
+<jh>
+thm (OutSymmetry () () ((P is-outside A B) ↔ (P is-outside B A)) (
+        (P ≠ A) (P ≠ B) ConjunctionSymmetry
+        (between P A B) (between P B A) DisjunctionSymmetry
+        buildConjunction
+))
+</jh>
+
+=== Transitivity ===
+Expanding the definitions of the antecedent, we start with
+  A ≠ P ∧ B ≠ P ∧ (between P A B ∨ between P B A) ∧
+  B ≠ P ∧ C ≠ P ∧ (between P B C ∨ between P C B)
+Looking at the betweenness part of that, there are four cases (<code>between P A B ∧ between P B C</code> being the first, <code>between P A B ∧ between P C B</code>, being the second, and so on).
+
+The interesting part is a lemma which handles those four cases; there is also a fair bit of rearranging (in the lemma and in the proof of the actual theorem).
+
+<jh>
+thm (OutTransitivity () () (((B ≠ P) ∧
+  (((between P A B) ∨ (between P B A)) ∧
+    ((between P B C) ∨ (between P C B)))) →
+  ((between P A C) ∨ (between P C A))) (
+</jh>
+First we break down the four cases.
+<jh>
+        (between P A B)
+          (between P B A)
+          ((between P B C) ∨ (between P C B))
+          ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+
+        (between P A B) (between P B C) (between P C B) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        (between P B A) (between P B C) (between P C B) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        disjoin
+
+        applySyllogism
+
+        (B ≠ P) conjoinLL
+</jh>
+Now we distribute the <code>B ≠ P</code> into each of the cases.
+<jh>
+        (B ≠ P)
+          (((between P A B) ∧ (between P B C)) ∨ ((between P A B) ∧ (between P C B)))
+          (((between P B A) ∧ (between P B C)) ∨ ((between P B A) ∧ (between P C B)))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (B ≠ P)
+          ((between P A B) ∧ (between P B C))
+          ((between P A B) ∧ (between P C B))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        (B ≠ P)
+          ((between P B A) ∧ (between P B C))
+          ((between P B A) ∧ (between P C B))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        disjoin
+        applySyllogism
+</jh>
+The first case is <code>B ≠ P ∧ between P A B ∧ between P B C</code>.  In all four cases we are showing that the case in question implies <code>between P A C ∨ between P C A</code>. In the current case, <code>between P A C</code> follows from transitivity.
+<jh>
+        (B ≠ P)
+          ((between P A B) ∧ (between P B C))
+          ConjunctionLeftElimination
+
+        P A B C BetweennessMiddleTransitivityFlipped
+        applySyllogism
+
+        (between P A C) (between P C A) DisjunctionRightIntroduction
+        applySyllogism
+</jh>
+The second case is <code>B ≠ P ∧ between P A B ∧ between P C B</code>.  Here we apply inner connectivity for betweenness.
+<jh>
+        (B ≠ P)
+          ((between P A B) ∧ (between P C B))
+          ConjunctionLeftElimination
+
+        P A B C BetweennessInnerConnectivity
+        applySyllogism
+
+        composeDisjunction
+</jh>
+The third case is <code>B ≠ P ∧ between P B A ∧ between P B C</code>.  Here we apply outer connectivity for betweenness.
+<jh>
+        B P EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+
+        ((between P B A) ∧ (between P B C)) conjoinRR
+
+        P B A C BetweennessOuterConnectivity
+        applySyllogism
+</jh>
+The fourth case is <code>B ≠ P ∧ between P B A ∧ between P C B</code>.  In this one <code>between P C A</code> follows from betweenness transitivity.
+<jh>
+        (B ≠ P)
+          ((between P B A) ∧ (between P C B))
+          ConjunctionLeftElimination
+
+        (between P B A) (between P C B) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P C B A BetweennessMiddleTransitivityFlipped
+        applySyllogism
+
+        (between P C A) (between P A C) DisjunctionLeftIntroduction
+        applySyllogism
+
+        composeDisjunction
+
+        composeDisjunction
+))
+
+thm (OutTransitivity () () (((P is-outside A B) ∧ (P is-outside B C)) → (P is-outside A C)) (
+</jh>
+First we pick out <code>A ≠ P</code>.
+<jh>
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+Secondly we pick out <code>C ≠ P</code>.
+<jh>
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Next we assemble <code>B ≠ P ∧ ((between P A B ∨ between P B A) ∧ (between P B C ∨ between P C B))</code> and apply our lemma to turn this into <code>between P A C ∨ between P C A</code>.
+<jh>
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        composeConjunction
+
+        B P A C OutTransitivity-1
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
