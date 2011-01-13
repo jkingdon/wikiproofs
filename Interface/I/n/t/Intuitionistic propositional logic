@@ -123,7 +123,7 @@ stmt (ConjunctionRightDistribution () () (((p ∨ q) ∧ r) ↔ ((p ∧ r) ∨ (
 
 === De Morgan's laws ===
 
-[[w:De Morgan's laws|De Morgan's laws]] do not hold, in general, but some of them are available, often as implications rather than biconditionals.<ref>NegationCollectionNDN and NegationCollectionNCNDistributionPDP can be found on page 100 of Heyting, 1966</ref> The naming convention is basd on <code>P</code> for non-negated, <code>N</code> for negated, <code>D</code> for disjunction, and <code>C</code> for conjunction.  Collection refers to a formula which is negated on the right hand side; distribution refers to a formula which is negated on the left hand side.
+[[w:De Morgan's laws|De Morgan's laws]] do not hold, in general, but some of them are available, often as implications rather than biconditionals.<ref>NegationCollectionNDN and NegationCollectionNCNDistributionPDP can be found on page 100 of Heyting, 1966</ref> The naming convention is based on <code>P</code> for non-negated, <code>N</code> for negated, <code>D</code> for disjunction, and <code>C</code> for conjunction.  Collection refers to a formula which is negated on the right hand side; distribution refers to a formula which is negated on the left hand side.
 <jh>
 stmt (NegationCollectionPCP () () ((p ∧ q) → (¬ ((¬ p) ∨ (¬ q)))))
 stmt (NegationCollectionPDP () () ((p ∨ q) → (¬ ((¬ p) ∧ (¬ q)))))
