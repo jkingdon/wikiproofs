@@ -744,7 +744,11 @@ thm (equs4c () () ((∀ x (((value x) = s) → φ)) → (∃ x (((value x) = s) 
         x (((value x) = s) → φ) Specialization
         import
 
-        joinConsequents
+        composeConjunction
+
+        ((value x) = s) φ ConjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
 That gives us <code>((∀ x ((x = y) → φ)) ∧ x = y) → (¬ ((x = y) → (¬ φ)))</code>. We transform the consequent to <code>(¬ (∀ x ((x = y) → (¬ φ))))</code>:
 <jh>

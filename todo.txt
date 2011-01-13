@@ -1,7 +1,5 @@
 Items which may be doable without a network connection:
 
-* convenience theorems of propositional logic
-  - joinConsequents (do without, probably)
 * look at whether Raph's proof of ceqsex simplifies our development
   (I think it might enable omitting a bunch of strange little
   theorems).
@@ -162,4 +160,6 @@ To do with network:
 
 * pkcon install ocaml
   figure out what else coq needs
+
+* Throughout First-order logic with quantifiability (and probably First-order logic), add spaces (e.g. change ∃xφ to ∃ x φ).
 

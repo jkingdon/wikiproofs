@@ -368,15 +368,6 @@ stmt (VariableSubstitution ((x y)) ()
   (((value x) = (value y)) → (φ → (∀ x (((value x) = (value y)) → φ)))) )
 </jh>
 
-== Propositional logic ==
-These surely belong elsewhere, but are here for the moment.
-
-<jh>
-stmt (joinConsequents ()
-  ((φ → ψ) (φ → χ))
-  (φ → (¬ (ψ → (¬ χ)))))
-</jh>
-
 == References ==
 <references/>
 
