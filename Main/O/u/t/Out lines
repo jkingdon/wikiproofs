@@ -5,7 +5,7 @@
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
 
-This page gets its name from ''out lines'', that is a predicate <code>(out P A B)</code> which means that <code>P</code> is on the line <code>A B</code> outside the segment <code>A B</code>. We prove a number of results based on that concept, which in turn lead to a number of theorems involving colinearity.
+This page gets its name from ''out lines'', that is a predicate <code>(P is-outside A B)</code> which means that <code>P</code> is on the line <code>A B</code> outside the segment <code>A B</code>. We prove a number of results based on that concept, which in turn lead to a number of theorems involving collinearity.
 
 We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
 <jh>
@@ -15,6 +15,202 @@ import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″)
 var (variable c c′ d d′ e e′ f p)
+</jh>
+
+== Out lines defined ===
+A point <code>P</code> is on the line <code>A B</code> outside the line segment <code>A B</code> if and only if one of those points is between <code>P</code> and the other and <code>P</code> is not equal to either one.<ref>Definition out in Narboux</ref>
+<jh>
+def ((is-outside P A B) (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
+</jh>
+
+We also state this definition as a theorem.
+<jh>
+thm (OutBetweenness () () ((P is-outside A B) ↔ (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))) (
+        (P is-outside A B) BiconditionalReflexivity
+))
+</jh>
+
+=== Relating out lines to existence of a point beyond the outside point ===
+This section (and the next one) have to do with relating <code>P is-outside A B</code> to a point <code>C</code> for which <code>between A P C</code> and <code>between B P C</code>. The first result says that if <code>between A P C</code>, then <code>between B P C</code> is equivalent to <code>P is-outside A B</code>.<ref>l6_2 in Narboux</ref>
+
+We first tackle the <code>between B P C → P is-outside A B</code> case. This is a straightforward application of <code>BetweennessMiddleConnectivity</code>, which in this case says basically that <code>between A P C</code> and <code>between B P C</code> imply <code>between A B P ∨ between B A P</code>.
+<jh>
+thm (BeyondOutForward () () ((((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C)) ∧ (between B P C)) → (P is-outside A B)) (
+</jh>
+The first two parts of the <code>P is-outside A B</code> definition are the inequalities <code>A ≠ P</code> and <code>B ≠ P</code> which we just carry over from the antecedent.
+<jh>
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (between B P C)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (between B P C)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+To apply <code>BetweennessMiddleConnectivity</code>, we first need <code>C ≠ P</code>.
+<jh>
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (between B P C)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Next we need <code>between C P A</code>.
+<jh>
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (between B P C)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        A P C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The last thing we will need for <code>BetweennessMiddleConnectivity</code> is <code>between C P B</code>.
+<jh>
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (between B P C)
+          ConjunctionLeftElimination
+
+        B P C BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Now we apply connectivity to get <code>between P A B ∨ between P B A</code>, which is the only remaining part of the definition of <code>is-outside</code>.
+<jh>
+        C P A B BetweennessMiddleConnectivity
+        applySyllogism
+
+        composeConjunction
+))
+
+</jh>
+In the other direction, <code>P is-outside A B</code> tells us that either <code>between P A B</code> or <code>between P B A</code>. In the either case, we can apply transitivity with <code>between A P C</code> to get <code>between B P C</code>.
+
+We'll arrange this proof by first rearranging the disjunction and conjunctions, before we worry about transitivity.
+<jh>
+thm (BeyondOutReverse-1 () ()
+  ((((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C)) ∧ (P is-outside A B)) →
+    ((((A ≠ P) ∧ (between A P C)) ∧ (between P A B)) ∨
+      (((A ≠ P) ∧ (between A P C)) ∧ (between P B A)))) (
+</jh>
+First we pick out <code>A ≠ P ∧ between A P C</code>.
+<jh>
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (P is-outside A B)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (P is-outside A B)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Next we take <code>P is-outside A B</code>, unfold the definition, and extract <code>between P A B ∨ between P B A</code>.
+<jh>
+        ((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C))
+          (P is-outside A B)
+          ConjunctionLeftElimination
+
+        ((A ≠ P) ∧ (B ≠ P))
+          ((between P A B) ∨ (between P B A))
+          ConjunctionLeftElimination
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying distributivity of conjunction over disjunction finishes the job.
+<jh>
+        ((A ≠ P) ∧ (between A P C))
+          (between P A B)
+          (between P B A)
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (BeyondOutReverse () () ((((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C)) ∧ (P is-outside A B)) → (between B P C)) (
+        A P B C BeyondOutReverse-1
+</jh>
+Our first transitivity invocation is <code>between B A P ∧ between A P C ∧ A ≠ P → between B P C</code>.
+<jh>
+        ((A ≠ P) ∧ (between A P C))
+          (between P A B)
+          ConjunctionLeftElimination
+
+        P A B BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((A ≠ P) ∧ (between A P C))
+          (between P A B)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        ((A ≠ P) ∧ (between A P C))
+          (between P A B)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        B A P C BetweennessOuterTransitivityFlipped
+        applySyllogism
+</jh>
+Our second transitivity invocation is <code>between A B P ∧ between A P C → B P C</code>
+<jh>
+        ((A ≠ P) ∧ (between A P C))
+          (between P B A)
+          ConjunctionLeftElimination
+
+        P B A BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((A ≠ P) ∧ (between A P C))
+          (between P B A)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A B P C BetweennessInnerTransitivityFlipped
+        applySyllogism
+</jh>
+Now we combine the two.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
+
+thm (BeyondOut () () (((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C)) →
+  ((between B P C) ↔ (P is-outside A B))) (
+        A P B C BeyondOutForward
+        export
+
+        A P B C BeyondOutReverse
+        export
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
 </jh>
 
 == Export ==
