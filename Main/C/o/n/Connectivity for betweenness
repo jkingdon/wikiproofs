@@ -720,11 +720,7 @@ Next is <code>between A B B″</code>, which follows from <code>between A B D′
 </jh>
 Finally we need <code>B B″ ≡ B″ B</code>.
 <jh>
-        B B″ CongruenceReflexivity
-
-        B B″ B B″ CongruenceRightCommutativity
-        eliminateBiconditionalReverse
-        applyModusPonens
+        B B″ CongruenceABBA
 
         ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -981,11 +977,7 @@ Next is <code>B C′ ≡ B′ C</code>.
 </jh>
 Last is <code>C C′ ≡ C′ C</code>.
 <jh>
-        C C′ CongruenceReflexivity
-
-        C C′ C C′ CongruenceRightCommutativity
-        eliminateBiconditionalReverse
-        applyModusPonens
+        C C′ CongruenceABBA
 
         ((B ≠ C) ∧
           ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
@@ -1962,12 +1954,7 @@ Next is <code>C R ≡ C E</code>, from the construction of <code>R</code>.
 </jh>
 Next is <code>D′ P ≡ P D′</code>, which holds trivially.
 <jh>
-        D′ P CongruenceReflexivity
-
-        D′ P D′ P CongruenceRightCommutativity
-        eliminateBiconditionalReverse
-        applyModusPonens
-
+        D′ P CongruenceABBA
         introduceRightConjunctToConsequent
 </jh>
 Next is <code>C P ≡ C D′</code>, from the construction of <code>P</code>.
