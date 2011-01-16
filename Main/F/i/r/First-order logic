@@ -1493,23 +1493,6 @@ def ((substVariable y x φ) ((((value x) = (value y)) → φ) ∧ (∃ x (((valu
 === Proving substitution from (∀ x ((x = y) → φ)) ===
 Given the definition we have adopted, our first order of business is making it a bit easier to prove a substitution formula.<ref>[http://us.metamath.org/mpeuni/sb2.html sb2] in metamath's set.mm, accessed February 22, 2010</ref>
 
-First, a propositional logic theorem:<ref>[http://us.metamath.org/mpeuni/jc.html jc] in metamath's set.mm, accessed February 22, 2010</ref>
-<jh>
-thm (joinConsequents ()
-  ((H1 (φ → ψ)) (H2 (φ → χ)))
-  (φ → (¬ (ψ → (¬ χ)))) (
-        H1 H2 composeConjunction
-        ψ χ DeMorganNDN eliminateBiconditionalForward
-        applySyllogism
-
-        ψ (¬ χ) ImplicationDisjunction
-        addNegation
-        eliminateBiconditionalForward
-
-        applySyllogism
-))
-</jh>
-
 The following lemma's consequent is half of the definition of <code>substVariable</code>:<ref>[http://us.metamath.org/mpeuni/equs4.html equs4] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
@@ -1519,7 +1502,11 @@ thm (equs4 () () ((∀ x (((value x) = (value y)) → φ)) → (∃ x (((value x
         x (((value x) = (value y)) → φ) Specialization
         import
 
-        joinConsequents
+        composeConjunction
+
+        ((value x) = (value y)) φ ConjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
 That gives us <code>((∀ x ((x = y) → φ)) ∧ x = y) → (¬ ((x = y) → (¬ φ)))</code>. We transform the consequent to <code>(¬ (∀ x ((x = y) → (¬ φ))))</code>:
 <jh>
