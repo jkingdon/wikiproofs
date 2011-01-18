@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="433.36774"
+   height="386.659"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="Points in a plane equidistant to two given points lie on a line.svg">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="369.41661"
+     inkscape:cy="-127.77492"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1171"
+     inkscape:window-height="965"
+     inkscape:window-x="100"
+     inkscape:window-y="26"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-143.39844,-190.04027)">
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="140"
+       y="495.21933"
+       id="text2816"><tspan
+         sodipodi:role="line"
+         id="tspan2818"
+         x="140"
+         y="495.21933">u</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="554.28571"
+       y="495.21933"
+       id="text2820"><tspan
+         sodipodi:role="line"
+         id="tspan2822"
+         x="554.28571"
+         y="495.21933">v</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.02202666px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 180.01101,485.43727 180.11388,-263.79939 179.30739,262.00104 -0.0108,0.007 -178.797,-123.23861 -180.61345,125.02958 z"
+       id="path2824"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 179.6651,485.06683 361.4114,544.62562 539.42146,483.6463"
+       id="path2826"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="332.34018"
+       y="211.91527"
+       id="text2828"><tspan
+         sodipodi:role="line"
+         id="tspan2830"
+         x="332.34018"
+         y="211.91527">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="332.34018"
+       y="349.29599"
+       id="text2832"><tspan
+         sodipodi:role="line"
+         id="tspan2834"
+         x="332.34018"
+         y="349.29599">y</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="336.62589"
+       y="576.69928"
+       id="text2836"><tspan
+         sodipodi:role="line"
+         id="tspan2838"
+         x="336.62589"
+         y="576.69928">z</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 360.0947,222.22415 1.42633,322.26798"
+       id="path2842"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
