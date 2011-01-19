@@ -1,0 +1,9 @@
+== [[Kinetic energy]] ==
+
+Hello Guythatprovesstuff, and welcome to Wikiproofs. Thank you for your contribution, [[Kinetic energy]], but I'm afraid you may have misunderstood the purpose of Wikiproofs. Wikiproofs is a wiki for '''formal, machine-verifiable proofs'''. Proofs are to be written in a special computer language called [[Help:JHilbert|JHilbert]] ([[Basic arithmetic implies Peano axioms|example]]), possibly interspersed with informal comments on the proof steps (see also [[WP:SCOPE]]). Note that physics is not excluded from the scope ''per se''. However, you must write your contributions in the JHilbert language. Unfortunately, Wikiproofs is still rather new, and we have, at this time, no formalised instance of any integral calculus whatsoever, which would be a requirement for your proof.
+
+Of course, you are invited to work on a formalisation of more basic concepts (integers, rationals, reals, and complex numbers appear to be the next logical steps towards a formalisation of physics). In the meantime, why don't you take your proof to a site whose scope matches high school physics. Wikipedia appears to have a proof already, at [[w:Kinetic energy#Derivation]]. There is also [http://planetphysics.org Planet Physics]. For generic informal proofs, you should take a look at [http://proofwiki.org Proofwiki] (I don't know, though, whether they accept physics).
+
+Again, I'm sorry that your contribution has to be deleted. I'll postpone the deletion until tomorrow, so you can take your work to a different site (and even once it's deleted, you can still extract the wikitext from [http://www.wikiproofs.org/dumps/xmldump-2011-01-19.xml.bz2 today's wiki dump]).
+
+Take care!--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 09:54, 19 January 2011 (UTC)
