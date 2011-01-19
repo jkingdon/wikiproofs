@@ -748,6 +748,55 @@ Next we assemble <code>B ≠ P ∧ ((between P A B ∨ between P B A) ∧ (betwe
 ))
 </jh>
 
+== Line segment construction ==
+From a given point, in the direction of a second given point, we construct a segment congruent to a given line segment. This is similar to <code>InnerSegmentConstruction</code> but is expressed in terms of <code>is-outside</code>.<ref>l6_11_existence in Narboux</ref>
+
+The proof consists of applying <code>InnerSegmentConstruction</code>, rearranging, and applying the definition of <code>is-outside</code>. The following lemma expresses most of the rearrangements.
+<jh>
+thm (OutSegmentConstructionLemma () ()
+  ((((R ≠ A) ∧ (B ≠ C)) ∧
+    (((between A R E) ∨ (between A E R)) ∧
+      (A E ≡ B C))) →
+  ((A is-outside E R) ∧ (A E ≡ B C))) (
+</jh>
+To apply the definition of <code>A is-outside E R</code>, first we need <code>E ≠ A</code>. This follows from <code>B ≠ C</code> and <code>A E ≡ B C</code>.
+<jh>
+        TODO
+</jh>
+Next we need <code>R ≠ A</code>.
+<jh>
+        TODO
+</jh>
+Then we need <code>between A e R ∨ between A R e</code>
+<jh>
+        TODO
+</jh>
+That's all for <code>A is-outside E R</code>. So the only remaining step is <code>A E ≡ B C</code>
+<jh>
+        TODO
+))
+
+thm (OutSegmentConstruction ((e R) (e A) (e B) (e C)) ()
+  (((R ≠ A) ∧ (B ≠ C)) →
+    (∃ e ((A is-outside (value e) R) ∧ (A (value e) ≡ B C)))) (
+        ((R ≠ A) ∧ (B ≠ C)) ImplicationReflexivity
+        e A R B C InnerSegmentConstruction
+        introduceRightConjunctToConsequent
+
+        e
+          ((R ≠ A) ∧ (B ≠ C))
+          (((between A R (value e)) ∨ (between A (value e) R)) ∧
+            (A (value e) ≡ B C))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        R A B C (value e) OutSegmentConstructionLemma
+        e addThereExists
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
