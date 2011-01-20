@@ -98,7 +98,7 @@ Combining these produces <code>0 + 0 < a + 1</code>.
         (0) a (0) (1) LessEqualLessThanAddition
         applyModusPonens
 </jh>
-Simplifyng the left hand side gives <code>0 < a + 1</code>.
+Simplifying the left hand side gives <code>0 < a + 1</code>.
 <jh>
         (0) AdditiveIdentityLeft
         (a + (1)) buildLessThanRR
