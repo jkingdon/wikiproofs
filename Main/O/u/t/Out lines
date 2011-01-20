@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″)
+var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″ X Y)
 var (variable c c′ d d′ e e′ f p)
 </jh>
 
@@ -749,9 +749,12 @@ Next we assemble <code>B ≠ P ∧ ((between P A B ∨ between P B A) ∧ (betwe
 </jh>
 
 == Line segment construction ==
-From a given point, in the direction of a second given point, we construct a segment congruent to a given line segment. This is similar to <code>InnerSegmentConstruction</code> but is expressed in terms of <code>is-outside</code>.<ref>l6_11_existence in Narboux</ref>
+From a given point, in the direction of a second given point, we construct a segment congruent to a given line segment. This is similar to <code>InnerSegmentConstruction</code> but is expressed in terms of <code>is-outside</code>.
 
-The proof consists of applying <code>InnerSegmentConstruction</code>, rearranging, and applying the definition of <code>is-outside</code>. The following lemma expresses most of the rearrangements.
+=== Existence ===
+In this section we prove the existence of such a point. That is, <code>R ≠ A ∧ B ≠ C → ∃ e (A is-outside e R ∧ A e ≡ B C)</code>.
+
+The proof consists of applying <code>InnerSegmentConstruction</code>, rearranging, and applying the definition of <code>is-outside</code>. The following lemma expresses most of the rearrangements.<ref>l6_11_existence in Narboux</ref>
 <jh>
 thm (OutSegmentConstructionLemma () ()
   ((((R ≠ A) ∧ (B ≠ C)) ∧
@@ -853,6 +856,26 @@ thm (OutSegmentConstruction ((e R) (e A) (e B) (e C)) ()
         applySyllogism
 ))
 </jh>
+
+=== Uniqueness ===
+The point that we construct this way is also unique. In symbols, <code>R ≠ A ∧ B ≠ C ∧ A is-outside X R ∧ A X ≡ B C ∧ A is-outside Y R ∧ A Y ≡ B C → X = Y</code>.
+
+The proof of uniqueness is more involved than the existence proof. Start by expanding the definitions of <code>is-outside</code> (and removing the redundant copies of <code>R ≠ A</code>) so we now have
+  R ≠ A ∧ B ≠ C ∧
+  X ≠ A ∧ (between A X R ∨ between A R X) ∧
+  A X ≡ B C ∧
+  Y ≠ A ∧ (between A Y R ∨ between A R Y) ∧
+  A Y ≡ B C
+
+{{under construction}}
+Derive:
+ A X ≡ A Y
+ between A X Y ∨ between A Y X
+Apply:
+ BetweennessTwoDistanceUniqueness
+ InnerThreeSegment
+ BetweennessOneDistanceUniqueness
+ BetweennessOuterConnectivity
 
 == Export ==
 We now export to [[Interface:Out lines]].
