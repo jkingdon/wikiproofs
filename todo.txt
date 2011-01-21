@@ -78,16 +78,21 @@ Items which may be doable without a network connection:
     • antisymmetry
     • (x - y) · (y - x) = 0 → x = y (follows from x · y = 0 → x = 0 or y = 0)
 
-* How much do we use ThereExistsConjunctionRightMovement? Is there room
-  for a convenience theorem or is it something which often has another
-  quantifier outside?
+* Probably worth a convenience theorem for  ThereExistsConjunctionRightMovement +
+ eliminateBiconditionalForward +
+ applySyllogism
 
 == Separation ==
-[this is an attempt which writes φ as [ x / x ] φ but that, while arguably nicer,
-doesn't solve the problem which makes the proof not work, which is that φ can contain
-the variable. Maybe we need to be using *NotFree rather than distinct variables?]
+[what we need is a verion of SetVariable which replaces the
+distinct variable constraint (y φz) with (y is-not-free-in φz)?
+(or is it a different constraint? might want to put this through
+jhilbert again to see exactly where it blows up)
 
-Here we provide the ability to form a set containing those elements of a given set which satisfy an arbitrary formula. In other words, we can form the set of all <code>x</code> in <code>A</code> such that <code>φ</code>, which is commonly notated as <code>{x ∈ A | φ }</code>. We will use that notation in discussion but JHilbert's syntax is not that flexible, so for JHilbert we will call it <code>(separate x A φ)</code>. ''Restricted set abstraction'' is one term for this (contrasted with the ''unrestricted set abstraction'' of <code>{x | φ}</code>).<ref>Michael R. Genesereth and Richard E. Fikes (1994), "[http://logic.stanford.edu/kif/Hypertext/node25.html Paradoxes]", Knowledge Interchange Format Version 3.0 Reference Manual, also available as Stanford Logic Group Technical Report Logic-92-1.</ref>
+I guess the problem is that φ can contain x
+
+Is it as simple as adding (x C) to the theorem we are proving?]
+
+Here we provide the ability to form a set containing those elements of a given set which satisfy an arbitrary formula. In other words, we can form the set of all <code>x</code> in <code>A</code> such that <code>φ</code>, which is commonly notated as <code>{x ∈ A | φ }</code>. We will use that notation in discussion but JHilbert's syntax is not that flexible, so for JHilbert we will call it <code>(separate x A φ)</code>. ''Restricted set abstraction'' is one term for this (contrasted with the ''unrestricted set abstraction'' of <code>{x | φ}</code>).<ref>For example, see Michael R. Genesereth and Richard E. Fikes (1994), "[http://logic.stanford.edu/kif/Hypertext/node25.html Paradoxes]", Knowledge Interchange Format Version 3.0 Reference Manual, also available as Stanford Logic Group Technical Report Logic-92-1.</ref>
 
 Introducing this notation follows much the process as for the other existence theorems/axioms, in this case working from <code>SeparationThereExists</code>. We are trying to prove <code>y ∈ {x ∈ A | φ } ↔ y ∈ A ∧ [y / x] φ</code>.
 
