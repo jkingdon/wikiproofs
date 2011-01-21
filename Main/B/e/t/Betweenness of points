@@ -363,55 +363,7 @@ thm (BetweennessOuterTransitivityFlipped ((A a) (B a) (C a) (D a)) () ((((betwee
 ))
 </jh>
 
-==== Middle transitivity ====
-The next result is <code>between A B D ∧ between B C D → between A C D</code>. The proof has two cases. If <code>B = C</code>, then we can substitute <code>between A B D</code> into <code>between A C D</code> and we are done. If <code>B ≠ C</code>, then we first apply inner transitivity to get <code>between A B C</code>, and then apply outer transitivity (flipped) to get <code>between A C D</code>.<ref>between_exchange2 in Narboux</ref>
-<jh>
-thm (BetweennessMiddleTransitivityBEqualsC () () ((B = C) → (((between A B D) ∧ (between B C D)) → (between A C D))) (
-        A EqualityReflexivity
-        D EqualityReflexivity
-        A A B C D D BetweenBuilder
-        detach2of2
-        detach1of2
-        eliminateBiconditionalReverseInConsequent
-
-        (between A B D) (between B C D) ConjunctionRightElimination
-        (between A C D) addCommonConsequent
-        applySyllogism
-))
-
-thm (BetweennessMiddleTransitivityBNotEqualC () () ((B ≠ C) → (((between A B D) ∧ (between B C D)) → (between A C D))) (
-</jh>
-We'll prove <code>B ≠ C ∧ (between A B D ∧ between B C D) → between A C D</code>, which is only an export away from our desired result.
-
-To apply <code>BetweennessOuterTransitivityFlipped</code> we need three things.  The first is <code>between A B C</code>
-<jh>
-        (B ≠ C) ((between A B D) ∧ (between B C D)) ConjunctionLeftElimination
-        A B D C BetweennessInnerTransitivity
-        applySyllogism
-</jh>
-The second is <code>between B C D</code>
-<jh>
-        (B ≠ C) ((between A B D) ∧ (between B C D)) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-
-        composeConjunction
-</jh>
-The third is <code>B ≠ C</code>
-<jh>
-        (B ≠ C) ((between A B D) ∧ (between B C D)) ConjunctionRightElimination
-        composeConjunction
-
-        A B C D BetweennessOuterTransitivityFlipped
-        applySyllogism
-        export
-))
-
-thm (BetweennessMiddleTransitivity () () (((between A B D) ∧ (between B C D)) → (between A C D)) (
-        B C A D BetweennessMiddleTransitivityBEqualsC
-        B C A D BetweennessMiddleTransitivityBNotEqualC
-        eliminateCases
-))
-</jh>
+ http://www.xingbing66.com/ nexium knsa http://www.citiaction.org/ lunesta 69302 http://www.canaveraldistrict.org/prednisone.html prednisone =[[[ http://www.marsyslaw.org/acomplia.html acomplia =PP
 
 ==== Outer transitivity, non-flipped ====
 The non-flipped outer transitivity is <code>between A B C ∧ between B C D ∧ B ≠ C → between A B D</code>.<ref>outer_transitivity_between in Narboux</ref><ref>Axiom 16 in Givant and Tarski, 1999</ref> Our proof just takes <code>BetweennessOuterTransitivityFlipped</code> and flips it, whereas Narboux's proof also invokes <code>BetweennessMiddleTransitivity</code>.
