@@ -19,7 +19,7 @@ The [[w:empty set|empty set]], or null set, is the set with no elements. We star
 <jh>
 thm (axnul ((x y z)) () (∃ x (∀ y (¬ ((value y) ∈ (value x))))) (
 </jh>
-The only set theory axiom we use in the proof is the axiom of separation, which says that given the existence of any set (which is implicit in some the predicate logic steps), we can construct a subset of it which has no elements. Here is our application of separation, which we will use at the end of the proof (after a bunch of logical steps).
+The only set theory axiom we use in the proof is the axiom of separation, which says that given the existence of any set (which is implicit in some of the predicate logic steps), we can construct a subset of it which has no elements. Here is our application of separation, which we will use at the end of the proof (after a bunch of logical steps).
 <jh>
         x y z (((value y) ∈ (value y)) ∧ (¬ ((value y) ∈ (value y)))) SeparationThereExists
 </jh>
