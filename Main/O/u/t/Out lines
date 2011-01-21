@@ -871,6 +871,33 @@ By congruence transitivity, we derive <code>A X ≡ A Y</code>. Then we look at 
 
 Once we have <code>A X ≡ A Y</code> and <code>between A X Y ∨ between A Y X</code>, <code>X = Y</code> follows from <code>BetweennessOneDistanceUniqueness</code> (applied twice, once to each of the betweenness formulas).
 
+Our first lemma just spells out the four cases.
+<jh>
+thm (OutSegmentConstructionUniqueness-cases () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  (((((between A X R) ∧ (between A Y R)) ∨
+    ((between A X R) ∧ (between A R Y))) ∨
+    ((between A R X) ∧ (between A Y R))) ∨
+    (((A ≠ R) ∧ (between A R X)) ∧ (between A R Y)))) (
+))
+
+thm (OutSegmentConstructionUniqueness-axay () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  (A X ≡ A Y)) (
+))
+
+thm (OutSegmentConstructionUniqueness () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  (X = Y)) (
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
