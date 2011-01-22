@@ -586,7 +586,7 @@ thm (Separation ((φ A) (x A)  (z A) (z B) (z φ) (z x)) ()
 </jh>
 
 == Done ==
-We have now proved all the theorems in [[Interface:Basic operations of general set theory]]j, and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
+We have now proved all the theorems in [[Interface:Basic operations of general set theory]], and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
 
 <jh>
 export (GENERAL Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
