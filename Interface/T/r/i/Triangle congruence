@@ -33,8 +33,6 @@ There are a variety of ways of expressing the idea that congruence is not affect
 stmt (CongruenceLeftCommutativity () () ((x y ≡ z w) ↔ (y x ≡ z w)))
 stmt (CongruenceRightCommutativity () () ((x y ≡ z w) ↔ (x y ≡ w z)))
 stmt (CongruenceCommutativity () () ((x y ≡ z w) ↔ (y x ≡ w z)))
-
-stmt (CongruenceABBA () () (x y ≡ y x))
 </jh>
 
 The congruence relation has the attributes of an equivalence relation between line segments.
