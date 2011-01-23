@@ -42,6 +42,8 @@ The congruence relation has the attributes of an equivalence relation between li
 stmt (CongruenceReflexivity () () (x y ≡ x y))
 stmt (CongruenceSymmetry () () ((x y ≡ z w) ↔ (z w ≡ x y)))
 stmt (CongruenceTransitivity () () (((x y ≡ z w) ∧ (z w ≡ u v)) → (x y ≡ u v)))
+
+stmt (CongruenceABBA () () (x y ≡ y x))
 </jh>
 
 A segment which has zero length starts and ends at the same point (although saying "zero length" is a bit of a shortcut, as our theory is not based on real numbers or any other numbers).

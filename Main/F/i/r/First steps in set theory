@@ -12,6 +12,7 @@ import (AXIOMS Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ()
 
 var (variable x y z w result x′)
 var (object A B C D A0 A1 B0 B1)
+var (formula φ)
 </jh>
 
 == Empty set ==
@@ -534,8 +535,58 @@ thm (PowerSet ( (x A) (x B)) () ((B ∈ (power A)) ↔ (B ⊆ A)) (
 ))
 </jh>
 
+== Separation ==
+Here we provide the ability to form a set containing those elements of a given set which satisfy an arbitrary formula. In other words, we can form the set of all <code>x</code> in <code>A</code> such that <code>φ</code>, which is commonly notated as <code>{x ∈ A | φ }</code>. We will use that notation in discussion but JHilbert's syntax is not that flexible, so for JHilbert we will call it <code>(separate x A φ)</code>. ''Restricted set abstraction'' is one term for this (contrasted with the ''unrestricted set abstraction'' of <code>{x | φ}</code>).<ref>See for example Michael R. Genesereth and Richard E. Fikes (1994), "[http://logic.stanford.edu/kif/Hypertext/node25.html Paradoxes]", Knowledge Interchange Format Version 3.0 Reference Manual, also available as Stanford Logic Group Technical Report Logic-92-1.</ref>
+
+Introducing this notation follows much the process as for the other existence theorems/axioms, in this case working from <code>SeparationThereExists</code>. We are trying to prove <code>y ∈ {x ∈ A | φ } ↔ y ∈ A ∧ [y / x] φ</code>.
+
+First we provide a version of <code>SeparationThereExists</code> where we turn the variable <code>z</code> into the object <code>A</code>
+<jh>
+thm (SeparationThereExistsObject ((x y A) (φ y A)  (z x y A) (z φ)) ()
+  (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ A) ∧ φ)))) (
+        (value z) A (value x) IsElementBuilderLL
+        φ buildConjunctionRRInConsequent
+        ((value x) ∈ (value y)) buildBiconditionalLLInConsequent
+        x buildForAllInConsequent
+        y buildThereExistsInConsequent
+
+        y x z φ SeparationThereExists
+
+        VariableToObject
+))
+
+thm (SeparationThereExistsSubst ((result y A) (φ result A) (x result A)) ()
+  (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ A) ∧ (subst (value y) x φ))))) (
+        result y A (subst (value y) x φ) SeparationThereExistsObject
+))
+</jh>
+
+From here we apply <code>SetObject</code> in much the usual way.
+<jh>
+thm (Separation-sub () () ((C = D) → (((C ∈ A) ∧ (subst C x φ)) ↔ ((D ∈ A) ∧ (subst D x φ)))) (
+        C D A IsElementBuilderRR
+        C D x φ SubstBuilderReplacement
+        buildConjunctionInConsequent
+))
+
+thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z) (φ A) (x A)) ()
+  ((C ∈ (abstract z (((value z) ∈ A) ∧ (subst (value z) x φ)))) ↔ ((C ∈ A) ∧ (subst C x φ))) (
+        (value z) (value y) A x φ Separation-sub
+        (value y) C A x φ Separation-sub
+        result y A x φ SeparationThereExistsSubst
+        SetObject
+))
+
+def ((separate x A φ) (abstract y (((value y) ∈ A) ∧ (subst (value y) x φ))))
+
+thm (Separation ((φ A) (x A)  (z A) (z B) (z φ) (z x)) ()
+  ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))) (
+        C z A x φ SeparationObject
+))
+</jh>
+
 == Done ==
-We have now proved all the theorems in [[Interface:Basic operations of general set theory]]j, and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
+We have now proved all the theorems in [[Interface:Basic operations of general set theory]], and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
 
 <jh>
 export (GENERAL Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())

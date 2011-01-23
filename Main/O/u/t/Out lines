@@ -5,7 +5,7 @@
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
 
-This page gets its name from ''out lines'', that is a predicate <code>(P is-outside A B)</code> which means that <code>P</code> is on the line <code>A B</code> outside the segment <code>A B</code>. We prove a number of results based on that concept, which in turn lead to a number of theorems involving colinearity.
+This page gets its name from ''out lines'', that is a predicate <code>(P is-outside A B)</code> which means that <code>P</code> is on the line <code>A B</code> outside the segment <code>A B</code>. We prove a number of results based on that concept, which in turn lead to a number of theorems involving collinearity.
 
 We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
 <jh>
@@ -17,10 +17,10 @@ var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″ X Y)
 var (variable c c′ d d′ e e′ f p)
 </jh>
 
-== Out lines defined ===
+== Out lines defined ==
 A point <code>P</code> is on the line <code>A B</code> outside the line segment <code>A B</code> if and only if one of those points is between <code>P</code> and the other and <code>P</code> is not equal to either one.<ref>Definition out in Narboux</ref>
 <jh>
-def ((is-outside P A B) (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))))
+def ((is-outside P A B) (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
 </jh>
 
 We also state this definition as a theorem.
@@ -128,7 +128,9 @@ Next we take <code>P is-outside A B</code>, unfold the definition, and extract <
           (P is-outside A B)
           ConjunctionLeftElimination
 
-        ((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A)) ConjunctionLeftElimination
+        ((A ≠ P) ∧ (B ≠ P))
+          ((between P A B) ∨ (between P B A))
+          ConjunctionLeftElimination
         applySyllogism
 
         composeConjunction
@@ -139,6 +141,7 @@ Applying distributivity of conjunction over disjunction finishes the job.
           (between P A B)
           (between P B A)
           ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 
@@ -158,14 +161,14 @@ Our first transitivity invocation is <code>between B A P ∧ between A P C ∧ A
         ((A ≠ P) ∧ (between A P C))
           (between P A B)
           ConjunctionRightElimination
-        eliminateLeftConjuctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
         ((A ≠ P) ∧ (between A P C))
           (between P A B)
           ConjunctionRightElimination
-        eliminateRightConjuctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -200,10 +203,10 @@ Now we combine the two.
 
 thm (BeyondOut () () (((((A ≠ P) ∧ (B ≠ P)) ∧ (C ≠ P)) ∧ (between A P C)) →
   ((between B P C) ↔ (P is-outside A B))) (
-        BeyondOutForward
+        A P B C BeyondOutForward
         export
 
-        BeyondOutReverse
+        A P B C BeyondOutReverse
         export
 
         introduceBiconditionalFromImplicationsInConsequent
@@ -216,7 +219,9 @@ In this section we show that a point is outside a line segment if and only if th
 We start with the forward implication. Extend <code>A P</code> to a distinct point <code>c</code> (that is, a point for which <code>P ≠ c ∧ between A P c</code>. We can then apply <code>BeyondOut</code> to show that <code>between B P c</code>.<ref>l6_3_1 in Narboux</ref> Below we present the formal version of this proof, broken down into several lemmas.
 
 <jh>
-thm (ExistsBeyondOutForward-bpc () () (((P is-outside A B) ∧ ((C ≠ P) ∧ (between A P C))) → (between B P C)) (
+thm (ExistsBeyondOutForward-bpc () ()
+  (((P is-outside A B) ∧ ((C ≠ P) ∧ (between A P C))) →
+    (between B P C)) (
 </jh>
 At the end of the proof we'll need a copy of <code>P is-outside A B</code>, so we stick it on the proof stack.
 <jh>
@@ -267,7 +272,7 @@ The next lemma is just <code>PointConstructionDifferent</code>, together with so
 thm (ExistsBeyondOutForward-c ((c A) (c P)) () (∃ c (((value c) ≠ P) ∧ (between A P (value c)))) (
         c A P PointConstructionDifferent
 
-        (P ≠ (value c)) (between A P (value c)) ConjunctionCommutativity
+        (between A P (value c)) (P ≠ (value c)) ConjunctionCommutativity
         eliminateBiconditionalReverse
         c addThereExists
         applyModusPonens
@@ -275,7 +280,7 @@ thm (ExistsBeyondOutForward-c ((c A) (c P)) () (∃ c (((value c) ≠ P) ∧ (be
         P (value c) EqualitySymmetry
         addNegation
         eliminateBiconditionalReverse
-        (between A P (value c)) conjoinLL
+        (between A P (value c)) conjoinRR
         c addThereExists
         applyModusPonens
 ))
@@ -294,6 +299,7 @@ We now have <code>P is-outside A B → ∀ c (c ≠ P ∧ between A P c → betw
           (((value c) ≠ P) ∧ (between A P (value c)))
           ((((value c) ≠ P) ∧ (between A P (value c))) → (between B P (value c)))
           ThereExistsConjunctionRightCombining
+        applySyllogism
 </jh>
 To get <code>between B P c</code> is just a matter of modus ponens. The one complication is that we want to keep <code>c ≠ P ∧ between A P c</code> around in addition, so we apply idempotence, associativity, and modus ponens, in that order.
 <jh>
@@ -319,17 +325,20 @@ To get <code>between B P c</code> is just a matter of modus ponens. The one comp
         applySyllogism
 ))
 
-thm (ExistsBeyondOutForward ((c A) (c B) (c P)) () ((P is-outside A B) → (((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c)))))) (
+thm (ExistsBeyondOutForward ((c A) (c B) (c P)) ()
+  ((P is-outside A B) → (((A ≠ P) ∧ (B ≠ P)) ∧
+    (∃ c ((((value c) ≠ P) ∧
+      (between A P (value c))) ∧ (between B P (value c)))))) (
 </jh>
 First is <code>P is-outside A B → A ≠ P</code>
 <jh>
-        (((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A))) ConjunctionRightElimination
+        ((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A)) ConjunctionRightElimination
         eliminateRightConjunctInConsequent
 
 </jh>
 Next is <code>P is-outside A B → B ≠ P</code>
 <jh>
-        (((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A))) ConjunctionRightElimination
+        ((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A)) ConjunctionRightElimination
         eliminateLeftConjunctInConsequent
 
         composeConjunction
@@ -343,7 +352,11 @@ Next is the remainder.
 </jh>
 We now turn to the reverse direction.<ref>l6_3_2 in Narboux</ref>
 <jh>
-thm (ExistsBeyondOutReverse ((c A) (c B) (c P)) () ((((A ≠ P) ∧ (B ≠ P)) ∧ (∃ c ((((value c) ≠ P) ∧ (between A P (value c))) ∧ (between B P (value c))))) → (P is-outside A B)) (
+thm (ExistsBeyondOutReverse ((c A) (c B) (c P)) ()
+  ((((A ≠ P) ∧ (B ≠ P)) ∧
+    (∃ c ((((value c) ≠ P) ∧
+      (between A P (value c))) ∧ (between B P (value c))))) →
+   (P is-outside A B)) (
 </jh>
 This proof is basically an application of middle connectivity for betweenness, which in this case is <code>c ≠ P ∧ between c P A ∧ between c P B → between P A B ∨ between P B A</code>. First we need <code>c ≠ P</code>
 <jh>
@@ -362,6 +375,8 @@ Next is <code>between c P A</code>.
         A P (value c) BetweennessSymmetry
         eliminateBiconditionalReverse
         applySyllogism
+
+        composeConjunction
 </jh>
 Next is <code>between c P B</code>.
 <jh>
@@ -372,12 +387,15 @@ Next is <code>between c P B</code>.
         B P (value c) BetweennessSymmetry
         eliminateBiconditionalReverse
         applySyllogism
+
+        composeConjunction
 </jh>
 We apply connectivity, remove the quantifier from the consequent, and assemble the result.
 <jh>
         (value c) P A B BetweennessMiddleConnectivity
         applySyllogism
 
+        c addThereExists
         removeThereExistsInConsequent
 
         ((A ≠ P) ∧ (B ≠ P)) conjoinLL
@@ -395,26 +413,30 @@ A point is outside a line segment if and only if it is collinear with the endpoi
 
 We first tackle the forward direction.<ref>l6_4_1 in Narboux</ref> The first lemma is <code>P ≠ A ∧ P ≠ B ∧ between P A B → ¬ between A P B</code>.
 <jh>
-thm (OutCollinearityForward-1 () () ((((P ≠ A) ∧ (P ≠ B)) ∧ (between P A B)) → (¬ (between A P B))) (
+thm (OutCollinearityForward-1 () () ((((A ≠ P) ∧ (B ≠ P)) ∧ (between P A B)) → (¬ (between A P B))) (
 </jh>
 First we pick out and rearrange the parts we need, specifically we prove <code>P ≠ A ∧ P ≠ B ∧ between P A B → between P A B ∧ P ≠ A</code>
 <jh>
-        ((P ≠ A) ∧ (P ≠ B)) (between P A B) ConjunctionLeftElimination
+        ((A ≠ P) ∧ (B ≠ P)) (between P A B) ConjunctionLeftElimination
 
-        ((P ≠ A) ∧ (P ≠ B)) (between P A B) ConjunctionRightElimination
+        ((A ≠ P) ∧ (B ≠ P)) (between P A B) ConjunctionRightElimination
         eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
-The geometrical content of this proof is <code>between P A B ∧ between A P B → P = A</code>.
+The geometrical content of this proof is <code>between P A B ∧ between A P B → A = P</code>.
 <jh>
         P A B BetweennessEquality
+
+        P A EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
-Applying some propositional logic, we rearrange this to <code>between P A B ∧ P ≠ A → ¬ between A P B</code>
+Applying some propositional logic, we rearrange this to <code>between P A B ∧ A ≠ P → ¬ between A P B</code>
 <jh>
         export
 
-        (between A P B) (P = A) Transposition
+        (between A P B) (A = P) Transposition
         eliminateBiconditionalReverse
         applySyllogism
 
@@ -424,18 +446,19 @@ Combining this with our first rearrangement, we get the desired result.
 <jh>
         applySyllogism
 ))
+</jh>
 
-The second lemma, <code>P ≠ A ∧ P ≠ B ∧ between P B A → ¬ between A P B</code>, is very similar.
+The second lemma, <code>A ≠ P ∧ B ≠ P ∧ between P B A → ¬ between A P B</code>, is very similar.
 <jh>
-thm (OutCollinearityForward-2 () () ((((P ≠ A) ∧ (P ≠ B)) ∧ (between P B A)) → (¬ (between A P B))) (
-        (P ≠ A) (P ≠ B) ConjunctionCommutativity
+thm (OutCollinearityForward-2 () () ((((A ≠ P) ∧ (B ≠ P)) ∧ (between P B A)) → (¬ (between A P B))) (
+        (A ≠ P) (B ≠ P) ConjunctionCommutativity
         eliminateBiconditionalReverse
         (between P B A) conjoinRR
 
-        P B A OutCollinearityForward-1
+        B P A OutCollinearityForward-1
         applySyllogism
 
-        A P B BetweennessSymmetry
+        B P A BetweennessSymmetry
         addNegation
         eliminateBiconditionalReverse
         applySyllogism
@@ -445,10 +468,11 @@ thm (OutCollinearityForward-2 () () ((((P ≠ A) ∧ (P ≠ B)) ∧ (between P B
 Combining the two previous lemmas we get <code>P is-outside A B → ¬ between A P B</code>.
 <jh>
 thm (OutCollinearityForward-3 () () ((P is-outside A B) → (¬ (between A P B))) (
-        ((P ≠ A) ∧ (P ≠ B)) (between P A B) (between P B A) ConjunctionLeftDistribution
+        ((A ≠ P) ∧ (B ≠ P)) (between P A B) (between P B A) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
 
-        P A B OutCollinearityForward-1
-        P A B OutCollinearityForward-2
+        A P B OutCollinearityForward-1
+        A P B OutCollinearityForward-2
         composeDisjunction
 
         applySyllogism
@@ -458,7 +482,7 @@ thm (OutCollinearityForward-3 () () ((P is-outside A B) → (¬ (between A P B))
 Collinearity is straightforward.
 <jh>
 thm (OutCollinearityForward-collinear () () ((P is-outside A B) → (collinear A P B)) (
-        ((P ≠ A) ∧ (P ≠ B)) ((between P A B) ∨ (between P B A)) ConjunctionLeftElimination
+        ((A ≠ P) ∧ (B ≠ P)) ((between P A B) ∨ (between P B A)) ConjunctionLeftElimination
 
         (between P A B) (between P B A) DisjunctionCommutativity
         eliminateBiconditionalReverse
@@ -470,6 +494,10 @@ thm (OutCollinearityForward-collinear () () ((P is-outside A B) → (collinear A
         applySyllogism
 
         ((between P B A) ∨ (between B A P)) (between A P B) DisjunctionLeftIntroduction
+        applySyllogism
+
+        (between A P B) (between P B A) (between B A P) DisjunctionAssociativity
+        eliminateBiconditionalForward
         applySyllogism
 ))
 </jh>
@@ -485,35 +513,35 @@ thm (OutCollinearityForward () () ((P is-outside A B) → ((collinear A P B) ∧
 
 Turning our attention to the reverse direction,<ref>l6_4_2 in Narboux</ref> we have two tasks. The first is to show that <code>P ≠ A</code> and </code>P ≠ B</code>, each of which follows from <code>¬ between A P B</code> (because either equality holding would make <code>between A P B</code> hold trivially).
 <jh>
-thm (OutCollinearityReverse-1 () () (((collinear A P B) ∧ (¬ (between A P B))) → ((P ≠ A) ∧ (P ≠ B))) (
+thm (OutCollinearityReverse-1 () () (((collinear A P B) ∧ (¬ (between A P B))) → ((A ≠ P) ∧ (B ≠ P))) (
         (collinear A P B) (¬ (between A P B))
         ConjunctionLeftElimination
 </jh>
-Next we show <code>P = A → (between P P B ↔ between A P B)</code>, and from it <code>P = A → between A P B</code>.
+Next we show <code>A = P → (between A P B ↔ between P P B)</code>, and from it <code>A = P → between A P B</code>.
 <jh>
         P B BetweenAAB
 
         P EqualityReflexivity
         B EqualityReflexivity
-        P A P P B B BetweennessBuilder
+        A P P P B B BetweennessBuilder
         detach2of2
         detach2of2
 
-        detachImplicationBiconditional
+        detachImplicationBiconditionalRight
 
         introduceTransposition
 </jh>
-Proving <code>P = B → between A P B</code> is similar (via <code>P = B → (between A P P ↔ between A P B)</code>.
+Proving <code>B = P → between A P B</code> is similar (via <code>B = P → (between A P B ↔ between A P P)</code>.
 <jh>
         A P BetweenABB
 
         A EqualityReflexivity
         P EqualityReflexivity
-        A A P P P B BetweennessBuilder
+        A A P P B P BetweennessBuilder
         detach2of3
         detach1of2
 
-        detachImplicationBiconditional
+        detachImplicationBiconditionalRight
 
         introduceTransposition
 
@@ -524,24 +552,20 @@ Proving <code>P = B → between A P B</code> is similar (via <code>P = B → (be
 </jh>
 Our other task is to show <code>between P A B ∨ between P B A</code>.
 <jh>
-thm (OutCollinearityReverse-2 () () (((collinear A P B) ∧ (¬ (between A P B))) → ((between P A B) ∨ (between P B A))) (
-        (collinear A P B) (¬ (between A P B))
-        ConjunctionLeftElimination
-
-        (collinear A P B) (¬ (between A P B))
-        ConjunctionRightElimination
-
+thm (OutCollinearityReverse-2 () ()
+  (((collinear A P B) ∧ (¬ (between A P B))) →
+    ((between P A B) ∨ (between P B A))) (
+</jh>
+First we show <code>collinear A P B ∧ ¬ between A P B → between P B A ∨ between P A B</code>
+<jh>
         (between A P B) (between P B A) (between B A P) DisjunctionAssociativity
         eliminateBiconditionalReverse
-        applySyllogism
 
         (between A P B) ((between P B A) ∨ (between B A P)) DisjunctionImplication
         eliminateBiconditionalReverse
         applySyllogism
 
-        composeConjunction
-
-        applyModusPonensInConsequent
+        import
 </jh>
 That gives us <code>between P B A ∨ between B A P</code>. We just need to rearrange a bit and we are done.
 <jh>
@@ -564,7 +588,7 @@ thm (OutCollinearityReverse () () (((collinear A P B) ∧ (¬ (between A P B))) 
         composeConjunction
 ))
 
-thm (OutCollinearity () () ((P is-outside A B) → ((collinear A P B) ∧ (¬ (between A P B)))) (
+thm (OutCollinearity () () ((P is-outside A B) ↔ ((collinear A P B) ∧ (¬ (between A P B)))) (
         P A B OutCollinearityForward
         A P B OutCollinearityReverse
         introduceBiconditionalFromImplications
@@ -576,8 +600,8 @@ Here we present versions of reflexivity, symmetry, and transitivity. You can thi
 
 === Reflexivity ===
 <jh>
-thm (OutReflexivity () () ((P ≠ A) → (P is-outside A A)) (
-        (P ≠ A) ConjunctionIdempotence
+thm (OutReflexivity () () ((A ≠ P) → (P is-outside A A)) (
+        (A ≠ P) ConjunctionIdempotence
         eliminateBiconditionalReverse
 
         P A BetweenABB
@@ -589,8 +613,8 @@ thm (OutReflexivity () () ((P ≠ A) → (P is-outside A A)) (
 === Symmetry ===
 <jh>
 thm (OutSymmetry () () ((P is-outside A B) ↔ (P is-outside B A)) (
-        (P ≠ A) (P ≠ B) ConjunctionSymmetry
-        (between P A B) (between P B A) DisjunctionSymmetry
+        (A ≠ P) (B ≠ P) ConjunctionCommutativity
+        (between P A B) (between P B A) DisjunctionCommutativity
         buildConjunction
 ))
 </jh>
@@ -604,7 +628,7 @@ Looking at the betweenness part of that, there are four cases (<code>between P A
 The interesting part is a lemma which handles those four cases; there is also a fair bit of rearranging (in the lemma and in the proof of the actual theorem).
 
 <jh>
-thm (OutTransitivity () () (((B ≠ P) ∧
+thm (OutTransitivity-1 () () (((B ≠ P) ∧
   (((between P A B) ∨ (between P B A)) ∧
     ((between P B C) ∨ (between P C B)))) →
   ((between P A C) ∨ (between P C A))) (
@@ -680,6 +704,10 @@ The third case is <code>B ≠ P ∧ between P B A ∧ between P B C</code>.  Her
 
         ((between P B A) ∧ (between P B C)) conjoinRR
 
+        (P ≠ B) (between P B A) (between P B C) ConjunctionAssociativity
+        eliminateBiconditionalForward
+        applySyllogism
+
         P B A C BetweennessOuterConnectivity
         applySyllogism
 </jh>
@@ -702,41 +730,45 @@ The fourth case is <code>B ≠ P ∧ between P B A ∧ between P C B</code>.  In
         composeDisjunction
 
         composeDisjunction
+
+        applySyllogism
 ))
 
 thm (OutTransitivity () () (((P is-outside A B) ∧ (P is-outside B C)) → (P is-outside A C)) (
 </jh>
 First we pick out <code>A ≠ P</code>.
 <jh>
-        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
-          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B)))
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
         eliminateRightConjunctInConsequent
 </jh>
 Secondly we pick out <code>C ≠ P</code>.
 <jh>
-        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
-          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B)))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
         eliminateLeftConjunctInConsequent
+
+        composeConjunction
 </jh>
 Next we assemble <code>B ≠ P ∧ ((between P A B ∨ between P B A) ∧ (between P B C ∨ between P C B))</code> and apply our lemma to turn this into <code>between P A C ∨ between P C A</code>.
 <jh>
-        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
-          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B)))
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
-        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
-          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B)))
           ConjunctionRightElimination
         eliminateLeftConjunctInConsequent
 
-        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A))))
-          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B))))
+        (((A ≠ P) ∧ (B ≠ P)) ∧ ((between P A B) ∨ (between P B A)))
+          (((B ≠ P) ∧ (C ≠ P)) ∧ ((between P B C) ∨ (between P C B)))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
 
@@ -745,6 +777,10 @@ Next we assemble <code>B ≠ P ∧ ((between P A B ∨ between P B A) ∧ (betwe
         composeConjunction
 
         B P A C OutTransitivity-1
+
+        applySyllogism
+
+        composeConjunction
 ))
 </jh>
 

@@ -1955,7 +1955,6 @@ Next is <code>C R ≡ C E</code>, from the construction of <code>R</code>.
 Next is <code>D′ P ≡ P D′</code>, which holds trivially.
 <jh>
         D′ P CongruenceABBA
-
         introduceRightConjunctToConsequent
 </jh>
 Next is <code>C P ≡ C D′</code>, from the construction of <code>P</code>.
