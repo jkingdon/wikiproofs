@@ -783,6 +783,115 @@ Next we assemble <code>B ≠ P ∧ ((between P A B ∨ between P B A) ∧ (betwe
 ))
 </jh>
 
+== Line segment construction ==
+From a given point, in the direction of a second given point, we construct a segment congruent to a given line segment. This is similar to <code>InnerSegmentConstruction</code> but is expressed in terms of <code>is-outside</code>.
+
+=== Existence ===
+In this section we prove the existence of such a point. That is, <code>R ≠ A ∧ B ≠ C → ∃ e (A is-outside e R ∧ A e ≡ B C)</code>.
+
+The proof consists of applying <code>InnerSegmentConstruction</code>, rearranging, and applying the definition of <code>is-outside</code>. The following lemma expresses most of the rearrangements.<ref>l6_11_existence in Narboux</ref>
+<jh>
+thm (OutSegmentConstructionLemma () ()
+  ((((R ≠ A) ∧ (B ≠ C)) ∧
+    (((between A R E) ∨ (between A E R)) ∧
+      (A E ≡ B C))) →
+  ((A is-outside E R) ∧ (A E ≡ B C))) (
+</jh>
+To apply the definition of <code>A is-outside E R</code>, first we need <code>E ≠ A</code>. This follows from <code>B ≠ C</code> and <code>A E ≡ B C</code>, and the first step is picking out those two formulas.
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+The next step in getting to <code>E ≠ A</code> is to show that <code>B ≠ C ∧ A E ≡ B C → A ≠ E</code>.
+<jh>
+        A E B C CongruenceIdentityFromEquality
+        export
+        applyComm
+
+        (A = E) (B = C) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyComm
+        import
+</jh>
+Combining that with the previous result and flipping the two sides of the not-equals sign gives us <code>E ≠ A</code>.
+<jh>
+        applySyllogism
+
+        A E EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next we need <code>R ≠ A</code>.
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+Then we need <code>between A E R ∨ between A R E</code>
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        (between A R E) (between A E R)
+        DisjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+That's all for <code>A is-outside E R</code>. So the only remaining step is <code>A E ≡ B C</code>
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+))
+
+thm (OutSegmentConstruction ((e R) (e A) (e B) (e C)) ()
+  (((R ≠ A) ∧ (B ≠ C)) →
+    (∃ e ((A is-outside (value e) R) ∧ (A (value e) ≡ B C)))) (
+        ((R ≠ A) ∧ (B ≠ C)) ImplicationReflexivity
+        e A R B C InnerSegmentConstruction
+        introduceRightConjunctToConsequent
+
+        e
+          ((R ≠ A) ∧ (B ≠ C))
+          (((between A R (value e)) ∨ (between A (value e) R)) ∧
+            (A (value e) ≡ B C))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        R A B C (value e) OutSegmentConstructionLemma
+        e addThereExists
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
