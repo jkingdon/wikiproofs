@@ -54,8 +54,8 @@ Items which may be doable without a network connection:
         perhaps something like z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B) is one step
         (φ → z ∈ A) → (y ∈ {z ∈ A | φ} ↔ [y / z]φ)  (could be helpful but has the subst)
           then next step is y ∈ A × B ↔ [y / z](z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
-          then y ∈ A × B ↔ y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B
-          and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B
+          then y ∈ A × B ↔ ∃ a ∃ b (y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) (elxp)
+          and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B  (opelxp)
       - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
     - note dmex depends on ax-pow and ax-un, but doesn't need replacement.
   - recursion theorem (see downloaded wikipedia page, Joedit)
@@ -84,6 +84,7 @@ Items which may be doable without a network connection:
 
 * Is there a metamath equivalent of Separation? In particular, I'm curious about
 whether the distinct variable constraints turn out the same.
+  - rabid is sort of a special case
 
 To do with network:
 

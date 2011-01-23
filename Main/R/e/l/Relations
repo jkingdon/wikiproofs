@@ -153,6 +153,38 @@ thm (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPai
 ))
 </jh>
 
+== Unions ==
+Logically, these theorems belong with the other union theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+
+The union of two sets is just a special case of the union of a set: <code>A ∪ B</code> is defined to be <code>⋃ {A, B}</code>.
+<jh>
+def ((∪ A B) (⋃ (unorderedPair A B)))
+</jh>
+
+The next theorem, <code>A ∈ B ∪ C ↔ A ∈ B ∨ A ∈ C</code>, is another way of stating what the union of two sets means.<ref>[http://us.metamath.org/mpeuni/elun.html elun] in metamath's set.mm, accessed January 22, 2011</ref>
+<jh>
+#thm (BinaryUnion () () ((A ∈ (B ∪ C)) ↔ ((A ∈ B) ∨ (A ∈ C))) (
+        
+#))
+</jh>
+
+{{under construction}}
+
+Here's a sketch of how we might prove this:
+ x ∈ {B, C} ↔ x = B ∨ x = C
+ A ∈ ⋃ {B, C} ↔ ∃ x (A ∈ x ∧ x ∈ {B, C})  by Union
+  ↔ ∃ x (A ∈ x ∧ (x = B ∨ x = C))        by UnorderedPair
+  ↔ ∃ x ((A ∈ x ∧ x = B) ∨ (A ∈ x ∧ x = C))  by distributivity
+
+
+  ↔ ∃ x ((A ∈ B) ∨ (A ∈ C))
+    first ThereExistsDisjunction
+    then forward direction by substitution
+    and reverse direction probably via
+      A ∈ B → ∃ x (A ∈ x ∧ x = B) which follows form Quantifiability, I think
+
+  ↔ ((A ∈ B) ∨ (A ∈ C))  by NullThereExists
+
 == Ordered pair ==
 The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
 <jh>
@@ -430,6 +462,14 @@ A relation for two objects holds if and only if the corresponding ordered pair i
 def ((relates A R B) ((orderedPair A B) ∈ R))
 </jh>
 
+== Cartesian product ==
+The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.
+
+To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>(power (power A ∪ B))</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ (power (power A ∪ B)) | z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
+<jh>
+def ((× A B) (separate z (power (power (A ∪ B))) (((z = (orderedPair a b)) ∧ (a ∈ A)) ∧ (b ∈ B))))
+</jh>
+
 == To be added ==
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
@@ -443,3 +483,4 @@ When we've proved everything in it, we'll export to [[Interface:Set theory]].
 <references/>
 
 [[Category:Other classical set theory]]
+
