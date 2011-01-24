@@ -1088,12 +1088,44 @@ thm (OutSegmentConstructionUniqueness-axay () ()
         applySyllogism
 ))
 
-#thm (OutSegmentConstructionUniqueness () () 
-#  (((((((R ≠ A) ∧ (B ≠ C)) ∧
-#    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
-#    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
-#  (X = Y)) (
-#))
+thm (OutSegmentConstructionUniqueness () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  (X = Y)) (
+</jh>
+We first arrange the results of the two previous lemmas to get <code>(between A X Y ∧ A X ≡ A Y) ∨ (between A Y X ∧ A X ≡ A Y)</code>.
+<jh>
+        R A B C X Y OutSegmentConstructionUniqueness-axy-ayx
+        R A B C X Y OutSegmentConstructionUniqueness-axay
+        composeConjunction
+
+        (between A X Y) (between A Y X) (A X ≡ A Y) ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The result for the first half is <code>between A X Y ∧ A X ≡ A Y → X = Y</code>, which follows directly from <code>BetweennessOneDistanceUniqueness</code>.
+<jh>
+        A X Y BetweennessOneDistanceUniqueness
+</jh>
+The second half result, <code>between A Y X ∧ A X ≡ A Y → X = Y</code>, is basically the same thing, but we need to rearrange slightly.
+<jh>
+        A X A Y CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (between A Y X) conjoinLL
+
+        A Y X BetweennessOneDistanceUniqueness
+        applySyllogism
+
+        Y X EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we combine the two halves.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
 </jh>
 
 == Export ==
