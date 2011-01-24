@@ -1059,12 +1059,34 @@ The fourth case is <code>A ≠ R ∧ between A R X ∧ between A R Y</code>.
         applySyllogism
 ))
 
-#thm (OutSegmentConstructionUniqueness-axay () () 
-#  (((((((R ≠ A) ∧ (B ≠ C)) ∧
-#    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
-#    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
-#  (A X ≡ A Y)) (
-#))
+thm (OutSegmentConstructionUniqueness-axay () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  (A X ≡ A Y)) (
+        (((((R ≠ A) ∧ (B ≠ C)) ∧
+          (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+          (A is-outside Y R))
+          (A Y ≡ B C)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        (((((R ≠ A) ∧ (B ≠ C)) ∧
+          (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+          (A is-outside Y R))
+          (A Y ≡ B C)
+          ConjunctionLeftElimination
+
+        A Y B C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A X B C A Y CongruenceTransitivity
+        applySyllogism
+))
 
 #thm (OutSegmentConstructionUniqueness () () 
 #  (((((((R ≠ A) ∧ (B ≠ C)) ∧
