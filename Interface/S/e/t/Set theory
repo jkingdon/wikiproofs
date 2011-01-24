@@ -101,6 +101,34 @@ stmt (Subset ((x A) (x B)) ()
   ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))))
 </jh>
 
+== Union ==
+The union of a set has as its elements everything which is an element of some set in the given set.
+<jh>
+term (object (⋃ object))
+stmt (Union ((x A) (x B)) () ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))))
+</jh>
+
+The union of two sets is just a special case of the union of a set.
+<jh>
+def ((∪ A B) (⋃ (unorderedPair A B)))
+stmt (BinaryUnion () () ((A ∈ (B ∪ C)) ↔ ((A ∈ B) ∨ (A ∈ C))))
+</jh>
+
+== Power set ==
+The power set of a set has as its elements all of the subsets of the given set.
+<jh>
+term (object (power object))
+stmt (PowerSet () () ((B ∈ (power A)) ↔ (B ⊆ A)))
+</jh>
+
+== Separation ==
+We define <code>{x ∈ A | φ}</code>, the set of all elements in <code>A</code> which also satisfy <code>φ</code>. Although we write <code>{x ∈ A | φ}</code> informally, for JHilbert it needs to be <code>(separate x A φ)</code>.
+<jh>
+term (object (separate variable object formula))
+stmt (Separation ((φ A) (x A)) ()
+  ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))))
+</jh>
+
 == Builders ==
 Equals can be substituted for equals, in the context of set operations.
 
