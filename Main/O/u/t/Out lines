@@ -1018,6 +1018,47 @@ Now we remove <code>A ≠ R</code> from the first three cases, and apply associa
         applySyllogism
 ))
 
+thm (OutSegmentConstructionUniqueness-axy-ayx () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  ((between A X Y) ∨ (between A Y X))) (
+        R A B C X Y OutSegmentConstructionUniqueness-cases
+</jh>
+The first of the four cases is <code>between A X R ∧ between A Y R</code>.
+<jh>
+        A X R Y BetweennessInnerConnectivity
+</jh>
+The second case is <code>between A X R ∧ between A R Y</code>.
+<jh>
+        A X R Y BetweennessMiddleTransitivityFlipped
+        (between A X Y) (between A Y X) DisjunctionRightIntroduction
+        applySyllogism
+
+        composeDisjunction
+</jh>
+The third case is <code>between A R X ∧ between A Y R</code>.
+<jh>
+        (between A R X) (between A Y R) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        A Y R X BetweennessMiddleTransitivityFlipped
+        (between A Y X) (between A X Y) DisjunctionLeftIntroduction
+        applySyllogism
+
+        applySyllogism
+</jh>
+The fourth case is <code>A ≠ R ∧ between A R X ∧ between A R Y</code>.
+<jh>
+        A R X Y BetweennessOuterConnectivity
+
+        composeDisjunction
+
+        composeDisjunction
+
+        applySyllogism
+))
+
 #thm (OutSegmentConstructionUniqueness-axay () () 
 #  (((((((R ≠ A) ∧ (B ≠ C)) ∧
 #    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
