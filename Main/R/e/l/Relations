@@ -207,6 +207,46 @@ Adding in the quantifier finishes the reverse direction, and we combine the two 
 ))
 </jh>
 
+=== Membership in a union related to membership in one of the two sets ===
+The next theorem, <code>A ∈ B ∪ C ↔ A ∈ B ∨ A ∈ C</code>, is another way of stating what the union of two sets means.<ref>[http://us.metamath.org/mpeuni/elun.html elun] in metamath's set.mm, accessed January 22, 2011</ref>
+<jh>
+thm (BinaryUnion ( (x A) (x B) (x C)) () ((A ∈ (B ∪ C)) ↔ ((A ∈ B) ∨ (A ∈ C))) (
+</jh>
+We apply the definition of the union of two sets, and the <code>Union</code> theorem to get <code>A ∈ ⋃ {B, C} ↔ ∃ x (A ∈ x ∧ x ∈ {B, C})</code>
+<jh>
+        A (unorderedPair B C) x Union
+</jh>
+Expanding the unordered pair turns that into <code>∃ x (A ∈ x ∧ (x = B ∨ x = C))</code>.
+<jh>
+        (value x) B C UnorderedPair
+        (A ∈ (value x)) buildConjunctionLL
+        x buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+Distributivity gives us <code>∃ x ((A ∈ x ∧ x = B) ∨ (A ∈ x ∧ x = C))</code> and splitting the quantifier turns that into <code>∃ x (A ∈ x ∧ x = B) ∨ ∃ x (A ∈ x ∧ x = C)</code>.
+<jh>
+        (A ∈ (value x)) ((value x) = B) ((value x) = C) ConjunctionLeftDistribution
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        x
+          ((A ∈ (value x)) ∧ ((value x) = B))
+          ((A ∈ (value x)) ∧ ((value x) = C))
+          ThereExistsDisjunction
+        applyBiconditionalTransitivity
+</jh>
+Now we can apply the lemma from the previous section to get <code>A ∈ B ∨ A ∈ C</code>.
+<jh>
+        A B x IsElementThereExists
+
+        A C x IsElementThereExists
+
+        buildDisjunction
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Ordered pair ==
 The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
 <jh>
