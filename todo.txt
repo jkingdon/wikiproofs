@@ -38,7 +38,7 @@ Items which may be doable without a network connection:
       - dffun2 (how to deal with the distinct variables?), funrel
       (lambda x t)
         e.g. (lambda x A 〈x, 1〉)
-        ≝ {〈x, result〉| x ∈ A ∧ result = φ }
+        ≝ {〈x, result〉| x ∈ A ∧ result = t }
       - [s / x](apply (lambda x A t) s) = t
         this reads oddly, because [/] only applies to formulas, not terms
         (metamath has underlined [/] for terms; do we want that?)
@@ -46,12 +46,24 @@ Items which may be doable without a network connection:
       xpexg regarding existence of cross products
         relies on xpsspw
         Also note dependence on defn of ordered pair.
-      A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
+      A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
+
+        proof of a ∈ A ∧ b ∈ B → 〈a, b〉∈ 𝒫𝒫(A ∪ B)
+
         a ∈ A ↔ {a} ⊆ A
-        a0 ∈ A ∧ a1 ∈ A ↔ {a0, a1} ⊆ A
-        A ∈ B → A ∈ B 
-        perhaps something like z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B) is one step
+          → {a} ⊆ A ∪ B
+          ↔ {a} ∈ 𝒫(A ∪ B)
+        a ∈ A ∧ b ∈ B → a ∈ A ∪ B ∧ b ∈ A ∪ B
+          → {a, b} ⊆ A ∪ B
+          ↔ {a, b} ∈ 𝒫(A ∪ B)
+        {{a}, {a, b}} ⊆ 𝒫(A ∪ B)
+        〈a, b〉∈ 𝒫𝒫(A ∪ B)
+
+        a substitution could turn this into:
+          z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B)
+        in case that is helpful
+
         (φ → z ∈ A) → (y ∈ {z ∈ A | φ} ↔ [y / z]φ)  (could be helpful but has the subst)
           then next step is y ∈ A × B ↔ [y / z](z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
           then y ∈ A × B ↔ ∃ a ∃ b (y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) (elxp)
@@ -86,6 +98,8 @@ Items which may be doable without a network connection:
 whether the distinct variable constraints turn out the same.
   - rabid is sort of a special case
 
+* What about using ⟨a, b⟩ for ordered pair instead of 〈a, b〉?
+
 To do with network:
 
 * try to find out more about School Mathematics Study Group geometry postulates? Like Euclid's?
@@ -100,4 +114,8 @@ To do with network:
   figure out what else coq needs
 
 * Throughout First-order logic with quantifiability (and probably First-order logic), add spaces (e.g. change ∃xφ to ∃ x φ).
+
+* In the sandbox experiment about changing the universe of
+quantification, why do we need separate kinds, separate subst,
+etc? Can we just have ∀ and ∃ be separate?
 
