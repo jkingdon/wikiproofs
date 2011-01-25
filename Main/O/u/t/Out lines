@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F P Q R A′ B′ C′ D′ E′ B″ C″ X Y)
+var (point A B C D E F P Q R X Y A′ B′ C′ D′ E′ B″ C″)
 var (variable c c′ d d′ e e′ f p)
 </jh>
 
@@ -931,6 +931,351 @@ thm (OutSegmentConstructionUniqueness () ()
     (A is-outside X R)) ∧ (A X ≡ B C)) ∧
     (A is-outside Y R)) ∧ (A Y ≡ B C)) →
   (X = Y)) (
+))
+</jh>
+
+== Line segment construction ==
+From a given point, in the direction of a second given point, we construct a segment congruent to a given line segment. This is similar to <code>InnerSegmentConstruction</code> but is expressed in terms of <code>is-outside</code>.
+
+=== Existence ===
+In this section we prove the existence of such a point. That is, <code>R ≠ A ∧ B ≠ C → ∃ e (A is-outside e R ∧ A e ≡ B C)</code>.
+
+The proof consists of applying <code>InnerSegmentConstruction</code>, rearranging, and applying the definition of <code>is-outside</code>. The following lemma expresses most of the rearrangements.<ref>l6_11_existence in Narboux</ref>
+<jh>
+thm (OutSegmentConstructionLemma () ()
+  ((((R ≠ A) ∧ (B ≠ C)) ∧
+    (((between A R E) ∨ (between A E R)) ∧
+      (A E ≡ B C))) →
+  ((A is-outside E R) ∧ (A E ≡ B C))) (
+</jh>
+To apply the definition of <code>A is-outside E R</code>, first we need <code>E ≠ A</code>. This follows from <code>B ≠ C</code> and <code>A E ≡ B C</code>, and the first step is picking out those two formulas.
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+The next step in getting to <code>E ≠ A</code> is to show that <code>B ≠ C ∧ A E ≡ B C → A ≠ E</code>.
+<jh>
+        A E B C CongruenceIdentityFromEquality
+        export
+        applyComm
+
+        (A = E) (B = C) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyComm
+        import
+</jh>
+Combining that with the previous result and flipping the two sides of the not-equals sign gives us <code>E ≠ A</code>.
+<jh>
+        applySyllogism
+
+        A E EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next we need <code>R ≠ A</code>.
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+Then we need <code>between A E R ∨ between A R E</code>
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        (between A R E) (between A E R)
+        DisjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+That's all for <code>A is-outside E R</code>. So the only remaining step is <code>A E ≡ B C</code>
+<jh>
+        ((R ≠ A) ∧ (B ≠ C))
+          (((between A R E) ∨ (between A E R)) ∧
+            (A E ≡ B C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+))
+
+thm (OutSegmentConstruction ((e R) (e A) (e B) (e C)) ()
+  (((R ≠ A) ∧ (B ≠ C)) →
+    (∃ e ((A is-outside (value e) R) ∧ (A (value e) ≡ B C)))) (
+        ((R ≠ A) ∧ (B ≠ C)) ImplicationReflexivity
+        e A R B C InnerSegmentConstruction
+        introduceRightConjunctToConsequent
+
+        e
+          ((R ≠ A) ∧ (B ≠ C))
+          (((between A R (value e)) ∨ (between A (value e) R)) ∧
+            (A (value e) ≡ B C))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        R A B C (value e) OutSegmentConstructionLemma
+        e addThereExists
+        applySyllogism
+))
+</jh>
+
+=== Uniqueness ===
+The point that we construct this way is also unique. In symbols, <code>R ≠ A ∧ B ≠ C ∧ A is-outside X R ∧ A X ≡ B C ∧ A is-outside Y R ∧ A Y ≡ B C → X = Y</code>.
+
+The proof of uniqueness is more involved than the existence proof. Start by expanding the definitions of <code>is-outside</code> (and removing the redundant copies of <code>R ≠ A</code>) so we now have
+  R ≠ A ∧ B ≠ C ∧
+  X ≠ A ∧ (between A X R ∨ between A R X) ∧
+  A X ≡ B C ∧
+  Y ≠ A ∧ (between A Y R ∨ between A R Y) ∧
+  A Y ≡ B C
+
+By congruence transitivity, we derive <code>A X ≡ A Y</code>. Then we look at the betweenness relationships. Specifically we want to conclude <code>between A X Y ∨ between A Y X</code>. There are four cases: <code>between A X R ∧ between A Y R → between A X Y ∨ between A Y X</code> by inner connectivity, <code>between A X R ∧ between A R Y → between A X Y</code> by transitivity, <code>between A R X ∧ between A Y R → between A Y X</code> by transitivity, and <code>A ≠ R ∧ between A R X ∧ between A R Y → between A X Y ∨ between A Y X</code> by outer connectivity.
+
+Once we have <code>A X ≡ A Y</code> and <code>between A X Y ∨ between A Y X</code>, <code>X = Y</code> follows from <code>BetweennessOneDistanceUniqueness</code> (applied twice, once to each of the betweenness formulas).
+
+Our first lemma just spells out the four cases.
+<jh>
+thm (OutSegmentConstructionUniqueness-cases () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  ((((between A X R) ∧ (between A Y R)) ∨
+    ((between A X R) ∧ (between A R Y))) ∨
+    (((between A R X) ∧ (between A Y R)) ∨
+    (((A ≠ R) ∧ (between A R X)) ∧ (between A R Y))))) (
+</jh>
+First is <code>A ≠ R</code>.
+<jh>
+        (((((R ≠ A) ∧ (B ≠ C)) ∧
+          (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+          (A is-outside Y R))
+          (A Y ≡ B C)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        R A EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>between A X R ∨ between A R X</code>
+<jh>
+        (((((R ≠ A) ∧ (B ≠ C)) ∧
+          (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+          (A is-outside Y R))
+          (A Y ≡ B C)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Next is <code>between A Y R ∨ between A R Y</code>
+<jh>
+        (((((R ≠ A) ∧ (B ≠ C)) ∧
+          (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+          (A is-outside Y R))
+          (A Y ≡ B C)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        composeConjunction
+</jh>
+Now we apply distributivity to expand the four cases.
+<jh>
+        (between A X R)
+          (between A R X)
+          ((between A Y R) ∨ (between A R Y))
+          ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+
+        (between A X R) (between A Y R) (between A R Y) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        (between A R X) (between A Y R) (between A R Y) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        disjoin
+
+        applySyllogism
+
+        (A ≠ R) conjoinLL
+
+        applySyllogism
+</jh>
+Now we distribute the <code>A ≠ R</code> into each of the cases.
+<jh>
+        (A ≠ R)
+          (((between A X R) ∧ (between A Y R)) ∨ ((between A X R) ∧ (between A R Y)))
+          (((between A R X) ∧ (between A Y R)) ∨ ((between A R X) ∧ (between A R Y)))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (A ≠ R)
+          ((between A X R) ∧ (between A Y R))
+          ((between A X R) ∧ (between A R Y))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        (A ≠ R)
+          ((between A R X) ∧ (between A Y R))
+          ((between A R X) ∧ (between A R Y))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        disjoin
+        applySyllogism
+</jh>
+Now we remove <code>A ≠ R</code> from the first three cases, and apply associativity to the fourth.
+<jh>
+        (A ≠ R) ((between A X R) ∧ (between A Y R)) ConjunctionLeftElimination
+        (A ≠ R) ((between A X R) ∧ (between A R Y)) ConjunctionLeftElimination
+        disjoin
+
+        (A ≠ R) ((between A R X) ∧ (between A Y R)) ConjunctionLeftElimination
+
+        (A ≠ R) (between A R X) (between A R Y) ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        disjoin
+        disjoin
+        applySyllogism
+))
+
+thm (OutSegmentConstructionUniqueness-axy-ayx () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  ((between A X Y) ∨ (between A Y X))) (
+        R A B C X Y OutSegmentConstructionUniqueness-cases
+</jh>
+The first of the four cases is <code>between A X R ∧ between A Y R</code>.
+<jh>
+        A X R Y BetweennessInnerConnectivity
+</jh>
+The second case is <code>between A X R ∧ between A R Y</code>.
+<jh>
+        A X R Y BetweennessMiddleTransitivityFlipped
+        (between A X Y) (between A Y X) DisjunctionRightIntroduction
+        applySyllogism
+
+        composeDisjunction
+</jh>
+The third case is <code>between A R X ∧ between A Y R</code>.
+<jh>
+        (between A R X) (between A Y R) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        A Y R X BetweennessMiddleTransitivityFlipped
+        (between A Y X) (between A X Y) DisjunctionLeftIntroduction
+        applySyllogism
+
+        applySyllogism
+</jh>
+The fourth case is <code>A ≠ R ∧ between A R X ∧ between A R Y</code>.
+<jh>
+        A R X Y BetweennessOuterConnectivity
+
+        composeDisjunction
+
+        composeDisjunction
+
+        applySyllogism
+))
+
+thm (OutSegmentConstructionUniqueness-axay () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  (A X ≡ A Y)) (
+        (((((R ≠ A) ∧ (B ≠ C)) ∧
+          (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+          (A is-outside Y R))
+          (A Y ≡ B C)
+          ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctionInConsequent
+
+        (((((R ≠ A) ∧ (B ≠ C)) ∧
+          (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+          (A is-outside Y R))
+          (A Y ≡ B C)
+          ConjunctionLeftElimination
+
+        A Y B C CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A X B C A Y CongruenceTransitivity
+        applySyllogism
+))
+
+thm (OutSegmentConstructionUniqueness () () 
+  (((((((R ≠ A) ∧ (B ≠ C)) ∧
+    (A is-outside X R)) ∧ (A X ≡ B C)) ∧
+    (A is-outside Y R)) ∧ (A Y ≡ B C)) →
+  (X = Y)) (
+</jh>
+We first arrange the results of the two previous lemmas to get <code>(between A X Y ∧ A X ≡ A Y) ∨ (between A Y X ∧ A X ≡ A Y)</code>.
+<jh>
+        R A B C X Y OutSegmentConstructionUniqueness-axy-ayx
+        R A B C X Y OutSegmentConstructionUniqueness-axay
+        composeConjunction
+
+        (between A X Y) (between A Y X) (A X ≡ A Y) ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The result for the first half is <code>between A X Y ∧ A X ≡ A Y → X = Y</code>, which follows directly from <code>BetweennessOneDistanceUniqueness</code>.
+<jh>
+        A X Y BetweennessOneDistanceUniqueness
+</jh>
+The second half result, <code>between A Y X ∧ A X ≡ A Y → X = Y</code>, is basically the same thing, but we need to rearrange slightly.
+<jh>
+        A X A Y CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (between A Y X) conjoinLL
+
+        A Y X BetweennessOneDistanceUniqueness
+        applySyllogism
+
+        Y X EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we combine the two halves.
+<jh>
+        composeDisjunction
+        applySyllogism
 ))
 </jh>
 
