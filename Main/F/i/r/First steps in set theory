@@ -542,7 +542,8 @@ Introducing this notation follows much the process as for the other existence th
 
 First we provide a version of <code>SeparationThereExists</code> where we turn the variable <code>z</code> into the object <code>A</code>
 <jh>
-thm (SeparationThereExistsObject ((x y A) (φ y A)  (z x y A) (z φ)) ()
+thm (SeparationThereExistsObject
+  ((x y A) (φ y) (A y))  (z x y A) (z φ)) ()
   (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ A) ∧ φ)))) (
         (value z) A (value x) IsElementBuilderLL
         φ buildConjunctionRRInConsequent
