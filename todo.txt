@@ -64,8 +64,11 @@ Items which may be doable without a network connection:
           z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B)
         in case that is helpful
 
+        ∃ a ∃ b (z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) → z ∈ 𝒫𝒫(A ∪ B)
+
+
         (φ → z ∈ A) → (y ∈ {z ∈ A | φ} ↔ [y / z]φ)  (could be helpful but has the subst)
-          then next step is y ∈ A × B ↔ [y / z](z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
+          then next step is y ∈ A × B ↔ [y / z](z = ∃ a ∃ b〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
           then y ∈ A × B ↔ ∃ a ∃ b (y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) (elxp)
           and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B  (opelxp)
       - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
