@@ -25,6 +25,7 @@ As usual, capital letters starting from <code>A</code> are set expressions (that
 <jh>
 var (object A B C D A0 A1 B0 B1)
 var (variable a b x y z w x′ y′ z′)
+var (formula φ)
 </jh>
 
 == Singletons ==
@@ -150,6 +151,47 @@ thm (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPai
 
         A C B UnorderedPairFirstMembersEqual
         applySyllogism
+))
+</jh>
+
+== Separation ==
+Logically, these theorems belong with the other separation theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+
+Although, in general, we cannot specify a set by a formula ("the set of all x for which φ holds") and expect it to exist, such a definition does specify a set in the case in which the formula φ implies that x is part of some set which is known to exist. There might be a few ways to formalize this notion; the one here is particularly aimed at helping us make a definition of the form <code>{z ∈ A | φ}</code> and then prove a statement about membership in that defined set. In symbols, given <code>φ → z ∈ A</code> we conclude <code>B ∈ {z ∈ A | φ} ↔ [B / z]φ</code>.
+<jh>
+thm (FormulaBoundLemma ((z A) (z B)) ((H (φ → ((value z) ∈ A))))
+  (((B ∈ A) ∧ (subst B z φ)) ↔ (subst B z φ)) (
+</jh>
+The forward direction is trivial.
+<jh>
+        (B ∈ A) (subst B z φ) ConjunctionLeftElimination
+</jh>
+To prove the reverse direction we start by adding a substitution to our hypothesis to get <code>[ B / z ] φ → [ B / z ] z ∈ A</code>.
+<jh>
+        H
+        B z addSubst
+</jh>
+Now we perform the latter subsitution, starting with <code>z = B → (z ∈ A ↔ B ∈ A)</code>, and then combining with the previous step to get <code>[ B / z ] φ → B ∈ A</code>.
+<jh>
+        (value z) B A IsElementBuilderRR
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We now just need to add <code>[ B / z ] φ</code> and combine the two directions.
+<jh>
+        (subst B z φ) ImplicationReflexivity
+        composeConjunction
+
+        introduceBiconditionalFromImplications
+))
+
+thm (FormulaBound ((z A) (z B)) ((H (φ → ((value z) ∈ A))))
+  ((B ∈ (separate z A φ)) ↔ (subst B z φ)) (
+        B z A φ Separation
+        H
+        B FormulaBoundLemma
+        applyBiconditionalTransitivity
 ))
 </jh>
 
