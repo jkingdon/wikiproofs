@@ -537,9 +537,9 @@ def ((× A B) (separate z (power (power (A ∪ B)))
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
 == Export ==
-When we've proved everything in it, we'll export to [[Interface:Set theory]].
+We export to [[Interface:Set theory]].
 <jh>
-#export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
