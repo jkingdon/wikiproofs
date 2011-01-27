@@ -73,7 +73,7 @@ stmt (PowerSet () () ((B ∈ (power A)) ↔ (B ⊆ A)))
 We define <code>{x ∈ A | φ}</code>, the set of all elements in <code>A</code> which also satisfy <code>φ</code>. Although we write <code>{x ∈ A | φ}</code> informally, for JHilbert it needs to be <code>(separate x A φ)</code>.
 <jh>
 term (object (separate variable object formula))
-stmt (Separation ((φ A) (x A)) ()
+stmt (Separation ((x A)) ()
   ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))))
 </jh>
 
