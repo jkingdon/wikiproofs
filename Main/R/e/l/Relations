@@ -23,7 +23,7 @@ import (BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASS
 
 As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
 <jh>
-var (object A B C D A0 A1 B0 B1)
+var (object A B C D A0 A1 B0 B1 α β)
 var (variable a b x y z w x′ y′ z′)
 var (formula φ)
 </jh>
@@ -569,10 +569,17 @@ def ((relates A R B) ((orderedPair A B) ∈ R))
 == Cartesian product ==
 The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.
 
-To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>(power (power A ∪ B))</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ (power (power A ∪ B)) | ∃ a ∃ b z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
+To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>(power (power A ∪ B))</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ (power (power (A ∪ B))) | ∃ a ∃ b z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
 <jh>
 def ((× A B) (separate z (power (power (A ∪ B)))
   (∃ a (∃ b ((((value z) = (orderedPair (value a) (value b))) ∧ ((value a) ∈ A)) ∧ ((value b) ∈ B))))))
+</jh>
+
+To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉∈ (power (power (A ∪ B))</code>.
+<jh>
+#thm (IsElementCartesianProductLemma () ()
+#  (((α ∈ A) ∧ (β ∈ B)) → ((orderedPair α β) ∈ (power (power (A ∪ B))))) (
+#))
 </jh>
 
 == To be added ==
