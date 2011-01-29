@@ -893,7 +893,7 @@ thm (OutSegmentConstruction ((e R) (e A) (e B) (e C)) ()
 </jh>
 
 === Uniqueness ===
-The point that we construct this way is also unique. In symbols, <code>R ≠ A ∧ B ≠ C ∧ A is-outside X R ∧ A X ≡ B C ∧ A is-outside Y R ∧ A Y ≡ B C → X = Y</code>.
+The point that we construct this way is also unique. In symbols, <code>R ≠ A ∧ B ≠ C ∧ A is-outside X R ∧ A X ≡ B C ∧ A is-outside Y R ∧ A Y ≡ B C → X = Y</code>.<ref>l6_11_unicity in Narboux</ref>
 
 The proof of uniqueness is more involved than the existence proof. Start by expanding the definitions of <code>is-outside</code> (and removing the redundant copies of <code>R ≠ A</code>) so we now have
   R ≠ A ∧ B ≠ C ∧
