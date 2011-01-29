@@ -430,6 +430,15 @@ stmt (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))))
 stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
 </jh>
 
+=== Some theorems related to substitution ===
+Although the following theorems do not refer to substitution with <code>subst</code>, they do express similar ideas.
+<jh>
+stmt (ImplicitForAll ((x ψ)) ((((value x) = s) → (φ ↔ ψ)))
+  ((∀ x (((value x) = s) → φ)) ↔ ψ))
+stmt (ImplicitThereExists ((x ψ)) ((((value x) = s) → (φ ↔ ψ)))
+  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ))
+</jh>
+
 == Quantifiability ==
 Although the above results do imply the [[Interface:Axiom of quantifiability|axiom of quantifiability]], at least on occasion it is useful directly.
 <jh>
