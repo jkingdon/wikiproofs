@@ -327,6 +327,20 @@ and reassemble our result.
 ))
 </jh>
 
+A rule form with a distinct variable constraint instead of a freeness hypothesis is:
+<jh>
+thm (ImplicitForAll ((x ψ)) ((HEQ (((value x) = s) → (φ ↔ ψ))))
+  ((∀ x (((value x) = s) → φ)) ↔ ψ) (
+        HEQ
+        x generalize
+
+        x ψ DistinctNotFree
+        s φ ImplicitSubstitutionForAll
+
+        applyModusPonens
+))
+</jh>
+
 === Implicit substitution and ∃ ===
 There is a similar result with ∃.<ref>[http://us.metamath.org/mpeuni/equsex.html equsex] in metamath's set.mm, accessed March 9, 2010, with <code>s</code> (the replacement) changed from a <code>variable</code> to an <code>object</code></ref>
 
