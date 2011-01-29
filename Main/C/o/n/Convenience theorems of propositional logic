@@ -352,8 +352,11 @@ thm (buildBiconditionalLL () ((H (p ↔ q))) ((common ↔ p) ↔ (common ↔ q))
         H
         buildBiconditional
 ))
+</jh>
 
-thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
+For implications, we call the two sides the antecedent and consequent, rather than L and R (well, except for theorems which were named before this convention was establish and which noone has gotten around to renaming yet).
+<jh>
+thm (ConsequentImplicationBuilder () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
         common BiconditionalReflexivity
         (common ↔ common) (p ↔ q) ConjunctionLeftIntroduction
         applyModusPonens
@@ -361,10 +364,17 @@ thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common
         p q common common ImplicationFunction
         applySyllogism
 ))
-</jh>
 
-For implications, we call the two sides the antecedent and consequent, rather than L and R (well, except for theorems which were named before this convention was establish and which noone has gotten around to renaming yet).
-<jh>
+thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
+        p q common ConsequentImplicationBuilder
+))
+
+thm (buildImplicationConsequent () ((H (p ↔ q))) ((p → common) ↔ (q → common)) (
+        H
+        common BiconditionalReflexivity
+        buildImplication
+))
+
 thm (buildImplicationAntecedent () ((H (p ↔ q))) ((common → p) ↔ (common → q)) (
         common BiconditionalReflexivity
         H
