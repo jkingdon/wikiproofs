@@ -586,6 +586,17 @@ thm (Separation ((x A)  (z A) (z B) (z φ) (z x)) ()
 ))
 </jh>
 
+== Membership ===
+Here's a theorem which combines <code>∈</code> with a substitution.<ref>[http://us.metamath.org/mpeuni/clel2.html clel2], metamath's set.mm, accessed January 28, 2011</ref>
+<jh>
+thm (ImplicitIsElement ((x A) (x B)) ()
+  ((A ∈ B) ↔ (∀ x (((value x) = A) → ((value x) ∈ B)))) (
+        (value x) A B IsElementBuilderRR
+        ImplicitForAll
+        swapBiconditional
+))
+</jh>
+
 == Done ==
 We have now proved all the theorems in [[Interface:Basic operations of general set theory]], and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
 
