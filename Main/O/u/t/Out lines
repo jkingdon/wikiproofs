@@ -1128,6 +1128,20 @@ Now we combine the two halves.
 ))
 </jh>
 
+== The closer point is between ==
+If <code>A</code> and <code>B</code> are on a line with <code>P</code>, both on the same side of <code>P</code>, and <code>A</code> is closer to <code>P</code> than <code>B</code> is, then <code>A</code> is between <code>P</code> and <code>B</code>. That is, <code>P is-outside A B ∧ P A ≤ P B → between P A B</code>.<ref>l6_13_1 in Narboux</ref>
+
+The proof begins by expanding <code>P A ≤ P B</code> to <code>∃ y (between P y B ∧ P A ≡ P y)</code>. From <code>P is-outside A B</code> and <code>P A ≡ P y</code> we can conclude <code>P ≠ y</code>. We will then be applying <code>OutSegmentConstructionUniqueness</code> which in this case expands to:
+
+  B ≠ P ∧ P ≠ y ∧
+  P is-outside y B ∧ P y ≡ P y ∧
+  P is-outside A B ∧ P A ≡ P y →
+  y = A
+
+Each piece of this is something we already have, or readily follows from things we have. Once we have <code>y = A</code> we just substitute it into <code>between P y B</code> and we are done.
+
+{{under construction}}
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
