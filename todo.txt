@@ -49,16 +49,28 @@ Items which may be doable without a network connection:
       A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
 
+snss: A ∈ B ↔ { A } ⊆ B
+  { A } ⊆ B ↔ ∀ x (x ∈ { A } → x ∈ B) by Subset
+  x ∈ { A } ↔ x = A by Singleton
+  { A } ⊆ B ↔ ∀ x (x = A → x ∈ B) by builders
+    now what?
+    x = A → (x ∈ B ↔ A ∈ B)
+  want (1): (x = A → x ∈ B) → A ∈ B
+  want (2): A ∈ B → (x = A → x ∈ B) (follows from subst)
+ssun3: A ⊆ B → A ⊆ B ∪ C
+elun1: A ∈ B → A ∈ B ∪ C
+prss: A ∈ C ∧ B ∈ C ↔ { A, B } ⊆ C
+
         proof of a ∈ A ∧ b ∈ B → 〈a, b〉∈ 𝒫𝒫(A ∪ B)
 
-        a ∈ A ↔ {a} ⊆ A
-          → {a} ⊆ A ∪ B
-          ↔ {a} ∈ 𝒫(A ∪ B)
-        a ∈ A ∧ b ∈ B → a ∈ A ∪ B ∧ b ∈ A ∪ B
-          → {a, b} ⊆ A ∪ B
-          ↔ {a, b} ∈ 𝒫(A ∪ B)
-        {{a}, {a, b}} ⊆ 𝒫(A ∪ B)
-        〈a, b〉∈ 𝒫𝒫(A ∪ B)
+        a ∈ A ↔ {a} ⊆ A by snss
+          → {a} ⊆ A ∪ B by ssun3
+          ↔ {a} ∈ 𝒫(A ∪ B) by PowerSet
+        a ∈ A ∧ b ∈ B → a ∈ A ∪ B ∧ b ∈ A ∪ B by elun1
+          ↔ {a, b} ⊆ A ∪ B by prss
+          ↔ {a, b} ∈ 𝒫(A ∪ B) by PowerSet
+        {{a}, {a, b}} ⊆ 𝒫(A ∪ B) by prss
+        〈a, b〉∈ 𝒫𝒫(A ∪ B) by PowerSet
 
         a substitution could turn this into:
           z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B)

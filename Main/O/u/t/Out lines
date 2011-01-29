@@ -1044,7 +1044,7 @@ thm (OutSegmentConstruction ((e R) (e A) (e B) (e C)) ()
 </jh>
 
 === Uniqueness ===
-The point that we construct this way is also unique. In symbols, <code>R ≠ A ∧ B ≠ C ∧ A is-outside X R ∧ A X ≡ B C ∧ A is-outside Y R ∧ A Y ≡ B C → X = Y</code>.
+The point that we construct this way is also unique. In symbols, <code>R ≠ A ∧ B ≠ C ∧ A is-outside X R ∧ A X ≡ B C ∧ A is-outside Y R ∧ A Y ≡ B C → X = Y</code>.<ref>l6_11_unicity in Narboux</ref>
 
 The proof of uniqueness is more involved than the existence proof. Start by expanding the definitions of <code>is-outside</code> (and removing the redundant copies of <code>R ≠ A</code>) so we now have
   R ≠ A ∧ B ≠ C ∧
@@ -1278,6 +1278,19 @@ Now we combine the two halves.
         applySyllogism
 ))
 </jh>
+
+== The closer point is between ==
+If <code>A</code> and <code>B</code> are on a line with <code>P</code>, both on the same side of <code>P</code>, and <code>A</code> is closer to <code>P</code> than <code>B</code> is, then <code>A</code> is between <code>P</code> and <code>B</code>. That is, <code>P is-outside A B ∧ P A ≤ P B → between P A B</code>.<ref>l6_13_1 is Narboux/ref>
+
+The proof begins by expanding <code>P A ≤ P B</code> to <code>∃ y (between P y B ∧ P A ≡ P y)</code>. From <code>P is-outside A B</code> and <code>P A ≡ P y</code> we can conclude <code>P ≠ y</code>.
+
+want y = A
+  (((((((B ≠ P) ∧ (P ≠ y)) ∧
+    (P is-outside y B)) ∧ (P y ≡ P y)) ∧
+    (P is-outside A B)) ∧ (P A ≡ P y)) →
+  (y = A)) (
+want P is-outside y B
+  P ≠ y ∧ P ≠ B ∧ (between P y B ∨ between P B y)
 
 == Export ==
 We now export to [[Interface:Out lines]].
