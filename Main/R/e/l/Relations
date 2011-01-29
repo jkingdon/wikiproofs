@@ -289,6 +289,37 @@ Now we can apply the lemma from the previous section to get <code>A ∈ B ∨ A 
 ))
 </jh>
 
+== Subset ==
+Logically, these theorems belong with the other subset theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+
+=== Singleton and subset ===
+Here we prove <code>A ∈ B ↔ { A } ⊆ B</code>.<ref>[http://us.metamath.org/mpeuni/snss.html snss], metamath's set.mm, accessed January 29, 2011</ref>
+
+<jh>
+thm (SingletonSubset ( (x A) (x B)) ()
+  ((A ∈ B) ↔ ((singleton A) ⊆ B)) (
+</jh>
+We start from the <code>{ A } ⊆ B</code> side, first expanding it to <code>∀ x (x ∈ { A } → x ∈ B)</code>.
+<jh>
+        (singleton A) B x Subset
+</jh>
+Then we transform the <code>x ∈ { A }</code> into <code>x = A</code>
+<jh>
+        (value x) A Singleton
+        ((value x) ∈ B) buildImplicationConsequent
+        x buildForAll
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>∀ x (x = A → x ∈ B)</code>, which is equivalent to <code>A ∈ B</code> via the substitution <code>x = A → (x ∈ B ↔ A ∈ B)</code>.
+<jh>
+        (value x) A B IsElementBuilderRR
+        ImplicitForAll
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
+</jh>
+
 == Ordered pair ==
 The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
 <jh>
