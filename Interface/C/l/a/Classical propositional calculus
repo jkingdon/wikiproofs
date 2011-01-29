@@ -433,8 +433,10 @@ stmt (buildConjunctionLL () ((p ↔ q)) ((r ∧ p) ↔ (r ∧ q)))
 stmt (buildConjunctionRR () ((p ↔ q)) ((p ∧ r) ↔ (q ∧ r)))
 stmt (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ common) ↔ (q ↔ common))))
 stmt (buildBiconditionalLL () ((p ↔ q)) ((common ↔ p) ↔ (common ↔ q)))
-stmt (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))))
 
+stmt (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))))
+stmt (ImplicationBuilderConsequent () () ((p ↔ q) → ((p → common) ↔ (q → common))))
+stmt (buildImplicationConsequent () ((p ↔ q)) ((p → common) ↔ (q → common)))
 stmt (buildImplicationAntecedent () ((p ↔ q)) ((common → p) ↔ (common → q)))
 
 stmt (addNegationInConsequent () ((antecedent → (p ↔ q))) (antecedent → ((¬ p) ↔ (¬ q))))
