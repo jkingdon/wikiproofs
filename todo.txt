@@ -141,16 +141,11 @@ whether the distinct variable constraints turn out the same.
 
 To do with network:
 
-* try to find out more about School Mathematics Study Group geometry postulates? Like Euclid's?
-
 * notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
 
 * rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think.
 
 * Continue changing CongruenceIdentityFromEquality to be the imported version.
-
-* pkcon install ocaml
-  figure out what else coq needs
 
 * Throughout First-order logic with quantifiability (and probably First-order logic), add spaces (e.g. change ∃xφ to ∃ x φ).
 
