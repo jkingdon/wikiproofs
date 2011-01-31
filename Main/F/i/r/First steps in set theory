@@ -467,6 +467,36 @@ thm (Subset ((x A) (x B)  (y A) (y B) (y x)) ()
 ))
 </jh>
 
+=== Partial order ===
+The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive.
+
+For now we just prove transitivity.<ref>[http://us.metamath.org/mpeuni/sstr.html sstr], metamath's set.mm, accessed January 28, 2011</ref>
+<jh>
+thm (SubsetTransitivity ( (x A) (x B) (x C)) () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)) (
+        A B x Subset
+        B C x Subset
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        x
+          (((value x) ∈ A) → ((value x) ∈ B))
+          (((value x) ∈ B) → ((value x) ∈ C))
+          ForAllConjunction
+        eliminateBiconditionalForward
+        applySyllogism
+
+        ((value x) ∈ A) ((value x) ∈ B) ((value x) ∈ C) ImplicationTransitivity
+        x addForAll
+        applySyllogism
+
+        A C x Subset
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+{{under construction}}
+
 == Power set ==
 Introducing a notation for power set is much like union. Because of issues with distinct variable declarations, we won't be able to to use the subset notation until the very end.
 
