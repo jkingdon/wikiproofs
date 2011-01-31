@@ -23,8 +23,9 @@ import (BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASS
 
 As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
 <jh>
-var (object A B C D A0 A1 B0 B1)
+var (object A B C D A0 A1 B0 B1 α β)
 var (variable a b x y z w x′ y′ z′)
+var (formula φ)
 </jh>
 
 == Singletons ==
@@ -170,10 +171,11 @@ To prove the reverse direction we start by adding a substitution to our hypothes
         H
         B z addSubst
 </jh>
-Now we perform the latter subsitution, starting with <code>z = B → (z ∈ A ↔ B ∈ A</code>, and then combining with the previous step to get <code>[ B / z ] φ → B ∈ A</code>.
+Now we perform the latter subsitution, starting with <code>z = B → (z ∈ A ↔ B ∈ A)</code>, and then combining with the previous step to get <code>[ B / z ] φ → B ∈ A</code>.
 <jh>
         (value z) B A IsElementBuilderRR
         makeSubstExplicit
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 We now just need to add <code>[ B / z ] φ</code> and combine the two directions.
@@ -183,14 +185,12 @@ We now just need to add <code>[ B / z ] φ</code> and combine the two directions
 
         introduceBiconditionalFromImplications
 ))
-</jh>
 
-The distinct variable constraint between <code>A</code> and <code>φ</code> is only here until we fix <code>Separation</code> to no longer have it.
-<jh>
-thm (FormulaBound ((φ A) (z A) (z B)) ((H (φ → ((value z) ∈ A))))
+thm (FormulaBound ((z A) (z B)) ((H (φ → ((value z) ∈ A))))
   ((B ∈ (separate z A φ)) ↔ (subst B z φ)) (
         B z A φ Separation
-        B A z φ FormulaBoundLemma
+        H
+        B FormulaBoundLemma
         applyBiconditionalTransitivity
 ))
 </jh>
@@ -286,6 +286,37 @@ Now we can apply the lemma from the previous section to get <code>A ∈ B ∨ A 
         buildDisjunction
         swapBiconditional
         applyBiconditionalTransitivity
+))
+</jh>
+
+== Subset ==
+Logically, these theorems belong with the other subset theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
+
+=== Singleton and subset ===
+Here we prove <code>A ∈ B ↔ { A } ⊆ B</code>.<ref>[http://us.metamath.org/mpeuni/snss.html snss], metamath's set.mm, accessed January 29, 2011</ref>
+
+<jh>
+thm (SingletonSubset ( (x A) (x B)) ()
+  ((A ∈ B) ↔ ((singleton A) ⊆ B)) (
+</jh>
+We start from the <code>{ A } ⊆ B</code> side, first expanding it to <code>∀ x (x ∈ { A } → x ∈ B)</code>.
+<jh>
+        (singleton A) B x Subset
+</jh>
+Then we transform the <code>x ∈ { A }</code> into <code>x = A</code>
+<jh>
+        (value x) A Singleton
+        ((value x) ∈ B) buildImplicationConsequent
+        x buildForAll
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>∀ x (x = A → x ∈ B)</code>, which is equivalent to <code>A ∈ B</code> via the substitution <code>x = A → (x ∈ B ↔ A ∈ B)</code>.
+<jh>
+        (value x) A B IsElementBuilderRR
+        ImplicitForAll
+        applyBiconditionalTransitivity
+
+        swapBiconditional
 ))
 </jh>
 
@@ -569,19 +600,26 @@ def ((relates A R B) ((orderedPair A B) ∈ R))
 == Cartesian product ==
 The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.
 
-To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>(power (power A ∪ B))</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ (power (power A ∪ B)) | ∃ a ∃ b z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
+To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>(power (power A ∪ B))</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ (power (power (A ∪ B))) | ∃ a ∃ b z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
 <jh>
 def ((× A B) (separate z (power (power (A ∪ B)))
   (∃ a (∃ b ((((value z) = (orderedPair (value a) (value b))) ∧ ((value a) ∈ A)) ∧ ((value b) ∈ B))))))
+</jh>
+
+To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉∈ (power (power (A ∪ B))</code>.
+<jh>
+#thm (IsElementCartesianProductLemma () ()
+#  (((α ∈ A) ∧ (β ∈ B)) → ((orderedPair α β) ∈ (power (power (A ∪ B))))) (
+#))
 </jh>
 
 == To be added ==
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
 == Export ==
-When we've proved everything in it, we'll export to [[Interface:Set theory]].
+We export to [[Interface:Set theory]].
 <jh>
-#export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==

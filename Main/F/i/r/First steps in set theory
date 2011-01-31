@@ -542,8 +542,7 @@ Introducing this notation follows much the process as for the other existence th
 
 First we provide a version of <code>SeparationThereExists</code> where we turn the variable <code>z</code> into the object <code>A</code>
 <jh>
-thm (SeparationThereExistsObject
-  ((x y A) (φ y) (A y))  (z x y A) (z φ)) ()
+thm (SeparationThereExistsObject ((x y A) (φ y) (A y)  (z x y A) (z φ)) ()
   (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ A) ∧ φ)))) (
         (value z) A (value x) IsElementBuilderLL
         φ buildConjunctionRRInConsequent
@@ -556,7 +555,8 @@ thm (SeparationThereExistsObject
         VariableToObject
 ))
 
-thm (SeparationThereExistsSubst ((result y A) (φ result A) (x result A)) ()
+thm (SeparationThereExistsSubst
+  ((result y A) (φ result) (A result) (x result A)) ()
   (∃ result (∀ y (((value y) ∈ (value result)) ↔ (((value y) ∈ A) ∧ (subst (value y) x φ))))) (
         result y A (subst (value y) x φ) SeparationThereExistsObject
 ))
@@ -570,7 +570,7 @@ thm (Separation-sub () () ((C = D) → (((C ∈ A) ∧ (subst C x φ)) ↔ ((D �
         buildConjunctionInConsequent
 ))
 
-thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z) (φ A) (x A)) ()
+thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z) (x A)) ()
   ((C ∈ (abstract z (((value z) ∈ A) ∧ (subst (value z) x φ)))) ↔ ((C ∈ A) ∧ (subst C x φ))) (
         (value z) (value y) A x φ Separation-sub
         (value y) C A x φ Separation-sub
@@ -580,9 +580,20 @@ thm (SeparationObject ((y C) (result y A z) (result y φ z) (result y x z) (φ A
 
 def ((separate x A φ) (abstract y (((value y) ∈ A) ∧ (subst (value y) x φ))))
 
-thm (Separation ((φ A) (x A)  (z A) (z B) (z φ) (z x)) ()
+thm (Separation ((x A)  (z A) (z B) (z φ) (z x)) ()
   ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))) (
         C z A x φ SeparationObject
+))
+</jh>
+
+== Membership ==
+Here's a theorem which combines <code>∈</code> with a substitution.<ref>[http://us.metamath.org/mpeuni/clel2.html clel2], metamath's set.mm, accessed January 28, 2011</ref>
+<jh>
+thm (ImplicitIsElement ((x A) (x B)) ()
+  ((A ∈ B) ↔ (∀ x (((value x) = A) → ((value x) ∈ B)))) (
+        (value x) A B IsElementBuilderRR
+        ImplicitForAll
+        swapBiconditional
 ))
 </jh>
 
