@@ -48,7 +48,7 @@ term (object (unorderedPair object object))
 stmt (UnorderedPair () () ((B ∈ (unorderedPair A0 A1)) ↔ ((B = A0) ∨ (B = A1))))
 </jh>
 
-== Subset, union, and power set ==
+== Subset ==
 
 We define the subset relationship.
 <jh>
@@ -57,6 +57,14 @@ stmt (Subset ((x A) (x B)) ()
   ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))))
 </jh>
 
+=== Partial order ===
+The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive. For now we just have transitivity.
+
+<jh>
+stmt (SubsetTransitivity () () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)))
+</jh>
+
+== Union and power set ==
 The union of a set has as its elements everything which is an element of some set in the given set.
 <jh>
 term (object (⋃ object))
