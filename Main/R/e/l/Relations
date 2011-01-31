@@ -333,7 +333,7 @@ That gives us <code>∀ x (x = A → x ∈ B)</code>, which is equivalent to <co
 </jh>
 
 === Union and subset ===
-The left side of a union is a subset of the union.
+The left side of a union is a subset of the union.<ref>[http://us.metamath.org/mpeuni/snun1.html snun1], metamath's set.mm, accessed January 30, 2011</ref>
 <jh>
 thm (SubsetUnionLeft ( (x A) (x B)) ()
   (A ⊆ (A ∪ B)) (
@@ -348,6 +348,16 @@ thm (SubsetUnionLeft ( (x A) (x B)) ()
         A (A ∪ B) x Subset
         eliminateBiconditionalForward
         applyModusPonens
+))
+</jh>
+
+Being a subset of a set implies being a subset of the union of set and any other.<ref>[http://us.metamath.org/mpeuni/snun3.html snun3], metamath's set.mm, accessed January 30, 2011</ref>
+<jh>
+thm (SubsetUnionRightIntroduction () ()
+  ((A ⊆ B) → (A ⊆ (B ∪ C))) (
+        B C SubsetUnionLeft
+        A B (B ∪ C) SubsetTransitivity
+        detach2of2
 ))
 </jh>
 
