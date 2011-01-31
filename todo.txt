@@ -49,27 +49,51 @@ Items which may be doable without a network connection:
       A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
 
-snss: A ∈ B ↔ { A } ⊆ B
-  { A } ⊆ B ↔ ∀ x (x ∈ { A } → x ∈ B) by Subset
-  x ∈ { A } ↔ x = A by Singleton
-  { A } ⊆ B ↔ ∀ x (x = A → x ∈ B) by builders
-    now what?
-    x = A → (x ∈ B ↔ A ∈ B)
-  want (1): (x = A → x ∈ B) → A ∈ B
-  want (2): A ∈ B → (x = A → x ∈ B) (follows from subst)
-ssun3: A ⊆ B → A ⊆ B ∪ C
-elun1: A ∈ B → A ∈ B ∪ C
-prss: A ∈ C ∧ B ∈ C ↔ { A, B } ⊆ C
+Theorem ssel 2166
+Description: Membership relationships follow from a subclass relationship.
+Assertion Ref 	Expression
+ssel	⊢ (A ⊆ B → (C ∈ A → C ∈ B))
+Proof of Theorem ssel Step	Hyp	Ref 	Expression
+1	 	dfss2 2161	. . . . . 6 ⊢ (A ⊆ B ↔ ∀x(x ∈ A → x ∈ B))
+2	1	biimpi 158	. . . . 5 ⊢ (A ⊆ B → ∀x(x ∈ A → x ∈ B))
+3	2	19.21bi 1131	. . . 4 ⊢ (A ⊆ B → (x ∈ A → x ∈ B))
+4	3	anim2d 588	. . 3 ⊢ (A ⊆ B → ((x = C ⋀ x ∈ A) → (x = C ⋀ x ∈ B)))
+5	4	19.22dv 1364	. 2 ⊢ (A ⊆ B → (∃x(x = C ⋀ x ∈ A) → ∃x(x = C ⋀ x ∈ B)))
+6	 	df-clel 1553	. 2 ⊢ (C ∈ A ↔ ∃x(x = C ⋀ x ∈ A))
+7	 	df-clel 1553	. 2 ⊢ (C ∈ B ↔ ∃x(x = C ⋀ x ∈ B))
+8	5, 6, 7	3imtr4g 580	1 ⊢ (A ⊆ B → (C ∈ A → C ∈ B))
+
+proof of prss
+Step	Hyp	Ref 	Expression
+1	 	eleq1a 1625	. . . . 5 ⊢ (A ∈ C → (x = A → x ∈ C))
+2	 	eleq1a 1625	. . . . 5 ⊢ (B ∈ C → (x = B → x ∈ C))
+3	1, 2	jaao 446	. . . 4 ⊢ ((A ∈ C ⋀ B ∈ C) → ((x = A ⋁ x = B) → x ∈ C))
+4	 	visset 1905	. . . . 5 ⊢ x ∈ V
+5	4	elpr 2537	. . . 4 ⊢ (x ∈ {A, B} ↔ (x = A ⋁ x = B))
+6	3, 5	syl5ib 213	. . 3 ⊢ ((A ∈ C ⋀ B ∈ C) → (x ∈ {A, B} → x ∈ C))
+7	6	ssrdv 2173	. 2 ⊢ ((A ∈ C ⋀ B ∈ C) → {A, B} ⊆ C)
+8	 	prss.1	. . . . 5 ⊢ A ∈ V
+9	8	prid1 2569	. . . 4 ⊢ A ∈ {A, B}
+10	 	ssel 2166	. . . 4 ⊢ ({A, B} ⊆ C → (A ∈ {A, B} → A ∈ C))
+11	9, 10	mpi 53	. . 3 ⊢ ({A, B} ⊆ C → A ∈ C)
+12	 	prss.2	. . . . 5 ⊢ B ∈ V
+13	12	prid2 2570	. . . 4 ⊢ B ∈ {A, B}
+14	 	ssel 2166	. . . 4 ⊢ ({A, B} ⊆ C → (B ∈ {A, B} → B ∈ C))
+15	13, 14	mpi 53	. . 3 ⊢ ({A, B} ⊆ C → B ∈ C)
+16	11, 15	jca 295	. 2 ⊢ ({A, B} ⊆ C → (A ∈ C ⋀ B ∈ C))
+17	7, 16	impbii 164	1 ⊢ ((A ∈ C ⋀ B ∈ C) ↔ {A, B} ⊆ C)
+
+UnorderedPairSubset (prss): A ∈ C ∧ B ∈ C ↔ { A, B } ⊆ C
 
         proof of a ∈ A ∧ b ∈ B → 〈a, b〉∈ 𝒫𝒫(A ∪ B)
 
-        a ∈ A ↔ {a} ⊆ A by snss
-          → {a} ⊆ A ∪ B by ssun3
+        a ∈ A ↔ {a} ⊆ A by SingletonSubset
+          → {a} ⊆ A ∪ B by SubsetUnionRightIntroduction
           ↔ {a} ∈ 𝒫(A ∪ B) by PowerSet
-        a ∈ A ∧ b ∈ B → a ∈ A ∪ B ∧ b ∈ A ∪ B by elun1
-          ↔ {a, b} ⊆ A ∪ B by prss
+        a ∈ A ∧ b ∈ B → a ∈ A ∪ B ∧ b ∈ A ∪ B by MembershipUnionRightIntroduction
+          ↔ {a, b} ⊆ A ∪ B by UnorderedPairSubset
           ↔ {a, b} ∈ 𝒫(A ∪ B) by PowerSet
-        {{a}, {a, b}} ⊆ 𝒫(A ∪ B) by prss
+        {{a}, {a, b}} ⊆ 𝒫(A ∪ B) by UnorderedPairSubset
         〈a, b〉∈ 𝒫𝒫(A ∪ B) by PowerSet
 
         a substitution could turn this into:
