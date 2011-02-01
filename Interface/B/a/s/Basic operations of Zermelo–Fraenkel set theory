@@ -89,12 +89,18 @@ stmt (Separation ((x A)) ()
 Equals can be substituted for equals, in the context of set operations.
 
 <jh>
-stmt (IsElementBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
-stmt (IsElementBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
+stmt (MembershipBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
+stmt (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
 stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))))
+</jh>
+
+The following builders are deprecated, being alternate names for the builders above.
+<jh>
+stmt (IsElementBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
+stmt (IsElementBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 </jh>
 
 == Extensionality ==
