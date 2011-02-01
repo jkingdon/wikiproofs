@@ -62,6 +62,10 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |× || *X || product || [[Interface:Set theory|set theory]]
 |-
+|〈 || </ || ordered pair || [[Interface:Set theory|set theory]]
+|-
+|〉 || /> || ordered pair || [[Interface:Set theory|set theory]]
+|-
 |ℙ || || || subset of [[Interface:Complex number axioms|complex numbers]]
 |-
 |ℕ || || natural numbers || subset of [[Interface:Complex number axioms|complex numbers]]
@@ -163,7 +167,11 @@ The following characters are intentionally omitted from the above list and gener
 |-
 | various || raised dots || The one shown above seems to be the most widely used; see <ref name="confusables" /> for a long list of other raised dot characters.
 |-
-| א‎ || Hebrew alef || Although essentially the same character, the aleph symbol used in mathematics (ℵ) generally shows significant font differences
+| 〈, 〉 || angle brackets (U+3008, U+3009) || These (at least on some systems) produce undesirable whitespace outside the brackets
+|-
+| ⟨, ⟩ || angle brackets (U+27E8, U+27E9) || These (at least on some systems) look too much lke parentheses
+|-
+| א‎ || Hebrew alef || The aleph symbol used in mathematics (ℵ) generally shows significant font differences and behaves differently with respect to bidirectional texts
 |}
 
 == References ==
