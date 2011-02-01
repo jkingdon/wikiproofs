@@ -137,8 +137,6 @@ UnorderedPairSubset (prss): A ∈ C ∧ B ∈ C ↔ { A, B } ⊆ C
 whether the distinct variable constraints turn out the same.
   - rabid is sort of a special case
 
-* What about using ⟨a, b⟩ for ordered pair instead of 〈a, b〉?
-
 To do with network:
 
 * notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
