@@ -546,6 +546,7 @@ By "transforming", we mean applying a biconditional to replace part of a formula
 <jh>
 stmt (transformAntecedent () ((p → q) (p ↔ r)) (r → q))
 stmt (transformImplicationImplicationConsequent () ((antecedent → (p → q)) (q ↔ r)) (antecedent → (p → r)))
+stmt (transformImplicationImplicationAntecedent () ((antecedent → (p → q)) (p ↔ r)) (antecedent → (r → q)))
 stmt (transformImplicationBiconditionalLeft () ((antecedent → (p ↔ q)) (p ↔ r)) (antecedent → (r ↔ q)))
 stmt (transformImplicationBiconditionalRight () ((antecedent → (p ↔ q)) (q ↔ r)) (antecedent → (p ↔ r)))
 stmt (transformImplicationDisjunctionLeft () ((antecedent → (p ∨ q)) (p ↔ r)) (antecedent → (r ∨ q)))
