@@ -14,7 +14,7 @@ Items which may be doable without a network connection:
 
   * ax9o is only used by equs4.
 
-* General set theory
+* Set theory
   - definitions and consequences: union?,
     intersection, difference (e.g. eldifi and similar), subset
   - do both directions of A = B ↔ { A } = { B } hold? (think so)
@@ -48,20 +48,6 @@ Items which may be doable without a network connection:
         Also note dependence on defn of ordered pair.
       A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
-
-Theorem ssel 2166
-Description: Membership relationships follow from a subclass relationship.
-Assertion Ref 	Expression
-ssel	⊢ (A ⊆ B → (C ∈ A → C ∈ B))
-Proof of Theorem ssel Step	Hyp	Ref 	Expression
-1	 	dfss2 2161	. . . . . 6 ⊢ (A ⊆ B ↔ ∀x(x ∈ A → x ∈ B))
-2	1	biimpi 158	. . . . 5 ⊢ (A ⊆ B → ∀x(x ∈ A → x ∈ B))
-3	2	19.21bi 1131	. . . 4 ⊢ (A ⊆ B → (x ∈ A → x ∈ B))
-4	3	anim2d 588	. . 3 ⊢ (A ⊆ B → ((x = C ⋀ x ∈ A) → (x = C ⋀ x ∈ B)))
-5	4	19.22dv 1364	. 2 ⊢ (A ⊆ B → (∃x(x = C ⋀ x ∈ A) → ∃x(x = C ⋀ x ∈ B)))
-6	 	df-clel 1553	. 2 ⊢ (C ∈ A ↔ ∃x(x = C ⋀ x ∈ A))
-7	 	df-clel 1553	. 2 ⊢ (C ∈ B ↔ ∃x(x = C ⋀ x ∈ B))
-8	5, 6, 7	3imtr4g 580	1 ⊢ (A ⊆ B → (C ∈ A → C ∈ B))
 
 proof of prss
 Step	Hyp	Ref 	Expression

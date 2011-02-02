@@ -320,6 +320,40 @@ That gives us <code>∀ x (x = A → x ∈ B)</code>, which is equivalent to <co
 ))
 </jh>
 
+=== Subset and membership
+If one set is a subset of another, then being an element of the subset implies being an element of the containing set. That is, <code>A ⊆ B → (C ∈ A → C ∈ B)</code>. This resembles <code>Subset</code>, but it is not biconditional because it does not make a statement about all potential elements, but just about one particular one.<ref>[http://us.metamath.org/mpeuni/ssel.html ssel], metamath's set.mm, accessed February 1, 2011</ref>
+<jh>
+thm (SubsetMembership ( (x A) (x B)) ()
+  ((A ⊆ B) → ((C ∈ A) → (C ∈ B))) (
+</jh>
+First we expand <code>A ⊆ B</code> to <code>∀ x (x ∈ A → x ∈ B)</code>.
+<jh>
+        A B x Subset
+</jh>
+Then we conjoin <code>x = C</code> to both sides of the implication to get <code>∀ x (x = C ∧ x ∈ A → x = C ∧ x ∈ B)</code>
+<jh>
+        ((value x) ∈ A) ((value x) ∈ B) ((value x) = C) ConjunctionMultiplicationLL
+        x addForAll
+        applySyllogism
+</jh>
+Next we distribute the quantifier across the implication to get <code>∃ x (x = C ∧ x ∈ A) → ∃ x (x = C ∧ x ∈ B)</code>.
+<jh>
+        x
+          (((value x) = C) ∧ ((value x) ∈ A))
+          (((value x) = C) ∧ ((value x) ∈ B))
+          ForAllImplicationThereExists
+        applySyllogism
+</jh>
+But the two halves of that are equivalent to <code>C ∈ A</code> and <code>C ∈ B</code>, respectively, thanks to <code>MembershipThereExists</code>.
+<jh>
+        C A x MembershipThereExists
+        C B x MembershipThereExists
+        buildImplication
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 == Ordered pair ==
 The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
 <jh>
