@@ -49,28 +49,6 @@ Items which may be doable without a network connection:
       A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
 
-proof of prss
-Step	Hyp	Ref 	Expression
-1	 	eleq1a 1625	. . . . 5 ⊢ (A ∈ C → (x = A → x ∈ C))
-2	 	eleq1a 1625	. . . . 5 ⊢ (B ∈ C → (x = B → x ∈ C))
-3	1, 2	jaao 446	. . . 4 ⊢ ((A ∈ C ⋀ B ∈ C) → ((x = A ⋁ x = B) → x ∈ C))
-4	 	visset 1905	. . . . 5 ⊢ x ∈ V
-5	4	elpr 2537	. . . 4 ⊢ (x ∈ {A, B} ↔ (x = A ⋁ x = B))
-6	3, 5	syl5ib 213	. . 3 ⊢ ((A ∈ C ⋀ B ∈ C) → (x ∈ {A, B} → x ∈ C))
-7	6	ssrdv 2173	. 2 ⊢ ((A ∈ C ⋀ B ∈ C) → {A, B} ⊆ C)
-8	 	prss.1	. . . . 5 ⊢ A ∈ V
-9	8	prid1 2569	. . . 4 ⊢ A ∈ {A, B}
-10	 	ssel 2166	. . . 4 ⊢ ({A, B} ⊆ C → (A ∈ {A, B} → A ∈ C))
-11	9, 10	mpi 53	. . 3 ⊢ ({A, B} ⊆ C → A ∈ C)
-12	 	prss.2	. . . . 5 ⊢ B ∈ V
-13	12	prid2 2570	. . . 4 ⊢ B ∈ {A, B}
-14	 	ssel 2166	. . . 4 ⊢ ({A, B} ⊆ C → (B ∈ {A, B} → B ∈ C))
-15	13, 14	mpi 53	. . 3 ⊢ ({A, B} ⊆ C → B ∈ C)
-16	11, 15	jca 295	. 2 ⊢ ({A, B} ⊆ C → (A ∈ C ⋀ B ∈ C))
-17	7, 16	impbii 164	1 ⊢ ((A ∈ C ⋀ B ∈ C) ↔ {A, B} ⊆ C)
-
-UnorderedPairSubset (prss): A ∈ C ∧ B ∈ C ↔ { A, B } ⊆ C
-
         proof of a ∈ A ∧ b ∈ B → 〈a, b〉∈ 𝒫𝒫(A ∪ B)
 
         a ∈ A ↔ {a} ⊆ A by SingletonSubset
