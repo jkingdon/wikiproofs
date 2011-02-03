@@ -102,6 +102,10 @@ term (formula (⊆ object object))
 stmt (Subset ((x A) (x B)) ()
   ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))))
 stmt (SubsetMembership () () ((A ⊆ B) → ((C ∈ A) → (C ∈ B))))
+
+stmt (SingletonSubset () () ((A ∈ B) ↔ ((singleton A) ⊆ B)))
+stmt (UnorderedPairSubset () ()
+  (((A ∈ C) ∧ (B ∈ C)) ↔ ((unorderedPair A B) ⊆ C)))
 </jh>
 
 == Union ==
