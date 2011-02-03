@@ -15,6 +15,37 @@ var (object A B C D A0 A1 B0 B1)
 var (formula φ)
 </jh>
 
+== Membership ==
+=== Alternate names for builders ===
+We're in the process of renaming <code>IsElementBuilderRR</code> to <code>MembershipBuilderRR</code> and <code>IsElementBuilderLL</code> to <code>MembershipBuilderLL</code>.
+<jh>
+thm (MembershipBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))) (
+        B0 B1 A IsElementBuilderLL
+))
+
+thm (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))) (
+        A0 A1 B IsElementBuilderRR
+))
+</jh>
+
+=== Membership with a substitution ===
+Here are two ways to express <code>∈</code> in terms of a substitution.<ref>[http://us.metamath.org/mpeuni/clel2.html clel2], metamath's set.mm, accessed January 28, 2011</ref><ref>[http://us.metamath.org/mpeuni/df-clel.html df-clel], metamath's set.mm, accessed February 1, 2011</ref>
+<jh>
+thm (MembershipForAll ((x A) (x B)) ()
+  ((A ∈ B) ↔ (∀ x (((value x) = A) → ((value x) ∈ B)))) (
+        (value x) A B MembershipBuilderRR
+        ImplicitForAll
+        swapBiconditional
+))
+
+thm (MembershipThereExists ((x A) (x B)) ()
+  ((A ∈ B) ↔ (∃ x (((value x) = A) ∧ ((value x) ∈ B)))) (
+        (value x) A B MembershipBuilderRR
+        ImplicitThereExists
+        swapBiconditional
+))
+</jh>
+
 == Empty set ==
 The [[w:empty set|empty set]], or null set, is the set with no elements. We start with the conventional form of the [[w:Axiom of empty set|axiom of empty set]]. For us (and for many other axiomizations of set theory), this "axiom" is a theorem rather than an axiom.<ref>[http://us.metamath.org/mpeuni/axnul.html axnul], metamath's set.mm, accessed July 19, 2010</ref>
 <jh>
