@@ -49,18 +49,10 @@ Items which may be doable without a network connection:
       A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
 
-        proof of a ∈ A ∧ b ∈ B → 〈a, b〉∈ 𝒫𝒫(A ∪ B)
+elun1: A ∈ B → A ∈ B ∪ C MembershipUnionRightIntroduction
+elun2: A ∈ C → A ∈ B ∪ C MembershipUnionLeftIntroduction
 
-        a ∈ A ↔ {a} ⊆ A by SingletonSubset
-          → {a} ⊆ A ∪ B by SubsetUnionRightIntroduction
-          ↔ {a} ∈ 𝒫(A ∪ B) by PowerSet
-        a ∈ A ∧ b ∈ B → a ∈ A ∪ B ∧ b ∈ A ∪ B by MembershipUnionRightIntroduction
-          ↔ {a, b} ⊆ A ∪ B by UnorderedPairSubset
-          ↔ {a, b} ∈ 𝒫(A ∪ B) by PowerSet
-        {{a}, {a, b}} ⊆ 𝒫(A ∪ B) by UnorderedPairSubset
-        〈a, b〉∈ 𝒫𝒫(A ∪ B) by PowerSet
-
-        a substitution could turn this into:
+        a substitution could turn MembershipCartesianProductLemma into:
           z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B)
         in case that is helpful
 
