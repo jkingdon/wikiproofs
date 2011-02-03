@@ -29,6 +29,14 @@ term (formula (∈ object object))
 def ((∉ A B) (¬ (A ∈ B)))
 </jh>
 
+Here are two ways of combining membership with a substitution:
+<jh>
+stmt (MembershipForAll ((x A) (x B)) ()
+  ((A ∈ B) ↔ (∀ x (((value x) = A) → ((value x) ∈ B)))))
+stmt (MembershipThereExists ((x A) (x B)) ()
+  ((A ∈ B) ↔ (∃ x (((value x) = A) ∧ ((value x) ∈ B)))))
+</jh>
+
 == Empty set, singletons, and unordered pairs ==
 We assert the existence of the empty set, a set with no elements.
 <jh>
