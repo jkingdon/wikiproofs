@@ -43,22 +43,16 @@ Items which may be doable without a network connection:
         this reads oddly, because [/] only applies to formulas, not terms
         (metamath has underlined [/] for terms; do we want that?)
     - cross products, e.g. cxp, df-xp, elxp, opelxp1, opelxp
-      xpexg regarding existence of cross products
-        relies on xpsspw
-        Also note dependence on defn of ordered pair.
       A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
 
-        a substitution could turn MembershipCartesianProductLemma into:
-          z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B)
-        in case that is helpful
-
         ∃ a ∃ b (z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) → z ∈ 𝒫𝒫(A ∪ B)
+          (MembershipCartesianProduct-2)
 
 
-        (φ → z ∈ A) → (y ∈ {z ∈ A | φ} ↔ [y / z]φ)  (could be helpful but has the subst)
-          then next step is y ∈ A × B ↔ [y / z](z = ∃ a ∃ b〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
-          then y ∈ A × B ↔ ∃ a ∃ b (y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) (elxp)
+        (φ → z ∈ A) gives (B ∈ {z ∈ A | φ} ↔ [B / z]φ)  (FormulaBound)
+          then next step is C ∈ A × B ↔ [C / z] ∃ a ∃ b (z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
+          then C ∈ A × B ↔ ∃ a ∃ b (C = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) (elxp)
           and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B  (opelxp)
       - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
   - recursion theorem (see downloaded wikipedia page, Joedit)
