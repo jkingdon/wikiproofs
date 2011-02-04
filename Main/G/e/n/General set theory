@@ -106,7 +106,7 @@ thm (EmptySetObject ((x A y)) () (A ∉ (abstract y (⊥))) (
 </jh>
 The substitution to apply <code>VariableToObject</code> is <code>x = A → x ∉ ∅ ↔ A ∉ ∅</code>
 <jh>
-        (value x) A (abstract y (⊥)) IsElementBuilderRR
+        (value x) A (abstract y (⊥)) MembershipBuilderRR
         addNegationInConsequent
 
         x y EmptySetVariable
@@ -123,7 +123,7 @@ thm (EmptySet ((A emptyElement)) () (A ∉ (∅)) (
 The <code>Adjunction</code> axiom allows us to form a set with the elements of a given set and a single additional given element, where the given sets are represented by variables. Here we prove the same thing, but with object in place of variable. The proof is by straightforward application of <code>VariableToObject</code> with the usual substitution machinery.
 <jh>
 thm (AdjunctionObject-1 ((A x z w) (y x z w)) () (∃ w (∀ z (((value z) ∈ (value w)) ↔ (((value z) ∈ A) ∨ ((value z) = (value y)))))) (
-        (value x) A (value z) IsElementBuilderLL
+        (value x) A (value z) MembershipBuilderLL
         ((value z) = (value y)) buildDisjunctionRRInConsequent
         ((value z) ∈ (value w)) buildBiconditionalLLInConsequent
         z buildForAllInConsequent
@@ -155,7 +155,7 @@ thm (ExtensionalityObject-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) 
 </jh>
 This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))</code>
 <jh>
-        (value x) A (value z) IsElementBuilderLL
+        (value x) A (value z) MembershipBuilderLL
         ((value z) ∈ (value y)) buildBiconditionalRRInConsequent
         z buildForAllInConsequent
 
@@ -171,7 +171,7 @@ thm (ExtensionalityObject ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z)
 </jh>
 To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))</code>
 <jh>
-        (value y) B (value z) IsElementBuilderLL
+        (value y) B (value z) MembershipBuilderLL
         ((value z) ∈ A) buildBiconditionalLLInConsequent
         z buildForAllInConsequent
 
@@ -276,7 +276,7 @@ thm (SingletonObject ((y B) (y A singletonElement)) () ((B ∈ (abstract singlet
 </jh>
 Our substitution is <code>y = B → ((y ∈ { A } ↔ y = A) ↔ (B ∈ { A } ↔ B = A))</code>.
 <jh>
-        (value y) B (abstract singletonElement ((value singletonElement) = A)) IsElementBuilderRR
+        (value y) B (abstract singletonElement ((value singletonElement) = A)) MembershipBuilderRR
         (value y) B A EqualityBuilderRR
         buildBiconditionalInConsequent
 
@@ -404,7 +404,7 @@ thm (UnorderedPairObject ((y C) (y A pairElement) (y B pairElement)) () ((C ∈ 
 </jh>
 Our substitution is <code>y = C → ((y ∈ { A, B } ↔ y = A ∨ y = B) ↔ (C ∈ { A, B } ↔ C = A ∨ C = B))</code>.
 <jh>
-        (value y) C (abstract pairElement (((value pairElement) = A) ∨ ((value pairElement) = B))) IsElementBuilderRR
+        (value y) C (abstract pairElement (((value pairElement) = A) ∨ ((value pairElement) = B))) MembershipBuilderRR
 
         (value y) C A EqualityBuilderRR
         (value y) C B EqualityBuilderRR
