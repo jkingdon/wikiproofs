@@ -58,6 +58,7 @@ stmt (UnorderedPair () () ((B ∈ (unorderedPair A0 A1)) ↔ ((B = A0) ∨ (B = 
 An unordered pair contains each of its members: <code>A ∈ {A, B}</code>.
 <jh>
 stmt (UnorderedPairLeftMembership () () (A ∈ (unorderedPair A B)))
+stmt (UnorderedPairRightMembership () () (B ∈ (unorderedPair A B)))
 </jh>
 
 Unordered pairs are unordered: <code>{A, B} = {B, A}</code>.
@@ -95,11 +96,12 @@ term (object (× object object))
 </jh>
 
 == Subset ==
-The subset relationship is equivalent to various statements involving membership, unions, intersections, and set differences.<ref>[http://us.metamath.org/mpeuni/df-ss.html df-ss]</ref> For now, we just provide one.
+The subset relationship is equivalent to various statements involving membership, unions, intersections, and set differences.<ref>[http://us.metamath.org/mpeuni/df-ss.html df-ss]</ref>
 <jh>
 term (formula (⊆ object object))
 stmt (Subset ((x A) (x B)) ()
   ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))))
+stmt (SubsetMembership () () ((A ⊆ B) → ((C ∈ A) → (C ∈ B))))
 </jh>
 
 == Union ==
