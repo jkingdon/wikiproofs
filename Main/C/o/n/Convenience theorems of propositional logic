@@ -196,6 +196,17 @@ thm (transformImplicationImplicationConsequent () ((HIMP (antecedent → (p → 
         applyModusPonens
 ))
 
+thm (transformImplicationImplicationAntecedent ()
+  ((HIMP (antecedent → (p → q))) (HEQ (p ↔ r)))
+  (antecedent → (r → q)) (
+        HEQ eliminateBiconditionalForward
+        antecedent introduceAntecedent
+
+        HIMP
+
+        applySyllogismInConsequent
+))
+
 thm (transformImplicationBiconditionalLeft () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
         HEQ
         swapBiconditional
