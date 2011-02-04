@@ -103,7 +103,7 @@ First we prove a lemma, <code>{A, C} = {B, C} → A = B ∨ A = C</code>
 thm (UnorderedPairFirstMembersEqual-1 () () (((unorderedPair A C) = (unorderedPair B C)) → ((A = B) ∨ (A = C))) (
         A C UnorderedPairLeftMembership
 
-        (unorderedPair A C) (unorderedPair B C) A IsElementBuilderLL
+        (unorderedPair A C) (unorderedPair B C) A MembershipBuilderLL
 
         detachImplicationBiconditional
 </jh>
@@ -187,7 +187,7 @@ To prove the reverse direction we start by adding a substitution to our hypothes
 </jh>
 Now we perform the latter subsitution, starting with <code>z = B → (z ∈ A ↔ B ∈ A)</code>, and then combining with the previous step to get <code>[ B / z ] φ → B ∈ A</code>.
 <jh>
-        (value z) B A IsElementBuilderRR
+        (value z) B A MembershipBuilderRR
         makeSubstExplicit
         eliminateBiconditionalReverse
         applySyllogism
@@ -235,7 +235,7 @@ We start with the forward direction. First we prove <code>A ∈ B → ∃ x (x =
 </jh>
 Next is the substitution <code>x = B → (A ∈ x ↔ A ∈ B)</code>, which we then rearrange to <code>x = B ∧ A ∈ B → A ∈ x)</code>.
 <jh>
-        (value x) B A IsElementBuilderLL
+        (value x) B A MembershipBuilderLL
         eliminateBiconditionalForwardInConsequent
         import
 </jh>
@@ -249,7 +249,7 @@ Combining this with <code>x = B</code> we get <code>x = B ∧ A ∈ B → A ∈ 
 </jh>
 The reverse direction is just a substitution. We start with <code>x = B → (A ∈ x ↔ A ∈ B)</code> and rearrange it to <code>A ∈ x ∧ x = B → A ∈ B</code>.
 <jh>
-        (value x) B A IsElementBuilderLL
+        (value x) B A MembershipBuilderLL
         eliminateBiconditionalReverseInConsequent
         applyComm
         import
@@ -345,7 +345,7 @@ Then we transform the <code>x ∈ { A }</code> into <code>x = A</code>
 </jh>
 That gives us <code>∀ x (x = A → x ∈ B)</code>, which is equivalent to <code>A ∈ B</code> via the substitution <code>x = A → (x ∈ B ↔ A ∈ B)</code>.
 <jh>
-        (value x) A B IsElementBuilderRR
+        (value x) A B MembershipBuilderRR
         ImplicitForAll
         applyBiconditionalTransitivity
 
@@ -356,12 +356,13 @@ That gives us <code>∀ x (x = A → x ∈ B)</code>, which is equivalent to <co
 === Subset and membership ===
 If one set is a subset of another, then being an element of the subset implies being an element of the containing set. That is, <code>A ⊆ B → (C ∈ A → C ∈ B)</code>. This resembles <code>Subset</code>, but it is not biconditional because it does not make a statement about all potential elements, but just about one particular one.<ref>[http://us.metamath.org/mpeuni/ssel.html ssel], metamath's set.mm, accessed February 1, 2011</ref>
 <jh>
-thm (SubsetMembership ( (x A) (x B)) ()
+thm (SubsetMembership ( (x A) (x B) (x C)) ()
   ((A ⊆ B) → ((C ∈ A) → (C ∈ B))) (
 </jh>
 First we expand <code>A ⊆ B</code> to <code>∀ x (x ∈ A → x ∈ B)</code>.
 <jh>
         A B x Subset
+        eliminateBiconditionalReverse
 </jh>
 Then we conjoin <code>x = C</code> to both sides of the implication to get <code>∀ x (x = C ∧ x ∈ A → x = C ∧ x ∈ B)</code>
 <jh>
@@ -384,6 +385,35 @@ But the two halves of that are equivalent to <code>C ∈ A</code> and <code>C �
         buildImplication
         eliminateBiconditionalForward
         applySyllogism
+))
+</jh>
+
+=== Union and subset ===
+The left side of a union is a subset of the union.<ref>[http://us.metamath.org/mpeuni/snun1.html snun1], metamath's set.mm, accessed January 30, 2011</ref>
+<jh>
+thm (SubsetUnionLeft ( (x A) (x B)) ()
+  (A ⊆ (A ∪ B)) (
+        ((value x) ∈ A) ((value x) ∈ B) DisjunctionRightIntroduction
+
+        (value x) A B BinaryUnion
+        eliminateBiconditionalForward
+        applySyllogism
+
+        x generalize
+
+        A (A ∪ B) x Subset
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+Being a subset of a set implies being a subset of the union of set and any other.<ref>[http://us.metamath.org/mpeuni/ssun3.html ssun3], metamath's set.mm, accessed February 3, 2011</ref>
+<jh>
+thm (SubsetUnionRightIntroduction () ()
+  ((A ⊆ B) → (A ⊆ (B ∪ C))) (
+        B C SubsetUnionLeft
+        A B (B ∪ C) SubsetTransitivity
+        detach2of2
 ))
 </jh>
 
@@ -436,7 +466,7 @@ thm (UnorderedPairSubsetReverse ( (x A) (x B) (x C)) ()
         applyComm
         applyModusPonens
 
-        A B UnorderedPairRightMembership
+        B A UnorderedPairRightMembership
         (unorderedPair A B) C B SubsetMembership
         applyComm
         applyModusPonens
@@ -447,37 +477,8 @@ thm (UnorderedPairSubsetReverse ( (x A) (x B) (x C)) ()
 thm (UnorderedPairSubset () ()
   (((A ∈ C) ∧ (B ∈ C)) ↔ ((unorderedPair A B) ⊆ C)) (
         A C B UnorderedPairSubsetForward
-        A C B UnorderedPairSubsetReverse
+        A B C UnorderedPairSubsetReverse
         introduceBiconditionalFromImplications
-))
-</jh>
-
-=== Union and subset ===
-The left side of a union is a subset of the union.<ref>[http://us.metamath.org/mpeuni/snun1.html snun1], metamath's set.mm, accessed January 30, 2011</ref>
-<jh>
-thm (SubsetUnionLeft ( (x A) (x B)) ()
-  (A ⊆ (A ∪ B)) (
-        ((value x) ∈ A) ((value x) ∈ B) DisjunctionRightIntroduction
-
-        (value x) A B BinaryUnion
-        eliminateBiconditionalForward
-        applySyllogism
-
-        x generalize
-
-        A (A ∪ B) x Subset
-        eliminateBiconditionalForward
-        applyModusPonens
-))
-</jh>
-
-Being a subset of a set implies being a subset of the union of set and any other.<ref>[http://us.metamath.org/mpeuni/snun3.html snun3], metamath's set.mm, accessed January 30, 2011</ref>
-<jh>
-thm (SubsetUnionRightIntroduction () ()
-  ((A ⊆ B) → (A ⊆ (B ∪ C))) (
-        B C SubsetUnionLeft
-        A B (B ∪ C) SubsetTransitivity
-        detach2of2
 ))
 </jh>
 
@@ -548,7 +549,7 @@ The first step is <code>〈A, B〉=〈C, D〉 → ({C} ∈ 〈A, B〉 ↔ {C} �
 But <code>{C} ∈ 〈C, D〉</code> is true unconditionally, so this formula reduces to <code>〈A, B〉=〈C, D〉 → {C} ∈ 〈A, B〉</code>.
 <jh>
         C D OrderedPairTheoremForwardFirst-1
-        (orderedPair A B) (orderedPair C D) (singleton C) IsElementBuilderLL
+        (orderedPair A B) (orderedPair C D) (singleton C) MembershipBuilderLL
         detachImplicationBiconditionalRight
 </jh>
 We now apply our other lemma to turn <code>{C} ∈ 〈A, B〉</code> into <code>{C} = {A} ∨ {C} = {A, B}</code>.
@@ -560,13 +561,13 @@ We now apply our other lemma to turn <code>{C} ∈ 〈A, B〉</code> into <code>
 We'll show that each half of <code>{C} = {A} ∨ {C} = {A, B}</code> implies <code>A ∈ {C}</code>.  The left half follows from <code>{C} = {A} → (A ∈ {C} ↔ A ∈ {A})</code> once we detach the theorem <code>A ∈ {A}</code>.
 <jh>
         A SingletonMembership
-        (singleton C) (singleton A) A IsElementBuilderLL
+        (singleton C) (singleton A) A MembershipBuilderLL
         detachImplicationBiconditionalRight
 </jh>
 The right half is similar: the builder gives us <code>{C} = {A, B} → (A ∈ {C} ↔ A ∈ {A, B})</code> and we can detach <code>A ∈ {A, B}</code>.
 <jh>
         A B UnorderedPairLeftMembership
-        (singleton C) (unorderedPair A B) A IsElementBuilderLL
+        (singleton C) (unorderedPair A B) A MembershipBuilderLL
         detachImplicationBiconditionalRight
 </jh>
 We now compose the two and combine with our earlier result to get <code>〈A, B〉=〈C, D〉 → A ∈ {C}</code>
@@ -712,7 +713,7 @@ That gives us <code>∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉) ↔ ∀ z′ 
 </jh>
 Now we perform the substitutions. The first one is <code>[z′ / z] z ∈ A ↔ z′ ∈ A</code>.
 <jh>
-        (value z) (value z′) A IsElementBuilderRR
+        (value z) (value z′) A MembershipBuilderRR
         makeSubstExplicit
 </jh>
 The next is <code>[z′ / z] z = 〈x, y〉 ↔ z′ = 〈x, y〉</code>.
@@ -767,12 +768,12 @@ def ((× A B) (separate z (power (power (A ∪ B)))
   (∃ a (∃ b ((((value z) = (orderedPair (value a) (value b))) ∧ ((value a) ∈ A)) ∧ ((value b) ∈ B))))))
 </jh>
 
-To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉 ∈ power power (A ∪ B)</code>.
+To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉 ∈ power power (A ∪ B)</code>.
 <jh>
 thm (MembershipCartesianProductLemma () ()
   (((α ∈ A) ∧ (β ∈ B)) → ((orderedPair α β) ∈ (power (power (A ∪ B))))) (
 </jh>
-The ordered pair <code>〈α, β〉</code> has two elements, <code>{ α }</code> and <code>{ α , β }</code>. We start with the former, and the first step is <code>α ∈ A ∧ β ∈ B → { α } ⊆ A</code>
+The ordered pair <code>〈α, β〉</code> has two elements, <code>{ α }</code> and <code>{ α , β }</code>. We start with the former, and the first step is <code>α ∈ A ∧ β ∈ B → { α } ⊆ A</code>
 <jh>
         (α ∈ A) (β ∈ B) ConjunctionRightElimination
 
@@ -800,7 +801,7 @@ Turning our attention to <code>{ α, β }</code>, we start with <code>α ∈ A �
 The consequent implies <code>{ α, β } ⊆ A ∪ B</code>,
 <jh>
         α (A ∪ B) β UnorderedPairSubset
-        eliminateBiconditional?
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 which in turn implies <code>{ α, β } ∈ power (A ∪ B)</code>.
@@ -819,7 +820,7 @@ Combining <code>{ α } ∈ power (A ∪ B)</code> and <code>{ α, β } ∈ power
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
-That in turn is just <code>〈 α, β 〉 ∈ power power (A ∪ B)</code>, which is what we are seeking to prove.
+That in turn is just <code>〈 α, β 〉 ∈ power power (A ∪ B)</code>, which is what we are seeking to prove.
 <jh>
         (orderedPair α β) (power (A ∪ B)) PowerSet
         eliminateBiconditionalForward
