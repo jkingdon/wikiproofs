@@ -408,7 +408,7 @@ thm (SubsetUnionLeft ( (x A) (x B)) ()
 ))
 </jh>
 
-Being a subset of a set implies being a subset of the union of set and any other.<ref>[http://us.metamath.org/mpeuni/snun3.html snun3], metamath's set.mm, accessed January 30, 2011</ref>
+Being a subset of a set implies being a subset of the union of set and any other.<ref>[http://us.metamath.org/mpeuni/ssun3.html ssun3], metamath's set.mm, accessed February 3, 2011</ref>
 <jh>
 thm (SubsetUnionRightIntroduction () ()
   ((A ⊆ B) → (A ⊆ (B ∪ C))) (
