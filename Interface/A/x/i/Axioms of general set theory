@@ -42,8 +42,8 @@ The principle that equals can be substituted for equals in JHilbert must be adop
 
 <jh>
 var (object A B A0 A1 B0 B1)
-stmt (IsElementBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
-stmt (IsElementBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
+stmt (MembershipBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
+stmt (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 </jh>
 
 The axiom of separation is <code>∃ y ∀ x (x ∈ y ↔ x ∈ z ∧ φ)</code>.  Given a set <code>z</code> and a formula <code>φ</code> this asserts the existence of a set <code>y</code> which contains the elements of <code>z</code> which satisfy <code>φ</code>. The distinct variable constraint between <code>φ</code> and <code>y</code> is needed and is part of textbook statements of this axiom.  Most of the other distinct variable constraints are implicit in the notation in many textbooks, and not all of them are necessary, but as with extensionality we include them.  
