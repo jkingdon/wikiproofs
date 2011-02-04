@@ -49,8 +49,6 @@ Items which may be doable without a network connection:
       A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
         then the interesting part is proving opelxp, elxp, or something else useful
 
-ssun3: A ⊆ B → A ⊆ B ∪ C SubsetUnionRightIntroduction
-
         a substitution could turn MembershipCartesianProductLemma into:
           z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B → z ∈ 𝒫𝒫(A ∪ B)
         in case that is helpful
