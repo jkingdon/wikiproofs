@@ -89,7 +89,7 @@ First we prove a lemma, <code>{A, C} = {B, C} → A = B ∨ A = C</code>
 thm (UnorderedPairFirstMembersEqual-1 () () (((unorderedPair A C) = (unorderedPair B C)) → ((A = B) ∨ (A = C))) (
         A C UnorderedPairLeftMembership
 
-        (unorderedPair A C) (unorderedPair B C) A IsElementBuilderLL
+        (unorderedPair A C) (unorderedPair B C) A MembershipBuilderLL
 
         detachImplicationBiconditional
 </jh>
@@ -173,7 +173,7 @@ To prove the reverse direction we start by adding a substitution to our hypothes
 </jh>
 Now we perform the latter subsitution, starting with <code>z = B → (z ∈ A ↔ B ∈ A)</code>, and then combining with the previous step to get <code>[ B / z ] φ → B ∈ A</code>.
 <jh>
-        (value z) B A IsElementBuilderRR
+        (value z) B A MembershipBuilderRR
         makeSubstExplicit
         eliminateBiconditionalReverse
         applySyllogism
@@ -221,7 +221,7 @@ We start with the forward direction. First we prove <code>A ∈ B → ∃ x (x =
 </jh>
 Next is the substitution <code>x = B → (A ∈ x ↔ A ∈ B)</code>, which we then rearrange to <code>x = B ∧ A ∈ B → A ∈ x)</code>.
 <jh>
-        (value x) B A IsElementBuilderLL
+        (value x) B A MembershipBuilderLL
         eliminateBiconditionalForwardInConsequent
         import
 </jh>
@@ -235,7 +235,7 @@ Combining this with <code>x = B</code> we get <code>x = B ∧ A ∈ B → A ∈ 
 </jh>
 The reverse direction is just a substitution. We start with <code>x = B → (A ∈ x ↔ A ∈ B)</code> and rearrange it to <code>A ∈ x ∧ x = B → A ∈ B</code>.
 <jh>
-        (value x) B A IsElementBuilderLL
+        (value x) B A MembershipBuilderLL
         eliminateBiconditionalReverseInConsequent
         applyComm
         import
@@ -324,7 +324,7 @@ Then we transform the <code>x ∈ { A }</code> into <code>x = A</code>
 </jh>
 That gives us <code>∀ x (x = A → x ∈ B)</code>, which is equivalent to <code>A ∈ B</code> via the substitution <code>x = A → (x ∈ B ↔ A ∈ B)</code>.
 <jh>
-        (value x) A B IsElementBuilderRR
+        (value x) A B MembershipBuilderRR
         ImplicitForAll
         applyBiconditionalTransitivity
 
@@ -428,7 +428,7 @@ The first step is <code>〈A, B〉=〈C, D〉 → ({C} ∈ 〈A, B〉 ↔ {C} �
 But <code>{C} ∈ 〈C, D〉</code> is true unconditionally, so this formula reduces to <code>〈A, B〉=〈C, D〉 → {C} ∈ 〈A, B〉</code>.
 <jh>
         C D OrderedPairTheoremForwardFirst-1
-        (orderedPair A B) (orderedPair C D) (singleton C) IsElementBuilderLL
+        (orderedPair A B) (orderedPair C D) (singleton C) MembershipBuilderLL
         detachImplicationBiconditionalRight
 </jh>
 We now apply our other lemma to turn <code>{C} ∈ 〈A, B〉</code> into <code>{C} = {A} ∨ {C} = {A, B}</code>.
@@ -440,13 +440,13 @@ We now apply our other lemma to turn <code>{C} ∈ 〈A, B〉</code> into <code>
 We'll show that each half of <code>{C} = {A} ∨ {C} = {A, B}</code> implies <code>A ∈ {C}</code>.  The left half follows from <code>{C} = {A} → (A ∈ {C} ↔ A ∈ {A})</code> once we detach the theorem <code>A ∈ {A}</code>.
 <jh>
         A SingletonMembership
-        (singleton C) (singleton A) A IsElementBuilderLL
+        (singleton C) (singleton A) A MembershipBuilderLL
         detachImplicationBiconditionalRight
 </jh>
 The right half is similar: the builder gives us <code>{C} = {A, B} → (A ∈ {C} ↔ A ∈ {A, B})</code> and we can detach <code>A ∈ {A, B}</code>.
 <jh>
         A B UnorderedPairLeftMembership
-        (singleton C) (unorderedPair A B) A IsElementBuilderLL
+        (singleton C) (unorderedPair A B) A MembershipBuilderLL
         detachImplicationBiconditionalRight
 </jh>
 We now compose the two and combine with our earlier result to get <code>〈A, B〉=〈C, D〉 → A ∈ {C}</code>
@@ -592,7 +592,7 @@ That gives us <code>∀ z (z ∈ A → ∃ x ∃ y z = 〈x, y〉) ↔ ∀ z′ 
 </jh>
 Now we perform the substitutions. The first one is <code>[z′ / z] z ∈ A ↔ z′ ∈ A</code>.
 <jh>
-        (value z) (value z′) A IsElementBuilderRR
+        (value z) (value z′) A MembershipBuilderRR
         makeSubstExplicit
 </jh>
 The next is <code>[z′ / z] z = 〈x, y〉 ↔ z′ = 〈x, y〉</code>.
