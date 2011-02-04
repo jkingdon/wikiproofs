@@ -452,6 +452,35 @@ thm (UnorderedPairSubset () ()
 ))
 </jh>
 
+=== Union and subset ===
+The left side of a union is a subset of the union.<ref>[http://us.metamath.org/mpeuni/snun1.html snun1], metamath's set.mm, accessed January 30, 2011</ref>
+<jh>
+thm (SubsetUnionLeft ( (x A) (x B)) ()
+  (A ⊆ (A ∪ B)) (
+        ((value x) ∈ A) ((value x) ∈ B) DisjunctionRightIntroduction
+
+        (value x) A B BinaryUnion
+        eliminateBiconditionalForward
+        applySyllogism
+
+        x generalize
+
+        A (A ∪ B) x Subset
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+Being a subset of a set implies being a subset of the union of set and any other.<ref>[http://us.metamath.org/mpeuni/snun3.html snun3], metamath's set.mm, accessed January 30, 2011</ref>
+<jh>
+thm (SubsetUnionRightIntroduction () ()
+  ((A ⊆ B) → (A ⊆ (B ∪ C))) (
+        B C SubsetUnionLeft
+        A B (B ∪ C) SubsetTransitivity
+        detach2of2
+))
+</jh>
+
 == Ordered pair ==
 The ordered pair <code>〈A, B〉</code> can be defined in several ways as long as the definition implies the key ordered pair theorem <code>〈A0, B0〉=〈A1, B1〉↔ A0 = A1 ∧ B0 = B1</code>. The most widely adopted definition is <code>〈A, B〉≝ { {A}, {A, B} }</code>, which is the one we use. Because the notation <code>〈A, B〉</code> is not available in JHilbert, we call it <code>(orderedPair A B)</code>.
 <jh>
