@@ -61,6 +61,20 @@ thm (UnorderedPairLeftMembership () () (A ∈ (unorderedPair A B)) (
 ))
 </jh>
 
+A similar result holds, of course, for the second member.<ref>[http://us.metamath.org/mpeuni/prid2.html prid2], metamath's set.mm, accessed February 2, 2011.</ref>
+
+<jh>
+thm (UnorderedPairRightMembership () () (B ∈ (unorderedPair A B)) (
+        B EqualityReflexivity
+        (B = A) introduceLeftDisjunction
+
+        B A B UnorderedPair
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
 === Unordered pair commutativity ===
 Unordered pairs are unordered: <code>{A, B} = {B, A}</code>.
 <jh>
@@ -393,6 +407,71 @@ thm (SubsetUnionRightIntroduction () ()
         B C SubsetUnionLeft
         A B (B ∪ C) SubsetTransitivity
         detach2of2
+))
+</jh>
+
+=== Unordered pair and subset ===
+Analogous to the result we already proved which relates a singleton being a subset to the singleton's element being an element, here is a similar result for unordered pairs: <code>A ∈ C ∧ B ∈ C ↔ { A, B } ⊆ C</code>.<ref>[http://us.metamath.org/mpeuni/prss.html prss], metamath's set.mm, accessed February 1, 2011</ref>
+<jh>
+thm (UnorderedPairSubsetForward ( (x A) (x B) (x C)) ()
+  (((A ∈ C) ∧ (B ∈ C)) → ((unorderedPair A B) ⊆ C)) (
+</jh>
+We begin with <code>A ∈ C → (x = A → x ∈ C)</code> and likewise for <code>B</code>
+<jh>
+        (value x) A C MembershipBuilderRR
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+
+        (value x) B C MembershipBuilderRR
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+</jh>
+We combine the two implications with conjunctions to get <code>A ∈ C ∧ B ∈ C → ((x = A → x ∈ C) ∧ (x = B → x ∈ C))</code>, but the consequent of that simplifies to <code>x = A ∨ x = B → x ∈ C</code>.
+<jh>
+        conjoin
+
+        ((value x) = A)
+          ((value x) ∈ C)
+          ((value x) = B)
+          DisjunctionComposition
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we transform <code>x = A ∨ x = B</code> into <code>x ∈ { A, B }</code>.
+<jh>
+        (value x) A B UnorderedPair
+        swapBiconditional
+        transformImplicationImplicationAntecedent
+</jh>
+That gives <code>A ∈ C ∧ B ∈ C → (x ∈ { A, B } → x ∈ C)</code>. But the consequent simplifies to just <code>{ A, B } ⊆ C</code>.
+<jh>
+        x addForAllToConsequent
+
+        (unorderedPair A B) C x Subset
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (UnorderedPairSubsetReverse ( (x A) (x B) (x C)) ()
+  (((unorderedPair A B) ⊆ C) → ((A ∈ C) ∧ (B ∈ C))) (
+        A B UnorderedPairLeftMembership
+        (unorderedPair A B) C A SubsetMembership
+        applyComm
+        applyModusPonens
+
+        B A UnorderedPairRightMembership
+        (unorderedPair A B) C B SubsetMembership
+        applyComm
+        applyModusPonens
+
+        composeConjunction
+))
+
+thm (UnorderedPairSubset () ()
+  (((A ∈ C) ∧ (B ∈ C)) ↔ ((unorderedPair A B) ⊆ C)) (
+        A C B UnorderedPairSubsetForward
+        A B C UnorderedPairSubsetReverse
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
