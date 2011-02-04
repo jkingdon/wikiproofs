@@ -64,7 +64,6 @@ elun2: A ∈ C → A ∈ B ∪ C MembershipUnionLeftIntroduction
           then y ∈ A × B ↔ ∃ a ∃ b (y = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) (elxp)
           and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B  (opelxp)
       - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
-    - note dmex depends on ax-pow and ax-un, but doesn't need replacement.
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html

@@ -119,6 +119,9 @@ The union of two sets is just a special case of the union of a set.
 <jh>
 def ((∪ A B) (⋃ (unorderedPair A B)))
 stmt (BinaryUnion () () ((A ∈ (B ∪ C)) ↔ ((A ∈ B) ∨ (A ∈ C))))
+
+stmt (MembershipUnionRightIntroduction () () ((A ∈ B) → (A ∈ (B ∪ C))))
+stmt (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))))
 </jh>
 
 == Power set ==

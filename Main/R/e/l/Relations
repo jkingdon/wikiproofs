@@ -303,6 +303,25 @@ Now we can apply the lemma from the previous section to get <code>A ∈ B ∨ A 
 ))
 </jh>
 
+An easy corollary is that membership in one of the two sets of a union implies membership in the union.<ref>MembershipUnionRightIntroduction is [http://us.metamath.org/mpeuni/elun1.html elun1] and MembershipUnionLeftIntroduction is [http://us.metamath.org/mpeuni/elun2.html elun2], metamath's set.mm, accessed 2009</ref>
+<jh>
+thm (MembershipUnionRightIntroduction () () ((A ∈ B) → (A ∈ (B ∪ C))) (
+        (A ∈ B) (A ∈ C) DisjunctionRightIntroduction
+
+        A B C BinaryUnion
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))) (
+        (A ∈ C) (A ∈ B) DisjunctionLeftIntroduction
+
+        A B C BinaryUnion
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 == Subset ==
 Logically, these theorems belong with the other subset theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
 
