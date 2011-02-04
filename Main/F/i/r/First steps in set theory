@@ -16,18 +16,6 @@ var (formula φ)
 </jh>
 
 == Membership ==
-=== Alternate names for builders ===
-We're in the process of renaming <code>IsElementBuilderRR</code> to <code>MembershipBuilderRR</code> and <code>IsElementBuilderLL</code> to <code>MembershipBuilderLL</code>.
-<jh>
-thm (MembershipBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))) (
-        B0 B1 A IsElementBuilderLL
-))
-
-thm (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))) (
-        A0 A1 B IsElementBuilderRR
-))
-</jh>
-
 === Membership with a substitution ===
 Here are two ways to express <code>∈</code> in terms of a substitution.<ref>[http://us.metamath.org/mpeuni/clel2.html clel2], metamath's set.mm, accessed January 28, 2011</ref><ref>[http://us.metamath.org/mpeuni/df-clel.html df-clel], metamath's set.mm, accessed February 1, 2011</ref>
 <jh>
@@ -130,7 +118,7 @@ thm (EmptySetObject ((x A y)) () (A ∉ (abstract y (⊥))) (
 </jh>
 The substitution to apply <code>VariableToObject</code> is <code>x = A → x ∉ ∅ ↔ A ∉ ∅</code>
 <jh>
-        (value x) A (abstract y (⊥)) IsElementBuilderRR
+        (value x) A (abstract y (⊥)) MembershipBuilderRR
         addNegationInConsequent
 
         x y EmptySetVariable
@@ -179,7 +167,7 @@ thm (ExtensionalityObject-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) 
 </jh>
 This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))</code>
 <jh>
-        (value x) A (value z) IsElementBuilderLL
+        (value x) A (value z) MembershipBuilderLL
         ((value z) ∈ (value y)) buildBiconditionalRRInConsequent
         z buildForAllInConsequent
 
@@ -195,7 +183,7 @@ thm (ExtensionalityObject ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z)
 </jh>
 To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))</code>
 <jh>
-        (value y) B (value z) IsElementBuilderLL
+        (value y) B (value z) MembershipBuilderLL
         ((value z) ∈ A) buildBiconditionalLLInConsequent
         z buildForAllInConsequent
 
@@ -256,7 +244,7 @@ thm (SetObject
 </jh>
 Our substitution is <code>y = C → ((y ∈ {z | φz} ↔ φy) ↔ (C ∈ {z | φz} ↔ φC))</code>.
 <jh>
-        (value y) C (abstract z φz) IsElementBuilderRR
+        (value y) C (abstract z φz) MembershipBuilderRR
         HSUBC
         buildBiconditionalInConsequent
 
@@ -432,7 +420,7 @@ First is a version of the axiom of union for <code>object</code> rather than <co
 
 <jh>
 thm (UnionAxiomObject ((A x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∃ w (((value z) ∈ (value w)) ∧ ((value w) ∈ A)))))) (
-        (value x) A (value w) IsElementBuilderLL
+        (value x) A (value w) MembershipBuilderLL
         ((value z) ∈ (value w)) buildConjunctionLLInConsequent
         w buildThereExistsInConsequent
         ((value z) ∈ (value y)) buildBiconditionalLLInConsequent
@@ -449,7 +437,7 @@ Then we prove <code>B ∈ ⋃ A ↔ ∃ x (B ∈ x ∧ x ∈ A)</code> using <co
 
 <jh>
 thm (Union-sub ((x C) (x D)) () ((C = D) → ((∃ x ((C ∈ (value x)) ∧ ((value x) ∈ A))) ↔ (∃ x ((D ∈ (value x)) ∧ ((value x) ∈ A))))) (
-        C D (value x) IsElementBuilderRR
+        C D (value x) MembershipBuilderRR
         ((value x) ∈ A) buildConjunctionRRInConsequent
         x buildThereExistsInConsequent
 ))
@@ -457,8 +445,8 @@ thm (Union-sub ((x C) (x D)) () ((C = D) → ((∃ x ((C ∈ (value x)) ∧ ((va
 thm (Union-changeVariable ((x′ C) (x′ x) (x′ A) (x C) (x A)) ()
   ((∃ x ((C ∈ (value x)) ∧ ((value x) ∈ A))) ↔
     (∃ x′ ((C ∈ (value x′)) ∧ ((value x′) ∈ A)))) (
-        (value x) (value x′) C IsElementBuilderLL
-        (value x) (value x′) A IsElementBuilderRR
+        (value x) (value x′) C MembershipBuilderLL
+        (value x) (value x′) A MembershipBuilderRR
         buildConjunctionInConsequent
 
         ChangeVariableThereExists
@@ -491,8 +479,8 @@ def ((⊆ A B) (∀ x (((value x) ∈ A) → ((value x) ∈ B))))
 
 thm (Subset ((x A) (x B)  (y A) (y B) (y x)) ()
   ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))) (
-        (value y) (value x) A IsElementBuilderRR
-        (value y) (value x) B IsElementBuilderRR
+        (value y) (value x) A MembershipBuilderRR
+        (value y) (value x) B MembershipBuilderRR
         buildImplicationInConsequent
         ChangeVariableForAll
 ))
@@ -533,7 +521,7 @@ First is a version of the axiom of power set for <code>object</code> rather than
 
 <jh>
 thm (PowerSetAxiomObject ((A x y z w)) () (∃ y (∀ z (((value z) ∈ (value y)) ↔ (∀ w (((value w) ∈ (value z)) → ((value w) ∈ A)))))) (
-        (value x) A (value w) IsElementBuilderLL
+        (value x) A (value w) MembershipBuilderLL
         ((value w) ∈ (value z)) buildCommonAntecedentInConsequent
         w buildForAllInConsequent
         ((value z) ∈ (value y)) buildBiconditionalLLInConsequent
@@ -550,7 +538,7 @@ Then we prove <code>B ∈ (power A) ↔ ∀ x (x ∈ B → x ∈ A)</code> using
 
 <jh>
 thm (PowerSet-sub ((x C) (x D)) () ((C = D) → ((∀ x (((value x) ∈ C) → ((value x) ∈ A))) ↔ (∀ x (((value x) ∈ D) → ((value x) ∈ A))))) (
-        C D (value x) IsElementBuilderLL
+        C D (value x) MembershipBuilderLL
         ((value x) ∈ A) buildCommonConsequentInConsequent
         x buildForAllInConsequent
 ))
@@ -558,8 +546,8 @@ thm (PowerSet-sub ((x C) (x D)) () ((C = D) → ((∀ x (((value x) ∈ C) → (
 thm (PowerSet-changeVariable ((x′ C) (x′ x) (x′ A) (x C) (x A)) ()
   ((∀ x (((value x) ∈ C) → ((value x) ∈ A))) ↔
     (∀ x′ (((value x′) ∈ C) → ((value x′) ∈ A)))) (
-        (value x) (value x′) C IsElementBuilderRR
-        (value x) (value x′) A IsElementBuilderRR
+        (value x) (value x′) C MembershipBuilderRR
+        (value x) (value x′) A MembershipBuilderRR
         buildImplicationInConsequent
 
         ChangeVariableForAll
@@ -603,7 +591,7 @@ First we provide a version of <code>SeparationThereExists</code> where we turn t
 <jh>
 thm (SeparationThereExistsObject ((x y A) (φ y) (A y)  (z x y A) (z φ)) ()
   (∃ y (∀ x (((value x) ∈ (value y)) ↔ (((value x) ∈ A) ∧ φ)))) (
-        (value z) A (value x) IsElementBuilderLL
+        (value z) A (value x) MembershipBuilderLL
         φ buildConjunctionRRInConsequent
         ((value x) ∈ (value y)) buildBiconditionalLLInConsequent
         x buildForAllInConsequent
@@ -624,7 +612,7 @@ thm (SeparationThereExistsSubst
 From here we apply <code>SetObject</code> in much the usual way.
 <jh>
 thm (Separation-sub () () ((C = D) → (((C ∈ A) ∧ (subst C x φ)) ↔ ((D ∈ A) ∧ (subst D x φ)))) (
-        C D A IsElementBuilderRR
+        C D A MembershipBuilderRR
         C D x φ SubstBuilderReplacement
         buildConjunctionInConsequent
 ))
@@ -650,7 +638,7 @@ Here's a theorem which combines <code>∈</code> with a substitution.<ref>[http:
 <jh>
 thm (ImplicitMembership ((x A) (x B)) ()
   ((A ∈ B) ↔ (∀ x (((value x) = A) → ((value x) ∈ B)))) (
-        (value x) A B IsElementBuilderRR
+        (value x) A B MembershipBuilderRR
         ImplicitForAll
         swapBiconditional
 ))
