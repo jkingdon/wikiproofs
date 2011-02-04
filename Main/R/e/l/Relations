@@ -303,11 +303,19 @@ Now we can apply the lemma from the previous section to get <code>A ∈ B ∨ A 
 ))
 </jh>
 
-An easy corollary is <code>A ∈ B → A ∈ B ∪ C</code>.<ref>[http://us.metamath.org/mpeuni/elun1.html elun1] in metamath's set.mm, accessed January 22, 2011</ref>
+An easy corollary is that membership in one of the two sets of a union implies membership in the union.<ref>MembershipUnionRightIntroduction is [http://us.metamath.org/mpeuni/elun1.html elun1] and MembershipUnionLeftIntroduction is [http://us.metamath.org/mpeuni/elun2.html elun2], metamath's set.mm, accessed 2009</ref>
 <jh>
 thm (MembershipUnionRightIntroduction () ()
   ((A ∈ B) → (A ∈ (B ∪ C))) (
         (A ∈ B) (A ∈ C) DisjunctionRightIntroduction
+
+        A B C BinaryUnion
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))) (
+        (A ∈ C) (A ∈ B) DisjunctionLeftIntroduction
 
         A B C BinaryUnion
         eliminateBiconditionalForward
@@ -755,17 +763,70 @@ def ((relates A R B) ((orderedPair A B) ∈ R))
 == Cartesian product ==
 The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.
 
-To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>(power (power A ∪ B))</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ (power (power (A ∪ B))) | ∃ a ∃ b z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
+To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>power power (A ∪ B)</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ power power (A ∪ B) | ∃ a ∃ b z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
 <jh>
 def ((× A B) (separate z (power (power (A ∪ B)))
   (∃ a (∃ b ((((value z) = (orderedPair (value a) (value b))) ∧ ((value a) ∈ A)) ∧ ((value b) ∈ B))))))
 </jh>
 
-To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉∈ (power (power (A ∪ B))</code>.
+To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉 ∈ power power (A ∪ B)</code>.
 <jh>
-#thm (IsElementCartesianProductLemma () ()
-#  (((α ∈ A) ∧ (β ∈ B)) → ((orderedPair α β) ∈ (power (power (A ∪ B))))) (
-#))
+thm (MembershipCartesianProductLemma () ()
+  (((α ∈ A) ∧ (β ∈ B)) → ((orderedPair α β) ∈ (power (power (A ∪ B))))) (
+</jh>
+The ordered pair <code>〈α, β〉</code> has two elements, <code>{ α }</code> and <code>{ α , β }</code>. We start with the former, and the first step is <code>α ∈ A ∧ β ∈ B → { α } ⊆ A</code>
+<jh>
+        (α ∈ A) (β ∈ B) ConjunctionRightElimination
+
+        α A SingletonSubset
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The consequent in turn implies <code>{ a } ⊆ A ∪ B</code>,
+<jh>
+        (singleton α) A B SubsetUnionRightIntroduction
+        applySyllogism
+</jh>
+which then becomes <code>{ α } ∈ power (A ∪ B)</code>.
+<jh>
+        (singleton α) (A ∪ B) PowerSet
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Turning our attention to <code>{ α, β }</code>, we start with <code>α ∈ A ∧ β ∈ B → α ∈ A ∪ B ∧ β ∈ A ∪ B</code>.
+<jh>
+        α A B MembershipUnionRightIntroduction
+        β B A MembershipUnionLeftIntroduction
+        conjoin
+</jh>
+The consequent implies <code>{ α, β } ⊆ A ∪ B</code>,
+<jh>
+        α (A ∪ B) β UnorderedPairSubset
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+which in turn implies <code>{ α, β } ∈ power (A ∪ B)</code>.
+<jh>
+        (unorderedPair α β) (A ∪ B) PowerSet
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Combining <code>{ α } ∈ power (A ∪ B)</code> and <code>{ α, β } ∈ power (A ∪ B)</code> gives <code>{ { α }, { α, β } } ⊆ power (A ∪ B)</code>.
+<jh>
+        composeConjunction
+        (singleton α)
+          (power (A ∪ B))
+          (unorderedPair α β)
+          UnorderedPairSubset
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+That in turn is just <code>〈 α, β 〉 ∈ power power (A ∪ B)</code>, which is what we are seeking to prove.
+<jh>
+        (orderedPair α β) (power (A ∪ B)) PowerSet
+        eliminateBiconditionalForward
+        applySyllogism
+))
 </jh>
 
 == To be added ==
