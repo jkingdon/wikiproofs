@@ -763,10 +763,11 @@ def ((relates A R B) ((orderedPair A B) ∈ R))
 == Cartesian product ==
 The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.
 
-To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>power power (A ∪ B)</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ power power (A ∪ B) | ∃ a ∃ b z = 〈a, b〉∧ a ∈ A ∧ b ∈ B}</code>.
+To show that it exists, we need to define it terms of a larger set which contains it. The larger set is <code>power power (A ∪ B)</code> (this choice depends on our definition of ordered pair). Based on this concept, we define <code>A × B</code> to be <code>{z ∈ power power (A ∪ B) | ∃ a ∃ b z = 〈a, b〉∧ (a ∈ A ∧ b ∈ B)}</code>.
 <jh>
 def ((× A B) (separate z (power (power (A ∪ B)))
-  (∃ a (∃ b ((((value z) = (orderedPair (value a) (value b))) ∧ ((value a) ∈ A)) ∧ ((value b) ∈ B))))))
+  (∃ a (∃ b (((value z) = (orderedPair (value a) (value b))) ∧
+    (((value a) ∈ A) ∧ ((value b) ∈ B)))))))
 </jh>
 
 To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉 ∈ power power (A ∪ B)</code>.
@@ -854,6 +855,31 @@ That's almost it. Combining those implications gives <code>Z = 〈 a, b 〉 ∧ 
 
         b addThereExistsToAntecedent
         a addThereExistsToAntecedent
+))
+</jh>
+
+It just takes some logic to turn that into <code>C ∈ A × B ↔ ∃ a ∃ b (C = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)</code>, which we can take as a basic equivalence which "defines" the meaning of a Cartesian product.<ref>[http://us.metamath.org/mpeuni/elxp.html elxp], metamath's set.mm, accessed 2009</ref> For the moment we expand <code>A × B</code> according to its definition, but that is just a stopgap measure, until we prove this the rest of the way.
+<jh>
+thm (MembershipCartesianProduct
+  ((a b A) (a b B) (a b C)
+    (C z) (a b z) (A z) (B z)) ()
+  ((C ∈ (separate z (power (power (A ∪ B)))
+  (∃ a (∃ b (((value z) = (orderedPair (value a) (value b))) ∧ (((value a) ∈ A) ∧ ((value b) ∈ B))))))
+) ↔
+    (∃ a (∃ b ((C = (orderedPair (value a) (value b)))
+      ∧ (((value a) ∈ A) ∧ ((value b) ∈ B)))))) (
+        a b (value z) A B MembershipCartesianProduct-2
+        C FormulaBound
+</jh>
+We now have <code>C ∈ A × B ↔ [C / z] ∃ a ∃ b (z = 〈a, b〉 ∧ (a ∈ A ∧ b ∈ B))</code>. We now just perform the substitution, starting with <code>z = C → (∃ a ∃ b (z = 〈 a, b 〉 ∧ a ∈ A ∧ b ∈ B) ↔ ∃ a ∃ b (C = 〈 a, b 〉 ∧ a ∈ A ∧ b ∈ B)</code>
+<jh>
+        (value z) C (orderedPair (value a) (value b)) EqualityBuilderRR
+        (((value a) ∈ A) ∧ ((value b) ∈ B)) buildConjunctionRRInConsequent
+        b buildThereExistsInConsequent
+        a buildThereExistsInConsequent
+        makeSubstExplicit
+
+        applyBiconditionalTransitivity
 ))
 </jh>
 
