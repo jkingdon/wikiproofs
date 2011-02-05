@@ -6,7 +6,7 @@
 
 This page covers some of the simplest operations of set theory including the empty set, singletons, unordered pairs, power set, and unions. Because of the way that JHilbert currently handles definitions, further development is in other places.
 
-== Variables, objects (classes), and is-element ==
+== Variables, objects (classes), and membership ==
 
 We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
 
@@ -99,6 +99,8 @@ Equals can be substituted for equals, in the context of set operations.
 <jh>
 stmt (MembershipBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
 stmt (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
+stmt (buildMembershipLL () ((B0 = B1)) ((A ∈ B0) ↔ (A ∈ B1)))
+stmt (buildMembershipRR () ((A0 = A1)) ((A0 ∈ B) ↔ (A1 ∈ B)))
 
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
