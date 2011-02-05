@@ -167,9 +167,9 @@ The following characters are intentionally omitted from the above list and gener
 |-
 | various || raised dots || The one shown above seems to be the most widely used; see <ref name="confusables" /> for a long list of other raised dot characters.
 |-
-| 〈, 〉 || angle brackets (U+3008, U+3009) || These (at least on some systems) produce undesirable whitespace outside the brackets
+| 〈, 〉 || angle brackets (U+3008, U+3009) || These (at least on some systems) produce undesirable whitespace outside the brackets compared with U+2329 and U+232A, although some software will convert the latter to the former, so it may be difficult to maintain this distinction.
 |-
-| ⟨, ⟩ || angle brackets (U+27E8, U+27E9) || These (at least on some systems) look too much lke parentheses
+| ⟨, ⟩ || angle brackets (U+27E8, U+27E9) || These (at least on some systems) look too much like parentheses
 |-
 | א‎ || Hebrew alef || The aleph symbol used in mathematics (ℵ) generally shows significant font differences and behaves differently with respect to bidirectional texts
 |}
