@@ -957,18 +957,25 @@ That's almost it. Combining those implications gives <code>Z = 〈 a, b 〉 ∧ 
 ))
 </jh>
 
-It just takes some logic to turn that into <code>C ∈ A × B ↔ ∃ a ∃ b (C = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)</code>, which we can take as a basic equivalence which "defines" the meaning of a Cartesian product.<ref>[http://us.metamath.org/mpeuni/elxp.html elxp], metamath's set.mm, accessed 2009</ref> First we prove a variant with <code>A × B</code> expanded according to its definition, but once we've done that we provide the regular version.
+It just takes some logic to turn that into <code>C ∈ A × B ↔ ∃ a ∃ b (C = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)</code>, which we can take as a basic equivalence which "defines" the meaning of a Cartesian product.<ref>[http://us.metamath.org/mpeuni/elxp.html elxp], metamath's set.mm, accessed 2009</ref>
 <jh>
-thm (MembershipCartesianProduct-3
+thm (MembershipCartesianProduct
   ((a b A) (a b B) (a b C)
-    (C z) (a b z) (A z) (B z)) ()
-  ((C ∈ (separate z (power (power (A ∪ B)))
-  (∃ a (∃ b (((value z) = (orderedPair (value a) (value b))) ∧ (((value a) ∈ A) ∧ ((value b) ∈ B))))))
-) ↔
+    (C z a′ b′) (a b z a′ b′) (A z a′ b′) (B z a′ b′)) ()
+  ((C ∈ (A × B)) ↔
     (∃ a (∃ b ((C = (orderedPair (value a) (value b)))
       ∧ (((value a) ∈ A) ∧ ((value b) ∈ B)))))) (
+</jh>
+We start by expanding the definition of <code>A × B</code>.
+<jh>
+        z A B a′ b′ a b CartesianProduct
+        C buildMembershipLL
+</jh>
+We now proceed to <code>MembershipCartesianProduct-2</code>.
+<jh>
         a b (value z) A B MembershipCartesianProduct-2
         C FormulaBound
+        applyBiconditionalTransitivity
 </jh>
 We now have <code>C ∈ A × B ↔ [C / z] ∃ a ∃ b (z = 〈a, b〉 ∧ (a ∈ A ∧ b ∈ B))</code>. We now just perform the substitution, starting with <code>z = C → (∃ a ∃ b (z = 〈 a, b 〉 ∧ a ∈ A ∧ b ∈ B) ↔ ∃ a ∃ b (C = 〈 a, b 〉 ∧ a ∈ A ∧ b ∈ B)</code>
 <jh>
@@ -978,19 +985,6 @@ We now have <code>C ∈ A × B ↔ [C / z] ∃ a ∃ b (z = 〈a, b〉 ∧ (a �
         a buildThereExistsInConsequent
         makeSubstExplicit
 
-        applyBiconditionalTransitivity
-))
-
-thm (MembershipCartesianProduct
-  ((a b A) (a b B) (a b C)
-    (C z a′ b′) (a b z a′ b′) (A z a′ b′) (B z a′ b′)) ()
-  ((C ∈ (A × B)) ↔
-    (∃ a (∃ b ((C = (orderedPair (value a) (value b)))
-      ∧ (((value a) ∈ A) ∧ ((value b) ∈ B)))))) (
-        z A B a′ b′ a b CartesianProduct
-        C buildMembershipLL
-
-        C z A B a b MembershipCartesianProduct-3
         applyBiconditionalTransitivity
 ))
 </jh>
