@@ -91,6 +91,8 @@ stmt (Relation ((x y z A)) ()
 The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.<ref>[http://us.metamath.org/mpeuni/opelxp.html opelxp], metamath's set.mm, accessed November 3, 2010</ref>
 <jh>
 term (object (× object object))
+stmt (MembershipCartesianProduct ((a b A) (a b B) (a b C)) ()
+  ((C ∈ (A × B)) ↔ (∃ a (∃ b ((C = (orderedPair (value a) (value b))) ∧ (((value a) ∈ A) ∧ ((value b) ∈ B)))))))
 #stmt (OrderedPairCartesianProduct () ()
 #  (((orderedPair A0 B0) ∈ (A × B)) ↔ ((A0 ∈ A) ∧ (B0 ∈ B))))
 </jh>
