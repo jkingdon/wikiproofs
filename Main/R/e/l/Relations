@@ -23,7 +23,7 @@ import (BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASS
 
 As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
 <jh>
-var (object A B C D A0 A1 B0 B1 α β)
+var (object A B C D A0 A1 B0 B1 α β Z)
 var (variable a b x y z w x′ y′ z′)
 var (formula φ)
 </jh>
@@ -826,6 +826,34 @@ That in turn is just <code>〈 α, β 〉 ∈ power power (A ∪ B)</code>, whic
         (orderedPair α β) (power (A ∪ B)) PowerSet
         eliminateBiconditionalForward
         applySyllogism
+))
+</jh>
+
+The next lemma combines the previous one with a substitution and adds some quantifiers: <code>∃ a ∃ b (Z = 〈 a, b 〉 ∧ (a ∈ A ∧ b ∈ B)) → Z ∈ power power (A ∪ B)</code>
+<jh>
+thm (MembershipCartesianProduct-2 ((a Z) (b Z) (a A) (b A) (a B) (b B)) ()
+  ((∃ a (∃ b ((Z = (orderedPair (value a) (value b))) ∧ (((value a) ∈ A) ∧ ((value b) ∈ B))))) → (Z ∈ (power (power (A ∪ B))))) (
+</jh>
+We start with <code>a ∈ A ∧ b ∈ B → 〈a, b〉 ∈ power power (A ∪ B)</code> (which was the previous lemma), and then conjoin <code>Z = 〈 a, b 〉</code> to both antecedent and consequent.
+<jh>
+        (value a) A (value b) B MembershipCartesianProductLemma
+        (Z = (orderedPair (value a) (value b))) conjoinLL
+</jh>
+Next we take the substitution <code>Z = 〈 a, b 〉 → (Z ∈ power power (A ∪ B) ↔ 〈 a, b 〉 ∈ power power (A ∪ B))</code> and rearrange it into <code>Z = 〈 a, b 〉 ∧ 〈 a, b 〉 ∈ power power (A ∪ B)) → Z ∈ power power (A ∪ B)</code>
+<jh>
+        Z
+          (orderedPair (value a) (value b))
+          (power (power (A ∪ B)))
+          MembershipBuilderRR
+        eliminateBiconditionalForwardInConsequent
+        import
+</jh>
+That's almost it. Combining those implications gives <code>Z = 〈 a, b 〉 ∧ (a ∈ A ∧ b ∈ B) → Z ∈ power power (A ∪ B)</code>, and then we just add the quantifiers.
+<jh>
+        applySyllogism
+
+        b addThereExistsToAntecedent
+        a addThereExistsToAntecedent
 ))
 </jh>
 
