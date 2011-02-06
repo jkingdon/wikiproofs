@@ -740,6 +740,29 @@ thm (swap23ofDisjunction3 () ((H ((p ∨ q) ∨ r))) ((p ∨ r) ∨ q) (
 ))
 </jh>
 
+The next theorem swaps the second and third conjuncts in a conjunction of four formulas.<ref>[http://us.metamath.org/mpeuni/an4.html an4], metamath's set.mm, accessed February 5, 2011</ref>
+<jh>
+thm (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))) (
+        p q (r ∧ s) ConjunctionAssociativity
+
+        q r s ConjunctionAssociativity swapBiconditional
+        p buildConjunctionLL
+        applyBiconditionalTransitivity
+
+        q r ConjunctionCommutativity
+        s buildConjunctionRR
+        p buildConjunctionLL
+        applyBiconditionalTransitivity
+
+        r q s ConjunctionAssociativity
+        p buildConjunctionLL
+        applyBiconditionalTransitivity
+
+        p r (q ∧ s) ConjunctionAssociativity swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Done ==
 We now export [[Interface:Classical propositional calculus]].
 <jh>
