@@ -19,7 +19,7 @@ First-order logic provides us with two kinds: <code>variable</code> is a variabl
 <jh>
 var (variable x y z w)
 var (object A B C A0 A1 B0 B1)
-var (formula φ)
+var (formula φ ψ antecedent)
 </jh>
 
 == Set membership ==
@@ -149,6 +149,18 @@ stmt (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
 stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))))
+
+stmt (OrderedPairBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((orderedPair A0 B0) = (orderedPair A1 B1))))
+stmt (OrderedPairBuilderLL () () ((B0 = B1) → ((orderedPair A B0) = (orderedPair A B1))))
+stmt (buildOrderedPairLLInConsequent ()
+  ((antecedent → (B0 = B1)))
+  (antecedent → ((orderedPair A B0) = (orderedPair A B1))))
+stmt (OrderedPairBuilderRR () () ((A0 = A1) → ((orderedPair A0 B) = (orderedPair A1 B))))
+stmt (buildOrderedPairRRInConsequent ()
+  ((antecedent → (A0 = A1)))
+  (antecedent → ((orderedPair A0 B) = (orderedPair A1 B))))
+
+stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A ψ)))
 </jh>
 
 == Extensionality ==
