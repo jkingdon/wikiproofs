@@ -692,6 +692,8 @@ thm (exportInAntecedent ()
 
 == Combinations of commutativity and associativity ==
 Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
+
+The first one swaps the second and third disjuncts in a disjunction of four formulas.<ref>[http://us.metamath.org/mpeuni/or4.html or4], metamath's set.mm, accessed February 5, 2011</ref>
 <jh>
 thm (Disjunction4 () () (((p ∨ q) ∨ (r ∨ s)) ↔ ((p ∨ r) ∨ (q ∨ s))) (
         p q (r ∨ s) DisjunctionAssociativity
