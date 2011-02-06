@@ -24,8 +24,8 @@ import (BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASS
 As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
 <jh>
 var (object A B C D A0 A1 B0 B1 α β Z)
-var (variable a b x y z w x′ y′ z′)
-var (formula φ)
+var (variable a b x y z w a′ b′ x′ y′ z′)
+var (formula φ ψ antecedent)
 </jh>
 
 == Singletons ==
@@ -171,6 +171,37 @@ thm (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPai
 == Separation ==
 Logically, these theorems belong with the other separation theorems in [[First steps in set theory]]. However, until JHilbert changes its handling of dummy variables in definitions, it may be easier to handle them here.
 
+=== Separation builder ===
+Here's a builder based on equivalent formulas: <code>(φ ↔ ψ) → { x ∈ A | φ } = { x ∈ A | ψ }</code>.
+
+The first lemma is <code>C ∈ { x ∈ A | φ } ↔ C ∈ { x ∈ A | ψ }</code>.
+<jh>
+thm (buildSeparation-1 ((x A)) ((H (φ ↔ ψ)))
+  ((C ∈ (separate x A φ)) ↔ (C ∈ (separate x A ψ))) (
+        C x A φ Separation
+
+        H
+        C x buildSubst
+        (C ∈ A) buildConjunctionLL
+        applyBiconditionalTransitivity
+
+        C x A ψ Separation
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (buildSeparation ((x A)  (z x) (z A) (z φ) (z ψ)) ((H (φ ↔ ψ)))
+  ((separate x A φ) = (separate x A ψ)) (
+        H
+        (value z) x A buildSeparation-1
+        z generalize
+
+        z (separate x A φ) (separate x A ψ) ExtensionalityObject
+        applyModusPonens
+))
+</jh>
+
+=== A formula which defines a set ===
 Although, in general, we cannot specify a set by a formula ("the set of all x for which φ holds") and expect it to exist, such a definition does specify a set in the case in which the formula φ implies that x is part of some set which is known to exist. There might be a few ways to formalize this notion; the one here is particularly aimed at helping us make a definition of the form <code>{z ∈ A | φ}</code> and then prove a statement about membership in that defined set. In symbols, given <code>φ → z ∈ A</code> we conclude <code>B ∈ {z ∈ A | φ} ↔ [B / z]φ</code>.
 <jh>
 thm (FormulaBoundLemma ((z A) (z B)) ((H (φ → ((value z) ∈ A))))
@@ -515,12 +546,28 @@ thm (OrderedPairBuilderLL () () ((B0 = B1) → ((orderedPair A B0) = (orderedPai
         applyModusPonens
 ))
 
+thm (buildOrderedPairLLInConsequent ()
+  ((H (antecedent → (B0 = B1))))
+  (antecedent → ((orderedPair A B0) = (orderedPair A B1))) (
+        H
+        B0 B1 A OrderedPairBuilderLL
+        applySyllogism
+))
+
 thm (OrderedPairBuilderRR () () ((A0 = A1) → ((orderedPair A0 B) = (orderedPair A1 B))) (
         B EqualityReflexivity
         A0 A1 B B OrderedPairBuilder
         export
         applyComm
         applyModusPonens
+))
+
+thm (buildOrderedPairRRInConsequent ()
+  ((H (antecedent → (A0 = A1))))
+  (antecedent → ((orderedPair A0 B) = (orderedPair A1 B))) (
+        H
+        A0 A1 B OrderedPairBuilderRR
+        applySyllogism
 ))
 </jh>
 
@@ -768,6 +815,58 @@ To show that it exists, we need to define it terms of a larger set which contain
 def ((× A B) (separate z (power (power (A ∪ B)))
   (∃ a (∃ b (((value z) = (orderedPair (value a) (value b))) ∧
     (((value a) ∈ A) ∧ ((value b) ∈ B)))))))
+</jh>
+
+=== Changing quantifiers ===
+We first add the ability to specify the variables of quantification, as we do with most such definitions. Currently we do this for <code>a</code> and <code>b</code>; we could also do it for <code>z</code> if need be.
+<jh>
+thm (CartesianProduct
+  ((b′ z) (b′ a) (b′ b) (b′ A) (b′ B)
+    (b z) (b a) (b A) (b B)
+    (a′ z) (a′ b′) (a′ A) (a′ B)
+    (a z) (a A) (a B)
+    (a a′) (b b′)
+    (z A) (z B)
+  ) ()
+  ((separate z (power (power (A ∪ B)))
+      (∃ a′ (∃ b′ (((value z) = (orderedPair (value a′) (value b′))) ∧
+        (((value a′) ∈ A) ∧ ((value b′) ∈ B)))))) =
+    (separate z (power (power (A ∪ B)))
+      (∃ a (∃ b (((value z) = (orderedPair (value a) (value b))) ∧
+        (((value a) ∈ A) ∧ ((value b) ∈ B))))))) (
+</jh>
+First we show <code>∃ a′ ∃ b′ (z = 〈 a′, b′ 〉 ∧ (a′ ∈ A ∧ b′ ∈ B)) ↔ ∃ a ∃ b′ (z = 〈 a, b′ 〉 ∧ (a ∈ A ∧ b′ ∈ B))</code>.
+<jh>
+        (value a′) (value a) (value b′) OrderedPairBuilderRR
+        (value z) buildEqualityLLInConsequent
+
+        (value a′) (value a) A MembershipBuilderRR
+        ((value b′) ∈ B) buildConjunctionRRInConsequent
+
+        buildConjunctionInConsequent
+        b′ buildThereExistsInConsequent
+
+        ChangeVariableThereExists
+</jh>
+The change of the inner quantifier starts with <code>b′ = b → (z = 〈 a, b′ 〉 ∧ (a ∈ A ∧ b′ ∈ B) ↔ z = 〈 a, b 〉 ∧ (a ∈ A ∧ b ∈ B))</code>, which then leads to <code>∃ b′ (z = 〈 a, b′ 〉 ∧ (a ∈ A ∧ b′ ∈ B)) ↔ ∃ b (z = 〈 a, b 〉 ∧ (a ∈ A ∧ b ∈ B))</code>
+<jh>
+        (value b′) (value b) (value a) OrderedPairBuilderLL
+        (value z) buildEqualityLLInConsequent
+
+        (value b′) (value b) B MembershipBuilderRR
+        ((value a) ∈ A) buildConjunctionLLInConsequent
+
+        buildConjunctionInConsequent
+
+        ChangeVariableThereExists
+</jh>
+Combining the two variable changes gives us everything except the separation, which we then add.
+<jh>
+        a buildThereExists
+        applyBiconditionalTransitivity
+
+        z (power (power (A ∪ B))) buildSeparation
+))
 </jh>
 
 To go from the definition to various theorems which restate what a Cartesian product is, our first lemma is <code>α ∈ A ∧ β ∈ B → 〈α, β〉 ∈ power power (A ∪ B)</code>.
