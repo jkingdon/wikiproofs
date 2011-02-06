@@ -32,23 +32,25 @@ thm (SetEmptyMembership () () ((∅) ∈ (singleton (∅))) (
         (∅) SingletonMembership
 ))
 
-thm (SetEmptyMembershipWithSubst () ()
-  (subst (singleton (∅)) a ((∅) ∈ (value a))) (
-        SetEmptyMembership
-
-</jh>
-The substitution is <code>a = { ∅ } → (∅ ∈ a ↔ ∅ ∈ { ∅ })</code>.
-<jh>
-        (value a) (singleton (∅)) (∅) MembershipBuilderLL
-        set.makeSubstExplicit
-
-        eliminateBiconditionalForward
-        applyModusPonens
+thm (OneInUniverse () () ((1) ∈ (universe)) (
+        (1) (0) UnorderedPairRightMembership
 ))
 
-thm (SetNotOne () () (set.∃ a ((∅) ∈ (value a))) (
-        a SetEmptyMembershipWithSubst
-        set.introduceThereExistsFromObject
+thm (EmptyMembershipWithSubst () ()
+  (subst (1) a (((value a) ∈ (universe)) ∧ ((0) ∈ (value a)))) (
+        OneInUniverse
+        SetEmptyMembership
+        introduceConjunction
+</jh>
+The substitution is <code>a = 1 → (a ∈ universe ∧ ∅ ∈ a ↔ 1 ∈ universe ∧ ∅ ∈ 1)</code>.
+<jh>
+        (value a) (1) (universe) MembershipBuilderRR
+        (value a) (1) (∅) MembershipBuilderLL
+        buildConjunctionInConsequent
+
+        set.makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
 ))
 
 </jh>
@@ -66,8 +68,14 @@ thm (ThereExistsUniverse () () ((∃ x φ) ↔ (set.∃ x (((value x) ∈ (unive
         applyBiconditionalTransitivity
 ))
 
-#thm (NotOne () () (∃ x ((0) < (value x))) (
-#))
+thm (NotOne () () (∃ x ((0) < (value x))) (
+        x EmptyMembershipWithSubst
+        set.introduceThereExistsFromObject
+
+        x ((0) < (value x)) ThereExistsUniverse
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 
 export (RESULT User_interface:Kingdon/Sandbox (CLASSICAL QUANTIFY_OVER_NUMBERS) ())
 </jh>
