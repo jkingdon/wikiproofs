@@ -4,7 +4,7 @@
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (QUANTIFY_OVER_SETS Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
 #import (QUANTIFY_OVER_NUMBERS Interface:First-order_logic_with_quantifiability (CLASSICAL) number.)
-import (SETS Interface:Set_theory (CLASSICAL QUANTIFY_OVER_SETS) set.)
+import (SETS Interface:Set_theory (CLASSICAL QUANTIFY_OVER_SETS) ())
 
 import (QUANTIFY_OVER_NUMBERS User_interface:Kingdon/Logic (CLASSICAL QUANTIFY_OVER_SETS SETS) ())
 #import (TARSKI Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
@@ -19,64 +19,49 @@ var (formula p q φ ψ)
 #var (variable result x′)
 #var (object A B C D)
 
-var (set.variable a)
-var (set.object A)
-var (variable x)
-var (object X Y Z)
+var (variable x a)
+var (object X Y Z A)
 
-def ((0) (asNumber (set.∅)))
-def ((1) (asNumber (set.singleton (set.∅))))
-def ((< X Y) ((asSet X) set.∈ (asSet Y)))
+def ((0) (∅))
+def ((1) (singleton (∅)))
+def ((< X Y) (X ∈ Y))
 
-thm (SetEmptyMembership () () ((set.∅) set.∈ (set.singleton (set.∅))) (
-        (set.∅) set.SingletonMembership
+def ((subst X a φ) (set.subst X a φ))
+
+thm (SetEmptyMembership () () ((∅) ∈ (singleton (∅))) (
+        (∅) SingletonMembership
 ))
 
 thm (SetEmptyMembershipWithSubst () ()
-  (set.subst (set.singleton (set.∅)) a ((set.∅) set.∈ (set.value a))) (
+  (subst (singleton (∅)) a ((∅) ∈ (value a))) (
         SetEmptyMembership
 
 </jh>
 The substitution is <code>a = { ∅ } → (∅ ∈ a ↔ ∅ ∈ { ∅ })</code>.
 <jh>
-        (set.value a) (set.singleton (set.∅)) (set.∅) set.MembershipBuilderLL
+        (value a) (singleton (∅)) (∅) MembershipBuilderLL
         set.makeSubstExplicit
 
         eliminateBiconditionalForward
         applyModusPonens
 ))
 
-thm (SetNotOne () () (set.∃ a ((set.∅) set.∈ (set.value a))) (
+thm (SetNotOne () () (set.∃ a ((∅) ∈ (value a))) (
         a SetEmptyMembershipWithSubst
         set.introduceThereExistsFromObject
 ))
 
-thm (SetNotOne-2 () () (set.∃ a ((asSet (asNumber (set.∅))) set.∈ (set.value a))) (
-        a SetNotOne
-
-        (set.∅) (set.singleton (set.∅)) set.UnorderedPairLeftMembership
-        AsSetAsNumber
-
-        (asSet (asNumber (set.∅))) (set.∅) (set.value a) set.MembershipBuilderRR
-        applyModusPonens
-
-        a set.buildThereExists
-        eliminateBiconditionalForward
-
-        applyModusPonens
-))
-
 </jh>
-Here we prove <code>∃ x φ ↔ set.∃ a (a ∈ universe ∧ φ)</code>, where here by <code>a</code> we mean <code>(asSetVariable x)</code>.
+Here we prove <code>∃ x φ ↔ set.∃ x (x ∈ universe ∧ φ)</code>.
 <jh>
-thm (ThereExistsUniverse () () ((∃ x φ) ↔ (set.∃ (asSetVariable x) (((set.value (asSetVariable x)) set.∈ (universe)) ∧ φ))) (
+thm (ThereExistsUniverse () () ((∃ x φ) ↔ (set.∃ x (((value x) ∈ (universe)) ∧ φ))) (
 </jh>
-<code>∃ x φ</code> is, by definition, equivalent to <code>¬ ∀ x ¬ φ</code> and in turn to <code>¬ set.∀ x (a ∈ universe → ¬ φ)</code>. We move the opening negation inside the quantifier to get <code>set.∃ x ¬ (a ∈ universe → ¬ φ)</code>.
+<code>∃ x φ</code> is, by definition, equivalent to <code>¬ ∀ x ¬ φ</code> and in turn to <code>¬ set.∀ x (x ∈ universe → ¬ φ)</code>. We move the opening negation inside the quantifier to get <code>set.∃ x ¬ (x ∈ universe → ¬ φ)</code>.
 <jh>
-        (asSetVariable x) (((set.value (asSetVariable x)) set.∈ (universe)) → (¬ φ)) set.NotForAll
+        x (((value x) ∈ (universe)) → (¬ φ)) set.NotForAll
 
-        ((set.value (asSetVariable x)) set.∈ (universe)) φ ConjunctionImplication
-        (asSetVariable x) set.buildThereExists
+        ((value x) ∈ (universe)) φ ConjunctionImplication
+        x set.buildThereExists
         swapBiconditional
         applyBiconditionalTransitivity
 ))
