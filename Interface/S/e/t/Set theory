@@ -113,6 +113,13 @@ stmt (UnorderedPairSubset () ()
   (((A ∈ C) ∧ (B ∈ C)) ↔ ((unorderedPair A B) ⊆ C)))
 </jh>
 
+=== Partial order ===
+The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive. For now we just have transitivity.
+
+<jh>
+stmt (SubsetTransitivity () () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)))
+</jh>
+
 == Union ==
 The union of a set has as its elements everything which is an element of some set in the given set.
 <jh>
