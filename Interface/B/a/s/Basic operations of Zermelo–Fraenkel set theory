@@ -117,6 +117,12 @@ stmt (MembershipUnionRightIntroduction () () ((A ∈ B) → (A ∈ (B ∪ C))))
 stmt (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))))
 </jh>
 
+=== Subsets and unions ===
+<jh>
+stmt (SubsetUnionRightIntroduction () ()
+  ((A ⊆ B) → (A ⊆ (B ∪ C))))
+</jh>
+
 == Power set ==
 The power set of a set has as its elements all of the subsets of the given set.
 <jh>
