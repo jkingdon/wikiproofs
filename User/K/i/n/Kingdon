@@ -11,19 +11,10 @@ Don't yet know if this is easy or hard, but [http://www.jimloy.com/geometry/17-g
 
 == First order logic todos ==
 
-=== Worth proving? ===
-
 * Not sure whether these are the most salient subst theorems (perhaps better to see what we end up needing), but some interesting-looking ones are:
 :*[http://us.metamath.org/mpeuni/sbcom2.html sbcom2]
 :*[http://us.metamath.org/mpeuni/sbid2v.html sbid2v]
 :*[http://us.metamath.org/mpeuni/hbs1f.html hbs1f]
 :*[http://us.metamath.org/mpeuni/hbsb2a.html hbsb2a]
 
-=== More moving formulas where quantified variable is not free ===
-*These two similar: [http://us.metamath.org/mpeuni/19.28.html 19.28] [http://us.metamath.org/mpeuni/19.45.html 19.45]
-
 * Follow up on Foo -> FooNotFree rename per [[Interface talk:First-order logic]].
-
-=== Others? ===
-[http://us.metamath.org/mpeuni/19.29.html 19.29]
-[http://us.metamath.org/mpeuni/19.2.html 19.2]
