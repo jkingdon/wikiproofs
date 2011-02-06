@@ -28,18 +28,18 @@ def ((0) (asNumber (set.∅)))
 def ((1) (asNumber (set.singleton (set.∅))))
 def ((< X Y) ((asSet X) set.∈ (asSet Y)))
 
-thm (SetEmptyIsElement () () ((set.∅) set.∈ (set.singleton (set.∅))) (
+thm (SetEmptyMembership () () ((set.∅) set.∈ (set.singleton (set.∅))) (
         (set.∅) set.SingletonMembership
 ))
 
-thm (SetEmptyIsElementWithSubst () ()
+thm (SetEmptyMembershipWithSubst () ()
   (set.subst (set.singleton (set.∅)) a ((set.∅) set.∈ (set.value a))) (
-        SetEmptyIsElement
+        SetEmptyMembership
 
 </jh>
 The substitution is <code>a = { ∅ } → (∅ ∈ a ↔ ∅ ∈ { ∅ })</code>.
 <jh>
-        (set.value a) (set.singleton (set.∅)) (set.∅) set.IsElementBuilderLL
+        (set.value a) (set.singleton (set.∅)) (set.∅) set.MembershipBuilderLL
         set.makeSubstExplicit
 
         eliminateBiconditionalForward
@@ -47,7 +47,7 @@ The substitution is <code>a = { ∅ } → (∅ ∈ a ↔ ∅ ∈ { ∅ })</code>
 ))
 
 thm (SetNotOne () () (set.∃ a ((set.∅) set.∈ (set.value a))) (
-        a SetEmptyIsElementWithSubst
+        a SetEmptyMembershipWithSubst
         set.introduceThereExistsFromObject
 ))
 
@@ -57,7 +57,7 @@ thm (SetNotOne-2 () () (set.∃ a ((asSet (asNumber (set.∅))) set.∈ (set.val
         (set.∅) (set.singleton (set.∅)) set.UnorderedPairLeftMembership
         AsSetAsNumber
 
-        (asSet (asNumber (set.∅))) (set.∅) (set.value a) set.IsElementBuilderRR
+        (asSet (asNumber (set.∅))) (set.∅) (set.value a) set.MembershipBuilderRR
         applyModusPonens
 
         a set.buildThereExists
