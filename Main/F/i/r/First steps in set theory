@@ -16,6 +16,22 @@ var (formula φ)
 </jh>
 
 == Membership ==
+=== Builders ===
+Here are some more membership builders, slight variants of the ones we have.
+<jh>
+thm (buildMembershipLL () ((H (B0 = B1))) ((A ∈ B0) ↔ (A ∈ B1)) (
+        H
+        B0 B1 A MembershipBuilderLL
+        applyModusPonens
+))
+
+thm (buildMembershipRR () ((H (A0 = A1))) ((A0 ∈ B) ↔ (A1 ∈ B)) (
+        H
+        A0 A1 B MembershipBuilderRR
+        applyModusPonens
+))
+</jh>
+
 === Membership with a substitution ===
 Here are two ways to express <code>∈</code> in terms of a substitution.<ref>[http://us.metamath.org/mpeuni/clel2.html clel2], metamath's set.mm, accessed January 28, 2011</ref><ref>[http://us.metamath.org/mpeuni/df-clel.html df-clel], metamath's set.mm, accessed February 1, 2011</ref>
 <jh>
