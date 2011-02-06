@@ -136,6 +136,8 @@ We define <code>{x ∈ A | φ}</code>, the set of all elements in <code>A</code>
 term (object (separate variable object formula))
 stmt (Separation ((x A)) ()
   ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))))
+stmt (FormulaBound ((z A) (z B)) ((φ → ((value z) ∈ A)))
+  ((B ∈ (separate z A φ)) ↔ (subst B z φ)))
 </jh>
 
 == Builders ==
