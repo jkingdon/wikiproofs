@@ -957,9 +957,9 @@ That's almost it. Combining those implications gives <code>Z = 〈 a, b 〉 ∧ 
 ))
 </jh>
 
-It just takes some logic to turn that into <code>C ∈ A × B ↔ ∃ a ∃ b (C = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)</code>, which we can take as a basic equivalence which "defines" the meaning of a Cartesian product.<ref>[http://us.metamath.org/mpeuni/elxp.html elxp], metamath's set.mm, accessed 2009</ref> For the moment we expand <code>A × B</code> according to its definition, but that is just a stopgap measure, until we prove this the rest of the way.
+It just takes some logic to turn that into <code>C ∈ A × B ↔ ∃ a ∃ b (C = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)</code>, which we can take as a basic equivalence which "defines" the meaning of a Cartesian product.<ref>[http://us.metamath.org/mpeuni/elxp.html elxp], metamath's set.mm, accessed 2009</ref> First we prove a variant with <code>A × B</code> expanded according to its definition, but once we've done that we provide the regular version.
 <jh>
-thm (MembershipCartesianProduct
+thm (MembershipCartesianProduct-3
   ((a b A) (a b B) (a b C)
     (C z) (a b z) (A z) (B z)) ()
   ((C ∈ (separate z (power (power (A ∪ B)))
@@ -978,6 +978,19 @@ We now have <code>C ∈ A × B ↔ [C / z] ∃ a ∃ b (z = 〈a, b〉 ∧ (a �
         a buildThereExistsInConsequent
         makeSubstExplicit
 
+        applyBiconditionalTransitivity
+))
+
+thm (MembershipCartesianProduct
+  ((a b A) (a b B) (a b C)
+    (C z a′ b′) (a b z a′ b′) (A z a′ b′) (B z a′ b′)) ()
+  ((C ∈ (A × B)) ↔
+    (∃ a (∃ b ((C = (orderedPair (value a) (value b)))
+      ∧ (((value a) ∈ A) ∧ ((value b) ∈ B)))))) (
+        z A B a′ b′ a b CartesianProduct
+        C buildMembershipLL
+
+        C z A B a b MembershipCartesianProduct-3
         applyBiconditionalTransitivity
 ))
 </jh>
