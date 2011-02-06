@@ -4,9 +4,6 @@
 *[[User interface:Kingdon/Sandbox]]
 *[[User module:Kingdon/Sandbox]]
 
-== Naming convention ==
-In [[Interface:Classical propositional calculus]], perhaps should rename detach2of2 to detachLastConjunct (as it also serves for 3 of 3, 4 of 4, etc) and detach2of3 to detachPenultimateConjunct (e.g. 3 of 4). However, this is a bit strange as detach1of(anything) is a different case (detach1of2 is not the same as detachPenultimateConjunct although the name detachPenultimateConjunct would suggest it would be).
-
 == Geometry ==
 Do we want/need/know how to get more familiar notation such as the line AB, the angle ∠ABC, the triangle △ABC, etc?
 
