@@ -27,9 +27,10 @@ Items which may be doable without a network connection:
       - releq
       (mkrelation a A b B φ) (A, B object; a, b variable; φ formula)
         ≝ {〈a, b〉| a ∈ A ∧ b ∈ B ∧ φ }
+        ≝ { z ∈ A × B | ∃ a ∃ b z = 〈 a, b 〉 ∧ φ }
         e.g. (mkrelation a ℕ b ℕ (∃ n ∈ ℕ a + n = b))
       - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
-    - domain and range: dfdm3 and dfrn2 or some such (need to prove existence)
+    - domain and range: df-dm and dfrn2 or some such (need to prove existence)
       - dmeq
       - breldm, brelrn
       - (domain (mkrelation a A b B φ)) ⊆ A
@@ -42,25 +43,14 @@ Items which may be doable without a network connection:
       - [s / x](apply (lambda x A t) s) = t
         this reads oddly, because [/] only applies to formulas, not terms
         (metamath has underlined [/] for terms; do we want that?)
-    - cross products, e.g. cxp, df-xp, elxp, opelxp1, opelxp
-      A × B ≝ {z ∈ 𝒫𝒫(A ∪ B) | ∃ a ∃ b z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B}
-        then the interesting part is proving opelxp, elxp, or something else useful
-
-        ∃ a ∃ b (z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) → z ∈ 𝒫𝒫(A ∪ B)
-          (MembershipCartesianProduct-2)
-
-
-        (φ → z ∈ A) gives (B ∈ {z ∈ A | φ} ↔ [B / z]φ)  (FormulaBound)
-          then next step is C ∈ A × B ↔ [C / z] ∃ a ∃ b (z = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B)
-          then C ∈ A × B ↔ ∃ a ∃ b (C = 〈a, b〉 ∧ a ∈ A ∧ b ∈ B) (elxp)
-          and/or 〈a, b〉 ∈ A × B ↔ a ∈ A ∧ b ∈ B  (opelxp)
+    - cross products
       - (relation A) ↔ ∃ x ∃ y A ⊆ x × y
+      - (relation A) ↔ A ⊆ domain A × range A  (right?)
   - recursion theorem (see downloaded wikipedia page, Joedit)
     = frfnom and friends in set.mm
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
 
 * Needed to derive geometry axioms from reals (page 201 of Givant1999)
-  - cartesian products
   - subtraction
   - ≤ for reals (defined in terms of <)
   - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceABBA)
