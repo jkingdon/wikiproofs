@@ -9,40 +9,23 @@ param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 var (formula φ ψ χ θ)
 
 # Here we are defining the kinds and terms of first-order logic
-kind (object)
-kind (variable)
-term (object (value variable))
-term (formula (= object object))
-term (formula (subst object variable formula))
+kindbind (set.object object)
+kindbind (set.variable variable)
 
-var (set.variable a b c)
-var (set.object A B C)
-var (variable x y z)
-var (object X Y Z)
+var (variable a b c x y z)
+var (object A B C X Y Z)
+
+def ((value a) (set.value a))
+def ((= X Y) (X set.= Y))
 
 def ((universe) (unorderedPair (∅) (singleton (∅))))
 
-term (set.object (asSet object))
-term (set.variable (asSetVariable variable))
-
-term (object (asNumber set.object))
-
-stmt (InUniverse () () ((asSet X) ∈ (universe)))
-stmt (ValueValue () () ((set.value (asSetVariable x)) set.= (asSet (value x))))
-
-stmt (EqualsEquals () () ((X = Y) ↔ ((asSet X) set.= (asSet Y))))
-stmt (SubstSubst () () ((subst Y x φ) ↔ (set.subst (asSet Y) (asSetVariable x) φ)))
-
-stmt (AsSetAsNumber () ((A ∈ (universe))) ((asSet (asNumber A)) set.= A))
-stmt (AsNumberAsSet () () ((asNumber (asSet X)) = X))
-
-# TODO: This doesn't look right; it seems to be missing a subst
-def ((∀ x φ) (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) → φ)))
+def ((∀ x φ) (set.∀ x (((value x) ∈ (universe)) → φ)))
 def ((∃ x φ) (¬ (∀ x (¬ φ))))
 def ((≠ X Y) (¬ (X = Y)))
 def ((is-not-free-in x φ) (φ → (∀ x φ)))
 </jh>
 
-To think about: Need to justify each of the statements here (unless there is some way to prove them, but I'd need to figure out from what).
+To think about: Is there a need to justify/prove these statements now that they are fairly simple?
 
 To think about: the result should satisfy all the axioms of [[Interface:Axioms of first-order logic]]. Seems like this could probably be proved, but maybe believing it to be possible would suffice for now. I don't think we need that to just get something past JHilbert, though (since statements are not read from params). Also on the subject of axioms versus the full [[Interface:First-order logic with quantifiability]] is whether we need to mention <code>∃</code> and <code>subst</code>.

@@ -564,8 +564,11 @@ stmt (NegationBiconditional () () ((¬ p) ↔ (p ↔ (⊥))))
 === Combinations of commutativity and associativity ===
 Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
 <jh>
+stmt (Disjunction4 () () (((p ∨ q) ∨ (r ∨ s)) ↔ ((p ∨ r) ∨ (q ∨ s))))
 stmt (swap23ofDisjunction4 () (((p ∨ q) ∨ (r ∨ s))) ((p ∨ r) ∨ (q ∨ s)))
 stmt (swap23ofDisjunction3 () (((p ∨ q) ∨ r)) ((p ∨ r) ∨ q))
+
+stmt (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))))
 </jh>
 
 === Deprecated ===

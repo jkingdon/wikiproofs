@@ -1,10 +1,10 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
-| importedby = [[Relations]]
+| importedby = [[Basic operations of Zermelo–Fraenkel set theory]]
 | exportedby = [[First steps in set theory]]
 }}
 
-This page covers some of the simplest operations of set theory including the empty set, singletons, unordered pairs, power set, and unions. Because of the way that JHilbert currently handles definitions, further development is in other places.
+This page covers some of the simplest operations of set theory including the empty set, singletons, unordered pairs, power set, and unions. Because of the way that JHilbert currently handles definitions, it only includes the most basic results (sufficient to define terms using <code>term</code> rather than <code>def</code>) and leaves a more comprehensive set of theorems about each of these topics to other places.
 
 == Variables, objects (classes), and membership ==
 
@@ -20,7 +20,7 @@ First-order logic provides us with two kinds: <code>variable</code> is a variabl
 <jh>
 var (variable x y z w)
 var (object A B C A0 A1 B0 B1)
-var (formula φ ψ)
+var (formula φ)
 </jh>
 
 We can test whether one set is an element of another, and define an abbreviation for the negated version.
@@ -37,61 +37,32 @@ stmt (MembershipThereExists ((x A) (x B)) ()
   ((A ∈ B) ↔ (∃ x (((value x) = A) ∧ ((value x) ∈ B)))))
 </jh>
 
-== Empty set ==
+== Empty set, singletons, and unordered pairs ==
 We assert the existence of the empty set, a set with no elements.
 <jh>
 term (object (∅))
 stmt (EmptySet () () (A ∉ (∅)))
 </jh>
 
-== Singleton ==
 Given a set, we can form a set <code>{ s }</code> which has only it as an element.<ref>[http://us.metamath.org/mpeuni/elsncg.html elsncg], metamath's set.mm, accessed August 7, 2010</ref>
 <jh>
 term (object (singleton object))
 stmt (Singleton () () ((A ∈ (singleton B)) ↔ (A = B)))
 </jh>
 
-A set is an element of its singleton: <code>A ∈ {A}</code>.<ref>[http://us.metamath.org/mpeuni/snid.html snid], metamath's set.mm, accessed August 5, 2010</ref>
-<jh>
-stmt (SingletonMembership () () (A ∈ (singleton A)))
-</jh>
-
-== Unordered pair ==
 Given two sets, we can form a unordered pair <code>{ s, t }</code> which has only those sets as elements.
 <jh>
 term (object (unorderedPair object object))
 stmt (UnorderedPair () () ((B ∈ (unorderedPair A0 A1)) ↔ ((B = A0) ∨ (B = A1))))
 </jh>
 
-An unordered pair contains each of its members: <code>A ∈ {A, B}</code>.
-<jh>
-stmt (UnorderedPairLeftMembership () () (A ∈ (unorderedPair A B)))
-stmt (UnorderedPairRightMembership () () (B ∈ (unorderedPair A B)))
-</jh>
-
-Unordered pairs are unordered: <code>{A, B} = {B, A}</code>.
-<jh>
-stmt (UnorderedPairCommutativity () () ((unorderedPair A B) = (unorderedPair B A)))
-</jh>
-
-Unordered pair equality can imply equality of members: <code>{A, C} = {B, C} → A = B</code>,<ref>[http://us.metamath.org/mpeuni/preqr1.html preqr1], metamath's set.mm, accessed August 4, 2010</ref> and likewise if the unordered pairs are commuted.
-
-<jh>
-stmt (UnorderedPairFirstMembersEqual () () (((unorderedPair A C) = (unorderedPair B C)) → (A = B)))
-stmt (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPair C B)) → (A = B)))
-</jh>
-
 == Subset ==
-The subset relationship is equivalent to various statements involving membership, unions, intersections, and set differences.<ref>[http://us.metamath.org/mpeuni/df-ss.html df-ss]</ref>
+
+We define the subset relationship.
 <jh>
 term (formula (⊆ object object))
 stmt (Subset ((x A) (x B)) ()
   ((A ⊆ B) ↔ (∀ x (((value x) ∈ A) → ((value x) ∈ B)))))
-stmt (SubsetMembership () () ((A ⊆ B) → ((C ∈ A) → (C ∈ B))))
-
-stmt (SingletonSubset () () ((A ∈ B) ↔ ((singleton A) ⊆ B)))
-stmt (UnorderedPairSubset () ()
-  (((A ∈ C) ∧ (B ∈ C)) ↔ ((unorderedPair A B) ⊆ C)))
 </jh>
 
 === Partial order ===
@@ -101,29 +72,13 @@ The subset relationship has the three properties of a [[w:Partially ordered set|
 stmt (SubsetTransitivity () () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)))
 </jh>
 
-== Union ==
+== Union and power set ==
 The union of a set has as its elements everything which is an element of some set in the given set.
 <jh>
 term (object (⋃ object))
 stmt (Union ((x A) (x B)) () ((B ∈ (⋃ A)) ↔ (∃ x ((B ∈ (value x)) ∧ ((value x) ∈ A)))))
 </jh>
 
-The union of two sets is just a special case of the union of a set.
-<jh>
-def ((∪ A B) (⋃ (unorderedPair A B)))
-stmt (BinaryUnion () () ((A ∈ (B ∪ C)) ↔ ((A ∈ B) ∨ (A ∈ C))))
-
-stmt (MembershipUnionRightIntroduction () () ((A ∈ B) → (A ∈ (B ∪ C))))
-stmt (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))))
-</jh>
-
-=== Subsets and unions ===
-<jh>
-stmt (SubsetUnionRightIntroduction () ()
-  ((A ⊆ B) → (A ⊆ (B ∪ C))))
-</jh>
-
-== Power set ==
 The power set of a set has as its elements all of the subsets of the given set.
 <jh>
 term (object (power object))
@@ -136,8 +91,6 @@ We define <code>{x ∈ A | φ}</code>, the set of all elements in <code>A</code>
 term (object (separate variable object formula))
 stmt (Separation ((x A)) ()
   ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))))
-stmt (FormulaBound ((z A) (z B)) ((φ → ((value z) ∈ A)))
-  ((B ∈ (separate z A φ)) ↔ (subst B z φ)))
 </jh>
 
 == Builders ==
@@ -152,14 +105,6 @@ stmt (buildMembershipRR () ((A0 = A1)) ((A0 ∈ B) ↔ (A1 ∈ B)))
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
 stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))))
-
-stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A ψ)))
-</jh>
-
-The following builders are deprecated, being alternate names for the builders above.
-<jh>
-stmt (IsElementBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
-stmt (IsElementBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 </jh>
 
 == Extensionality ==

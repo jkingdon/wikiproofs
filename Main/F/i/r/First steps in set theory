@@ -1,6 +1,6 @@
 {{interfaces
 | imports = [[Interface:Zermelo–Fraenkel set theory]]
-| exports = [[Interface:Basic operations of Zermelo–Fraenkel set theory]]
+| exports = [[Interface:First steps in set theory]]
 }}
 Here we start with the axioms of Zermelo–Fraenkel set theory and prove theorems for a few of the basic concepts: empty set, singletons, and unordered pairs.  Other topics of set theory are treated elsewhere, such as ordered pairs, relations, functions, some kinds of unions, intersection, set difference, and so on.
 
@@ -16,6 +16,22 @@ var (formula φ)
 </jh>
 
 == Membership ==
+=== Builders ===
+Here are some more membership builders, slight variants of the ones we have.
+<jh>
+thm (buildMembershipLL () ((H (B0 = B1))) ((A ∈ B0) ↔ (A ∈ B1)) (
+        H
+        B0 B1 A MembershipBuilderLL
+        applyModusPonens
+))
+
+thm (buildMembershipRR () ((H (A0 = A1))) ((A0 ∈ B) ↔ (A1 ∈ B)) (
+        H
+        A0 A1 B MembershipBuilderRR
+        applyModusPonens
+))
+</jh>
+
 === Membership with a substitution ===
 Here are two ways to express <code>∈</code> in terms of a substitution.<ref>[http://us.metamath.org/mpeuni/clel2.html clel2], metamath's set.mm, accessed January 28, 2011</ref><ref>[http://us.metamath.org/mpeuni/df-clel.html df-clel], metamath's set.mm, accessed February 1, 2011</ref>
 <jh>
@@ -645,11 +661,11 @@ thm (ImplicitMembership ((x A) (x B)) ()
 </jh>
 
 == Done ==
-We have now proved all the theorems in [[Interface:Basic operations of general set theory]], and in [[Interface:Basic operations of Zermelo–Fraenkel set theory]].
+We have now proved all the theorems in [[Interface:Basic operations of general set theory]], and in [[Interface:First steps in set theory]].
 
 <jh>
 export (GENERAL Interface:Basic_operations_of_general_set_theory (CLASSICAL FIRSTORDER) ())
-export (ZF_BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ()) 
+export (FIRST Interface:First_steps_in_set_theory (CLASSICAL FIRSTORDER) ()) 
 </jh>
 
 == References ==
