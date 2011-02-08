@@ -1,0 +1,47 @@
+{{header
+ | title    = Changing all quantifiers to be restricted
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = In proving theories such as [[Interface:Tarski's geometry axioms]] or [[Interface:Peano axioms]] from set theory, we need to provide a way for a quantifier of the theory to be translated into a set theory quantifier which is restricted to the universe of the theory. For example, <code>∀ x φ</code> in Peano arithmetic corresponds to <code>∀ x ∈ ℕ φ</code> in the underlying set theory.
+
+Such a construction should prove that the [[Interface:Axioms of first-order logic]] (and the [[Interface:Axiom of quantifiability]], if in use) are satisfied by the restricted quantifiers, to justify the use of this interface as a parameter in place of [[Interface:First-order logic]] (or [[Interface:First-order logic with quantifiability]]). We do not yet attempt such a task, and ensuring the soundness of such an effort would require some thought about how parameters and interfaces in JHilbert relate to soundness (most discussion of JHilbert soundness to date has concerned soundness within a single proof module, not how soundness relates to interfaces and parameters).
+}}
+{{modules
+| parameters = [[Interface:Classical propositional calculus]]
+| importedby = [[Tarski's geometry axioms in terms of real numbers]]
+| exportedby = none yet
+}}
+
+Our parameters are [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], and [[Interface:Set theory]].
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
+param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+param (COMPLEX Interface:Complex_number_axioms (CLASSICAL FIRSTORDER SETS) ())
+
+var (formula φ)
+
+kindbind (set.object object)
+kindbind (set.variable variable)
+
+var (variable x)
+var (object A B)
+
+def ((value x) (set.value x))
+def ((= A B) (A set.= B))
+</jh>
+
+Although the construction we are doing here isn't dependent on what set we are using for the universe of the restricted quantifiers, at least for now we specify the universe here directly. The choice of ℝ<sup>2</sup> is what we need to construct two dimensional geometry from the reals.
+<jh>
+def ((universe) ((ℝ) × (ℝ)))
+
+def ((∀ x φ) (set.∀ x (((value x) ∈ (universe)) → φ)))
+def ((∃ x φ) (¬ (∀ x (¬ φ))))
+def ((≠ A B) (¬ (A = B)))
+def ((is-not-free-in x φ) (φ → (∀ x φ)))
+</jh>
+
+[[Category:Classical first-order logic|{{PAGENAME}}]]
+[[Category:JHilbert]]
