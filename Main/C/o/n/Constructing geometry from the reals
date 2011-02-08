@@ -1,0 +1,33 @@
+{{interfaces
+| imports = [[Interface:Complex number axioms]]
+| exports = [[Interface:Tarski's geometry axioms]]
+}}
+
+[[Interface:Tarski's geometry axioms|Tarki's geometry axioms]] provide a set of axioms for Euclidian geometry which are based only on the concepts of congruence and betweenness: they make no reference to numbers. Here we show how to derive those axioms from real numbers.
+
+We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]],  [[Interface:Set theory]], and [[Interface:Complex number axioms]].
+
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (QUANTIFY_OVER_SETS Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
+import (SETS Interface:Set_theory (CLASSICAL QUANTIFY_OVER_SETS) ())
+import (COMPLEX Interface:Complex_number_axioms (CLASSICAL QUANTIFY_OVER_SETS SETS) ())
+</jh>
+
+We also import an interface, [[Interface:Restricting all quantifiers]], which provides the mapping between quantifiers which range over sets and quantifiers which range over points. The reason for this to be a separate interface rather than just a set of definitions and theorems in this file is that when it comes time to export to [[Interface:Tarski's geometry axioms]], we'll need an interface to pass as a parameter.
+<jh>
+import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers (CLASSICAL QUANTIFY_OVER_SETS SETS COMPLEX) ())
+</jh>
+
+The way that [[Interface:Restricting all quantifiers]] works, we 
+<jh>
+kindbind (object point)
+</jh>
+
+Now we export to [[Interface:Tarski's geometry axioms]].
+<jh>
+export (TARSKI Interface:Tarski's_geometry_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
+</jh>
+
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
