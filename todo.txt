@@ -51,7 +51,9 @@ Items which may be doable without a network connection:
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
 
 * Needed to derive geometry axioms from reals (page 201 of Givant1999)
-  - subtraction
+  - to define ≡
+    • subtraction
+    • 1st, 2nd
   - ≤ for reals (defined in terms of <)
   - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceABBA)
   - builders for +, ·

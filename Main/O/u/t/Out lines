@@ -1140,7 +1140,181 @@ The proof begins by expanding <code>P A ≤ P B</code> to <code>∃ y (between P
 
 Each piece of this is something we already have, or readily follows from things we have. Once we have <code>y = A</code> we just substitute it into <code>between P y B</code> and we are done.
 
-{{under construction}}
+The first lemma constructs the point <code>y</code>.
+<jh>
+thm (LessEqualBetween-y ((y P) (y A) (y B)) ()
+  (((P is-outside A B) ∧ (P A ≤ P B)) →
+    (∃ y ((P is-outside A B) ∧ ((between P (value y) B) ∧ (P A ≡ P (value y)))))) (
+        P A P B y LessEqualCutoff
+        eliminateBiconditionalReverse
+
+        y (P is-outside A B) ((between P y B) ∧ (P A ≡ P y)) ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+The next lemma is <code>P ≠ y</code>
+<jh>
+thm (LessEqualBetween-Py () ()
+  (((P is-outside A B) ∧ ((between P Y B) ∧ (P A ≡ P Y))) → (P ≠ Y)) (
+</jh>
+First we pick out <code>P ≠ A</code>.
+<jh>
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+Next is <code>P A ≡ P Y</code>.
+<jh>
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Next is <code>P = Y ∧ P A ≡ P Y → P = A</code> (from <code>CongruenceIdentityFromEquality</code>), which we then rearrange to give <code>P ≠ A ∧ P A ≡ P Y → P ≠ Y</code>
+<jh>
+        P A P Y CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (P = Y) conjoinLL
+
+        P Y P A CongruenceIdentityFromEquality
+        applySyllogism
+
+        export
+        applyComm
+
+        (P = Y) (P = A) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+        
+        applyComm
+        import
+</jh>
+Combining that with the previous result finishes the proof.
+<jh>
+        applySyllogism
+))
+</jh>
+
+The next lemma is <code>P is-outside Y B</code>.
+<jh>
+thm (LessEqualBetween-PyB () ()
+  (((P is-outside A B) ∧ ((between P Y B) ∧ (P A ≡ P Y))) →
+  (P is-outside Y B)) (
+</jh>
+First we need <code>P ≠ Y</code>.
+<jh>
+        P A B Y LessEqualBetween-Py
+</jh>
+Then we need <code>P ≠ B</code>.
+<jh>
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Finally we need <code>between P Y B ∨ between P B Y</code>.
+<jh>
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        (between P Y B) (between P B Y) DisjunctionRightIntroduction
+        applySyllogism
+
+        composeConjunction
+))
+
+</jh>
+The next lemma applies <code>OutSegmentConstructionUniqueness</code> to give <code>Y = A</code>.
+<jh>
+thm (LessEqualBetween-yA () ()
+  (((P is-outside A B) ∧ ((between P Y B) ∧ (P A ≡ P Y))) →
+  (Y = A)) (
+</jh>
+First we need <code>B ≠ P</code>.
+<jh>
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        P B EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next we need <code>P ≠ Y</code>.
+<jh>
+        P A B Y LessEqualBetween-Py
+        composeConjunction
+</jh>
+Next we need <code>P is-outside Y B</code>.
+<jh>
+        P A B Y LessEqualBetween-PyB
+        composeConjunction
+</jh>
+Next is <code>P Y ≡ P Y</code>.
+<jh>
+        P Y CongruenceReflexivity
+        composeConjunction
+</jh>
+Next is <code>P is-outside A B</code>.
+<jh>
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionRightElimination
+        composeConjunction
+</jh>
+Next is <code>P A ≡ P Y</code>.
+<jh>
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+</jh>
+Now that we have all the hypotheses, we'll apply <code>OutSegmentConstructionUniqueness</code> to give <code>Y = A</code>.
+<jh>
+        B P P Y Y A OutSegmentConstructionUniqueness
+        applySyllogism
+))
+
+</jh>
+Now that we have <code>Y = A</code>, we just substitute that into <code>between P Y B</code> to get <code>between P A B</code>.
+thm (LessEqualBetween-PAB () ()
+  (((P is-outside A B) ∧ ((between P Y B) ∧ (P A ≡ P Y))) →
+  (between P A B) (
+</jh>
+First we get out <code>Y = A</code> and <code>between P Y B</code>.
+<jh>
+        P A B Y LessEqualBetween-yA
+
+        (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+The substitution is <code>Y = A → (between P Y B ↔ between P A B)</code>.
+<jh>
+        P EqualityReflexivity
+        B EqualityReflexivity
+        P P Y A B B BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        eliminateBiconditionalReverseInConsequent
+        import
+
+        applySyllogism
+))
+
+thm (LessEqualBetween ( (y P) (y A) (y B)) ()
+  (((P is-outside A B) ∧ (P A ≤ P B)) → (between P A B)) (
+        P A B y LessEqualBetween-y
+
+        P A B (value y) LessEqualBetween-PAB
+        y addThereExists
+        applySyllogism
+
+        removeThereExistsFromConsequent
+))
+</jh>
 
 == Export ==
 We now export to [[Interface:Out lines]].
