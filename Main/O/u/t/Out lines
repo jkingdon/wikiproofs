@@ -14,7 +14,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F P Q R X Y A′ B′ C′ D′ E′ B″ C″)
-var (variable c c′ d d′ e e′ f p)
+var (variable c c′ d d′ e e′ f p y)
 </jh>
 
 == Out lines defined ==
@@ -1144,11 +1144,16 @@ The first lemma constructs the point <code>y</code>.
 <jh>
 thm (LessEqualBetween-y ((y P) (y A) (y B)) ()
   (((P is-outside A B) ∧ (P A ≤ P B)) →
-    (∃ y ((P is-outside A B) ∧ ((between P (value y) B) ∧ (P A ≡ P (value y)))))) (
+    (∃ y ((P is-outside A B) ∧
+      ((between P (value y) B) ∧ (P A ≡ P (value y)))))) (
         P A P B y LessEqualCutoff
         eliminateBiconditionalReverse
+        (P is-outside A B) conjoinLL
 
-        y (P is-outside A B) ((between P y B) ∧ (P A ≡ P y)) ThereExistsConjunctionMovement
+        y
+          (P is-outside A B)
+          ((between P (value y) B) ∧ (P A ≡ P (value y)))
+          ThereExistsConjunctionMovement
         eliminateBiconditionalForward
         applySyllogism
 ))
@@ -1164,6 +1169,11 @@ First we pick out <code>P ≠ A</code>.
         (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionRightElimination
         eliminateRightConjunctInConsequent
         eliminateRightConjunctInConsequent
+
+        A P EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
 Next is <code>P A ≡ P Y</code>.
 <jh>
@@ -1203,11 +1213,16 @@ thm (LessEqualBetween-PyB () ()
   (((P is-outside A B) ∧ ((between P Y B) ∧ (P A ≡ P Y))) →
   (P is-outside Y B)) (
 </jh>
-First we need <code>P ≠ Y</code>.
+First we need <code>Y ≠ P</code>.
 <jh>
         P A B Y LessEqualBetween-Py
+
+        P Y EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
-Then we need <code>P ≠ B</code>.
+Then we need <code>B ≠ P</code>.
 <jh>
         (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionRightElimination
         eliminateRightConjunctInConsequent
@@ -1237,11 +1252,6 @@ First we need <code>B ≠ P</code>.
         (P is-outside A B) ((between P Y B) ∧ (P A ≡ P Y)) ConjunctionRightElimination
         eliminateRightConjunctInConsequent
         eliminateLeftConjunctInConsequent
-
-        P B EqualitySymmetry
-        addNegation
-        eliminateBiconditionalReverse
-        applySyllogism
 </jh>
 Next we need <code>P ≠ Y</code>.
 <jh>
@@ -1256,7 +1266,7 @@ Next we need <code>P is-outside Y B</code>.
 Next is <code>P Y ≡ P Y</code>.
 <jh>
         P Y CongruenceReflexivity
-        composeConjunction
+        introduceRightConjunctToConsequent
 </jh>
 Next is <code>P is-outside A B</code>.
 <jh>
@@ -1277,9 +1287,10 @@ Now that we have all the hypotheses, we'll apply <code>OutSegmentConstructionUni
 
 </jh>
 Now that we have <code>Y = A</code>, we just substitute that into <code>between P Y B</code> to get <code>between P A B</code>.
+<jh>
 thm (LessEqualBetween-PAB () ()
   (((P is-outside A B) ∧ ((between P Y B) ∧ (P A ≡ P Y))) →
-  (between P A B) (
+  (between P A B)) (
 </jh>
 First we get out <code>Y = A</code> and <code>between P Y B</code>.
 <jh>
@@ -1312,7 +1323,7 @@ thm (LessEqualBetween ( (y P) (y A) (y B)) ()
         y addThereExists
         applySyllogism
 
-        removeThereExistsFromConsequent
+        removeThereExistsInConsequent
 ))
 </jh>
 
