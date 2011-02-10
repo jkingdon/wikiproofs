@@ -156,12 +156,6 @@ stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair 
 stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A ψ)))
 </jh>
 
-The following builders are deprecated, being alternate names for the builders above.
-<jh>
-stmt (IsElementBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
-stmt (IsElementBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
-</jh>
-
 == Extensionality ==
 Sets with the same elements are equal.
 <jh>
