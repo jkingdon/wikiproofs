@@ -1315,7 +1315,7 @@ The substitution is <code>Y = A → (between P Y B ↔ between P A B)</code>.
         applySyllogism
 ))
 
-thm (LessEqualBetween ( (y P) (y A) (y B)) ()
+thm (LessEqualBetweenForward ( (y P) (y A) (y B)) ()
   (((P is-outside A B) ∧ (P A ≤ P B)) → (between P A B)) (
         P A B y LessEqualBetween-y
 
@@ -1324,6 +1324,67 @@ thm (LessEqualBetween ( (y P) (y A) (y B)) ()
         applySyllogism
 
         removeThereExistsInConsequent
+))
+</jh>
+
+=== The point which is between is closer ===
+The converse also holds: <code>P is-outside A B ∧ between P A B → P A ≤ P B</code>.<ref>l6_13_2 in Narboux</ref> To prove <code>P A ≤ P B</code>, we need <code>∃ c (between P c B ∧ P A ≡ P c)</code>, and the point <code>A</code> suffices for the choice of <code>c</code>. In fact, we don't need the hypothesis <code>P is-outside A B</code>, so unlike Narboux we state the theorem without it.
+<jh>
+thm (LessEqualBetweenReverse ( (c P) (c A) (c B)) ()
+  ((between P A B) → (P A ≤ P B)) (
+        (between P A B) ImplicationReflexivity
+
+        P A CongruenceReflexivity
+        introduceRightConjunctToConsequent
+</jh>
+Now we apply a substitution <code>c = A → (between P c B ∧ P A ≡ P c ↔ between P A B ∧ P A ≡ P A)</code> to turn <code>between P A B ∧ P A ≡ P A</code> into <code>[ A / c ] (between P c B ∧ P A ≡ P c)</code>.
+<jh>
+        P EqualityReflexivity
+        B EqualityReflexivity
+        P P (value c) A B B BetweennessBuilder
+        detach2of2
+        detach1of2
+
+        A EqualityReflexivity
+        P EqualityReflexivity
+        P EqualityReflexivity
+        P P A A P P (value c) A CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Turning the substitution into ∃ and applying <code>LessEqualCutoff</code> we are done.
+<jh>
+        A
+          c
+          ((between P (value c) B) ∧ (P A ≡ P (value c)))
+          ThereExistsIntroductionFromObject
+        applySyllogism
+
+        P A P B c LessEqualCutoff
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+=== Biconditional ===
+Here we combine the previous two results: <code>P is-outside A B → (P A ≤ P B ↔ between P A B)</code>.
+<jh>
+thm (LessEqualBetween () ()
+  ((P is-outside A B) → ((P A ≤ P B) ↔ (between P A B))) (
+        P A B LessEqualBetweenForward
+        export
+
+        P A B LessEqualBetweenReverse
+        (P is-outside A B) introduceAntecedent
+
+        introduceBiconditionalFromImplicationsInConsequent
 ))
 </jh>
 
