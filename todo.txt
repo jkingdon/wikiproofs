@@ -54,6 +54,12 @@ Items which may be doable without a network connection:
   - to define ≡
     • subtraction
     • 1st, 2nd
+      - op1sta ⋃ dom { 〈A, B〉 } = A
+        • dmsnop dom { 〈A, B〉 } = { A } (metamath proof is involved)
+        • unieq UnionBuilder A = B → ⋃ A = ⋃ B
+        • unisn ⋃ { A } = A
+        (each of these is proved in terms of various things we probably want,
+        but don't have yet)
   - ≤ for reals (defined in terms of <)
   - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceABBA)
   - builders for +, ·
