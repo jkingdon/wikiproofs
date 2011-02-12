@@ -1390,6 +1390,32 @@ thm (LessEqualBetween () ()
 ))
 </jh>
 
+== Collinearity ==
+In this section we prove a number of results involving collinearity.
+
+=== Being collinear to collinear points ===
+Given three collinear distinct points, a fourth point being collinear to two of them is equivalent to being collinear to two others. More precisely, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q → (collinear X P Q ↔ collinear X P S)</code>.
+
+We will first prove one direction of this, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code>.<ref>l6_16_1 in Narboux</ref> Our strategy is to prove <code>between P S X ∨ between P X S</code>, from which the consequent follows.
+
+There are nine cases. The first is based on the following application of <code>BetweennessMiddleConnectivity</code>: <code>Q ≠ P ∧ between Q P S ∧ between Q P X → between P S X ∨ between P X S</code>.
+
+BetweennessOuterConnectivity:
+P ≠ Q ∧ between P Q S ∧ between P Q X → between P S X ∨ between P X S
+
+BetweennessInnerConnectivity:
+between P S Q ∧ between P X Q → between P S X ∨ between P X S
+
+
+between Q P S ∧ between X Q P → between X P S by transitivity
+between Q P S ∧ between P X Q → between X P S by transitivity
+
+between P Q S ∧ between X P Q → between X P S by transitivity
+between P Q S ∧ between Q X P → between P X S by transitivity
+
+between P S Q ∧ between Q P X → between X P S by transitivity
+between P S Q ∧ between X Q P → between P X S by transitivity
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
