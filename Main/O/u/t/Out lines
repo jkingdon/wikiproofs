@@ -1402,17 +1402,20 @@ We start with a few lemmas, and then proceed to the proof.
 <jh>
 thm (CollinearityCollinearity-1 () ()
   (((between P S X) ∨ (between P X S)) → (collinear X P S)) (
+</jh>
+We prove <code>collinear X P S</code> via its definition: <code>between X P S ∨ between P S X ∨ between S X P</code>.
+<jh>
         P X S BetweennessSymmetry
         eliminateBiconditionalReverse
 
         (between P S X) disjoinLL
 
-        ((between P S X) ∧ (between S X P))
+        ((between P S X) ∨ (between S X P))
           (between X P S)
           DisjunctionLeftIntroduction
         applySyllogism
 
-        (between P S X) (between S X P) (between X P S) DisjunctionAssociativity
+        (between X P S) (between P S X) (between S X P) DisjunctionAssociativity
         eliminateBiconditionalForward
         applySyllogism
 ))
@@ -1601,7 +1604,7 @@ Round four.
         disjoin
         applySyllogism
 </jh>
-Sorry breaking out the cases took so long. Anyway, we are ready to tackle them one by one. The first is <code>between S P Q ∧ between X P Q</code> (of course, all of them have <code>P ≠ Q ∧ S ≠ P</code> tacked on the front, which we usually will not state expli5citly). It follows from the following application of <code>BetweennessMiddleConnectivity</code>: <code>Q ≠ P ∧ between Q P S ∧ between Q P X → between P S X ∨ between P X S</code>
+Sorry breaking out the cases took so long. Anyway, we are ready to tackle them one by one. The first is <code>between S P Q ∧ between X P Q</code> (of course, all of them have <code>P ≠ Q ∧ S ≠ P</code> tacked on the front, which we usually will not state explicitly). It follows from the following application of <code>BetweennessMiddleConnectivity</code>: <code>Q ≠ P ∧ between Q P S ∧ between Q P X → between P S X ∨ between P X S</code>
 <jh>
         ((P ≠ Q) ∧ (S ≠ P))
           ((between S P Q) ∧ (between X P Q))
@@ -1635,30 +1638,253 @@ Sorry breaking out the cases took so long. Anyway, we are ready to tackle them o
 
         composeConjunction
 
-        P Q S X BetweennessMiddleConnectivity
+        Q P S X BetweennessMiddleConnectivity
         applySyllogism
 </jh>
 To finish the first case we turn <code>between P S X ∨ between P X S</code> into <code>collinear X P S</code>.
 <jh>
         P S X CollinearityCollinearity-1
         applySyllogism
+</jh>
+The second case is <code>between S P Q ∧ between P Q X</code>. This follows from <code>between S P Q ∧ between P Q X ∧ P ≠ Q → between S P X</code>, which is an instance of <code>BetweennessOuterTransitivity</code>.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between P Q X))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between P Q X))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between P Q X))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        S P Q X BetweennessOuterTransitivity
+        applySyllogism
+</jh>
+Now we need <code>between S P X → collinear X P S</code>.
+<jh>
+        S P X BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        X P S BetweennessCollinearity
+        applySyllogism
+
+        composeDisjunction
+</jh>
+The third case is <code>between S P Q ∧ between Q X P</code>, which follows from <code>between S P Q ∧ between P X Q → between S P X</code>, which is an instance of <code>BetweennessInnerTransitivity</code>
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between Q X P))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between Q X P))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        Q X P BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        S P Q X BetweennessInnerTransitivity
+        applySyllogism
+</jh>
+To finish this case we need <code>between S P X → collinear X P S</code>.
+<jh>
+        S P X BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        X P S BetweennessCollinearity
+        applySyllogism
+
+        composeDisjunction
+</jh>
+We now start the second set of cases, those starting with <code>between P Q S</code>. The fourth case is <code>between P Q S ∧ between X P Q</code>, which follows from <code>between X P Q ∧ between P Q S ∧ P ≠ Q → between X P S</code>, which is an instance of <code>BetweennessOuterTransitivity</code>.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between P Q S) ∧ (between X P Q))
+          ConjunctionLeftElimination
+
+        (between P Q S) (between X P Q) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between P Q S) ∧ (between X P Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        X P Q S BetweennessOuterTransitivity
+        applySyllogism
+</jh>
+To finish this case we need <code>between X P S → collinear X P S</code>.
+<jh>
+        X P S BetweennessCollinearity
+        applySyllogism
+</jh>
+The fifth case is <code>between P Q S ∧ between P Q X</code>. This follows from <code>BetweennessOuterConnectivity</code>, which in this case is <code>P ≠ Q ∧ between P Q S ∧ between P Q X → between P S X ∨ between P X S</code>.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between P Q S) ∧ (between P Q X))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between P Q S) ∧ (between P Q X))
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        (P ≠ Q) (between P Q S) (between P Q X) ConjunctionAssociativity
+        eliminateBiconditionalForward
+        applySyllogism
+
+        P Q S X BetweennessOuterConnectivity
+        applySyllogism
+</jh>
+To finish this case we turn <code>between P S X ∨ between P X S</code> into <code>collinear X P S</code>.
+<jh>
+        P S X CollinearityCollinearity-1
+        applySyllogism
+
+        composeDisjunction
+</jh>
+The sixth case is <code>between P Q S ∧ between Q X P</code>. It follows from <code>between P X Q ∧ between P Q S → between P X S</code>, an instance of <code>BetweennessMiddleTransitivityFlipped</code>
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between P Q S) ∧ (between Q X P))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        Q X P BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between P Q S) ∧ (between Q X P))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        P X Q S BetweennessMiddleTransitivityFlipped
+        applySyllogism
+</jh>
+To finish the case we turn <code>between P X S</code> into <code>collinear X P S</code>.
+<jh>
+        P X S BetweennessCollinearity
+        applySyllogism
+
+        P X S Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeDisjunction
+
+        composeDisjunction
+</jh>
+We are ready for the last trio of cases, those which start with <code>between Q S P</code>. The seventh case is <code>between Q S P ∧ between X P Q</code>. It follows from <code>between X P Q ∧ between P S Q → between X P S</code>, which is an instance of <code>BetweennessInnerTransitivity</code>.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between Q S P) ∧ (between X P Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between Q S P) ∧ (between X P Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        Q S P BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        X P Q S BetweennessInnerTransitivity
+        applySyllogism
+</jh>
+To finish the case we turn <code>between X P S</code> into <code>collinear X P S</code>.
+<jh>
+        X P S BetweennessCollinearity
+        applySyllogism
+</jh>
+The eighth case is <code>between Q S P ∧ between P Q X</code>. It follows by <code>between P S Q ∧ between P Q X → between P S X</code> which is an instance of <code>BetweennessMiddleTransitivityFlipped</code>.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between Q S P) ∧ (between P Q X))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        Q S P BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between Q S P) ∧ (between P Q X))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        P S Q X BetweennessMiddleTransitivityFlipped
+        applySyllogism
+</jh>
+To finish the case we need to turn <code>between P S X</code> into <code>collinear X P S</code>.
+<jh>
+        P S X BetweennessCollinearity
+        applySyllogism
+
+        X P S CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeDisjunction
+</jh>
+The ninth and final case is <code>between Q S P ∧ between Q X P</code>. It follows from <code>between P S Q ∧ between P X Q → between P S X ∨ between P X S</code>, which is an instance of <code>BetweennessInnerConnectivity</code>.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between Q S P) ∧ (between Q X P))
+          ConjunctionLeftElimination
+
+        Q S P BetweennessSymmetry
+        Q X P BetweennessSymmetry
+        buildConjunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P S Q X BetweennessInnerConnectivity
+        applySyllogism
+</jh>
+To finish this case, we turn <code>between P S X ∨ between P X S</code> into <code>collinear X P S</code>.
+<jh>
+        P S X CollinearityCollinearity-1
+        applySyllogism
+
+        composeDisjunction
+
+        composeDisjunction
+</jh>
+To finish the proof, we simply combine the breaking down of the cases with the resolution of each case.
+<jh>
+        applySyllogism
 ))
-
-BetweennessOuterConnectivity:
-P ≠ Q ∧ between P Q S ∧ between P Q X → between P S X ∨ between P X S
-
-BetweennessInnerConnectivity:
-between P S Q ∧ between P X Q → between P S X ∨ between P X S
-
-
-between Q P S ∧ between X Q P → between X P S by transitivity
-between Q P S ∧ between P X Q → between X P S by transitivity
-
-between P Q S ∧ between X P Q → between X P S by transitivity
-between P Q S ∧ between Q X P → between P X S by transitivity
-
-between P S Q ∧ between Q P X → between X P S by transitivity
-between P S Q ∧ between X Q P → between P X S by transitivity
+</jh>
 
 == Export ==
 We now export to [[Interface:Out lines]].
