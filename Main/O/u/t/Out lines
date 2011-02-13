@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F P Q R X Y A′ B′ C′ D′ E′ B″ C″)
+var (point A B C D E F P Q R S X Y A′ B′ C′ D′ E′ B″ C″)
 var (variable c c′ d d′ e e′ f p y)
 </jh>
 
@@ -1328,10 +1328,9 @@ thm (LessEqualBetweenForward ( (y P) (y A) (y B)) ()
 </jh>
 
 === The point which is between is closer ===
-The converse also holds: <code>P is-outside A B ∧ between P A B → P A ≤ P B</code>.<ref>l6_13_2 in Narboux</ref> To prove <code>P A ≤ P B</code>, we need <code>∃ c (between P c B ∧ P A ≡ P c)</code>
-<jh> but the point <code>A</code> suffices for the choice of <code>c</code>. In fact, we don't need the hypothesis <code>P is-outside A B</code>, so unlike Narboux we state the theorem without it.
+The converse also holds: <code>P is-outside A B ∧ between P A B → P A ≤ P B</code>.<ref>l6_13_2 in Narboux</ref> To prove <code>P A ≤ P B</code>, we need <code>∃ c (between P c B ∧ P A ≡ P c)</code>, and the point <code>A</code> suffices for the choice of <code>c</code>. In fact, we don't need the hypothesis <code>P is-outside A B</code>, so unlike Narboux we state the theorem without it.
 <jh>
-thm (LessEqualBetweenReverse () ()
+thm (LessEqualBetweenReverse ( (c P) (c A) (c B)) ()
   ((between P A B) → (P A ≤ P B)) (
         (between P A B) ImplicationReflexivity
 
@@ -1354,7 +1353,7 @@ Now we apply a substitution <code>c = A → (between P c B ∧ P A ≡ P c ↔ b
         detach2of3
         detach1of2
 
-        composeConjunction
+        buildConjunctionInConsequent
 
         makeSubstExplicit
         eliminateBiconditionalForward
@@ -1371,7 +1370,6 @@ Turning the substitution into ∃ and applying <code>LessEqualCutoff</code> we a
         P A P B c LessEqualCutoff
         eliminateBiconditionalForward
         applySyllogism
-<jh>
 ))
 </jh>
 
@@ -1379,12 +1377,12 @@ Turning the substitution into ∃ and applying <code>LessEqualCutoff</code> we a
 Here we combine the previous two results: <code>P is-outside A B → (P A ≤ P B ↔ between P A B)</code>.
 <jh>
 thm (LessEqualBetween () ()
-  ((P is-outside A B) → ((P A ≤ P B) ↔ (between P A B)) (
+  ((P is-outside A B) → ((P A ≤ P B) ↔ (between P A B))) (
         P A B LessEqualBetweenForward
         export
 
         P A B LessEqualBetweenReverse
-        introduceRightConjunctToConsequent
+        (P is-outside A B) introduceAntecedent
 
         introduceBiconditionalFromImplicationsInConsequent
 ))
@@ -1396,9 +1394,255 @@ In this section we prove a number of results involving collinearity.
 === Being collinear to collinear points ===
 Given three collinear distinct points, a fourth point being collinear to two of them is equivalent to being collinear to two others. More precisely, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q → (collinear X P Q ↔ collinear X P S)</code>.
 
-We will first prove one direction of this, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code>.<ref>l6_16_1 in Narboux</ref> Our strategy is to prove <code>between P S X ∨ between P X S</code>, from which the consequent follows.
+We will first prove one direction of this, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code>.<ref>l6_16_1 in Narboux</ref>
 
-There are nine cases. The first is based on the following application of <code>BetweennessMiddleConnectivity</code>: <code>Q ≠ P ∧ between Q P S ∧ between Q P X → between P S X ∨ between P X S</code>.
+Expanding each <code>collinear</code> in the antecedent by the definition, and then applying associativity, gives us nine cases. In each case we'll be able to prove <code>between X P S</code>, <code>between P X S</code>, <code>between P S X</code>, or a disjunction between two of them. Each case will follow from either betweenness transitivity or betweenness connectivity.
+
+We start with a few lemmas, and then proceed to the proof.
+<jh>
+thm (CollinearityCollinearity-1 () ()
+  (((between P S X) ∨ (between P X S)) → (collinear X P S)) (
+        P X S BetweennessSymmetry
+        eliminateBiconditionalReverse
+
+        (between P S X) disjoinLL
+
+        ((between P S X) ∧ (between S X P))
+          (between X P S)
+          DisjunctionLeftIntroduction
+        applySyllogism
+
+        (between P S X) (between S X P) (between X P S) DisjunctionAssociativity
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (CollinearityCollinearityImplication () ()
+  (((((P ≠ Q) ∧ (S ≠ P)) ∧
+    (collinear S P Q)) ∧ (collinear X P Q)) →
+  (collinear X P S)) (
+</jh>
+First we associate the two collinearity formulas together.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          (collinear S P Q)
+          (collinear X P Q)
+          ConjunctionAssociativity
+        eliminateBiconditionalReverse
+</jh>
+Now we apply distributivity multiple times to separate out the nine cases. Round one: splitting <code>collinear S P Q</code> halfway.
+<jh>
+        ((between S P Q) ∨ (between P Q S))
+          (between Q S P) 
+          (collinear X P Q)
+          ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+</jh>
+Round two: splitting <code>collinear S P Q</code> the rest of the way.
+<jh>
+        (between S P Q)
+          (between P Q S)
+          (collinear X P Q)
+          ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+        ((between Q S P) ∧ (collinear X P Q)) disjoinRR
+        applySyllogism
+</jh>
+Round three: split <code>collinear X P Q</code> halfway.
+<jh>
+        (between S P Q)
+          ((between X P Q) ∨ (between P Q X))
+          (between Q X P)
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        (between P Q S)
+          ((between X P Q) ∨ (between P Q X))
+          (between Q X P)
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        disjoin
+
+        (between Q S P)
+          ((between X P Q) ∨ (between P Q X))
+          (between Q X P)
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        disjoin
+        applySyllogism
+</jh>
+Round four: split <code>collinear X P Q</code> the rest of the way.
+<jh>
+        (between S P Q)
+          (between X P Q)
+          (between P Q X)
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        ((between S P Q) ∧ (between Q X P)) disjoinRR
+
+        (between P Q S)
+          (between X P Q)
+          (between P Q X)
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        ((between P Q S) ∧ (between Q X P)) disjoinRR
+
+        disjoin
+
+        (between Q S P)
+          (between X P Q)
+          (between P Q X)
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        ((between Q S P) ∧ (between Q X P)) disjoinRR
+
+        disjoin
+
+        applySyllogism
+</jh>
+Having split out the nine cases, we combine with <code>P ≠ Q ∧ S ≠ P</code> and then distribute <code>P ≠ Q ∧ S ≠ P</code> into each of the cases.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P)) conjoinLL
+        applySyllogism
+</jh>
+Round one.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          (((((between S P Q) ∧ (between X P Q)) ∨
+                ((between S P Q) ∧ (between P Q X))) ∨
+              ((between S P Q) ∧ (between Q X P))) ∨
+            ((((between P Q S) ∧ (between X P Q)) ∨
+                ((between P Q S) ∧ (between P Q X))) ∨
+              ((between P Q S) ∧ (between Q X P))))
+          ((((between Q S P) ∧ (between X P Q)) ∨
+              ((between Q S P) ∧ (between P Q X))) ∨
+            ((between Q S P) ∧ (between Q X P)))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Round two.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((((between S P Q) ∧ (between X P Q)) ∨
+                ((between S P Q) ∧ (between P Q X))) ∨
+              ((between S P Q) ∧ (between Q X P)))
+          ((((between P Q S) ∧ (between X P Q)) ∨
+              ((between P Q S) ∧ (between P Q X))) ∨
+            ((between P Q S) ∧ (between Q X P)))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        (((P ≠ Q) ∧ (S ≠ P)) ∧
+          ((((between Q S P) ∧ (between X P Q)) ∨
+              ((between Q S P) ∧ (between P Q X))) ∨
+            ((between Q S P) ∧ (between Q X P))))
+          disjoinRR
+        applySyllogism
+</jh>
+Round three.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          (((between S P Q) ∧ (between X P Q)) ∨
+            ((between S P Q) ∧ (between P Q X)))
+          ((between S P Q) ∧ (between Q X P))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          (((between P Q S) ∧ (between X P Q)) ∨
+            ((between P Q S) ∧ (between P Q X)))
+          ((between P Q S) ∧ (between Q X P))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        disjoin
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          (((between Q S P) ∧ (between X P Q)) ∨
+            ((between Q S P) ∧ (between P Q X)))
+          ((between Q S P) ∧ (between Q X P))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+
+        disjoin
+        applySyllogism
+</jh>
+Round four.
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between X P Q))
+          ((between S P Q) ∧ (between P Q X))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ ((between S P Q) ∧ (between Q X P))) disjoinRR
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between P Q S) ∧ (between X P Q))
+          ((between P Q S) ∧ (between P Q X))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ ((between P Q S) ∧ (between Q X P))) disjoinRR
+
+        disjoin
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between Q S P) ∧ (between X P Q))
+          ((between Q S P) ∧ (between P Q X))
+          ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ ((between Q S P) ∧ (between Q X P))) disjoinRR
+
+        disjoin
+        applySyllogism
+</jh>
+Sorry breaking out the cases took so long. Anyway, we are ready to tackle them one by one. The first is <code>between S P Q ∧ between X P Q</code> (of course, all of them have <code>P ≠ Q ∧ S ≠ P</code> tacked on the front, which we usually will not state expli5citly). It follows from the following application of <code>BetweennessMiddleConnectivity</code>: <code>Q ≠ P ∧ between Q P S ∧ between Q P X → between P S X ∨ between P X S</code>
+<jh>
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between X P Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        P Q EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between X P Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        S P Q BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        ((P ≠ Q) ∧ (S ≠ P))
+          ((between S P Q) ∧ (between X P Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        X P Q BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        P Q S X BetweennessMiddleConnectivity
+        applySyllogism
+</jh>
+To finish the first case we turn <code>between P S X ∨ between P X S</code> into <code>collinear X P S</code>.
+<jh>
+        P S X CollinearityCollinearity-1
+        applySyllogism
+))
 
 BetweennessOuterConnectivity:
 P ≠ Q ∧ between P Q S ∧ between P Q X → between P S X ∨ between P X S
@@ -1429,3 +1673,4 @@ We now export to [[Interface:Out lines]].
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Euclidean geometries (general) and generalizations]]
 [[Category:Foundations of classical theories (including reverse mathematics)]]
+

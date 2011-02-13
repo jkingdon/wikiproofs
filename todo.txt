@@ -14,6 +14,12 @@ Items which may be doable without a network connection:
 
   * ax9o is only used by equs4.
 
+* Maybe DRY up CollinearityCollinearity. The lemmas for the various pieces of the
+  distributivity in breaking up the 9 cases would reduce duplicative proofs, but
+  might be slightly awkward to name. Lemmas for each of the main steps (9 cases,
+  distribute inequality into the cases, handle the cases) might not be as bad as
+  I first thought (in terms of how verbose it would be to state them).
+
 * Set theory
   - definitions and consequences: union?,
     intersection, difference (e.g. eldifi and similar), subset
