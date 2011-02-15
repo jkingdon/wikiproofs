@@ -361,6 +361,34 @@ thm (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))) (
 ))
 </jh>
 
+=== Unordered pair as the union of two singletons ===
+An unordered pair equals the union of singletons for each of its elements. That is, <code>{A, B} = {A} ∪ {B}</code>.<ref>[http://us.metamath.org/mpeuni/df-pr.html df-pr], metamath's set.mm, accessed January 29, 2011</ref>
+<jh>
+thm (UnorderedPairSingleton () ()
+  ((unorderedPair A B) = ((singleton A) ∪ (singleton B))) (
+</jh>
+The proof starts with <code>x ∈ {A, B} ↔ x = A ∨ x = B</code>.
+<jh>
+        (value x) A B UnorderedPair
+</jh>
+The right hand side is equivalent to <code>x ∈ {A} ∨ x ∈ {B}</code>,
+<jh>
+        (value x) A Singleton
+        (value x) B Singleton
+        buildDisjunction
+        swapBiconditional
+        applyBiconditionalTransitivity
+</jh>
+which is equivalent to <code>x ∈ {A} ∪ {B}</code>.
+<jh>
+        (value x) (singleton A) (singleton B) BinaryUnion
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        applyExtensionality
+))
+</jh>
+
 == Subset ==
 
 === Singleton and subset ===

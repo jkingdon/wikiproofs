@@ -19,13 +19,6 @@ Items which may be doable without a network connection:
   might be slightly awkward to name.
 
 * Set theory
-  - UnorderedPairSingleton {A, B} = ({A} ∪ {B}) (df-pr)
-    proof not from metamath: x ∈ {A, B} ↔ x = A ∨ x = B
-      ↔ x ∈ {A} ∨ x ∈ {B}
-      ↔ x ∈ {A} ∪ {B}
-  - SingletonUnorderedPair {A} = {A, A} (dfsn2)
-    proof not from metamath
-
   - UnionBuilder: A = B → ⋃A = ⋃B (unieq)
     from Union and extensionality and builders for ∈, ∧, ∃
   - BinaryUnionIdempotence: (A ∪ A) = A (unidm)
@@ -110,4 +103,8 @@ To do with network:
 * Continue changing CongruenceIdentityFromEquality to be the imported version.
 
 * Throughout First-order logic with quantifiability (and probably First-order logic), add spaces (e.g. change ∃xφ to ∃ x φ).
+
+* Rename ExtensionalityObject to Extensionality and Extensionality to something (ExtensionalityVariable?)
+
+* find the metamath name for applyExtensionality
 
