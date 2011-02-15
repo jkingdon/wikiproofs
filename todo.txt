@@ -21,26 +21,42 @@ Items which may be doable without a network connection:
   I first thought (in terms of how verbose it would be to state them).
 
 * Set theory
-  - definitions and consequences: union?,
-    intersection, difference (e.g. eldifi and similar), subset
-  - do both directions of A = B ↔ { A } = { B } hold? (think so)
+  - UnorderedPairSingleton {A, B} = ({A} ∪ {B}) (df-pr)
+    proof not from metamath: x ∈ {A, B} ↔ x = A ∨ x = B
+      ↔ x ∈ {A} ∨ x ∈ {B}
+      ↔ x ∈ {A} ∪ {B}
+  - SingletonUnorderedPair {A} = {A, A} (dfsn2)
+    proof not from metamath
+
+  - UnionBuilder: A = B → ⋃A = ⋃B (unieq)
+    from Union and extensionality and builders for ∈, ∧, ∃
+  - BinaryUnionIdempotence: (A ∪ A) = A (unidm)
+    • easy to prove, but worth stating.
+
+  - intersection, difference (e.g. eldifi and similar)
+  - state A = B ↔ { A } = { B } ? (see sneqr)
   - indexed union or intersection? (if needed for functions)
   - prove Peano axioms from them
     - suc11
   - finite induction (e.g. peano5 in set.mm)
   - functions and relations (e.g. cxp and following in set.mm)
     - binary relations.
-      - releq
-      (mkrelation a A b B φ) (A, B object; a, b variable; φ formula)
+      - releq (builder for relation predicate)
+      (makeRelation a A b B φ) (A, B object; a, b variable; φ formula)
         ≝ {〈a, b〉| a ∈ A ∧ b ∈ B ∧ φ }
         ≝ { z ∈ A × B | ∃ a ∃ b z = 〈 a, b 〉 ∧ φ }
         e.g. (mkrelation a ℕ b ℕ (∃ n ∈ ℕ a + n = b))
       - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
     - domain and range: df-dm and dfrn2 or some such (need to prove existence)
+        - dmexg for existence
+          - check proof, but presumably follows from dmrnssfld
       - dmeq
       - breldm, brelrn
-      - (domain (mkrelation a A b B φ)) ⊆ A
-      - (range (mkrelation a A b B φ)) ⊆ B
+      - (domain (makeRelation a A b B φ)) ⊆ A
+      - (range (makeRelation a A b B φ)) ⊆ B
+      - (relation { 〈A, B〉 } )
+        { 〈A, B〉 } = { A } × { B }
+        B ≠ ∅ → domain (A × B) = A (dmxp)
     - functions
       - dffun2 (how to deal with the distinct variables?), funrel
       (lambda x t)
@@ -60,8 +76,8 @@ Items which may be doable without a network connection:
   - to define ≡
     • subtraction
     • 1st, 2nd
-      - op1sta ⋃ dom { 〈A, B〉 } = A
-        • dmsnop dom { 〈A, B〉 } = { A } (metamath proof is involved)
+      - op1sta ⋃ domain { 〈A, B〉 } = A
+        • dmsnop domain { 〈A, B〉 } = { A } (metamath proof is involved)
         • unieq UnionBuilder A = B → ⋃ A = ⋃ B
         • unisn ⋃ { A } = A
         (each of these is proved in terms of various things we probably want,
