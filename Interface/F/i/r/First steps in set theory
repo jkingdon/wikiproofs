@@ -111,6 +111,7 @@ stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair 
 Sets with the same elements are equal.
 <jh>
 stmt (ExtensionalityObject ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)))
+stmt (applyExtensionality () ((((value x) ∈ A) ↔ ((value x) ∈ B))) (A = B))
 </jh>
 
 == References ==
