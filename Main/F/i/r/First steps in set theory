@@ -212,7 +212,7 @@ To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableT
 ))
 </jh>
 
-It will also be convenient to have a rule form.
+It will also be convenient to have a rule form.<ref>[http://us.metamath.org/mpeuni/eqriv.html eqriv], metamath's set.mm, accessed February 15, 2011</ref>
 <jh>
 thm (applyExtensionality ((x A) (x B))
   ((H (((value x) ∈ A) ↔ ((value x) ∈ B))))
