@@ -81,6 +81,11 @@ stmt (UnorderedPairFirstMembersEqual () () (((unorderedPair A C) = (unorderedPai
 stmt (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPair C B)) → (A = B)))
 </jh>
 
+A singleton is equal to an unordered pair with the same element listed twice.
+<jh>
+stmt (SingletonUnorderedPair () () ((singleton A) = (unorderedPair A, A)))
+</jh>
+
 == Subset ==
 The subset relationship is equivalent to various statements involving membership, unions, intersections, and set differences.<ref>[http://us.metamath.org/mpeuni/df-ss.html df-ss]</ref>
 <jh>
@@ -115,6 +120,14 @@ stmt (BinaryUnion () () ((A ∈ (B ∪ C)) ↔ ((A ∈ B) ∨ (A ∈ C))))
 
 stmt (MembershipUnionRightIntroduction () () ((A ∈ B) → (A ∈ (B ∪ C))))
 stmt (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))))
+
+stmt (UnionIdempotence () () ((A ∪ A) = A))
+</jh>
+
+An unordered pair is the union of singletons for each of its elements.
+<jh>
+stmt (UnorderedPairSingleton () ()
+  ((unorderedPair A B) = ((singleton A) ∪ (singleton B))) ())
 </jh>
 
 === Subsets and unions ===
@@ -154,6 +167,8 @@ stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))))
 
 stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A ψ)))
+
+stmt (UnionBuilder () () ((A = B) → ((⋃ A) = (⋃ B))))
 </jh>
 
 == Extensionality ==

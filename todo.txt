@@ -64,7 +64,7 @@ Items which may be doable without a network connection:
     • 1st, 2nd
       - op1sta ⋃ domain { 〈A, B〉 } = A
         • dmsnop domain { 〈A, B〉 } = { A } (metamath proof is involved)
-        • unieq UnionBuilder A = B → ⋃ A = ⋃ B
+        • (have) unieq UnionBuilder A = B → ⋃ A = ⋃ B
         • unisn ⋃ { A } = A
         (each of these is proved in terms of various things we probably want,
         but don't have yet)
@@ -100,6 +100,4 @@ To do with network:
 * Throughout First-order logic with quantifiability (and probably First-order logic), add spaces (e.g. change ∃xφ to ∃ x φ).
 
 * Rename ExtensionalityObject to Extensionality and Extensionality to something (ExtensionalityVariable?)
-
-* find the metamath name for applyExtensionality
 
