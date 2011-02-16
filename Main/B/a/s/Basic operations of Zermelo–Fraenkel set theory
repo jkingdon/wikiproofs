@@ -413,6 +413,20 @@ We need <code>x ∈ ⋃ A ↔ x ∈ ⋃ B</code>, or expanding the unions accord
 ))
 </jh>
 
+=== Union idempotence ===
+The binary union operation is idempotent: <code>A ∪ A = A</code>.<ref>[http://us.metamath.org/mpeuni/unidm.html unidm], metamath's set.mm, accessed February 14, 2011</ref>
+<jh>
+thm (UnionIdempotence ( (x A)) () ((A ∪ A) = A) (
+        (value x) A A BinaryUnion
+
+        ((value x) ∈ A) DisjunctionIdempotence
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        applyExtensionality
+))
+</jh>
+
 == Subset ==
 
 === Singleton and subset ===
