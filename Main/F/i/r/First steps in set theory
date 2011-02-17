@@ -212,6 +212,18 @@ To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableT
 ))
 </jh>
 
+It will also be convenient to have a rule form.<ref>[http://us.metamath.org/mpeuni/eqriv.html eqriv], metamath's set.mm, accessed February 15, 2011</ref>
+<jh>
+thm (applyExtensionality ((x A) (x B))
+  ((H (((value x) ∈ A) ↔ ((value x) ∈ B))))
+  (A = B) (
+        H
+        x generalize
+        x A B ExtensionalityObject
+        applyModusPonens
+))
+</jh>
+
 == Introducing a notation for a set ==
 Many of the axioms (or theorems) of set theory assert the existence of certain sets. That is, they take the form that there is a set whose elements are those which satisfy a certain formula. In symbols, <code>∃ result ∀ y (y ∈ result ↔ φy)</code>. For each of these, we want to introduce a notation for the set <code>result</code>. Most of the work of doing this is some substitution machinery, which can be in part factored out to the following theorems.
 <jh>
