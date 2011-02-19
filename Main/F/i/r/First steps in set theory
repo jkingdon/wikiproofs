@@ -217,6 +217,7 @@ It will also be convenient to have a rule form.<ref>[http://us.metamath.org/mpeu
 thm (applyExtensionality ((x A) (x B))
   ((H (((value x) ∈ A) ↔ ((value x) ∈ B))))
   (A = B) (
+        H
         x generalize
         x A B ExtensionalityObject
         applyModusPonens
