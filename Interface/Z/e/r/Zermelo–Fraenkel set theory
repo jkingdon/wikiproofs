@@ -35,7 +35,7 @@ term (formula (∈ object object))
 Our first axiom, the axiom of extensionality, states that if two sets have the same elements, they are equal. In symbols this is <code>∀ z (z ∈ x ↔ z ∈ y) → x = y</code>.  Versions with fewer distinct variable constaints also hold, but they can be proved from this version and other axioms, so we assume the weakest version (the one with the most distinct variable constraints).
 
 <jh>
-stmt (Extensionality ((x y z)) () ((∀ z (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y)))) → ((value x) = (value y))))
+stmt (ExtensionalityVariable ((x y z)) () ((∀ z (((value z) ∈ (value x)) ↔ ((value z) ∈ (value y)))) → ((value x) = (value y))))
 </jh>
 
 The principle that equals can be substituted for equals in JHilbert must be adopted as an axiom for each non-logical predicate (in this case ∈), which we do now.<ref>They are variants of [http://us.metamath.org/mpeuni/ax-13.html ax-13] and [http://us.metamath.org/mpeuni/ax-14.html ax-14] in metamath's set.mm, accessed July 21, 2010. The minor change is to biconditionalize them, but the major one is to make them apply for object, not just variable.</ref>
