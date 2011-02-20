@@ -166,6 +166,24 @@ thm (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPai
 ))
 </jh>
 
+=== A singleton as an unordered pair ===
+A singleton is equal to an unordered pair where the two elements are the same. That is, <code>{ A } = { A, A }</code>.<ref>[http://us.metamath.org/mpeuni/dfsn2.html dfsn2] in metamath's set.mm, accessed February 14, 2011</ref>
+<jh>
+thm (SingletonUnorderedPair ( (x A)) ()
+  ((singleton A) = (unorderedPair A A)) (
+        (value x) A Singleton
+
+        ((value x) = A) DisjunctionIdempotence
+        applyBiconditionalTransitivity
+
+        (value x) A A UnorderedPair
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        applyExtensionality
+))
+</jh>
+
 == Separation ==
 
 === Separation builder ===
