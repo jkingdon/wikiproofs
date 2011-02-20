@@ -159,7 +159,8 @@ stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A �
 == Extensionality ==
 Sets with the same elements are equal.
 <jh>
-stmt (ExtensionalityObject ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)))
+stmt (Extensionality ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)))
+stmt (applyExtensionality ((x A) (x B)) ((((value x) ∈ A) ↔ ((value x) ∈ B))) (A = B))
 </jh>
 
 == References ==
