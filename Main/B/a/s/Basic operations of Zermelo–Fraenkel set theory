@@ -395,6 +395,30 @@ which is equivalent to <code>x ∈ {A} ∪ {B}</code>.
 ))
 </jh>
 
+=== Union builder ===
+Equals can be substituted for equals, in the context of the union of a set.<ref>[http://us.metamath.org/mpeuni/unieq.html unieq], metamath's set.mm, accessed February 14, 2011</ref>
+<jh>
+thm (UnionBuilder ( (x A) (x B) (y x) (y A) (y B)) ()
+  ((A = B) → ((⋃ A) = (⋃ B))) (
+</jh>
+We need <code>x ∈ ⋃ A ↔ x ∈ ⋃ B</code>, or expanding the unions according to <code>Union</code>, <code>∃ y (x ∈ y ∧ y ∈ A) ↔ ∃ y (x ∈ y ∧ y ∈ B)</code>. The first step is <code>A = B → (y ∈ A ↔ y ∈ B)</code>, followed by applying builders for the conjunction and the quantifier.
+<jh>
+        A B (value y) MembershipBuilderLL
+        ((value x) ∈ (value y)) buildConjunctionLLInConsequent
+        y buildThereExistsInConsequent
+
+        (value x) A y Union
+        (value x) B y Union
+        buildBiconditional
+        eliminateBiconditionalForward
+        applySyllogism
+
+        x addForAllToConsequent
+        x (⋃ A) (⋃ B) Extensionality
+        applySyllogism
+))
+</jh>
+
 == Subset ==
 
 === Singleton and subset ===
