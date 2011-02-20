@@ -7,7 +7,7 @@
  | notes    = Here we start with [[Interface:First steps in set theory]] and prove additional theorems involving singletons, unordered pairs, unions, subsets, and the like. }}
 {{interfaces
 | imports = [[Interface:First steps in set theory]]
-| exports = [[Interface:Set theory]]
+| exports = [[Interface:Basic operations of Zermelo–Fraenkel set theory]]
 }}
 
 We first import [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]].
