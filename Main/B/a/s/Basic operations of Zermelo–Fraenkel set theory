@@ -87,7 +87,7 @@ thm (UnorderedPairCommutativity ((x A) (x B)) () ((unorderedPair A B) = (unorder
         applyBiconditionalTransitivity
 
         x generalize
-        x (unorderedPair A B) (unorderedPair B A) ExtensionalityObject
+        x (unorderedPair A B) (unorderedPair B A) Extensionality
 
         applyModusPonens
 ))
@@ -193,7 +193,7 @@ thm (buildSeparation ((x A)  (z x) (z A) (z φ) (z ψ)) ((H (φ ↔ ψ)))
         (value z) x A buildSeparation-1
         z generalize
 
-        z (separate x A φ) (separate x A ψ) ExtensionalityObject
+        z (separate x A φ) (separate x A ψ) Extensionality
         applyModusPonens
 ))
 </jh>
