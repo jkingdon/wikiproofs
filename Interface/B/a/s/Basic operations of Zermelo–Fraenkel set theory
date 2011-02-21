@@ -83,7 +83,7 @@ stmt (UnorderedPairSecondMembersEqual () () (((unorderedPair C A) = (unorderedPa
 
 A singleton is equal to an unordered pair with the same element listed twice.
 <jh>
-stmt (SingletonUnorderedPair () () ((singleton A) = (unorderedPair A, A)))
+stmt (SingletonUnorderedPair () () ((singleton A) = (unorderedPair A A)))
 </jh>
 
 == Subset ==
@@ -127,7 +127,7 @@ stmt (UnionIdempotence () () ((A ∪ A) = A))
 An unordered pair is the union of singletons for each of its elements.
 <jh>
 stmt (UnorderedPairSingleton () ()
-  ((unorderedPair A B) = ((singleton A) ∪ (singleton B))) ())
+  ((unorderedPair A B) = ((singleton A) ∪ (singleton B))))
 </jh>
 
 === Subsets and unions ===
@@ -174,8 +174,8 @@ stmt (UnionBuilder () () ((A = B) → ((⋃ A) = (⋃ B))))
 == Extensionality ==
 Sets with the same elements are equal.
 <jh>
-stmt (ExtensionalityObject ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)))
-stmt (applyExtensionality () ((((value x) ∈ A) ↔ ((value x) ∈ B))) (A = B))
+stmt (Extensionality ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)))
+stmt (applyExtensionality ((x A) (x B)) ((((value x) ∈ A) ↔ ((value x) ∈ B))) (A = B))
 </jh>
 
 == References ==

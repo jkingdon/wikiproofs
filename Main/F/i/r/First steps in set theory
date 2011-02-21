@@ -179,7 +179,7 @@ thm (PairingObject ((A y z w) (B y z w)) () (∃ w (∀ z (((value z) ∈ (value
 Here is a variant of extensionality, <code>∀ z (z ∈ A ↔ z ∈ B) → A = B</code>, which changes variables to objects. We first prove a lemma.
 
 <jh>
-thm (ExtensionalityObject-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ (value y)))) → (A = (value y))) (
+thm (Extensionality-1 ((z A) (x y z) (x A)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ (value y)))) → (A = (value y))) (
 </jh>
 This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObject</code> applied to <code>x = A → ((∀ z (z ∈ x ↔ z ∈ y) → x = y) ↔ (∀ z (z ∈ A ↔ z ∈ y) → A = y))</code>
 <jh>
@@ -191,11 +191,11 @@ This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObjec
 
         buildImplicationInConsequent
 
-        z x y Extensionality
+        z x y ExtensionalityVariable
         VariableToObject
 ))
 
-thm (ExtensionalityObject ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)) (
+thm (Extensionality ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)) (
 </jh>
 To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))</code>
 <jh>
@@ -207,7 +207,7 @@ To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableT
 
         buildImplicationInConsequent
 
-        z A y ExtensionalityObject-1
+        z A y Extensionality-1
         VariableToObject
 ))
 </jh>
@@ -219,7 +219,7 @@ thm (applyExtensionality ((x A) (x B))
   (A = B) (
         H
         x generalize
-        x A B ExtensionalityObject
+        x A B Extensionality
         applyModusPonens
 ))
 </jh>
@@ -351,7 +351,7 @@ Extensionality turns <code>z ∈ {A} ↔ z ∈ {B}</code> into <code>{A} = {B}</
 <jh>
         z addForAllToConsequent
 
-        z (abstract a ((value a) = A)) (abstract b ((value b) = B)) ExtensionalityObject
+        z (abstract a ((value a) = A)) (abstract b ((value b) = B)) Extensionality
         applySyllogism
 ))
 
@@ -428,7 +428,7 @@ Applying <code>UnorderedPair</code>, we get <code>A0 = B0 ∧ A1 = B1 → (z ∈
 By extensionality, the right hand side implies <code>{A0, A1} = {B0, B1}</code>.
 <jh>
         z addForAllToConsequent
-        z (abstract a (((value a) = A0) ∨ ((value a) = A1))) (abstract b (((value b) = B0) ∨ ((value b) = B1))) ExtensionalityObject
+        z (abstract a (((value a) = A0) ∨ ((value a) = A1))) (abstract b (((value b) = B0) ∨ ((value b) = B1))) Extensionality
         applySyllogism
 ))
 
