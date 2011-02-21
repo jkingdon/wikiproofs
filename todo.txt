@@ -35,7 +35,15 @@ Items which may be doable without a network connection:
       - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
     - domain and range: df-dm and dfrn2 or some such (need to prove existence)
         - dmexg for existence
-          - check proof, but presumably follows from dmrnssfld
+          - follows from dmrnssfld
+        - define domain A as { x ∈ ⋃ ⋃ A | ∃ y 〈x, y〉 ∈ A }
+          - lemma: ∃ y 〈x, y〉 ∈ A → x ∈ ⋃ ⋃ A
+            which implies: B ∈ domain A ↔ [ B / x ] ∃ y 〈x, y〉 ∈ A
+        - then want B ∈ dom A ↔ ∃ y 〈B, y〉 ∈ A (eldm2)
+        - uniop: ⋃〈x, y〉 = { x, y }
+          As this theorem is specific to our definition of ordered pair, we don't
+          export it, but just use it to prove some results such as the existence of
+          the domain of a relation.
       - dmeq
       - breldm, brelrn
       - (domain (makeRelation a A b B φ)) ⊆ A
