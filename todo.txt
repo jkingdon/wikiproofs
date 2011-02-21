@@ -19,6 +19,7 @@ Items which may be doable without a network connection:
   might be slightly awkward to name.
 
 * Set theory
+  - can handle singletons a bit more concisely by defining { A } as { A, A }
   - intersection, difference (e.g. eldifi and similar)
   - state A = B ↔ { A } = { B } ? (see sneqr)
   - indexed union or intersection? (if needed for functions)
