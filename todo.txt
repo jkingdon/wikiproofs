@@ -40,11 +40,26 @@ Items which may be doable without a network connection:
         - define domain A as { x ∈ ⋃ ⋃ A | ∃ y 〈x, y〉 ∈ A }
           - lemma: ∃ y 〈x, y〉 ∈ A → x ∈ ⋃ ⋃ A
             which implies: B ∈ domain A ↔ [ B / x ] ∃ y 〈x, y〉 ∈ A
-        - then want B ∈ dom A ↔ ∃ y 〈B, y〉 ∈ A (eldm2)
+        - then want B ∈ domain A ↔ ∃ y 〈B, y〉 ∈ A (eldm2)
+
+        - already proved 〈 x, y 〉 ∈ R → { x, y } ∈ ⋃ R (Domain-1)
+          〈 x, y 〉 ∈ R → { x, y } ∈ ⋃ R (Domain-1)
+                       → { x, y } ⊆ ⋃ ⋃ R  (by elssuni)
+                       → x ∈ { x, y } → x ∈ ⋃ ⋃ R (by SubsetMembership)
+          then detach x ∈ { x, y } which is UnorderedPairLeftMembership
+          then addThereExistsToConsequent
         - uniop: ⋃〈x, y〉 = { x, y }
           As this theorem is specific to our definition of ordered pair, we don't
           export it, but just use it to prove some results such as the existence of
           the domain of a relation.
+        - elssuni: A ∈ B → A ⊆ ⋃B
+          - ssuni: A ⊆ B ∧ B ∈ C → A ⊆ ⋃C
+            various predicate logic steps
+          - ssid: A ⊆ A (want this anyway, as SubsetReflexivity)
+            - eqss: A = B ↔ A ⊆ B ∧ B ⊆ A (SubsetAntisymmetry?)
+              • proof is pretty easy; ∀ x (x ∈ A ↔ X ∈ B) and then break it into
+                implications, apply Subset, apply Extensionality
+          - uniopel? (an odd theorem, and the dmrnssfld proof just undoes part)
       - dmeq
       - breldm, brelrn
       - (domain (makeRelation a A b B φ)) ⊆ A

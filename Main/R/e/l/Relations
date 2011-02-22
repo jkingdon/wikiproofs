@@ -321,6 +321,59 @@ A relation for two objects holds if and only if the corresponding ordered pair i
 def ((relates A R B) ((orderedPair A B) ∈ R))
 </jh>
 
+=== The domain of a relation ===
+A relation is a set of ordered pairs, and the domain of a relation is a set consisting of all of the first elements of those ordered pairs.
+
+Our notation is <code>domain R</code> (a slight variation of the common notation <code>dom R</code>). To show that the domain of a relation exists, we will show that the domain is contained in <code>⋃ ⋃ R</code>. That is, we define <code>domain R</code> as <code>{ x ∈ ⋃ ⋃ R | ∃ y 〈x, y〉 ∈ R }</code><ref>adapted from [http://us.metamath.org/mpeuni/dfdm3.html dfdm3] and [http://us.metamath.org/mpeuni/dmrnssfld dmrnssfld], metamath's set.mm, accessed February 21, 2011</ref> and then show that this definition works as expected, that is that <code>B ∈ domain A ↔ ∃ y 〈B, y〉 ∈ A</code>.<ref>[http://us.metamath.org/mpeuni/eldm2 eldm2], metamath's set.mm, accessed February 21, 2011</ref> One detail: the definition, and the theorems that follow, do not insist that <code>R</code> is a relation. But we will refer to it as a relation simply because the definition and the theorems aren't particularly interesting if it is not.
+<jh>
+def ((domain R) (separate x (⋃ (⋃ R)) (∃ y ((orderedPair (value x) (value y)) ∈ R))))
+</jh>
+
+The first lemma is <code>〈 A, B 〉 ∈ R → { A, B } ∈ ⋃ R</code>. This is the part where we make use of our definition of the ordered pair.
+<jh>
+thm (Domain-1 ( (z A) (z B) (z R)) ()
+  (((orderedPair A B) ∈ R) → ((unorderedPair A B) ∈ (⋃ R))) (
+</jh>
+We will prove <code>{ A, B } ∈ ⋃ R</code> by <code>Union</code>. That is, we need <code>∃ z ({ A, B } ∈ z ∧ z ∈ ⋃ R</code>. We prove this by presenting such a <code>z</code>, which is just <code>〈 A, B 〉</code> (matters will be clearer if we write it with the definition of ordered pair expanded: <code>{ { A }, { A, B } }</code>.
+
+The first step is <code>{ { A }, { A, B } } ∈ R → { A, B } ∈ { { A }, { A, B } } ∧ { { A }, { A, B } } ∈ R</code>.
+<jh>
+        ((unorderedPair (singleton A) (unorderedPair A B)) ∈ R) ImplicationReflexivity
+        (unorderedPair A B) (singleton A) UnorderedPairRightMembership
+        introduceLeftConjunctToConsequent
+</jh>
+Now we need to replace <code>{ { A }, { A, B } }</code> with a variable <code>z</code>.
+<jh>
+        (value z)
+          (unorderedPair (singleton A) (unorderedPair A B))
+          (unorderedPair A B)
+          MembershipBuilderLL
+
+        (value z)
+          (unorderedPair (singleton A) (unorderedPair A B))
+          R
+          MembershipBuilderRR
+
+        buildConjunctionInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Turning the substitution into ∃ gives us <code>〈 A, B 〉 ∈ R → ∃ z ({ A, B } ∈ z ∧ z ∈ R)</code>, and applying <code>Union</code> we are done.
+<jh>
+        (unorderedPair (singleton A) (unorderedPair A B))
+          z
+          (((unorderedPair A B) ∈ (value z)) ∧ ((value z) ∈ R))
+          ThereExistsIntroductionFromObject
+        applySyllogism
+
+        (unorderedPair A B) R z Union
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 == Cartesian product ==
 The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.
 
