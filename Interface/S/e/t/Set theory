@@ -124,9 +124,11 @@ stmt (UnorderedPairSubset () ()
 </jh>
 
 === Partial order ===
-The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive. For now we just have transitivity.
+The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive.
 
 <jh>
+thm (SubsetReflexivity () () (A ⊆ A))
+thm (SubsetAntisymmetry () () (((A ⊆ B) ∧ (B ⊆ A)) → (A = B)))
 stmt (SubsetTransitivity () () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)))
 </jh>
 
