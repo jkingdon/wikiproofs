@@ -50,7 +50,6 @@ Items which may be doable without a network connection:
           then addThereExistsToConsequent
         - elssuni: A ∈ B → A ⊆ ⋃B
           - ssuni: A ⊆ B ∧ B ∈ C → A ⊆ ⋃C
-            various predicate logic steps
           - A ⊆ A (by SubsetReflexivity)
       - dmeq
       - breldm, brelrn

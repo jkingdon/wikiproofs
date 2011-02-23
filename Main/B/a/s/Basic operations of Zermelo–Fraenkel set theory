@@ -492,7 +492,70 @@ But the two halves of that are equivalent to <code>C ∈ A</code> and <code>C �
 ))
 </jh>
 
-=== Union and subset ===
+=== Elements and subsets of unions ===
+The first theorem in this section is <code>A ⊆ B ∧ B ∈ C → A ⊆ ⋃C</code>. To sketch out the proof, we first expand the subsets and union so that the antecedent reads <code>∀ x (x ∈ A → x ∈ B) ∧ B ∈ C</code>, and the consequent would follow from <code>∀ x (x ∈ A → ∃ y (x ∈ y ∧ y ∈ C))</code>. So we need a choice for <code>y</code> in the consequent, and it turns out that <code>B</code> does the trick (with that substitution made, there is only minor rearrangment to derive the consequent from the antecedent).
+<jh>
+thm (SubsetUnion ( (x B) (x C) (x A)) ()
+  (((A ⊆ B) ∧ (B ∈ C)) → (A ⊆ (⋃ C))) (
+        A B x Subset
+        (B ∈ C) buildConjunctionRR
+        eliminateBiconditionalReverse
+</jh>
+So far we have <code>A ⊆ B ∧ B ∈ C → ∀ x (x ∈ A → x ∈ B) ∧ B ∈ C</code>. Now we move <code>B ∈ C</code> inside the quantifier.
+<jh>
+        x (B ∈ C) Generalization
+        (∀ x (((value x) ∈ A) → ((value x) ∈ B))) conjoinLL
+        applySyllogism
+
+        x (((value x) ∈ A) → ((value x) ∈ B)) (B ∈ C) ForAllConjunction
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+That gives us <code>∀ x ((x ∈ A → x ∈ B) ∧ B ∈ C)</code>. Since <code>B ∈ C</code> holds irrespective of <code>x ∈ A</code>, we can also make the weaker statement that it holds assuming <code>x ∈ A</code>. In other words, we can rewrite our formula to <code>∀ x (x ∈ A → x ∈ B ∧ B ∈ C)</code>.
+<jh>
+        (B ∈ C) ((value x) ∈ A) AntecedentIntroduction
+        ((value x) ∈ A) → ((value x) ∈ B)) conjoinLL
+        x addForAll
+        applySyllogism
+
+        ((value x) ∈ A) ((value x) ∈ B) (B ∈ C) ConjunctionComposition
+        eliminateBiconditionalReverse
+        x addForAll
+        applySyllogism
+</jh>
+Now we turn <code>x ∈ B ∧ B ∈ C</code> into first <code>[ B / y ] (x ∈ y ∧ y ∈ C)</code> and then <code>∃ y (x ∈ y ∧ y ∈ C)</code>.
+<jh>
+        (value y) B (value x) MembershipBuilderLL
+        (value y) B C MembershipBuilderRR
+        buildConjunctionInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+
+        B y (((value x) ∈ (value y)) ∧ ((value y) ∈ C)) ThereExistsIntroductionFromObject
+        applySyllogism
+
+        ((value x) ∈ A) addCommonAntecedent
+        x addForAll
+        applySyllogism
+</jh>
+That gives us <code>∀ x (x ∈ A → ∃ y (x ∈ y ∧ y ∈ C))</code>, which we first turn into <code>∀ x (x ∈ A → x ∈ ⋃ C)</code>,
+<jh>
+        (value x) C y Union
+        eliminateBiconditionalForward
+        ((value x) ∈ A) addCommonAntecedent
+        x addForAll
+        applySyllogism
+</jh>
+and then <code>A ⊆ ⋃ C</code>.
+<jh>
+        A (⋃ C) x Subset
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+=== Binary union and subset ===
 The left side of a union is a subset of the union.<ref>[http://us.metamath.org/mpeuni/snun1.html snun1], metamath's set.mm, accessed January 30, 2011</ref>
 <jh>
 thm (SubsetUnionLeft ( (x A) (x B)) ()

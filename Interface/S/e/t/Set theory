@@ -158,6 +158,8 @@ stmt (UnorderedPairSingleton () ()
 
 === Subsets and unions ===
 <jh>
+stmt (SubsetUnion () () (((A ⊆ B) ∧ (B ∈ C)) → (A ⊆ (⋃ C))))
+
 stmt (SubsetUnionRightIntroduction () ()
   ((A ⊆ B) → (A ⊆ (B ∪ C))))
 </jh>
