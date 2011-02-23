@@ -188,6 +188,12 @@ stmt (MembershipBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
 stmt (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 stmt (buildMembershipLL () ((B0 = B1)) ((A ∈ B0) ↔ (A ∈ B1)))
 stmt (buildMembershipRR () ((A0 = A1)) ((A0 ∈ B) ↔ (A1 ∈ B)))
+stmt (buildMembershipLLInConsequent ()
+  ((antecedent → (B0 = B1)))
+  (antecedent → ((A ∈ B0) = (A ∈ B1))))
+stmt (buildMembershipRRInConsequent ()
+  ((antecedent → (A0 = A1)))
+  (antecedent → ((A0 ∈ B) = (A1 ∈ B))))
 
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 

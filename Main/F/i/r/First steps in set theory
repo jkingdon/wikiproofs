@@ -30,6 +30,22 @@ thm (buildMembershipRR () ((H (A0 = A1))) ((A0 ∈ B) ↔ (A1 ∈ B)) (
         A0 A1 B MembershipBuilderRR
         applyModusPonens
 ))
+
+thm (buildMembershipLLInConsequent ()
+  ((H (antecedent → (B0 = B1))))
+  (antecedent → ((A ∈ B0) = (A ∈ B1))) (
+        H
+        B0 B1 A MembershipBuilderLL
+        applySyllogism
+))
+
+thm (buildMembershipRRInConsequent ()
+  ((H (antecedent → (A0 = A1))))
+  (antecedent → ((A0 ∈ B) = (A1 ∈ B))) (
+        H
+        A0 A1 B MembershipBuilderRR
+        applySyllogism
+))
 </jh>
 
 === Membership with a substitution ===
