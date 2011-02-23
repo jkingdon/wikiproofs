@@ -493,7 +493,7 @@ But the two halves of that are equivalent to <code>C ∈ A</code> and <code>C �
 </jh>
 
 === Elements and subsets of unions ===
-The first theorem in this section is <code>A ⊆ B ∧ B ∈ C → A ⊆ ⋃C</code>. To sketch out the proof, we first expand the subsets and union so that the antecedent reads <code>∀ x (x ∈ A → x ∈ B) ∧ B ∈ C</code>, and the consequent would follow from <code>∀ x (x ∈ A → ∃ y (x ∈ y ∧ y ∈ C))</code>. So we need a choice for <code>y</code> in the consequent, and it turns out that <code>B</code> does the trick (with that substitution made, there is only minor rearrangment to derive the consequent from the antecedent).
+The first theorem in this section is <code>A ⊆ B ∧ B ∈ C → A ⊆ ⋃C</code>. To sketch out the proof, we first expand the subsets and union so that the antecedent reads <code>∀ x (x ∈ A → x ∈ B) ∧ B ∈ C</code>, and the consequent would follow from <code>∀ x (x ∈ A → ∃ y (x ∈ y ∧ y ∈ C))</code>. So we need a choice for <code>y</code> in the consequent, and it turns out that <code>B</code> does the trick (with that substitution made, there is only minor rearrangment to derive the consequent from the antecedent).<ref>[http://us.metamath.org/mpeuni/ssuni.html ssuni], metamath's set.mm, accessed February, 2011</ref>
 <jh>
 thm (SubsetUnion ( (x B) (x C) (x A)) ()
   (((A ⊆ B) ∧ (B ∈ C)) → (A ⊆ (⋃ C))) (
@@ -552,6 +552,15 @@ and then <code>A ⊆ ⋃ C</code>.
         A (⋃ C) x Subset
         eliminateBiconditionalForward
         applySyllogism
+))
+</jh>
+
+An easy corollary is <code>A ∈ B → A ⊆ ⋃ B</code>.
+<jh>
+thm (MembershipSubsetUnion () () ((A ∈ B) → (A ⊆ (⋃ B))) (
+        A SubsetReflexivity
+        A A B SubsetUnion
+        detach1of2
 ))
 </jh>
 
