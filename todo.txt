@@ -35,19 +35,6 @@ Items which may be doable without a network connection:
         e.g. (mkrelation a ℕ b ℕ (∃ n ∈ ℕ a + n = b))
       - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
     - domain and range: df-dm and dfrn2 or some such (need to prove existence)
-        - dmexg for existence
-          - follows from dmrnssfld
-        - define domain R as { x ∈ ⋃ ⋃ R | ∃ y 〈x, y〉 ∈ R }
-          - lemma: ∃ y 〈x, y〉 ∈ R → x ∈ ⋃ ⋃ R
-            which implies: B ∈ domain R ↔ [ B / x ] ∃ y 〈x, y〉 ∈ R
-        - then want B ∈ domain R ↔ ∃ y 〈B, y〉 ∈ R (eldm2)
-
-        - already proved 〈 x, y 〉 ∈ R → { x, y } ∈ ⋃ R (Domain-1)
-          〈 x, y 〉 ∈ R → { x, y } ∈ ⋃ R (Domain-1)
-                       → { x, y } ⊆ ⋃ ⋃ R  (by MembershipSubsetUnion)
-                       → x ∈ { x, y } → x ∈ ⋃ ⋃ R (by SubsetMembership)
-          then detach x ∈ { x, y } which is UnorderedPairLeftMembership
-          then addThereExistsToAntecedent
       - dmeq
       - breldm, brelrn
       - (domain (makeRelation a A b B φ)) ⊆ A
