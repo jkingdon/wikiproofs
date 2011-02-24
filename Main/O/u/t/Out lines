@@ -1420,7 +1420,7 @@ We prove <code>collinear X P S</code> via its definition: <code>between X P S �
         applySyllogism
 ))
 
-thm (CollinearityCollinearityImplication () ()
+thm (CollinearityCollinearityForward () ()
   (((((P ≠ Q) ∧ (S ≠ P)) ∧
     (collinear S P Q)) ∧ (collinear X P Q)) →
   (collinear X P S)) (
@@ -1882,6 +1882,70 @@ To finish this case, we turn <code>between P S X ∨ between P X S</code> into <
 </jh>
 To finish the proof, we simply combine the breaking down of the cases with the resolution of each case.
 <jh>
+        applySyllogism
+))
+</jh>
+
+==== Reverse direction ====
+The reverse direction is <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q ∧ collinear X P S → collinear X P Q</code>.<ref>l6_16_2 in Narboux</ref> This is essentially the same as the forward direction, as exchanging <code>S</code> and <code>Q</code> doesn't really change the statement. Narboux proves the reverse direction by copy-pasting the proof of the forward direction, interchanging <code>S</code> and <code>Q</code>, but our proof simply performs the right rearrangements to apply the forward direction.
+<jh>
+thm (CollinearityCollinearityReverse () ()
+  (((((P ≠ Q) ∧ (S ≠ P)) ∧
+    (collinear S P Q)) ∧ (collinear X P S)) →
+  (collinear X P Q)) (
+</jh>
+We first need <code>P ≠ S</code>.
+<jh>
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))
+          (collinear X P S)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        S P EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>Q ≠ P</code>.
+<jh>
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))
+          (collinear X P S)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        P Q EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>collinear Q P S</code>.
+<jh>
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))
+          (collinear X P S)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        S P Q BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Last is <code>collinear X P S</code>.
+<jh>
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))
+          (collinear X P S)
+          ConjunctionLeftElimination
+
+        composeConjunction
+</jh>
+Applying the forward theorem, with <code>S</code> and <code>Q</code> interchanged, finishes the job.
+<jh>
+        P S Q CollinearityCollinearityForward
         applySyllogism
 ))
 </jh>
