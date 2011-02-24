@@ -1950,6 +1950,22 @@ Applying the forward theorem, with <code>S</code> and <code>Q</code> interchange
 ))
 </jh>
 
+==== Biconditional ====
+We combine the two previous results to get <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q → (collinear X P S ↔ collinear X P Q)</code>
+<jh>
+thm (CollinearityCollinearity () ()
+  (((((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))) →
+    ((collinear X P S) ↔ (collinear X P Q))) (
+        P Q S P CollinearityCollinearityForward
+        export
+
+        P Q S P CollinearityCollinearityReverse
+        export
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
