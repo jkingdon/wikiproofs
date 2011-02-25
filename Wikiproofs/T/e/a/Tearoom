@@ -302,3 +302,18 @@ is not the right place for this post. My name is Rob
 I am from  BRazil
 
 :Hi, welcome to the site.  Was there any kind of contribution you were particularly interested in? There's plenty to do, from writing proofs to software development to writing explanatory text. [[User:Kingdon|Kingdon]] 00:13, 19 August 2010 (UTC)
+
+== Feedback on main page ==
+
+Hello, a friend of mine took a look at wikiproofs and was kind enough to write up his first impressions. Here is what he said:
+
+ The main thing I was looking for on my first visit was a list of
+ available proofs, or at least some examples. Also a simple example
+ ("hello world".) I see now that Help:Tutorial counts as "hello world"
+ - maybe you need a more prominent link for that? Also, for some reason
+ I skimmed right over the "featured article" linking to Principa
+ Mathematica propositional logic.
+
+I've taken a shot at reorganizing the home page so that these things are more prominent at [[User:Kingdon/Main page]] ([http://www.wikiproofs.org/w/index.php?title=User:Kingdon/Main_page&diff=2064&oldid=2063 diffs from current main page]). Mostly this draft just moves things around, but I did trim out some verbiage and I'd also propose deleting [[Wikiproofs:Subject index|Subject index]] (it is superceded by some new main page text and of course things like the categories).
+
+Reactions? [[User:Kingdon|Kingdon]] 02:39, 25 February 2011 (UTC)
