@@ -4,19 +4,22 @@ __NOTOC__ __NOEDITSECTION__
 |-
 | class="welcomeheader" | Welcome to '''Wikiproofs'''
 | rowspan="2" |
-* [[Help:Tutorial|Tutorial]]
-* [[Wikiproofs:Subject index|Subject index]]
-* [[Wikiproofs:JHilbert development|Verifier development]]
+* The [[Help:Tutorial|tutorial]] shows how proofs are written
+* Ask questions in the [[Wikiproofs:Tearoom|tearoom]]
 |-
 | class="welcomefooter" | the '''free''' repository of '''instantly verified proofs'''<br />to which '''anyone can contribute'''.
 |-
 | colspan="2" |
 ----
-'''[[Wikiproofs:About|Wikiproofs]]''' is an online repository of [[Wikiproofs:Copyrights|free]] [[w:formal system|formalisations]]. It is possible to [[w:deductive reasoning|reason]] within such a formalisation, that is, to put forth statements and write formal proofs for some of them. These proofs are immediately verified upon submission by an automated proof verifier. The largest domain of formal reasoning is [[w:mathematics|mathematics]], but Wikiproof's underlying proof verifier is sufficiently generic to allow for other formal systems as well.
+Here's an overview of what is currently on wikiproofs.
+* [[Interface:Classical propositional calculus|Propositional logic]] · [[Interface:First-order logic with quantifiability|Predicate logic]] · [[Interface:Set theory|Set theory]]
+* [[Interface:Basic arithmetic|Arithmetic]] · [[Interface:Complex number axioms|Real and complex numbers]] · [[Interface:Basic geometry|Geometry]]
+* [[Sandbox|Your proof here!]] You can either start from the above starting points, or start anywhere you'd like as long as you can state your starting point as a set of axioms.
 |}
-<center>[[:Category:Categories|Main category]] '''·''' [[Wikiproofs:Tearoom|Tearoom]] '''·''' [[:Category:Mathematics Subject Classification|Mathematics]] '''·''' [[Help:Contents|Help]]</center>
 {{featured}}
-<center>[[Wikiproofs:Community Portal|Community Portal]]</center>
+<center>[[:Category:Categories|Main category]] '''·''' [[:Category:Mathematics Subject Classification|Mathematics]] '''·''' [[Help:Contents|Help]]
+</center>
+<center>[[Wikiproofs:Community Portal|Community Portal]] '''·''' [[Wikiproofs:Copyrights|Copyrights]]</center>
 {{collaboration}}
 </div>
 
