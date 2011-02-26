@@ -533,7 +533,7 @@ thm (Subset ((x A) (x B)  (y A) (y B) (y x)) ()
 === Partial order ===
 The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive.
 
-For now we just prove transitivity.<ref>[http://us.metamath.org/mpeuni/sstr.html sstr], metamath's set.mm, accessed January 28, 2011</ref>
+First we prove transitivity.<ref>[http://us.metamath.org/mpeuni/sstr.html sstr], metamath's set.mm, accessed January 28, 2011</ref>
 <jh>
 thm (SubsetTransitivity ( (x A) (x B) (x C)) () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)) (
         A B x Subset
@@ -555,6 +555,55 @@ thm (SubsetTransitivity ( (x A) (x B) (x C)) () (((A ⊆ B) ∧ (B ⊆ C)) → (
         A C x Subset
         eliminateBiconditionalForward
         applySyllogism
+))
+</jh>
+
+Antisymmetry and reflexivity follow from the equivalence <code>A = B ↔ A ⊆ B ∧ B ⊆ A</code>.  To prove this equivalence, take <code>∀ x (x ∈ A ↔ x ∈ B)</code>, decompose the biconditional into implications, and distribute the quantifier across both of them. The left side is <code>A = B</code> by extensionality, and the right side is <code>A ⊆ B ∧ B ⊆ A</code> by <code>Subset</code>.<ref>[http://us.metamath.org/mpeuni/eqss.html eqss], metamath's set.mm, accessed February 20, 2011</ref>
+<jh>
+thm (ExtensionalityBiconditional ((A z) (B z)) ()
+  ((A = B) ↔ (∀ z (((value z) ∈ A) ↔ ((value z) ∈ B)))) (
+        A B (value z) MembershipBuilderLL
+        z addForAllToConsequent
+
+        z A B Extensionality
+
+        introduceBiconditionalFromImplications
+))
+
+thm (EqualitySubset ( (x A) (x B)) ()
+  ((A = B) ↔ ((A ⊆ B) ∧ (B ⊆ A))) (
+        A B x ExtensionalityBiconditional
+
+        ((value x) ∈ A) ((value x) ∈ B) BiconditionalImplication
+        x buildForAll
+        applyBiconditionalTransitivity
+
+        x
+          (((value x) ∈ A) → ((value x) ∈ B))
+          (((value x) ∈ B) → ((value x) ∈ A))
+          ForAllConjunction
+        applyBiconditionalTransitivity
+
+        A B x Subset
+        B A x Subset
+        buildConjunction
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (SubsetReflexivity () () (A ⊆ A) (
+        A EqualityReflexivity
+
+        A A EqualitySubset
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        conflateConjunction
+))
+
+thm (SubsetAntisymmetry () () (((A ⊆ B) ∧ (B ⊆ A)) → (A = B)) (
+        A B EqualitySubset
+        eliminateBiconditionalForward
 ))
 </jh>
 
