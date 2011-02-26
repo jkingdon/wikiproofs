@@ -1391,14 +1391,14 @@ thm (LessEqualBetween () ()
 == Collinearity ==
 In this section we prove a number of results involving collinearity.
 
-=== Being collinear to collinear points ===
-Given three collinear distinct points, a fourth point being collinear to two of them is equivalent to being collinear to two others. More precisely, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q → (collinear X P Q ↔ collinear X P S)</code>.
+=== Outer transitivity ===
+Here we prove <code>P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear P A B</code>.<ref>col_transitivity_1 in Narboux</ref>
 
-We will first prove one direction of this, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code>.<ref>l6_16_1 in Narboux</ref>
+Actually, we first prove it in the slightly rearranged form <code>P ≠ Q ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code> (in which <code>P</code> and <code>Q</code> are interchanged and the order of the points in the collinearity statements are chagned). There is no deep reason for this rearrangement, but it will be slightly more convenient in the next section.
 
 Expanding each <code>collinear</code> in the antecedent by the definition, and then applying associativity, gives us nine cases. In each case we'll be able to prove <code>between X P S</code>, <code>between P X S</code>, <code>between P S X</code>, or a disjunction between two of them. Each case will follow from either betweenness transitivity or betweenness connectivity.
 
-We start with a few lemmas, and then proceed to the proof.
+We start with a lemma, and then proceed to the proof.
 <jh>
 thm (CollinearityCollinearity-1 () ()
   (((between P S X) ∨ (between P X S)) → (collinear X P S)) (
@@ -1420,14 +1420,13 @@ We prove <code>collinear X P S</code> via its definition: <code>between X P S �
         applySyllogism
 ))
 
-thm (CollinearityCollinearityForward () ()
-  (((((P ≠ Q) ∧ (S ≠ P)) ∧
-    (collinear S P Q)) ∧ (collinear X P Q)) →
+thm (CollinearityOuterTransitivityRearranged () ()
+  ((((P ≠ Q) ∧ (collinear S P Q)) ∧ (collinear X P Q)) →
   (collinear X P S)) (
 </jh>
 First we associate the two collinearity formulas together.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           (collinear S P Q)
           (collinear X P Q)
           ConjunctionAssociativity
@@ -1508,14 +1507,14 @@ Round four: split <code>collinear X P Q</code> the rest of the way.
 
         applySyllogism
 </jh>
-Having split out the nine cases, we combine with <code>P ≠ Q ∧ S ≠ P</code> and then distribute <code>P ≠ Q ∧ S ≠ P</code> into each of the cases.
+Having split out the nine cases, we combine with <code>P ≠ Q</code> and then distribute <code>P ≠ Q</code> into each of the cases.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P)) conjoinLL
+        (P ≠ Q) conjoinLL
         applySyllogism
 </jh>
 Round one.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           (((((between S P Q) ∧ (between X P Q)) ∨
                 ((between S P Q) ∧ (between P Q X))) ∨
               ((between S P Q) ∧ (between Q X P))) ∨
@@ -1531,7 +1530,7 @@ Round one.
 </jh>
 Round two.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((((between S P Q) ∧ (between X P Q)) ∨
                 ((between S P Q) ∧ (between P Q X))) ∨
               ((between S P Q) ∧ (between Q X P)))
@@ -1541,7 +1540,7 @@ Round two.
           ConjunctionLeftDistribution
         eliminateBiconditionalReverse
 
-        (((P ≠ Q) ∧ (S ≠ P)) ∧
+        ((P ≠ Q) ∧
           ((((between Q S P) ∧ (between X P Q)) ∨
               ((between Q S P) ∧ (between P Q X))) ∨
             ((between Q S P) ∧ (between Q X P))))
@@ -1550,14 +1549,14 @@ Round two.
 </jh>
 Round three.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           (((between S P Q) ∧ (between X P Q)) ∨
             ((between S P Q) ∧ (between P Q X)))
           ((between S P Q) ∧ (between Q X P))
           ConjunctionLeftDistribution
         eliminateBiconditionalReverse
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           (((between P Q S) ∧ (between X P Q)) ∨
             ((between P Q S) ∧ (between P Q X)))
           ((between P Q S) ∧ (between Q X P))
@@ -1566,7 +1565,7 @@ Round three.
 
         disjoin
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           (((between Q S P) ∧ (between X P Q)) ∨
             ((between Q S P) ∧ (between P Q X)))
           ((between Q S P) ∧ (between Q X P))
@@ -1578,45 +1577,44 @@ Round three.
 </jh>
 Round four.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between X P Q))
           ((between S P Q) ∧ (between P Q X))
           ConjunctionLeftDistribution
         eliminateBiconditionalReverse
-        (((P ≠ Q) ∧ (S ≠ P)) ∧ ((between S P Q) ∧ (between Q X P))) disjoinRR
+        ((P ≠ Q) ∧ ((between S P Q) ∧ (between Q X P))) disjoinRR
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between P Q S) ∧ (between X P Q))
           ((between P Q S) ∧ (between P Q X))
           ConjunctionLeftDistribution
         eliminateBiconditionalReverse
-        (((P ≠ Q) ∧ (S ≠ P)) ∧ ((between P Q S) ∧ (between Q X P))) disjoinRR
+        ((P ≠ Q) ∧ ((between P Q S) ∧ (between Q X P))) disjoinRR
 
         disjoin
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between Q S P) ∧ (between X P Q))
           ((between Q S P) ∧ (between P Q X))
           ConjunctionLeftDistribution
         eliminateBiconditionalReverse
-        (((P ≠ Q) ∧ (S ≠ P)) ∧ ((between Q S P) ∧ (between Q X P))) disjoinRR
+        ((P ≠ Q) ∧ ((between Q S P) ∧ (between Q X P))) disjoinRR
 
         disjoin
         applySyllogism
 </jh>
-Sorry breaking out the cases took so long. Anyway, we are ready to tackle them one by one. The first is <code>between S P Q ∧ between X P Q</code> (of course, all of them have <code>P ≠ Q ∧ S ≠ P</code> tacked on the front, which we usually will not state explicitly). It follows from the following application of <code>BetweennessMiddleConnectivity</code>: <code>Q ≠ P ∧ between Q P S ∧ between Q P X → between P S X ∨ between P X S</code>
+Sorry breaking out the cases took so long. Anyway, we are ready to tackle them one by one. The first is <code>between S P Q ∧ between X P Q</code> (of course, all of them have <code>P ≠ Q</code> tacked on the front, which we usually will not state explicitly). It follows from the following application of <code>BetweennessMiddleConnectivity</code>: <code>Q ≠ P ∧ between Q P S ∧ between Q P X → between P S X ∨ between P X S</code>
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between X P Q))
           ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
 
         P Q EqualitySymmetry
         addNegation
         eliminateBiconditionalReverse
         applySyllogism
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between X P Q))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
@@ -1627,7 +1625,7 @@ Sorry breaking out the cases took so long. Anyway, we are ready to tackle them o
 
         composeConjunction
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between X P Q))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
@@ -1648,22 +1646,21 @@ To finish the first case we turn <code>between P S X ∨ between P X S</code> in
 </jh>
 The second case is <code>between S P Q ∧ between P Q X</code>. This follows from <code>between S P Q ∧ between P Q X ∧ P ≠ Q → between S P X</code>, which is an instance of <code>BetweennessOuterTransitivity</code>.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between P Q X))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between P Q X))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
 
         composeConjunction
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between P Q X))
           ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -1683,12 +1680,12 @@ Now we need <code>between S P X → collinear X P S</code>.
 </jh>
 The third case is <code>between S P Q ∧ between Q X P</code>, which follows from <code>between S P Q ∧ between P X Q → between S P X</code>, which is an instance of <code>BetweennessInnerTransitivity</code>
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between Q X P))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between S P Q) ∧ (between Q X P))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
@@ -1715,7 +1712,7 @@ To finish this case we need <code>between S P X → collinear X P S</code>.
 </jh>
 We now start the second set of cases, those starting with <code>between P Q S</code>. The fourth case is <code>between P Q S ∧ between X P Q</code>, which follows from <code>between X P Q ∧ between P Q S ∧ P ≠ Q → between X P S</code>, which is an instance of <code>BetweennessOuterTransitivity</code>.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between P Q S) ∧ (between X P Q))
           ConjunctionLeftElimination
 
@@ -1723,10 +1720,9 @@ We now start the second set of cases, those starting with <code>between P Q S</c
         eliminateBiconditionalReverse
         applySyllogism
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between P Q S) ∧ (between X P Q))
           ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
         composeConjunction
 
         X P Q S BetweennessOuterTransitivity
@@ -1739,12 +1735,11 @@ To finish this case we need <code>between X P S → collinear X P S</code>.
 </jh>
 The fifth case is <code>between P Q S ∧ between P Q X</code>. This follows from <code>BetweennessOuterConnectivity</code>, which in this case is <code>P ≠ Q ∧ between P Q S ∧ between P Q X → between P S X ∨ between P X S</code>.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between P Q S) ∧ (between P Q X))
           ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between P Q S) ∧ (between P Q X))
           ConjunctionLeftElimination
 
@@ -1766,7 +1761,7 @@ To finish this case we turn <code>between P S X ∨ between P X S</code> into <c
 </jh>
 The sixth case is <code>between P Q S ∧ between Q X P</code>. It follows from <code>between P X Q ∧ between P Q S → between P X S</code>, an instance of <code>BetweennessMiddleTransitivityFlipped</code>
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between P Q S) ∧ (between Q X P))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
@@ -1775,7 +1770,7 @@ The sixth case is <code>between P Q S ∧ between Q X P</code>. It follows from 
         eliminateBiconditionalReverse
         applySyllogism
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between P Q S) ∧ (between Q X P))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
@@ -1800,12 +1795,12 @@ To finish the case we turn <code>between P X S</code> into <code>collinear X P S
 </jh>
 We are ready for the last trio of cases, those which start with <code>between Q S P</code>. The seventh case is <code>between Q S P ∧ between X P Q</code>. It follows from <code>between X P Q ∧ between P S Q → between X P S</code>, which is an instance of <code>BetweennessInnerTransitivity</code>.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between Q S P) ∧ (between X P Q))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between Q S P) ∧ (between X P Q))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
@@ -1826,7 +1821,7 @@ To finish the case we turn <code>between X P S</code> into <code>collinear X P S
 </jh>
 The eighth case is <code>between Q S P ∧ between P Q X</code>. It follows by <code>between P S Q ∧ between P Q X → between P S X</code> which is an instance of <code>BetweennessMiddleTransitivityFlipped</code>.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between Q S P) ∧ (between P Q X))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
@@ -1835,7 +1830,7 @@ The eighth case is <code>between Q S P ∧ between P Q X</code>. It follows by <
         eliminateBiconditionalReverse
         applySyllogism
 
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between Q S P) ∧ (between P Q X))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
@@ -1858,7 +1853,7 @@ To finish the case we need to turn <code>between P S X</code> into <code>colline
 </jh>
 The ninth and final case is <code>between Q S P ∧ between Q X P</code>. It follows from <code>between P S Q ∧ between P X Q → between P S X ∨ between P X S</code>, which is an instance of <code>BetweennessInnerConnectivity</code>.
 <jh>
-        ((P ≠ Q) ∧ (S ≠ P))
+        (P ≠ Q)
           ((between Q S P) ∧ (between Q X P))
           ConjunctionLeftElimination
 
@@ -1886,7 +1881,86 @@ To finish the proof, we simply combine the breaking down of the cases with the r
 ))
 </jh>
 
-==== Reverse direction ====
+Now we return to <code>P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear P A B</code>.
+<jh>
+thm (CollinearityOuterTransitivity () ()
+  ((((P ≠ Q) ∧ (collinear P Q A)) ∧ (collinear P Q B)) →
+  (collinear P A B)) (
+</jh>
+First we need <code>P ≠ Q</code>
+<jh>
+        ((P ≠ Q) ∧ (collinear P Q A))
+          (collinear P Q B)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+</jh>
+Second we need <code>collinear A P Q</code>.
+<jh>
+        ((P ≠ Q) ∧ (collinear P Q A))
+          (collinear P Q B)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        P Q A CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+</jh>
+Lastly we need <code>collinear B P Q</code>.
+<jh>
+        ((P ≠ Q) ∧ (collinear P Q A))
+          (collinear P Q B)
+          ConjunctionLeftElimination
+
+        P Q B CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying the previous rearrangement of transitivity gives us <code>collinear B P A</code>, which we then rearrange to <code>collinear P A B</code>.
+<jh>
+        P Q A B CollinearityOuterTransitivityRearranged
+        applySyllogism
+
+        B P A CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+=== Being collinear to collinear points ===
+Given three collinear distinct points, a fourth point being collinear to two of them is equivalent to being collinear to two others. More precisely, <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q → (collinear X P Q ↔ collinear X P S)</code>.
+
+The forward direction is <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code>.<ref>l6_16_1 in Narboux</ref> It is almost identical to what we proved in the previous section (we just need to drop the <code>S ≠ P</code>).
+<jh>
+thm (CollinearityCollinearityForward () ()
+  (((((P ≠ Q) ∧ (S ≠ P)) ∧
+    (collinear S P Q)) ∧ (collinear X P Q)) →
+  (collinear X P S)) (
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))
+          (collinear X P Q)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))
+          (collinear X P Q)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q))
+          (collinear X P Q)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        P Q S X CollinearityOuterTransitivityRearranged
+        applySyllogism
+))
+</jh>
+
 The reverse direction is <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q ∧ collinear X P S → collinear X P Q</code>.<ref>l6_16_2 in Narboux</ref> This is essentially the same as the forward direction, as exchanging <code>S</code> and <code>Q</code> doesn't really change the statement. Narboux proves the reverse direction by copy-pasting the proof of the forward direction, interchanging <code>S</code> and <code>Q</code>, but our proof simply performs the right rearrangements to apply the forward direction.
 <jh>
 thm (CollinearityCollinearityReverse () ()
@@ -1950,7 +2024,6 @@ Applying the forward theorem, with <code>S</code> and <code>Q</code> interchange
 ))
 </jh>
 
-==== Biconditional ====
 We combine the two previous results to get <code>P ≠ Q ∧ S ≠ P ∧ collinear S P Q → (collinear X P S ↔ collinear X P Q)</code>
 <jh>
 thm (CollinearityCollinearity () ()
