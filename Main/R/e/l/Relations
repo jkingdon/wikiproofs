@@ -329,6 +329,32 @@ Our notation is <code>domain R</code> (a slight variation of the common notation
 def ((domain R) (separate x (⋃ (⋃ R)) (∃ y ((orderedPair (value x) (value y)) ∈ R))))
 </jh>
 
+As usual, we may sometimes need to fold or unfold the definition while specifying the dummy variables in the definition. Unlike some such cases, we do not export this definition, but just use it in this file. That is because our definition of domain is specific to our definition of ordered pair, and isn't really needed once we prove <code>Domain</code> below.
+<jh>
+thm (Domain-def
+  ((x R) (y R) (x y)  (x′ y′) (x y′) (x′ R) (y′ R) (x′ x) (y′ y)) ()
+  ((domain R) = (separate x (⋃ (⋃ R)) (∃ y ((orderedPair (value x) (value y)) ∈ R)))) (
+</jh>
+We start by changing <code>x′</code> to <code>x</code>, that is <code>{ x′ ∈ ⋃ ⋃ R | ∃ y′ 〈 x′, y′ 〉 ∈ R } = { x ∈ ⋃ ⋃ R | ∃ y′ 〈 x, y′ 〉 ∈ R }</code>.
+<jh>
+        (value x′) (value x) (value y′) OrderedPairBuilderRR
+        R buildMembershipRRInConsequent
+        y′ buildThereExistsInConsequent
+        (⋃ (⋃ R)) ChangeVariableSeparation
+</jh>
+Then we show <code>∃ y′ 〈 x, y′ 〉 ∈ R ↔ ∃ y 〈 x, y 〉 ∈ R</code>,
+<jh>
+        (value y′) (value y) (value x) OrderedPairBuilderLL
+        R buildMembershipRRInConsequent
+        ChangeVariableThereExists
+</jh>
+and combine the two parts.
+<jh>
+        x (⋃ (⋃ R)) buildSeparation
+        applyEqualityTransitivity
+))
+</jh>
+
 The first lemma is <code>〈 A, B 〉 ∈ R → { A, B } ∈ ⋃ R</code>. This is the part where we make use of our definition of the ordered pair.
 <jh>
 thm (Domain-1 ( (z A) (z B) (z R)) ()
@@ -371,6 +397,60 @@ Turning the substitution into ∃ gives us <code>〈 A, B 〉 ∈ R → ∃ z ({
         (unorderedPair A B) R z Union
         eliminateBiconditionalForward
         applySyllogism
+))
+</jh>
+
+Our second lemma is <code>∃ y 〈A, y〉 ∈ R → A ∈ ⋃ ⋃ R</code>, which goes most of the way towards showing that our definition of domain does what we expect it to.
+<jh>
+thm (Domain-2 ((y A) (y R)) ()
+  ((∃ y ((orderedPair A (value y)) ∈ R)) → (A ∈ (⋃ (⋃ R)))) (
+</jh>
+First we put <code>A ∈ { A, y }</code> on the proof stack for later use.
+<jh>
+        A (value y) UnorderedPairLeftMembership
+</jh>
+Leaving that aside for the moment, we start with the previous lemma, which is <code>〈 A, y 〉 ∈ R → { A, y } ∈ ⋃ R</code>, and turn the consequent into <code>{ A, y } ⊆ ⋃ ⋃ R</code>.
+<jh>
+        A (value y) R Domain-1
+
+        (unorderedPair A (value y)) (⋃ R) MembershipSubsetUnion
+        applySyllogism
+</jh>
+Now we turn <code>{ A, y } ⊆ ⋃ ⋃ R</code> into <code>A ∈ { A, y } → A ∈ ⋃ ⋃ R</code>,
+<jh>
+        (unorderedPair A (value y)) (⋃ (⋃ R)) A SubsetMembership
+        applySyllogism
+</jh>
+and then detach <code>A ∈ { A, y }</code>. That gives us <code>〈 A, y 〉 ∈ R → A ∈ ⋃ ⋃ R</code> so adding <code>∃ y</code> to the antecedent we are done.
+<jh>
+        detachImplicationImplication
+        y addThereExistsToAntecedent
+))
+</jh>
+
+We're now ready to prove the main result, <code>B ∈ domain R ↔ ∃ y 〈B, y〉 ∈ R</code>.<ref>[http://us.metamath.org/mpeuni/eldm2.html eldm2], metamath's set.mm, accessed February, 2011</ref> The proof follows fairly directly from the previous lemma, via <code>FormulaBound</code> and a substitution.
+<jh>
+thm (Domain ((y B) (y R)  (x y) (x B) (x R)) ()
+  ((B ∈ (domain R)) ↔ (∃ y ((orderedPair B (value y)) ∈ R))) (
+</jh>
+We expand <code>domain R</code> so that we can specify the variables involved.
+<jh>
+        R x y Domain-def
+        B buildMembershipLL
+</jh>
+We first apply <code>FormulaBound</code> to get <code>B ∈ { x ∈ ⋃ ⋃ R | ∃ y 〈 x, y 〉 ∈ R } ↔ [ B / x ] ∃ y 〈 x, y 〉 ∈ R</code>.
+<jh>
+        y (value x) R Domain-2
+        B FormulaBound
+        applyBiconditionalTransitivity
+</jh>
+The left side of that is just <code>B ∈ domain R</code>; the right side is a subsitution away from being what we need.
+<jh>
+        (value x) B (value y) OrderedPairBuilderRR
+        R buildMembershipRRInConsequent
+        y buildThereExistsInConsequent
+        makeSubstExplicit
+        applyBiconditionalTransitivity
 ))
 </jh>
 
