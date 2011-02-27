@@ -128,9 +128,11 @@ stmt (UnorderedPairSubset () ()
 </jh>
 
 === Partial order ===
-The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive. For now we just have transitivity.
+The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive.
 
 <jh>
+stmt (SubsetReflexivity () () (A ⊆ A))
+stmt (SubsetAntisymmetry () () (((A ⊆ B) ∧ (B ⊆ A)) → (A = B)))
 stmt (SubsetTransitivity () () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)))
 </jh>
 
@@ -160,6 +162,9 @@ stmt (UnorderedPairSingleton () ()
 
 === Subsets and unions ===
 <jh>
+stmt (SubsetUnion () () (((A ⊆ B) ∧ (B ∈ C)) → (A ⊆ (⋃ C))))
+stmt (MembershipSubsetUnion () () ((A ∈ B) → (A ⊆ (⋃ B))))
+
 stmt (SubsetUnionRightIntroduction () ()
   ((A ⊆ B) → (A ⊆ (B ∪ C))))
 </jh>
@@ -195,6 +200,12 @@ stmt (MembershipBuilderLL () () ((B0 = B1) → ((A ∈ B0) ↔ (A ∈ B1))))
 stmt (MembershipBuilderRR () () ((A0 = A1) → ((A0 ∈ B) ↔ (A1 ∈ B))))
 stmt (buildMembershipLL () ((B0 = B1)) ((A ∈ B0) ↔ (A ∈ B1)))
 stmt (buildMembershipRR () ((A0 = A1)) ((A0 ∈ B) ↔ (A1 ∈ B)))
+stmt (buildMembershipLLInConsequent ()
+  ((antecedent → (B0 = B1)))
+  (antecedent → ((A ∈ B0) ↔ (A ∈ B1))))
+stmt (buildMembershipRRInConsequent ()
+  ((antecedent → (A0 = A1)))
+  (antecedent → ((A0 ∈ B) ↔ (A1 ∈ B))))
 
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
