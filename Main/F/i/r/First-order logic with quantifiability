@@ -18,10 +18,10 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (WITHOUT_QUANTIFIABILITY Interface:First-order_logic (CLASSICAL) ())
 </jh>
 
-As usual, φ, ψ, χ, and θ are formulas, x, y, and z are variables, and s, t, and u are objects:
+As usual, φ and ψ are formulas, x, y, and z are variables, and s, t, and u are objects:
 
 <jh>
-var (formula φ ψ χ θ)
+var (formula φ ψ φx φy φs)
 var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
@@ -433,7 +433,6 @@ thm (VariableToObjectLemma ((x s) (x φ))
 Our main result can be restated as that <code>φx</code> and <code>x = s → (φx ↔ φs)</code> enable us to conclude <code>φs</code>.
 
 <jh>
-var (formula φx φs)
 thm (VariableToObject ((x s) (x φs))
   ((HSUB (((value x) = s) → (φx ↔ φs)))
    (Hφx φx)
@@ -1020,6 +1019,30 @@ thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subs
         y φ DistinctNotFree
         x (value y) φ EqualitySubst
         ChangeVariableForAllNotFree
+))
+</jh>
+
+=== Changing the variable in a substitution ===
+The variable in a substitution is bound like a quantified variable, and can be substituted in a similar way.
+<jh>
+thm (ChangeVariableSubstitution
+  ((y φx) (x φy) (x y) (s x) (s y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((subst s x φx) ↔ (subst s y φy)) (
+</jh>
+We rewrite <code>[ s / x ] φx</code> as <code>[ s / y ] [ y / x ] φx</code>.
+<jh>
+        s y x φx SubstitutionComposition
+        swapBiconditional
+</jh>
+Our hypothesis implies that <code>[ y / x ] φx ↔ φy</code>, so we use this to change <code>[ s / y ] [ y / x ] φx</code> into <code>[ s / y ] φy</code>.
+<jh>
+        H
+        makeSubstExplicit
+
+        s y buildSubst
+
+        applyBiconditionalTransitivity
 ))
 </jh>
 
