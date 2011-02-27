@@ -19,7 +19,7 @@ First-order logic provides us with two kinds: <code>variable</code> is a variabl
 <jh>
 var (variable a b x y z w)
 var (object A B C A0 A1 B0 B1)
-var (formula φ ψ antecedent)
+var (formula φ ψ φx φy antecedent)
 </jh>
 
 == Set membership ==
@@ -168,6 +168,14 @@ We define <code>{x ∈ A | φ}</code>, the set of all elements in <code>A</code>
 term (object (separate variable object formula))
 stmt (Separation ((x A)) ()
   ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))))
+</jh>
+
+The term <code>{x ∈ A | φ}</code> is like a quantifier in the sense that it binds <code>x</code>, and we can change the variable in a similar manner.
+<jh>
+stmt (ChangeVariableSeparation
+  ((y φx) (x φy) (x y A))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((separate x A φx) = (separate y A φy)))
 </jh>
 
 == Builders ==
