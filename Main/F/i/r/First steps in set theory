@@ -12,7 +12,7 @@ import (AXIOMS Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ()
 
 var (variable x y z w result x′)
 var (object A B C D A0 A1 B0 B1)
-var (formula φ)
+var (formula φ antecedent)
 </jh>
 
 == Membership ==
@@ -33,7 +33,7 @@ thm (buildMembershipRR () ((H (A0 = A1))) ((A0 ∈ B) ↔ (A1 ∈ B)) (
 
 thm (buildMembershipLLInConsequent ()
   ((H (antecedent → (B0 = B1))))
-  (antecedent → ((A ∈ B0) = (A ∈ B1))) (
+  (antecedent → ((A ∈ B0) ↔ (A ∈ B1))) (
         H
         B0 B1 A MembershipBuilderLL
         applySyllogism
@@ -41,7 +41,7 @@ thm (buildMembershipLLInConsequent ()
 
 thm (buildMembershipRRInConsequent ()
   ((H (antecedent → (A0 = A1))))
-  (antecedent → ((A0 ∈ B) = (A1 ∈ B))) (
+  (antecedent → ((A0 ∈ B) ↔ (A1 ∈ B))) (
         H
         A0 A1 B MembershipBuilderRR
         applySyllogism
@@ -563,29 +563,30 @@ Antisymmetry and reflexivity follow from the equivalence <code>A = B ↔ A ⊆ B
 thm (ExtensionalityBiconditional ((A z) (B z)) ()
   ((A = B) ↔ (∀ z (((value z) ∈ A) ↔ ((value z) ∈ B)))) (
         A B (value z) MembershipBuilderLL
-        z buildForAllInConsequent
+        z addForAllToConsequent
 
         z A B Extensionality
 
-        buildBiconditionalFromImplications
+        introduceBiconditionalFromImplications
 ))
 
 thm (EqualitySubset ( (x A) (x B)) ()
   ((A = B) ↔ ((A ⊆ B) ∧ (B ⊆ A))) (
-        A B ExtensionalityBiconditional
+        A B x ExtensionalityBiconditional
 
         ((value x) ∈ A) ((value x) ∈ B) BiconditionalImplication
         x buildForAll
         applyBiconditionalTransitivity
 
-        (((value x) ∈ A) → ((value x) ∈ B))
+        x
+          (((value x) ∈ A) → ((value x) ∈ B))
           (((value x) ∈ B) → ((value x) ∈ A))
           ForAllConjunction
         applyBiconditionalTransitivity
 
         A B x Subset
         B A x Subset
-        buildBiconditional
+        buildConjunction
         swapBiconditional
         applyBiconditionalTransitivity
 ))
@@ -677,7 +678,7 @@ thm (PowerSet ( (x A) (x B)) () ((B ∈ (power A)) ↔ (B ⊆ A)) (
 == Separation ==
 Here we provide the ability to form a set containing those elements of a given set which satisfy an arbitrary formula. In other words, we can form the set of all <code>x</code> in <code>A</code> such that <code>φ</code>, which is commonly notated as <code>{x ∈ A | φ }</code>. We will use that notation in discussion but JHilbert's syntax is not that flexible, so for JHilbert we will call it <code>(separate x A φ)</code>. ''Restricted set abstraction'' is one term for this (contrasted with the ''unrestricted set abstraction'' of <code>{x | φ}</code>).<ref>See for example Michael R. Genesereth and Richard E. Fikes (1994), "[http://logic.stanford.edu/kif/Hypertext/node25.html Paradoxes]", Knowledge Interchange Format Version 3.0 Reference Manual, also available as Stanford Logic Group Technical Report Logic-92-1.</ref>
 
-Introducing this notation follows much the process as for the other existence theorems/axioms, in this case working from <code>SeparationThereExists</code>. We are trying to prove <code>y ∈ {x ∈ A | φ } ↔ y ∈ A ∧ [y / x] φ</code>.
+Introducing this notation follows much the process as for the other existence theorems/axioms, in this case working from <code>SeparationThereExists</code>. We are trying to prove <code>C ∈ {x ∈ A | φ } ↔ C ∈ A ∧ [C / x] φ</code>.<ref>This is basically [http://us.metamath.org/mpeuni/elrabsf.html elrabsf] from metamath's set.mm, accessed February 24, 2011. The main difference is that metamath expresses the notion that x is not free in A as a hypothesis rather than a distinct variable constraint.</ref>
 
 First we provide a version of <code>SeparationThereExists</code> where we turn the variable <code>z</code> into the object <code>A</code>
 <jh>

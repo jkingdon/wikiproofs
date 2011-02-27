@@ -20,7 +20,7 @@ First-order logic provides us with two kinds: <code>variable</code> is a variabl
 <jh>
 var (variable x y z w)
 var (object A B C A0 A1 B0 B1)
-var (formula φ)
+var (formula φ antecedent)
 </jh>
 
 We can test whether one set is an element of another, and define an abbreviation for the negated version.
@@ -66,9 +66,11 @@ stmt (Subset ((x A) (x B)) ()
 </jh>
 
 === Partial order ===
-The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive. For now we just have transitivity.
+The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive.
 
 <jh>
+stmt (SubsetReflexivity () () (A ⊆ A))
+stmt (SubsetAntisymmetry () () (((A ⊆ B) ∧ (B ⊆ A)) → (A = B)))
 stmt (SubsetTransitivity () () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)))
 </jh>
 
@@ -103,10 +105,10 @@ stmt (buildMembershipLL () ((B0 = B1)) ((A ∈ B0) ↔ (A ∈ B1)))
 stmt (buildMembershipRR () ((A0 = A1)) ((A0 ∈ B) ↔ (A1 ∈ B)))
 stmt (buildMembershipLLInConsequent ()
   ((antecedent → (B0 = B1)))
-  (antecedent → ((A ∈ B0) = (A ∈ B1))))
+  (antecedent → ((A ∈ B0) ↔ (A ∈ B1))))
 stmt (buildMembershipRRInConsequent ()
   ((antecedent → (A0 = A1)))
-  (antecedent → ((A0 ∈ B) = (A1 ∈ B))))
+  (antecedent → ((A0 ∈ B) ↔ (A1 ∈ B))))
 
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 

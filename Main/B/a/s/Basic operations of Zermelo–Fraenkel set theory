@@ -25,7 +25,7 @@ As usual, capital letters starting from <code>A</code> are set expressions (that
 <jh>
 var (object A B C D A0 A1 B0 B1 Z)
 var (variable a b x y z w a′ b′ x′ y′ z′)
-var (formula φ ψ antecedent)
+var (formula φ ψ φx φy antecedent)
 </jh>
 
 == Singletons ==
@@ -246,6 +246,45 @@ thm (FormulaBound ((z A) (z B)) ((H (φ → ((value z) ∈ A))))
         H
         B FormulaBoundLemma
         applyBiconditionalTransitivity
+))
+</jh>
+
+=== Change variable ===
+As with a quantifier, we can make an equivalent formula by changing the variable which is bound by <code>separate</code> and making an according change to that variable in the formula inside <code>separate</code>. That is, given <code>x = y → (φx ↔ φy)</code>, we can conclude <code>{ x ∈ A | φx } = { y ∈ A | φy }</code>.<ref>[http://us.metamath.org/mpeuni/cbvrabv.html cbvrabv], metamath's set.mm, accessed February 26, 2011</ref>
+
+As with the proof of <code>buildSeparation</code>, it will be convenient to first prove <code>C ∈ { x ∈ A | φx } ↔ C ∈ { y ∈ A | φy }</code> as a separate lemma.
+<jh>
+thm (ChangeVariableSeparation-1 ((y φx) (x φy) (x y A) (C x) (C y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((C ∈ (separate x A φx)) ↔ (C ∈ (separate y A φy))) (
+</jh>
+We start by rewriting <code>C ∈ { x ∈ A | φx }</code> as <code>C ∈ A ∧ [ C / x ] φx</code>.
+<jh>
+        C x A φx Separation
+</jh>
+But <code>[ C / x ] φx</code> is equivalent to <code>[ C / y ] φy</code>.
+<jh>
+        H
+        C ChangeVariableSubstitution
+
+        (C ∈ A) buildConjunctionLL
+
+        applyBiconditionalTransitivity
+</jh>
+That gives us <code>C ∈ A ∧ [ C / y ] φy</code>, which is equivalent to <code>C ∈ { y ∈ A | φy }</code>.
+<jh>
+        C y A φy Separation
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (ChangeVariableSeparation
+  ((y φx) (x φy) (x y A)  (z y) (z x) (z A) (z φx) (z φy))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((separate x A φx) = (separate y A φy)) (
+        H
+        (value z) A ChangeVariableSeparation-1
+        applyExtensionality
 ))
 </jh>
 
@@ -495,7 +534,7 @@ But the two halves of that are equivalent to <code>C ∈ A</code> and <code>C �
 === Elements and subsets of unions ===
 The first theorem in this section is <code>A ⊆ B ∧ B ∈ C → A ⊆ ⋃C</code>. To sketch out the proof, we first expand the subsets and union so that the antecedent reads <code>∀ x (x ∈ A → x ∈ B) ∧ B ∈ C</code>, and the consequent would follow from <code>∀ x (x ∈ A → ∃ y (x ∈ y ∧ y ∈ C))</code>. So we need a choice for <code>y</code> in the consequent, and it turns out that <code>B</code> does the trick (with that substitution made, there is only minor rearrangment to derive the consequent from the antecedent).<ref>[http://us.metamath.org/mpeuni/ssuni.html ssuni], metamath's set.mm, accessed February, 2011</ref>
 <jh>
-thm (SubsetUnion ( (x B) (x C) (x A)) ()
+thm (SubsetUnion ( (x B) (x C) (x A) (y x) (y B) (y C)) ()
   (((A ⊆ B) ∧ (B ∈ C)) → (A ⊆ (⋃ C))) (
         A B x Subset
         (B ∈ C) buildConjunctionRR
@@ -503,7 +542,7 @@ thm (SubsetUnion ( (x B) (x C) (x A)) ()
 </jh>
 So far we have <code>A ⊆ B ∧ B ∈ C → ∀ x (x ∈ A → x ∈ B) ∧ B ∈ C</code>. Now we move <code>B ∈ C</code> inside the quantifier.
 <jh>
-        x (B ∈ C) Generalization
+        (B ∈ C) x Generalization
         (∀ x (((value x) ∈ A) → ((value x) ∈ B))) conjoinLL
         applySyllogism
 
@@ -514,7 +553,7 @@ So far we have <code>A ⊆ B ∧ B ∈ C → ∀ x (x ∈ A → x ∈ B) ∧ B �
 That gives us <code>∀ x ((x ∈ A → x ∈ B) ∧ B ∈ C)</code>. Since <code>B ∈ C</code> holds irrespective of <code>x ∈ A</code>, we can also make the weaker statement that it holds assuming <code>x ∈ A</code>. In other words, we can rewrite our formula to <code>∀ x (x ∈ A → x ∈ B ∧ B ∈ C)</code>.
 <jh>
         (B ∈ C) ((value x) ∈ A) AntecedentIntroduction
-        ((value x) ∈ A) → ((value x) ∈ B)) conjoinLL
+        (((value x) ∈ A) → ((value x) ∈ B)) conjoinLL
         x addForAll
         applySyllogism
 

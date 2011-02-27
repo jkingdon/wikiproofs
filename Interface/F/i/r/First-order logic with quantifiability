@@ -424,6 +424,14 @@ stmt (ChangeVariableExplicitForAll ((y φ) (x y)) ()
   ((∀ x φ) ↔ (∀ y (subst (value y) x φ))))
 </jh>
 
+A similar transformation is possible for substitution.
+<jh>
+stmt (ChangeVariableSubstitution
+  ((y φx) (x φy) (x y) (s x) (s y))
+  ((((value x) = (value y)) → (φx ↔ φy)))
+  ((subst s x φx) ↔ (subst s y φy)))
+</jh>
+
 === More theorems involving subst ===
 <jh>
 stmt (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))))
