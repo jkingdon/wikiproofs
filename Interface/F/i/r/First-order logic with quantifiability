@@ -428,6 +428,8 @@ stmt (ChangeVariableExplicitForAll ((y φ) (x y)) ()
 <jh>
 stmt (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))))
 stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
+stmt (SubstitutionComposition ((φ y) (s y) (x y)) ()
+  ((subst s y (subst (value y) x φ)) ↔ (subst s x φ)))
 </jh>
 
 === Some theorems related to substitution ===
