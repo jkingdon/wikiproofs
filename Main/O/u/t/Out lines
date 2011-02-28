@@ -2088,6 +2088,23 @@ Last is <code>collinear Q P B</code>.
 ))
 </jh>
 
+== The intersection of two lines ==
+If two distinct, non-degenerate lines intersect, they intersect in a single point. At least for this theorem, we consider a line <code>A B</code> and line <code>C D</code> to be distinct and non-degenerate if <code>¬ collinear A B C ∧ C ≠ D</code>. The statement of the whole theorem is <code>¬ collinear A B C ∧ C ≠ D ∧ collinear A B P ∧ collinear A B Q ∧ collinear C D P ∧ collinear C D Q → P = Q</code>.<ref>l6_21 in Narboux</ref>
+
+The proof is as follows. First conclude <code>collinear D P Q</code> and <code>collinear C P Q</code> (by collinearity transitivity). Then note that <code>A ≠ B</code> (as a consequence of <code>¬ collinear A B C</code>), and collinearity transitivity gives us <code>collinear A P Q</code> and <code>collinear B P Q</code>. We now assume <code>P ≠ Q</code> and will show <code>collinear A B C</code>, which is a contradiction. The first thing we get from <code>P ≠ Q</code> is <code>collinear A C Q</code> (from <code>collinear A P Q</code> and <code>collinear C P Q</code>). We also get <code>collinear A B Q</code>, similarly.
+
+At this point we have <code>Q = A</code> and <code>Q ≠ A</code> cases. For the <code>Q = A</code> case, first apply collinearity transitivity to <code>collinear C P Q</code> and <code>collinear B P Q</code> to get <code>collinear C B Q</code>, which turns into our desired contradiction <code>collinear A B C</code> by substituting <code>A</code> for <code>Q</code>.
+
+The <code>Q ≠ A</code> case lets us apply transitivity to <code>collinear A C Q</code> and <code>collinear A B Q</code> to get <code>collinear A B C</code>, which is our desired contradiction.
+<jh>
+#thm (LineIntersection () ()
+#  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+#    (collinear A B P)) ∧ (collinear A B Q)) ∧
+#    (collinear C D P)) ∧ (collinear C D Q)) →
+#    (P = Q)) (
+#))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
