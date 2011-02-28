@@ -4,18 +4,12 @@
 </div>
 {| class="table"
 |-
-! Content !! Verifier documentation and development !! Specification
+! Verifier documentation and development !! Specification
 |-
 |
-* [[Project:Logic|Logic project]]
-* [[Project:Mathematics|Mathematics project]]
-* &hellip;
-||
 * [[Help:JHilbert|JHilbert help]]
 * [[Wikiproofs:JHilbert development|JHilbert development]]
-* &hellip;
 ||
-* [[Wikiproofs:JHilbert specification|JHilbert specification]]
 * [[Wikiproofs:Formal description of JHilbert|Formal description of JHilbert]]
 * [[Wikiproofs:JHilbert definition soundness|Definition soundness in JHilbert]]
 |}</div><noinclude></div>
