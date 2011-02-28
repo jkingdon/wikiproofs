@@ -1392,9 +1392,9 @@ thm (LessEqualBetween () ()
 In this section we prove a number of results involving collinearity.
 
 === Outer transitivity ===
-Here we prove <code>P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear P A B</code>.<ref>col_transitivity_1 in Narboux</ref>
+Here we prove <code>P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear P A B</code>.<ref>col_transitivity_1 in Narboux</ref> We call it "outer" transitivity although unlike similar-looking results for betweenness, five segment, etc, this does not make it a different theorem than inner transitivity, just a different rearrangement (since the order of points in a collinearity predicate does not matter).
 
-Actually, we first prove it in the slightly rearranged form <code>P ≠ Q ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code> (in which <code>P</code> and <code>Q</code> are interchanged and the order of the points in the collinearity statements are chagned). There is no deep reason for this rearrangement, but it will be slightly more convenient in the next section.
+Actually, we first prove it in the slightly rearranged form <code>P ≠ Q ∧ collinear S P Q ∧ collinear X P Q → collinear X P S</code> (in which <code>P</code> and <code>Q</code> are interchanged and the order of the points in the collinearity statements are changed). There is no deep reason for this rearrangement, but it will be slightly more convenient in the next section.
 
 Expanding each <code>collinear</code> in the antecedent by the definition, and then applying associativity, gives us nine cases. In each case we'll be able to prove <code>between X P S</code>, <code>between P X S</code>, <code>between P S X</code>, or a disjunction between two of them. Each case will follow from either betweenness transitivity or betweenness connectivity.
 
