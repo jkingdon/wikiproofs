@@ -24,6 +24,7 @@ The issues above seem to fall into two categories: the stuff that affects the me
 * Storage agnostic: all data structures are created, manipulated and queried in-memory.
 * Multithread-friendly: while ISO C does not know threads, the API can be specified in a thread-friendly way. For example, a module object might have a "finished" flag. In unfinished state, the module object cannot be used for param, import, and export. In finished state, it can be used so, but becomes essentially read-only. One cannot go back from finished to unfinished state.
 The kernel could be compiled into a library, like <code>libhilbert.so</code>, or simply be included into some other project as a bunch of C files.
+:I've started a C kernel library implementation on [https://github.com/TheCount/hilbert-kernel github].--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 22:00, 27 February 2011 (UTC)
 
 --[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 17:58, 5 March 2010 (UTC)
 
