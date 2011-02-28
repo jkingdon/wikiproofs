@@ -2039,6 +2039,55 @@ thm (CollinearityCollinearity () ()
 ))
 </jh>
 
+=== Inner transitivity ===
+Here we prove <code>P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear Q A B</code>.<ref>col_transitivity_2 in Narboux</ref> As we said before, the mathematical meaning of the theorem is not different from the "outer" collinearity transitivity; it is merely a rearrangement.
+<jh>
+thm (CollinearityInnerTransitivity () ()
+  ((((P ≠ Q) ∧ (collinear P Q A)) ∧ (collinear P Q B)) →
+  (collinear Q A B)) (
+</jh>
+We will be applying collinearity outer transitivity. First we need <code>Q ≠ P</code>.
+<jh>
+        ((P ≠ Q) ∧ (collinear P Q A))
+          (collinear P Q B)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        Q P EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>collinear Q P A</code>.
+<jh>
+        ((P ≠ Q) ∧ (collinear P Q A))
+          (collinear P Q B)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        P Q A Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Last is <code>collinear Q P B</code>.
+<jh>
+        ((P ≠ Q) ∧ (collinear P Q A))
+          (collinear P Q B)
+          ConjunctionLeftElimination
+
+        P Q B Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        Q P A B CollinearityOuterTransitivity
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>

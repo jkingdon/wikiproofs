@@ -33,6 +33,9 @@ Items which may be doable without a network connection:
         ≝ {〈a, b〉| a ∈ A ∧ b ∈ B ∧ φ }
         ≝ { z ∈ A × B | ∃ a ∃ b z = 〈 a, b 〉 ∧ φ }
         e.g. (mkrelation a ℕ b ℕ (∃ n ∈ ℕ a + n = b))
+        This is a variation of df-opab which restricts the domain and range of the relation. We need this kind of restriction
+        because we assume the [[Interface:Axiom of quantifiability]] which means that we can only introduce a notation for
+        something which exists (as a set).
       - (relates s (mkrelation a A b B φ) t) ↔ [s / a][t / b]φ  (probably some distinct)
     - domain and range: df-dm and dfrn2 or some such (need to prove existence)
       - dmeq
