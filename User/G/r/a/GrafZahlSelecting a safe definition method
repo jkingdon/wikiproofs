@@ -11,6 +11,21 @@ I deliberately dubbed the last two items thus, for that is what the users sees f
 
 == Abbreviations: the least common denominator ==
 
+Sometimes you want to use transparent shorthands in your mathematical developments. That's what I mistakenly thought the Ghilbert definition mechanism for when I first encountered it. When I found out that it didn't quite do what I wanted (it happened in the context of [[Nicod's reduction of Principia Mathematica]], where I wanted to introduce <code>π</code> as an abbreviation for <code>(t | (t | t))</code>) it seemed natural to just enhance the existing definition mechanism, introducing automatic folding and unfolding. Now I know that this kind of behaviour is not desirable for all kinds of definition. Nevertheless, it may be helpful in simple cases. Therefore, I propose the following ''abbreviation'' mechanism, which will be completely independent of the definition mechanism (in particular, whenever the following mechanism is applicable, the user has the choice whether to use it or use definitions instead).
+
+=== Syntax ===
+
+ abbrev ((''label'' ''var1'' &hellip; ''varN'') ''expression'')
+
+=== Constraints ===
+
+* ''label'' shall be an identifier not yet present in the functor namespace,
+* if present, ''var1'' through ''varN'' shall have been previously defined as variables,
+* ''expression'' shall be an expression in which all variables ''var1'' through ''varN'' appear,
+* in an interface module context, no other variables shall appear in ''expression''.
+
+=== Semantics ===
+
 [TODO]
 
 == Statement-backed definitions (Carl Witty) ==
