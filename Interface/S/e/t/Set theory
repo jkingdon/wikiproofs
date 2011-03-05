@@ -131,8 +131,8 @@ stmt (UnorderedPairSubset () ()
 The subset relationship has the three properties of a [[w:Partially ordered set|partial order]]. That is, it is reflexive, antisymmetric, and transitive.
 
 <jh>
-thm (SubsetReflexivity () () (A ⊆ A))
-thm (SubsetAntisymmetry () () (((A ⊆ B) ∧ (B ⊆ A)) → (A = B)))
+stmt (SubsetReflexivity () () (A ⊆ A))
+stmt (SubsetAntisymmetry () () (((A ⊆ B) ∧ (B ⊆ A)) → (A = B)))
 stmt (SubsetTransitivity () () (((A ⊆ B) ∧ (B ⊆ C)) → (A ⊆ C)))
 </jh>
 
@@ -202,10 +202,10 @@ stmt (buildMembershipLL () ((B0 = B1)) ((A ∈ B0) ↔ (A ∈ B1)))
 stmt (buildMembershipRR () ((A0 = A1)) ((A0 ∈ B) ↔ (A1 ∈ B)))
 stmt (buildMembershipLLInConsequent ()
   ((antecedent → (B0 = B1)))
-  (antecedent → ((A ∈ B0) = (A ∈ B1))))
+  (antecedent → ((A ∈ B0) ↔ (A ∈ B1))))
 stmt (buildMembershipRRInConsequent ()
   ((antecedent → (A0 = A1)))
-  (antecedent → ((A0 ∈ B) = (A1 ∈ B))))
+  (antecedent → ((A0 ∈ B) ↔ (A1 ∈ B))))
 
 stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
