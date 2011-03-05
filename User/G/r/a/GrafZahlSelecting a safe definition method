@@ -1,0 +1,26 @@
+The purpose of this page is first and foremost to precisely specify the various safe definition proposals floating around in the *Hilbert multiverse, so that interested folks (including myself (GrafZahl), for I'm still struggling to get all this stuff into my head) can finally grok them all.
+
+Secondly, it would be nice if all involved parties could agree on a common internal mechanism to handle definitions, that is, the definition mechanism in Ghilbert/JHilbert/whatever are identical from an ''abstract'' point of view, not necessarily in command syntax. I have started to write a [https://github.com/TheCount/hilbert-kernel library] implementing the abstract mechanics of JHilbert. If we put all the hard metalogical stuff into this library and then use the library for every JHilbert-like application, we'll have to verify its correctness only once. For example, I expect that in the end there will be two implementations of JHilbert on this site; a JavaScript "JHilbert console" helping users compose proofs using their own processing resources, and the server-side verifier.
+
+What is discussed here:
+* An "abbreviation" mechanism, that is a heavily trimmed-down version of the current (broken) definition mechanism. It has automatic folding and unfolding and is intended to be used when the user ''wants'' such automatic folding and unfolding.
+* Carl Witty's statement-backed definition proposal.
+* Raph Levien's proof-backed definition proposal (apparently already implemented in Ghilbert[http://ghilbert.googlecode.com/svn/trunk/]).
+
+I deliberately dubbed the last two items thus, for that is what the users sees first upon encountering the respective <code>defthm</code> command. I am quite aware that there may be significant philosophical differences between these two proposals (in particular the free vs. distinct variables interpretation) which may render a [[#Confluence|confluence]] of both approaches moot. That is, it may not even make sense to attempt to drive both views with the same internal mechanism. (As far as I know, there is currently no implementation of Carl's proposal, while Raph's is already in Ghilbert. Still, currently I like Carl's proposal better. But that may be just because at the moment, Carl's proposal is the one I understand better.)
+
+== Abbreviations: the least common denominator ==
+
+[TODO]
+
+== Statement-backed definitions (Carl Witty) ==
+
+[TODO]
+
+== Proof-backed definitions (Raph Levien) ==
+
+[TODO]
+
+== Confluence ==
+
+[TODO]
