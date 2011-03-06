@@ -14,6 +14,7 @@ import (START Interface:Triangle_congruence (CLASSICAL FIRSTORDER) ())
 var (formula φ)
 var (point x y z w u v A B C D E P Q A′ B′ C′ D′ B″ C″)
 var (point x′ y′ z′ w′ u′)
+var (point x0 x1 x2 x3 y0 y1 y2 y3)
 var (variable a b b′ c c′ d′ b″ c″)
 </jh>
 
@@ -168,6 +169,49 @@ The proof of the <code>between C A B</code> case, <code>between C A B → (A B C
 
         composeDisjunction
         import
+))
+</jh>
+
+=== Builder ===
+Equals can be substituted for equals in a collinearity.
+<jh>
+thm (CollinearityBuilder () () (
+  (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+  → ((collinear x0 x1 x2) ↔ (collinear y0 y1 y2))) (
+        # between x0 x1 x2 ↔ between y0 y1 y2
+        x0 y0 x1 y1 x2 y2 BetweennessBuilder
+
+        # between x1 x2 x0 ↔ between y1 y2 y0 
+        ((x0 = y0) ∧ (x1 = y1)) (x2 = y2) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        ((x0 = y0) ∧ (x1 = y1)) (x2 = y2) ConjunctionLeftElimination
+        composeConjunction
+
+        ((x0 = y0) ∧ (x1 = y1)) (x2 = y2) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        x1 y1 x2 y2 x0 y0 BetweennessBuilder
+        applySyllogism
+
+        buildDisjunctionInConsequent
+
+        # between x2 x0 x1 ↔ between y2 y0 y1 
+        ((x0 = y0) ∧ (x1 = y1)) (x2 = y2) ConjunctionLeftElimination
+
+        ((x0 = y0) ∧ (x1 = y1)) (x2 = y2) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        ((x0 = y0) ∧ (x1 = y1)) (x2 = y2) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        x2 y2 x0 y0 x1 y1 BetweennessBuilder
+        applySyllogism
+
+        buildDisjunctionInConsequent
 ))
 </jh>
 
@@ -840,11 +884,6 @@ thm (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C�
 We now export to [[Interface:Collinearity]].
 <jh>
 export (RESULTS Interface:Collinearity (CLASSICAL FIRSTORDER) ())
-</jh>
-
-Also, since this page is currently the last in the (in-progress) series on basic geometry, we export to [[Interface:Basic geometry]].
-<jh>
-export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
