@@ -21,12 +21,34 @@ Sometimes you want to use transparent shorthands in your mathematical developmen
 
 * ''label'' shall be an identifier not yet present in the functor namespace,
 * if present, ''var1'' through ''varN'' shall have been previously defined as variables,
-* ''expression'' shall be an expression in which all variables ''var1'' through ''varN'' appear,
+* ''expression'' shall be an expression in which all variables ''var1'' through ''varN'' appear (''left inclusion constraint''),
 * in an interface module context, no other variables shall appear in ''expression''.
 
 === Semantics ===
 
-[TODO]
+Creates a new functor ''label'' with ''N'' places with kinds matching the kinds of the respective variables. Expressions with the new functor as head functor are interchangeable with the respective substitution instance of ''expression''. In a proof module context, if ''expression'' contains variables not in the list <code>''var1'' &hellip; ''varN''</code>, the number of places of the new functor is extended internally with these variables, and expressions with the functor are treated as if each instance of the functor had precisely these variables (as expressions) as additional arguments.
+
+=== Examples ===
+
+The abbreviation
+ abbrev ((¬ p) (p | p))
+is valid in both interface and proof module contexts. The new one-place functor <code>¬</code> defines negation in terms of the Sheffer stroke.
+
+The abbreviation
+ abbrev ((F x y) (G x))
+is ill-formed because the expression <code>(G x)</code> does not contain the variable <code>y</code>.
+
+The abbreviation
+ abbrev ((V) (class x (x = x)))
+is ill-formed in an interface module context, because <code>x</code> is a dummy variable then.
+
+The abbreviation
+ abbrev ((π) (t | (t | t)))
+is valid in a proof module context. Each occurrence of the expression <code>(π)</code> is interchangeable with <code>(t | (t | t))</code>. This is highly practical for common shortcuts. In an interface module context, the given fragment would be ill-formed. This has to be so, because variables are local to a module, and <code>t</code> would essentially mutate to a dummy variable, which is forbidden.
+
+== A note about the left inclusion constraint ==
+
+The restriction that all variables on the left-hand side of an abbreviation (and also a definition) must appear in the right-hand side can be easily dropped. The parser simply has to drop all parts of the expression belonging to these surplus variables, and internally the functor is handled as if it had a lower place count. Whether this is a wise thing to do remains to be seen. Anyway, I don't think the situation where one wants to have variables in the lhs not appearing in the rhs is very common, so for now, I'll leave that constraint in in the descriptions.
 
 == Statement-backed definitions (Carl Witty) ==
 
