@@ -14,7 +14,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F P Q R S X Y A′ B′ C′ D′ E′ B″ C″)
-var (variable c c′ d d′ e e′ f p y)
+var (variable c c′ d d′ e e′ f p x y z)
 </jh>
 
 == Out lines defined ==
@@ -2084,6 +2084,470 @@ Last is <code>collinear Q P B</code>.
         composeConjunction
 
         Q P A B CollinearityOuterTransitivity
+        applySyllogism
+))
+</jh>
+
+== The intersection of two lines ==
+If two distinct, non-degenerate lines intersect, they intersect in a single point. At least for this theorem, we consider a line <code>A B</code> and line <code>C D</code> to be distinct and non-degenerate if <code>¬ collinear A B C ∧ C ≠ D</code>. The statement of the whole theorem is <code>¬ collinear A B C ∧ C ≠ D ∧ collinear A B P ∧ collinear A B Q ∧ collinear C D P ∧ collinear C D Q → P = Q</code>.<ref>l6_21 in Narboux</ref>
+
+The proof is as follows. First conclude <code>collinear D P Q</code> (TODO: do we need this one?) and <code>collinear C P Q</code> (by collinearity transitivity).
+<jh>
+thm (LineIntersection-cpq () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (collinear C P Q)) (
+</jh>
+<code>C ≠ D</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P))
+          (collinear C D Q)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear C D P</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P))
+          (collinear C D Q)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear C D Q</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P))
+          (collinear C D Q)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        C D P Q CollinearityOuterTransitivity
+        applySyllogism
+))
+</jh>
+
+Then note that <code>A ≠ B</code> (as a consequence of <code>¬ collinear A B C</code>), and collinearity transitivity gives us <code>collinear A P Q</code> and <code>collinear B P Q</code>.
+<jh>
+thm (LineIntersection-ab () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (A ≠ B)) (
+</jh>
+We pick out <code>¬ collinear A B C</code>, which we will need shortly.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P))
+          (collinear C D Q)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+The next step is to note <code>collinear A A C</code> and apply a substitution to turn it into <code>A = B → collinear A B C</code>.
+<jh>
+        A C CollinearityAAB
+
+        A EqualityReflexivity
+        C EqualityReflexivity
+        A A A B C C CollinearityBuilder
+        detach2of2
+        detach1of2
+
+        detachImplicationBiconditional
+</jh>
+Now we just transpose and combine with <code>¬ collinear A B C</code>.
+<jh>
+        introduceTransposition
+        applySyllogism
+))
+
+thm (LineIntersection-abpq () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (((A ≠ B) ∧ (collinear A B P)) ∧ (collinear A B Q))) (
+</jh>
+<code>A ≠ B</code>:
+<jh>
+        A B C D P Q LineIntersection-ab
+</jh>
+<code>collinear A B P</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P))
+          (collinear C D Q)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A B Q</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P))
+          (collinear C D Q)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+))
+
+thm (LineIntersection-apq () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (collinear A P Q)) (
+        A B C D P Q LineIntersection-abpq
+        A B P Q CollinearityOuterTransitivity
+        applySyllogism
+))
+
+thm (LineIntersection-bpq () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (collinear B P Q)) (
+        A B C D P Q LineIntersection-abpq
+        A B P Q CollinearityInnerTransitivity
+        applySyllogism
+))
+</jh>
+
+We now assume <code>P ≠ Q</code> and will show <code>collinear A B C</code>, which is a contradiction. The first thing we get from <code>P ≠ Q</code> is <code>collinear A C Q</code> (from <code>collinear A P Q</code> and <code>collinear C P Q</code>).
+<jh>
+thm (LineIntersection-pqa () ()
+  ((((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
+    (collinear P Q A)) (
+        ((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P)) ∧ (collinear C D Q))
+          (P ≠ Q)
+          ConjunctionRightElimination
+        A B C D P Q LineIntersection-apq
+        applySyllogism
+
+        A P Q CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (LineIntersection-pqc () ()
+  ((((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
+    (collinear P Q C)) (
+        ((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P)) ∧ (collinear C D Q))
+          (P ≠ Q)
+          ConjunctionRightElimination
+        A B C D P Q LineIntersection-cpq
+        applySyllogism
+
+        C P Q CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (LineIntersection-acq () ()
+  ((((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
+    (collinear A C Q)) (
+</jh>
+<code>P ≠ Q</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P)) ∧ (collinear C D Q))
+          (P ≠ Q)
+          ConjunctionLeftElimination
+</jh>
+<code>collinear P Q A</code>:
+<jh>
+        A B C D P Q LineIntersection-pqa
+        composeConjunction
+</jh>
+<code>collinear P Q C</code>:
+<jh>
+        A B C D P Q LineIntersection-pqc
+        composeConjunction
+</jh>
+Transitivity produces <code>collinear Q A C</code>, which we then rearrange to <code>collinear A C Q</code>.
+<jh>
+        P Q A C CollinearityInnerTransitivity
+        applySyllogism
+
+        Q A C CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+In a similar way we prove <code>collinear A B Q</code>.
+
+<jh>
+thm (LineIntersection-pqb () ()
+  ((((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
+    (collinear P Q B)) (
+        ((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P)) ∧ (collinear C D Q))
+          (P ≠ Q)
+          ConjunctionRightElimination
+        A B C D P Q LineIntersection-bpq
+        applySyllogism
+
+        B P Q CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (LineIntersection-abq () ()
+  ((((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
+    (collinear A B Q)) (
+</jh>
+<code>P ≠ Q</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P)) ∧ (collinear C D Q))
+          (P ≠ Q)
+          ConjunctionLeftElimination
+</jh>
+<code>collinear P Q A</code>:
+<jh>
+        A B C D P Q LineIntersection-pqa
+        composeConjunction
+</jh>
+<code>collinear P Q B</code>:
+<jh>
+        A B C D P Q LineIntersection-pqb
+        composeConjunction
+</jh>
+Transitivity produces <code>collinear Q A B</code>, which we then rearrange to <code>collinear A B Q</code>.
+<jh>
+        P Q A B CollinearityInnerTransitivity
+        applySyllogism
+
+        Q A B CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Now we consider two cases: <code>Q = A</code> and <code>Q ≠ A</code>.
+
+For the <code>Q = A</code> case, first apply collinearity transitivity to <code>collinear C P Q</code> and <code>collinear B P Q</code> to get <code>collinear C B Q</code>, which turns into our desired contradiction <code>collinear A B C</code> by substituting <code>A</code> for <code>Q</code>.
+<jh>
+thm (LineIntersection-qa () ()
+  (((Q = A) ∧
+    (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))) →
+    (collinear A B C)) (
+</jh>
+<code>P ≠ Q</code>:
+<jh>
+        (Q = A)
+          (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+          (collinear A B P)) ∧ (collinear A B Q)) ∧
+          (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear P Q B</code>:
+<jh>
+        (Q = A)
+          (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+          (collinear A B P)) ∧ (collinear A B Q)) ∧
+          (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
+          ConjunctionLeftElimination
+        A B C D P Q LineIntersection-pqb
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear P Q C</code>:
+<jh>
+        (Q = A)
+          (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+          (collinear A B P)) ∧ (collinear A B Q)) ∧
+          (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
+          ConjunctionLeftElimination
+        A B C D P Q LineIntersection-pqc
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying transitivity yields <code>collinear Q B C</code>, which we then turn into <code>collinear A B C</code> via a subsitution.
+<jh>
+        P Q B C CollinearityInnerTransitivity
+        applySyllogism
+
+        (Q = A)
+          (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+          (collinear A B P)) ∧ (collinear A B Q)) ∧
+          (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
+          ConjunctionRightElimination
+        composeConjunction
+
+        B EqualityReflexivity
+        C EqualityReflexivity
+        Q A B B C C CollinearityBuilder
+        detach2of2
+        detach2of2
+
+        eliminateBiconditionalReverseInConsequent
+        applyComm
+        import
+
+        applySyllogism
+))
+</jh>
+
+The <code>Q ≠ A</code> case lets us apply transitivity to <code>collinear A C Q</code> and <code>collinear A B Q</code> to get <code>collinear A B C</code>, which is our desired contradiction.
+<jh>
+thm (LineIntersection-qnota () ()
+  (((Q ≠ A) ∧
+    (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))) →
+    (collinear A B C)) (
+</jh>
+<code>Q ≠ A</code>:
+<jh>
+        (Q ≠ A)
+          (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+          (collinear A B P)) ∧ (collinear A B Q)) ∧
+          (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
+          ConjunctionRightElimination
+</jh>
+<code>collinear Q A B</code>:
+<jh>
+        (Q ≠ A)
+          (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+          (collinear A B P)) ∧ (collinear A B Q)) ∧
+          (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        Q A B CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear Q A C</code>:
+<jh>
+        (Q ≠ A)
+          (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+          (collinear A B P)) ∧ (collinear A B Q)) ∧
+          (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
+          ConjunctionLeftElimination
+        A B C D P Q LineIntersection-acq
+        applySyllogism
+
+        Q A C CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+
+        Q A B C CollinearityInnerTransitivity
+        applySyllogism
+))
+</jh>
+
+Next we combine the cases.
+<jh>
+thm (LineIntersection-abc () ()
+  ((((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
+    (collinear A B C)) (
+        Q A B C D P LineIntersection-qa
+        export
+
+        Q A B C D P LineIntersection-qnota
+        export
+
+        eliminateCases
+))
+</jh>
+
+Here we point out the contradiction.
+<jh>
+thm (LineIntersection-contradiction () ()
+  ((((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
+    (⊥)) (
+        A B C D P Q LineIntersection-abc
+
+        ((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+            (collinear A B P)) ∧ (collinear A B Q)) ∧
+            (collinear C D P)) ∧ (collinear C D Q))
+          (P ≠ Q)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        (collinear A B C) Contradiction
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Since assuming <code>P ≠ Q</code> produced a contradiction, we can conclude that <code>P = Q</code>.
+<jh>
+thm (LineIntersection () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (P = Q)) (
+        A B C D P Q LineIntersection-contradiction
+        export
+
+        (P ≠ Q) NegationImplication
+        eliminateBiconditionalForward
+        applySyllogism
+
+        (P = Q) DoubleNegation
+        eliminateBiconditionalForward
         applySyllogism
 ))
 </jh>
