@@ -2789,6 +2789,44 @@ thm (PointNotOnLine-abz () ()
 
         import
 ))
+</jh>
+
+The next lemma gets rid of <code>collinear A B X</code> (because the case <code>¬ collinear A B X</code> is taken care of by <code>PointNotOnLineLemma</code>).
+<jh>
+thm (PointNotOnLine-eliminate-abx ((c A) (c B) (c X) (c Z)) ()
+  ((((collinear A B Y) ∧ (A ≠ B)) ∧ (¬ (collinear X Y Z))) →
+  (∃ c (¬ (collinear A B (value c))))) (
+</jh>
+First, the <code>collinear A B X</code> case:
+<jh>
+        (collinear A B X)
+          ((collinear A B Y) ∧ (A ≠ B))
+          (¬ (collinear X Y Z))
+          ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        A B X Y Z PointNotOnLine-abz
+        applySyllogism
+
+        A B Z c PointNotOnLineLemma
+        applySyllogism
+
+        export
+</jh>
+Second, the <code>¬ collinear A B X</code> case:
+<jh>
+        (¬ (collinear A B X))
+          (((collinear A B Y) ∧ (A ≠ B)) ∧ (¬ (collinear X Y Z)))
+          ConjunctionRightElimination
+        A B X c PointNotOnLineLemma
+        applySyllogism
+
+        export
+</jh>
+Now we just need to combine the cases.
+<jh>
+        eliminateCases
+))
 
 #thm (PointNotOnLine ((c A) (c B)) ()
 #  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
