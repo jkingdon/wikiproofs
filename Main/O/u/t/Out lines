@@ -2765,6 +2765,30 @@ We are now ready to apply transitivity to <code>A ≠ X</code>, <code>collinear 
         A X Y Z CollinearityInnerTransitivity
         applySyllogism
 ))
+</jh>
+
+We now combine the <code>A = X</code> and <code>A ≠ X</code> cases and rearrange a bit.
+<jh>
+thm (PointNotOnLine-abz () ()
+  ((((collinear A B X) ∧ ((collinear A B Y) ∧
+    (A ≠ B))) ∧ (¬ (collinear X Y Z))) →
+  (¬ (collinear A B Z))) (
+        A X B Y Z PointNotOnLine-ax
+        export
+
+        A X B Y Z PointNotOnLine-anotx
+        export
+
+        eliminateCases
+
+        export
+
+        (collinear A B Z) (collinear X Y Z) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+))
 
 #thm (PointNotOnLine ((c A) (c B)) ()
 #  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
