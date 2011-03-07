@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F P Q R S X Y A′ B′ C′ D′ E′ B″ C″)
+var (point A B C D E F P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″)
 var (variable a b c c′ d d′ e e′ f p x y z)
 </jh>
 
@@ -2583,10 +2583,91 @@ thm (LowerDimensionCollinearity ((a b c)) ()
         a addThereExists
         applyModusPonens
 ))
+</jh>
 
-#thm (PointNotOnLineLemma () ()
-#  ((¬ collinear A B P) → (∃ c (¬ (collinear A B (value c))))) (
-#))
+The next lemma says that if we have a point not collinear with <code>A</code> and <code>B</code>, we are done.
+<jh>
+thm (PointNotOnLineLemma ((c A) (c B) (c P)) ()
+  ((¬ (collinear A B P)) → (∃ c (¬ (collinear A B (value c))))) (
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B (value c) P CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        addNegationInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+
+        P c (¬ (collinear A B (value c))) ThereExistsIntroductionFromObject
+        applySyllogism
+))
+</jh>
+
+We're ready to start working on getting <code>collinear x y z</code> by transitivity. There are two cases: <code>A = X</code> and <code>A ≠ X</code>. The <code>A = X</code> case is the easier one: we first conclude <code>collinear A Y Z</code> and then substitute <code>X</code> for <code>A</code>.
+<jh>
+thm (PointNotOnLine-ax () ()
+  (((A = X) ∧ (((collinear A B X) ∧ ((collinear A B Y) ∧
+    (A ≠ B))) ∧ (collinear A B Z))) →
+  (collinear X Y Z)) (
+</jh>
+<code>A ≠ B</code>:
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear A B Y</code>:
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A B Z</code>:
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Applying transitivity gives <code>collinear A Y Z</code>,
+<jh>
+        A B Y Z CollinearityOuterTransitivity
+        applySyllogism
+</jh>
+and applying a substitution turns that into <code>collinear X Y Z</code>.
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionRightElimination
+        composeConjunction
+
+        Y EqualityReflexivity
+        Z EqualityReflexivity
+        A X Y Y Z Z CollinearityBuilder
+        detach2of2
+        detach2of2
+
+        eliminateBiconditionalReverseInConsequent
+        applyComm
+        import
+        applySyllogism
+))
 
 #thm: A ≠ B ∧ collinear A B x ∧ collinear A B y ∧ collinear A B z
 #  → collinear x y z
