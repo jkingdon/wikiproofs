@@ -2668,10 +2668,103 @@ and applying a substitution turns that into <code>collinear X Y Z</code>.
         import
         applySyllogism
 ))
+</jh>
 
-#thm: A ≠ B ∧ collinear A B x ∧ collinear A B y ∧ collinear A B z
-#  → collinear x y z
-#TODO: How to do the case elimination (or equivalent)?
+The <code>A ≠ X</code> case involves first proving <code>collinear A X Y</code> and <code>collinear A X Z</code> (each by transitivity), and applying transitivity again, to get <code>collinear X Y Z</code>.
+<jh>
+thm (PointNotOnLine-anotx () ()
+  (((A ≠ X) ∧ (((collinear A B X) ∧ ((collinear A B Y) ∧
+    (A ≠ B))) ∧ (collinear A B Z))) →
+  (collinear X Y Z)) (
+</jh>
+We start with <code>A ≠ X</code>.
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionRightElimination
+</jh>
+To prove <code>collinear A X Y</code>, we first need <code>A ≠ B</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear A B X</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A B Y</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+That's all we need for <code>collinear A X Y</code>
+<jh>
+        A B X Y CollinearityOuterTransitivity
+        applySyllogism
+        composeConjunction
+</jh>
+Now we need <code>collinear A X Z</code>, and the first antecedent is <code>A ≠ B</code>.
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear A B X</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A B Z</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Applying transitivity we get <code>collinear A X Z</code>
+<jh>
+        A B X Z CollinearityOuterTransitivity
+        applySyllogism
+        composeConjunction
+</jh>
+We are now ready to apply transitivity to <code>A ≠ X</code>, <code>collinear A X Y</code>, and <code>collinear A X Z</code> to get <code>collinear X Y Z</code>.
+<jh>
+        A X Y Z CollinearityInnerTransitivity
+        applySyllogism
+))
 
 #thm (PointNotOnLine ((c A) (c B)) ()
 #  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
