@@ -14,7 +14,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F P Q R S X Y A′ B′ C′ D′ E′ B″ C″)
-var (variable c c′ d d′ e e′ f p x y z)
+var (variable a b c c′ d d′ e e′ f p x y z)
 </jh>
 
 == Out lines defined ==
@@ -2550,6 +2550,52 @@ thm (LineIntersection () ()
         eliminateBiconditionalForward
         applySyllogism
 ))
+</jh>
+
+== The existence of a point not on a given line ==
+Given a line, there is a point which is not on that line. Formally, <code>A ≠ B → ∃ c ¬ collinear A B c</code>.<ref>l6_25 in Narboux</ref>
+
+The proof, not surprisingly, is based on <code>LowerDimension</code>, which gives us three non-collinear points x, y, and z. If any one of them is not on the line (that is, <code>¬ collinear A B x</code> or likewise for y or z), we are done. But if they are all collinear with <code>A</code> and <code>B</code>, we can conclude <code>collinear x y z</code> by transitivity, which is a contradiction.
+
+We start by restating <code>LowerDimension</code> in terms of collinearity.
+<jh>
+thm (LowerDimensionCollinearity ((a b c)) ()
+  (∃ a (∃ b (∃ c (¬ (collinear (value a) (value b) (value c)))))) (
+        a b c LowerDimension
+
+        (between (value a) (value b) (value c))
+          (between (value b) (value c) (value a))
+          DeMorganPDP
+        eliminateBiconditionalForward
+        (¬ (between (value c) (value a) (value b))) conjoinRR
+        c addThereExists
+        b addThereExists
+        a addThereExists
+        applyModusPonens
+
+        ((between (value a) (value b) (value c)) ∨
+            (between (value b) (value c) (value a)))
+          (between (value c) (value a) (value b))
+          DeMorganPDP
+        eliminateBiconditionalForward
+        c addThereExists
+        b addThereExists
+        a addThereExists
+        applyModusPonens
+))
+
+#thm (PointNotOnLineLemma () ()
+#  ((¬ collinear A B P) → (∃ c (¬ (collinear A B (value c))))) (
+#))
+
+#thm: A ≠ B ∧ collinear A B x ∧ collinear A B y ∧ collinear A B z
+#  → collinear x y z
+#TODO: How to do the case elimination (or equivalent)?
+
+#thm (PointNotOnLine ((c A) (c B)) ()
+#  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
+        
+#))
 </jh>
 
 == Export ==
