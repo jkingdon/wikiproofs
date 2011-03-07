@@ -2862,11 +2862,57 @@ Now we just need to combine the cases.
 <jh>
         eliminateCases
 ))
+</jh>
 
-#thm (PointNotOnLine ((c A) (c B)) ()
-#  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
-        
-#))
+At this point we are very close. The only thing remaining in the antecedent that we need to get rid of is <code>¬ collinear X Y Z</code>. But <code>X</code>, <code>Y</code>, and <code>Z</code> no longer appear anywhere else in the formula. So we can quantify at will, specifically to turn <code>¬ collinear X Y Z</code> into <code>∃ x ∃ y ∃ z ¬ collinear x y z</code>, which we can then detach as it is a theorem.
+
+<jh>
+thm (PointNotOnLine ((c A) (c B)  (x y z A) (x y z B) (x y z c)) ()
+  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
+</jh>
+First we put the theorem on the proof stack.
+<jh>
+        x y z LowerDimensionCollinearity
+</jh>
+Now we show we can move the quantifiers to the start: <code>A ≠ B ∧ ∃ x ∃ y ∃ z ¬ collinear x y z → ∃ x ∃ y ∃ z (A ≠ B ∧ ¬ collinear x y z)</code>
+<jh>
+        x
+          (A ≠ B)
+          (∃ y (∃ z (¬ (collinear (value x) (value y) (value z)))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+
+        y
+          (A ≠ B)
+          (∃ z (¬ (collinear (value x) (value y) (value z))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        x addThereExists
+        applySyllogism
+
+        z
+          (A ≠ B)
+          (¬ (collinear (value x) (value y) (value z)))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        y addThereExists
+        x addThereExists
+        applySyllogism
+
+</jh>
+Now we can introduce the previous theorem and then add the quantifiers.
+<jh>
+        A B (value x) (value y) (value z) c PointNotOnLine-eliminate-aby
+        z addThereExistsToAntecedent
+        y addThereExistsToAntecedent
+        x addThereExistsToAntecedent
+
+        applySyllogism
+</jh>
+Detaching the theorem finishes the proof.
+<jh>
+        detach2of2
+))
 </jh>
 
 == Export ==
