@@ -2827,6 +2827,41 @@ Now we just need to combine the cases.
 <jh>
         eliminateCases
 ))
+</jh>
+
+In a very similar manner we get rid of <code>collinear A B Y</code>.
+<jh>
+thm (PointNotOnLine-eliminate-aby ((c A) (c B) (c X) (c Y) (c Z)) ()
+  (((A ≠ B) ∧ (¬ (collinear X Y Z))) →
+  (∃ c (¬ (collinear A B (value c))))) (
+</jh>
+First, the <code>collinear A B Y</code> case:
+<jh>
+        (collinear A B Y)
+          (A ≠ B)
+          (¬ (collinear X Y Z))
+          ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        A B Y X Z c PointNotOnLine-eliminate-abx
+        applySyllogism
+
+        export
+</jh>
+Second, the <code>¬ collinear A B Y</code> case:
+<jh>
+        (¬ (collinear A B Y))
+          ((A ≠ B) ∧ (¬ (collinear X Y Z)))
+          ConjunctionRightElimination
+        A B Y c PointNotOnLineLemma
+        applySyllogism
+
+        export
+</jh>
+Now we just need to combine the cases.
+<jh>
+        eliminateCases
+))
 
 #thm (PointNotOnLine ((c A) (c B)) ()
 #  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
