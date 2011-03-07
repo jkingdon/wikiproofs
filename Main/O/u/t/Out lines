@@ -13,8 +13,8 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F P Q R S X Y A′ B′ C′ D′ E′ B″ C″)
-var (variable c c′ d d′ e e′ f p x y z)
+var (point A B C D E F P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″)
+var (variable a b c c′ d d′ e e′ f p x y z)
 </jh>
 
 == Out lines defined ==
@@ -2053,7 +2053,7 @@ We will be applying collinearity outer transitivity. First we need <code>Q ≠ P
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
 
-        Q P EqualitySymmetry
+        P Q EqualitySymmetry
         addNegation
         eliminateBiconditionalReverse
         applySyllogism
@@ -2442,7 +2442,7 @@ thm (LineIntersection-qnota () ()
 </jh>
 <code>Q ≠ A</code>:
 <jh>
-        (Q = A)
+        (Q ≠ A)
           (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
           (collinear A B P)) ∧ (collinear A B Q)) ∧
           (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
@@ -2450,7 +2450,7 @@ thm (LineIntersection-qnota () ()
 </jh>
 <code>collinear Q A B</code>:
 <jh>
-        (Q = A)
+        (Q ≠ A)
           (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
           (collinear A B P)) ∧ (collinear A B Q)) ∧
           (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
@@ -2468,7 +2468,7 @@ thm (LineIntersection-qnota () ()
 </jh>
 <code>collinear Q A C</code>:
 <jh>
-        (Q = A)
+        (Q ≠ A)
           (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
           (collinear A B P)) ∧ (collinear A B Q)) ∧
           (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q))
@@ -2477,10 +2477,13 @@ thm (LineIntersection-qnota () ()
         applySyllogism
 
         Q A C CollinearityRotation
-        eliminateBiconditionalReverse
+        eliminateBiconditionalForward
         applySyllogism
 
         composeConjunction
+
+        Q A B C CollinearityInnerTransitivity
+        applySyllogism
 ))
 </jh>
 
@@ -2491,10 +2494,10 @@ thm (LineIntersection-abc () ()
     (collinear A B P)) ∧ (collinear A B Q)) ∧
     (collinear C D P)) ∧ (collinear C D Q)) ∧ (P ≠ Q)) →
     (collinear A B C)) (
-        A B C D P Q LineIntersection-qa
+        Q A B C D P LineIntersection-qa
         export
 
-        A B C D P Q LineIntersection-qnota
+        Q A B C D P LineIntersection-qnota
         export
 
         eliminateCases
@@ -2526,6 +2529,7 @@ thm (LineIntersection-contradiction () ()
         (collinear A B C) Contradiction
         eliminateBiconditionalReverse
         applySyllogism
+))
 </jh>
 
 Since assuming <code>P ≠ Q</code> produced a contradiction, we can conclude that <code>P = Q</code>.
@@ -2555,7 +2559,7 @@ The proof, not surprisingly, is based on <code>LowerDimension</code>, which give
 
 We start by restating <code>LowerDimension</code> in terms of collinearity.
 <jh>
-thm (LowerDimensionCollinearity () ()
+thm (LowerDimensionCollinearity ((a b c)) ()
   (∃ a (∃ b (∃ c (¬ (collinear (value a) (value b) (value c)))))) (
         a b c LowerDimension
 
@@ -2579,18 +2583,335 @@ thm (LowerDimensionCollinearity () ()
         a addThereExists
         applyModusPonens
 ))
+</jh>
 
-thm (PointNotOnLineLemma () ()
-  ((¬ collinear A B P) → (∃ c (¬ (collinear A B (value c))))) (
+The next lemma says that if we have a point not collinear with <code>A</code> and <code>B</code>, we are done.
+<jh>
+thm (PointNotOnLineLemma ((c A) (c B) (c P)) ()
+  ((¬ (collinear A B P)) → (∃ c (¬ (collinear A B (value c))))) (
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B (value c) P CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        addNegationInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+
+        P c (¬ (collinear A B (value c))) ThereExistsIntroductionFromObject
+        applySyllogism
 ))
+</jh>
 
-#thm: A ≠ B ∧ collinear A B x ∧ collinear A B y ∧ collinear A B z
-#  → collinear x y z
-#TODO: How to do the case elimination (or equivalent)?
+We're ready to start working on getting <code>collinear x y z</code> by transitivity. There are two cases: <code>A = X</code> and <code>A ≠ X</code>. The <code>A = X</code> case is the easier one: we first conclude <code>collinear A Y Z</code> and then substitute <code>X</code> for <code>A</code>.
+<jh>
+thm (PointNotOnLine-ax () ()
+  (((A = X) ∧ (((collinear A B X) ∧ ((collinear A B Y) ∧
+    (A ≠ B))) ∧ (collinear A B Z))) →
+  (collinear X Y Z)) (
+</jh>
+<code>A ≠ B</code>:
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear A B Y</code>:
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
-thm (PointNotOnLine ((c A) (c B)) ()
+        composeConjunction
+</jh>
+<code>collinear A B Z</code>:
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Applying transitivity gives <code>collinear A Y Z</code>,
+<jh>
+        A B Y Z CollinearityOuterTransitivity
+        applySyllogism
+</jh>
+and applying a substitution turns that into <code>collinear X Y Z</code>.
+<jh>
+        (A = X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionRightElimination
+        composeConjunction
+
+        Y EqualityReflexivity
+        Z EqualityReflexivity
+        A X Y Y Z Z CollinearityBuilder
+        detach2of2
+        detach2of2
+
+        eliminateBiconditionalReverseInConsequent
+        applyComm
+        import
+        applySyllogism
+))
+</jh>
+
+The <code>A ≠ X</code> case involves first proving <code>collinear A X Y</code> and <code>collinear A X Z</code> (each by transitivity), and applying transitivity again, to get <code>collinear X Y Z</code>.
+<jh>
+thm (PointNotOnLine-anotx () ()
+  (((A ≠ X) ∧ (((collinear A B X) ∧ ((collinear A B Y) ∧
+    (A ≠ B))) ∧ (collinear A B Z))) →
+  (collinear X Y Z)) (
+</jh>
+We start with <code>A ≠ X</code>.
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionRightElimination
+</jh>
+To prove <code>collinear A X Y</code>, we first need <code>A ≠ B</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear A B X</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A B Y</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+That's all we need for <code>collinear A X Y</code>
+<jh>
+        A B X Y CollinearityOuterTransitivity
+        applySyllogism
+        composeConjunction
+</jh>
+Now we need <code>collinear A X Z</code>, and the first antecedent is <code>A ≠ B</code>.
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear A B X</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A B Z</code>:
+<jh>
+        (A ≠ X)
+          (((collinear A B X) ∧ ((collinear A B Y) ∧
+            (A ≠ B))) ∧ (collinear A B Z))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+Applying transitivity we get <code>collinear A X Z</code>
+<jh>
+        A B X Z CollinearityOuterTransitivity
+        applySyllogism
+        composeConjunction
+</jh>
+We are now ready to apply transitivity to <code>A ≠ X</code>, <code>collinear A X Y</code>, and <code>collinear A X Z</code> to get <code>collinear X Y Z</code>.
+<jh>
+        A X Y Z CollinearityInnerTransitivity
+        applySyllogism
+))
+</jh>
+
+We now combine the <code>A = X</code> and <code>A ≠ X</code> cases and rearrange a bit.
+<jh>
+thm (PointNotOnLine-abz () ()
+  ((((collinear A B X) ∧ ((collinear A B Y) ∧
+    (A ≠ B))) ∧ (¬ (collinear X Y Z))) →
+  (¬ (collinear A B Z))) (
+        A X B Y Z PointNotOnLine-ax
+        export
+
+        A X B Y Z PointNotOnLine-anotx
+        export
+
+        eliminateCases
+
+        export
+
+        (collinear A B Z) (collinear X Y Z) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+))
+</jh>
+
+The next lemma gets rid of <code>collinear A B X</code> (because the case <code>¬ collinear A B X</code> is taken care of by <code>PointNotOnLineLemma</code>).
+<jh>
+thm (PointNotOnLine-eliminate-abx ((c A) (c B) (c X) (c Z)) ()
+  ((((collinear A B Y) ∧ (A ≠ B)) ∧ (¬ (collinear X Y Z))) →
+  (∃ c (¬ (collinear A B (value c))))) (
+</jh>
+First, the <code>collinear A B X</code> case:
+<jh>
+        (collinear A B X)
+          ((collinear A B Y) ∧ (A ≠ B))
+          (¬ (collinear X Y Z))
+          ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        A B X Y Z PointNotOnLine-abz
+        applySyllogism
+
+        A B Z c PointNotOnLineLemma
+        applySyllogism
+
+        export
+</jh>
+Second, the <code>¬ collinear A B X</code> case:
+<jh>
+        (¬ (collinear A B X))
+          (((collinear A B Y) ∧ (A ≠ B)) ∧ (¬ (collinear X Y Z)))
+          ConjunctionRightElimination
+        A B X c PointNotOnLineLemma
+        applySyllogism
+
+        export
+</jh>
+Now we just need to combine the cases.
+<jh>
+        eliminateCases
+))
+</jh>
+
+In a very similar manner we get rid of <code>collinear A B Y</code>.
+<jh>
+thm (PointNotOnLine-eliminate-aby ((c A) (c B) (c X) (c Y) (c Z)) ()
+  (((A ≠ B) ∧ (¬ (collinear X Y Z))) →
+  (∃ c (¬ (collinear A B (value c))))) (
+</jh>
+First, the <code>collinear A B Y</code> case:
+<jh>
+        (collinear A B Y)
+          (A ≠ B)
+          (¬ (collinear X Y Z))
+          ConjunctionAssociativity
+        eliminateBiconditionalForward
+
+        A B Y X Z c PointNotOnLine-eliminate-abx
+        applySyllogism
+
+        export
+</jh>
+Second, the <code>¬ collinear A B Y</code> case:
+<jh>
+        (¬ (collinear A B Y))
+          ((A ≠ B) ∧ (¬ (collinear X Y Z)))
+          ConjunctionRightElimination
+        A B Y c PointNotOnLineLemma
+        applySyllogism
+
+        export
+</jh>
+Now we just need to combine the cases.
+<jh>
+        eliminateCases
+))
+</jh>
+
+At this point we are very close. The only thing remaining in the antecedent that we need to get rid of is <code>¬ collinear X Y Z</code>. But <code>X</code>, <code>Y</code>, and <code>Z</code> no longer appear anywhere else in the formula. So we can quantify at will, specifically to turn <code>¬ collinear X Y Z</code> into <code>∃ x ∃ y ∃ z ¬ collinear x y z</code>, which we can then detach as it is a theorem.
+
+<jh>
+thm (PointNotOnLine ((c A) (c B)  (x y z A) (x y z B) (x y z c)) ()
   ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))) (
-        
+</jh>
+First we put the theorem on the proof stack.
+<jh>
+        x y z LowerDimensionCollinearity
+</jh>
+Now we show we can move the quantifiers to the start: <code>A ≠ B ∧ ∃ x ∃ y ∃ z ¬ collinear x y z → ∃ x ∃ y ∃ z (A ≠ B ∧ ¬ collinear x y z)</code>
+<jh>
+        x
+          (A ≠ B)
+          (∃ y (∃ z (¬ (collinear (value x) (value y) (value z)))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+
+        y
+          (A ≠ B)
+          (∃ z (¬ (collinear (value x) (value y) (value z))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        x addThereExists
+        applySyllogism
+
+        z
+          (A ≠ B)
+          (¬ (collinear (value x) (value y) (value z)))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        y addThereExists
+        x addThereExists
+        applySyllogism
+
+</jh>
+Now we can introduce the previous theorem and then add the quantifiers.
+<jh>
+        A B (value x) (value y) (value z) c PointNotOnLine-eliminate-aby
+        z addThereExistsToAntecedent
+        y addThereExistsToAntecedent
+        x addThereExistsToAntecedent
+
+        applySyllogism
+</jh>
+Detaching the theorem finishes the proof.
+<jh>
+        detach2of2
 ))
 </jh>
 
@@ -2612,3 +2933,4 @@ export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Euclidean geometries (general) and generalizations]]
 [[Category:Foundations of classical theories (including reverse mathematics)]]
+
