@@ -2091,7 +2091,7 @@ Last is <code>collinear Q P B</code>.
 == The intersection of two lines ==
 If two distinct, non-degenerate lines intersect, they intersect in a single point. At least for this theorem, we consider a line <code>A B</code> and line <code>C D</code> to be distinct and non-degenerate if <code>¬ collinear A B C ∧ C ≠ D</code>. The statement of the whole theorem is <code>¬ collinear A B C ∧ C ≠ D ∧ collinear A B P ∧ collinear A B Q ∧ collinear C D P ∧ collinear C D Q → P = Q</code>.<ref>l6_21 in Narboux</ref>
 
-The proof is as follows. First conclude <code>collinear D P Q</code> (TODO: do we need this one?) and <code>collinear C P Q</code> (by collinearity transitivity).
+The proof consists of multiple applications of collinearity transitivity, together with some cases and a proof by contradiction. It starts with <code>collinear C P Q</code> (by collinearity transitivity).
 <jh>
 thm (LineIntersection-cpq () ()
   (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
@@ -3134,4 +3134,3 @@ export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Euclidean geometries (general) and generalizations]]
 [[Category:Foundations of classical theories (including reverse mathematics)]]
-
