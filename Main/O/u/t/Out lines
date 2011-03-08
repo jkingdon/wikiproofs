@@ -2915,6 +2915,207 @@ Detaching the theorem finishes the proof.
 ))
 </jh>
 
+== Intersecting lines and congruences ==
+[[File:Theorem t2_8 from Narboux.svg|thumb|right]]
+Given two intersecting line segments, where the portions of each segment on the sides of the intersection are congruent, the segments drawn from the endpoints of one line segment to the endpoints of the other are congruent. That is, <code>between A B C ∧ between D B E ∧ A B ≡ D B ∧ B C ≡ B E → A E ≡ C D</code>.<ref>Theorem t2_8 in Narboux</ref>
+
+We consider <code>A = B</code> and <code>A ≠ B</code> cases. The <code>A = B</code> case is easy: <code>A = B</code> implies <code>D = B</code> and substituting into <code>B C ≡ B E</code> gives us <code>A E ≡ C D</code>.
+
+The <code>A ≠ B</code> case follows from outer five segment, using baselines <code>A B C</code> and <code>D B E</code> and points <code>D</code> and <code>A</code>.
+
+Starting on the <code>A = B</code> case, the first step is proving <code>D = B</code>.
+<jh>
+thm (IntersectionCongruence-db () ()
+  (((A = B) ∧ ((((between A B C) ∧ (between D B E)) ∧
+    (A B ≡ D B)) ∧ (B C ≡ B E))) →
+  (D = B)) (
+</jh>
+To apply <code>CongruenceIdentityFromEquality</code>, we first need <code>A = B</code>.
+<jh>
+        (A = B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionRightElimination
+</jh>
+Secondly, we need <code>A B ≡ D B</code>.
+<jh>
+        (A = B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+That lets us conclude <code>D = B</code>.
+<jh>
+        A B D B CongruenceIdentityFromEquality
+        applySyllogism
+))
+
+thm (IntersectionCongruence-ab () ()
+  (((A = B) ∧ ((((between A B C) ∧ (between D B E)) ∧
+    (A B ≡ D B)) ∧ (B C ≡ B E))) →
+  (A E ≡ C D)) (
+</jh>
+We'll need <code>B C ≡ B E</code> a bit later, so we put it on the proof stack.
+<jh>
+        (A = B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+</jh>
+The next step is the substitution. The substitution will be <code>D = B ∧ A = B → (D C ≡ A E ↔ B C ≡ B E)</code>, so we start with <code>D = B ∧ A = B</code>.
+<jh>
+        A B C D E IntersectionCongruence-db
+
+        (A = B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionRightElimination
+
+        composeConjunction
+</jh>
+Here is <code>D = B ∧ A = B → (D C ≡ A E ↔ B C ≡ B E)</code>, as promised.
+<jh>
+        C EqualityReflexivity
+        E EqualityReflexivity
+        D B C C A B E E CongruenceBuilder
+        detach2of2
+        detach2of3
+
+        applySyllogism
+</jh>
+Pulling <code>B C ≡ B E</code> off the proof stack and combining, we get <code>D C ≡ A E</code>.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+</jh>
+Now we just rearrange that congruence to <code>A E ≡ C D</code>.
+<jh>
+        D C A E CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        A E D C CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Now we are ready for the <code>A ≠ B</code> case, in which we apply outer five segment using baselines <code>A B C</code> and <code>D B E</code> and points <code>D</code> and <code>A</code>.
+<jh>
+thm (IntersectionCongruence-anotb () ()
+  (((A ≠ B) ∧ ((((between A B C) ∧ (between D B E)) ∧
+    (A B ≡ D B)) ∧ (B C ≡ B E))) →
+  (A E ≡ C D)) (
+</jh>
+First we need <code>A ≠ B</code>.
+<jh>
+        (A ≠ B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionRightElimination
+</jh>
+We need two betweenness relationships, the first of which is <code>between A B C</code>.
+<jh>
+        (A ≠ B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+The other is <code>between D B E</code>.
+<jh>
+        (A ≠ B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+There are two congruences for the baseline, <code>A B ≡ D B</code>,
+<jh>
+        (A ≠ B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+and <code>B C ≡ B E</code>.
+<jh>
+        (A ≠ B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+The off-baseline congruences are <code>A D ≡ D A</code>,
+<jh>
+        A D CongruenceABBA
+        introduceRightConjunctToConsequent
+</jh>
+and <code>B D ≡ B A</code>.
+<jh>
+        (A ≠ B)
+          ((((between A B C) ∧ (between D B E)) ∧
+            (A B ≡ D B)) ∧ (B C ≡ B E))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B D B CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        D B A B CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying five segment gives us <code>C D ≡ E A</code>, which we then rearrange to <code>A E ≡ C D</code>.
+<jh>
+        A B C D B E D A OuterFiveSegment
+        applySyllogism
+
+        C D E A CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        E A C D CongruenceLeftCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (IntersectionCongruence () ()
+  (((((between A B C) ∧ (between D B E)) ∧
+    (A B ≡ D B)) ∧ (B C ≡ B E)) →
+  (A E ≡ C D)) (
+        A B C D E IntersectionCongruence-ab
+        export
+
+        A B C D E IntersectionCongruence-anotb
+        export
+
+        eliminateCases
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
