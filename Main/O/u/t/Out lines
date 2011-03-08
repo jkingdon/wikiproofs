@@ -2967,14 +2967,14 @@ We'll need <code>B C ≡ B E</code> a bit later, so we put it on the proof stack
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
 </jh>
-The next step is the substitution. The substitution will be <code>A = B ∧ D = B → (A E ≡ C D ↔ B C ≡ B E)</code>, so we start with <code>A = B ∧ D = B</code>.
+The next step is the substitution. The substitution will be <code>D = B ∧ A = B → (D C ≡ A E ↔ B C ≡ B E)</code>, so we start with <code>D = B ∧ A = B</code>.
 <jh>
+        A B C D E IntersectionCongruence-db
+
         (A = B)
           ((((between A B C) ∧ (between D B E)) ∧
             (A B ≡ D B)) ∧ (B C ≡ B E))
           ConjunctionRightElimination
-
-        A B C D E IntersectionCongruence-db
 
         composeConjunction
 </jh>
@@ -2991,7 +2991,6 @@ Here is <code>D = B ∧ A = B → (D C ≡ A E ↔ B C ≡ B E)</code>, as promi
 Pulling <code>B C ≡ B E</code> off the proof stack and combining, we get <code>D C ≡ A E</code>.
 <jh>
         eliminateBiconditionalForwardInConsequent
-        composeConjunction
         applyModusPonensInConsequent
 </jh>
 Now we just rearrange that congruence to <code>A E ≡ C D</code>.
