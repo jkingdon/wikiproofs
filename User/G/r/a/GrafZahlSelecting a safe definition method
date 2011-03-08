@@ -1,0 +1,85 @@
+The purpose of this page is first and foremost to precisely specify the various safe definition proposals floating around in the *Hilbert multiverse, so that interested folks (including myself (GrafZahl), for I'm still struggling to get all this stuff into my head) can finally grok them all.
+
+Secondly, it would be nice if all involved parties could agree on a common internal mechanism to handle definitions, that is, the definition mechanism in Ghilbert/JHilbert/whatever are identical from an ''abstract'' point of view, not necessarily in command syntax. I have started to write a [https://github.com/TheCount/hilbert-kernel library] implementing the abstract mechanics of JHilbert. If we put all the hard metalogical stuff into this library and then use the library for every JHilbert-like application, we'll have to verify its correctness only once. For example, I expect that in the end there will be two implementations of JHilbert on this site; a JavaScript "JHilbert console" helping users compose proofs using their own processing resources, and the server-side verifier.
+
+What is discussed here:
+* An "abbreviation" mechanism, that is a heavily trimmed-down version of the current (broken) definition mechanism. It has automatic folding and unfolding and is intended to be used when the user ''wants'' such automatic folding and unfolding.
+* Carl Witty's statement-backed definition proposal.
+* Raph Levien's proof-backed definition proposal (apparently already implemented in Ghilbert[http://ghilbert.googlecode.com/svn/trunk/]).
+
+I deliberately dubbed the last two items thus, for that is what the users sees first upon encountering the respective <code>defthm</code> command. I am quite aware that there may be significant philosophical differences between these two proposals (in particular the free vs. distinct variables interpretation) which may render a [[#Confluence|confluence]] of both approaches moot. That is, it may not even make sense to attempt to drive both views with the same internal mechanism. (As far as I know, there is currently no implementation of Carl's proposal, while Raph's is already in Ghilbert. Still, currently I like Carl's proposal better. But that may be just because at the moment, Carl's proposal is the one I understand better.)
+
+== Abbreviations: the least common denominator ==
+
+Sometimes you want to use transparent shorthands in your mathematical developments. That's what I mistakenly thought the Ghilbert definition mechanism for when I first encountered it. When I found out that it didn't quite do what I wanted (it happened in the context of [[Nicod's reduction of Principia Mathematica]], where I wanted to introduce <code>π</code> as an abbreviation for <code>(t | (t | t))</code>) it seemed natural to just enhance the existing definition mechanism, introducing automatic folding and unfolding. Now I know that this kind of behaviour is not desirable for all kinds of definition. Nevertheless, it may be helpful in simple cases. Therefore, I propose the following ''abbreviation'' mechanism, which will be completely independent of the definition mechanism (in particular, whenever the following mechanism is applicable, the user has the choice whether to use it or use definitions instead).
+
+=== Syntax ===
+
+ abbrev ((''label'' ''var1'' &hellip; ''varN'') ''expression'')
+
+=== Constraints ===
+
+* ''label'' shall be an identifier not yet present in the functor namespace,
+* if present, ''var1'' through ''varN'' shall have been previously defined as variables,
+* ''expression'' shall be an expression in which all variables ''var1'' through ''varN'' appear (''left inclusion constraint''),
+* in an interface module context, no other variables shall appear in ''expression''.
+
+=== Semantics ===
+
+Creates a new functor ''label'' with ''N'' places with kinds matching the kinds of the respective variables. Expressions with the new functor as head functor are interchangeable with the respective substitution instance of ''expression''. In a proof module context, if ''expression'' contains variables not in the list <code>''var1'' &hellip; ''varN''</code>, the number of places of the new functor is extended internally with these variables, and expressions with the functor are treated as if each instance of the functor had precisely these variables (as expressions) as additional arguments.
+
+=== Examples ===
+
+The abbreviation
+ abbrev ((¬ p) (p | p))
+is valid in both interface and proof module contexts. The new one-place functor <code>¬</code> defines negation in terms of the Sheffer stroke.
+
+The abbreviation
+ abbrev ((F x y) (G x))
+is ill-formed because the expression <code>(G x)</code> does not contain the variable <code>y</code>.
+
+The abbreviation
+ abbrev ((V) (class x (x = x)))
+is ill-formed in an interface module context, because <code>x</code> is a dummy variable then.
+
+The abbreviation
+ abbrev ((π) (t | (t | t)))
+is valid in a proof module context. Each occurrence of the expression <code>(π)</code> is interchangeable with <code>(t | (t | t))</code>. This is highly practical for common shortcuts. In an interface module context, the given fragment would be ill-formed. This has to be so, because variables are local to a module, and <code>t</code> would essentially mutate to a dummy variable, which is forbidden.
+
+== A note about the left inclusion constraint ==
+
+The restriction that all variables on the left-hand side of an abbreviation (and also a definition) must appear in the right-hand side can be easily dropped. The parser simply has to drop all parts of the expression belonging to these surplus variables, and internally the functor is handled as if it had a lower place count. Whether this is a wise thing to do remains to be seen. Anyway, I don't think the situation where one wants to have variables in the lhs not appearing in the rhs is very common, so for now, I'll leave that constraint in in the descriptions.
+
+== Statement-backed definitions (Carl Witty) ==
+
+=== Syntax ===
+
+ vkind (''vkind-label'')
+ def ((''def-label'' ''var1'' &hellip; ''varN'') ''definiens'')
+ defthm (''new-label'' (''dv-constraints'') (''hyp1'' &hellip; ''hypM'') ''consequent'' ''def-label'' ''old-label'')
+
+Note: in his original proposal, Carl included a hyphen in the <code>defthm</code> command; I'll leave it out because no other command contains a hyphen.
+
+=== Constraints ===
+
+[TODO]
+
+=== Semantics ===
+
+[TODO]
+
+=== Examples ===
+
+[TODO]
+
+=== Proof of conservativity ===
+
+[TODO]
+
+== Proof-backed definitions (Raph Levien) ==
+
+[TODO]
+
+== Confluence ==
+
+[TODO]
