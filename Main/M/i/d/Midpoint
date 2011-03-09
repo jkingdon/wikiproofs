@@ -1,0 +1,152 @@
+{{interfaces
+| imports = [[Interface:Out lines]]
+| exports = [[Interface:Midpoint]]
+}}
+
+This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
+
+This page proves various results involving the midpoint of a line segment. We don't yet prove the existence of a midpoint (that's in the next chapter).
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+
+var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″)
+var (point P1 P2)
+var (variable a b c c′ d d′ e e′ f p p′ x y z)
+</jh>
+
+== Midpoint defined ==
+A point is the midpoint of a line segment if it is between the endpoints and is equidistant from each one.
+<jh>
+def ((is-midpoint-of M A B) ((between A M B) ∧ (A M ≡ M B)))
+</jh>
+
+Whether a point is the midpoint does not depend on the order in which we list the endpoints.<ref>Lemma l7_2 in Narboux</ref> This is easily proved from the corresponding theorems for betweenness and congruence.
+<jh>
+thm (MidpointSymmetry () ()
+  ((M is-midpoint-of A B) ↔ (M is-midpoint-of B A)) (
+        A M B BetweennessSymmetry
+
+        A M M B CongruenceSymmetry
+        M B A M CongruenceCommutativity
+        applyBiconditionalTransitivity
+
+        buildConjunction
+))
+</jh>
+
+The only midpoint of an empty line segment is the endpoint of the line segment.<ref>l7_3 in Narboux</ref>
+<jh>
+thm (IndivisibilityBiconditional () () ((between A B A) ↔ (A = B)) (
+        A B IndivisibilityBidirectional
+))
+
+thm (MidpointIndivisibility () ()
+  ((M is-midpoint-of A A) → (M = A)) (
+        (between A M A) (A M ≡ M A) ConjunctionRightElimination
+        A M IndivisibilityBiconditional
+        applySyllogism
+
+        A M EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+The endpoint of an empty line segment is a midpoint of that segment.<ref>Lemma l7_3_2 in Narboux</ref>
+<jh>
+thm (MidpointReflexivity () () (A is-midpoint-of A A) (
+        A A BetweenAAB
+        A A CongruenceReflexivity
+        introduceConjunction
+))
+</jh>
+
+== Symmetric point ==
+Given a line segment <code>A P</code>, the symmetric point of <code>A</code> is a point <code>P′</code> such that <code>P is-midpoint-of A P′</code>. This point always exists and is unique. We first prove existence.<ref>symmetric_point_construction in Narboux</ref> The proof just applies line segment construction to extend the line segment <code>A P</code> to a point <code>p′</code> by a distance of <code>A P</code>, or in other words, <code>∃ p′ (between A P p′ ∧ P p′ ≡ A P)</code>.
+<jh>
+thm (SymmetricPoint ((p′ P) (p′ A)) ()
+  (∃ p′ (P is-midpoint-of A (value p′))) (
+        p′ A P A P SegmentConstruction
+
+        P (value p′) A P CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (between A P (value p′)) conjoinLL
+        p′ addThereExists
+        applyModusPonens
+))
+</jh>
+
+Uniqueness is <code>P is-midpoint-of A P1 ∧ P is-midpoint-of A P2 → P1 = P2</code>.<ref>symmetric_point_unicity in Narboux</ref> We first consider the <code>A = P</code> case, which is just a matter of applying <code>CongruenceIdentityFromEquality</code>
+<jh>
+thm (SymmetricPointUniqueness-ap () ()
+  (((A = P) ∧ ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))) →
+    (P1 = P2)) (
+</jh>
+Our first application of <code>CongruenceIdentityFromEquality</code> will be <code>A = P ∧ A P ≡ P P1 → P = P1</code>. After that, we flip <code>P = P1</code> to <code>P1 = P</code>.
+<jh>
+        (A = P)
+          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+          ConjunctionRightElimination
+
+        (A = P)
+          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A P P P1 CongruenceIdentityFromEquality
+        applySyllogism
+
+        P P1 EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The other application of <code>CongruenceIdentityFromEquality</code> is the same thing but with <code>P2</code>.
+<jh>
+        (A = P)
+          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+          ConjunctionRightElimination
+
+        (A = P)
+          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A P P P2 CongruenceIdentityFromEquality
+        applySyllogism
+</jh>
+Combining the two gives <code>P1 = P2</code>.
+<jh>
+        composeConjunction
+        P1 P P2 EqualityTransitivity
+        applySyllogism
+))
+</jh>
+
+== Export ==
+We now export to [[Interface:Midpoint]].
+<jh>
+#export (RESULTS Interface:Midpoint (CLASSICAL FIRSTORDER) ())
+</jh>
+
+Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+* Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
