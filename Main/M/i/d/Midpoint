@@ -65,70 +65,154 @@ thm (MidpointReflexivity () () (A is-midpoint-of A A) (
 ))
 </jh>
 
-== Symmetric point ==
-Given a line segment <code>A P</code>, the symmetric point of <code>A</code> is a point <code>P′</code> such that <code>P is-midpoint-of A P′</code>. This point always exists and is unique. We first prove existence.<ref>symmetric_point_construction in Narboux</ref> The proof just applies line segment construction to extend the line segment <code>A P</code> to a point <code>p′</code> by a distance of <code>A P</code>, or in other words, <code>∃ p′ (between A P p′ ∧ P p′ ≡ A P)</code>.
-<jh>
-thm (SymmetricPoint ((p′ P) (p′ A)) ()
-  (∃ p′ (P is-midpoint-of A (value p′))) (
-        p′ A P A P SegmentConstruction
+== Reflection through a point ==
+[[w:Point reflection|Point symmetry]], or reflection through a point, refers to the process of starting with a single point (which in special cases might be called the origin or the center) and mapping every point to a point directly opposite the given point (at the same distance).
 
-        P (value p′) A P CongruenceSymmetry
+=== Existence of the symmetric point ===
+Given a point <code>A</code>, the symmetric point of <code>P</code> through <code>A</code> is a point <code>P′</code> such that <code>A is-midpoint-of P P′</code>. This point always exists and is unique. We first prove existence.<ref>symmetric_point_construction in Narboux, with the cosmetic change that Narboux interchanges A and P</ref> The proof just applies line segment construction to extend the line segment <code>P A</code> to a point <code>p′</code> by a distance of <code>P A</code>, or in other words, <code>∃ p′ (between P A p′ ∧ A p′ ≡ P A)</code>.
+<jh>
+thm (SymmetricPoint ((p′ A) (p′ P)) ()
+  (∃ p′ (A is-midpoint-of P (value p′))) (
+        p′ P A P A SegmentConstruction
+
+        A (value p′) P A CongruenceSymmetry
         eliminateBiconditionalReverse
-        (between A P (value p′)) conjoinLL
+        (between P A (value p′)) conjoinLL
         p′ addThereExists
         applyModusPonens
 ))
 </jh>
 
-Uniqueness is <code>P is-midpoint-of A P1 ∧ P is-midpoint-of A P2 → P1 = P2</code>.<ref>symmetric_point_unicity in Narboux</ref> We first consider the <code>A = P</code> case, which is just a matter of applying <code>CongruenceIdentityFromEquality</code>
+=== Symmetric point uniqueness ===
+Uniqueness is <code>A is-midpoint-of P P1 ∧ A is-midpoint-of P P2 → P1 = P2</code>.<ref>symmetric_point_unicity in Narboux, again exchanging A and P</ref> We first consider the <code>P = A</code> case, which is just a matter of applying <code>CongruenceIdentityFromEquality</code>
 <jh>
-thm (SymmetricPointUniqueness-ap () ()
-  (((A = P) ∧ ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))) →
+thm (SymmetricPointUniqueness-pa () ()
+  (((P = A) ∧ ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))) →
     (P1 = P2)) (
 </jh>
-Our first application of <code>CongruenceIdentityFromEquality</code> will be <code>A = P ∧ A P ≡ P P1 → P = P1</code>. After that, we flip <code>P = P1</code> to <code>P1 = P</code>.
+Our first application of <code>CongruenceIdentityFromEquality</code> will be <code>P = A ∧ P A ≡ A P1 → A = P1</code>. After that, we flip <code>A = P1</code> to <code>P1 = A</code>.
 <jh>
-        (A = P)
-          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
           ConjunctionRightElimination
 
-        (A = P)
-          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
           ConjunctionLeftElimination
         eliminateRightConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
         composeConjunction
 
-        A P P P1 CongruenceIdentityFromEquality
+        P A A P1 CongruenceIdentityFromEquality
         applySyllogism
 
-        P P1 EqualitySymmetry
+        A P1 EqualitySymmetry
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
 The other application of <code>CongruenceIdentityFromEquality</code> is the same thing but with <code>P2</code>.
 <jh>
-        (A = P)
-          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
           ConjunctionRightElimination
 
-        (A = P)
-          ((P is-midpoint-of A P1) ∧ (P is-midpoint-of A P2))
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
           ConjunctionLeftElimination
         eliminateLeftConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
         composeConjunction
 
-        A P P P2 CongruenceIdentityFromEquality
+        P A A P2 CongruenceIdentityFromEquality
         applySyllogism
 </jh>
 Combining the two gives <code>P1 = P2</code>.
 <jh>
         composeConjunction
-        P1 P P2 EqualityTransitivity
+        P1 A P2 EqualityTransitivity
         applySyllogism
+))
+</jh>
+
+The <code>P ≠ A</code> case is a straightforward application of <code>SegmentConstructionUniqueness</code>.
+<jh>
+thm (SymmetricPointUniqueness-pnota () ()
+  (((P ≠ A) ∧ ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))) →
+    (P1 = P2)) (
+</jh>
+First, <code>P ≠ A</code>.
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionRightElimination
+</jh>
+Next, <code>between P A P1</code>.
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+Next, <code>A P1 ≡ P A</code>.
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        P A A P1 CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The corresponding statements for <code>P2</code> are similar, which are <code>between P A P2</code>,
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+and <code>A P2 ≡ P A</code>
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        P A A P2 CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        P A P1 P A SegmentConstructionUniqueness
+        applySyllogism
+))
+</jh>
+
+Combining the two cases completes the proof of uniqueness.
+<jh>
+thm (SymmetricPointUniqueness () ()
+  (((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2)) →
+    (P1 = P2)) (
+        P A P1 P2 SymmetricPointUniqueness-pa
+        export
+
+        P A P1 P2 SymmetricPointUniqueness-pnota
+        export
+
+        eliminateCases
 ))
 </jh>
 
