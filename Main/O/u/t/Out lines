@@ -3119,7 +3119,7 @@ thm (IntersectionCongruence () ()
 == Export ==
 We now export to [[Interface:Out lines]].
 <jh>
-#export (RESULTS Interface:Out_lines (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Out_lines (CLASSICAL FIRSTORDER) ())
 </jh>
 
 Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].

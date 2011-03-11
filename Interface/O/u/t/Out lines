@@ -16,7 +16,7 @@ param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) (
 The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined in the obvious way as sets of points, as this is a first-order theory).
 <jh>
 kindbind (object point)
-var (point x y z w u v A B C D E P Q)
+var (point x y z w u v A B C D E P Q R S X Y)
 var (point x′ y′ z′ u′ A′ B′ C′ D′)
 
 var (variable a b c a′ b′ c′ e f p)
