@@ -216,6 +216,41 @@ thm (SymmetricPointUniqueness () ()
 ))
 </jh>
 
+=== One to one ===
+Reflecting through a point is one to one.<ref>Lemma l7_9 in Narboux</ref>
+<jh>
+thm (SymmetricPointOneToOne () ()
+  (((A is-midpoint-of P1 P) ∧ (A is-midpoint-of P2 P)) →
+    (P1 = P2)) (
+        A P1 P MidpointSymmetry
+        A P2 P MidpointSymmetry
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        A P P1 P2 SymmetricPointUniqueness
+        applySyllogism
+))
+</ref>
+
+=== Distance-preserving ===
+Reflecting through a point preserves distances. That is, <code>A is-midpoint-of P′ P ∧ A is-midpoint-of Q′ Q → P Q ≡ P′ Q′</code>.<ref>Lemma l7_13 in Narboux</ref>
+
+[[File:Proof of lemma l7_13 in Narboux.svg]]
+The proof is involved, so we'll start with a brief outline. The <code>P = A</code> case is trivial, so henceforth we assume <code>P ≠ A</code>. Starting with the line segment <code>P P′</code>, we extend the two endpoints to points <code>x</code> and <code>x′</code> (by a distance of <code>Q A</code> in both cases). Then we do something similar: extend both ends of <code>Q Q′</code> to <code>y</code> and <code>y′</code> by a distance of <code>P A</code>.
+
+TODO: finish the outline, the main steps of which are:
+
+1. X′ Y′ ≡ Y X
+2. Q X ≡ Q′ X′
+3. P Q ≡ P′ Q′
+
+<jh>
+thm (SymmetricPointDistance () ()
+  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
+  (P Q ≡ P′ Q′)) (
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Midpoint]].
 <jh>
