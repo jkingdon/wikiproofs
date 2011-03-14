@@ -97,5 +97,3 @@ To do with network:
 
 * Throughout First-order logic with quantifiability (and probably First-order logic), add spaces (e.g. change ∃xφ to ∃ x φ).
 
-* get levitation running again on the sylvania
-
