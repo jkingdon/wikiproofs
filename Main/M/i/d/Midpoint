@@ -241,6 +241,9 @@ The proof is involved, so we'll start with a brief outline. The <code>P = A</cod
 TODO: finish the outline, the main steps of which are:
 
 1. X′ Y′ ≡ Y X
+
+five segment with baselines X A X' and Y' A Y and points Y' and X
+
 2. Q X ≡ Q′ X′
 3. P Q ≡ P′ Q′
 
