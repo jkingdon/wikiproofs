@@ -1,0 +1,354 @@
+{{interfaces
+| imports = [[Interface:Out lines]]
+| exports = [[Interface:Midpoint]]
+}}
+
+This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
+
+This page proves various results involving the midpoint of a line segment. We don't yet prove the existence of a midpoint (that's in the next chapter).
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+
+var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′)
+var (point P1 P2)
+var (variable a b c c′ d d′ e e′ f p p′ x y z)
+</jh>
+
+== Midpoint defined ==
+A point is the midpoint of a line segment if it is between the endpoints and is equidistant from each one.
+<jh>
+def ((is-midpoint-of M A B) ((between A M B) ∧ (A M ≡ M B)))
+</jh>
+
+Whether a point is the midpoint does not depend on the order in which we list the endpoints.<ref>Lemma l7_2 in Narboux</ref> This is easily proved from the corresponding theorems for betweenness and congruence.
+<jh>
+thm (MidpointSymmetry () ()
+  ((M is-midpoint-of A B) ↔ (M is-midpoint-of B A)) (
+        A M B BetweennessSymmetry
+
+        A M M B CongruenceSymmetry
+        M B A M CongruenceCommutativity
+        applyBiconditionalTransitivity
+
+        buildConjunction
+))
+</jh>
+
+The only midpoint of an empty line segment is the endpoint of the line segment.<ref>l7_3 in Narboux</ref>
+<jh>
+thm (IndivisibilityBiconditional () () ((between A B A) ↔ (A = B)) (
+        A B IndivisibilityBidirectional
+))
+
+thm (MidpointIndivisibility () ()
+  ((M is-midpoint-of A A) → (M = A)) (
+        (between A M A) (A M ≡ M A) ConjunctionRightElimination
+
+        A M IndivisibilityBiconditional
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        A M EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+The endpoint of an empty line segment is a midpoint of that segment.<ref>Lemma l7_3_2 in Narboux</ref>
+<jh>
+thm (MidpointReflexivity () () (A is-midpoint-of A A) (
+        A A BetweenAAB
+        A A CongruenceReflexivity
+        introduceConjunction
+))
+</jh>
+
+== Reflection through a point ==
+[[w:Point reflection|Point symmetry]], or reflection through a point, refers to the process of starting with a single point (which in special cases might be called the origin or the center) and mapping every point to a point directly opposite the given point (at the same distance).
+
+=== Existence of the symmetric point ===
+Given a point <code>A</code>, the symmetric point of <code>P</code> through <code>A</code> is a point <code>P′</code> such that <code>A is-midpoint-of P P′</code>. This point always exists and is unique. We first prove existence.<ref>symmetric_point_construction in Narboux, with the cosmetic change that Narboux interchanges A and P</ref> The proof just applies line segment construction to extend the line segment <code>P A</code> to a point <code>p′</code> by a distance of <code>P A</code>, or in other words, <code>∃ p′ (between P A p′ ∧ A p′ ≡ P A)</code>.
+<jh>
+thm (SymmetricPoint ((p′ A) (p′ P)) ()
+  (∃ p′ (A is-midpoint-of P (value p′))) (
+        p′ P A P A SegmentConstruction
+
+        A (value p′) P A CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (between P A (value p′)) conjoinLL
+        p′ addThereExists
+        applyModusPonens
+))
+</jh>
+
+=== Symmetric point uniqueness ===
+Uniqueness is <code>A is-midpoint-of P P1 ∧ A is-midpoint-of P P2 → P1 = P2</code>.<ref>symmetric_point_unicity in Narboux, again exchanging A and P</ref> We first consider the <code>P = A</code> case, which is just a matter of applying <code>CongruenceIdentityFromEquality</code>
+<jh>
+thm (SymmetricPointUniqueness-pa () ()
+  (((P = A) ∧ ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))) →
+    (P1 = P2)) (
+</jh>
+Our first application of <code>CongruenceIdentityFromEquality</code> will be <code>P = A ∧ P A ≡ A P1 → A = P1</code>. After that, we flip <code>A = P1</code> to <code>P1 = A</code>.
+<jh>
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionRightElimination
+
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        P A A P1 CongruenceIdentityFromEquality
+        applySyllogism
+
+        A P1 EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The other application of <code>CongruenceIdentityFromEquality</code> is the same thing but with <code>P2</code>.
+<jh>
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionRightElimination
+
+        (P = A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        P A A P2 CongruenceIdentityFromEquality
+        applySyllogism
+</jh>
+Combining the two gives <code>P1 = P2</code>.
+<jh>
+        composeConjunction
+        P1 A P2 EqualityTransitivity
+        applySyllogism
+))
+</jh>
+
+The <code>P ≠ A</code> case is a straightforward application of <code>SegmentConstructionUniqueness</code>.
+<jh>
+thm (SymmetricPointUniqueness-pnota () ()
+  (((P ≠ A) ∧ ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))) →
+    (P1 = P2)) (
+</jh>
+First, <code>P ≠ A</code>.
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionRightElimination
+</jh>
+Next, <code>between P A P1</code>.
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+Next, <code>A P1 ≡ P A</code>.
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        P A A P1 CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The corresponding statements for <code>P2</code> are similar, which are <code>between P A P2</code>,
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+and <code>A P2 ≡ P A</code>
+<jh>
+        (P ≠ A)
+          ((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        P A A P2 CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        P A P1 P A P2 SegmentConstructionUniqueness
+        applySyllogism
+))
+</jh>
+
+Combining the two cases completes the proof of uniqueness.
+<jh>
+thm (SymmetricPointUniqueness () ()
+  (((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2)) →
+    (P1 = P2)) (
+        P A P1 P2 SymmetricPointUniqueness-pa
+        export
+
+        P A P1 P2 SymmetricPointUniqueness-pnota
+        export
+
+        eliminateCases
+))
+</jh>
+
+=== One to one ===
+Reflecting through a point is one to one.<ref>Lemma l7_9 in Narboux</ref>
+<jh>
+thm (SymmetricPointOneToOne () ()
+  (((A is-midpoint-of P1 P) ∧ (A is-midpoint-of P2 P)) →
+    (P1 = P2)) (
+        A P1 P MidpointSymmetry
+        A P2 P MidpointSymmetry
+        buildConjunction
+        eliminateBiconditionalReverse
+
+        A P P1 P2 SymmetricPointUniqueness
+        applySyllogism
+))
+</jh>
+
+=== Distance-preserving ===
+Reflecting through a point preserves distances. That is, <code>A is-midpoint-of P′ P ∧ A is-midpoint-of Q′ Q → P Q ≡ P′ Q′</code>.<ref>Lemma l7_13 in Narboux</ref>
+
+[[File:Proof of lemma l7_13 in Narboux.svg]]
+The proof is a bit involved, so we'll start with a brief outline. The <code>P = A</code> case is trivial, so henceforth we assume <code>P ≠ A</code>. Starting with the line segment <code>P P′</code>, we extend the two endpoints to points <code>X</code> and <code>X′</code> (by a distance of <code>Q A</code> in both cases). Then we do something similar: extend both ends of <code>Q Q′</code> to <code>Y</code> and <code>Y′</code> by a distance of <code>P A</code>.
+
+The next step is <code>X′ Y′ ≡ Y X</code>, which we get by applying five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>.
+
+Then we apply inner five segment to baselines <code>Y Q A</code> and <code>Y′ Q′ A</code> and points <code>X</code> and <code>X′</code>, which gives <code>Q X ≡ Q′ X′</code>.
+
+Finally, applying inner five segment to baselines <code>X P A</code> and <code>X′ P′ A</code> and points Q and <code>Q′</code> yields <code>P Q ≡ P′ Q′</code>, as desired.
+
+We start formalizing this proof with the <code>P = A</code> case. Because <code>A</code> is the midpoint of <code>Q′ Q</code>, we know that <code>Q′ A ≡ Q A</code>, and we can substitute <code>P</code> for <code>A</code>. We can also substitute <code>P′</code> for <code>A</code>, as <code>A = P′</code> follows from <code>P = A</code> and <code>P′ A ≡ A P</code>.
+
+To understand the organization of the proof, it is based on the substitution <code>A = P′ ∧ A = P → (Q′ A ≡ Q A ↔ Q′ P′ ≡ Q P)</code>.
+<jh>
+thm (SymmetricPointDistance-pa () ()
+  (((P = A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
+  (P Q ≡ P′ Q′)) (
+</jh>
+First we need <code>A = P′</code>, which follows from <code>P = A</code> and <code>P A ≡ A P′</code>.
+<jh>
+        (P = A)
+          ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))
+          ConjunctionRightElimination
+
+        (P = A)
+          ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        A P′ P MidpointSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        P A A P′ CongruenceIdentityFromEquality
+        applySyllogism
+</jh>
+Second is <code>A = P</code>.
+<jh>
+        (P = A)
+          ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))
+          ConjunctionRightElimination
+
+        P A EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction 
+</jh>
+Last is <code>Q′ A ≡ Q A</code>
+<jh>
+        (P = A)
+          ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        Q′ A A Q CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+We're ready to prove and apply <code>A = P′ ∧ A = P → (Q′ A ≡ Q A ↔ Q′ P′ ≡ Q P)</code>.
+<jh>
+        Q EqualityReflexivity
+        Q′ EqualityReflexivity
+        Q′ Q′ A P′ Q Q A P CongruenceBuilder
+        detach1of4
+        detach2of3
+
+        eliminateBiconditionalReverseInConsequent
+        import
+
+        applySyllogism
+</jh>
+Now we just need to rearrange <code>Q′ P′ ≡ Q P</code> into <code>P Q ≡ P′ Q′</code>.
+<jh>
+        Q′ P′ Q P CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Q P Q′ P′ CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+#thm (SymmetricPointDistance () ()
+#  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
+#  (P Q ≡ P′ Q′)) (
+#))
+</jh>
+
+{{under construction}}
+
+== Export ==
+We now export to [[Interface:Midpoint]].
+<jh>
+#export (RESULTS Interface:Midpoint (CLASSICAL FIRSTORDER) ())
+</jh>
+
+Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+* Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
