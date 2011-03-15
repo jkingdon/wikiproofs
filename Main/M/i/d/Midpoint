@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″)
+var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′)
 var (point P1 P2)
 var (variable a b c c′ d d′ e e′ f p p′ x y z)
 </jh>
@@ -47,7 +47,9 @@ thm (IndivisibilityBiconditional () () ((between A B A) ↔ (A = B)) (
 thm (MidpointIndivisibility () ()
   ((M is-midpoint-of A A) → (M = A)) (
         (between A M A) (A M ≡ M A) ConjunctionRightElimination
+
         A M IndivisibilityBiconditional
+        eliminateBiconditionalReverse
         applySyllogism
 
         A M EqualitySymmetry
@@ -196,7 +198,7 @@ and <code>A P2 ≡ P A</code>
 
         composeConjunction
 
-        P A P1 P A SegmentConstructionUniqueness
+        P A P1 P A P2 SegmentConstructionUniqueness
         applySyllogism
 ))
 </jh>
@@ -230,7 +232,7 @@ thm (SymmetricPointOneToOne () ()
         A P P1 P2 SymmetricPointUniqueness
         applySyllogism
 ))
-</ref>
+</jh>
 
 === Distance-preserving ===
 Reflecting through a point preserves distances. That is, <code>A is-midpoint-of P′ P ∧ A is-midpoint-of Q′ Q → P Q ≡ P′ Q′</code>.<ref>Lemma l7_13 in Narboux</ref>
@@ -272,12 +274,18 @@ First we need <code>A = P′</code>, which follows from <code>P = A</code> and <
         composeConjunction
 
         P A A P′ CongruenceIdentityFromEquality
+        applySyllogism
 </jh>
 Second is <code>A = P</code>.
 <jh>
         (P = A)
           ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))
           ConjunctionRightElimination
+
+        P A EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
         composeConjunction 
 </jh>
 Last is <code>Q′ A ≡ Q A</code>
@@ -288,7 +296,7 @@ Last is <code>Q′ A ≡ Q A</code>
         eliminateLeftConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
-        Q′ A Q CongruenceRightCommutativity
+        Q′ A A Q CongruenceRightCommutativity
         eliminateBiconditionalReverse
         applySyllogism
 
@@ -305,6 +313,16 @@ We're ready to prove and apply <code>A = P′ ∧ A = P → (Q′ A ≡ Q A ↔ 
         eliminateBiconditionalReverseInConsequent
         import
 
+        applySyllogism
+</jh>
+Now we just need to rearrange <code>Q′ P′ ≡ Q P</code> into <code>P Q ≡ P′ Q′</code>.
+<jh>
+        Q′ P′ Q P CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Q P Q′ P′ CongruenceCommutativity
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 
