@@ -325,6 +325,176 @@ Now we just need to rearrange <code>Q′ P′ ≡ Q P</code> into <code>P Q ≡ 
         eliminateBiconditionalReverse
         applySyllogism
 ))
+</jh>
+
+The first step for the <code>P ≠ A</code> case is to construct the points we will need. The first lemma constructs two points (and we'll be able to use it twice, once for <code>x</code> and <code>x′</code> and once for <code>y</code> and <code>y′</code>).
+
+<jh>
+thm (SymmetricPointDistance-xx (
+    (P x x′) (P′ x x′) (Q x x′)
+  ) () (∃ x (∃ x′ (
+    ((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+      ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))
+    ))) (
+        x P′ P Q A SegmentConstruction
+
+        x′ (value x) P′ Q A SegmentConstruction
+        x generalize
+
+        introduceConjunction
+
+        x
+          ((between P′ P (value x)) ∧ (P (value x) ≡ Q A))
+          (∃ x′ ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A)))
+          ThereExistsConjunctionRightCombining
+        applyModusPonens
+
+        x′
+          ((between P′ P (value x)) ∧ (P (value x) ≡ Q A))
+          ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        x addThereExists
+        applyModusPonens
+))
+
+thm (SymmetricPointDistance-xxyy (
+    (P x x′ y y′) (P′ x x′ y y′) (Q x x′ y y′) (Q′ x x′ y y′)
+  ) ()
+  (((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
+  (∃ x (∃ x′ (∃ y (∃ y′ (
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+    ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))) ∧
+    (((between Q′ Q (value y)) ∧ (Q (value y) ≡ P A)) ∧
+    ((between (value y) Q′ (value y′)) ∧
+      (Q′ (value y′) ≡ P A)))))))))) (
+</jh>
+First we stick something on the proof stack for later use.
+<jh>
+        ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ImplicationReflexivity
+</jh>
+Leaving that aside, the next step is to construct our four points.
+<jh>
+        x x′ P′ P Q A SymmetricPointDistance-xx
+        y y′ Q′ Q P A SymmetricPointDistance-xx
+        introduceConjunction
+</jh>
+Now we move the quantifiers to the front.
+<jh>
+        x
+          (∃ x′ (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))))
+          (∃ y (∃ y′ (((between Q′ Q (value y)) ∧
+              (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A)))))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applyModusPonens
+
+        x′
+          (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A)))
+          (∃ y (∃ y′ (((between Q′ Q (value y)) ∧
+              (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A)))))
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        x addThereExists
+        applyModusPonens
+
+        y
+          (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A)))
+          (∃ y′ (((between Q′ Q (value y)) ∧
+              (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        x′ addThereExists
+        x addThereExists
+        applyModusPonens
+
+        y′
+          (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A)))
+          (((between Q′ Q (value y)) ∧
+              (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A)))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        y addThereExists
+        x′ addThereExists
+        x addThereExists
+        applyModusPonens
+</jh>
+Now we just need to pick <code>P ≠ A ∧ (A is-midpoint-of P′ P ∧ A is-midpoint-of Q′ Q)</code> up off the proof stack and move it inside the quantifiers.
+<jh>
+        introduceRightConjunctToConsequent
+        x
+          ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          (∃ x′ (∃ y (∃ y′ (
+            (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))) ∧
+            (((between Q′ Q (value y)) ∧ (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A)))))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        x′
+          ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          (∃ y (∃ y′ (
+            (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))) ∧
+            (((between Q′ Q (value y)) ∧ (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A))))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        x addThereExists
+        applySyllogism
+
+        y
+          ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          (∃ y′ (
+            (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))) ∧
+            (((between Q′ Q (value y)) ∧ (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A)))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        x′ addThereExists
+        x addThereExists
+        applySyllogism
+
+        y′
+          ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          (
+            (((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
+            ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))) ∧
+            (((between Q′ Q (value y)) ∧ (Q (value y) ≡ P A)) ∧
+            ((between (value y) Q′ (value y′)) ∧
+              (Q′ (value y′) ≡ P A))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        y addThereExists
+        x′ addThereExists
+        x addThereExists
+        applySyllogism
+))
+
+#thm (SymmetricPointDistance-pnota () ()
+#  (((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
+#  (P Q ≡ P′ Q′)) (
+#))
+</jh>
 
 #thm (SymmetricPointDistance () ()
 #  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
