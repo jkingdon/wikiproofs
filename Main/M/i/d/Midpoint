@@ -489,6 +489,119 @@ Now we just need to pick <code>P ≠ A ∧ (A is-midpoint-of P′ P ∧ A is-mid
         x addThereExists
         applySyllogism
 ))
+</jh>
+
+The next step is <code>X′ Y′ ≡ Y X</code>, which we get by applying outer five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>. We break some of the steps into their own lemmas.
+<jh>
+thm (SymmetricPointDistance-xa () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (X ≠ A)) (
+</jh>
+First we prove <code>between A P X</code> from <code>between P′ A P</code> and <code>between P′ P X</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        P′ A P X BetweennessInnerTransitivityFlipped
+        applySyllogism
+</jh>
+We'll also need <code>A ≠ P</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        P A EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+
+        composeConjunction
+</jh>
+So far we have <code>between A P X ∧ A ≠ P</code>, and we want to show that it implies <code>A ≠ X</code>. This is just <code>IndivisibilityFromEquality</code> and some rearrangement. In this case, indivisibility is <code>A = X ∧ between A P X → A = P</code>.
+<jh>
+        A X P IndivisibilityFromEquality
+        export
+        applyComm
+
+        (A = X) (A = P) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+        applySyllogism
+))
+
+thm (SymmetricPointDistance-xyyx () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (X′ Y′ ≡ Y X)) (
+</jh>
+First we need <code>X ≠ A</code>. It follows from <code>between A P X</code> and <code>P ≠ A</code>. In turn, <code>between A P X</code> follows from <code>between P′ A P</code> and <code>between P′ P X</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-xa
+</jh>
+Next is <code>between X A X′</code>. This follows by applying transitivity twice. The first application is <code>between P′ A P ∧ between P′ P X → between P′ A X</code>, and the second is <code>between X A P′ ∧ between X P′ X′ → between P P′ X′</code>.
+<jh>
+between P′ A P
+between P′ P X   → between P′ A X    ABC ACD → ABD
+
+between X A P′
+between X P′ X′   → between X A X′    ABC ACD → ABD
+
+</jh>
+Next is <code>between Y′ A Y</code>.
+<jh>
+</jh>
+Next is <code>X A ≡ Y′ A</code>.
+<jh>
+</jh>
+Next is <code>A X′ ≡ A Y</code>.
+<jh>
+</jh>
+Next is <code>X Y′ ≡ Y′ X</code>.
+<jh>
+        X Y′ CongruenceABBA
+        composeConjunction
+</jh>
+Next is <code>A Y′ ≡ A X</code>.
+<jh>
+</jh>
+That gives us <code>X′ Y′ ≡ Y X</code>.
+<jh>
+))
 
 #thm (SymmetricPointDistance-pnota () ()
 #  (((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
