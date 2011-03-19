@@ -540,6 +540,7 @@ We'll also need <code>A ≠ P</code>.
             (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
             ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
           ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
         P A EqualitySymmetry
         addNegation
         eliminateBiconditionalReverse
@@ -569,21 +570,115 @@ thm (SymmetricPointDistance-xyyx () ()
     ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
   (X′ Y′ ≡ Y X)) (
 </jh>
-First we need <code>X ≠ A</code>. It follows from <code>between A P X</code> and <code>P ≠ A</code>. In turn, <code>between A P X</code> follows from <code>between P′ A P</code> and <code>between P′ P X</code>.
+First we need <code>X ≠ A</code>.
 <jh>
         P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-xa
 </jh>
-Next is <code>between X A X′</code>. This follows by applying transitivity twice. The first application is <code>between P′ A P ∧ between P′ P X → between P′ A X</code>, and the second is <code>between X A P′ ∧ between X P′ X′ → between P P′ X′</code>.
+Next is <code>between X A X′</code>. This follows by applying transitivity twice. The first application is <code>between P′ A P ∧ between P′ P X → between P′ A X</code>,
 <jh>
-between P′ A P
-between P′ P X   → between P′ A X    ABC ACD → ABD
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
-between X A P′
-between X P′ X′   → between X A X′    ABC ACD → ABD
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
+        composeConjunction
+
+        P′ A P X BetweennessMiddleTransitivityFlipped
+        applySyllogism
 </jh>
-Next is <code>between Y′ A Y</code>.
+and the second is <code>between X A P′ ∧ between X P′ X′ → between X A X′</code>.
 <jh>
+        P′ A X BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        X A P′ X′ BetweennessMiddleTransitivityFlipped
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>between Y′ A Y</code>. The proof is extremely similar to that for <code>between X A X′</code> (in fact, it is a close call whether to break out a lemma to express the commonality, but here we just repeat the similar proof). The first application of transitivity is <code>between Q′ A Q ∧ between Q′ Q Y → between Q′ A Y</code>,
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        Q′ A Q Y BetweennessMiddleTransitivityFlipped
+        applySyllogism
+</jh>
+and the second is <code>between Y A Q′ ∧ between Y Q′ Y′ → between Y A Y′</code>.
+<jh>
+        Q′ A Y BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        Y A Q′ Y′ BetweennessMiddleTransitivityFlipped
+        applySyllogism
+
+        composeConjunction
 </jh>
 Next is <code>X A ≡ Y′ A</code>.
 <jh>
