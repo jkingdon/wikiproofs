@@ -792,7 +792,7 @@ The other is <code>P X ≡ Q A</code>.
 </jh>
 The next congruence is <code>A Y′ ≡ X′ A</code>, by three segment from <code>A Q′ Y′</code> and <code>X′ P′ A</code>.
 <jh>
-thm (SymmetricPointDistance-axya () ()
+thm (SymmetricPointDistance-ayxa () ()
   ((
     ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
     ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
@@ -902,7 +902,93 @@ This lets us conclude <code>A Y′ ≡ X′ A</code>.
 ))
 </jh>
 
-The next step is <code>X′ Y′ ≡ Y X</code>, which we get by applying outer five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>. We break some of the steps into their own lemmas.
+We have one more similar congruence, <code>A Y ≡ A Y′</code>, which follows from outer three segment on lines <code>A Q Y</code> and <code>A Q′ Y′</code>.
+<jh>
+thm (SymmetricPointDistance-ayay () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A Y ≡ A Y′)) (
+</jh>
+First is <code>between A Q Y</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-aqy
+</jh>
+Next is <code>between A Q′ Y′</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-qprime-yprime
+
+        composeConjunction
+</jh>
+The first congruence is <code>A Q ≡ A Q′</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        Q′ A A Q CongruenceLeftCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        A Q′ A Q CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The other congruence is <code>Q Y ≡ Q′ Y′</code>, which holds because each of those line segments is congruent to <code>P A</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        Q′ Y′ P A CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        Q Y P A Q′ Y′ CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+We can now conclude <code>A Y ≡ A Y′</code>.
+<jh>
+        A Q Y A Q′ Y′ OuterThreeSegment
+        applySyllogism
+))
+</jh>
+
+All that seems fairly preparatory, and visually obvious. Now for a more substantial result: <code>X′ Y′ ≡ Y X</code>, which we get by applying outer five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>. We break <code>X ≠ A</code> into its own lemma, and then proceed with outer five segment.
 <jh>
 thm (SymmetricPointDistance-xa () ()
   ((
@@ -1063,22 +1149,81 @@ and the second is <code>between Y A Q′ ∧ between Y Q′ Y′ → between Y A
 
         composeConjunction
 </jh>
-Next is <code>X A ≡ Y′ A</code>.
+Next is <code>X A ≡ Y′ A</code>, which follows from <code>A X ≡ Y A</code> and <code>A Y ≡ A Y′</code>.
 <jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
+
+        A X Y A CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        composeConjunction
+
+        X A A Y A Y′ CongruenceTransitivity
+        applySyllogism
+
+        X A A Y′ CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
 </jh>
-Next is <code>A X′ ≡ A Y</code>.
+Next is <code>A X′ ≡ A Y</code>, which follows from <code>A Y′ ≡ X′ A</code> and <code>A Y ≡ A Y′</code>.
 <jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayxa
+
+        A Y′ X′ A CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        X′ A A Y′ CongruenceLeftCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        A Y A Y′ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A X′ A Y′ A Y CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
 </jh>
 Next is <code>X Y′ ≡ Y′ X</code>.
 <jh>
         X Y′ CongruenceABBA
         composeConjunction
 </jh>
-Next is <code>A Y′ ≡ A X</code>.
+Next is <code>A Y′ ≡ A X</code>. It is essentially the same as <code>X A ≡ Y′ A</code> which we did a few steps back, but we'll just rederive it (suitably rearranged) from <code>A Y ≡ A Y′</code> and <code>A X ≡ Y A</code>.
 <jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        A Y A Y′ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        A Y′ A Y CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
+
+        A X Y A CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
 </jh>
 That gives us <code>X′ Y′ ≡ Y X</code>.
 <jh>
+        X A X′ Y′ A Y Y′ X OuterFiveSegment
+        applySyllogism
 ))
 
 #thm (SymmetricPointDistance-pnota () ()

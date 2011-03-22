@@ -85,9 +85,13 @@ Items which may be doable without a network connection:
     • antisymmetry
     • (x - y) · (y - x) = 0 → x = y (follows from x · y = 0 → x = 0 or y = 0)
 
-* Probably worth a convenience theorem for  ThereExistsConjunctionRightMovement +
- eliminateBiconditionalForward +
- applySyllogism
+* convenience theorems for:
+  swapCongruenceInConsequent
+  swapBetweennessInConsequent
+  commuteCongruenceInConsequent
+  commuteCongruenceRightInConsequent
+  commuteCongruenceLeftInConsequent
+  what else?
 
 To do with network:
 
