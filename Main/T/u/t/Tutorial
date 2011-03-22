@@ -22,7 +22,7 @@ The <code>succfunc</code> statement requires one hypothesis, <code>(x = y)</code
 The first line pushes the expression <code>((succ ((2) + (0))) = ((2) + (succ (0))))</code> on the stack. So we have now ''two'' expressions on the stack:
 # <code>((3) = (succ ((2) + (0))))</code>
 # <code>((succ ((2) + (0))) = ((2) + (succ (0))))</code>
-This means we have proved these two expressions, and they look like they could be combined to the single expression <code>((3) = ((2) + (1)))</code> (with <code>(succ (0))</code> already simplified to <code>(1)</code>). That's just what <code>eqtransitive</code> does: it needs two expressions, the two on the stack match, so they are popped. Unification determines all variables, so we get the combined expression on the stack. All we've got to do now is doing the same thing once more to go from <code>(3)</code> to <code>(4)</code>:
+This means we have proved these two expressions, and they look like they could be combined to the single expression <code>((3) = ((2) + (1)))</code> (with <code>(succ (0))</code> already simplified to <code>(1)</code>). That's just what <code>eqtransitive</code> does: it needs two expressions, the two on the stack match, so they are popped. Unification determines all variables, so we get the combined expression on the stack. Now we just need to do the same thing once more to go from <code>(3)</code> to <code>(4)</code>:
 <jh>        succfunc
         (2) (1) addsucc
         eqtransitive
