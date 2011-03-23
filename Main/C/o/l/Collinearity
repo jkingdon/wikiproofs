@@ -252,9 +252,7 @@ thm (CollinearityConstructDegenerateTriangle-abc-bc () ()
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 
-        B′ C′ B C CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 ))
 
 thm (CollinearityConstructDegenerateTriangle-abc-ac () ()
@@ -325,9 +323,7 @@ thm (CollinearityConstructDegenerateTriangle-cab-ac () ()
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 
-        A′ C′ A C CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 ))
 
 thm (CollinearityConstructDegenerateTriangle-cab-bc () ()
@@ -343,9 +339,7 @@ Next, <code>between C′ A′ B′</code>.
         eliminateLeftConjunctionInConsequent
         eliminateRightConjunctionInConsequent
 
-        B′ A′ C′ BetweennessSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapBetweennessInConsequent
 
         composeConjunction
 </jh>
@@ -353,9 +347,7 @@ We need two congruences. The first is <code>C A ≡ C′ A′</code>.
 <jh>
         C A B A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-ac
 
-        A C A′ C′ CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -371,9 +363,7 @@ We can now apply outer three segment.
         C A B C′ A′ B′ OuterThreeSegment
         applySyllogism
 
-        C B C′ B′ CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceInConsequent
 ))
 
 thm (CollinearityConstructDegenerateTriangle-cab-core () ()
@@ -628,15 +618,11 @@ thm (FiveSegment-bac () () ((between B A C) → (((((A ≠ B) ∧ (A B C ≅ A�
         composeConjunction
 
         (between B A C) A B C A′ B′ C′ D D′ FiveSegment-ab
-        A B A′ B′ CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceInConsequent
         composeConjunction
 
         (between B A C) A B C A′ B′ C′ D D′ FiveSegment-ca
-        C A C′ A′ CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceInConsequent
         composeConjunction
 
         (between B A C) A B C A′ B′ C′ D D′ FiveSegment-bd

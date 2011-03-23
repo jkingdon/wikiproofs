@@ -14,6 +14,7 @@ import (AXIOMS Interface:Tarski's_geometry_axioms (CLASSICAL FIRSTORDER) ())
 var (point x y z w u v A B C D E P Q A′ B′ C′ D′ B″ C″)
 var (point x′ y′ z′ w′ u′)
 var (variable a b b′ c d′ q q′ ww ww′ b″ c″)
+var (formula antecedent)
 </jh>
 
 == Congruence ==
@@ -43,6 +44,13 @@ thm (CongruenceSymmetry () () ((x y ≡ z w) ↔ (z w ≡ x y)) (
         z w x y CongruenceSymmetryImplication
         introduceBiconditionalFromImplications
 ))
+
+thm (swapCongruenceInConsequent () ((H (antecedent → (x y ≡ z w))))
+  (antecedent → (z w ≡ x y)) (
+        H
+        x y z w CongruenceSymmetryImplication
+        applySyllogism
+))
 </jh>
 
 Congruence is transitive.<ref>Lemma cong_transitivity in Narboux</ref>
@@ -71,6 +79,13 @@ thm (CongruenceLeftCommutativity () () ((x y ≡ z w) ↔ (y x ≡ z w)) (
         y x z w CongruenceLeftCommutativityImplication
         introduceBiconditionalFromImplications
 ))
+
+thm (commuteCongruenceLeftInConsequent () ((H (antecedent → (x y ≡ z w))))
+  (antecedent → (y x ≡ z w)) (
+        H
+        x y z w CongruenceLeftCommutativityImplication
+        applySyllogism
+))
 </jh>
 
 Likewise for the second line segment.<ref>Lemma cong_right_commutativity in Narboux, biconditionalized</ref>
@@ -83,6 +98,14 @@ thm (CongruenceRightCommutativity () () ((x y ≡ z w) ↔ (x y ≡ w z)) (
 
         w z x y CongruenceSymmetry
         applyBiconditionalTransitivity
+))
+
+thm (commuteCongruenceRightInConsequent () ((H (antecedent → (x y ≡ z w))))
+  (antecedent → (x y ≡ w z)) (
+        H
+        x y z w CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
@@ -145,6 +168,14 @@ thm (CongruenceCommutativity () () ((x y ≡ z w) ↔ (y x ≡ w z)) (
         x y z w CongruenceLeftCommutativity
         y x z w CongruenceRightCommutativity
         applyBiconditionalTransitivity
+))
+
+thm (commuteCongruenceInConsequent () ((H (antecedent → (x y ≡ z w))))
+  (antecedent → (y x ≡ w z)) (
+        H
+        x y z w CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
@@ -228,8 +259,7 @@ We get most of the way with <code>x y ≡ x′ y′ ∧ y z ≡ y′ z′ → (x
         ((x y ≡ x′ y′) ∧ (y z ≡ y′ z′)) ImplicationReflexivity
 
         (x y ≡ x′ y′) (y z ≡ y′ z′) ConjunctionRightElimination
-        x y x′ y′ CongruenceCommutativity eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -283,12 +313,11 @@ And then that it implies <code>A y ≡ B C</code>.
 </jh>
 We apply symmetry to turn that into <code>B C ≡ A y</code>.
 <jh>
-        A y B C CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 </jh>
 We combine the two to get <code>A x ≡ B C ∧ B C ≡ A y</code>, and apply transitivity to finish.
 <jh>
+        applyCongruenceTransitivityInConsequent
         composeConjunction
 
         A x B C A y CongruenceTransitivity

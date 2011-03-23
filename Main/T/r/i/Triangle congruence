@@ -391,9 +391,7 @@ The last conjunct is <code>z x ≡ z′ x′</code>
         eliminateRightConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 
-        x z x′ z′ CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -402,9 +400,7 @@ Applying inner five segment gives us <code>y x ≡ y′ x′</code>, and we just
         x y z x′ y′ z′ x x′ InnerFiveSegment
         applySyllogism
 
-        y x y′ x′ CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceInConsequent
 ))
 </jh>
 
@@ -659,9 +655,7 @@ Third is <code>A B ≡ A′ B′</code>.
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 
-        A′ B′ A B CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -676,9 +670,7 @@ Fourth is <code>B C ≡ B′ C″</code>.
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 
-        B′ C″ B C CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -769,9 +761,7 @@ The second is <code>between D′ A′ C′</code>.
         eliminateRightConjunctionInConsequent
         eliminateRightConjunctionInConsequent
 
-        C′ A′ D′ BetweennessSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapBetweennessInConsequent
 
         composeConjunction
 </jh>
@@ -785,9 +775,7 @@ The third is <code>A′ C′ ≡ A C</code>.
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 
-        A C A′ C′ CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -800,9 +788,7 @@ And the last is <code>A′ C″ ≡ A C</code>.
 <jh>
         C′ A′ D′ B′ A B C″ C InnerDegenerateTriangle-acac
 
-        A C A′ C″ CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -857,9 +843,7 @@ thm (InnerDegenerateTriangle-abcabc () () (
         eliminateLeftConjunctionInConsequent
         eliminateLeftConjunctionInConsequent
 
-        A′ B′ A B CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 </jh>
 <code>A C ≡ A′ C′</code>:
 <jh>
@@ -891,9 +875,7 @@ thm (InnerDegenerateTriangle-abcabc () () (
         C′ C″ B′ B C InnerDegenerateTriangle-bcbc
         applySyllogism
 
-        B′ C′ B C CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 ))
@@ -1021,9 +1003,7 @@ We start with <code>A′ B″ ≡ A B</code>.
         A B C A′ B″ C′ Congruence12
         applySyllogism
 
-        A B A′ B″ CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 </jh>
 In a similar way we get <code>A B ≡ A′ B′</code>.
 <jh>
@@ -1063,9 +1043,7 @@ We start with <code>B″ C′ ≡ B C</code>.
         A B C A′ B″ C′ Congruence23
         applySyllogism
 
-        B C B″ C′ CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 </jh>
 In a similar way we get <code>B C ≡ B′ C′</code>.
 <jh>
@@ -1085,9 +1063,7 @@ We now combine and rearrange a bit.
         B″ C′ B C B′ C′ CongruenceTransitivity
         applySyllogism
 
-        B″ C′ B′ C′ CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceInConsequent
 ))
 </jh>
 
