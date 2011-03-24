@@ -988,6 +988,19 @@ We can now conclude <code>A Y ≡ A Y′</code>.
 ))
 </jh>
 
+Other similar congruences can be derived from those by transitivity. Here is <code>A X ≡ A X′</code>
+<jh>
+thm (SymmetricPointDistance-axax () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A X ≡ A X′)) (
+))
+</jh>
+
 All that seems fairly preparatory, and visually obvious. Now for a more substantial result: <code>X′ Y′ ≡ Y X</code>, which we get by applying outer five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>. We break <code>X ≠ A</code> into its own lemma, and then proceed with outer five segment.
 <jh>
 thm (SymmetricPointDistance-xa () ()
@@ -1224,6 +1237,78 @@ That gives us <code>X′ Y′ ≡ Y X</code>.
 <jh>
         X A X′ Y′ A Y Y′ X OuterFiveSegment
         applySyllogism
+))
+
+</jh>
+Now it is time to apply inner five segment to baselines <code>Y Q A</code> and <code>Y′ Q′ A</code> and points <code>X</code> and <code>X′</code>, which gives <code>Q X ≡ Q′ X′</code>.
+<jh>
+thm (SymmetricPointDistance-qxqx () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (Q X ≡ Q′ X′)) (
+</jh>
+First we need betweenness for the two baselines, starting with <code>between Y Q A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-aqy
+
+        A Q Y BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Betweenness for the other baseline is <code>between Y′ Q′ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-qprime-yprime
+
+        A Q′ Y′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+We need two congruences for the baselines. The first is <code>Y A ≡ Y′ A</code>,
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        Y A Y′ A CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+and the other is <code>Q A ≡ Q′ A</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        commuteCongruenceRightInConsequent
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The congruences for the points are <code>Y X ≡ Y′ X′</code>,
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-xyyx
+        swapCongruenceInConsequent
+        commuteCongruenceRightInConsequent
+        composeConjunction
+</jh>
+and <code>A X ≡ A X′</code>.
+<jh>
+</jh>
+This lets us conclude <code>Q X ≡ Q′ X′</code>.
+<jh>
 ))
 
 #thm (SymmetricPointDistance-pnota () ()
