@@ -998,6 +998,22 @@ thm (SymmetricPointDistance-axax () ()
     (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
     ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
   (A X ≡ A X′)) (
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
+        commuteCongruenceRightInConsequent
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        composeConjunction
+        A X A Y A Y′ CongruenceTransitivity
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayxa
+
+        composeConjunction
+        A X A Y′ X′ A CongruenceTransitivity
+        applySyllogism
+
+        commuteCongruenceRightInConsequent
 ))
 </jh>
 
@@ -1306,9 +1322,13 @@ The congruences for the points are <code>Y X ≡ Y′ X′</code>,
 </jh>
 and <code>A X ≡ A X′</code>.
 <jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axax
+        composeConjunction
 </jh>
 This lets us conclude <code>Q X ≡ Q′ X′</code>.
 <jh>
+        Y Q A Y′ Q′ A X X′ InnerFiveSegment
+        applySyllogism
 ))
 
 #thm (SymmetricPointDistance-pnota () ()
