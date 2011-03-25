@@ -655,7 +655,7 @@ thm (SymmetricPointDistance-pprime-a-x () ()
     ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
     (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
     ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
-  (between Q′ A Y)) (
+  (between P′ A X)) (
         ((P ≠ A) ∧ 
             ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
           ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
@@ -936,13 +936,8 @@ The first congruence is <code>A Q ≡ A Q′</code>.
         eliminateLeftConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
-        Q′ A A Q CongruenceLeftCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
-
-        A Q′ A Q CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        commuteCongruenceLeftInConsequent
+        swapCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -1328,6 +1323,83 @@ and <code>A X ≡ A X′</code>.
 This lets us conclude <code>Q X ≡ Q′ X′</code>.
 <jh>
         Y Q A Y′ Q′ A X X′ InnerFiveSegment
+        applySyllogism
+))
+
+The next step is another application of inner five segment, which proves <code>P Q ≡ P′ Q′</code>. It uses baselines <code>X P A</code> and <code>X′ P′ A</code> and points <code>Q</code> and <code>Q′</code>.
+
+<jh>
+thm (SymmetricPointDistance-pqpq () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (P Q ≡ P′ Q′)) (
+</jh>
+Betweenness for the first baseline is <code>between X P A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-apx
+        swapBetweennessInConsequent
+</jh>
+Betweenness for the other baseline is <code>between X′ P′ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-pprime-xprime
+        swapBetweennessInConsequent
+        composeConjunction
+</jh>
+The first congruence for the baselines is <code>X A ≡ X′ A</code>
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axax
+        commuteCongruenceInConsequent
+        composeConjunction
+</jh>
+The other baseline congruence is <code>P A ≡ P′ A</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        commuteCongruenceRightInConsequent
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The first congruence for the points is <code>X Q ≡ X′ Q′</code>, which we have already proved.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-qxqx
+        commuteCongruenceInConsequent
+        composeConjunction
+</jh>
+The other congruence for the points is <code>A Q ≡ A Q′</code>, which follows directly from <code>A is-midpoint-of Q′ Q</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        commuteCongruenceLeftInConsequent
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+We are ready to conclude <code>P Q ≡ P′ Q′</code>.
+<jh>
+        X P A X′ P′ A Q Q′ InnerFiveSegment
         applySyllogism
 ))
 
