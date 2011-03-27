@@ -20,6 +20,7 @@ var (point x y z w u v A B C D Q)
 var (point x′ y′ z′ u′)
 
 var (variable a b c)
+var (formula antecedent)
 </jh>
 
 == Congruence of line segments ==
@@ -33,6 +34,13 @@ There are a variety of ways of expressing the idea that congruence is not affect
 stmt (CongruenceLeftCommutativity () () ((x y ≡ z w) ↔ (y x ≡ z w)))
 stmt (CongruenceRightCommutativity () () ((x y ≡ z w) ↔ (x y ≡ w z)))
 stmt (CongruenceCommutativity () () ((x y ≡ z w) ↔ (y x ≡ w z)))
+
+stmt (commuteCongruenceLeftInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (y x ≡ z w)))
+stmt (commuteCongruenceRightInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (x y ≡ w z)))
+stmt (commuteCongruenceInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (y x ≡ w z)))
 </jh>
 
 The congruence relation has the attributes of an equivalence relation between line segments.
@@ -42,6 +50,8 @@ stmt (CongruenceSymmetry () () ((x y ≡ z w) ↔ (z w ≡ x y)))
 stmt (CongruenceTransitivity () () (((x y ≡ z w) ∧ (z w ≡ u v)) → (x y ≡ u v)))
 
 stmt (CongruenceABBA () () (x y ≡ y x))
+stmt (swapCongruenceInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (z w ≡ x y)))
 </jh>
 
 A segment which has zero length starts and ends at the same point (although saying "zero length" is a bit of a shortcut, as our theory is not based on real numbers or any other numbers).
@@ -78,6 +88,9 @@ stmt (BetweennessEquality () () (((between A B C) ∧ (between B A C)) → (A = 
 The two endpoints of a betweenness relation are interchangeable.
 <jh>
 stmt (BetweennessSymmetry () () ((between A B C) ↔ (between C B A)))
+
+stmt (swapBetweennessInConsequent () ((antecedent → (between A B C)))
+  (antecedent → (between C B A)))
 </jh>
 
 === Transitivity ===
