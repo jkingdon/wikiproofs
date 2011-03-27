@@ -13,9 +13,9 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′)
+var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′ X′ Y′)
 var (point P1 P2)
-var (variable a b c c′ d d′ e e′ f p p′ x y z)
+var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
 </jh>
 
 == Midpoint defined ==
@@ -246,6 +246,7 @@ Then we apply inner five segment to baselines <code>Y Q A</code> and <code>Y′ 
 
 Finally, applying inner five segment to baselines <code>X P A</code> and <code>X′ P′ A</code> and points Q and <code>Q′</code> yields <code>P Q ≡ P′ Q′</code>, as desired.
 
+==== P = A case ====
 We start formalizing this proof with the <code>P = A</code> case. Because <code>A</code> is the midpoint of <code>Q′ Q</code>, we know that <code>Q′ A ≡ Q A</code>, and we can substitute <code>P</code> for <code>A</code>. We can also substitute <code>P′</code> for <code>A</code>, as <code>A = P′</code> follows from <code>P = A</code> and <code>P′ A ≡ A P</code>.
 
 To understand the organization of the proof, it is based on the substitution <code>A = P′ ∧ A = P → (Q′ A ≡ Q A ↔ Q′ P′ ≡ Q P)</code>.
@@ -327,11 +328,12 @@ Now we just need to rearrange <code>Q′ P′ ≡ Q P</code> into <code>P Q ≡ 
 ))
 </jh>
 
+==== Constructing X, X′, Y, and Y′ ====
 The first step for the <code>P ≠ A</code> case is to construct the points we will need. The first lemma constructs two points (and we'll be able to use it twice, once for <code>x</code> and <code>x′</code> and once for <code>y</code> and <code>y′</code>).
 
 <jh>
 thm (SymmetricPointDistance-xx (
-    (P x x′) (P′ x x′) (Q x x′)
+    (P x x′) (P′ x x′) (Q x x′) (A x x′)
   ) () (∃ x (∃ x′ (
     ((between P′ P (value x)) ∧ (P (value x) ≡ Q A)) ∧
       ((between (value x) P′ (value x′)) ∧ (P′ (value x′) ≡ Q A))
@@ -491,6 +493,7 @@ Now we just need to pick <code>P ≠ A ∧ (A is-midpoint-of P′ P ∧ A is-mid
 ))
 </jh>
 
+==== Applying betweenness transitivity ====
 [[File:Proof of lemma l7_13 in Narboux.svg|thumb|right|X′, P′, A, P, and X are in that order and so are Y′, Q′, A, Q, and Y]]
 Visually the diagram makes it clear that the points of each of the two lines are in a certain order: in the one case X′, P′, A, P, and X and in the other case Y′, Q′, A, Q, and Y. To express this formally involves a large number of betweenness formulas, and we now prove a number of them. The first is <code>between A P X</code>, which follows from <code>between P′ A P</code> and <code>between P′ P X</code>.
 <jh>
@@ -722,6 +725,7 @@ thm (SymmetricPointDistance-a-pprime-xprime () ()
 ))
 </jh>
 
+==== Congruences ====
 [[File:Proof of lemma l7_13 in Narboux.svg|thumb|right|A X, A Y, A X′, and A Y′ are all congruent]]
 From the diagram it should be clear that the line segments <code>A X</code>, <code>A Y</code>, <code>A X′</code>, and <code>A Y′</code> are all congruent, as they each consist of one line segment congruent to <code>P A</code> plus one congruent to <code>Q A</code>. We formalize this through a series of lemmas which apply the three segment theorem.
 <jh>
@@ -787,6 +791,7 @@ The other is <code>P X ≡ Q A</code>.
         composeConjunction
 
         A P X Y Q A OuterThreeSegment
+        applySyllogism
 ))
 
 </jh>
@@ -904,7 +909,7 @@ This lets us conclude <code>A Y′ ≡ X′ A</code>.
 
 We have one more similar congruence, <code>A Y ≡ A Y′</code>, which follows from outer three segment on lines <code>A Q Y</code> and <code>A Q′ Y′</code>.
 <jh>
-thm (SymmetricPointDistance-ayay () ()
+thm (SymmetricPointDistance-a-y-a-yprime () ()
   ((
     ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
     ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
@@ -965,9 +970,7 @@ The other congruence is <code>Q Y ≡ Q′ Y′</code>, which holds because each
         eliminateLeftConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
-        Q′ Y′ P A CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 
@@ -996,7 +999,7 @@ thm (SymmetricPointDistance-axax () ()
         P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
         commuteCongruenceRightInConsequent
 
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
 
         composeConjunction
         A X A Y A Y′ CongruenceTransitivity
@@ -1012,7 +1015,9 @@ thm (SymmetricPointDistance-axax () ()
 ))
 </jh>
 
-All that seems fairly preparatory, and visually obvious. Now for a more substantial result: <code>X′ Y′ ≡ Y X</code>, which we get by applying outer five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>. We break <code>X ≠ A</code> into its own lemma, and then proceed with outer five segment.
+==== X′ Y′ ≡ Y X ====
+
+All that seems fairly preparatory, and visually obvious. Now for a more substantial result: <code>X′ Y′ ≡ Y X</code>, which we get by applying outer five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>. We break some of the antecedents of outer five segment into their own lemmas, and then proceed with outer five segment.
 <jh>
 thm (SymmetricPointDistance-xa () ()
   ((
@@ -1034,9 +1039,11 @@ We'll also need <code>A ≠ P</code>.
             ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
+
         P A EqualitySymmetry
         addNegation
         eliminateBiconditionalReverse
+        applySyllogism
 
         composeConjunction
 </jh>
@@ -1052,22 +1059,25 @@ So far we have <code>between A P X ∧ A ≠ P</code>, and we want to show that 
 
         import
         applySyllogism
+</jh>
+Now we just flip <code>A ≠ X</code> to get <code>X ≠ A</code>.
+<jh>
+        A X EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 
-thm (SymmetricPointDistance-xyyx () ()
+thm (SymmetricPointDistance-x-a-xprime () ()
   ((
     ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
     ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
     ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
     (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
     ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
-  (X′ Y′ ≡ Y X)) (
+  (between X A X′)) (
 </jh>
-First we need <code>X ≠ A</code>.
-<jh>
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-xa
-</jh>
-Next is <code>between X A X′</code>. This follows by applying transitivity twice. The first application is <code>between P′ A P ∧ between P′ P X → between P′ A X</code>,
+Here we apply transitivity twice. The first application is <code>between P′ A P ∧ between P′ P X → between P′ A X</code>,
 <jh>
         ((P ≠ A) ∧ 
             ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
@@ -1117,10 +1127,17 @@ and the second is <code>between X A P′ ∧ between X P′ X′ → between X A
 
         X A P′ X′ BetweennessMiddleTransitivityFlipped
         applySyllogism
+))
 
-        composeConjunction
-</jh>
-Next is <code>between Y′ A Y</code>. The proof is extremely similar to that for <code>between X A X′</code> (in fact, it is a close call whether to break out a lemma to express the commonality, but here we just repeat the similar proof). The first application of transitivity is <code>between Q′ A Q ∧ between Q′ Q Y → between Q′ A Y</code>,
+thm (SymmetricPointDistance-y-a-yprime () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between Y A Y′)) (
+</jh>The proof is extremely similar to that for <code>between X A X′</code> (in fact, it is a close call whether to break out a lemma to express the commonality, but here we just repeat the similar proof). The first application of transitivity is <code>between Q′ A Q ∧ between Q′ Q Y → between Q′ A Y</code>,
 <jh>
         ((P ≠ A) ∧ 
             ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
@@ -1170,18 +1187,26 @@ and the second is <code>between Y A Q′ ∧ between Y Q′ Y′ → between Y A
 
         Y A Q′ Y′ BetweennessMiddleTransitivityFlipped
         applySyllogism
+))
 
-        composeConjunction
 </jh>
 Next is <code>X A ≡ Y′ A</code>, which follows from <code>A X ≡ Y A</code> and <code>A Y ≡ A Y′</code>.
 <jh>
+thm (SymmetricPointDistance-x-a-yprime-a () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (X A ≡ Y′ A)) (
         P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
 
         A X Y A CongruenceCommutativity
         eliminateBiconditionalReverse
         applySyllogism
 
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
 
         composeConjunction
 
@@ -1191,11 +1216,19 @@ Next is <code>X A ≡ Y′ A</code>, which follows from <code>A X ≡ Y A</code>
         X A A Y′ CongruenceRightCommutativity
         eliminateBiconditionalReverse
         applySyllogism
+))
 
-        composeConjunction
 </jh>
 Next is <code>A X′ ≡ A Y</code>, which follows from <code>A Y′ ≡ X′ A</code> and <code>A Y ≡ A Y′</code>.
 <jh>
+thm (SymmetricPointDistance-a-xprime-a-y () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A X′ ≡ A Y)) (
         P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayxa
 
         A Y′ X′ A CongruenceSymmetry
@@ -1206,42 +1239,59 @@ Next is <code>A X′ ≡ A Y</code>, which follows from <code>A Y′ ≡ X′ A<
         eliminateBiconditionalReverse
         applySyllogism
 
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
-
-        A Y A Y′ CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
+        swapCongruenceInConsequent
 
         composeConjunction
 
         A X′ A Y′ A Y CongruenceTransitivity
         applySyllogism
+))
 
+thm (SymmetricPointDistance-xyyx () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (X′ Y′ ≡ Y X)) (
+</jh>
+First we need <code>X ≠ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-xa
+</jh>
+Next is <code>between X A X′</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-x-a-xprime
+        composeConjunction
+</jh>
+Next is <code>between Y′ A Y</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-y-a-yprime
+        swapBetweennessInConsequent
+        composeConjunction
+</jh>
+Next is <code>X A ≡ Y′ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-x-a-yprime-a
+        composeConjunction
+</jh>
+Next is <code>A X′ ≡ A Y</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-xprime-a-y
         composeConjunction
 </jh>
 Next is <code>X Y′ ≡ Y′ X</code>.
 <jh>
         X Y′ CongruenceABBA
-        composeConjunction
+        introduceRightConjunctToConsequent
 </jh>
-Next is <code>A Y′ ≡ A X</code>. It is essentially the same as <code>X A ≡ Y′ A</code> which we did a few steps back, but we'll just rederive it (suitably rearranged) from <code>A Y ≡ A Y′</code> and <code>A X ≡ Y A</code>.
+Next is <code>A Y′ ≡ A X</code>. It is essentially the same as <code>X A ≡ Y′ A</code> which we did a few steps back.
 <jh>
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
-
-        A Y A Y′ CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
-
-        A Y′ A Y CongruenceRightCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
-
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
-
-        A X Y A CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
-
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-x-a-yprime-a
+        swapCongruenceInConsequent
+        commuteCongruenceInConsequent
         composeConjunction
 </jh>
 That gives us <code>X′ Y′ ≡ Y X</code>.
@@ -1249,8 +1299,9 @@ That gives us <code>X′ Y′ ≡ Y X</code>.
         X A X′ Y′ A Y Y′ X OuterFiveSegment
         applySyllogism
 ))
-
 </jh>
+
+==== Q X ≡ Q′ X′ ====
 Now it is time to apply inner five segment to baselines <code>Y Q A</code> and <code>Y′ Q′ A</code> and points <code>X</code> and <code>X′</code>, which gives <code>Q X ≡ Q′ X′</code>.
 <jh>
 thm (SymmetricPointDistance-qxqx () ()
@@ -1282,11 +1333,8 @@ Betweenness for the other baseline is <code>between Y′ Q′ A</code>.
 </jh>
 We need two congruences for the baselines. The first is <code>Y A ≡ Y′ A</code>,
 <jh>
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
-
-        Y A Y′ A CongruenceCommutativity
-        eliminateBiconditionalReverse
-        applySyllogism
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
+        commuteCongruenceInConsequent
 
         composeConjunction
 </jh>
@@ -1325,7 +1373,9 @@ This lets us conclude <code>Q X ≡ Q′ X′</code>.
         Y Q A Y′ Q′ A X X′ InnerFiveSegment
         applySyllogism
 ))
+</jh>
 
+==== P Q ≡ P′ Q′ ====
 The next step is another application of inner five segment, which proves <code>P Q ≡ P′ Q′</code>. It uses baselines <code>X P A</code> and <code>X′ P′ A</code> and points <code>Q</code> and <code>Q′</code>.
 
 <jh>
@@ -1402,20 +1452,50 @@ We are ready to conclude <code>P Q ≡ P′ Q′</code>.
         X P A X′ P′ A Q Q′ InnerFiveSegment
         applySyllogism
 ))
-
-#thm (SymmetricPointDistance-pnota () ()
-#  (((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
-#  (P Q ≡ P′ Q′)) (
-#))
 </jh>
 
-#thm (SymmetricPointDistance () ()
-#  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
-#  (P Q ≡ P′ Q′)) (
-#))
+==== Finishing the proof ====
+Combining the construction of the points and the proof of <code>P Q ≡ P′ Q′</code> from those points gives us the <code>P ≠ A</code> case of the proof.
+
+<jh>
+thm (SymmetricPointDistance-pnota
+  ( (P x x′ y y′) (P′ x x′ y y′) (Q x x′ y y′) (Q′ x x′ y y′) (A x x′ y y′)) ()
+  (((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
+  (P Q ≡ P′ Q′)) (
+        P A P′ Q′ Q x x′ y y′ SymmetricPointDistance-xxyy
+
+        P A P′ Q′ Q
+          (value x) (value x′) (value y) (value y′)
+          SymmetricPointDistance-pqpq
+        y′ addThereExists
+        y addThereExists
+        x′ addThereExists
+        x addThereExists
+
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
 </jh>
 
-{{under construction}}
+And finally we combine the <code>P = A</code> and <code>P ≠ A</code> cases.
+
+<jh>
+thm (SymmetricPointDistance () ()
+  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
+  (P Q ≡ P′ Q′)) (
+        P A P′ Q′ Q SymmetricPointDistance-pa
+        export
+
+        P A P′ Q′ Q SymmetricPointDistance-pnota
+        export
+
+        eliminateCases
+))
+</jh>
 
 == Export ==
 We now export to [[Interface:Midpoint]].

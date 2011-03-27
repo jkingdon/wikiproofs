@@ -3704,11 +3704,6 @@ We now export to [[Interface:Connectivity for betweenness]].
 export (RESULTS Interface:Connectivity_for_betweenness (CLASSICAL FIRSTORDER) ())
 </jh>
 
-Also, since this page is currently the last in the (in-progress) series on basic geometry, we export to [[Interface:Basic geometry]].
-<jh>
-export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
-</jh>
-
 == References ==
 <references/>
 * Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986

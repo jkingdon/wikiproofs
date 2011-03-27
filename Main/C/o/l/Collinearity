@@ -347,7 +347,7 @@ We need two congruences. The first is <code>C A ≡ C′ A′</code>.
 <jh>
         C A B A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-ac
 
-        swapCongruenceInConsequent
+        commuteCongruenceInConsequent
 
         composeConjunction
 </jh>
