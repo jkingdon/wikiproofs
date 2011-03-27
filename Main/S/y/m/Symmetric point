@@ -1015,6 +1015,296 @@ thm (SymmetricPointDistance-axax () ()
 ))
 </jh>
 
+==== X′ Y′ ≡ Y X ====
+
+All that seems fairly preparatory, and visually obvious. Now for a more substantial result: <code>X′ Y′ ≡ Y X</code>, which we get by applying outer five segment to baselines <code>X A X′</code> and <code>Y′ A Y</code> and points <code>Y′</code> and <code>X</code>. We break some of the antecedents of outer five segment into their own lemmas, and then proceed with outer five segment.
+<jh>
+thm (SymmetricPointDistance-xa () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (X ≠ A)) (
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-apx
+</jh>
+We'll also need <code>A ≠ P</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        P A EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+So far we have <code>between A P X ∧ A ≠ P</code>, and we want to show that it implies <code>A ≠ X</code>. This is just <code>IndivisibilityFromEquality</code> and some rearrangement. In this case, indivisibility is <code>A = X ∧ between A P X → A = P</code>.
+<jh>
+        A X P IndivisibilityFromEquality
+        export
+        applyComm
+
+        (A = X) (A = P) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        import
+        applySyllogism
+</jh>
+Now we just flip <code>A ≠ X</code> to get <code>X ≠ A</code>.
+<jh>
+        A X EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (SymmetricPointDistance-x-a-xprime () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between X A X′)) (
+</jh>
+Here we apply transitivity twice. The first application is <code>between P′ A P ∧ between P′ P X → between P′ A X</code>,
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        P′ A P X BetweennessMiddleTransitivityFlipped
+        applySyllogism
+</jh>
+and the second is <code>between X A P′ ∧ between X P′ X′ → between X A X′</code>.
+<jh>
+        P′ A X BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        X A P′ X′ BetweennessMiddleTransitivityFlipped
+        applySyllogism
+))
+
+thm (SymmetricPointDistance-y-a-yprime () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between Y A Y′)) (
+</jh>The proof is extremely similar to that for <code>between X A X′</code> (in fact, it is a close call whether to break out a lemma to express the commonality, but here we just repeat the similar proof). The first application of transitivity is <code>between Q′ A Q ∧ between Q′ Q Y → between Q′ A Y</code>,
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        Q′ A Q Y BetweennessMiddleTransitivityFlipped
+        applySyllogism
+</jh>
+and the second is <code>between Y A Q′ ∧ between Y Q′ Y′ → between Y A Y′</code>.
+<jh>
+        Q′ A Y BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        Y A Q′ Y′ BetweennessMiddleTransitivityFlipped
+        applySyllogism
+))
+
+</jh>
+Next is <code>X A ≡ Y′ A</code>, which follows from <code>A X ≡ Y A</code> and <code>A Y ≡ A Y′</code>.
+<jh>
+thm (SymmetricPointDistance-x-a-yprime-a () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (X A ≡ Y′ A)) (
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
+
+        A X Y A CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        composeConjunction
+
+        X A A Y A Y′ CongruenceTransitivity
+        applySyllogism
+
+        X A A Y′ CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+</jh>
+Next is <code>A X′ ≡ A Y</code>, which follows from <code>A Y′ ≡ X′ A</code> and <code>A Y ≡ A Y′</code>.
+<jh>
+thm (SymmetricPointDistance-a-xprime-a-y () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A X′ ≡ A Y)) (
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayxa
+
+        A Y′ X′ A CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        X′ A A Y′ CongruenceLeftCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        A Y A Y′ CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A X′ A Y′ A Y CongruenceTransitivity
+        applySyllogism
+))
+
+thm (SymmetricPointDistance-xyyx () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (X′ Y′ ≡ Y X)) (
+</jh>
+First we need <code>X ≠ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-xa
+</jh>
+Next is <code>between X A X′</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-x-a-xprime
+        composeConjunction
+</jh>
+Next is <code>between Y′ A Y</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-y-a-yprime
+        swapBetweennessInConsequent
+        composeConjunction
+</jh>
+Next is <code>X A ≡ Y′ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-x-a-yprime-a
+        composeConjunction
+</jh>
+Next is <code>A X′ ≡ A Y</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-xprime-a-y
+        composeConjunction
+</jh>
+Next is <code>X Y′ ≡ Y′ X</code>.
+<jh>
+        X Y′ CongruenceABBA
+        introduceRightConjunctToConsequent
+</jh>
+Next is <code>A Y′ ≡ A X</code>. It is essentially the same as <code>X A ≡ Y′ A</code> which we did a few steps back.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-x-a-yprime-a
+        swapCongruenceInConsequent
+        commuteCongruenceInConsequent
+        composeConjunction
+</jh>
+That gives us <code>X′ Y′ ≡ Y X</code>.
+<jh>
+        X A X′ Y′ A Y Y′ X OuterFiveSegment
+        applySyllogism
+))
+</jh>
+
+==== Finishing the proof ====
 {{under construction}}
 
 <jh>
