@@ -361,7 +361,7 @@ thm (SymmetricPointDistance-xx (
 ))
 
 thm (SymmetricPointDistance-xxyy (
-    (P x x′ y y′) (P′ x x′ y y′) (Q x x′ y y′) (Q′ x x′ y y′)
+    (P x x′ y y′) (P′ x x′ y y′) (Q x x′ y y′) (Q′ x x′ y y′) (A x x′ y y′)
   ) ()
   (((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
   (∃ x (∃ x′ (∃ y (∃ y′ (
