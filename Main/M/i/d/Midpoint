@@ -725,6 +725,296 @@ thm (SymmetricPointDistance-a-pprime-xprime () ()
 ))
 </jh>
 
+==== Congruences ====
+[[File:Proof of lemma l7_13 in Narboux.svg|thumb|right|A X, A Y, A X′, and A Y′ are all congruent]]
+From the diagram it should be clear that the line segments <code>A X</code>, <code>A Y</code>, <code>A X′</code>, and <code>A Y′</code> are all congruent, as they each consist of one line segment congruent to <code>P A</code> plus one congruent to <code>Q A</code>. We formalize this through a series of lemmas which apply the three segment theorem.
+<jh>
+thm (SymmetricPointDistance-axya () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A X ≡ Y A)) (
+</jh>
+First is <code>between A P X</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-apx
+</jh>
+Then <code>between Y Q A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-aqy
+
+        A Q Y BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The first congruence we'll need is <code>A P ≡ Y Q</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        Q Y P A CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A Q Y CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+The other is <code>P X ≡ Q A</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A P X Y Q A OuterThreeSegment
+        applySyllogism
+))
+
+</jh>
+The next congruence is <code>A Y′ ≡ X′ A</code>, by three segment from <code>A Q′ Y′</code> and <code>X′ P′ A</code>.
+<jh>
+thm (SymmetricPointDistance-ayxa () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A Y′ ≡ X′ A)) (
+</jh>
+First is <code>between A Q′ Y′</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-qprime-yprime
+</jh>
+Next is <code>between X′ P′ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-pprime-xprime
+
+        A P′ X′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>A Q′ ≡ X′ P′</code>, which holds because those two line segments are each congruent to <code>A Q</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        Q′ A A Q CongruenceLeftCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        P′ X′ Q A CongruenceCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        X′ P′ A Q CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+        A Q′ A Q X′ P′ CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+Last is <code>Q′ Y′ ≡ P′ A</code>, which holds because those two line segments are each congruent to <code>P A</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        P′ A A P CongruenceRightCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P′ A P A CongruenceSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+        Q′ Y′ P A P′ A CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+This lets us conclude <code>A Y′ ≡ X′ A</code>.
+<jh>
+        A Q′ Y′ X′ P′ A OuterThreeSegment
+        applySyllogism
+))
+</jh>
+
+We have one more similar congruence, <code>A Y ≡ A Y′</code>, which follows from outer three segment on lines <code>A Q Y</code> and <code>A Q′ Y′</code>.
+<jh>
+thm (SymmetricPointDistance-ayay () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A Y ≡ A Y′)) (
+</jh>
+First is <code>between A Q Y</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-aqy
+</jh>
+Next is <code>between A Q′ Y′</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-qprime-yprime
+
+        composeConjunction
+</jh>
+The first congruence is <code>A Q ≡ A Q′</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        commuteCongruenceLeftInConsequent
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The other congruence is <code>Q Y ≡ Q′ Y′</code>, which holds because each of those line segments is congruent to <code>P A</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        swapCongruenceInConsequent
+
+        composeConjunction
+
+        Q Y P A Q′ Y′ CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+We can now conclude <code>A Y ≡ A Y′</code>.
+<jh>
+        A Q Y A Q′ Y′ OuterThreeSegment
+        applySyllogism
+))
+</jh>
+
+Other similar congruences can be derived from those by transitivity. Here is <code>A X ≡ A X′</code>
+<jh>
+thm (SymmetricPointDistance-axax () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (A X ≡ A X′)) (
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
+        commuteCongruenceRightInConsequent
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+
+        composeConjunction
+        A X A Y A Y′ CongruenceTransitivity
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayxa
+
+        composeConjunction
+        A X A Y′ X′ A CongruenceTransitivity
+        applySyllogism
+
+        commuteCongruenceRightInConsequent
+))
+</jh>
+
 {{under construction}}
 
 <jh>
