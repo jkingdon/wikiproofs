@@ -317,7 +317,6 @@ We apply symmetry to turn that into <code>B C ≡ A y</code>.
 </jh>
 We combine the two to get <code>A x ≡ B C ∧ B C ≡ A y</code>, and apply transitivity to finish.
 <jh>
-        applyCongruenceTransitivityInConsequent
         composeConjunction
 
         A x B C A y CongruenceTransitivity
