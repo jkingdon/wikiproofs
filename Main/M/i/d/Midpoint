@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′)
+var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′ X′ Y′)
 var (point P1 P2)
 var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
 </jh>
@@ -489,6 +489,238 @@ Now we just need to pick <code>P ≠ A ∧ (A is-midpoint-of P′ P ∧ A is-mid
         y addThereExists
         x′ addThereExists
         x addThereExists
+        applySyllogism
+))
+</jh>
+
+==== Applying betweenness transitivity ====
+[[File:Proof of lemma l7_13 in Narboux.svg|thumb|right|X′, P′, A, P, and X are in that order and so are Y′, Q′, A, Q, and Y]]
+Visually the diagram makes it clear that the points of each of the two lines are in a certain order: in the one case X′, P′, A, P, and X and in the other case Y′, Q′, A, Q, and Y. To express this formally involves a large number of betweenness formulas, and we now prove a number of them. The first is <code>between A P X</code>, which follows from <code>between P′ A P</code> and <code>between P′ P X</code>.
+<jh>
+thm (SymmetricPointDistance-apx () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between A P X)) (
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        P′ A P X BetweennessInnerTransitivityFlipped
+        applySyllogism
+))
+</jh>
+
+A similar result is <code>between A Q Y</code>, which follows from <code>between Q′ A Q</code> and <code>between Q′ Q Y</code>.
+<jh>
+thm (SymmetricPointDistance-aqy () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between A Q Y)) (
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        Q′ A Q Y BetweennessInnerTransitivityFlipped
+        applySyllogism
+))
+</jh>
+
+The next betweenness result is <code>between A Q′ Y′</code>. Unlike the previous two, we need to apply transitivity twice (because of the way we constructed <code>Y′</code>). The first application applies transitivity to <code>between Q′ A Q</code> and <code>between Q′ Q Y</code> to give <code>between Q′ A Y</code>.
+<jh>
+thm (SymmetricPointDistance-qprime-a-y () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between Q′ A Y)) (
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        Q′ A Q Y BetweennessMiddleTransitivityFlipped
+        applySyllogism
+))
+</jh>
+The second application applies transitivity to <code>between Y′ Q′ Y</code> and <code>between Q′ A Y</code> to give <code>between Y′ Q′ A</code>.
+<jh>
+thm (SymmetricPointDistance-a-qprime-yprime () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between A Q′ Y′)) (
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        Y Q′ Y′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-qprime-a-y
+
+        composeConjunction
+
+        Y′ Q′ Y A BetweennessInnerTransitivity
+        applySyllogism
+
+        Y′ Q′ A BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+The same reasoning applied to the other line gives <code>between A P′ X′</code>. The first application of transitivity is to <code>between P′ A P</code> and <code>between P′ P X</code> and gives <code>between P′ A X</code>.
+<jh>
+thm (SymmetricPointDistance-pprime-a-x () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between P′ A X)) (
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        P′ A P X BetweennessMiddleTransitivityFlipped
+        applySyllogism
+))
+</jh>
+The second application applies transitivity to <code>between X′ P′ X</code> and <code>between P′ A X</code> to give <code>between X′ P′ A</code>.
+<jh>
+thm (SymmetricPointDistance-a-pprime-xprime () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (between A P′ X′)) (
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        X P′ X′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-pprime-a-x
+
+        composeConjunction
+
+        X′ P′ X A BetweennessInnerTransitivity
+        applySyllogism
+
+        X′ P′ A BetweennessSymmetry
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 </jh>
