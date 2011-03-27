@@ -14,6 +14,7 @@ import (START Interface:Line_segment_congruence (CLASSICAL FIRSTORDER) ())
 var (point x y z w u v A B C D E P Q A′ B′ C′ D′ B″ C″)
 var (point x′ y′ z′ w′ u′)
 var (variable a b b′ c d′ q q′ ww ww′ b″ c″)
+var (formula antecedent)
 </jh>
 
 == Betweenness ==
@@ -109,6 +110,13 @@ thm (BetweennessSymmetry () () ((between A B C) ↔ (between C B A)) (
         C B A BetweennessSymmetryImplication
         introduceBiconditionalFromImplications
 ))
+
+thm (swapBetweennessInConsequent () ((H (antecedent → (between A B C))))
+  (antecedent → (between C B A)) (
+        H
+        A B C BetweennessSymmetryImplication
+        applySyllogism
+))
 </jh>
 
 Symmetry lets us easily prove the other degenerate case.<ref>beetween_trivial2 in Narboux</ref>
@@ -156,9 +164,7 @@ That gives us <code>∃ a (between B a B ∧ between C a A)</code>. The <code>Be
         a B C A BetweenSubstitution
         applySyllogism
 
-        C B A BetweennessSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapBetweennessInConsequent
 ))
 </jh>
 
@@ -187,9 +193,7 @@ Now we are ready to apply inner transitivity (which, when expanded with these va
 </jh>
 Turning <code>between D C B</code> into <code>between B C D</code> finishes the proof.
 <jh>
-        D C B BetweennessSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapBetweennessInConsequent
 ))
 </jh>
 
@@ -730,9 +734,7 @@ To construct <code>q′</code>, we need <code>between A P A′</code> and <code>
 
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
         eliminateLeftConjunctionInConsequent
-        A′ B′ C BetweennessSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapBetweennessInConsequent
 
         composeConjunction
 
@@ -743,9 +745,7 @@ That gives us <code>between A B C ∧ between A′ B′ C ∧ between A P A′ �
 <jh>
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
         eliminateRightConjunctionInConsequent
-        A B C BetweennessSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        swapBetweennessInConsequent
 
         composeConjunction
 
