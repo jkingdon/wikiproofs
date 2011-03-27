@@ -1455,13 +1455,46 @@ We are ready to conclude <code>P Q ≡ P′ Q′</code>.
 </jh>
 
 ==== Finishing the proof ====
-{{under construction}}
+Combining the construction of the points and the proof of <code>P Q ≡ P′ Q′</code> from those points gives us the <code>P ≠ A</code> case of the proof.
 
 <jh>
-#thm (SymmetricPointDistance () ()
-#  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
-#  (P Q ≡ P′ Q′)) (
-#))
+thm (SymmetricPointDistance-pnota
+  ( (P x x′ y y′) (P′ x x′ y y′) (Q x x′ y y′) (Q′ x x′ y y′) (A x x′ y y′)) ()
+  (((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) →
+  (P Q ≡ P′ Q′)) (
+        P A P′ Q′ Q x x′ y y′ SymmetricPointDistance-xxyy
+
+        P A P′ Q′ Q
+          (value x) (value x′) (value y) (value y′)
+          SymmetricPointDistance-pqpq
+        y′ addThereExists
+        y addThereExists
+        x′ addThereExists
+        x addThereExists
+
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+</jh>
+
+And finally we combine the <code>P = A</code> and <code>P ≠ A</code> cases.
+
+<jh>
+thm (SymmetricPointDistance () ()
+  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
+  (P Q ≡ P′ Q′)) (
+        P A P′ Q′ Q SymmetricPointDistance-pa
+        export
+
+        P A P′ Q′ Q SymmetricPointDistance-pnota
+        export
+
+        eliminateCases
+))
 </jh>
 
 == Export ==
