@@ -909,7 +909,7 @@ This lets us conclude <code>A Y′ ≡ X′ A</code>.
 
 We have one more similar congruence, <code>A Y ≡ A Y′</code>, which follows from outer three segment on lines <code>A Q Y</code> and <code>A Q′ Y′</code>.
 <jh>
-thm (SymmetricPointDistance-ayay () ()
+thm (SymmetricPointDistance-a-y-a-yprime () ()
   ((
     ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
     ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
@@ -999,7 +999,7 @@ thm (SymmetricPointDistance-axax () ()
         P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axya
         commuteCongruenceRightInConsequent
 
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
 
         composeConjunction
         A X A Y A Y′ CongruenceTransitivity
@@ -1206,7 +1206,7 @@ thm (SymmetricPointDistance-x-a-yprime-a () ()
         eliminateBiconditionalReverse
         applySyllogism
 
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
 
         composeConjunction
 
@@ -1239,11 +1239,8 @@ thm (SymmetricPointDistance-a-xprime-a-y () ()
         eliminateBiconditionalReverse
         applySyllogism
 
-        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-ayay
-
-        A Y A Y′ CongruenceSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
+        swapCongruenceInConsequent
 
         composeConjunction
 
@@ -1300,6 +1297,80 @@ Next is <code>A Y′ ≡ A X</code>. It is essentially the same as <code>X A ≡
 That gives us <code>X′ Y′ ≡ Y X</code>.
 <jh>
         X A X′ Y′ A Y Y′ X OuterFiveSegment
+        applySyllogism
+))
+</jh>
+
+==== Q X ≡ Q′ X′ ====
+Now it is time to apply inner five segment to baselines <code>Y Q A</code> and <code>Y′ Q′ A</code> and points <code>X</code> and <code>X′</code>, which gives <code>Q X ≡ Q′ X′</code>.
+<jh>
+thm (SymmetricPointDistance-qxqx () ()
+  ((
+    ((P ≠ A) ∧ ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q))) ∧
+    ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+    ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+    (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+    ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))) →
+  (Q X ≡ Q′ X′)) (
+</jh>
+First we need betweenness for the two baselines, starting with <code>between Y Q A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-aqy
+
+        A Q Y BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Betweenness for the other baseline is <code>between Y′ Q′ A</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-qprime-yprime
+
+        A Q′ Y′ BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+We need two congruences for the baselines. The first is <code>Y A ≡ Y′ A</code>,
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-a-y-a-yprime
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+and the other is <code>Q A ≡ Q′ A</code>.
+<jh>
+        ((P ≠ A) ∧ 
+            ((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)))
+          ((((between P′ P X) ∧ (P X ≡ Q A)) ∧
+            ((between X P′ X′) ∧ (P′ X′ ≡ Q A))) ∧
+            (((between Q′ Q Y) ∧ (Q Y ≡ P A)) ∧
+            ((between Y Q′ Y′) ∧ (Q′ Y′ ≡ P A))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        commuteCongruenceRightInConsequent
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The congruences for the points are <code>Y X ≡ Y′ X′</code>,
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-xyyx
+        swapCongruenceInConsequent
+        commuteCongruenceRightInConsequent
+        composeConjunction
+</jh>
+and <code>A X ≡ A X′</code>.
+<jh>
+        P A P′ Q′ Q X X′ Y Y′ SymmetricPointDistance-axax
+        composeConjunction
+</jh>
+This lets us conclude <code>Q X ≡ Q′ X′</code>.
+<jh>
+        Y Q A Y′ Q′ A X X′ InnerFiveSegment
         applySyllogism
 ))
 </jh>
