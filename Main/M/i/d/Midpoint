@@ -1574,6 +1574,78 @@ thm (SymmetricPointBetweenness () ()
 ))
 </jh>
 
+=== Congruence-preserving ===
+The reflections (through a common point) of congruent line segments are congruent. In symbols, <code>A is-midpoint-of P P′ ∧ A is-midpoint-of Q Q′ ∧ A is-midpoint-of R R′ ∧ A is-midpoint-of S S′ ∧ P Q ≡ R S → P′ Q′ ≡ R′ S′</code>.<ref>l7_16 in Narboux</ref>
+
+The proof is just a matter of applying congruence transitivity to <code>P Q ≡ P′ Q′</code> and <code>R S ≡ R′ S′</code>, which come from <code>SymmetricPointDistance</code>, and <code>P Q ≡ R S</code> (which we are given).
+<jh>
+thm (SymmetricPointCongruence () ()
+  ((((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (A is-midpoint-of S S′)) ∧
+      (P Q ≡ R S)) →
+    (P′ Q′ ≡ R′ S′)) (
+</jh>
+First is <code>P′ Q′ ≡ P Q</code>.
+<jh>
+        ((((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′)) ∧
+            (A is-midpoint-of S S′))
+          (P Q ≡ R S)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A P P′ Q Q′ SymmetricPointDistance
+        applySyllogism
+</jh>
+Second is <code>P Q ≡ R S</code>.
+<jh>
+        ((((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′)) ∧
+            (A is-midpoint-of S S′))
+          (P Q ≡ R S)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        P′ Q′ P Q R S CongruenceTransitivity
+        applySyllogism
+</jh>
+And finally is <code>R S ≡ R′ S′</code>.
+<jh>
+        ((((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′)) ∧
+            (A is-midpoint-of S S′))
+          (P Q ≡ R S)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        ((((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′)) ∧
+            (A is-midpoint-of S S′))
+          (P Q ≡ R S)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A R R′ S S′ SymmetricPointDistance
+        applySyllogism
+
+        composeConjunction
+
+        P′ Q′ R S R′ S′ CongruenceTransitivity
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Midpoint]].
 <jh>
