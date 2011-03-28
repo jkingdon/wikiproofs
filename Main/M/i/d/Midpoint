@@ -1497,6 +1497,83 @@ thm (SymmetricPointDistance () ()
 ))
 </jh>
 
+=== Betweenness-preserving ===
+Reflecting through a point preserves betweenness relationships. That is, if a point is between two points and we reflect all three points through a common point <code>A</code>, then the corresponding one symmetric point is between the corresponding two symmetric points. In symbols, <code>A is-midpoint-of P P′ ∧ A is-midpoint-of Q Q′ ∧ A is-midpoint-of R R′ ∧ between P Q R → between P′ Q′ R′</code>.<ref>l7_15 in Narboux</ref>
+
+The proof first applies <code>SymmetricPointDistance</code> to each pair of points to prove the degenerate triangle congruence <code>P Q R ≌ P′ Q′ R′</code>. From there, it is a simple application of <code>BetweennessDegenerateTriangle</code>.
+
+<jh>
+thm (SymmetricPointBetweenness-congruence () ()
+  ((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) →
+    (P Q R ≌ P′ Q′ R′)) (
+        ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
+          (A is-midpoint-of R R′)
+          ConjunctionRightElimination
+        A P P′ Q Q′ SymmetricPointDistance
+        applySyllogism
+
+        ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
+          (A is-midpoint-of R R′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
+          (A is-midpoint-of R R′)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        A P P′ R R′ SymmetricPointDistance
+        applySyllogism
+
+        composeConjunction
+
+        ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
+          (A is-midpoint-of R R′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
+          (A is-midpoint-of R R′)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        A Q Q′ R R′ SymmetricPointDistance
+        applySyllogism
+
+        composeConjunction
+))
+
+thm (SymmetricPointBetweenness () ()
+  (((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (between P Q R)) →
+    (between P′ Q′ R′)) (
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (between P Q R)
+          ConjunctionLeftElimination
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (between P Q R)
+          ConjunctionRightElimination
+        A P P′ Q Q′ R R′ SymmetricPointBetweenness-congruence
+        applySyllogism
+
+        composeConjunction
+
+        P Q R P′ Q′ R′ BetweennessDegenerateTriangle
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Midpoint]].
 <jh>
