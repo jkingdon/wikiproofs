@@ -13,7 +13,7 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′ X′ Y′)
+var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′ R′ S′ X′ Y′)
 var (point P1 P2)
 var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
 </jh>
@@ -1500,20 +1500,26 @@ thm (SymmetricPointDistance () ()
 === Betweenness-preserving ===
 Reflecting through a point preserves betweenness relationships. That is, if a point is between two points and we reflect all three points through a common point <code>A</code>, then the corresponding one symmetric point is between the corresponding two symmetric points. In symbols, <code>A is-midpoint-of P P′ ∧ A is-midpoint-of Q Q′ ∧ A is-midpoint-of R R′ ∧ between P Q R → between P′ Q′ R′</code>.<ref>l7_15 in Narboux</ref>
 
-The proof first applies <code>SymmetricPointDistance</code> to each pair of points to prove the degenerate triangle congruence <code>P Q R ≌ P′ Q′ R′</code>. From there, it is a simple application of <code>BetweennessDegenerateTriangle</code>.
+The proof first applies <code>SymmetricPointDistance</code> to each pair of points to prove the degenerate triangle congruence <code>P Q R ≅ P′ Q′ R′</code>. From there, it is a simple application of <code>BetweennessDegenerateTriangle</code>.
 
 <jh>
 thm (SymmetricPointBetweenness-congruence () ()
   ((((A is-midpoint-of P P′) ∧
       (A is-midpoint-of Q Q′)) ∧
       (A is-midpoint-of R R′)) →
-    (P Q R ≌ P′ Q′ R′)) (
+    (P Q R ≅ P′ Q′ R′)) (
+</jh>
+First is <code>P Q ≡ P′ Q′</code>.
+<jh>
         ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
           (A is-midpoint-of R R′)
           ConjunctionRightElimination
         A P P′ Q Q′ SymmetricPointDistance
         applySyllogism
-
+        swapCongruenceInConsequent
+</jh>
+Second is <code>P R ≡ P′ R′</code>.
+<jh>
         ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
           (A is-midpoint-of R R′)
           ConjunctionRightElimination
@@ -1527,9 +1533,13 @@ thm (SymmetricPointBetweenness-congruence () ()
 
         A P P′ R R′ SymmetricPointDistance
         applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 
+</jh>
+Third is <code>Q R ≡ Q′ R′</code>
+<jh>
         ((A is-midpoint-of P P′) ∧ (A is-midpoint-of Q Q′))
           (A is-midpoint-of R R′)
           ConjunctionRightElimination
@@ -1543,6 +1553,7 @@ thm (SymmetricPointBetweenness-congruence () ()
 
         A Q Q′ R R′ SymmetricPointDistance
         applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 ))
@@ -1638,6 +1649,7 @@ And finally is <code>R S ≡ R′ S′</code>.
 
         A R R′ S S′ SymmetricPointDistance
         applySyllogism
+        swapCongruenceInConsequent
 
         composeConjunction
 
@@ -1664,3 +1676,4 @@ export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Euclidean geometries (general) and generalizations]]
 [[Category:Foundations of classical theories (including reverse mathematics)]]
+
