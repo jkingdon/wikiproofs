@@ -1,1 +1,41 @@
-#REDIRECT [[Symmetric point]]
+{{interfaces
+| imports = [[Interface:Symmetric point]]
+| exports = [[Interface:Midpoint]]
+}}
+
+This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
+
+This page proves various results involving the midpoint of a line segment. We don't yet prove the existence of a midpoint (that's in the next chapter).
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+
+var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′ R′ S′ X′ Y′)
+var (point P1 P2)
+var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
+</jh>
+
+== This page is not yet started ==
+{{under construction}}
+
+== Export ==
+We now export to [[Interface:Midpoint]].
+<jh>
+#export (RESULTS Interface:Midpoint (CLASSICAL FIRSTORDER) ())
+</jh>
+
+Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+* Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
