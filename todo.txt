@@ -1,18 +1,9 @@
 Items which may be doable without a network connection:
 
-* look at whether Raph's proof of ceqsex simplifies our development
-  (I think it might enable omitting a bunch of strange little
-  theorems).
-  - the proof does need Quantifiability but nothing else we don't have.
-  - ceqsex is ImplicitThereExists.
-    - ImplicitSubstitutionThereExists
-      - ImplicitSubstitutionForAll
-        - ax9oc (see also equs4c)
-          - ax6o (see also NegationNotFree, ax9o)
-        - a5i
-  - ceqsex also has the distinct variable constraint x s.
-
+* cleanup?
   * ax9o is only used by equs4.
+  * nuke equs4c, I think
+  * what about NegationNotFree, ax9o?
 
 * Maybe DRY up CollinearityCollinearity. The lemmas for the various pieces of the
   distributivity in breaking up the 9 cases would reduce duplicative proofs, but

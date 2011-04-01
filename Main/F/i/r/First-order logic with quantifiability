@@ -414,6 +414,8 @@ thm (ImplicitThereExists ((x ψ)) ((HEQ (((value x) = s) → (φ ↔ ψ))))
 ))
 </jh>
 
+As a parenthetical note, we have proved <code>ImplicitThereExists</code> (and related results) in a fairly roundabout way, via strange-looking theorems which we don't use elsewhere, like <code>ax6o</code>, <code>ax9oc</code>, and <code>a5i</code>. A more direct proof from <code>Quantifiability</code> is possible.<ref>ceqsex in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 2010</ref> We might be better served by using that proof, although it does add a distinct variable constraint between <code>x</code> and <code>s</code> (our current treatment does not impose that constraint at this stage, although many of the later substitution theorems do have such a constraint anyway).
+
 === Implicit substitution of an object for a variable ===
 Suppose that we have a formula <code>φx</code> and a formula <code>φs</code> which is much the same, but with <code>s</code> in place of <code>x</code>.  Then if <code>φx</code> is a theorem, we can conclude <code>φs</code>.
 
