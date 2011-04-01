@@ -1,10 +1,5 @@
 Items which may be doable without a network connection:
 
-* cleanup?
-  * ax9o is only used by equs4.
-  * nuke equs4c, I think
-  * what about NegationNotFree, ax9o?
-
 * Maybe DRY up CollinearityCollinearity. The lemmas for the various pieces of the
   distributivity in breaking up the 9 cases would reduce duplicative proofs, but
   might be slightly awkward to name.

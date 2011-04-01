@@ -743,53 +743,6 @@ But <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code> is <code>[ s / x ] φ</c
 ))
 </jh>
 
-== equs4c ==
-This is an analogue to equs4 from [[First-order logic]] but for objects not variables:
-
-<jh>
-thm (equs4c () () ((∀ x (((value x) = s) → φ)) → (∃ x (((value x) = s) ∧ φ))) (
-        (∀ x (((value x) = s) → φ)) ((value x) = s) ConjunctionLeftElimination
-
-        x (((value x) = s) → φ) Specialization
-        import
-
-        composeConjunction
-
-        ((value x) = s) φ ConjunctionImplication
-        eliminateBiconditionalReverse
-        applySyllogism
-</jh>
-That gives us <code>((∀ x ((x = y) → φ)) ∧ x = y) → (¬ ((x = y) → (¬ φ)))</code>. We transform the consequent to <code>(¬ (∀ x ((x = y) → (¬ φ))))</code>:
-<jh>
-        x (((value x) = s) → (¬ φ)) Specialization
-        introduceTransposition
-        applySyllogism
-</jh>
-And then we add <code>∀x</code> to the front of that consequent:
-<jh>
-        x (((value x) = s) → (¬ φ)) BoundForAllNotFree
-        negateNotFree
-        ForAllAddRemove eliminateBiconditionalForward
-
-        applySyllogism
-</jh>
-We export and add one more ∀x:
-<jh>
-        export
-        a5i
-</jh>
-which gives us <code>(∀x(x = s → φ) → ∀x(x = s → ∀x ¬ ∀x(x = s → ¬ φ)))</code>.  The consequent of that is just what we need to apply <code>ax9oc</code>:
-<jh>
-        x s (¬ (∀ x (((value x) = s) → (¬ φ)))) ax9oc
-        applySyllogism
-</jh>
-so we have simplified the consequent to <code>¬ ∀x(x = y → ¬ φ))</code>. We merely apply <code>equs3</code> to that and we're done.
-<jh>
-        x s φ equs3 eliminateBiconditionalForward
-        applySyllogism
-))
-</jh>
-
 == Substitution of objects, with axiom of quantifiability ==
 The axiom of quantifiability allows us to prove more substitution results because we can assume that a variable can take on a value corresponding to any object.
 
