@@ -60,7 +60,7 @@ term (formula (∃ variable formula))
 In informal discussion, we omit some parentheses, building on the [[w:Order of operations|precedence]] from [[Interface:Classical propositional calculus]]. The precedence, from tightest to loosest, is:
 
 * =
-* ∀, ∃
+* ∀, ∃, is-not-free-in
 * ¬
 * ∧
 * ∨
