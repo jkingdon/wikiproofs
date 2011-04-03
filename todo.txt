@@ -5,6 +5,13 @@ Items which may be doable without a network connection:
   might be slightly awkward to name.
 
 * Do we use distributeForAllConjunction and friends?
+  - distributeForAllImplication is just a strange variant of addForAll
+  - distributeForAllImplicationToThereExists is a strange variant of addThereExists
+  - distributeForAllConjunction ?
+    - collectForAllConjunction ?
+    - distributeThereExistsDisjunction
+    - collectThereExistsDisjunction
+  - distributeThereExistsImplication, collectThereExistsImplication
 
 * Set theory
   - can handle singletons a bit more concisely by defining { A } as { A, A }
@@ -79,5 +86,5 @@ To do with network:
 
 * Continue changing CongruenceIdentityFromEquality to be the imported version.
 
-* Throughout First-order logic with quantifiability (and probably First-order logic), add spaces (e.g. change ∃xφ to ∃ x φ).
+* Throughout First-order logic with quantifiability, add spaces (e.g. change ∃xφ to ∃ x φ).
 
