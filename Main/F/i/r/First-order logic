@@ -455,12 +455,6 @@ thm (ForAllConjunctionSplitting () () ((∀ x (φ ∧ ψ)) → ((∀ x φ) ∧ (
         composeConjunction
 ))
 
-thm (distributeForAllConjunction () ((H (∀ x (φ ∧ ψ)))) ((∀ x φ) ∧ (∀ x ψ)) (
-        H
-        x φ ψ ForAllConjunctionSplitting
-        applyModusPonens
-))
-
 thm (ForAllConjunctionCombining () () (((∀ x φ) ∧ (∀ x ψ)) → (∀ x (φ ∧ ψ))) (
         φ ψ ConjunctionRightIntroduction
         x addForAll
@@ -469,16 +463,6 @@ thm (ForAllConjunctionCombining () () (((∀ x φ) ∧ (∀ x ψ)) → (∀ x (�
         applySyllogism
 
         import
-))
-
-thm (collectForAllConjunction () ((HLEFT (∀ x φ)) (HRIGHT (∀ x ψ))) (∀ x (φ ∧ ψ)) (
-        HLEFT
-        HRIGHT
-        introduceConjunction
-
-        x φ ψ ForAllConjunctionCombining
-
-        applyModusPonens
 ))
 
 thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))) (
@@ -507,19 +491,6 @@ thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ 
         ((∃ x φ) ∨ (∃ x ψ)) DoubleNegation swapBiconditional
         applyBiconditionalTransitivity
 ))
-
-thm (distributeThereExistsDisjunction () ((H (∃ x (φ ∨ ψ))))  ((∃ x φ) ∨ (∃ x ψ)) (
-        H
-        x φ ψ ThereExistsDisjunction eliminateBiconditionalReverse
-        applyModusPonens
-))
-
-thm (collectThereExistsDisjunction () ((H ((∃ x φ) ∨ (∃ x ψ)))) (∃ x (φ ∨ ψ)) (
-        H
-        x φ ψ ThereExistsDisjunction eliminateBiconditionalForward
-        applyModusPonens
-))
-
 </jh>
 
 === There-exists across a conjunction ===

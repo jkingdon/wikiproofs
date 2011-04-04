@@ -4,12 +4,6 @@ Items which may be doable without a network connection:
   distributivity in breaking up the 9 cases would reduce duplicative proofs, but
   might be slightly awkward to name.
 
-* Do we use:
-  - distributeForAllConjunction ?
-    - collectForAllConjunction ?
-    - distributeThereExistsDisjunction
-    - collectThereExistsDisjunction
-
 * Set theory
   - can handle singletons a bit more concisely by defining { A } as { A, A }
   - intersection, difference (e.g. eldifi and similar)
