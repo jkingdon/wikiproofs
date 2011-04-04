@@ -586,18 +586,6 @@ We're almost there.  The left hand side has been gradually built up into <code>(
         (∀ x φ) (¬ (∀ x (¬ ψ))) ImplicationDisjunction swapBiconditional
         applyBiconditionalTransitivity
 ))
-
-thm (distributeThereExistsImplication () ((H (∃ x (φ → ψ)))) ((∀ x φ) → (∃ x ψ)) (
-        H
-        x φ ψ ThereExistsImplication eliminateBiconditionalReverse
-        applyModusPonens
-))
-
-thm (collectThereExistsImplication () ((H ((∀ x φ) → (∃ x ψ)))) (∃ x (φ → ψ)) (
-        H
-        x φ ψ ThereExistsImplication eliminateBiconditionalForward
-        applyModusPonens
-))
 </jh>
 
 === Combining ∀ and ∃ to prove ∃ on a conjunction ===
@@ -1324,7 +1312,9 @@ The next part of the proof derives <code>∀ x (x = y → φx) → ∃ x φx</co
 </jh>
 Now we just distribute the quantification to get <code>∀ x (x = y → φx) → ∃ x φx</code>.
 <jh>
-        distributeThereExistsImplication
+        x (((value x) = (value y)) → φx) φx ThereExistsImplication
+        eliminateBiconditionalReverse
+        applyModusPonens
 </jh>
 Combining this with the previous result gives <code>φy → ∃ x φx</code>
 <jh>
