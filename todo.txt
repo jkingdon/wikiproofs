@@ -5,8 +5,6 @@ Items which may be doable without a network connection:
   might be slightly awkward to name.
 
 * Do we use distributeForAllConjunction and friends?
-  - distributeForAllImplication is just a strange variant of addForAll
-  - distributeForAllImplicationToThereExists is a strange variant of addThereExists
   - distributeForAllConjunction ?
     - collectForAllConjunction ?
     - distributeThereExistsDisjunction

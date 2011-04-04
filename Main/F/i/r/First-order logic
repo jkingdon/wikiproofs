@@ -35,17 +35,33 @@ var (formula φx φy ψy)
 
 == ForAllImplication ==
 
-The ∀ quantifier can be distributed across an implication. This is one of our axioms, so we just provide an additional name and a rule:
+The ∀ quantifier can be distributed across an implication. This is one of our axioms, so we just provide an additional name:
 
 <jh>
 thm (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))) (
         x φ ψ QuantifiedImplication
 ))
+</jh>
 
-thm (distributeForAllImplication () ((H (∀ x (φ → ψ)))) ((∀ x φ) → (∀ x ψ)) (
+=== Builder for ∀ ===
+From <code>φ → ψ</code> we want to be able to get <code>(∀ x φ) → (∀ x ψ)</code>.<ref>[http://us.metamath.org/mpeuni/19.20i.html 19.20i] in metamath's set.mm, accessed February 18, 2010</ref>
+<jh>
+thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
         H
-        x φ ψ QuantifiedImplication
+        x generalize
+
+        x φ ψ ForAllImplication
+
         applyModusPonens
+))
+</jh>
+
+The builder for the biconditional follows trivially:
+<jh>
+thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
+        H eliminateBiconditionalReverse x addForAll
+        H eliminateBiconditionalForward x addForAll
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -224,9 +240,7 @@ thm (Specialization-22 () ()
         ((value x) = (value y)) φ TranspositionWithNegatedConsequent
         eliminateBiconditionalReverse
 
-        x generalize
-
-        distributeForAllImplication
+        x addForAll
 ))
 
 thm (Specialization-a () () ((∀ x (φ → (¬ ((value x) = (value y))))) → (¬ (∀ x φ))) (
@@ -259,8 +273,7 @@ thm (Specialization-30 ((x y)) () ((¬ ((∀ x φ) → φ)) → (¬ ((value y) =
 thm (Specialization-33 ((x y)) () 
   ((∀ y (¬ ((∀ x φ) → φ))) → (∀ y (¬ ((value y) = (value x))))) (
         x φ y Specialization-30
-        y generalize
-        distributeForAllImplication
+        y addForAll
 ))
 </jh>
 
@@ -295,9 +308,7 @@ thm (ForAllDoubling-negation-lemma () ()
         x φ QuantifiedNegation
         transposeWithNegatedAntecedent
 
-        x generalize
-
-        distributeForAllImplication
+        x addForAll
 ))
 
 thm (ForAllDoubling () () ((∀ x φ) → (∀ x (∀ x φ))) (
@@ -318,55 +329,10 @@ A consequence is a variant of <code>QuantifiedImplication</code>:
 thm (a5i () ((H ((∀ x φ) → ψ))) ((∀ x φ) → (∀ x ψ)) (
         x φ ForAllDoubling
 
-        H x generalize
-        distributeForAllImplication
-
-        applySyllogism
-))
-</jh>
-
-== Builder for ∀ ==
-From <code>φ → ψ</code> we want to be able to get <code>(∀ x φ) → (∀ x ψ)</code>.  The easier part of this is geting the quantifier onto the antecedent:<ref>[http://us.metamath.org/mpeuni/a4s.html a4s] in metamath's set.mm, accessed February 18, 2010</ref>
-
-<jh>
-thm (a4s () ((H (φ → ψ))) ((∀ x φ) → ψ) (
-        x φ Specialization
         H
-        applySyllogism
-))
-</jh>
-
-We get the quantifier onto the consequent via this lemma:
-<jh>
-
-thm (ax5o () () ((∀ x ((∀ x φ) → ψ)) → ((∀ x φ) → (∀ x ψ))) (
-        x (∀ x φ) ψ QuantifiedImplication
-
-        x φ ForAllDoubling
-        (∀ x ψ) addCommonConsequent
+        x addForAll
 
         applySyllogism
-))
-</jh>
-
-Then our builder for implication is:<ref>[http://us.metamath.org/mpeuni/19.20i.html 19.20i] in metamath's set.mm, accessed February 18, 2010</ref>
-<jh>
-thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
-        H x a4s
-
-        x generalize
-        x φ ψ ax5o
-
-        applyModusPonens
-))
-</jh>
-
-The builder for the biconditional follows trivially:
-<jh>
-thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
-        H eliminateBiconditionalReverse x addForAll
-        H eliminateBiconditionalForward x addForAll
-        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -439,12 +405,6 @@ thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) →
         eliminateBiconditionalReverse
         applySyllogism
 ))
-
-thm (distributeForAllImplicationToThereExists () ((H (∀ x (φ → ψ)))) ((∃ x φ) → (∃ x ψ)) (
-        H
-        x φ ψ ForAllImplicationThereExists
-        applyModusPonens
-))
 </jh>
 
 == Quantifier order ==
@@ -487,12 +447,10 @@ The ability to combine or split ∀ across a conjunction follows from <code>ForA
 <jh>
 thm (ForAllConjunctionSplitting () () ((∀ x (φ ∧ ψ)) → ((∀ x φ) ∧ (∀ x ψ))) (
         φ ψ ConjunctionRightElimination
-        x generalize
-        distributeForAllImplication
+        x addForAll
 
         φ ψ ConjunctionLeftElimination
-        x generalize
-        distributeForAllImplication
+        x addForAll
 
         composeConjunction
 ))
@@ -505,8 +463,7 @@ thm (distributeForAllConjunction () ((H (∀ x (φ ∧ ψ)))) ((∀ x φ) ∧ (�
 
 thm (ForAllConjunctionCombining () () (((∀ x φ) ∧ (∀ x ψ)) → (∀ x (φ ∧ ψ))) (
         φ ψ ConjunctionRightIntroduction
-        x generalize
-        distributeForAllImplication
+        x addForAll
 
         x ψ (φ ∧ ψ) ForAllImplication
         applySyllogism
@@ -753,8 +710,7 @@ Next, if a variable is not free in <code>φ</code>, it is not free in <code>(¬ 
 <jh>
 thm (NegationNotFree () () ((∀ x (x is-not-free-in φ)) → (x is-not-free-in (¬ φ))) (
         φ (∀ x φ) Transposition eliminateBiconditionalReverse
-        x generalize
-        distributeForAllImplication
+        x addForAll
 
         x (¬ (∀ x φ)) (¬ φ) ForAllImplication
         applySyllogism
@@ -1600,8 +1556,7 @@ thm (sbie-2 () ((H ((((value x) = (value y)) ∧ φ) → ψ))) ((substVariable y
         y x φ sb1
 
         H
-        x generalize
-        distributeForAllImplicationToThereExists
+        x addThereExists
 
         applySyllogism
 ))
@@ -1640,8 +1595,7 @@ The first line we'll use at the very end.
 We now have <code>ψ → (x = y → φ)</code>.  The consequent of that is almost <code>(∀ x ((x = y) → φ))</code>, which is what we'll need for <code>sb2</code>.
 <jh>
 
-        x generalize
-        distributeForAllImplication
+        x addForAll
 
         x y φ sb2
         applySyllogism
@@ -1725,8 +1679,7 @@ The left half of the conjunction defining <code>substVariable</code> is <code>x 
 The right half of the conjunction defining <code>subst</code> is <code>∃x(x = y ∧ φ)</code>.  Showing the relevant implication is only slightly more difficult:
 <jh>
         H ((value x) = (value y)) conjoinLL
-        x generalize
-        distributeForAllImplicationToThereExists
+        x addThereExists
 </jh>
 We now combine the two halves:
 <jh>
