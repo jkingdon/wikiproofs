@@ -18,6 +18,8 @@ Items which may be doable without a network connection:
     then can we prove a restricted version of hbal (but w/o (x φ))?
   case II: x is the same as y
     then it is trivial
+  distinctor is ¬ ∀ x x = y (a.k.a. (x is-distinct-from y) ?)
+    look at proof of equvini
 
 * Set theory
   - can handle singletons a bit more concisely by defining { A } as { A, A }
