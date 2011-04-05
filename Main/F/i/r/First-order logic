@@ -44,7 +44,7 @@ thm (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)
 </jh>
 
 === Builder for ∀ ===
-From <code>φ → ψ</code> we want to be able to get <code>(∀ x φ) → (∀ x ψ)</code>.<ref>[http://us.metamath.org/mpeuni/19.20i.html 19.20i] in metamath's set.mm, accessed February 18, 2010</ref>
+From <code>φ → ψ</code> we want to be able to get <code>∀ x φ → ∀ x ψ</code>.<ref>[http://us.metamath.org/mpeuni/19.20i.html 19.20i] in metamath's set.mm, accessed February 18, 2010</ref>
 <jh>
 thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
         H
@@ -300,7 +300,7 @@ thm (specialize () ((H (∀ x φ))) φ (
 
 == Doubling ∀ ==
 
-If we have a universal quantifier, it doesn't change anything to apply it twice.  That is, <code>(∀ x φ) → (∀ x (∀ x φ))</code>
+If we have a universal quantifier, it doesn't change anything to apply it twice.  That is, <code>∀ x φ → ∀ x ∀ x φ</code>
 
 <jh>
 thm (ForAllDoubling-negation-lemma () () 
@@ -391,7 +391,7 @@ thm (ThereExistsIntroduction () () (φ → (∃ x φ)) (
 
 === Another for-all distribution law ===
 
-If we have an implication quantified by ∀, we've already shown that <code>(∀ x φ) → (∀ x ψ)</code> follows. It also will sometimes be useful to know that alternately <code>(∃ x φ) → (∃ x ψ)</code> does.<ref>[http://us.metamath.org/mpeuni/19.22.html 19.22] in metamath's set.mm, accessed February 21, 2010</ref>
+If we have an implication quantified by ∀, we've already shown that <code>∀ x φ → ∀ x ψ</code> follows. It also will sometimes be useful to know that alternately <code>∃ x φ → ∃ x ψ</code> does.<ref>[http://us.metamath.org/mpeuni/19.22.html 19.22] in metamath's set.mm, accessed February 21, 2010</ref>
 <jh>
 thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))) (
         φ ψ Transposition
@@ -419,9 +419,9 @@ thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
 </jh>
 
 The corresponding theorem for ∃ follows from it.  It may be easier to follow the proof below if you remember that 
- <code>(∃ x (∃ y φ))</code>
+ <code>∃ x ∃ y φ</code>
 is equivalent to 
- <code>(¬ (∀ x (¬ (¬ (∀ y (¬ φ))))))</code>
+ <code>¬ ∀ x ¬ ¬ ∀ y ¬ φ</code>
 
 <jh>
 thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
@@ -665,7 +665,7 @@ thm (addForAllNotFree () ((H (x is-not-free-in φ))) (x is-not-free-in (∀ y φ
 ))
 </jh>
 
-Next, if a variable is not free in <code>φ</code>, it is not free in <code>(¬ φ)</code>. We first prove an implication version:<ref>[http://us.metamath.org/mpeuni/hbnt.html hbnt] in metamath's set.mm, accessed February 20, 2010</ref>
+Next, if a variable is not free in <code>φ</code>, it is not free in <code>¬ φ</code>. We first prove an implication version:<ref>[http://us.metamath.org/mpeuni/hbnt.html hbnt] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
 thm (NegationNotFree () () ((∀ x (x is-not-free-in φ)) → (x is-not-free-in (¬ φ))) (
         φ (∀ x φ) Transposition eliminateBiconditionalReverse
@@ -675,7 +675,7 @@ thm (NegationNotFree () () ((∀ x (x is-not-free-in φ)) → (x is-not-free-in 
         applySyllogism
 
 </jh>
-At this point we have <code>(∀x(φ → ∀xφ) → (∀x ¬ ∀xφ → ∀x ¬ φ))</code>. Together with <code>(¬ φ → ∀x ¬ ∀xφ)</code> (which is the transposition of <code>ax6o</code>), we will get our desired result of <code>(∀x(φ → ∀xφ) → (¬ φ → ∀x ¬ φ))</code>.
+At this point we have <code>∀ x (φ → ∀ x φ) → (∀ x ¬ ∀ x φ → ∀ x ¬ φ)</code>. Together with <code>¬ φ → ∀ x ¬ ∀ x φ</code> (which is the transposition of <code>ax6o</code>), we will get our desired result of <code>∀ x (φ → ∀ x φ) → (¬ φ → ∀ x ¬ φ)</code>.
 <jh>
         x φ ax6o
         transposeWithNegatedAntecedent
@@ -762,14 +762,14 @@ Implication to disjunction we'll need at the end of the proof:
 <jh>
         φ ψ ImplicationDisjunction eliminateBiconditionalReverse
 </jh>
-The first part of the proof is to derive <code>(¬ φ) → (∀ x (φ → ψ))</code>:
+The first part of the proof is to derive <code>¬ φ → ∀ x (φ → ψ)</code>:
 <jh>
         HPHI
         negateNotFree
         φ ψ principia*2.21
         addForAllToConsequentNotFree
 </jh>
-The second part of the proof is to derive <code>ψ → (∀ x (φ → ψ))</code>:
+The second part of the proof is to derive <code>ψ → ∀ x (φ → ψ)</code>:
 <jh>
         HPSI
         ψ φ AntecedentIntroduction
@@ -791,7 +791,7 @@ thm (disjunctionNotFree ()
         HPSI
         implicationNotFree
 </jh>
-We've shown <code>(x is-not-free-in ((¬ φ) → ψ))</code>. Now we just need to convert the implication to the equivalent disjunction
+We've shown <code>x is-not-free-in (¬ φ → ψ)</code>. Now we just need to convert the implication to the equivalent disjunction
 <jh>
 
         φ ψ DisjunctionImplication
@@ -892,7 +892,7 @@ The reverse direction is slightly more novel.
         x ψ BoundForAllNotFree
         implicationNotFree
 </jh>
-That gives us <code>(x is-not-free-in (φ → (∀ x ψ)))</code>
+That gives us <code>x is-not-free-in (φ → ∀ x ψ)</code>
 <jh>
         x ψ Specialization
         φ addCommonAntecedent
@@ -943,26 +943,26 @@ The two theorems which involve moving the consequent result in changing ∃ to �
 <jh>
 thm (ForAllImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)) (
 </jh>
-For the forward direction we first distribute to <code>(∃ x φ) → (∃ x ψ)</code> and then remove the quantifier on <code>ψ</code>.
+For the forward direction we first distribute to <code>∃ x φ → ∃ x ψ</code> and then remove the quantifier on <code>ψ</code>.
 <jh>
         x φ ψ ForAllImplicationThereExists
         H ThereExistsAddRemove eliminateBiconditionalReverse
         (∃ x φ) addCommonAntecedent
         applySyllogism
 </jh>
-The reverse direction is somewhat more complicated.  We start by proving <code>(x is-not-free-in ((∃ x φ) → ψ))</code>:
+The reverse direction is somewhat more complicated.  We start by proving <code>x is-not-free-in (∃ x φ → ψ)</code>:
 <jh>
         x φ BoundThereExistsNotFree
         H
         implicationNotFree
 </jh>
-Then we show that <code>((∃ x φ) → ψ) → (φ → ψ)</code>
+Then we show that <code>(∃ x φ → ψ) → (φ → ψ)</code>
 <jh>
         φ x ThereExistsIntroduction
         ψ addCommonConsequent
 
 </jh>
-Because x is not free in the antecedent, we can conclude <code>((∃ x φ) → ψ) → (∀ x (φ → ψ))</code>:
+Because x is not free in the antecedent, we can conclude <code>(∃ x φ → ψ) → ∀ x (φ → ψ)</code>:
 <jh>
         addForAllToConsequentNotFree
 
@@ -1050,7 +1050,7 @@ For ∃:<ref>[http://us.metamath.org/mpeuni/19.42.html 19.42] in metamath's set.
 <jh>
 thm (ThereExistsConjunctionMovementNotFree () ((H (x is-not-free-in φ))) ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
 </jh>
-We first note that the definition of ∃ makes <code>∃ x φ ∧ ψ</code> equivalent to <code>¬ ∀ x ¬ (φ ∧ ψ)</code> and apply DeMorgan's law to make it <code>¬ ∀ x (¬ φ ∨ ¬ ψ)</code>
+We first note that the definition of ∃ makes <code>∃ x (φ ∧ ψ)</code> equivalent to <code>¬ ∀ x ¬ (φ ∧ ψ)</code> and apply DeMorgan's law to make it <code>¬ ∀ x (¬ φ ∨ ¬ ψ)</code>
 <jh>
         φ ψ DeMorganPCP
         x buildForAll
@@ -1150,14 +1150,14 @@ Then we pull much the same trick with <code>y</code> (but it is easier as there 
 ))
 </jh>
 
-== Quantifier order: ∃x∀y to ∀y∃x ==
+== Quantifier order: ∃ x ∀ y to ∀ y ∃ x ==
 We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.<ref>[http://us.metamath.org/mpeuni/19.12.html 19.12] in metamath's set.mm, accessed February 22, 2010</ref>
 <jh>
 thm (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))) (
         y φ BoundForAllNotFree
         x addThereExistsNotFree
 </jh>
-At this point we have (expanding the definition of <code>is-not-free-in</code>) <code>(∃ x (∀ y φ)) → (∀ y (∃ x (∀ y φ)))</code>.  We just need to get rid of the inner ∀ on the right hand side:
+At this point we have (expanding the definition of <code>is-not-free-in</code>) <code>∃ x ∀ y φ → ∀ y ∃ x ∀ y φ</code>.  We just need to get rid of the inner ∀ on the right hand side:
 <jh>
         y φ Specialization
         x addThereExists
@@ -1167,8 +1167,8 @@ At this point we have (expanding the definition of <code>is-not-free-in</code>) 
 ))
 </jh>
 
-== Quantifier order: ∀y∃x to ∃x∀y (sometimes) ==
-We also prove one case in which ∀y∃x can be switched to ∃x∀y, but it is subject to various discrete variable constraints.<ref>[http://us.metamath.org/mpeuni/19.12vv.html 19.12vv] in metamath's set.mm, accessed February 22, 2010</ref>
+== Quantifier order: ∀ y ∃ x to ∃ x ∀ y (sometimes) ==
+We also prove one case in which ∀ y ∃ x can be switched to ∃ x ∀ y, but it is subject to various discrete variable constraints.<ref>[http://us.metamath.org/mpeuni/19.12vv.html 19.12vv] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (ForAllThereExistsImplicationCommutation ((x y) (ψ x) (φ y)) ()
@@ -1178,19 +1178,19 @@ thm (ForAllThereExistsImplicationCommutation ((x y) (ψ x) (φ y)) ()
 
         x buildThereExists
 </jh>
-The left hand side is now <code>(∃ x (∀ y (φ → ψ)))</code>.  We will be transforming the right hand side through a series of equivalences.  So far we have <code>(∃ x (φ → (∀ y ψ))))</code>.
+The left hand side is now <code>∃ x ∀ y (φ → ψ)</code>.  We will be transforming the right hand side through a series of equivalences.  So far we have <code>∃ x (φ → ∀ y ψ)</code>.
 <jh>
         x (∀ y ψ) DistinctNotFree
         φ ThereExistsImplicationConsequentMovement
         applyBiconditionalTransitivity
 </jh>
-That gets us to <code>(∀ x φ) → (∀ y ψ)</code>
+That gets us to <code>∀ x φ → ∀ y ψ</code>
 <jh>
         y (∀ x φ) DistinctNotFree
         ψ ForAllImplicationAntecedentMovement swapBiconditional
         applyBiconditionalTransitivity
 </jh>
-which gives us <code>(∀ y ((∀ x φ) → ψ))</code>
+which gives us <code>∀ y (∀ x φ → ψ)</code>
 <jh>
         x ψ DistinctNotFree
         φ ThereExistsImplicationConsequentMovement swapBiconditional
@@ -1211,11 +1211,11 @@ thm (ax9o () () ((∀ x (((value x) = (value y)) → (∀ x φ))) → φ) (
         x y Existence
         x ((value x) = (value y)) (∀ x φ) ForAllImplicationThereExists
 </jh>
-This gives us <code>∀x(x = y → ∀xφ) → (∃x x = y → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = y</code> is just the <code>Existence</code> axiom, and can therefore be removed:
+This gives us <code>∀ x (x = y → ∀ x φ) → (∃ x x = y → ∃ x ∀ x φ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃ x x = y</code> is just the <code>Existence</code> axiom, and can therefore be removed:
 <jh>
         detachImplicationImplication
 </jh>
-Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
+Now we need to reduce <code>∃ x ∀ x φ</code> to <code>φ</code>:
 <jh>
         x φ ax6o
         applySyllogism
@@ -1223,7 +1223,7 @@ Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
 </jh>
 
 === A quantified statement which starts with a proposition ===
-It is common for a quantifier to be followed by some kind of condition.  For example "for every ε > 0, (¬ ψ)" or "there exists a δ > 0 such that ψ".  Despite the similar wording, the former is formalized as <code>∀ε ((ε > 0) → (¬ ψ))</code> (with an implication) and the latter is formalized as <code>∃ δ ((δ > 0) ∧ ψ)</code> (with a conjunction).  The first theorem in this section expresses this relationship:<ref>[http://us.metamath.org/mpeuni/alinexa.html alinexa] in metamath's set.mm, accessed February 22, 2010</ref>
+It is common for a quantifier to be followed by some kind of condition.  For example "for every ε > 0, (¬ ψ)" or "there exists a δ > 0 such that ψ".  Despite the similar wording, the former is formalized as <code>∀ ε (ε > 0 → ¬ ψ)</code> (with an implication) and the latter is formalized as <code>∃ δ (δ > 0 ∧ ψ)</code> (with a conjunction).  The first theorem in this section expresses this relationship:<ref>[http://us.metamath.org/mpeuni/alinexa.html alinexa] in metamath's set.mm, accessed February 22, 2010</ref>
 
 <jh>
 thm (alinexa () () ((∀ x (φ → (¬ ψ))) ↔ (¬ (∃ x (φ ∧ ψ)))) (
@@ -1233,7 +1233,7 @@ thm (alinexa () () ((∀ x (φ → (¬ ψ))) ↔ (¬ (∃ x (φ ∧ ψ)))) (
 
         x buildForAll
 </jh>
-That gives us <code>∀x(φ → ¬ ψ) ↔ ∀x ¬ (φ ∧ ψ)</code>.  Now we just need to apply <code>NotThereExists</code> to the right hand side:
+That gives us <code>∀ x (φ → ¬ ψ) ↔ ∀ x ¬ (φ ∧ ψ)</code>.  Now we just need to apply <code>NotThereExists</code> to the right hand side:
 <jh>
         x (φ ∧ ψ) NotThereExists swapBiconditional
         applyBiconditionalTransitivity
@@ -1351,7 +1351,7 @@ thm (ChangeVariableThereExists
 ))
 </jh>
 
-The corresponding result for ∀ is an easy consequence. The proof consists of the usual pushing negations around until all the ∃ turn into ∀.
+The corresponding result for ∀ is an easy consequence. The proof consists of the usual technique of pushing negations around until all the ∃ turn into ∀.
 <jh>
 thm (ChangeVariableForAllNotFree ((x y))
   ((HFREEX (x is-not-free-in φy))
@@ -1463,9 +1463,9 @@ thm (sb2 () () ((∀ x (((value x) = (value y)) → φ)) → (substVariable y x 
 ))
 </jh>
 
-=== Substitution implies ∃x(x = y ∧ φ) ===
+=== Substitution implies ∃ x (x = y ∧ φ) ===
 
-Although being able to prove a formula involving <code>subst</code> is our first order of business, some of the theorems below also do the reverse. Here is a lemma to help turn <code>subst</code> into something else (it is just extracting half of the definition):<ref>[http://us.metamath.org/mpeuni/sb1.html sb1] in metamath's set.mm, accessed February 24, 2010</ref>
+Although being able to prove a formula involving <code>substVariable</code> is our first order of business, some of the theorems below also do the reverse. Here is a lemma to help turn <code>substVariable</code> into something else (it is just extracting half of the definition):<ref>[http://us.metamath.org/mpeuni/sb1.html sb1] in metamath's set.mm, accessed February 24, 2010</ref>
 <jh>
 thm (sb1 () () ((substVariable y x φ) → (∃ x (((value x) = (value y)) ∧ φ))) (
         (((value x) = (value y)) → φ) (∃ x (((value x) = (value y)) ∧ φ)) ConjunctionLeftElimination
@@ -1553,7 +1553,7 @@ The first line we'll use at the very end.
 
         applyComm
 </jh>
-We now have <code>ψ → (x = y → φ)</code>.  The consequent of that is almost <code>(∀ x ((x = y) → φ))</code>, which is what we'll need for <code>sb2</code>.
+We now have <code>ψ → (x = y → φ)</code>.  The consequent of that is almost <code>∀ x (x = y → φ)</code>, which is what we'll need for <code>sb2</code>.
 <jh>
 
         x addForAll
@@ -1561,7 +1561,7 @@ We now have <code>ψ → (x = y → φ)</code>.  The consequent of that is almos
         x y φ sb2
         applySyllogism
 </jh>
-That gives us <code>((∀ x ψ) → (subst y x φ))</code>; we just need to remove the initial quantifier.
+That gives us <code>∀ x ψ → substVariable y x φ</code>; we just need to remove the initial quantifier.
 <jh>
 
         applySyllogism
@@ -1597,7 +1597,7 @@ The proof is going to show that <code>x = y ∧ φ</code> implies <code>(substVa
         φ ((value x) = (value y)) AntecedentIntroduction
         applySyllogism
 </jh>
-The other half is <code>∃x(x = y ∧ φ)</code>:
+The other half is <code>∃ x (x = y ∧ φ)</code>:
 <jh>
         (((value x) = (value y)) ∧ φ) x ThereExistsIntroduction
 </jh>
@@ -1637,7 +1637,7 @@ The left half of the conjunction defining <code>substVariable</code> is <code>x 
 <jh>
         H ((value x) = (value y)) addCommonAntecedent
 </jh>
-The right half of the conjunction defining <code>subst</code> is <code>∃x(x = y ∧ φ)</code>.  Showing the relevant implication is only slightly more difficult:
+The right half of the conjunction defining <code>substVariable</code> is <code>∃ x (x = y ∧ φ)</code>.  Showing the relevant implication is only slightly more difficult:
 <jh>
         H ((value x) = (value y)) conjoinLL
         x addThereExists

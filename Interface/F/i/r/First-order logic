@@ -56,6 +56,18 @@ term (formula (∀ variable formula))
 term (formula (∃ variable formula))
 </jh>
 
+=== Order of operations ===
+In informal discussion, we omit some parentheses, building on the [[w:Order of operations|precedence]] from [[Interface:Classical propositional calculus]]. The precedence, from tightest to loosest, is:
+
+* =
+* ∀, ∃, is-not-free-in
+* ¬
+* ∧
+* ∨
+* →, ↔
+
+For example, <code>∀ z x = y ∨ ¬ x = y</code> means <code>(∀ z (x = y)) ∨ (¬ (x = y))</code>. We do not supply a precedence for <code>value</code> because we simply omit it in informal discussion.
+
 == Relationship between universal and existential quantification ==
 
 <jh>
