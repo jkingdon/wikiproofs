@@ -300,86 +300,6 @@ Our substitution is <code>y = C → ((y ∈ {z | φz} ↔ φy) ↔ (C ∈ {z | �
 ))
 </jh>
 
-== Singletons ==
-Given a set (object) <code>A</code>, here we construct a set <code>{ A }</code> which has <code>A</code> as its only element. That is, we are trying to prove the theorem <code>y ∈ { A } ↔ y = A</code>.
-
-We first apply pairing via <code>SetObject</code>.
-<jh>
-thm (Singleton-sub () () ((B = C) → ((B = A) ↔ (C = A))) (
-        B C A EqualityBuilderRR
-))
-
-thm (SingletonObject ((y B) (result y A z)) () ((B ∈ (abstract z ((value z) = A))) ↔ (B = A)) (
-        (value z) (value y) A Singleton-sub
-
-        (value y) B A Singleton-sub
-
-</jh>
-The existence theorem we need is <code>∃ result ∀ y (y ∈ result ↔ y = A)</code> which is a result of supplying <code>A</code> for both of the given sets in <code>PairingObject</code>.
-<jh>
-        result y A A PairingObject
-
-        ((value y) = A) DisjunctionIdempotence
-        ((value y) ∈ (value result)) buildBiconditionalLL
-        y buildForAll
-        result buildThereExists
-        eliminateBiconditionalForward
-
-        applyModusPonens
-</jh>
-We're ready to apply <code>SetObject</code>
-<jh>
-        SetObject
-))
-</jh>
-
-Because the notation <code>{ A }</code> is not available, we call it <code>(singleton A)</code>.
-<jh>
-def ((singleton A) (abstract y ((value y) = A)))
-
-thm (Singleton ((z A)) () ((B ∈ (singleton A)) ↔ (B = A)) (
-        B z A SingletonObject
-))
-</jh>
-
-=== Builder ===
-The builder for singletons is <code>A = B → { A } = { B }</code>.<ref>[http://us.metamath.org/mpeuni/sneq.html sneq], metamath's set.mm, accessed July, 2010</ref>
-<jh>
-var (variable a b)
-thm (SingletonBuilder-1 ((z A) (z B) (z a) (z b) (A a) (B b)) () ((A = B) → ((abstract a ((value a) = A)) = (abstract b ((value b) = B)))) (
-</jh>
-The equality builder gives us <code>A = B → (z = A ↔ z = B)</code>.
-<jh>
-        A B (value z) EqualityBuilderLL
-</jh>
-Applying <code>Singleton</code> twice gives us <code>(z ∈ {A} ↔ z ∈ {B}) ↔ (z = A ↔ z = B)</code>
-<jh>
-        (value z) a A SingletonObject
-        (value z) b B SingletonObject
-        buildBiconditional
-</jh>
-We now combine those two results to get <code>A = B → (z ∈ {A} ↔ z ∈ {B})</code>
-<jh>
-        eliminateBiconditionalForward
-        applySyllogism
-</jh>
-Extensionality turns <code>z ∈ {A} ↔ z ∈ {B}</code> into <code>{A} = {B}</code>.
-<jh>
-        z addForAllToConsequent
-
-        z (abstract a ((value a) = A)) (abstract b ((value b) = B)) Extensionality
-        applySyllogism
-))
-
-thm (SingletonBuilder-2 ((A a) (B b)) () ((A = B) → ((singleton A) = (abstract b ((value b) = B)))) (
-        A B a b SingletonBuilder-1
-))
-
-thm (SingletonBuilder ((B b)) () ((A = B) → ((singleton A) = (singleton B))) (
-        A B b SingletonBuilder-2
-))
-</jh>
-
 == Unordered pair ==
 
 The unordered pair <code>{A, B}</code> has <code>A</code> and <code>B</code> as elements.  That is, we seek to prove <code>y ∈ {A, B} ↔ y = A ∨ y = B</code>. We apply pairing to <code>A</code> and <code>B</code> (again via <code>SetObject</code>).
@@ -452,8 +372,38 @@ thm (UnorderedPairBuilder-2 ((a A0) (a A1) (b B0) (b B1)) () (((A0 = B0) ∧ (A1
         A0 B0 A1 B1 a b UnorderedPairBuilder-1
 ))
 
-thm (UnorderedPairBuilder ((a A0) (a A1)) () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))) (
+thm (UnorderedPairBuilder ( (a A0) (a A1)) () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))) (
         A0 B0 A1 B1 a UnorderedPairBuilder-2
+))
+</jh>
+
+== Singleton ==
+Given a set (object) <code>A</code>, the singleton of <code>A</code> is a set <code>{ A }</code> which has <code>A</code> as its only element. Singletons are an easy special case of unordered pairs: we define <code>{ A }</code> to be <code>{ A, A }</code>.<ref>[http://us.metamath.org/mpeuni/dfsn2.html dfsn2] in metamath's set.mm, accessed April 4, 2011</ref> Because the notation <code>{ A }</code> is not available in JHilbert, we call it <code>(singleton A)</code>.
+
+<jh>
+def ((singleton A) (unorderedPair A A))
+</jh>
+
+The key theorem regarding membership in a singleton is <code>B ∈ { A } ↔ B = A</code>.<ref>[http://us.metamath.org/mpeuni/elsncg.html elsncg] in metamath's set.mm, accessed April 4, 2011</ref>
+<jh>
+thm (Singleton () () ((B ∈ (singleton A)) ↔ (B = A)) (
+        B A A UnorderedPair
+
+        (B = A) DisjunctionIdempotence
+        swapBiconditional
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The builder for singletons is <code>A = B → { A } = { B }</code>.<ref>[http://us.metamath.org/mpeuni/sneq.html sneq], metamath's set.mm, accessed July, 2010</ref>
+<jh>
+thm (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))) (
+        (A = B) ConjunctionIdempotence
+        eliminateBiconditionalReverse
+
+        A B A B UnorderedPairBuilder
+        applySyllogism
 ))
 </jh>
 
