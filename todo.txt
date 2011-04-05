@@ -4,6 +4,21 @@ Items which may be doable without a network connection:
   distributivity in breaking up the 9 cases would reduce duplicative proofs, but
   might be slightly awkward to name.
 
+* QuantifierCommutation
+  (sort of seems like this should be provable from the other axioms,
+  but is that intuition correct?)
+  y is-not-free-in ∀ x ∀ y φ
+  ∀ x ∀ y φ → ∀ y ∀ x ∀ y φ
+            → ∀ y ∀ x φ by specialization and builders
+
+  obvious flaw: addForAllNotFree is proved via ForAllCommutation
+
+  possible fixes to y is-not-free-in ∀ x ∀ y φ step:
+  case I: x is distinct from y
+    then can we prove a restricted version of hbal (but w/o (x φ))?
+  case II: x is the same as y
+    then it is trivial
+
 * Set theory
   - can handle singletons a bit more concisely by defining { A } as { A, A }
   - intersection, difference (e.g. eldifi and similar)
