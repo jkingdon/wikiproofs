@@ -131,20 +131,6 @@ stmt (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ
 stmt (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))))
 </jh>
 
-We also provide rules for the above theorems:
-<jh>
-stmt (distributeForAllConjunction () ((∀ x (φ ∧ ψ))) ((∀ x φ) ∧ (∀ x ψ)))
-stmt (collectForAllConjunction () ((∀ x φ) (∀ x ψ)) (∀ x (φ ∧ ψ)))
-
-stmt (distributeThereExistsDisjunction () ((∃ x (φ ∨ ψ)))  ((∃ x φ) ∨ (∃ x ψ)))
-stmt (collectThereExistsDisjunction () (((∃ x φ) ∨ (∃ x ψ))) (∃ x (φ ∨ ψ)))
-
-stmt (distributeThereExistsImplication () ((∃ x (φ → ψ))) ((∀ x φ) → (∃ x ψ)))
-stmt (collectThereExistsImplication () (((∀ x φ) → (∃ x ψ))) (∃ x (φ → ψ)))
-
-stmt (distributeForAllImplication () ((∀ x (φ → ψ))) ((∀ x φ) → (∀ x ψ)))
-</jh>
-
 === Biconditional ===
 <jh>
 stmt (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))))
