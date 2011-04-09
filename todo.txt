@@ -90,9 +90,7 @@ To do with network:
 
 * notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
 
-* rename IndivisibilityBidirectional to IndivisibilityBiconditional, I think.
+* Contingue changing IndivisibilityBidirectional to IndivisibilityBiconditional
 
 * Continue changing CongruenceIdentityFromEquality to be the imported version.
-
-* Throughout First-order logic with quantifiability, add spaces (e.g. change ∃xφ to ∃ x φ).
 
