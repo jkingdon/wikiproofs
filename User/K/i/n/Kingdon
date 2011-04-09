@@ -1,3 +1,10 @@
+Hi, I contribute to wikiproofs and this page contains a few of my thoughts, todo items for myself, and other stuff I haven't found a better place for.
+
+== Three Challenges ==
+The three hard parts of a formalized math project (in my view) are (1) make it sufficiently easy to read and write proofs, (2) attract a large enough body of contributors to spread the work so you don't burn out like Whitehead and Russell did (they wanted to spend one year on ''Principia'', and it took ten), and (3) formalize a large enough body of known mathematics that proofs don't need to rederive a lot of known results just to get started.
+
+The current situation (again, as far as I can tell): (1) there has been a lot of attention to new proof engines and proof languages, but it still warrants further work and experimentation, as I have yet to see a system which I ''really'' like. (2) there are a huge number of systems with just one contributor, or a small number (I frequently discover new ones). In one sense this is promising, as it indicates interest, but just highlights the challenge of attracting people to a project, which is also related to items (1) and (3). Metamath is perhaps the closest to having a diverse set of participants. (3) Some of the Isabelle libraries perhaps come closest to this one.
+
 ==Experimental pages==
 *[[Interface:Sandbox]]
 *[[Sandbox]]
