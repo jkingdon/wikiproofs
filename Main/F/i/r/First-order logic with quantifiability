@@ -131,14 +131,14 @@ thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
 </jh>
 
 === Proving there-exists ===
-One way to prove a formula of the form <code>∃xφ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.  In [[w:Intuitionistic logic|constructive logic]] any theorem <code>∃xφ</code> can be proved this way (because of the [[w:Existence property|existence property]]), but even in classical (non-constructive) logic this is one of the most common ways of proving <code>∃xφ</code>.
+One way to prove a formula of the form <code>∃ x φ</code> is to demonstrate a particular <code>x</code> for which <code>φ</code> holds.  In [[w:Intuitionistic logic|constructive logic]] any theorem <code>∃ x φ</code> can be proved this way (because of the [[w:Existence property|existence property]]), but even in classical (non-constructive) logic this is one of the most common ways of proving <code>∃ x φ</code>.
 
 In our notation, this idea is expressed via <code>subst</code>:
 <jh>
 thm (ThereExistsIntroductionFromObject ( (y φ) (y x) (y s)) ()
   ((subst s x φ) → (∃ x φ)) (
 </jh>
-The proof takes the definition of <code>subst</code>, <code>(∃ y (y = s ∧ (∃ x (x = y ∧ φ))))</code> and pares it down by eliminating the parts we don't need. We start by expanding the definition.
+The proof takes the definition of <code>subst</code>, <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ))</code> and pares it down by eliminating the parts we don't need. We start by expanding the definition.
 <jh>
         s x φ y Subst
         eliminateBiconditionalReverse
@@ -196,7 +196,7 @@ import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITH
 </jh>
 
 == Specialization with substitution ==
-The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ)</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref><ref>Hirst and Hirst, axiom 4 on page 51</ref>
+The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref><ref>Hirst and Hirst, axiom 4 on page 51</ref>
 <jh>
 thm (SpecializationToObject ((y s) (y x) (y φ)) () ((∀ x φ) → (subst s x φ)) (
 </jh>
@@ -254,11 +254,11 @@ thm (ax9oc () () ((∀ x (((value x) = s) → (∀ x φ))) → φ) (
         x s Quantifiability
         x ((value x) = s) (∀ x φ) ForAllImplicationThereExists
 </jh>
-This gives us <code>∀x(x = s → ∀xφ) → (∃x x = s → ∃x∀xφ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = s</code> is just the <code>Quantifiability</code> axiom, and can therefore be removed:
+This gives us <code>∀ x (x = s → ∀ x φ) → (∃ x x = s → ∃ x ∀ x φ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = s</code> is just the <code>Quantifiability</code> axiom, and can therefore be removed:
 <jh>
         detachImplicationImplication
 </jh>
-Now we need to reduce <code>∃x∀xφ</code> to <code>φ</code>:
+Now we need to reduce <code>∃ x ∀ x φ</code> to <code>φ</code>:
 <jh>
         x φ ax6o
         applySyllogism
@@ -282,20 +282,20 @@ Starting with <code>x = s → (φ ↔ ψ)</code>, we first add <code>∀x</code>
 
         ((value x) = s) addCommonAntecedent
 </jh>
-We now distribute the implication over the biconditional to get <code>(x = s → φ) ↔ (x = s → ∀xψ)</code>.
+We now distribute the implication over the biconditional to get <code>(x = s → φ) ↔ (x = s → ∀ x ψ)</code>.
 <jh>
         ((value x) = s) φ (∀ x ψ) ImplicationDistributionOverBiconditional eliminateBiconditionalReverse
         applySyllogism
 </jh>
-The entire formula we have at this point is <code>(x = s → (φ ↔ ψ)) → ((x = s → φ) ↔ (x = s → ∀xψ))</code>.  We will add <code>∀x</code> to the start of each of the three parts.
+The entire formula we have at this point is <code>(x = s → (φ ↔ ψ)) → ((x = s → φ) ↔ (x = s → ∀ x ψ))</code>.  We will add <code>∀ x</code> to the start of each of the three parts.
 <jh>
         x addForAll
         x (((value x) = s) → φ) (((value x) = s) → (∀ x ψ)) ForAllBiconditional
         applySyllogism
 </jh>
-The left side of that consequent, <code>∀x(x = s → φ)</code>, is the left side of our desired consequent.
+The left side of that consequent, <code>∀ x (x = s → φ)</code>, is the left side of our desired consequent.
 
-We will show that the right side, <code>∀x(x = s → ∀xψ)</code>, is equivalent to <code>ψ</code>. The forward direction is just <code>ax9oc</code>:
+We will show that the right side, <code>∀ x (x = s → ∀ x ψ)</code>, is equivalent to <code>ψ</code>. The forward direction is just <code>ax9oc</code>:
 <jh>
         x s ψ ax9oc
 </jh>
@@ -355,7 +355,7 @@ The proof basically consists of massaging negations to derive this result from t
 
         applySyllogism
 </jh>
-Now we need to show that <code>∀x(x = s → ¬ φ) ↔ (¬ ψ)</code> implies <code>∃x(x = s ∧ φ) ↔ ψ</code>. We first turn the former into <code>ψ ↔ (¬ ∀x(x = s → ¬ φ))</code>:
+Now we need to show that <code>∀ x (x = s → ¬ φ) ↔ (¬ ψ)</code> implies <code>∃ x (x = s ∧ φ) ↔ ψ</code>. We first turn the former into <code>ψ ↔ (¬ ∀ x (x = s → ¬ φ))</code>:
 <jh>
         (∀ x (((value x) = s) → (¬ φ))) ψ BiconditionalTranspositionWithNegatedRight
 </jh>
@@ -363,7 +363,7 @@ We stick <code>ψ ↔ ψ</code> on the proof stack for later use,
 <jh>
         ψ BiconditionalReflexivity
 </jh>
-and work just with <code>¬ ∀x(x = s → ¬ φ)</code> for now. We move the negation past the quantifier to get <code>∃x ¬ (x = s → ¬ φ)</code>:
+and work just with <code>¬ ∀ x (x = s → ¬ φ)</code> for now. We move the negation past the quantifier to get <code>∃ x ¬ (x = s → ¬ φ)</code>:
 <jh>
         x (((value x) = s) → (¬ φ)) NotForAll
 </jh>
@@ -373,12 +373,12 @@ Now we turn the negations and implication into a conjunction:
         x buildThereExists
         applyBiconditionalTransitivity
 </jh>
-Bringing back two statements we left on the proof stack, we assemble the formula that <code>∀x(x = s → ¬ φ) ↔ (¬ ψ)</code> is equivalent to <code>ψ ↔ ∃x(x = s ∧ φ)</code>,
+Bringing back two statements we left on the proof stack, we assemble the formula that <code>∀ x (x = s → ¬ φ) ↔ (¬ ψ)</code> is equivalent to <code>ψ ↔ ∃ x (x = s ∧ φ)</code>,
 <jh>
         buildBiconditional
         applyBiconditionalTransitivity
 </jh>
-flip the order to get <code>∃x(x = s ∧ φ) ↔ ψ</code>,
+flip the order to get <code>∃ x (x = s ∧ φ) ↔ ψ</code>,
 <jh>
         eliminateBiconditionalReverse
         ψ (∃ x (((value x) = s) ∧ φ)) BiconditionalSymmetry eliminateBiconditionalReverse
@@ -541,7 +541,7 @@ We can eliminate the left hand side of the consequent to get <code>[s / x] φ �
 <jh>
         extractRightConjunction
 </jh>
-The reverse direction is easier. Generalization gets us <code>φ → ∀ x φ</code>, and <code>SpecializationToObject</code> turns that into <code>[s / x] φ</code>
+The reverse direction is easier. Generalization gets us <code>φ → ∀ x φ</code>, and <code>SpecializationToObject</code> turns that into <code>[ s / x ] φ</code>
 <jh>
         φ x Generalization
         x φ s SpecializationToObject
@@ -684,7 +684,7 @@ thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (
 </jh>
 
 === Quantifiers ===
-We can move substitution across a quantifier to a distinct variable: <code>[s / x] ∃ y φ ↔ ∃ y [s / x] φ</code>.<ref>[http://us.metamath.org/mpeuni/sbex.html sbex], metamath's set.mm</ref>
+We can move substitution across a quantifier to a distinct variable: <code>[ s / x ] ∃ y φ ↔ ∃ y [ s / x ] φ</code>.<ref>[http://us.metamath.org/mpeuni/sbex.html sbex], metamath's set.mm</ref>
 <jh>
 thm (SubstThereExists ((x y s z) (z φ)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
 </jh>
@@ -783,20 +783,20 @@ First we rewrite <code>x = s → (φ ↔ ψ)</code> as <code>y = s → (x = y �
 
         export
 </jh>
-Now we add ∀x to the consequent:
+Now we add <code>∀ x</code> to the consequent:
 <jh>
         x addForAllToConsequent
 </jh>
-The first application of <code>ImplicitSubstitutionThereExists</code> turns <code>∀x(x = y → (φ ↔ ψ))</code> into <code>(∃x x = y ∧ φ) ↔ ψ</code>:
+The first application of <code>ImplicitSubstitutionThereExists</code> turns <code>∀ x (x = y → (φ ↔ ψ))</code> into <code>∃ x (x = y ∧ φ) ↔ ψ</code>:
 <jh>
         HFREE
         (value y) φ ImplicitSubstitutionThereExists
 </jh>
-Combining these results gets <code>y = s → ((∃x x = y ∧ φ) ↔ ψ)</code>:
+Combining these results gets <code>y = s → (∃x (x = y ∧ φ) ↔ ψ)</code>:
 <jh>
         applySyllogism
 </jh>
-We then apply <code>ImplicitSubstitutionThereExists</code> again to get <code>∃ y (y = s ∧ (∃x x = y ∧ φ)) ↔ ψ)</code>, which is our desired result.
+We then apply <code>ImplicitSubstitutionThereExists</code> again to get <code>∃ y (y = s ∧ ∃ x (x = y ∧ φ)) ↔ ψ)</code>, which is our desired result.
 <jh>
         y generalize
         y ψ DistinctNotFree
@@ -833,7 +833,7 @@ thm (EqualitySubstForward ((x s)  (z x) (z s) (z φ)) () (((value x) = s) → (�
 </jh>
 The proof consists of gradually building up the definition of <code>subst</code>. It is somewhat similar to the proof in metamath<ref>[http://us.metamath.org/mpeuni/sbequ1.html sbequ1]</ref> although the details are different because we have a different definition of <code>subst</code>.
 
-We're going to start with <code>x = s ∧ φ → ∃ x (x = s ∧ φ)</code>, and then we want to change the innermost <code>s</code> to <code>z</code> (under the condition that <code>z = s</code>). The mechanics of this is we use <code>(x = s ∧ φ) ∧ z = s</code> as an antecedent in both cases.
+We're going to start with <code>x = s ∧ φ → ∃ x (x = s ∧ φ)</code>, and then we want to change the innermost <code>s</code> to <code>z</code> (under the condition that <code>z = s</code>). We do this by using <code>(x = s ∧ φ) ∧ z = s</code> as an antecedent in both cases.
 <jh>
         (((value x) = s) ∧ φ) ((value z) = s) ConjunctionRightElimination
         (((value x) = s) ∧ φ) x ThereExistsIntroduction
