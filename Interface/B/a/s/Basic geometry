@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
 | importedby = None yet.
-| exportedby = [[Out lines]]
+| exportedby = [[Symmetric point]]
 }}
 
 Here we state a variety of basic geometrical theorems involving collinearity, midpoints, perpendiculars, and the like.
@@ -16,7 +16,7 @@ param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) (
 The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined in the obvious way as sets of points, as this is a first-order theory).
 <jh>
 kindbind (object point)
-var (point x y z w u v A B C D E P Q R S)
+var (point x y z w u v A B C D E M P Q R S)
 var (point x′ y′ z′ u′ A′ B′ C′ D′ P′ Q′ R′ S′)
 var (point P1 P2)
 
@@ -62,7 +62,7 @@ term (formula (between point point point))
 
 There are no points between a point and itself.
 <jh>
-stmt (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)))
+stmt (IndivisibilityBiconditional () () ((between x y x) ↔ (x = y)))
 stmt (IndivisibilityFromEquality () () (((x = z) ∧ (between x y z)) → (x = y)))
 </jh>
 
@@ -298,14 +298,14 @@ def ((is-midpoint-of M A B) ((between A M B) ∧ (A M ≡ M B)))
 
 Whether a point is the midpoint does not depend on the order in which we list the endpoints.
 <jh>
-thm (MidpointSymmetry () ()
+stmt (MidpointSymmetry () ()
   ((M is-midpoint-of A B) ↔ (M is-midpoint-of B A)))
 </jh>
 
 An empty line segment has as its midpoint its endpoint.
 <jh>
-thm (MidpointIndivisibility () () ((M is-midpoint-of A A) → (M = A)))
-thm (MidpointReflexivity () () (A is-midpoint-of A A))
+stmt (MidpointIndivisibility () () ((M is-midpoint-of A A) → (M = A)))
+stmt (MidpointReflexivity () () (A is-midpoint-of A A))
 </jh>
 
 === Reflection through a point ===
@@ -313,65 +313,67 @@ thm (MidpointReflexivity () () (A is-midpoint-of A A))
 
 The symmetric point exists and is unique.
 <jh>
-thm (SymmetricPoint ((p′ A) (p′ P)) ()
+stmt (SymmetricPoint ((p′ A) (p′ P)) ()
   (∃ p′ (A is-midpoint-of P (value p′))))
-thm (SymmetricPointUniqueness () ()
+stmt (SymmetricPointUniqueness () ()
   (((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2)) →
     (P1 = P2)))
 </jh>
 
 Mapping to the symmetric point is one to one.
 <jh>
-thm (SymmetricPointOneToOne () ()
+stmt (SymmetricPointOneToOne () ()
   (((A is-midpoint-of P1 P) ∧ (A is-midpoint-of P2 P)) →
     (P1 = P2)))
 </jh>
 
 Mapping all points to the symmetric point preserves distance, line segment congruence, betweenness, and midpointness.
 <jh>
-thm (SymmetricPointDistance () ()
+stmt (SymmetricPointDistance () ()
   (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
   (P Q ≡ P′ Q′)))
-thm (SymmetricPointBetweenness () ()
+stmt (SymmetricPointBetweenness () ()
   (((((A is-midpoint-of P P′) ∧
       (A is-midpoint-of Q Q′)) ∧
       (A is-midpoint-of R R′)) ∧
       (between P Q R)) →
     (between P′ Q′ R′)))
-thm (SymmetricPointCongruence () ()
+stmt (SymmetricPointCongruence () ()
   ((((((A is-midpoint-of P P′) ∧
       (A is-midpoint-of Q Q′)) ∧
       (A is-midpoint-of R R′)) ∧
       (A is-midpoint-of S S′)) ∧
       (P Q ≡ R S)) →
     (P′ Q′ ≡ R′ S′)))
-thm (SymmetricPointMidpoint () ()
-  (((((A is-midpoint-of P P′) ∧
-      (A is-midpoint-of Q Q′)) ∧
-      (A is-midpoint-of R R′)) ∧
-      (P is-midpoint-of Q R)) →
-    (P′ is-midpoint-of Q′ R′)))
+#stmt (SymmetricPointMidpoint () ()
+#  (((((A is-midpoint-of P P′) ∧
+#      (A is-midpoint-of Q Q′)) ∧
+#      (A is-midpoint-of R R′)) ∧
+#      (P is-midpoint-of Q R)) →
+#    (P′ is-midpoint-of Q′ R′)))
 </jh>
 
 === Midpoint exists and is unique ===
 The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref>
 <jh>
-thm (MidpointUniqueness () ()
-  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)) ())
+#stmt (MidpointUniqueness () ()
+#  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
 </jh>
 
 === Several other midpoint theorems ===
 A point which is on a line with two distinct points and equidistant to both of them is the midpoint of the line segment between those points.
 <jh>
-thm (EquidistantMidpoint () ()
-  (((collinear A M B) ∧ (M A ≡ M B)) → ((A = B) ∨ (M is-midpoint-of A B))))
+#stmt (EquidistantMidpoint () ()
+#  (((collinear A M B) ∧ (M A ≡ M B)) → ((A = B) ∨ (M is-midpoint-of A B))))
 </jh>
 
 The diagonals of a rhombus bisect each other. (TODO: need an image for this one).<ref>l7_21 in Narboux</ref>
 <jh>
-thm (RhombusDiagonals () ()
-  (((((((¬ collinear A B C) ∧ (B ≠ D)) ∧ (A B ≡ C D)) ∧ (B C ≡ D A)) ∧ (collinear A P C)) ∧ (collinear B P D)) → ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))) (
-))
+#stmt (RhombusDiagonals () ()
+#  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+#      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+#      (collinear A P C)) ∧ (collinear B P D)) →
+#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
 </jh>
 
 == Tarski's axioms ==

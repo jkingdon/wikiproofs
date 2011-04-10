@@ -11,6 +11,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (AXIOMS Interface:Zermelo–Fraenkel_set_theory (CLASSICAL FIRSTORDER) ())
 
 var (variable x y z w result x′)
+var (variable a b)
 var (object A B C D A0 A1 B0 B1)
 var (formula φ antecedent)
 </jh>
