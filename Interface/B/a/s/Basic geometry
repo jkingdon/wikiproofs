@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
 | importedby = None yet.
-| exportedby = [[Out lines]]
+| exportedby = [[Symmetric point]]
 }}
 
 Here we state a variety of basic geometrical theorems involving collinearity, midpoints, perpendiculars, and the like.
@@ -16,10 +16,11 @@ param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) (
 The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined in the obvious way as sets of points, as this is a first-order theory).
 <jh>
 kindbind (object point)
-var (point x y z w u v A B C D E P Q)
-var (point x′ y′ z′ u′ A′ B′ C′ D′)
+var (point x y z w u v A B C D E M P Q R S)
+var (point x′ y′ z′ u′ A′ B′ C′ D′ P′ Q′ R′ S′)
+var (point P1 P2)
 
-var (variable a b c a′ b′ c′ e f p)
+var (variable a b c a′ b′ c′ e f p p′)
 </jh>
 
 == Congruence of line segments ==
@@ -287,6 +288,92 @@ stmt (InnerDegenerateTriangle
 stmt (CollinearityConstructDegenerateTriangle
   ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) ()
   (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))))
+</jh>
+
+== Midpoints ==
+A point is the midpoint of a line segment if it is between the endpoints and is equidistant from each one.
+<jh>
+def ((is-midpoint-of M A B) ((between A M B) ∧ (A M ≡ M B)))
+</jh>
+
+Whether a point is the midpoint does not depend on the order in which we list the endpoints.
+<jh>
+stmt (MidpointSymmetry () ()
+  ((M is-midpoint-of A B) ↔ (M is-midpoint-of B A)))
+</jh>
+
+An empty line segment has as its midpoint its endpoint.
+<jh>
+stmt (MidpointIndivisibility () () ((M is-midpoint-of A A) → (M = A)))
+stmt (MidpointReflexivity () () (A is-midpoint-of A A))
+</jh>
+
+=== Reflection through a point ===
+[[w:Point reflection|Point symmetry]], or reflection through a point, refers to the process of starting with a single point (which in special cases might be called the origin or the center) and mapping every point to a point directly opposite the given point (at the same distance).
+
+The symmetric point exists and is unique.
+<jh>
+stmt (SymmetricPoint ((p′ A) (p′ P)) ()
+  (∃ p′ (A is-midpoint-of P (value p′))))
+stmt (SymmetricPointUniqueness () ()
+  (((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2)) →
+    (P1 = P2)))
+</jh>
+
+Mapping to the symmetric point is one to one.
+<jh>
+stmt (SymmetricPointOneToOne () ()
+  (((A is-midpoint-of P1 P) ∧ (A is-midpoint-of P2 P)) →
+    (P1 = P2)))
+</jh>
+
+Mapping all points to the symmetric point preserves distance, line segment congruence, betweenness, and midpointness.
+<jh>
+stmt (SymmetricPointDistance () ()
+  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
+  (P Q ≡ P′ Q′)))
+stmt (SymmetricPointBetweenness () ()
+  (((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (between P Q R)) →
+    (between P′ Q′ R′)))
+stmt (SymmetricPointCongruence () ()
+  ((((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (A is-midpoint-of S S′)) ∧
+      (P Q ≡ R S)) →
+    (P′ Q′ ≡ R′ S′)))
+#stmt (SymmetricPointMidpoint () ()
+#  (((((A is-midpoint-of P P′) ∧
+#      (A is-midpoint-of Q Q′)) ∧
+#      (A is-midpoint-of R R′)) ∧
+#      (P is-midpoint-of Q R)) →
+#    (P′ is-midpoint-of Q′ R′)))
+</jh>
+
+=== Midpoint exists and is unique ===
+The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref>
+<jh>
+#stmt (MidpointUniqueness () ()
+#  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
+</jh>
+
+=== Several other midpoint theorems ===
+A point which is on a line with two distinct points and equidistant to both of them is the midpoint of the line segment between those points.
+<jh>
+#stmt (EquidistantMidpoint () ()
+#  (((collinear A M B) ∧ (M A ≡ M B)) → ((A = B) ∨ (M is-midpoint-of A B))))
+</jh>
+
+The diagonals of a rhombus bisect each other. (TODO: need an image for this one).<ref>l7_21 in Narboux</ref>
+<jh>
+#stmt (RhombusDiagonals () ()
+#  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+#      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+#      (collinear A P C)) ∧ (collinear B P D)) →
+#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
 </jh>
 
 == Tarski's axioms ==
