@@ -62,7 +62,7 @@ term (formula (between point point point))
 
 There are no points between a point and itself.
 <jh>
-stmt (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)))
+stmt (IndivisibilityBiconditional () () ((between x y x) ↔ (x = y)))
 stmt (IndivisibilityFromEquality () () (((x = z) ∧ (between x y z)) → (x = y)))
 </jh>
 
