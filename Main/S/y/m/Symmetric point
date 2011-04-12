@@ -1658,6 +1658,106 @@ And finally is <code>R S ≡ R′ S′</code>.
 ))
 </jh>
 
+=== Midpoint-preserving ===
+<jh>
+thm (SymmetricPointMidpoint () ()
+  (((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (P is-midpoint-of Q R)) →
+    (P′ is-midpoint-of Q′ R′)) (
+</jh>
+Because reflecting to symmetric points preserves betweenness, <code>between Q P R</code> implies <code>between P′ Q′ R′</code>.
+<jh>
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        A Q Q′ P P′ R R′ SymmetricPointBetweenness
+        applySyllogism
+</jh>
+Because reflecting to symmetric points preserves line segment congruence, <code>Q P ≡ P R</code> implies <code>Q′ P′ ≡ P′ R′</code>.
+<jh>
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((A is-midpoint-of P P′) ∧
+            (A is-midpoint-of Q Q′)) ∧
+            (A is-midpoint-of R R′))
+          (P is-midpoint-of Q R)
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        A Q Q′ P P′ P P′ R R′ SymmetricPointCongruence
+        applySyllogism
+</jh>
+Combining betweenness and congruence shows <code>P′ is-midpoint-of Q′ R′</code>.
+<jh>
+        composeConjunction
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Symmetric point]].
 <jh>
