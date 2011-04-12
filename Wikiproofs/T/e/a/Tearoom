@@ -325,3 +325,5 @@ Reactions? [[User:Kingdon|Kingdon]] 02:39, 25 February 2011 (UTC)
 == How to create private sandbox? ==
 
 I would like to learn writing proofs for JHilbert. I know about the official [[Sandbox]]. Can I create a private (not publicly viewable) sandbox just for myself that I can reuse? [[User:Slawekk|Slawekk]] 08:45, 11 April 2011 (UTC)
+
+:There's definitely a place where you can experiment freely and not collide with other people's experiments. Just create a page like [[User module:Slawekk/Sandbox]] (doesn't have to be called Sandbox, you can give it any name you'd like). This is publicly visible in the sense that someone who knows the name can load it, but searches don't return it (unless the person searching explicitly asks to search the User module namespace), so perhaps that it private enough (depending on why you were asking for that). [[User:Kingdon|Kingdon]] 17:10, 11 April 2011 (UTC)
