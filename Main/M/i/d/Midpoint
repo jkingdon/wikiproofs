@@ -18,8 +18,47 @@ var (point P1 P2)
 var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
 </jh>
 
-== This page is not yet started ==
-{{under construction}}
+== Midpoint is unique ==
+The midpoint of a line segment is unique.<ref>l7_17 in Narboux</ref>
+
+[[File:Proof of midpoint uniqueness.svg|thumb|right]]
+To prove it, start with a line segment <code>P P′</code> which has two midpoints <code>A</code> and <code>B</code>. Our aim is to show that <code>A = B</code>. First construct <code>B′</code>, the symmetric point of <code>B</code> through the point <code>A</code>. Because reflecting through a symmetric point preserves distances, the line segments <code>P B′</code> and <code>B′ P′</code> are congruent to <code>P B</code> and <code>B P′</code>.
+
+Applying <code>BetweennessTwoDistanceUniqueness</code> gives us <code>B = B′</code>. And since <code>B B′</code> is an empty line segment and <code>A</code> is one of its midpoints, then <code>A = B</code>.
+
+To formalize this proof, first we construct the point <code>B′</code>.
+<jh>
+thm (MidpointUniqueness-bprime ((b′ A) (b′ B)) ()
+  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → 
+  (∃ b′ (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B (value b′))))) (
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ImplicationReflexivity
+        b′ A P SymmetricPoint
+        introduceRightConjunctToConsequent
+
+        b′
+          ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B (value b′))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+</jh>
+<jh>
+thm (MidpointUniqueness- ((b′ A) (b′ B)) ()
+  ((((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B B′)) → () )    ) (
+
+thm (MidpointUniqueness-b-bprime ((b′ A) (b′ B)) ()
+  ((((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B B′)) → (B = B′)) (
+</jh>
+In this case <code>BetweennessTwoDistanceUniqueness</code> expands to <code>between P B P′ ∧ P B ≡ P B′ ∧ P′ B ≡ P′ B′ → B = B′</code>.
+<jh>
+        P B P′ BetweennessTwoDistanceUniqueness
+))
+
+thm (MidpointUniqueness () ()
+  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)) ())
+</jh>
 
 == Export ==
 We now export to [[Interface:Midpoint]].
