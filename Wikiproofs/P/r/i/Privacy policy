@@ -4,7 +4,7 @@ Wikiproofs is a public, collaborative project. In order to fulfil its operationa
 
 The underlying server software (but not the wiki software) collects and stores the following data for each request:
 * the [[w:Internet Protocol|Internet Protocol]] (IP) address from which the request originated,
-* the host through which the site was accessed (normally <code>www.wikiproofs.de</code>),
+* the host through which the site was accessed (normally <code>www.wikiproofs.org</code> or <code>www.wikiproofs.de</code>),
 * date and time of the request,
 * the request string,
 * the server response code and response size,
