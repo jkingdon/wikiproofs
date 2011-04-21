@@ -345,12 +345,12 @@ stmt (SymmetricPointCongruence () ()
       (A is-midpoint-of S S′)) ∧
       (P Q ≡ R S)) →
     (P′ Q′ ≡ R′ S′)))
-#stmt (SymmetricPointMidpoint () ()
-#  (((((A is-midpoint-of P P′) ∧
-#      (A is-midpoint-of Q Q′)) ∧
-#      (A is-midpoint-of R R′)) ∧
-#      (P is-midpoint-of Q R)) →
-#    (P′ is-midpoint-of Q′ R′)))
+stmt (SymmetricPointMidpoint () ()
+  (((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (P is-midpoint-of Q R)) →
+    (P′ is-midpoint-of Q′ R′)))
 </jh>
 
 === Midpoint exists and is unique ===
