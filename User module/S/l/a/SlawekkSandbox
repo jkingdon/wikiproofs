@@ -637,7 +637,60 @@ We now have <code>C ∈ A × B ↔ [C / z] ∃ a ∃ b (z = 〈a, b〉 ∧ (a �
 ))
 </jh>
 
-You're the geraetst! JMHO
+=== An ordered pair which is a member of a Cartesian product ===
+Here we show that <code>〈 A0, B0 〉 ∈ A × B ↔ A0 ∈ A ∧ B0 ∈ B</code>.<ref>[http://us.metamath.org/mpeuni/opelxp.html opelxp], metamath's set.mm, accessed February 5, 2011</ref>
+<jh>
+thm (OrderedPairCartesianProduct ( (a b A) (a b B) (a b A0) (a b B0)) ()
+  (((orderedPair A0 B0) ∈ (A × B)) ↔ ((A0 ∈ A) ∧ (B0 ∈ B))) (
+</jh>
+The first step is invoking <code>MembershipCartesianProduct</code> with the ordered pair as the element. That is, <code>〈 A0, B0 〉 ∈ A × B ↔ ∃ a ∃ b (〈 A0, B0 〉 = 〈 a, b 〉 ∧ (a ∈ A ∧ b ∈ B))</code>
+<jh>
+        (orderedPair A0 B0) A B a b MembershipCartesianProduct
+</jh>
+Applying the ordered pair theorem and rearranging the conjunctions turns this into <code>∃ a ∃ b ((A0 = a ∧ a ∈ A) ∧ (B0 = b ∧ b ∈ B))</code>.
+<jh>
+        A0 B0 (value a) (value b) OrderedPairTheorem
+        (((value a) ∈ A) ∧ ((value b) ∈ B)) buildConjunctionRR
+        b buildThereExists
+        a buildThereExists
+        applyBiconditionalTransitivity
+
+        (A0 = (value a)) (B0 = (value b)) ((value a) ∈ A) ((value b) ∈ B) Conjunction4
+        b buildThereExists
+        a buildThereExists
+        applyBiconditionalTransitivity
+</jh>
+We now scatter the quantifiers to give <code>∃ a (A0 = a ∧ a ∈ A) ∧ ∃ b (B0 = b ∧ b ∈ B)</code>.
+<jh>
+        a
+          b
+          ((A0 = (value a)) ∧ ((value a) ∈ A))
+          ((B0 = (value b)) ∧ ((value b) ∈ B))
+          ThereExistsScattering
+        applyBiconditionalTransitivity
+</jh>
+Each half of that is equivalent to a membership formula (that is, <code>∃ a (A0 = a ∧ a ∈ A) ↔ A0 ∈ A)</code> and likewise for the other half).
+<jh>
+        A0 (value a) EqualitySymmetry
+        ((value a) ∈ A) buildConjunctionRR
+        a buildThereExist
+
+        A0 A a MembershipThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        B0 (value b) EqualitySymmetry
+        ((value b) ∈ B) buildConjunctionRR
+        b buildThereExists
+
+        B0 B b MembershipThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        buildConjunction
+        applyBiconditionalTransitivity
+))
+</jh>
 
 == To be added ==
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
