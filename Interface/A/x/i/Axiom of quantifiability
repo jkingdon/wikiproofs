@@ -32,8 +32,7 @@ As can be seen in more detail in [[First-order logic with quantifiability]] and 
 
 First-order logic with quantifiability works fine for Peano arithmetic (see for example Raph Levien's peano_thms<ref>[http://levien.com/garden/ghnew/peano/ Peano], accessed 6 May 2010</ref>), and set theories without proper classes, such as ZF.
 
-== Similar axioms/theorems in other systems ==
-Metamath's set.mm has a theorem <code>A ∈ B → ∃x x = A</code> (where <code>A</code> and <code>B</code> are classes and <code>x</code> is a variable),<ref>[http://us.metamath.org/mpeuni/elex.html elex], accessed 31 May 2010</ref> which closely resembles our axiom of quantifiability except for A ∈ B (which means "A is not a proper class").
+You're the geratset! JMHO
 
 == References ==
 <references/>
