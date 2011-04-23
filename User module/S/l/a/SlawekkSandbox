@@ -701,7 +701,4 @@ We export to [[Interface:Set theory]].
 export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
-== References ==
-<references/>
-
-[[Category:Other classical set theory]]
+That's not just the best answer. It's the btesset answer!
