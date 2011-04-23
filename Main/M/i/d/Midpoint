@@ -7,19 +7,55 @@ This is part of a series of modules which prove a variety of geometrical theorem
 
 This page proves various results involving the midpoint of a line segment. We don't yet prove the existence of a midpoint (that's in the next chapter).
 
-We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Symmetric point|geometry results so far]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+import (START Interface:Symmetric_point (CLASSICAL FIRSTORDER) ())
 
-var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′ R′ S′ X′ Y′)
-var (point P1 P2)
+var (point A B C D E F M P Q R S X Y Z)
+var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
 var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
 </jh>
 
-== This page is not yet started ==
-{{under construction}}
+== Midpoint builder ==
+This is the proposition that equals can be substituted for equals, in the context of <code>is-midpoint-of</code>. It follows directly from the builders for betweenness and line segment congruence.<ref>not in Narboux</ref>
+<jh>
+thm (MidpointBuilder () () ((((M = M′) ∧ (A = A′)) ∧ (B = B′)) →
+  ((M is-midpoint-of A B) ↔ (M′ is-midpoint-of A′ B′))) (
+        ((M = M′) ∧ (A = A′)) (B = B′) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        ((M = M′) ∧ (A = A′)) (B = B′) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        ((M = M′) ∧ (A = A′)) (B = B′) ConjunctionLeftElimination
+        composeConjunction
+
+        A A′ M M′ B B′ BetweennessBuilder
+        applySyllogism
+
+        ((M = M′) ∧ (A = A′)) (B = B′) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        ((M = M′) ∧ (A = A′)) (B = B′) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        ((M = M′) ∧ (A = A′)) (B = B′) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        ((M = M′) ∧ (A = A′)) (B = B′) ConjunctionLeftElimination
+        composeConjunction
+
+        A A′ M M′ M M′ B B′ CongruenceBuilder
+        applySyllogism
+
+        buildConjunctionInConsequent
+))
+</jh>
 
 == Export ==
 We now export to [[Interface:Midpoint]].
