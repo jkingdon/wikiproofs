@@ -1761,7 +1761,7 @@ Combining betweenness and congruence shows <code>P′ is-midpoint-of Q′ R′</
 == Export ==
 We now export to [[Interface:Symmetric point]].
 <jh>
-#export (RESULTS Interface:Symmetric_point (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Symmetric_point (CLASSICAL FIRSTORDER) ())
 </jh>
 
 Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
