@@ -52,13 +52,7 @@ The restriction that all variables on the left-hand side of an abbreviation (and
 
 == Statement-backed definitions (Carl Witty) ==
 
-=== Syntax ===
-
- vkind (''vkind-label'')
- def ((''def-label'' ''var1'' &hellip; ''varN'') ''definiens'')
- defthm (''new-label'' (''dv-constraints'') (''hyp1'' &hellip; ''hypM'') ''consequent'' ''def-label'' ''old-label'')
-
-Note: in his original proposal, Carl included a hyphen in the <code>defthm</code> command; I'll leave it out because no other command contains a hyphen.
+Great thinnkig! That really breaks the mold!
 
 === Constraints ===
 
