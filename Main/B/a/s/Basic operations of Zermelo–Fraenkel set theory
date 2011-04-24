@@ -294,7 +294,51 @@ The union of two sets is just a special case of the union of a set: <code>A ∪ 
 def ((∪ A B) (⋃ (unorderedPair A B)))
 </jh>
 
-I'm not easily imrpessed. . . but that's impressing me! :)
+=== A lemma involving substitution ===
+Here we prove <code>A ∈ B ↔ ∃ x (A ∈ x ∧ x = B)</code>. This only holds because of the [[Interface:Axiom of quantifiability]]; a treatment of set theory which does not have that axiom (for example, because it allows proper classes) will handle things differently.
+<jh>
+thm (IsElementThereExists ((x A) (x B)) ()
+  ((A ∈ B) ↔ (∃ x ((A ∈ (value x)) ∧ ((value x) = B)))) (
+</jh>
+We start with the forward direction. First we prove <code>A ∈ B → ∃ x (x = B ∧ A ∈ B)</code>.
+<jh>
+        (A ∈ B) ImplicationReflexivity
+        x B Quantifiability
+        introduceLeftConjunctToConsequent
+
+        x ((value x) = B) (A ∈ B) ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Next is the substitution <code>x = B → (A ∈ x ↔ A ∈ B)</code>, which we then rearrange to <code>x = B ∧ A ∈ B → A ∈ x)</code>.
+<jh>
+        (value x) B A MembershipBuilderLL
+        eliminateBiconditionalForwardInConsequent
+        import
+</jh>
+Combining this with <code>x = B</code> we get <code>x = B ∧ A ∈ B → A ∈ x ∧ x = B</code>, and adding in the quantifier we finish the forward direction.
+<jh>
+        ((value x) = B) (A ∈ B) ConjunctionRightElimination
+        composeConjunction
+
+        x addThereExists
+        applySyllogism
+</jh>
+The reverse direction is just a substitution. We start with <code>x = B → (A ∈ x ↔ A ∈ B)</code> and rearrange it to <code>A ∈ x ∧ x = B → A ∈ B</code>.
+<jh>
+        (value x) B A MembershipBuilderLL
+        eliminateBiconditionalReverseInConsequent
+        applyComm
+        import
+</jh>
+Adding in the quantifier finishes the reverse direction, and we combine the two directions.
+<jh>
+        x addThereExists
+        removeThereExistsInConsequent
+
+        introduceBiconditionalFromImplications
+))
+</jh>
 
 === Membership in a union related to membership in one of the two sets ===
 The next theorem, <code>A ∈ B ∪ C ↔ A ∈ B ∨ A ∈ C</code>, is another way of stating what the union of two sets means.<ref>[http://us.metamath.org/mpeuni/elun.html elun] in metamath's set.mm, accessed January 22, 2011</ref>
