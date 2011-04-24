@@ -1,1 +1,177 @@
-I'm out of league here. Too much brain power on dilspay!
+In 1916, [[w:Jean Nicod|Jean Nicod]] endeavoured to reduce the propositional calculus of [[w:Principia Mathematica|Principia Mathematica]] to a single rule of detachment and a single further axiom. In [[Nicod's reduction of Principia Mathematica]] we show that Nicod's axioms imply the ''Principia'' ones.  Here we show that the Principia axioms imply Nicod's.
+
+{{interfaces
+| imports = [[Interface:Classical propositional calculus]]
+| exports = [[Interface:Nicod axioms|Nicod axioms]]
+}}
+
+In order to avoid duplicating a lot of the work in [[Principia Mathematica propositional logic]], we'll just import [[Interface:Classical propositional calculus]].  Since [[Principia Mathematica propositional logic]] proves that interface from the ''Principia'' axioms, this is equivalent to importing the ''Principia'' axioms. It does mean that the proofs below are expressed in the somewhat more generic language of [[Interface:Classical propositional calculus]] (for example, the equivalence of <code>(→ p q)</code> and <code>((¬ p) ∨ q)</code> is not an automatically applied definition, but a statement which we apply explicitly).
+
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+Define some variables:
+<jh>
+var (formula p q r s t)
+</jh>
+
+The only connective in Nicod's system is the [[w:Sheffer stroke|Sheffer stroke]] (NAND). We define it in terms of negation and conjunction:
+
+<jh>
+def ((| p q) (¬ (p ∧ q)))
+</jh>
+
+== Implication conversion ==
+Nicod's version of implication involves two applications of the Sheffer stroke.  The following theorem will provide our main mechanism for handling it.<ref>[http://us.metamath.org/mpeuni/nic-justlem.html nic-justlem] in metamath's set.mm, accessed February 18, 2010</ref>
+
+<jh>
+thm (ImplicationEquivalence () () ((p | (q | r)) ↔ (p → (q ∧ r))) (
+</jh>
+By the definition of <code>|</code>, we are starting with <code>(¬ (p ∧ ¬ (q ∧ r))</code>.  We start by adding double negation to <code>p</code>:
+<jh>
+        p DoubleNegation
+        (¬ (q ∧ r)) BiconditionalReflexivity
+        buildConjunction
+        addNegation
+
+</jh>
+Applying DeMorgan's law to <code>(¬ ((¬ (¬ p)) ∧ ¬ (q ∧ r))</code> gives us <code>(¬ p) ∨ (q ∧ r)</code>
+<jh>
+        (¬ p) (q ∧ r) DeMorganNCN
+        applyBiconditionalTransitivity
+
+</jh>
+which in turn is equivalent to <code>p → (q ∧ r)</code>
+<jh>
+        p (q ∧ r) ImplicationDisjunction swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (unNicodize () ((H (p | (q | r)))) (p → (q ∧ r)) (
+        H
+        p q r ImplicationEquivalence eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (nicodize () ((H (p → (q ∧ r)))) (p | (q | r)) (
+        H
+        p q r ImplicationEquivalence eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (ImplicationToNicod () () ((p → q) → (p | (q | q))) (
+        q ConjunctionIdempotence eliminateBiconditionalReverse
+        p addCommonAntecedent
+
+        p q q ImplicationEquivalence eliminateBiconditionalForward
+
+        applySyllogism
+))
+</jh>
+
+== Inference rule ==
+Nicod's system only has only two axioms.  The first is an inference rule which is a variant of ''modus ponens''.
+
+<jh>
+thm (Nicod.applyRule () ((HP p) (HPR (p | (q | r)))) r (
+        HP
+        HPR unNicodize
+        applyModusPonens
+
+        eliminateLeftConjunction
+))
+</jh>
+
+== Proposition ==
+The other axiom is a tautology which expresses everything else in one big formula. Although poetic justice would demand that a big monolithic formula gets proved with a big monolithic proof, we'll break up the proof anyway. We're basically following a proof from metamath although various details have been rearranged.<ref>[http://us.metamath.org/mpeuni/nic-ax.html nic-ax] in metamath's set.mm, accessed February 18, 2010</ref>
+
+<jh>
+thm (ShefferCommutativity () () ((p | q) ↔ (q | p)) (
+        p q ConjunctionCommutativity
+        addNegation
+))
+
+thm (Prop-10 () () ((s → (¬ p)) ↔ (p | s)) (
+        s (¬ p) ImplicationDisjunction 
+        s p DeMorganPCP swapBiconditional
+        applyBiconditionalTransitivity
+
+        s p ShefferCommutativity
+        applyBiconditionalTransitivity
+))
+
+thm (Prop-15 () () ((p → q) → ((s | q) → (p | s))) (
+        p q Transposition eliminateBiconditionalReverse
+        (¬ q) (¬ p) s CommonAntecedentAddition
+        applySyllogism
+
+        s q Prop-10
+        q s ShefferCommutativity
+        applyBiconditionalTransitivity
+
+        s p Prop-10
+
+        buildImplication
+
+        eliminateBiconditionalReverse
+
+        applySyllogism
+))
+
+thm (Prop-a () () ((p | (q | r)) → (p → q)) (
+        p q r ImplicationEquivalence eliminateBiconditionalReverse
+
+        q r ConjunctionRightElimination
+        p addCommonAntecedent
+
+        applySyllogism
+))
+
+thm (Prop-18 () () ((p | (q | r)) → ((s | q) | ((p | s) | (p | s)))) (
+        p q r Prop-a
+        p q s Prop-15
+        applySyllogism
+
+        (s | q) (p | s) ImplicationToNicod
+        applySyllogism
+))
+
+thm (Prop-22 () () (t | (t | t)) (
+        t ConjunctionIdempotence eliminateBiconditionalReverse
+        nicodize
+))
+
+thm (Nicod.Prop () () ((p | (q | r)) | ((t | (t | t)) | ((s | q) | ((p | s) | (p | s))))) (
+        t Prop-22
+        (p | (q | r)) introduceAntecedent
+
+        p q r s Prop-18
+
+        composeConjunction
+
+        nicodize
+))
+
+</jh>
+
+== Export of Nicod's axioms ==
+
+Nicod defines implication in terms of the [[w:Sheffer stroke|Sheffer stroke]]. Although we don't use Nicod's version of implication in this file, we have to define it for the export to work. Because of the differing definitions, we prefix the Nicod kinds, definitions, and statements with <code>Nicod.</code>
+
+<jh>
+kindbind (formula Nicod.wff)
+def ((Nicod.| p q) (p | q))
+def ((Nicod.¬ p) (p | p))
+def ((Nicod.→ p q) (p | (q | q)))
+def ((Nicod.∨ p q) ((p | p) | (q | q)))
+def ((Nicod.∧ p q) ((p | q) | (p | q)))
+
+export (NICOD Interface:Nicod_axioms () Nicod.)
+</jh>
+
+== References ==
+
+<references />
+
+[[Category:Classical propositional logic]]
