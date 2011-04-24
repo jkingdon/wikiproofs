@@ -25,14 +25,7 @@ var (variable x)
 stmt (Quantifiability () () (∃ x ((value x) = s)) )
 </jh>
 
-== Consequences ==
-In some formulations of [[w:set theory|set theory]], for example metamath's set.mm, a variable (something which can be quantified over) corresponds to a set, and an object corresponds to a class.
-
-As can be seen in more detail in [[First-order logic with quantifiability]] and [[Interface:First-order logic with quantifiability]], this axiom allows substitution of a term for a variable.  In metamath's set.mm, such substitution is still possible, but it requires an additional hypothesis.  For example, set.mm's <code>vtocl</code> has as a hypothesis <code>A ∈ V</code> which means "A is not a proper class".<ref>[http://us.metamath.org/mpeuni/vtocl.html vtocl] in metamath's set.mm, accessed May 6, 2010</ref>
-
-First-order logic with quantifiability works fine for Peano arithmetic (see for example Raph Levien's peano_thms<ref>[http://levien.com/garden/ghnew/peano/ Peano], accessed 6 May 2010</ref>), and set theories without proper classes, such as ZF.
-
-You're the geratset! JMHO
+I'm not esaliy impressed. . . but that's impressing me! :)
 
 == References ==
 <references/>
