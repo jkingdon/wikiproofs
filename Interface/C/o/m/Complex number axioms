@@ -85,7 +85,31 @@ stmt (AdditiveInverse ((x a)) () ((a ∈ (ℝ)) → (∃ x (((value x) ∈ (ℝ)
 stmt (MultiplicativeInverse ((x a)) () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a · (value x)) = (1))))))
 </jh>
 
-YMMD with that asenwr! TX
+== Order on the reals ==
+We define a [[w:Total order|total order]] on the reals, which is consistent with addition and multiplication.
+<jh>
+term (formula (< object object))
+stmt (Trichotomy () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a < b) ↔ (¬ ((a = b) ∨ (b < a))))))
+stmt (Transitivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a < b) ∧ (b < c)) → (a < c))))
+stmt (LessThanAddition () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a < b) → ((c + a) < (c + b)))))
+stmt (LessThanMultiplication () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((((0) < a) ∧ ((0) < b)) → ((0) < (a · b)))))
+</jh>
+
+Any nonempty set of real numbers which is bounded above has a least upper bound ([[w:supremum|supremum]]) which is a real number. This property distinguishes the reals from the rationals. It is this property which causes us to build the reals on top of set theory, instead of just first-order logic, as it involves sets of reals not just individual real numbers. The statement of the axiom is as in metamath (modulo variable renamings and notation changes); the occurence of <code>bound</code> in the second part might better be read as "would-be upper bound" as of course the point is that it can't be less than the supremum and still be an upper bound.<ref>[http://us.metamath.org/mpeuni/axsup.html axsup]</ref>
+<jh>
+var (object A)
+var (variable bound supremum)
+stmt (Supremum ((x bound supremum A)) ()
+  ((((A ⊆ (ℝ))
+    ∧ (A ≠ (∅)))
+    ∧ (∃ bound (((value bound) ∈ (ℝ)) ∧ 
+      (∀ x (((value x) ∈ A) → ((value x) < (value bound)))))))
+  →
+    (∃ supremum (((value supremum) ∈ (ℝ)) ∧ (
+      (∀ x (((value x) ∈ A) → (¬ ((value supremum) < (value x))))) ∧ 
+      (∀ bound (((value bound) ∈ (ℝ)) → (((value bound) < (value supremum)) →
+        (∃ x (((value x) ∈ A) ∧ ((value bound) < (value x))))))))))))
+</jh>
 
 == References ==
 <references/>
