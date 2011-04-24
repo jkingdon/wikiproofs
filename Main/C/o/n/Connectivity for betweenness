@@ -19,8 +19,39 @@ var (point A B C D E P Q R A′ B′ C′ D′ B″ C″)
 var (variable a b b′ c c′ d′ e p q r b″ c″)
 </jh>
 
-At last, seoonme comes up with the "right" answer!
+== Summary ==
+[[File:outer connectivity for betweenness 1.svg|thumb|right|construction of C′, D′, B′, and B″]]
 
+Here's an outline of the proof, illustrating which points we construct but leaving most of the detailed line segment congruences for the detailed formal proof.
+
+We first construct <code>C′ and D′</code> extending the line segments <code>A D</code> and <code>A C</code> by a distance of <code>C D</code> in both cases. Eventually, the proof will show that <code>C = C′</code> or <code>D = D′</code>.
+
+Then extend the line segments <code>A C′</code> and <code>A D′</code> to points <code>B′</code> and <code>B″</code> by distances of <code>C B</code> and <code>D B</code>. The result of this construction is that the distance from <code>B</code> is the same to either <code>B′</code> or <code>B″</code> and thus we can conclude that <code>B′ = B″</code>.
+
+{{clear}}
+[[File:outer connectivity for betweenness 2.svg|thumb|right|construction of E]]
+The point <code>E</code> lies at the intersection of <code>C C′</code> and <code>D D′</code>.
+
+At this point we assume <code>C ≠ C′</code> and will deduce from that <code>D = D′</code>.
+
+{{clear}}
+[[File:outer connectivity for betweenness 3.svg|thumb|right|construction of P, Q, and R]]
+Extend <code>C′ C</code> by the distance <code>C D′</code> to a point <code>P</code>. Extend <code>D′ C</code> by the distance <code>C E</code> to a point <code>R</code>. Extend <code>P R</code> by the distance <code>R P</code> to a point <code>Q</code>.
+
+{{clear}}
+[[File:outer connectivity for betweenness 4.svg|thumb|right|D′ D ≡ P Q and C P ≡ C Q]]
+By some congruences we can show first <code>D′ D ≡ P Q</code>, which we'll need at the end of the proof, and <code>C P ≡ C Q</code>, which leads to the next step.
+
+{{clear}}
+[[File:outer connectivity for betweenness 5.svg|thumb|right|B P ≡ B Q and B′ P ≡ B′ Q]]
+[[File:outer connectivity for betweenness 6.svg|thumb|right|C′ P ≡ C′ Q]]
+At this point we will apply <code>EquidistantLine</code> five times. In every case we will show that <code>x P ≡ x Q</code> (based on two such existing congruences). For the starting point, we already have <code>C P ≡ C Q</code> and <code>R P ≡ R Q</code>. In turn, we will prove a similar congruence for <code>D′</code>, <code>B</code>, <code>B′</code>, and <code>C′</code>. Those cases easily fit the pictures we have been drawing so far. But we don't stop there: because <code>C′</code>, <code>C</code>, and <code>P</code> are collinear, we can also conclude <code>P P ≡ P Q</code> (this last one doesn't quite as readily lend itself to being illustrated in diagram form, but the first four are illustrated in the adjacent figures).
+
+Of course, <code>P P ≡ P Q</code> implies <code>P = Q</code>, which in turn implies <code>D = D′</code> (via <code>D D′ ≡ P Q</code>).
+
+We have shown that <code>C ≠ C′</code> implies <code>D = D′</code>, or in other words <code>C = C′ ∨ D = D′</code>. The former implies <code>A D C</code> and the latter implies <code>A C D</code>, so we reach the conclusion that <code>between A C D ∨ between A D C</code>.
+
+{{clear}}
 == Construction of C′, D′, B′, and B″ ==
 [[File:outer connectivity for betweenness 1.svg|thumb|right|construction of C′, D′, B′, and B″]]
 We construct <code>c′</code> such that <code>between A D c′ ∧ D c′ ≡ C D</code> and <code>d′</code> such that <code>between A C d′ ∧ C d′ ≡ C D</code>.
