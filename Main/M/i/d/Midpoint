@@ -217,6 +217,60 @@ thm (MidpointUniqueness ( (b′ A) (b′ B)) ()
 ))
 </jh>
 
+== The equidistant point is the midpoint ==
+A point which is equidistant to the two distinct endpoints of a line segment, and on the same line as them, is the midpoint of that line segment. In symbols, <code>collinear A M B ∧ M A ≡ M B → A = B ∨ M is-midpoint-of A B</code>.<ref>l7_20 in Narboux</ref>
+
+There are three cases based on <code>collinear A M B</code>. The first is <code>between A M B</code> which trivially satisfies the definition of midpoint.
+<jh>
+thm (EquidistantMidpoint-a-m-b () ()
+  ((between A M B) → ((M A ≡ M B) →
+    ((A = B) ∨ (M is-midpoint-of A B)))) (
+        M A M B CongruenceLeftCommutativity
+        eliminateBiconditionalReverse
+        (between A M B) conjoinLL
+
+        (M is-midpoint-of A B) (A = B) DisjunctionLeftIntroduction
+        applySyllogism
+
+        export
+))
+</jh>
+
+The second case is <code>between M B A</code>. Because <code>B</code> and <code>A</code> are the same distance from <code>M</code>, they must be the same point. To formalize this, apply inner three segment to <code>between M B A</code> and <code>between M B B</code>, which produces <code>B A ≡ B B</code>.
+<jh>
+thm (EquidistantMidpoint-m-b-a () ()
+  ((between M B A) → ((M A ≡ M B) →
+    ((A = B) ∨ (M is-midpoint-of A B)))) (
+        (between M B A) (M A ≡ M B) ConjunctionRightElimination
+        M B BetweenABB
+        
+))
+</jh>
+
+The third case is <code>between B A M</code>. Because <code>A</code> and <code>B</code> can be interchanged, it can be proven from the <code>between M B A</code> case. 
+<jh>
+thm (EquidistantMidpoint-m-b-a () ()
+  ((between B A M) → ((M A ≡ M B) →
+    ((A = B) ∨ (M is-midpoint-of A B)))) (
+))
+</jh>
+
+Combining the cases finishes the proof.
+<jh>
+thm (EquidistantMidpoint () ()
+  (((collinear A M B) ∧ (M A ≡ M B)) →
+    ((A = B) ∨ (M is-midpoint-of A B))) (
+        A M B EquidistantMidpoint-a-m-b
+        M B A EquidistantMidpoint-m-b-a
+        composeDisjunction
+
+        B A M EquidistantMidpoint-b-a-m
+        composeDisjunction
+
+        import
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Midpoint]].
 <jh>
