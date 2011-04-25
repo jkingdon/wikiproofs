@@ -241,17 +241,73 @@ The second case is <code>between M B A</code>. Because <code>B</code> and <code>
 thm (EquidistantMidpoint-m-b-a () ()
   ((between M B A) → ((M A ≡ M B) →
     ((A = B) ∨ (M is-midpoint-of A B)))) (
+</jh>
+Inner three segment needs two betweenness relationships, <code>between A B M</code>
+<jh>
         (between M B A) (M A ≡ M B) ConjunctionRightElimination
+        swapBetweennessInConsequent
+</jh>
+and <code>between B B M</code>,
+<jh>
         M B BetweenABB
-        
+
+        M B B BetweennessSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        introduceRightConjunctToConsequent
+</jh>
+and two congruences, <code>A M ≡ B M</code>
+<jh>
+        (between M B A) (M A ≡ M B) ConjunctionLeftElimination
+        commuteCongruenceInConsequent
+</jh>
+and <code>B M ≡ B M</code>.
+<jh>
+        B M CongruenceReflexivity
+        introduceRightConjunctToConsequent
+</jh>
+The conclusion is <code>A B ≡ B B</code>,
+<jh>
+        A B M B B M InnerThreeSegment
+        applySyllogism
+</jh>
+which in turn implies our result.
+<jh>
+        A B B CongruenceIdentity
+        applySyllogism
+
+        (A = B) (M is-midpoint-of A B) DisjunctionRightIntroduction
+        applySyllogism
+
+        export
 ))
 </jh>
 
 The third case is <code>between B A M</code>. Because <code>A</code> and <code>B</code> can be interchanged, it can be proven from the <code>between M B A</code> case. 
 <jh>
-thm (EquidistantMidpoint-m-b-a () ()
+thm (EquidistantMidpoint-b-a-m () ()
   ((between B A M) → ((M A ≡ M B) →
     ((A = B) ∨ (M is-midpoint-of A B)))) (
+</jh>
+When invoked with <code>A</code> and <code>B</code> switched, <code>EquidistantMidpoint-m-b-a</code> is <code>between M A B → (M B ≡ M A → B = A ∨ M is-midpoint-of B A)</code>. Rearranging we are done.
+<jh>
+        M A B EquidistantMidpoint-m-b-a
+
+        M A B BetweennessSymmetry
+
+        M B M A CongruenceSymmetry
+
+        B A EqualitySymmetry
+        M B A MidpointSymmetry
+        buildDisjunction
+
+        buildImplication
+
+        buildImplication
+
+        eliminateBiconditionalReverse
+        applySyllogism
 ))
 </jh>
 
