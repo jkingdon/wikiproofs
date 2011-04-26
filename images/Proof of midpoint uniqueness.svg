@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 r9760"
-   sodipodi:docname="Outer connectivity for betweenness 1a.svg">
+   sodipodi:docname="Proof of midpoint uniqueness.svg">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -46,16 +46,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="220.4723"
-     inkscape:cy="106.62482"
+     inkscape:zoom="1.4"
+     inkscape:cx="211.47791"
+     inkscape:cy="66.218718"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="800"
-     inkscape:window-height="480"
+     inkscape:window-width="1400"
+     inkscape:window-height="973"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="26"
      inkscape:window-maximized="1"
      inkscape:snap-midpoints="false" />
   <metadata
@@ -66,7 +66,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -107,16 +107,16 @@
          y="645.57642">P′</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:17.00595665px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-       x="281.96826"
-       y="646.83734"
+       style="font-size:22.07335281px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="270.83832"
+       y="661.82147"
        id="text3014"
        sodipodi:linespacing="125%"
-       transform="scale(1.0316303,0.96933954)"><tspan
+       transform="scale(1.0517157,0.9508273)"><tspan
          sodipodi:role="line"
          id="tspan3016"
-         x="281.96826"
-         y="646.83734">A</tspan></text>
+         x="270.83832"
+         y="661.82147">A</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:29.08529282px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -143,39 +143,43 @@
          y="596.9917">B′</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 34.285714,63.577144 417.14286,65.720001"
+       d="M 33.843772,66.039391 417.52167,65.972539"
        id="path3045"
        inkscape:connector-curvature="0"
-       transform="translate(67.854355,566.28501)" />
+       transform="translate(67.854355,566.28501)"
+       sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 214.65742,88.293594 0,-45.96194"
+       d="m 282.51177,655.08368 0,-45.96194"
        id="path3047"
-       inkscape:connector-curvature="0"
-       transform="translate(67.854355,566.28501)" />
+       inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 139.90613,79.707298 138.3909,93.344357"
+       d="m 139.90613,77.181917 -1.51523,16.16244"
        id="path3049"
        inkscape:connector-curvature="0"
-       transform="translate(67.854355,566.28501)" />
+       transform="translate(67.854355,566.28501)"
+       sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 308.6016,77.686993 2.02031,12.12183"
+       d="m 308.6016,77.686993 2.52539,14.647211"
        id="path3051"
        inkscape:connector-curvature="0"
-       transform="translate(67.854355,566.28501)" />
+       transform="translate(67.854355,566.28501)"
+       sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 292.94424,34.250433 -3.03046,18.687822"
+       d="m 292.94424,37.785967 -2.02031,16.162441"
        id="path3053"
        inkscape:connector-curvature="0"
-       transform="translate(67.854355,566.28501)" />
+       transform="translate(67.854355,566.28501)"
+       sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 146.47212,39.806272 4.04061,13.131983"
+       d="m 148.9975,36.270738 1.01015,19.192898"
        id="path3055"
        inkscape:connector-curvature="0"
-       transform="translate(67.854355,566.28501)" />
+       transform="translate(67.854355,566.28501)"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>
