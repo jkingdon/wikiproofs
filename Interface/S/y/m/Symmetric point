@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
-| importedby = [[Symmetric point]]
-| exportedby = [[Out lines]]
+| importedby = [[Midpoint]]
+| exportedby = [[Symmetric point]]
 }}
 
 {{geometry series brief}}
