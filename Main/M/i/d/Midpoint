@@ -7,16 +7,15 @@ This is part of a series of modules which prove a variety of geometrical theorem
 
 This page proves various results involving the midpoint of a line segment. We don't yet prove the existence of a midpoint (that's in the next chapter).
 
-We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Line segment inequality|geometry results so far]] and define some variables:
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Symmetric point|geometry results so far]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+import (START Interface:Symmetric_point (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F M P Q R S X Y Z)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
-var (point P1 P2)
-var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
+var (variable a a′ b b′ c c′ d d′ e e′ f p p′ x x′ y y′ z)
 </jh>
 
 == Midpoint builder ==
@@ -52,8 +51,11 @@ thm (MidpointBuilder () () ((((M = M′) ∧ (A = A′)) ∧ (B = B′)) →
         composeConjunction
 
         A A′ M M′ M M′ B B′ CongruenceBuilder
+        applySyllogism
+
         buildConjunctionInConsequent
 ))
+</jh>
 
 == Midpoint is unique ==
 The midpoint of a line segment is unique.<ref>l7_17 in Narboux</ref>
@@ -65,11 +67,11 @@ Applying <code>BetweennessTwoDistanceUniqueness</code> gives us <code>B = B′</
 
 To formalize this proof, first we construct the point <code>B′</code>.
 <jh>
-thm (MidpointUniqueness-bprime ((b′ A) (b′ B)) ()
+thm (MidpointUniqueness-bprime ((b′ A) (b′ B) (b′ P) (b′ P′)) ()
   (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → 
   (∃ b′ (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B (value b′))))) (
         ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ImplicationReflexivity
-        b′ A P SymmetricPoint
+        b′ A B SymmetricPoint
         introduceRightConjunctToConsequent
 
         b′
@@ -102,6 +104,7 @@ thm (MidpointUniqueness-p-b-pprime-bprime ((b′ A) (b′ B)) ()
 
         swapCongruenceInConsequent
 ))
+</jh>
 
 Similarly, <code>P′ B ≡ P B′</code>.
 <jh>
@@ -172,7 +175,7 @@ Last is <code>P′ B ≡ P′ B′</code>, which we prove via <code>P′ B ≡ P
 
         composeConjunction
 
-        P B P′ BetweennessTwoDistanceUniqueness
+        P B P′ B′ BetweennessTwoDistanceUniqueness
         applySyllogism
 ))
 </jh>
@@ -188,11 +191,12 @@ thm (MidpointUniqueness-a-b-b ((b′ A) (b′ B)) ()
           ConjunctionLeftElimination
         composeConjunction
 
-        A A EqualityReflexivity
-        B B EqualityReflexivity
+        A EqualityReflexivity
+        B EqualityReflexivity
         A A B B B B′ MidpointBuilder
         detach2of3
-        deatch1of2
+        detach1of2
+        eliminateBiconditionalForwardInConsequent
         import
 
         applySyllogism
@@ -205,7 +209,7 @@ thm (MidpointUniqueness-a-b ((b′ A) (b′ B)) ()
         applySyllogism
 ))
 
-thm (MidpointUniqueness ( (b′ A) (b′ B)) ()
+thm (MidpointUniqueness ( (b′ A) (b′ B) (b′ P) (b′ P′)) ()
   (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)) (
         A P P′ B b′ MidpointUniqueness-bprime
 
@@ -213,7 +217,7 @@ thm (MidpointUniqueness ( (b′ A) (b′ B)) ()
         b′ addThereExists
         applySyllogism
 
-        removeThereExistsFromConsequent
+        removeThereExistsInConsequent
 ))
 </jh>
 
@@ -249,18 +253,14 @@ Inner three segment needs two betweenness relationships, <code>between A B M</co
 </jh>
 and <code>between B B M</code>,
 <jh>
-        M B BetweenABB
-
-        M B B BetweennessSymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
-
+        B M BetweenAAB
         introduceRightConjunctToConsequent
 </jh>
 and two congruences, <code>A M ≡ B M</code>
 <jh>
         (between M B A) (M A ≡ M B) ConjunctionLeftElimination
         commuteCongruenceInConsequent
+        composeConjunction
 </jh>
 and <code>B M ≡ B M</code>.
 <jh>
@@ -307,7 +307,7 @@ When invoked with <code>A</code> and <code>B</code> switched, <code>EquidistantM
         buildImplication
 
         eliminateBiconditionalReverse
-        applySyllogism
+        applyModusPonens
 ))
 </jh>
 
@@ -331,6 +331,11 @@ thm (EquidistantMidpoint () ()
 We now export to [[Interface:Midpoint]].
 <jh>
 #export (RESULTS Interface:Midpoint (CLASSICAL FIRSTORDER) ())
+</jh>
+
+Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==

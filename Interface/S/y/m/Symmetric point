@@ -1,10 +1,10 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
-| importedby = None yet.
+| importedby = [[Midpoint]]
 | exportedby = [[Symmetric point]]
 }}
 
-Here we state a variety of basic geometrical theorems involving collinearity, midpoints, perpendiculars, and the like.
+{{geometry series brief}}
 
 We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
 
@@ -366,29 +366,6 @@ stmt (SymmetricPointMidpoint () ()
     (P′ is-midpoint-of Q′ R′)))
 </jh>
 
-=== Midpoint exists and is unique ===
-The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref>
-<jh>
-#stmt (MidpointUniqueness () ()
-#  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
-</jh>
-
-=== Several other midpoint theorems ===
-A point which is on a line with two distinct points and equidistant to both of them is the midpoint of the line segment between those points.
-<jh>
-#stmt (EquidistantMidpoint () ()
-#  (((collinear A M B) ∧ (M A ≡ M B)) → ((A = B) ∨ (M is-midpoint-of A B))))
-</jh>
-
-The diagonals of a rhombus bisect each other. (TODO: need an image for this one).<ref>l7_21 in Narboux</ref>
-<jh>
-#stmt (RhombusDiagonals () ()
-#  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
-#      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
-#      (collinear A P C)) ∧ (collinear B P D)) →
-#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
-</jh>
-
 == Tarski's axioms ==
 We repeat those axioms which are not subsumed by the theorems we have proved so far. Explanations are at [[Interface:Tarski's geometry axioms]].
 <jh>
@@ -432,10 +409,6 @@ stmt (LessEqualBuilder () () (
 
 == References ==
 <references/>
-
-== Incomplete ==
-{{under construction}}
-This page has not yet been updated for all the theorems proved as part of the geometry series. For now, look at the latest interface file in the series.
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Euclidean geometries (general) and generalizations]]
