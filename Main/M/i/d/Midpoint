@@ -15,7 +15,7 @@ import (START Interface:Symmetric_point (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F M P Q R S X Y Z)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
-var (variable a b c c′ d d′ e e′ f p p′ x x′ y y′ z)
+var (variable a a′ b b′ c c′ d d′ e e′ f p p′ x x′ y y′ z)
 </jh>
 
 == Midpoint builder ==
@@ -54,6 +54,170 @@ thm (MidpointBuilder () () ((((M = M′) ∧ (A = A′)) ∧ (B = B′)) →
         applySyllogism
 
         buildConjunctionInConsequent
+))
+</jh>
+
+== Midpoint is unique ==
+The midpoint of a line segment is unique.<ref>l7_17 in Narboux</ref>
+
+[[File:Proof of midpoint uniqueness.svg|thumb|right]]
+To prove it, start with a line segment <code>P P′</code> which has two midpoints <code>A</code> and <code>B</code>. Our aim is to show that <code>A = B</code>. First construct <code>B′</code>, the symmetric point of <code>B</code> through the point <code>A</code>. Because reflecting through a symmetric point preserves distances, the line segments <code>P B′</code> and <code>B′ P′</code> are congruent to <code>P B</code> and <code>B P′</code>.
+
+Applying <code>BetweennessTwoDistanceUniqueness</code> gives us <code>B = B′</code>. And since <code>B B′</code> is an empty line segment and <code>A</code> is one of its midpoints, then <code>A = B</code>.
+
+To formalize this proof, first we construct the point <code>B′</code>.
+<jh>
+thm (MidpointUniqueness-bprime ((b′ A) (b′ B) (b′ P) (b′ P′)) ()
+  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → 
+  (∃ b′ (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B (value b′))))) (
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ImplicationReflexivity
+        b′ A B SymmetricPoint
+        introduceRightConjunctToConsequent
+
+        b′
+          ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B (value b′))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+
+        applySyllogism
+))
+</jh>
+
+Because reflecting about the point <code>A</code> preserves distances, <code>P B ≡ P′ B′</code>.
+<jh>
+thm (MidpointUniqueness-p-b-pprime-bprime ((b′ A) (b′ B)) ()
+  ((((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B B′)) → (P B ≡ P′ B′)) (
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        A P P′ B B′ SymmetricPointDistance
+        applySyllogism
+
+        swapCongruenceInConsequent
+))
+</jh>
+
+Similarly, <code>P′ B ≡ P B′</code>.
+<jh>
+thm (MidpointUniqueness-pprime-b-p-bprime ((b′ A) (b′ B)) ()
+  ((((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B B′)) → (P′ B ≡ P B′)) (
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionLeftElimination
+
+        A B B′ MidpointSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A P P′ B′ B SymmetricPointDistance
+        applySyllogism
+))
+
+thm (MidpointUniqueness-b-bprime ((b′ A) (b′ B)) ()
+  ((((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B B′)) → (B = B′)) (
+</jh>
+In this case <code>BetweennessTwoDistanceUniqueness</code> expands to <code>between P B P′ ∧ P B ≡ P B′ ∧ P′ B ≡ P′ B′ → B = B′</code>. First is <code>between P B P′</code>.
+<jh>
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+Next is <code>P B ≡ P B′</code>, which we prove via <code>P B ≡ P′ B</code> and <code>P′ B ≡ P B′</code>.
+<jh>
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        commuteCongruenceRightInConsequent
+
+        A P P′ B B′ MidpointUniqueness-pprime-b-p-bprime
+
+        composeConjunction
+        P B P′ B P B′ CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+</jh>
+Last is <code>P′ B ≡ P′ B′</code>, which we prove via <code>P′ B ≡ P B</code> and <code>P B ≡ P′ B′</code>.
+<jh>
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        commuteCongruenceRightInConsequent
+        swapCongruenceInConsequent
+
+        A P P′ B B′ MidpointUniqueness-p-b-pprime-bprime
+
+        composeConjunction
+        P′ B P B P′ B′ CongruenceTransitivity
+        applySyllogism
+
+        composeConjunction
+
+        P B P′ B′ BetweennessTwoDistanceUniqueness
+        applySyllogism
+))
+</jh>
+
+Because <code>A</code> is between two points which end up being equal (<code>B</code> and <code>B′</code>), we can conclude that <code>A = B</code>.
+<jh>
+thm (MidpointUniqueness-a-b-b ((b′ A) (b′ B)) ()
+  ((((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B B′)) → (A is-midpoint-of B B)) (
+        A P P′ B B′ MidpointUniqueness-b-bprime
+
+        ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
+          (A is-midpoint-of B B′)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B B B′ MidpointBuilder
+        detach2of3
+        detach1of2
+        eliminateBiconditionalForwardInConsequent
+        import
+
+        applySyllogism
+))
+
+thm (MidpointUniqueness-a-b ((b′ A) (b′ B)) ()
+  ((((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) ∧ (A is-midpoint-of B B′)) → (A = B)) (
+        A P P′ B B′ MidpointUniqueness-a-b-b
+        A B MidpointIndivisibility
+        applySyllogism
+))
+
+thm (MidpointUniqueness ( (b′ A) (b′ B) (b′ P) (b′ P′)) ()
+  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)) (
+        A P P′ B b′ MidpointUniqueness-bprime
+
+        A P P′ B (value b′) MidpointUniqueness-a-b
+        b′ addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
 ))
 </jh>
 
