@@ -367,7 +367,7 @@ stmt (SymmetricPointMidpoint () ()
 </jh>
 
 === Midpoint exists and is unique ===
-The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref>
+The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref><ref>[http://aleph0.clarku.edu/~djoyce/java/elements/bookI/propI10.html Proposition 10] in book I of Euclid's Elements</ref>
 <jh>
 #stmt (MidpointUniqueness () ()
 #  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
