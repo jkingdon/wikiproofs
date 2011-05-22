@@ -1,0 +1,24 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]], [[Interface:Complex number axioms]]
+| importedby = none yet
+| exportedby = none yet
+}}
+
+[[w:Trigonometry]] concerns the sine function (and others which can be derived from it, such as cosine, tangent, etc). Here we concern ourselves only with the sine of a real number (not a complex number).
+
+We build on [[Interface:Classical propositional calculus|propositional logic]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]] and [[Interface:Complex number axioms]] (which we are just using for real numbers).
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+param (COMPLEX Interface:Complex_number_axioms (CLASSICAL FIRSTORDER SETS) ())
+</jh>
+
+{{under construction}}
+
+== References ==
+<references/>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Exponential and trigonometric functions]]
