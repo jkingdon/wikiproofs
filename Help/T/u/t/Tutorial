@@ -4,7 +4,7 @@ If you're really, ''really'' impatient, you can skip all the preliminary blah bl
 
 == Why this tutorial? ==
 
-While JHilbert is a relatively simple piece of software compared with other formal logic suites such as [[w:Coq|Coq]] or [[w:Isabelle (theorem prover)|Isabelle]], it is also more complex than most other MediaWiki extensions, so a tutorial to provide a gentle introduction for newcomers seems in order. Besides, most people prefer learning by example (at least initially) to just ingesting the specs.
+While JHilbert is a simple piece of software compared with other formal logic suites such as [[w:Coq|Coq]] or [[w:Isabelle (theorem prover)|Isabelle]], it is also more complex than most other MediaWiki extensions, so a tutorial to provide a gentle introduction for newcomers seems in order. Besides, most people prefer learning by example (at least initially) to just ingesting the specs.
 
 == Prerequisites ==
 

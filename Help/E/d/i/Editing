@@ -62,6 +62,8 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |× || *X || product || [[Interface:Set theory|set theory]]
 |-
+|− || -2 || subtraction || [[Interface:Complex number axioms|complex numbers]] (contrast with the hyphen - as negation)
+|-
 |√ || RT || square root || [[Interface:Complex numbers|complex numbers]]
 |-
 |〈 || </ || ordered pair || [[Interface:Set theory|set theory]]
@@ -75,6 +77,8 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |ℤ || || integers || subset of [[Interface:Complex number axioms|complex numbers]]
 |-
 |ℚ || || rationals || subset of [[Interface:Complex number axioms|complex numbers]]
+|-
+|ℝ || || real numbers || subset of [[Interface:Complex number axioms|complex numbers]]
 |-
 |ℂ || || complex numbers || [[Interface:Complex number axioms|complex numbers]]
 |-
@@ -100,9 +104,9 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |Ω || W* || Omega ||
 |-
-|α || a* || alpha ||
+|α || a* || alpha || [[Interface:Trigonometry|trigonometry]]
 |-
-|β || b* || beta ||
+|β || b* || beta || [[Interface:Trigonometry|trigonometry]]
 |-
 |γ || g* || gamma ||
 |-
@@ -114,7 +118,7 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |η || y* || eta ||
 |-
-|θ || h* || theta || [[Interface:First-order logic with quantifiability|predicate logic]]
+|θ || h* || theta || [[Interface:First-order logic with quantifiability|predicate logic]], [[Interface:Trigonometry|trigonometry]]
 |-
 |ι || i* || iota ||
 |-

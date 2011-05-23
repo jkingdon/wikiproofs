@@ -367,7 +367,7 @@ stmt (SymmetricPointMidpoint () ()
 </jh>
 
 === Midpoint exists and is unique ===
-The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref>
+The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref><ref>[http://aleph0.clarku.edu/~djoyce/java/elements/bookI/propI10.html Proposition 10] in book I of Euclid's Elements</ref>
 <jh>
 #stmt (MidpointUniqueness () ()
 #  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
@@ -380,9 +380,9 @@ A point which is on a line with two distinct points and equidistant to both of t
 #  (((collinear A M B) ∧ (M A ≡ M B)) → ((A = B) ∨ (M is-midpoint-of A B))))
 </jh>
 
-The diagonals of a rhombus bisect each other. (TODO: need an image for this one).<ref>l7_21 in Narboux</ref>
+The diagonals of a parallelogram bisect each other. (TODO: need an image for this one).<ref>l7_21 in Narboux</ref> (By "parallelogram" here we mean a quadrilateral whose opposite sides are congruent; there is no direct statement concerning parallel lines).
 <jh>
-#stmt (RhombusDiagonals () ()
+#stmt (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
 #      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
 #      (collinear A P C)) ∧ (collinear B P D)) →
