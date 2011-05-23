@@ -18,7 +18,7 @@ param (COMPLEX Interface:Complex_number_axioms (CLASSICAL FIRSTORDER SETS) ())
 == The sine and cosine functions ==
 In the future, we might prefer to define sin as a function (that is, a set, as will be developed in [[Relations]] when that is more complete) from the reals to the reals, but for now we define it as a term.
 <jh>
-var (object θ)
+var (object α β θ)
 term (object (sin object))
 stmt (SineRealToReal () () ((θ ∈ (ℝ)) → ((sin θ) ∈ (ℝ))))
 </jh>
@@ -37,7 +37,37 @@ term (object (τ))
 
 Some authors instead use a value of <code>τ/2</code>, which they call <code>π</code>.
 
-{{under construction}}
+== Relationship between sine and cosine ==
+The sine and the cosine at a given point, squared, add to one, which is the [[w:Pythagorean trigonometric identity|Pythagorean trigonometric identity]].
+<jh>
+stmt (TrigonometryPythagorean () () ((((sin θ) · (sin θ)) + ((cos θ) · (cos θ))) = (1)))
+</jh>
+
+The sine and cosine are the same, shifted by a quarter turn.
+<jh>
+#stmt (SineShift () () ((sin (θ + ((τ) / (4)))) = (cos θ)))
+</jh>
+
+== Periodicity ==
+The sine and cosine are periodic with period <code>τ</code> (we do not state, here, that <code>τ</code> is the smallest value which is a period, although it is).
+<jh>
+stmt (SinePeriod () () ((sin (θ + (τ))) = (sin θ)))
+</jh>
+
+== Negation ==
+<jh>
+#stmt (SineNegation () () ((sin (- θ)) = (- (sin θ))))
+</jh>
+
+== Addition ==
+There are expressions for taking the sine or cosine of a sum or difference.
+
+<jh>
+stmt (SineAddition () () ((sin (α + β)) = (((sin α) · (cos β)) + ((cos α) · (sin β)))))
+#stmt (CosineAddition () () ((cos (α + β)) = (((cos α) · (cos β)) − ((cos α) · (sin β)))))
+#stmt (SineSubtraction () () ((sin (α − β)) = (((sin α) · (cos β)) − ((cos α) · (sin β)))))
+#stmt (CosineSubtraction () () ((cos (α − β)) = (((cos α) · (cos β)) + ((cos α) · (sin β)))))
+</jh>
 
 == References ==
 <references/>
