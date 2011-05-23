@@ -74,6 +74,8 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |ℚ || || rationals || subset of [[Interface:Complex number axioms|complex numbers]]
 |-
+|ℝ || || real numbers || subset of [[Interface:Complex number axioms|complex numbers]]
+|-
 |ℂ || || complex numbers || [[Interface:Complex number axioms|complex numbers]]
 |-
 |ℍ || || quaternions ||
