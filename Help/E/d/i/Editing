@@ -62,6 +62,8 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |× || *X || product || [[Interface:Set theory|set theory]]
 |-
+|√ || RT || square root || [[Interface:Complex numbers|complex numbers]]
+|-
 |〈 || </ || ordered pair || [[Interface:Set theory|set theory]]
 |-
 |〉 || /> || ordered pair || [[Interface:Set theory|set theory]]
@@ -161,7 +163,7 @@ The following characters are intentionally omitted from the above list and gener
 |-
 |𝒫 || [[Interface:Basic operations of Zermelo–Fraenkel set theory|power set]] || not supported in enough browsers
 |-
-|Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ || Capital greek letters || Easily confused with latin letters<ref name="confusables">loosely based on the confusables.txt file from unicode.org, but adapated for mathematical conventions</ref>
+|Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ || Capital greek letters || Easily confused with latin letters<ref name="confusables">loosely based on the confusables.txt file from unicode.org, but adapted for mathematical conventions</ref>
 |-
 | ο || Lowercase greek omicron || Easily confused with latin letter o<ref name="confusables" />
 |-
