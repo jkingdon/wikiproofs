@@ -69,6 +69,49 @@ stmt (SineAddition () () ((sin (α + β)) = (((sin α) · (cos β)) + ((cos α) 
 #stmt (CosineSubtraction () () ((cos (α − β)) = (((cos α) · (cos β)) + ((cos α) · (sin β)))))
 </jh>
 
+== Trigonometry functions at particular points ==
+There are exact expressions for values of the trigonometric functions at many common points (for example, any multiple of <code>τ / 120</code> radians is possible, although we only provide some of the more common ones).
+
+<jh>
+stmt (Sin0 () () ((sin (0)) = (0)))
+stmt (Sin12 () () ((sin ((τ) / (12))) = ((1) / (2))))
+stmt (Sin8 () () ((sin ((τ) / (8))) = ((√ (2)) / (2))))
+stmt (Sin6 () () ((sin ((τ) / (6))) = ((√ (3)) / (2))))
+stmt (Sin4 () () ((sin ((τ) / (4))) = (1)))
+stmt (Sin2 () () ((sin ((τ) / (2))) = (0)))
+stmt (Sin1 () () ((sin (τ)) = (0)))
+
+stmt (Cos0 () () ((cos (0)) = (1)))
+stmt (Cos12 () () ((cos ((τ) / (12))) = ((√ (3)) / (2))))
+stmt (Cos8 () () ((cos ((τ) / (8))) = ((√ (2)) / (2))))
+stmt (Cos6 () () ((cos ((τ) / (6))) = ((1) / (2))))
+stmt (Cos4 () () ((cos ((τ) / (4))) = (0)))
+stmt (Cos2 () () ((cos ((τ) / (2))) = (- (1))))
+stmt (Cos1 () () ((cos (τ)) = (1)))
+</jh>
+
+== Degree measure ==
+Although radian measure is far more convenient in most of mathematics, for convenience we also provide an expression which allows us to specify an angle in degrees. The trigonometric functions themselves are unchanged; they still take an argument in radians. But the degree expression provides a conversion, so that, for example, writing <code>45 °</code> is equivalent to writing <code>τ / 8</code>.
+
+<jh>
+term (object (° object))
+stmt (TurnDegree () () ((τ) = (360 °)))
+
+stmt (Sin30 () () ((sin (30 °)) = ((1) / (2))))
+stmt (Sin45 () () ((sin (45 °)) = ((√ (2)) / (2))))
+stmt (Sin60 () () ((sin (60 °)) = ((√ (3)) / (2))))
+stmt (Sin90 () () ((sin (90 °)) = (1)))
+stmt (Sin180 () () ((sin (180 °)) = (0)))
+stmt (Sin360 () () ((sin (360 °)) = (0)))
+
+stmt (Cos30 () () ((cos (30 °)) = ((√ (3)) / (2))))
+stmt (Cos45 () () ((cos (45 °)) = ((√ (2)) / (2))))
+stmt (Cos60 () () ((cos (60 °)) = ((1) / (2))))
+stmt (Cos90 () () ((cos (90 °)) = (0)))
+stmt (Cos180 () () ((cos (180 °)) = (- (1))))
+stmt (Cos360 () () ((cos (360 °)) = (1)))
+</jh>
+
 == References ==
 <references/>
 
