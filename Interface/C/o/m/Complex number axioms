@@ -111,6 +111,8 @@ stmt (Supremum ((x bound supremum A)) ()
         (∃ x (((value x) ∈ A) ∧ ((value bound) < (value x))))))))))))
 </jh>
 
+{{unproven|axioms=Set theory}}
+
 == References ==
 <references/>
 

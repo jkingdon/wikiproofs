@@ -1,3 +1,12 @@
-[[Image:Zeichen 123.svg|50px]] This page is not yet done.  To help finish it, edit the page (you can see if your edits are verifying by previewing them), or go to [[Help:Contents]] if you haven't yet figured out how to edit and write proofs.<noinclude>
+[[Image:Zeichen 123.svg|50px]] This page is not yet done.  To help finish it, edit the page (you can see if your edits are verifying by previewing them), or go to [[Help:Contents]] if you haven't yet figured out how to edit and write proofs, or ask at [[WP:TEA]] if you have any questions.[[Category:Pages marked as under construction]]<noinclude>
+== Usage ==
+
+<pre>
+{{under construction}}
+</pre>
+Put this template on pages or sections which need work. Next to the template, it is helpful to put a statement of what kind of work you feel is needed.
+
+Using this template automatically places the interface into [[:Category:Pages marked as under construction]].
+
 [[Category:Templates|{{PAGENAME}}]]
 </noinclude>

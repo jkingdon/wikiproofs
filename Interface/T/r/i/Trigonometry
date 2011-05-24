@@ -112,6 +112,8 @@ stmt (Cos180 () () ((cos (180 °)) = (- (1))))
 stmt (Cos360 () () ((cos (360 °)) = (1)))
 </jh>
 
+{{unproven|axioms=Complex number axioms}}
+
 == References ==
 <references/>
 
