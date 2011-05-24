@@ -1,17 +1,3 @@
-Every complex (real?) number has an additive inverse.
-<jh>
-term (object (- object))
-stmt (AdditiveInverseClosed () () ((A ∈ (ℂ)) → ((- A) ∈ (ℂ))))
-stmt (AdditiveInverse () () ((A ∈ (ℂ)) → (A + (- A)) = (0)))
-</jh>
-
-We can subtract any complex (real?) number from another.
-<jh>
-term (object (− object object))
-stmt (SubtractionClosed () () (((A ∈ (ℂ)) ∧ (B ∈ (ℂ))) → ((A − B) ∈ (ℂ))))
-stmt (Subtraction () () (((A ∈ (ℂ)) ∧ (B ∈ (ℂ))) → ((A − B) = (A + (- B)))))
-</jh>
-
 There is not (yet at least) any particularly convenient way of expressing integers short of defining each one, so here are some of the more commonly used ones.
 <jh>
 term (object (0))

@@ -4,7 +4,7 @@
 | exportedby = none yet
 }}
 
-The complex numbers can be described, on top of set theory, by the axioms in this file. They are "axioms" in the sense that they are sufficient to define the complex (and real) numbers, but are theorems in the sense that it is possible to prove them from the [[Interface:Zermelo–Fraenkel set theory|axioms of set theory]] (by the usual construction of natural numbers, rational numbers as ratios, real numbers as Dedekind cuts, negative numbers, and complex numbers as pairs of real numbers). The form of the axioms in this file closely follows metamath (modulo a few details involving notation and the fact that we exclude proper classes while metamath does not).<ref>[http://us.metamath.org/mpeuni/mmcomplex.html Real and Complex Numbers], last updated on 6-May-2008</ref>
+This file contains the basic operations on complex numbers: addition, subtraction, square roots, and so on. It also contains a variety of convenience theorems and notations; for a minimal set of theorems/axioms sufficient to define the complex numbers see instead [[Interface:Complex number axioms]].
 
 We build on [[Interface:Classical propositional calculus|propositional logic]], [[Interface:First-order logic with quantifiability|first-order logic]], and [[Interface:Set theory|set theory]].
 
@@ -49,7 +49,7 @@ stmt (OneComplex () () ((1) ∈ (ℂ)))
 stmt (MultiplicativeIdentity () () ((z ∈ (ℂ)) → ((z · (1)) = z)))
 </jh>
 
-There is a complex number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity. We don't have an axiom stating that zero is complex simply because it is implied by the other axioms.
+There is a complex number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
 <jh>
 term (object (0))
 stmt (AdditiveIdentity () () ((z ∈ (ℂ)) → ((z + (0)) = z)))
@@ -79,9 +79,28 @@ Any complex number can be written as real and imaginary parts.
 stmt (ComplexParts ((x y z)) () ((z ∈ (ℂ)) → (∃ x (((value x) ∈ (ℝ)) ∧ (∃ y (((value y) ∈ (ℝ)) ∧ (z = ((value x) + ((i) · (value y))))))))))
 </jh>
 
-Any real number has an additive inverse, and a nonzero real number has a multiplicative inverse.
+=== Additive inverse and subtraction ===
+Any real (complex?) number has an additive inverse. Our notation is <code>- a</code> for the additive inverse of <code>a</code>.
+
 <jh>
 stmt (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))))))
+
+term (object (- object))
+stmt (ComplexAdditiveInverseClosed () () ((A ∈ (ℂ)) → ((- A) ∈ (ℂ))))
+stmt (ComplexAdditiveInverse () () ((A ∈ (ℂ)) → (A + (- A)) = (0)))
+</jh>
+
+We can subtract any complex (real?) number from another.
+<jh>
+term (object (− object object))
+stmt (SubtractionClosed () () (((A ∈ (ℂ)) ∧ (B ∈ (ℂ))) → ((A − B) ∈ (ℂ))))
+stmt (Subtraction () () (((A ∈ (ℂ)) ∧ (B ∈ (ℂ))) → ((A − B) = (A + (- B)))))
+</jh>
+
+=== Multiplicative inverse and division ===
+A nonzero real number has a multiplicative inverse.
+
+<jh>
 stmt (MultiplicativeInverse ((x a)) () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a · (value x)) = (1))))))
 </jh>
 
@@ -111,7 +130,7 @@ stmt (Supremum ((x bound supremum A)) ()
         (∃ x (((value x) ∈ A) ∧ ((value bound) < (value x))))))))))))
 </jh>
 
-{{unproven|axioms=Set theory}}
+{{unproven|axioms=Complex number axioms}}
 
 == References ==
 <references/>
