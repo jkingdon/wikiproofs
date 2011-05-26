@@ -79,6 +79,41 @@ Any complex number can be written as real and imaginary parts.
 stmt (ComplexParts ((x y z)) () ((z ∈ (ℂ)) → (∃ x (((value x) ∈ (ℝ)) ∧ (∃ y (((value y) ∈ (ℝ)) ∧ (z = ((value x) + ((i) · (value y))))))))))
 </jh>
 
+=== Numerical constants ===
+
+There is not (yet at least) any particularly convenient way of expressing integers short of defining each one, so here are some of the more commonly used ones.
+<jh>
+def ((2) ((1) + (1)))
+def ((3) ((2) + (1)))
+def ((4) ((3) + (1)))
+def ((5) ((4) + (1)))
+def ((6) ((5) + (1)))
+def ((7) ((6) + (1)))
+def ((8) ((7) + (1)))
+def ((9) ((8) + (1)))
+def ((10) ((9) + (1)))
+def ((11) ((10) + (1)))
+def ((12) ((11) + (1)))
+def ((100) ((10) · (10)))
+def ((1000) ((100) · (10)))
+def ((1000000) ((1000) · (1000)))
+
+stmt (TwoReal () () ((2) ∈ (ℝ)))
+stmt (ThreeReal () () ((3) ∈ (ℝ)))
+stmt (FourReal () () ((4) ∈ (ℝ)))
+stmt (FiveReal () () ((5) ∈ (ℝ)))
+stmt (SixReal () () ((6) ∈ (ℝ)))
+stmt (SevenReal () () ((7) ∈ (ℝ)))
+stmt (EightReal () () ((8) ∈ (ℝ)))
+stmt (NineReal () () ((9) ∈ (ℝ)))
+stmt (TenReal () () ((10) ∈ (ℝ)))
+stmt (ElevenReal () () ((11) ∈ (ℝ)))
+stmt (TwelveReal () () ((12) ∈ (ℝ)))
+stmt (HundredReal () () ((100) ∈ (ℝ)))
+stmt (ThousandReal () () ((1000) ∈ (ℝ)))
+stmt (MillionReal () () ((1000000) ∈ (ℝ)))
+</jh>
+
 === Additive inverse and subtraction ===
 Any real (complex?) number has an additive inverse. Our notation is <code>- a</code> for the additive inverse of <code>a</code>.
 
@@ -98,10 +133,30 @@ stmt (Subtraction () () (((A ∈ (ℂ)) ∧ (B ∈ (ℂ))) → ((A − B) = (A +
 </jh>
 
 === Multiplicative inverse and division ===
-A nonzero real number has a multiplicative inverse.
-
+Every nonzero complex (real?) number has a multiplicative inverse (TODO: what notation does metamath use for this?).
 <jh>
-stmt (MultiplicativeInverse ((x a)) () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a · (value x)) = (1))))))
+term (object (reciprocal object))
+stmt (ReciprocalClosed () () (((A ∈ (ℂ)) ∧ (A ≠ (0))) → ((reciprocal A) ∈ (ℂ))))
+stmt (Reciprocal () () (((A ∈ (ℂ)) ∧ (A ≠ (0))) → (A · (reciprocal A)) = (0)))
+</jh>
+
+We can divide any complex (real?) number by any nonzero complex number.
+<jh>
+term (object (/ object object))
+stmt (DivisionClosed () () ((((A ∈ (ℂ)) ∧ (B ∈ (ℂ))) ∧ (B ≠ (0)))) →
+  ((A / B) ∈ (ℂ)))
+stmt (Division () () ((((A ∈ (ℂ)) ∧ (B ∈ (ℂ))) ∧ (B ≠ (0)))) →
+  ((A / B) = (A · (reciprocal B))))
+</jh>
+
+=== Square root ===
+
+We can take the square root of any complex number. The square root of a nonnegative real is real.
+<jh>
+term (object (√ object))
+stmt (SquareRootComplex () () ((A ∈ (ℂ)) → ((√ A) ∈ (ℂ))))
+stmt (SquareRootReal () () (((A ∈ (ℝ)) ∧ (A ≥ (0))) → ((√ A) ∈ (ℝ))))
+stmt (SquareRoot () () ((A ∈ (ℂ)) → (((√ A) · (√ A)) = A)))
 </jh>
 
 == Order on the reals ==
