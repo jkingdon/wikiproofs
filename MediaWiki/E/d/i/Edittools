@@ -9,7 +9,7 @@
 </p>
 
 <p class="specialbasic" id="Arithmetic">
-<charinsert>≤ ≥ · × − ℙ ℕ ℤ ℚ ℝ ℂ ℍ</charinsert>
+<charinsert>≤ ≥ · × − √ ℙ ℕ ℤ ℚ ℝ ℂ ℍ</charinsert>
 </p>
 
 <p class="specialbasic" id="Greek letters"><!-- Perhaps should be from #1D400 onwards, but many fonts and browsers don't correctly render characters beyond the BMP yet, and the #1D400 ones are bold, italic, sans serif. I think we just want regular ones, which are not located in the #1D400 block -->
