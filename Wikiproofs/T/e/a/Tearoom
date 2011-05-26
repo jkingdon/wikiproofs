@@ -335,3 +335,7 @@ The more I look at metamath's set.mm, the more stuff I realize is there. Althoug
 :I don't know of such a tool specifically for JHilbert (I haven't written one). If there is one for Ghilbert, you can probably base your work on that; the differences are currently not that big. I don't have objections against creating interfaces matching the metamath theorem list (Norm has released <code>set.mm</code> under CC0, so it should go well with our own licence).--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 20:16, 23 May 2011 (UTC)
 
 ::Thanks; I'll see if Raph can point me to his tool (which I suppose will need some changes) and then I'll see how much of a time sink this ends up being. My top priority right now is getting [[Interface:Trigonometry]] ready for [http://tauday.com tau day] in about a month, so I'm going to make sure I have something up there (prepared manually) before I get too deeply into messing around with tools. [[User:Kingdon|Kingdon]] 10:52, 26 May 2011 (UTC)
+
+== $wgCapitalLinks ==
+
+Can we change the setting of $wgCapitalLinks now while the wiki is small and it is easy? Right now we have the default behavior, in which [[p-adic number]] (for example) gets turned into P-adic number (and then, on wikipedia they have hacks like the lowercase template or DISPLAYTITLE to try to partially recover, see [[w:p-adic number]]). We're better off with just setting $wgCapitalLinks to false like they do on wiktionary: see [http://www.mediawiki.org/wiki/Manual:LocalSettings.php]. [[User:Kingdon|Kingdon]] 10:58, 26 May 2011 (UTC)
