@@ -1,0 +1,16 @@
+[[Image:Zeichen 123.svg|50px]] This interface contains statements which are not yet proved, but could be. You can help wikiproofs by {{#if:{{{proof|}}}|editing the existing proof module [[{{{proof}}}]]|creating a proof module which will eventually export this interface}}. {{#if:{{{axioms|}}}|A good starting point would be [[Interface:{{{axioms}}}]].}} See [[Help:Contents]] if you haven't yet figured out how to edit and write proofs, or ask at [[WP:TEA]] if you have any questions.
+<includeonly>
+[[Category:Pages containing unproven statements]]
+</includeonly><noinclude>
+
+== Usage ==
+
+<pre>
+{{unproven | proof = existing-module | axioms = existing-interface }}
+</pre>
+Interface pages serve two functions: (1) for axioms, and (2) for statements which can be proved from axioms. This template is to tag pages which could be proved, but are not yet proved (because no one has gotten around to it yet). If a partial proof module exists, which is expected to eventually export the interface, specify it with the proof parameter. Specify the axioms parameter to indicate what axioms, or other interface, could serve as a starting point for proving the statements in this interface.
+
+Using this template automatically places the interface into [[:Category:Pages containing unproven statements]].
+
+[[Category:Cleanup templates|{{PAGENAME}}]]
+</noinclude>
