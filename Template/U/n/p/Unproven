@@ -1,4 +1,7 @@
-[[Image:Zeichen 123.svg|50px]] This interface contains statements which are not yet proved, but could be. You can help wikiproofs by {{#if:{{{proof|}}}|editing the existing proof module [[{{{proof}}}]]|creating a proof module which will eventually export this interface}}. {{#if:{{{axioms|}}}|A good starting point would be [[Interface:{{{axioms}}}]].}} See [[Help:Contents]] if you haven't yet figured out how to edit and write proofs, or ask at [[WP:TEA]] if you have any questions.[[Category:Pages containing unproven statements]]<noinclude>
+[[Image:Zeichen 123.svg|50px]] This interface contains statements which are not yet proved, but could be. You can help wikiproofs by {{#if:{{{proof|}}}|editing the existing proof module [[{{{proof}}}]]|creating a proof module which will eventually export this interface}}. {{#if:{{{axioms|}}}|A good starting point would be [[Interface:{{{axioms}}}]].}} See [[Help:Contents]] if you haven't yet figured out how to edit and write proofs, or ask at [[WP:TEA]] if you have any questions.
+<includeonly>
+[[Category:Pages containing unproven statements]]
+</includeonly><noinclude>
 
 == Usage ==
 
@@ -9,5 +12,5 @@ Interface pages serve two functions: (1) for axioms, and (2) for statements whic
 
 Using this template automatically places the interface into [[:Category:Pages containing unproven statements]].
 
-[[Category:Templates|{{PAGENAME}}]]
+[[Category:Cleanup templates|{{PAGENAME}}]]
 </noinclude>
