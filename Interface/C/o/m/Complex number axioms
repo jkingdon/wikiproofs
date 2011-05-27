@@ -81,7 +81,7 @@ stmt (ComplexParts ((x y z)) () ((z ∈ (ℂ)) → (∃ x (((value x) ∈ (ℝ))
 
 Any real number has an additive inverse, and a nonzero real number has a multiplicative inverse.
 <jh>
-stmt (AdditiveInverse ((x a)) () ((a ∈ (ℝ)) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))))))
+stmt (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))))))
 stmt (MultiplicativeInverse ((x a)) () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a · (value x)) = (1))))))
 </jh>
 
@@ -110,6 +110,8 @@ stmt (Supremum ((x bound supremum A)) ()
       (∀ bound (((value bound) ∈ (ℝ)) → (((value bound) < (value supremum)) →
         (∃ x (((value x) ∈ A) ∧ ((value bound) < (value x))))))))))))
 </jh>
+
+{{Unproven|axioms=Set theory}}
 
 == References ==
 <references/>
