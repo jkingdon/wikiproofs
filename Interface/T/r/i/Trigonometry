@@ -1,5 +1,5 @@
 {{modules
-| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]], [[Interface:Complex number axioms]]
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]], [[Interface:Complex numbers]]
 | importedby = none yet
 | exportedby = none yet
 }}
@@ -16,6 +16,7 @@ param (COMPLEX Interface:Complex_numbers (CLASSICAL FIRSTORDER SETS) ())
 </jh>
 
 == The sine and cosine functions ==
+[[File:Sin-cos-defn-I.png|thumb|right|geometric interpretation of sine and cosine]]
 In the future, we might prefer to define sin as a function (that is, a set, as will be developed in [[Relations]] when that is more complete) from the reals to the reals, but for now we define it as a term.
 <jh>
 var (object α β θ)
@@ -112,7 +113,7 @@ stmt (Cos180 () () ((cos ((180) °)) = (- (1))))
 stmt (Cos360 () () ((cos ((360) °)) = (1)))
 </jh>
 
-{{unproven|axioms=Complex number axioms}}
+{{unproven|axioms=Complex numbers}}
 
 == References ==
 <references/>
