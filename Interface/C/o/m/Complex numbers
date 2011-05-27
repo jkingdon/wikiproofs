@@ -1,0 +1,204 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]]
+| importedby = none yet
+| exportedby = none yet
+}}
+
+This file contains the basic operations on complex numbers: addition, subtraction, square roots, and so on. It also contains a variety of convenience theorems and notations; for a minimal set of theorems/axioms sufficient to define the complex numbers see instead [[Interface:Complex number axioms]].
+
+We build on [[Interface:Classical propositional calculus|propositional logic]], [[Interface:First-order logic with quantifiability|first-order logic]], and [[Interface:Set theory|set theory]].
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== Complex numbers ==
+There is a set of complex numbers. As a convention, we tend to use <code>z</code> and <code>w</code> to refer to complex numbers, although using these names does not by itself ensure that an <code>object</code> is a complex number rather than a set of numbers or a relation or something else.
+<jh>
+term (object (ℂ))
+var (object z w s)
+</jh>
+
+The complex numbers are closed under an addition operation, which is commutative and associative.
+<jh>
+term (object (+ object object))
+stmt (ComplexAdditionClosure () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z + w) ∈ (ℂ))))
+stmt (AdditionCommutativity () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z + w) = (w + z))))
+stmt (AdditionAssociativity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))) → (((z + w) + s) = (z + (w + s)))))
+</jh>
+
+The complex numbers are closed under a multiplication operation, which is commutative and associative.
+<jh>
+term (object (· object object))
+stmt (ComplexMultiplicationClosure () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z · w) ∈ (ℂ))))
+stmt (MultiplicationCommutativity () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z · w) = (w · z))))
+stmt (MultiplicationAssociativity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))) → (((z · w) · s) = (z · (w · s)))))
+</jh>
+
+Multiplication distributes over addition.
+<jh>
+stmt (Distributivity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))) → ((z · (w + s)) = ((z · w) + (z · s)))))
+</jh>
+
+There is a complex number <code>1</code>, which serves as a multiplicative identity.
+<jh>
+term (object (1))
+stmt (OneComplex () () ((1) ∈ (ℂ)))
+stmt (MultiplicativeIdentity () () ((z ∈ (ℂ)) → ((z · (1)) = z)))
+</jh>
+
+There is a complex number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
+<jh>
+term (object (0))
+stmt (AdditiveIdentity () () ((z ∈ (ℂ)) → ((z + (0)) = z)))
+stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
+There is a complex number <code>i</code> for the square root of negative one.
+<jh>
+term (object (i))
+stmt (IComplex () () ((i) ∈ (ℂ)))
+stmt (ISquared () () ((((i) · (i)) + (1)) = (0)))
+</jh>
+
+== Real numbers ==
+There is a subset of the complex numbers called the real numbers which are closed under addition and multiplication. We conventionally use <code>a</code>, <code>b</code>, and <code>c</code> to refer to real number objects, and <code>x</code> and <code>y</code> for real variables.
+<jh>
+term (object (ℝ))
+var (object a b c)
+var (variable x y)
+stmt (RealComplex () () ((ℝ) ⊆ (ℂ)))
+stmt (RealAdditionClosure () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a + b) ∈ (ℝ))))
+stmt (RealMultiplicationClosure () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a · b) ∈ (ℝ))))
+</jh>
+
+Any complex number can be written as real and imaginary parts.
+<jh>
+stmt (ComplexParts ((x y z)) () ((z ∈ (ℂ)) → (∃ x (((value x) ∈ (ℝ)) ∧ (∃ y (((value y) ∈ (ℝ)) ∧ (z = ((value x) + ((i) · (value y))))))))))
+</jh>
+
+=== Numerical constants ===
+
+There is not (yet at least) any particularly convenient way of expressing integers short of defining each one, so here are some of the more commonly used ones.
+<jh>
+def ((2) ((1) + (1)))
+def ((3) ((2) + (1)))
+def ((4) ((3) + (1)))
+def ((5) ((4) + (1)))
+def ((6) ((5) + (1)))
+def ((7) ((6) + (1)))
+def ((8) ((7) + (1)))
+def ((9) ((8) + (1)))
+def ((10) ((9) + (1)))
+def ((11) ((10) + (1)))
+def ((12) ((11) + (1)))
+def ((30) ((3) · (10)))
+def ((45) (((4) · (10)) + (5)))
+def ((60) ((6) · (10)))
+def ((90) ((9) · (10)))
+def ((100) ((10) · (10)))
+def ((180) ((100) + ((8) · (10))))
+def ((360) (((3) · (100)) + (60)))
+def ((1000) ((100) · (10)))
+def ((1000000) ((1000) · (1000)))
+
+stmt (TwoReal () () ((2) ∈ (ℝ)))
+stmt (ThreeReal () () ((3) ∈ (ℝ)))
+stmt (FourReal () () ((4) ∈ (ℝ)))
+stmt (FiveReal () () ((5) ∈ (ℝ)))
+stmt (SixReal () () ((6) ∈ (ℝ)))
+stmt (SevenReal () () ((7) ∈ (ℝ)))
+stmt (EightReal () () ((8) ∈ (ℝ)))
+stmt (NineReal () () ((9) ∈ (ℝ)))
+stmt (TenReal () () ((10) ∈ (ℝ)))
+stmt (ElevenReal () () ((11) ∈ (ℝ)))
+stmt (TwelveReal () () ((12) ∈ (ℝ)))
+stmt (HundredReal () () ((100) ∈ (ℝ)))
+stmt (ThousandReal () () ((1000) ∈ (ℝ)))
+stmt (MillionReal () () ((1000000) ∈ (ℝ)))
+</jh>
+
+=== Additive inverse and subtraction ===
+Any real (complex?) number has an additive inverse. Our notation is <code>- a</code> for the additive inverse of <code>a</code>.
+
+<jh>
+stmt (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))))))
+
+term (object (- object))
+stmt (ComplexAdditiveInverseClosed () () ((z ∈ (ℂ)) → ((- z) ∈ (ℂ))))
+stmt (ComplexAdditiveInverse () () ((z ∈ (ℂ)) → ((z + (- z)) = (0))))
+</jh>
+
+We can subtract any complex (real?) number from another.
+<jh>
+term (object (− object object))
+stmt (SubtractionClosed () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) ∈ (ℂ))))
+stmt (Subtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) = (z + (- w)))))
+</jh>
+
+=== Multiplicative inverse and division ===
+Every nonzero complex (real?) number has a multiplicative inverse (TODO: what notation does metamath use for this?).
+<jh>
+term (object (reciprocal object))
+stmt (ReciprocalClosed () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((reciprocal z) ∈ (ℂ))))
+stmt (Reciprocal () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((z · (reciprocal z)) = (0))))
+</jh>
+
+We can divide any complex (real?) number by any nonzero complex number.
+<jh>
+term (object (/ object object))
+stmt (DivisionClosed () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (w ≠ (0))) →
+  ((z / w) ∈ (ℂ))))
+stmt (Division () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (w ≠ (0))) →
+  ((z / w) = (z · (reciprocal w)))))
+</jh>
+
+== Order on the reals ==
+We define a [[w:Total order|total order]] on the reals, which is consistent with addition and multiplication.
+<jh>
+term (formula (< object object))
+stmt (Trichotomy () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a < b) ↔ (¬ ((a = b) ∨ (b < a))))))
+stmt (Transitivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a < b) ∧ (b < c)) → (a < c))))
+stmt (LessThanAddition () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a < b) → ((c + a) < (c + b)))))
+stmt (LessThanMultiplication () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((((0) < a) ∧ ((0) < b)) → ((0) < (a · b)))))
+
+def ((> a b) (b < a))
+def ((≤ a b) ((a < b) ∨ (a = b)))
+def ((≥ a b) (b ≤ a))
+</jh>
+
+Any nonempty set of real numbers which is bounded above has a least upper bound ([[w:supremum|supremum]]) which is a real number. This property distinguishes the reals from the rationals. It is this property which causes us to build the reals on top of set theory, instead of just first-order logic, as it involves sets of reals not just individual real numbers. The statement of the axiom is as in metamath (modulo variable renamings and notation changes); the occurence of <code>bound</code> in the second part might better be read as "would-be upper bound" as of course the point is that it can't be less than the supremum and still be an upper bound.<ref>[http://us.metamath.org/mpeuni/axsup.html axsup]</ref>
+<jh>
+var (object A)
+var (variable bound supremum)
+stmt (Supremum ((x bound supremum A)) ()
+  ((((A ⊆ (ℝ))
+    ∧ (A ≠ (∅)))
+    ∧ (∃ bound (((value bound) ∈ (ℝ)) ∧ 
+      (∀ x (((value x) ∈ A) → ((value x) < (value bound)))))))
+  →
+    (∃ supremum (((value supremum) ∈ (ℝ)) ∧ (
+      (∀ x (((value x) ∈ A) → (¬ ((value supremum) < (value x))))) ∧ 
+      (∀ bound (((value bound) ∈ (ℝ)) → (((value bound) < (value supremum)) →
+        (∃ x (((value x) ∈ A) ∧ ((value bound) < (value x))))))))))))
+</jh>
+
+=== Square root ===
+
+We can take the square root of any complex number. The square root of a nonnegative real is real.
+<jh>
+term (object (√ object))
+stmt (SquareRootComplex () () ((z ∈ (ℂ)) → ((√ z) ∈ (ℂ))))
+stmt (SquareRootReal () () (((a ∈ (ℝ)) ∧ (a ≥ (0))) → ((√ a) ∈ (ℝ))))
+stmt (SquareRoot () () ((z ∈ (ℂ)) → (((√ z) · (√ z)) = z)))
+</jh>
+
+{{unproven|axioms=Complex number axioms}}
+
+== References ==
+<references/>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Real and complex fields]]
