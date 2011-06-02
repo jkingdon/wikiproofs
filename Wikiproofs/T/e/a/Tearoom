@@ -341,3 +341,5 @@ The more I look at metamath's set.mm, the more stuff I realize is there. Althoug
 Can we change the setting of $wgCapitalLinks now while the wiki is small and it is easy? Right now we have the default behavior, in which [[p-adic number]] (for example) gets turned into P-adic number (and then, on wikipedia they have hacks like the lowercase template or DISPLAYTITLE to try to partially recover, see [[w:p-adic number]]). We're better off with just setting $wgCapitalLinks to false like they do on wiktionary: see [http://www.mediawiki.org/wiki/Manual:LocalSettings.php]. [[User:Kingdon|Kingdon]] 10:58, 26 May 2011 (UTC)
 
 :Hi, I've disabled capital links for the relevant namespaces.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 22:18, 28 May 2011 (UTC)
+
+::Hmm, didn't realize it would be per-namespace. Anyway, looks good. If I link to lowercase pi ([[π]]) it really links to lowercase pi, not uppercase pi as wikipedia would. [[User:Kingdon|Kingdon]] 23:36, 30 May 2011 (UTC)
