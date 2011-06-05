@@ -16,7 +16,7 @@ param (COMPLEX Interface:Complex_numbers (CLASSICAL FIRSTORDER SETS) ())
 </jh>
 
 == The sine and cosine functions ==
-[[File:Sin-cos-defn-I.png|thumb|right|geometric interpretation of sine and cosine]]
+[[File:Unit_circle.svg|thumb|right|geometric interpretation of sine and cosine]]
 In the future, we might prefer to define sin as a function (that is, a set, as will be developed in [[Relations]] when that is more complete) from the reals to the reals, but for now we define it as a term.
 <jh>
 var (object α β θ)
