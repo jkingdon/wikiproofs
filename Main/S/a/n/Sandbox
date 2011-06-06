@@ -10,20 +10,5 @@ You may also carry out your experiments in the <code>User interface</code> and <
 }}
 {{sandbox pages}}
 
-I'll write this sort of in the style of [[Nicod's reduction of Principia Mathematica]], with a theory at the beginning and transport theorems at the end.
+Hello, if you are here for [[Help:Tau day|Tau day]], you can edit this page to start in on the exercises describe at the tau day page.
 
-For convenience, I'll import the [[Interface:Nicod axioms|Nicod axioms]] rather than making another sandbox interface:
-<jh>
-import (NICOD Interface:Nicod_axioms () ())
-</jh>
-
-Transport theorems:
-
-<jh>
-kindbind (wff .wff)
-var (wff p)
-def ((.¬ p) (¬ p))
-
-# Uncomment this once it is ready:
-#export (SANDBOX Interface:Sandbox () .)
-</jh>
