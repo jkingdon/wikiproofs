@@ -1,8 +1,8 @@
 Happy tau day, everyone.<ref>[http://tauday.com/ tauday.com]</ref>
 
-Wikiproofs.org is a site where we write math proofs in a formal language which can be checked by the site. For our tau day project, we'll prove some simple statements involving τ.
+Wikiproofs.org is a site where we write math proofs in a formal language which can be checked by the site. Although we have no objection to celebrating tau day in the customary fashion of eating two pies, our tau day project will involve some actual mathematics, namely, proving some simple statements involving τ. We explain everything you need to know about the mathematics and the proof system, and you should be able to get started within 6 minutes and 28 seconds (getting to the end may take somewhat longer than that, but not the whole tau day).
 
-To play along, start by editing a ''proof module''. You can create your own account and create a page at [[User module:YourUsername/Tau day]], or you can use the [[Sandbox]].
+To play along, start by editing a ''proof module''. You can [http://wikiproofs.org/w/index.php?title=Special:UserLogin&type=signup&returnto=Help:Tau_day create your own account] and create a page at [[User module:YourUsername/Tau day]], or you can use the [[Sandbox]].
 
 Start by putting the following text into your module:
 
@@ -14,9 +14,9 @@ Start by putting the following text into your module:
   import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER SETS COMPLEX) ())
   </jh>
 
-Those statements tell the proof verifier to make use of some previous proved, or assumed, results. Only a few of these previous results matter for the tau day exercise, but here is a brief summary of what the four imports contain. The first import, propositional logic, lets us handle things like implication (as in "x < τ implies x < 7"). The second import, first order logic, adds variables, there-exists and for-all, for example "there exists an x such that x = τ / 2". The third import, set theory, adds sets, as in "the set of all x such that x is a multiple of τ" or "τ ∈ ℝ" (tau is an element of the set of real numbers). The fourth import, complex numbers, we only care about for real numbers, which are familiar numbers such as 1, -5, 44/7, √2, τ, or e. The fifth import is called "tau day axioms" because it contains statements that we will assume for the sake of this exercise, but not try to prove as part of it.
+Those statements tell the proof verifier to make use of some previously proved, or assumed, results. Only a few of these previous results matter for the tau day exercise, but here is a brief summary of what the four imports contain. The first import, propositional logic, lets us handle things like implication (as in "x < τ implies x < 7"). The second import, first order logic, adds variables, there-exists and for-all, for example "there exists an x such that x = τ / 2". The third import, set theory, adds sets, as in "the set of all x such that x is a multiple of τ" or "τ ∈ ℝ" (tau is an element of the set of real numbers). The fourth import, complex numbers, we only care about for real numbers, which are familiar numbers such as 1, -5, 44/7, √2, τ, or e. The fifth import is called "tau day axioms" because it contains statements that we will assume for the sake of this exercise, but not try to prove as part of it.
 
-Once you have copy-pasted those imports into your proof module, hit the preview button. You should see "Proof module successfully verified" (TODO: double-check wording) at the bottom of the in green.
+Once you have copy-pasted those imports into your proof module, hit the preview button. You should see "Proof module parsed successfully" at the bottom of the in green.
 
 Our first exercise is to show how proofs work by writing a very simple proof. It is just a restatement of something in the tau day axioms file, but with a new name.
 
@@ -34,7 +34,7 @@ The only thing remaining is the actual proof.  A proof is a set of invocations o
 
 To invoke a statement, we give expansions for each of the variables which need filling in, in the order in which they occur in the statement, and then the name of the statement. In this example, that is <code>θ SinePeriod</code>. The entire proof is enclosed in parentheses, so add <code>(θ SinePeriod)</code> to your proof module. Then add <code>)</code> (to close out the <code>thm</code>) and &lt;/jh&gt; on a line by itself, to match the &lt;jh&gt; we put in a while ago.
 
-That's a completed proof. Hit preview (or save, to save your work back to the wiki), and you should see TODO:msg again.
+That's a completed proof. Hit preview (or save, to save your work back to the wiki), and you should see "Proof module parsed successfully" again.
 
 prove the same thing but sin (x + τ) = sin x
 
