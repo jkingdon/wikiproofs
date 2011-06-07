@@ -38,13 +38,22 @@ That's a completed proof. Hit preview (or save, to save your work back to the wi
 
 When we invoke a statement in a proof, we can plug anything in for the expansion of a variable. Your next exercise is to use this fact to prove <code>sin (x + τ) = sin x</code> (which is the same as the previous result but with <code>x</code> in place of <code>θ</code>). Two hints: (1) you'll need to name the new theorem something other than <code>TauIsPeriodOfSine</code>, because you can't have two theorems with the same name, and (2) don't forget to declare the variable <code>x</code> (just as we declared <code>θ</code> earlier). Come back to this page once you've gotten this new proof to verify.
 
-A very similar variation is proving <code>sin (x · x + τ) = sin (x · x)</code>. If these exercises are starting to all sound alike and too easy, good, it means you are getting the hang of what we've covered so far. The main thing which is new in this one is figuring out where JHilbert wants you to put the parentheses.
+A very similar variation is proving <code>sin (x · x + τ) = sin (x · x)</code>. If these exercises are starting to all sound alike and too easy, it means you are getting the hang of what we've covered so far. The main thing which is new in this one is figuring out where JHilbert wants you to put the parentheses.
 
 
+given sin 0 = 0, then prove sin τ = 0
+
+somewhere in here talk about using a statement you proved, as opposed to one from the interface.
+
+will need to talk about the proof stack and propositional logic.
 
 The remainder of the exercise consists of applying the half angle....
+half angle
+third angle
+whatever calculations they need in terms of √ and what-not
 
-export to Interface:Trigonometry
+export to Interface:Trigonometry?
+or maybe make a Interface:Tau day theorems
 
 == What next? ==
 You can find another example explaining how to write proofs at [[Help:Tutorial]]. To find things to contribute to, browse [[:Category:Pages needing cleanup]]. Feel free to ask questions at [[WP:TEA]].
