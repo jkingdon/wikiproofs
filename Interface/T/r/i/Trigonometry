@@ -39,20 +39,20 @@ term (object (τ))
 Some authors instead use a value of <code>τ/2</code>, which they call <code>π</code>.
 
 == Relationship between sine and cosine ==
-The sine and the cosine at a given point, squared, add to one, which is the [[w:Pythagorean trigonometric identity|Pythagorean trigonometric identity]].
+The sine and the cosine at a given point, squared, add to one, which is the [[w:Pythagorean trigonometric identity|Pythagorean trigonometric identity]]. TODO: need to say θ is real.
 <jh>
 stmt (TrigonometryPythagorean () () ((((sin θ) · (sin θ)) + ((cos θ) · (cos θ))) = (1)))
 </jh>
 
-The sine and cosine are the same, shifted by a quarter turn.
+The sine and cosine are the same, shifted by a quarter turn.TODO: need to say θ is real.
 <jh>
 stmt (SineShift () () ((sin (θ + ((τ) / (4)))) = (cos θ)))
 </jh>
 
 == Periodicity ==
-The sine and cosine are periodic with period <code>τ</code> (we do not state, here, that <code>τ</code> is the smallest value which is a period, although it is).
+The sine and cosine are periodic with period <code>τ</code> (we do not state, here, that <code>τ</code> is the smallest value which is a period, although it is).<ref>slight variation of [http://us.metamath.org/mpeuni/sinper.html sinper], metamath's set.mm, accessed June 7, 2011</ref>
 <jh>
-stmt (SinePeriod () () ((sin (θ + (τ))) = (sin θ)))
+stmt (SinePeriod () () ((θ ∈ (ℝ)) → ((sin (θ + (τ))) = (sin θ))))
 </jh>
 
 == Negation ==
@@ -63,7 +63,7 @@ stmt (CosineNegation () () ((θ ∈ (ℝ)) → ((cos (- θ)) = (cos θ))))
 </jh>
 
 == Addition ==
-There are expressions for taking the sine or cosine of a sum or difference.
+There are expressions for taking the sine or cosine of a sum or difference. TODO: need to say α and β are real.
 
 <jh>
 stmt (SineAddition () () ((sin (α + β)) = (((sin α) · (cos β)) + ((cos α) · (sin β)))))
@@ -73,7 +73,7 @@ stmt (CosineSubtraction () () ((cos (α − β)) = (((cos α) · (cos β)) + ((c
 </jh>
 
 == Trigonometry functions at particular points ==
-There are exact expressions for values of the trigonometric functions at many common points (for example, any multiple of <code>τ / 120</code> radians is possible, although we only provide some of the more common ones).<ref>sine and cosine at zero are at [http://us.metamath.org/mpeuni/sin0.html sin0] and [http://us.metamath.org/mpeuni/cos0.html cos0], metamath's set.mm, accessed June 7, 2011</ref>
+There are exact expressions for values of the trigonometric functions at many common points (for example, any multiple of <code>τ / 120</code> radians is possible, although we only provide some of the more common ones).<ref>metamath's set.mm, accessed June 7, 2011 contains some of these: sine and cosine at zero are [http://us.metamath.org/mpeuni/sin0.html sin0] and [http://us.metamath.org/mpeuni/cos0.html cos0], at τ / 4 are [http://us.metamath.org/mpeuni/sinhalfpi.html sinhalfpi] and [http://us.metamath.org/mpeuni/coshalfpi.html coshalfpi], at τ / 2 are [http://us.metamath.org/mpeuni/sinpi.html sinpi] and [http://us.metamath.org/mpeuni/cospi.html cospi], at τ are [http://us.metamath.org/mpeuni/sin2pi.html sin2pi] and [http://us.metamath.org/mpeuni/cos2pi.html cos2pi]</ref>
 
 <jh>
 stmt (Sin0 () () ((sin (0)) = (0)))
