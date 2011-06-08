@@ -44,9 +44,9 @@ The sine and the cosine at a given point, squared, add to one, which is the [[w:
 stmt (TrigonometryPythagorean () () ((((sin θ) · (sin θ)) + ((cos θ) · (cos θ))) = (1)))
 </jh>
 
-The sine and cosine are the same, shifted by a quarter turn.TODO: need to say θ is real.
+The sine and cosine are the same, shifted by a quarter turn.<ref>[http://us.metamath.org/mpeuni/sinhalfpip.html sinhalfpip], metamath's set.mm, accessed June 7, 2011</ref>
 <jh>
-stmt (SineShift () () ((sin (θ + ((τ) / (4)))) = (cos θ)))
+stmt (SineShift () () ((θ ∈ (ℝ)) → ((sin (θ + ((τ) / (4)))) = (cos θ))))
 </jh>
 
 == Periodicity ==
