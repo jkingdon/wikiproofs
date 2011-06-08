@@ -17,14 +17,14 @@ param (COMPLEX Interface:Complex_numbers (CLASSICAL FIRSTORDER SETS) ())
 
 == The sine and cosine functions ==
 [[File:Unit_circle.svg|thumb|right|geometric interpretation of sine and cosine]]
-In the future, we might prefer to define sin as a function (that is, a set, as will be developed in [[Relations]] when that is more complete) from the reals to the reals, but for now we define it as a term.
+In the future, we might prefer to define sin as a function (that is, a set, as will be developed in [[Relations]] when that is more complete) from the reals to the reals, but for now we define it as a term.<ref>[http://us.metamath.org/mpeuni/csin.html csin] and [http://us.metamath.org/mpeuni/resincl.html resincl], metamath's set.mm, accessed June 7, 2011</ref>
 <jh>
 var (object α β θ)
 term (object (sin object))
 stmt (SineRealToReal () () ((θ ∈ (ℝ)) → ((sin θ) ∈ (ℝ))))
 </jh>
 
-We define cosine similarly.
+We define cosine similarly.<ref>[http://us.metamath.org/mpeuni/ccos.html ccos] and [http://us.metamath.org/mpeuni/recoscl.html recoscl], metamath's set.mm, accessed June 7, 2011</ref>
 <jh>
 term (object (cos object))
 stmt (CosineRealToReal () () ((θ ∈ (ℝ)) → ((cos θ) ∈ (ℝ))))
