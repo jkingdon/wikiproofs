@@ -131,7 +131,7 @@ stmt (ComplexAdditiveInverseClosed () () ((z ∈ (ℂ)) → ((- z) ∈ (ℂ))))
 stmt (ComplexAdditiveInverse () () ((z ∈ (ℂ)) → ((z + (- z)) = (0))))
 </jh>
 
-We can subtract any complex (real?) number from another.
+We can subtract any complex (real?) number from another. In case your screen doesn't show it clearly, the minus sign is a different character (longer) than the negation sign above.
 <jh>
 term (object (− object object))
 stmt (SubtractionClosed () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) ∈ (ℂ))))
@@ -139,11 +139,11 @@ stmt (Subtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) = (z +
 </jh>
 
 === Multiplicative inverse and division ===
-Every nonzero complex (real?) number has a multiplicative inverse (TODO: what notation does metamath use for this?).
+Every nonzero complex (real?) number has a multiplicative inverse (TODO: what notation does metamath use for this? just 1 / z ?).
 <jh>
 term (object (reciprocal object))
 stmt (ReciprocalClosed () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((reciprocal z) ∈ (ℂ))))
-stmt (Reciprocal () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((z · (reciprocal z)) = (0))))
+stmt (Reciprocal () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((z · (reciprocal z)) = (1))))
 </jh>
 
 We can divide any complex (real?) number by any nonzero complex number.
