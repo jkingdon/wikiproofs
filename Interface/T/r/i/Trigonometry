@@ -56,8 +56,10 @@ stmt (SinePeriod () () ((sin (θ + (τ))) = (sin θ)))
 </jh>
 
 == Negation ==
+There is a simple formula for the sine or cosine of a negated quantity.<ref>[http://us.metamath.org/mpeuni/sinneg.html sinneg] and [http://us.metamath.org/mpeuni/cosneg.html cosneg], metamath's set.mm, accessed June 7, 2011</ref>
 <jh>
-stmt (SineNegation () () ((sin (- θ)) = (- (sin θ))))
+stmt (SineNegation () () ((θ ∈ (ℝ)) → ((sin (- θ)) = (- (sin θ)))))
+stmt (CosineNegation () () ((θ ∈ (ℝ)) → ((cos (- θ)) = (cos θ))))
 </jh>
 
 == Addition ==
