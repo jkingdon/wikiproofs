@@ -73,7 +73,7 @@ stmt (CosineSubtraction () () ((cos (α − β)) = (((cos α) · (cos β)) + ((c
 </jh>
 
 == Trigonometry functions at particular points ==
-There are exact expressions for values of the trigonometric functions at many common points (for example, any multiple of <code>τ / 120</code> radians is possible, although we only provide some of the more common ones).
+There are exact expressions for values of the trigonometric functions at many common points (for example, any multiple of <code>τ / 120</code> radians is possible, although we only provide some of the more common ones).<ref>sine and cosine at zero are at [http://us.metamath.org/mpeuni/sin0.html sin0] and [http://us.metamath.org/mpeuni/cos0.html cos0], metamath's set.mm, accessed June 7, 2011</ref>
 
 <jh>
 stmt (Sin0 () () ((sin (0)) = (0)))
