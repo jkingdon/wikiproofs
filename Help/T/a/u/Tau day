@@ -46,8 +46,12 @@ given sin 0 = 0, then prove sin τ = 0
 somewhere in here talk about using a statement you proved, as opposed to one from the interface.
 
 will need to talk about the proof stack and propositional logic.
+  CosinePeriod (from SinePeriod and SineShift)
+  cos τ = 1 (from CosinePeriod and Cosine0)
 
 The remainder of the exercise consists of applying the half angle....
+  sin (τ / 2) = 0 (from SineHalfAngle and cos τ)\
+  what next?
 half angle
 third angle
 whatever calculations they need in terms of √ and what-not

@@ -24,32 +24,31 @@ There is an addition operation, which is commutative and associative.
 <jh>
 term (real (+ real real))
 stmt (AdditionCommutativity () () ((x + y) = (y + x)))
-#stmt (AdditionAssociativity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))) → (((z + w) + s) = (z + (w + s)))))
+stmt (AdditionAssociativity () () (((x + y) + z) = (x + (y + z))))
 </jh>
 
 There is a multiplication operation, which is commutative and associative.
 <jh>
 term (real (· real real))
-#stmt (ComplexMultiplicationClosure () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z · w) ∈ (ℂ))))
-#stmt (MultiplicationCommutativity () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z · w) = (w · z))))
-#stmt (MultiplicationAssociativity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))) → (((z · w) · s) = (z · (w · s)))))
+stmt (MultiplicationCommutativity () () ((x · y) = (y · z)))
+stmt (MultiplicationAssociativity () () (((x · y) · z) = (x · (y · z))))
 </jh>
 
 Multiplication distributes over addition.
 <jh>
-#stmt (Distributivity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))) → ((z · (w + s)) = ((z · w) + (z · s)))))
+stmt (Distributivity () () ((x · (y + z)) = ((x · y) + (x · z))))
 </jh>
 
 There is a real number <code>1</code>, which serves as a multiplicative identity.
 <jh>
 term (real (1))
-#stmt (MultiplicativeIdentity () () ((z ∈ (ℂ)) → ((x · (1)) = x)))
+stmt (MultiplicativeIdentity () () ((x · (1)) = x))
 </jh>
 
 There is a complex number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
 <jh>
 term (real (0))
-#stmt (AdditiveIdentity () () ((z ∈ (ℂ)) → ((z + (0)) = z)))
+stmt (AdditiveIdentity () () ((z + (0)) = z))
 stmt (ZeroOne () () ((0) ≠ (1)))
 </jh>
 
@@ -81,32 +80,27 @@ stmt (AdditiveInverse () () ((z + (- z)) = (0)))
 We can subtract any real number from another. In case your screen doesn't show it clearly, the minus sign is a different character (longer) than the negation sign above.
 <jh>
 term (object (− object object))
-stmt (SubtractionClosed () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) ∈ (ℂ))))
-stmt (Subtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) = (z + (- w)))))
+stmt (Subtraction () () ((z − w) = (z + (- w))))
 </jh>
 
 === Multiplicative inverse and division ===
-Every nonzero complex (real?) number has a multiplicative inverse (TODO: what notation does metamath use for this?).
-
-We can divide any real number by any nonzero complex number.
+We can divide any real number by any nonzero real number (actually, the notation doesn't impose the "nonzero" part but all the theorems which involve division do).
 <jh>
 term (real (/ real real))
-stmt (DivisionClosed () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (w ≠ (0))) →
-  ((z / w) ∈ (ℂ))))
-stmt (Division () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (w ≠ (0))) →
-  ((z / w) = (z · (reciprocal w)))))
+stmt (Division () () ((y ≠ (0)) → ((x / y) = (x · ((1) / y)))))
 
-stmt (Reciprocal () () ((z ≠ (0)) → ((z · ((1) / z)) = (1))))
+stmt (Reciprocal () () ((x ≠ (0)) → ((x · ((1) / x)) = (1))))
+stmt (DivideByOne () () ((x / (1)) = x))
 </jh>
 
 == Order on the reals ==
 We define a [[w:Total order|total order]] on the reals, which is consistent with addition and multiplication.
 <jh>
 term (formula (< real real))
-#stmt (Trichotomy () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a < b) ↔ (¬ ((a = b) ∨ (b < a))))))
-#stmt (Transitivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a < b) ∧ (b < c)) → (a < c))))
-#stmt (LessThanAddition () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a < b) → ((c + a) < (c + b)))))
-#stmt (LessThanMultiplication () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((((0) < a) ∧ ((0) < b)) → ((0) < (a · b)))))
+stmt (Trichotomy () () ((a < b) ↔ (¬ ((a = b) ∨ (b < a)))))
+stmt (Transitivity () () (((a < b) ∧ (b < c)) → (a < c)))
+stmt (LessThanAddition () () ((a < b) → ((c + a) < (c + b))))
+stmt (LessThanMultiplication () () ((((0) < a) ∧ ((0) < b)) → ((0) < (a · b))))
 
 def ((> a b) (b < a))
 def ((≤ a b) ((a < b) ∨ (a = b)))
@@ -119,13 +113,14 @@ We can take the square root of any nonnegative real number.
 <jh>
 term (real (√ real))
 stmt (SquareRoot () () ((x ≥ (0)) → (((√ x) · (√ x)) = x)))
+stmt (SquareRootPositive () () ((√ x) ≥ (0)))
 </jh>
 
 == Trigonometry ==
 
 [[w:Trigonometry|Trigonometry]] concerns the sine function (and others which can be derived from it, such as cosine, tangent, etc).
 
-== The sine and cosine functions ==
+=== The sine and cosine functions ===
 [[File:Sin-cos-defn-I.png|thumb|right|geometric interpretation of sine and cosine]]
 Here we define the sine and cosine functions.
 <jh>
@@ -133,7 +128,7 @@ term (real (sin real))
 term (real (cos real))
 </jh>
 
-== Circle constant ==
+=== Circle constant ===
 The circle constant <code>τ</code> is the circumference of a circle divided by its radius.<ref>Landau, Elizabeth (14 March 2011). [http://edition.cnn.com/2011/TECH/innovation/03/14/pi.tau.math/ "On Pi Day, is 'pi' under attack?"]. CNN. Retrieved 15 March 2011</ref>
 <jh>
 term (real (τ))
@@ -141,7 +136,7 @@ term (real (τ))
 
 Some authors instead use a value of <code>τ/2</code>, which they call <code>π</code>.
 
-== Relationship between sine and cosine ==
+=== Relationship between sine and cosine ===
 The sine and the cosine at a given point, squared, add to one, which is the [[w:Pythagorean trigonometric identity|Pythagorean trigonometric identity]].
 <jh>
 stmt (TrigonometryPythagorean () () ((((sin θ) · (sin θ)) + ((cos θ) · (cos θ))) = (1)))
@@ -152,18 +147,18 @@ The sine and cosine are the same, shifted by a quarter turn.
 stmt (SineShift () () ((sin (θ + ((τ) / (4)))) = (cos θ)))
 </jh>
 
-== Periodicity ==
+=== Periodicity ===
 The sine and cosine are periodic with period <code>τ</code> (we do not state, here, that <code>τ</code> is the smallest value which is a period, although it is).
 <jh>
 stmt (SinePeriod () () ((sin (θ + (τ))) = (sin θ)))
 </jh>
 
-== Negation ==
+=== Negation ===
 <jh>
 stmt (SineNegation () () ((sin (- θ)) = (- (sin θ))))
 </jh>
 
-== Addition ==
+=== Addition ===
 There are expressions for taking the sine or cosine of a sum or difference.
 
 <jh>
@@ -173,15 +168,28 @@ stmt (SineSubtraction () () ((sin (α − β)) = (((sin α) · (cos β)) − ((c
 stmt (CosineSubtraction () () ((cos (α − β)) = (((cos α) · (cos β)) + ((cos α) · (sin β)))))
 </jh>
 
-== Trigonometry functions at particular points ==
-We provide values of sine at zero; the values of the trigonometric functions at many points (for example, any multiple of <code>τ / 120</code> radians) can be derived from the theorems in this file.
+=== Trigonometry functions at particular points ===
+We provide the value of sine and cosine at zero; the values of the trigonometric functions at many points (for example, any multiple of <code>τ / 120</code> radians) can be derived from the theorems in this file.
 
 <jh>
-stmt (Sin0 () () ((sin (0)) = (0)))
+stmt (Sine0 () () ((sin (0)) = (0)))
+stmt (CosineTau () () ((cos (0)) = (1))
+</jh>
+
+=== Half angle formulas ===
+For an angle in the range 0 to τ / 2 (where the sine function is positive), the half angle formula for sine is
+<math>\sin \frac{\theta}{2} = \sqrt{\frac{1 - \cos \theta}{2}}</math>.
+<jh>
+stmt (SineHalfAngle () () ((((0) ≤ θ) ∧ (θ ≤ (τ))) → ((sin (θ / (2))) = (√ (((1) − (cos θ)) / (2))))))
+</jh>
+
+For cosine, the formula is <math>\cos \frac{\theta}{2} = \sqrt{\frac{1 + \cos \theta}{2}}</math>, and similarly we restrict the angles to a region where the cosine is positive.
+<jh>
+stmt (CosineHalfAngle () () ((((- ((τ) / (2))) ≤ θ) ∧ (θ ≤ ((τ) / (2)))) → ((cos (θ / (2))) = (√ (((1) + (cos θ)) / (2))))))
 </jh>
 
 == See also ==
-This file is based on [[Interface:Complex numbers]] and [[Interface:Trigonometry]]. The most fundamental difference is that it is a first-order theory (that is, a variable is a real number directly, rather than a set, which has consequences for how much of the real numbers are described here).
+This file is based on [[Interface:Complex numbers]] and [[Interface:Trigonometry]]. The most fundamental difference is that it is a first-order theory (that is, a variable is a real number directly, rather than a set, which has consequences for what version of "real" numbers can satisfy the theorems in this file).
 
 {{unproven}}
 
