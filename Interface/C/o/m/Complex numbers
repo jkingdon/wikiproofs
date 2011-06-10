@@ -131,7 +131,7 @@ stmt (ComplexAdditiveInverseClosed () () ((z ∈ (ℂ)) → ((- z) ∈ (ℂ))))
 stmt (ComplexAdditiveInverse () () ((z ∈ (ℂ)) → ((z + (- z)) = (0))))
 </jh>
 
-We can subtract any complex (real?) number from another.
+We can subtract any complex (real?) number from another. In case your screen doesn't show it clearly, the minus sign is a different character (longer) than the negation sign above.
 <jh>
 term (object (− object object))
 stmt (SubtractionClosed () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) ∈ (ℂ))))
