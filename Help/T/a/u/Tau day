@@ -4,17 +4,16 @@ Wikiproofs.org is a site where we write math proofs in a formal language which c
 
 To play along, start by editing a ''proof module''. You can [http://wikiproofs.org/w/index.php?title=Special:UserLogin&type=signup&returnto=Help:Tau_day create your own account] and create a page at [[User module:YourUsername/Tau day]], or you can use the [[Sandbox]].
 
+== First proof ==
 Start by putting the following text into your module:
 
   <jh>
   import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
   import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONS) ())
-  import (SETS Interface:Set_theory (PROPOSITIONS FIRSTORDER) ())
-  import (COMPLEX Interface:Complex_numbers (PROPOSITIONS FIRSTORDER SETS) ())
-  import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER SETS COMPLEX) ())
+  import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER) ())
   </jh>
 
-Those statements tell the proof verifier to make use of some previously proved, or assumed, results. Only a few of these previous results matter for the tau day exercise, but here is a brief summary of what the four imports contain. The first import, propositional logic, lets us handle things like implication (as in "x < τ implies x < 7"). The second import, first order logic, adds variables, there-exists and for-all, for example "there exists an x such that x = τ / 2". The third import, set theory, adds sets, as in "the set of all x such that x is a multiple of τ" or "τ ∈ ℝ" (tau is an element of the set of real numbers). The fourth import, complex numbers, we only care about for real numbers, which are familiar numbers such as 1, -5, 44/7, √2, τ, or e. The fifth import is called "tau day axioms" because it contains statements that we will assume for the sake of this exercise, but not try to prove as part of it.
+Those statements tell the proof verifier to make use of some previously proved, or assumed, results. Only a few of these previous results matter for the tau day exercise, but here is a brief summary of what the four imports contain. The first import, propositional logic, lets us handle things like implication (as in "x < τ implies x < 7"). The second import, first order logic, adds variables, there-exists and for-all, for example "there exists an x such that x = τ / 2". The third import is called "tau day axioms" because it contains statements that we will assume for the sake of this exercise, but not try to prove as part of it. It includes real numbers which are familiar numbers such as 1, -5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
 
 Once you have copy-pasted those imports into your proof module, hit the preview button. You should see "Proof module parsed successfully" at the bottom of the in green.
 
@@ -36,10 +35,12 @@ To invoke a statement, we give expansions for each of the variables which need f
 
 That's a completed proof. Hit preview (or save, to save your work back to the wiki), and you should see "Proof module parsed successfully" again. If you get an error, there's a list of error messages near the bottom of [[Help:JHilbert]].
 
+== A few easy variations on that proof ==
 When we invoke a statement in a proof, we can plug anything in for the expansion of a variable. Your next exercise is to use this fact to prove <code>sin (x + τ) = sin x</code> (which is the same as the previous result but with <code>x</code> in place of <code>θ</code>). Two hints: (1) you'll need to name the new theorem TauXIsPeriodOfSine (you can't name it <code>TauIsPeriodOfSine</code> because you can't have two theorems with the same name), and (2) don't forget to declare the variable <code>x</code> (just as we declared <code>θ</code> earlier). Come back to this page once you've gotten this new proof to verify.
 
 A very similar variation is proving <code>sin (x · x + τ) = sin (x · x)</code>. Call this one SineX2Period. If these exercises are starting to all sound alike and too easy, it means you are getting the hang of what we've covered so far. The main thing which is new in this one is figuring out where JHilbert wants you to put the parentheses.
 
+== More proofs ==
 {{under construction}}
 
 given sin 0 = 0, then prove sin τ = 0
@@ -57,8 +58,7 @@ half angle
 third angle
 whatever calculations they need in terms of √ and what-not
 
-export to Interface:Trigonometry?
-or maybe make a Interface:Tau day theorems
+export to [[Interface:Tau day theorems]]
 
 == What next? ==
 You can find another example explaining how to write proofs at [[Help:Tutorial]]. To find things to contribute to, browse [[:Category:Pages needing cleanup]]. Feel free to ask questions at [[WP:TEA]].
