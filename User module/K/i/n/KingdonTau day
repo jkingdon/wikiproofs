@@ -22,6 +22,36 @@ thm (SineX2Period () ()
   ((x · x) SinePeriod)
 )
 
+thm (CosinePeriodLemma1 () ()
+  (((θ + ((τ) / (4))) + (τ)) = ((θ + (τ)) + ((τ) / (4)))) (
+  θ ((τ) / (4)) (τ) Addition23
+))
+
+thm (CosinePeriodLemma2 () ()
+  ((sin ((θ + ((τ) / (4))) + (τ))) = (cos (θ + (τ)))) (
+  θ CosinePeriodLemma1
+  buildSine
+
+  (θ + (τ)) SineShift
+  applyEqualityTransitivity
+))
+
+thm (CosinePeriod () () ((cos (θ + (τ))) = (cos θ)) (
+  θ CosinePeriodLemma2
+  swapEquality
+
+  (θ + ((τ) / (4))) SinePeriod
+  applyEqualityTransitivity
+
+  θ SineShift
+  applyEqualityTransitivity
+))
+
+#thm (CosineTau () () ((cos (τ)) = 1) (
+#  (0) CosinePeriod
+#  Cosine0
+#))
+
 #export (THEOREMS blah blah blah
 </jh>
 
