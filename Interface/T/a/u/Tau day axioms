@@ -121,7 +121,7 @@ stmt (SquareRootPositive () () ((√ x) ≥ (0)))
 [[w:Trigonometry|Trigonometry]] concerns the sine function (and others which can be derived from it, such as cosine, tangent, etc).
 
 === The sine and cosine functions ===
-[[File:Sin-cos-defn-I.png|thumb|right|geometric interpretation of sine and cosine]]
+[[File:Unit_circle.svg|thumb|right|geometric interpretation of sine and cosine]]
 Here we define the sine and cosine functions.
 <jh>
 term (real (sin real))
@@ -145,6 +145,12 @@ stmt (TrigonometryPythagorean () () ((((sin θ) · (sin θ)) + ((cos θ) · (cos
 The sine and cosine are the same, shifted by a quarter turn.
 <jh>
 stmt (SineShift () () ((sin (θ + ((τ) / (4)))) = (cos θ)))
+</jh>
+
+Another way to relate sine and cosine is via [[w:complementary angle|complementary angles]].<ref>[http://us.metamath.org/mpeuni/sinhalfpim.html sinhalfpim] and [http://us.metamath.org/mpeuni/coshalfpim.html coshalfpim], metamath's set.mm, accessed June 9, 2011</ref>
+<jh>
+stmt (SineComplement () () ((sin (((τ) / (4)) − θ)) = (cos θ)))
+stmt (CosineComplement () () ((cos (((τ) / (4)) − θ)) = (sin θ)))
 </jh>
 
 === Periodicity ===
