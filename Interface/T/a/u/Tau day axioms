@@ -4,7 +4,7 @@
 | exportedby = none yet
 }}
 
-This is the starting point for the [[Tau day]] exercises. It defines the basic operations on real numbers: addition, subtraction, square roots, and so on. It also defines the sine and cosine trigonometric functions, and includes theorems for things like arithmetic results which are needed for the tau day exercises.
+This is the starting point for the [[Help:Tau day|Tau day]] exercises. It defines the basic operations on real numbers: addition, subtraction, square roots, and so on. It also defines the sine and cosine trigonometric functions, and includes theorems for things like arithmetic results which are needed for the tau day exercises.
 
 We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]].
 
@@ -17,7 +17,7 @@ param (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONA
 In this file, any variable refers to a real number.
 <jh>
 kindbind (object real)
-var (object x y z t θ α β)
+var (object a b c x y z t θ α β)
 </jh>
 
 There is an addition operation, which is commutative and associative.
@@ -74,13 +74,13 @@ Any real number has an additive inverse. Our notation is <code>- a</code> for th
 
 <jh>
 term (object (- object))
-stmt (AdditiveInverse () () ((z + (- z)) = (0)))
+stmt (AdditiveInverse () () ((x + (- x)) = (0)))
 </jh>
 
 We can subtract any real number from another. In case your screen doesn't show it clearly, the minus sign is a different character (longer) than the negation sign above.
 <jh>
 term (object (− object object))
-stmt (Subtraction () () ((z − w) = (z + (- w))))
+stmt (Subtraction () () ((x − y) = (x + (- y))))
 </jh>
 
 === Multiplicative inverse and division ===
@@ -121,7 +121,7 @@ stmt (SquareRootPositive () () ((√ x) ≥ (0)))
 [[w:Trigonometry|Trigonometry]] concerns the sine function (and others which can be derived from it, such as cosine, tangent, etc).
 
 === The sine and cosine functions ===
-[[File:Sin-cos-defn-I.png|thumb|right|geometric interpretation of sine and cosine]]
+[[File:Unit_circle.svg|thumb|right|geometric interpretation of sine and cosine]]
 Here we define the sine and cosine functions.
 <jh>
 term (real (sin real))
@@ -145,6 +145,12 @@ stmt (TrigonometryPythagorean () () ((((sin θ) · (sin θ)) + ((cos θ) · (cos
 The sine and cosine are the same, shifted by a quarter turn.
 <jh>
 stmt (SineShift () () ((sin (θ + ((τ) / (4)))) = (cos θ)))
+</jh>
+
+Another way to relate sine and cosine is via [[w:complementary angle|complementary angles]].<ref>[http://us.metamath.org/mpeuni/sinhalfpim.html sinhalfpim] and [http://us.metamath.org/mpeuni/coshalfpim.html coshalfpim], metamath's set.mm, accessed June 9, 2011</ref>
+<jh>
+stmt (SineComplement () () ((sin (((τ) / (4)) − θ)) = (cos θ)))
+stmt (CosineComplement () () ((cos (((τ) / (4)) − θ)) = (sin θ)))
 </jh>
 
 === Periodicity ===
@@ -173,7 +179,7 @@ We provide the value of sine and cosine at zero; the values of the trigonometric
 
 <jh>
 stmt (Sine0 () () ((sin (0)) = (0)))
-stmt (CosineTau () () ((cos (0)) = (1))
+stmt (Cosine0 () () ((cos (0)) = (1)))
 </jh>
 
 === Half angle formulas ===
