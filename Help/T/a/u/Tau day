@@ -1,0 +1,69 @@
+Happy tau day, everyone.<ref>[http://tauday.com/ tauday.com]</ref>
+
+Wikiproofs.org is a site where we write math proofs in a formal language which can be checked by the site. Although we have no objection to celebrating tau day in the customary fashion of eating two pies, our tau day project will involve some actual mathematics, namely, proving some simple statements involving τ. We explain everything you need to know about the mathematics and the proof system, and you should be able to get your first proof written and verified within 6 minutes and 28 seconds (getting to the end may take somewhat longer than that, but not the whole tau day).
+
+To play along, start by editing a ''proof module''. You can [http://wikiproofs.org/w/index.php?title=Special:UserLogin&type=signup&returnto=Help:Tau_day create your own account] and create a page at [[User module:YourUsername/Tau day]], or you can use the [[Sandbox]].
+
+Start by putting the following text into your module:
+
+  <jh>
+  import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
+  import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONS) ())
+  import (SETS Interface:Set_theory (PROPOSITIONS FIRSTORDER) ())
+  import (COMPLEX Interface:Complex_numbers (PROPOSITIONS FIRSTORDER SETS) ())
+  import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER SETS COMPLEX) ())
+  </jh>
+
+Those statements tell the proof verifier to make use of some previously proved, or assumed, results. Only a few of these previous results matter for the tau day exercise, but here is a brief summary of what the four imports contain. The first import, propositional logic, lets us handle things like implication (as in "x < τ implies x < 7"). The second import, first order logic, adds variables, there-exists and for-all, for example "there exists an x such that x = τ / 2". The third import, set theory, adds sets, as in "the set of all x such that x is a multiple of τ" or "τ ∈ ℝ" (tau is an element of the set of real numbers). The fourth import, complex numbers, we only care about for real numbers, which are familiar numbers such as 1, -5, 44/7, √2, τ, or e. The fifth import is called "tau day axioms" because it contains statements that we will assume for the sake of this exercise, but not try to prove as part of it.
+
+Once you have copy-pasted those imports into your proof module, hit the preview button. You should see "Proof module parsed successfully" at the bottom of the in green.
+
+Our first exercise is to show how proofs work by writing a very simple proof. It is just a restatement of something in the tau day axioms file, but with a new name.
+
+Start by adding "&lt;jh&gt;" to your proof module. We already saw this at the start of the import statements, and it means the start of a formal proof (as opposed to text intended only for human readers). The jh stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on wikiproofs.
+
+Then we need to declare a variable. For the purposes of this exercise, the only kind of variable we need is <code>object</code> which in our case will always be a real number. So first add "var (object θ)" to your proof module, which declares a variable named θ.
+
+Next add "thm (TauIsPeriodOfSine () ()". This indicates we are proving a result called "TauIsPeriodOfSine". The empty parentheses are for distinct variable constraints and hypotheses, neither of which we need to worry about for now.
+
+Now we need to state what we are going to be proving. In normal mathemetical notation we'd state it as <code>sin (θ + τ) = sin θ</code>. Tau (τ) is the number we celebrate on tau day. Theta is an angle and sin is the sine function. If you don't remember sine from high school trigonometry, don't worry. One of the nice things about wikiproofs is that even if you don't have a deep understanding of the concept behind what you are proving, you can still see how each step follows from the previous one. So if you like you can just think of the statements in [[Interface:Tau day axioms]] as strings of meaningless symbols, where the rules of the game of assembling them into proofs are given in that file and the others we imported (together with a very simple set of rules built into JHilbert).
+
+Anyway, what we are proving is <code>sin (θ + τ) = sin θ</code> and we express it almost that way in JHilbert. The main difference is that we need parentheses for everything. So add <code>((sin (θ + (τ))) = (sin θ))</code> to your proof.
+
+The only thing remaining is the actual proof.  A proof is a set of invocations of existing statements. For this first proof, we just need one statement, which corresponds to what we are trying to prove. So we will be invoking <code>SinePeriod</code> (which you can find at [[Interface:Tau day axioms]]). To invoke it, we need to notice that <code>SinePeriod</code> contains one variable: <code>θ</code>. If you are unclear on what is a variable and what is not, notice that <code>θ</code> was defined on the Tau day axioms page with <code>var</code>, but <code>sin</code> and <code>τ</code> were defined with <code>term</code> (the statement also contains <code>=</code>, which was also defined using <code>term</code>, but that was in another interface, [[Interface:First-order logic with quantifiability]]).
+
+To invoke a statement, we give expansions for each of the variables which need filling in, in the order in which they occur in the statement, and then the name of the statement. In this example, that is <code>θ SinePeriod</code>. The entire proof is enclosed in parentheses, so add <code>(θ SinePeriod)</code> to your proof module. Then add <code>)</code> (to close out the <code>thm</code>) and &lt;/jh&gt; on a line by itself, to match the &lt;jh&gt; we put in a while ago.
+
+That's a completed proof. Hit preview (or save, to save your work back to the wiki), and you should see "Proof module parsed successfully" again. If you get an error, there's a list of error messages near the bottom of [[Help:JHilbert]].
+
+When we invoke a statement in a proof, we can plug anything in for the expansion of a variable. Your next exercise is to use this fact to prove <code>sin (x + τ) = sin x</code> (which is the same as the previous result but with <code>x</code> in place of <code>θ</code>). Two hints: (1) you'll need to name the new theorem TauXIsPeriodOfSine (you can't name it <code>TauIsPeriodOfSine</code> because you can't have two theorems with the same name), and (2) don't forget to declare the variable <code>x</code> (just as we declared <code>θ</code> earlier). Come back to this page once you've gotten this new proof to verify.
+
+A very similar variation is proving <code>sin (x · x + τ) = sin (x · x)</code>. Call this one SineX2Period. If these exercises are starting to all sound alike and too easy, it means you are getting the hang of what we've covered so far. The main thing which is new in this one is figuring out where JHilbert wants you to put the parentheses.
+
+{{under construction}}
+
+given sin 0 = 0, then prove sin τ = 0
+
+somewhere in here talk about using a statement you proved, as opposed to one from the interface.
+
+will need to talk about the proof stack and propositional logic.
+  CosinePeriod (from SinePeriod and SineShift)
+  cos τ = 1 (from CosinePeriod and Cosine0)
+
+The remainder of the exercise consists of applying the half angle....
+  sin (τ / 2) = 0 (from SineHalfAngle and cos τ)\
+  what next?
+half angle
+third angle
+whatever calculations they need in terms of √ and what-not
+
+export to Interface:Trigonometry?
+or maybe make a Interface:Tau day theorems
+
+== What next? ==
+You can find another example explaining how to write proofs at [[Help:Tutorial]]. To find things to contribute to, browse [[:Category:Pages needing cleanup]]. Feel free to ask questions at [[WP:TEA]].
+
+== Footnotes ==
+<references/>
+
+[[Category:Tutorial]]
