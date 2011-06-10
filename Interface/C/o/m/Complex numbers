@@ -139,20 +139,19 @@ stmt (Subtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) = (z +
 </jh>
 
 === Multiplicative inverse and division ===
-Every nonzero complex (real?) number has a multiplicative inverse (TODO: what notation does metamath use for this?).
-<jh>
-term (object (reciprocal object))
-stmt (ReciprocalClosed () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((reciprocal z) ∈ (ℂ))))
-stmt (Reciprocal () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((z · (reciprocal z)) = (0))))
-</jh>
-
-We can divide any complex (real?) number by any nonzero complex number.
+Every nonzero complex number has a multiplicative inverse.<ref>[http://us.metamath.org/mpeuni/reccl.html reccl], metamath's set.mm, accessed June 9, 2011</ref>
 <jh>
 term (object (/ object object))
+stmt (ReciprocalClosed () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → (((1) / z) ∈ (ℂ))))
+stmt (Reciprocal () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((z · ((1) / z)) = (1))))
+</jh>
+
+We can divide any complex number by any nonzero complex number.<ref>[http://us.metamath.org/mpeuni/divcl.html divcl], metamath's set.mm, accessed June 9, 2011</ref>
+<jh>
 stmt (DivisionClosed () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (w ≠ (0))) →
   ((z / w) ∈ (ℂ))))
 stmt (Division () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (w ≠ (0))) →
-  ((z / w) = (z · (reciprocal w)))))
+  ((z / w) = (z · ((1) / w)))))
 </jh>
 
 == Order on the reals ==
