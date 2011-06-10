@@ -21,7 +21,7 @@ Our first exercise is to show how proofs work by writing a very simple proof. It
 
 Start by adding "&lt;jh&gt;" to your proof module. We already saw this at the start of the import statements, and it means the start of a formal proof (as opposed to text intended only for human readers). The jh stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on wikiproofs.
 
-Then we need to declare a variable. For the purposes of this exercise, the only kind of variable we need is <code>object</code> which in our case will always be a real number. So first add "var (object θ)" to your proof module, which declares a variable named θ.
+Then we need to declare a variable. So first add "var (real θ)" to your proof module, which declares a variable named θ. All the variables we will be adding are real numbers, which is what the "real" means.
 
 Next add "thm (TauIsPeriodOfSine () ()". This indicates we are proving a result called "TauIsPeriodOfSine". The empty parentheses are for distinct variable constraints and hypotheses, neither of which we need to worry about for now.
 

@@ -1,0 +1,27 @@
+<jh>
+import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONS) ())
+import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER) ())
+
+var (real θ)
+
+thm (TauIsPeriodOfSine () ()
+  ((sin (θ + (τ))) = (sin θ))
+  (θ SinePeriod)
+)
+
+var (real x)
+
+thm (TauXIsPeriodOfSine () ()
+  ((sin (x + (τ))) = (sin x))
+  (x SinePeriod)
+)
+
+thm (SineX2Period () ()
+  ((sin ((x · x) + τ)) = (sin (x · x)))
+  ((x · x) SinePeriod)
+)
+
+#export (THEOREMS blah blah blah
+</jh>
+
