@@ -27,6 +27,12 @@ stmt (AdditionCommutativity () () ((x + y) = (y + x)))
 stmt (AdditionAssociativity () () (((x + y) + z) = (x + (y + z))))
 </jh>
 
+Here are some convenience theorems which follow from commutativity and associat
+ivity:
+<jh>
+stmt (Addition23 () () (((x + y) + z) = ((x + z) + y)))
+</jh>
+
 There is a multiplication operation, which is commutative and associative.
 <jh>
 term (real (· real real))
@@ -179,7 +185,7 @@ We provide the value of sine and cosine at zero; the values of the trigonometric
 
 <jh>
 stmt (Sine0 () () ((sin (0)) = (0)))
-stmt (CosineTau () () ((cos (0)) = (1)))
+stmt (Cosine0 () () ((cos (0)) = (1)))
 </jh>
 
 === Half angle formulas ===
@@ -192,6 +198,12 @@ stmt (SineHalfAngle () () ((((0) ≤ θ) ∧ (θ ≤ (τ))) → ((sin (θ / (2))
 For cosine, the formula is <math>\cos \frac{\theta}{2} = \sqrt{\frac{1 + \cos \theta}{2}}</math>, and similarly we restrict the angles to a region where the cosine is positive.
 <jh>
 stmt (CosineHalfAngle () () ((((- ((τ) / (2))) ≤ θ) ∧ (θ ≤ ((τ) / (2)))) → ((cos (θ / (2))) = (√ (((1) + (cos θ)) / (2))))))
+</jh>
+
+== Builders ==
+<jh>
+stmt (SineBuilder () () ((x = y) → ((sin x) = (sin y))))
+stmt (buildSine () ((x = y)) ((sin x) = (sin y)))
 </jh>
 
 == See also ==
