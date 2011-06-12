@@ -1,3 +1,5 @@
+[[Interface:Tau day axioms]]
+
 <jh>
 import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONS) ())
@@ -47,10 +49,17 @@ thm (CosinePeriod () () ((cos (θ + (τ))) = (cos θ)) (
   applyEqualityTransitivity
 ))
 
-#thm (CosineTau () () ((cos (τ)) = 1) (
-#  (0) CosinePeriod
-#  Cosine0
-#))
+thm (CosineTau () () ((cos (τ)) = (1)) (
+  (τ) AdditiveIdentityLeft
+  buildCosine
+  swapEquality
+
+  (0) CosinePeriod
+  applyEqualityTransitivity
+
+  Cosine0
+  applyEqualityTransitivity
+))
 
 #export (THEOREMS blah blah blah
 </jh>
