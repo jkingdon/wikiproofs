@@ -209,6 +209,7 @@ stmt (CosineHalfAngle () () ((((- ((τ) / (2))) ≤ θ) ∧ (θ ≤ ((τ) / (2))
 <jh>
 stmt (SineBuilder () () ((x = y) → ((sin x) = (sin y))))
 stmt (buildSine () ((x = y)) ((sin x) = (sin y)))
+stmt (buildCosine () ((x = y)) ((cos x) = (cos y)))
 </jh>
 
 == See also ==
