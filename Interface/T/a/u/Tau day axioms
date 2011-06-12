@@ -54,8 +54,13 @@ stmt (MultiplicativeIdentity () () ((x · (1)) = x))
 There is a complex number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
 <jh>
 term (real (0))
-stmt (AdditiveIdentity () () ((z + (0)) = z))
+stmt (AdditiveIdentity () () ((x + (0)) = x))
 stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
+Here is a convenience variation:
+<jh>
+stmt (AdditiveIdentityLeft () () (((0) + x) = x))
 </jh>
 
 === Numerical constants ===
