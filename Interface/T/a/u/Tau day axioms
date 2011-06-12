@@ -118,7 +118,12 @@ def ((≤ a b) ((a < b) ∨ (a = b)))
 def ((≥ a b) (b ≤ a))
 </jh>
 
-=== Square root ===
+The above statements imply a variety of others. Here are some which will be convenient:
+<jh>
+stmt (LessEqualReflexive () () (a ≤ a))
+</jh>
+
+== Square root ==
 
 We can take the square root of any nonnegative real number.
 <jh>
@@ -191,6 +196,12 @@ We provide the value of sine and cosine at zero; the values of the trigonometric
 <jh>
 stmt (Sine0 () () ((sin (0)) = (0)))
 stmt (Cosine0 () () ((cos (0)) = (1)))
+</jh>
+
+=== Some arithmetic facts ===
+Here are a number of arithmetic statements we'll need for the tau day exercises.
+<jh>
+stmt (TauNonnegative () () ((0) ≤ (τ)))
 </jh>
 
 === Half angle formulas ===
