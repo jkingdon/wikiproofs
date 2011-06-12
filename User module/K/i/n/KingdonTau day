@@ -15,7 +15,7 @@ thm (TauIsPeriodOfSine () ()
 var (real α)
 
 thm (TauIsPeriodOfSineQuarterTurn () ()
-  ((sin ((α + ((τ) / (4)) + (τ))) = (sin (α + ((τ) / (4))))
+  ((sin ((α + ((τ) / (4))) + (τ))) = (sin (α + ((τ) / (4)))))
   ((α + ((τ) / (4))) SinePeriod)
 )
 
