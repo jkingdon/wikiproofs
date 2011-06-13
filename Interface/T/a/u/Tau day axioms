@@ -202,6 +202,11 @@ stmt (Cosine0 () () ((cos (0)) = (1)))
 Here are a number of arithmetic statements we'll need for the tau day exercises.
 <jh>
 stmt (TauNonnegative () () ((0) ≤ (τ)))
+stmt (SelfSubtraction () () ((a − a) = (0)))
+stmt (ZeroNumerator () () ((a ≠ (0)) → (((0) / a) = (0))))
+stmt (SquareRootZero () () ((√ (0)) = (0)))
+
+stmt (TwoNotZero () () ((2) ≠ (0)))
 </jh>
 
 === Half angle formulas ===
@@ -218,9 +223,13 @@ stmt (CosineHalfAngle () () ((((- ((τ) / (2))) ≤ θ) ∧ (θ ≤ ((τ) / (2))
 
 == Builders ==
 <jh>
+var (real common)
 stmt (SineBuilder () () ((x = y) → ((sin x) = (sin y))))
 stmt (buildSine () ((x = y)) ((sin x) = (sin y)))
 stmt (buildCosine () ((x = y)) ((cos x) = (cos y)))
+stmt (buildSubtractionLL () ((x = y)) ((common − x) = (common − y)))
+stmt (buildDivisionRR () ((x = y) (common ≠ (0))) ((x / common) = (y / common)))
+stmt (buildSquareRoot () ((x = y)) ((√ x) = (√ y)))
 </jh>
 
 == See also ==
