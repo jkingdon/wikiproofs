@@ -1,3 +1,5 @@
+[[Interface:Tau day axioms]]
+
 <jh>
 import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONS) ())
@@ -10,16 +12,11 @@ thm (TauIsPeriodOfSine () ()
   (θ SinePeriod)
 )
 
-var (real x)
+var (real α)
 
-thm (TauXIsPeriodOfSine () ()
-  ((sin (x + (τ))) = (sin x))
-  (x SinePeriod)
-)
-
-thm (SineX2Period () ()
-  ((sin ((x · x) + τ)) = (sin (x · x)))
-  ((x · x) SinePeriod)
+thm (TauIsPeriodOfSineQuarterTurn () ()
+  ((sin ((α + ((τ) / (4))) + (τ))) = (sin (α + ((τ) / (4)))))
+  ((α + ((τ) / (4))) SinePeriod)
 )
 
 thm (CosinePeriodLemma1 () ()
@@ -47,11 +44,56 @@ thm (CosinePeriod () () ((cos (θ + (τ))) = (cos θ)) (
   applyEqualityTransitivity
 ))
 
-#thm (CosineTau () () ((cos (τ)) = 1) (
-#  (0) CosinePeriod
-#  Cosine0
-#))
+thm (CosineTau () () ((cos (τ)) = (1)) (
+  (τ) AdditiveIdentityLeft
+  buildCosine
+  swapEquality
+
+  (0) CosinePeriod
+  applyEqualityTransitivity
+
+  Cosine0
+  applyEqualityTransitivity
+))
+
+thm (Sine2 () () ((sin ((τ) / (2))) = (0)) (
+  TauNonnegative
+  (τ) LessEqualReflexivity
+  introduceConjunction
+
+  (τ) SineHalfAngle
+  applyModusPonens
+</jh>
+That gives us <code>sin (τ / 2) = √ ((1 − cos τ) / 2)</code>. Now we just need to simplify the right hand side to zero.
+<jh>
+  CosineTau
+  (1) buildSubtractionLL
+  TwoNotZero
+  buildDivisionRR
+  buildSquareRoot
+  applyEqualityTransitivity
+</jh>
+We now have <code>√ ((1 − 1) / 2)</code>.
+<jh>
+  (1) SelfSubtraction
+  TwoNotZero
+  buildDivisionRR
+  buildSquareRoot
+  applyEqualityTransitivity
+</jh>
+That gives us <code>√ (0 / 2)</code>.
+<jh>
+  TwoNotZero
+  (2) ZeroNumerator
+  applyModusPonens
+  buildSquareRoot
+  applyEqualityTransitivity
+</jh>
+Now we have <code>√ 0</code>.
+<jh>
+  SquareRootZero
+  applyEqualityTransitivity
+))
 
 #export (THEOREMS blah blah blah
 </jh>
-

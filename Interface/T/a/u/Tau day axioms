@@ -53,8 +53,13 @@ stmt (MultiplicativeIdentity () () ((x · (1)) = x))
 There is a complex number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
 <jh>
 term (real (0))
-stmt (AdditiveIdentity () () ((z + (0)) = z))
+stmt (AdditiveIdentity () () ((x + (0)) = x))
 stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
+Here is a convenience variation:
+<jh>
+stmt (AdditiveIdentityLeft () () (((0) + x) = x))
 </jh>
 
 === Numerical constants ===
@@ -112,7 +117,12 @@ def ((≤ a b) ((a < b) ∨ (a = b)))
 def ((≥ a b) (b ≤ a))
 </jh>
 
-=== Square root ===
+The above statements imply a variety of others. Here are some which will be convenient:
+<jh>
+stmt (LessEqualReflexivity () () (a ≤ a))
+</jh>
+
+== Square root ==
 
 We can take the square root of any nonnegative real number.
 <jh>
@@ -187,6 +197,17 @@ stmt (Sine0 () () ((sin (0)) = (0)))
 stmt (Cosine0 () () ((cos (0)) = (1)))
 </jh>
 
+=== Some arithmetic facts ===
+Here are a number of arithmetic statements we'll need for the tau day exercises.
+<jh>
+stmt (TauNonnegative () () ((0) ≤ (τ)))
+stmt (SelfSubtraction () () ((a − a) = (0)))
+stmt (ZeroNumerator () () ((a ≠ (0)) → (((0) / a) = (0))))
+stmt (SquareRootZero () () ((√ (0)) = (0)))
+
+stmt (TwoNotZero () () ((2) ≠ (0)))
+</jh>
+
 === Half angle formulas ===
 For an angle in the range 0 to τ / 2 (where the sine function is positive), the half angle formula for sine is
 <math>\sin \frac{\theta}{2} = \sqrt{\frac{1 - \cos \theta}{2}}</math>.
@@ -201,8 +222,13 @@ stmt (CosineHalfAngle () () ((((- ((τ) / (2))) ≤ θ) ∧ (θ ≤ ((τ) / (2))
 
 == Builders ==
 <jh>
+var (real common)
 stmt (SineBuilder () () ((x = y) → ((sin x) = (sin y))))
-stmt (buildSine () (x = y) ((sin x) = (sin y)))
+stmt (buildSine () ((x = y)) ((sin x) = (sin y)))
+stmt (buildCosine () ((x = y)) ((cos x) = (cos y)))
+stmt (buildSubtractionLL () ((x = y)) ((common − x) = (common − y)))
+stmt (buildDivisionRR () ((x = y) (common ≠ (0))) ((x / common) = (y / common)))
+stmt (buildSquareRoot () ((x = y)) ((√ x) = (√ y)))
 </jh>
 
 == See also ==
