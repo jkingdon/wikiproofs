@@ -12,16 +12,11 @@ thm (TauIsPeriodOfSine () ()
   (θ SinePeriod)
 )
 
-var (real x)
+var (real α)
 
-thm (TauXIsPeriodOfSine () ()
-  ((sin (x + (τ))) = (sin x))
-  (x SinePeriod)
-)
-
-thm (SineX2Period () ()
-  ((sin ((x · x) + (τ))) = (sin (x · x)))
-  ((x · x) SinePeriod)
+thm (TauIsPeriodOfSineQuarterTurn () ()
+  ((sin ((α + ((τ) / (4)) + (τ))) = (sin (α + ((τ) / (4))))
+  ((α + ((τ) / (4))) SinePeriod)
 )
 
 thm (CosinePeriodLemma1 () ()
