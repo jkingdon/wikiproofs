@@ -56,5 +56,44 @@ thm (CosineTau () () ((cos (τ)) = (1)) (
   applyEqualityTransitivity
 ))
 
+thm (Sine2 () () ((sin ((τ) / (2))) = (0)) (
+  TauNonnegative
+  (τ) LessEqualReflexivity
+  introduceConjunction
+
+  (τ) SineHalfAngle
+  applyModusPonens
+</jh>
+That gives us <code>sin (τ / 2) = √ ((1 − cos τ) / 2)</code>. Now we just need to simplify the right hand side to zero.
+<jh>
+  CosineTau
+  (1) buildSubtractionLL
+  TwoNotZero
+  buildDivisionRR
+  buildSquareRoot
+  applyEqualityTransitivity
+</jh>
+We now have <code>√ ((1 − 1) / 2)</code>.
+<jh>
+  (1) SelfSubtraction
+  TwoNotZero
+  buildDivisionRR
+  buildSquareRoot
+  applyEqualityTransitivity
+</jh>
+That gives us <code>√ (0 / 2)</code>.
+<jh>
+  TwoNotZero
+  (2) ZeroNumerator
+  applyModusPonens
+  buildSquareRoot
+  applyEqualityTransitivity
+</jh>
+Now we have <code>√ 0</code>.
+<jh>
+  SquareRootZero
+  applyEqualityTransitivity
+))
+
 #export (THEOREMS blah blah blah
 </jh>
