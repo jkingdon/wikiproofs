@@ -120,7 +120,7 @@ def ((≥ a b) (b ≤ a))
 
 The above statements imply a variety of others. Here are some which will be convenient:
 <jh>
-stmt (LessEqualReflexive () () (a ≤ a))
+stmt (LessEqualReflexivity () () (a ≤ a))
 </jh>
 
 == Square root ==
