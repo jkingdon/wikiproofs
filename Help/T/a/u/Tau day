@@ -7,11 +7,11 @@ To play along, start by editing a ''proof module''. You can [http://wikiproofs.o
 == First proof ==
 Start by putting the following text into your module:
 
-  <jh>
+  &lt;jh&gt;
   import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
   import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONS) ())
   import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER) ())
-  </jh>
+  &lt;/jh&gt;
 
 Those statements tell the proof verifier to make use of some previously proved, or assumed, results. They provide logic (and, or, implies, etc) and real numbers which are familiar numbers such as 1, -5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
 
@@ -19,7 +19,7 @@ Once you have copy-pasted those imports into your proof module, hit the preview 
 
 Our first exercise is to show how proofs work by writing a very simple proof. It is just a restatement of something in the tau day axioms file, but with a new name.
 
-Start by adding "&lt;jh&gt;" to your proof module. We already saw this at the start of the import statements, and it means the start of a formal proof (as opposed to text intended only for human readers). The jh stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on wikiproofs.
+Edit the page and move the cursor above the &lt;/jh&gt; (everything we will be talking about in this exercise is a formal proof, which means it goes between the &lt;jh&gt; and &lt;/jh&gt; tags). The jh stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on wikiproofs.
 
 Then we need to declare a variable. So first add "var (real θ)" to your proof module, which declares a variable named θ. All the variables we will be adding are real numbers, which is what the "real" means.
 
@@ -43,18 +43,25 @@ When we invoke a statement in a proof, we can plug anything in for the expansion
 The next proof is <code>sin ((θ + τ / 4) + τ) = sin ((θ + τ) + τ / 4)</code>. Set up this proof and call it <code>CosinePeriodLemma1</code> (we pick that name because it will eventually help us prove something called <code>CosinePeriod</code>). The first step in the proof is invoking <code>Addition23</code> from [[Interface:Tau day axioms]]. Go ahead and write that part of the proof (which gives us <code>(θ + τ / 4) + τ = (θ + τ) + τ / 4</code>) but leave the parentheses open because the proof isn't finished. After <code>Addition23</code> you then write <code>buildSine</code>. If you look up <code>buildSine</code> in [[Interface:Tau day axioms]] you will see that it takes something of the form <code>x = y</code> as a hypothesis and gives you <code>sin x = sin y</code>, which in our case is <code>sin ((θ + τ / 4) + τ) = sin ((θ + τ) + τ / 4)</code>. Fortunately, that is what we need, so close all the parentheses and verify and save this proof.
 
 == The proof stack ==
-Our next proof is <code>sin ((θ + τ / 4) + τ) = cos (θ + τ)</code>, which we'll call <code>CosinePeriodLemma2</code>. The first two steps are to invoke <code>CosinePeriodLemma1</code> and then <code>SineShift</code>. Look at those two theorems and see if you can see what you need to plug in for the variables in each case. When we write two statement invocations after each other, they are put on a  proof [[w:stack (data structure)|stack]]. So then we can invoke something which takes two statements off the proof stack, in this case <code>applyEqualityTransitivity</code> (which is located in [[Interface:First-order logic with quantifiability]]). That's the final step in this proof, so verify and save this proof.
+Our next proof is <code>sin ((θ + τ / 4) + τ) = cos (θ + τ)</code>, which we'll call <code>CosinePeriodLemma2</code>. The first two steps are to invoke <code>CosinePeriodLemma1</code> and then <code>SineShift</code>. Look at those two statements and see if you can see what you need to plug in for the variables in each case. When we write two statement invocations after each other, they are put on a  proof [[w:stack (data structure)|stack]]. So then we can invoke something which takes two statements off the proof stack, in this case <code>applyEqualityTransitivity</code> (which is located in [[Interface:First-order logic with quantifiability]]). That's the final step in this proof, so verify and save this proof.
+
+== Cosine period ==
+The next theorem to prove <code>CosinePeriod</code>, which is <code>cos (θ + τ) = cos θ</code>. You'll prove it with <code>CosinePeriodLemma2</code>, <code>SinePeriod</code>, and <code>SineShift</code> (in that order), together with <code>swapEquality</code> and <code>applyEqualityTransitivity</code> (both in [[Interface:First-order logic with quantifiability]]) to join the pieces together. Figure out what to plug into the variables for each of those theorems, and where you need the <code>swapEquality</code> and <code>applyEqualityTransitivity</code>. Verify and save that proof.
+
+== Cosine of tau ==
+In an effort to keep this exercise to something which could be completed on tau day, we'll make this the last theorem to prove: <code>cos τ = 1</code>. Prove it using <code>AdditiveIdentityLeft</code>, <code>CosinePeriod</code>, and <code>Cosine0</code>, with <code>swapEquality</code> and <code>applyEqualityTransitivity</code> to help. You'll also need <code>buildCosine</code> which is similar to the <code>buildSine</code> we saw a few sections ago.
+
+== Exporting the result ==
+If you have finished all the exercises to this point, you have proved everything in [[Interface:Tau day theorems]]. Add the following to your proof module:
+  export (THEOREMS Interface:Tau_day_theorems (PROPOSITIONS FIRSTORDER) ())
+and verify the page. If the export verifies, it means your proof module has proved all the statements in the Tau day theorems interface. Congratulations!
+
+== Theorems 2 ==
 
 == More proofs ==
 {{under construction}}
 
 given sin 0 = 0, then prove sin τ = 0
-
-somewhere in here talk about using a statement you proved, as opposed to one from the interface.
-
-will need to talk about the proof stack and propositional logic.
-  CosinePeriod (from SinePeriod and SineShift)
-  cos τ = 1 (from CosinePeriod and Cosine0)
 
 The remainder of the exercise consists of applying the half angle....
   sin (τ / 2) = 0 (from SineHalfAngle and cos τ)

@@ -34,7 +34,7 @@ thm (CosinePeriodLemma2 () ()
 ))
 
 thm (CosinePeriod () () ((cos (θ + (τ))) = (cos θ)) (
-  θ CosinePeriodLemma
+  θ CosinePeriodLemma2
   swapEquality
 
   (θ + ((τ) / (4))) SinePeriod
