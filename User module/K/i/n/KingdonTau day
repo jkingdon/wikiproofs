@@ -1,4 +1,5 @@
-[[Interface:Tau day axioms]]
+This is my proof of [[Interface: Tau day theorems]] and [[Interface: Tau day theorems 2]] from
+[[Interface:Tau day axioms]], as part of the exercises at [[Help:Tau day]]. Spoiler alert: if you are hoping to figure out the exercises for yourself, I recommend going to the help page first and only coming back here if you get stuck.
 
 <jh>
 import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
@@ -56,6 +57,8 @@ thm (CosineTau () () ((cos (τ)) = (1)) (
   applyEqualityTransitivity
 ))
 
+export (THEOREMS Interface:Tau_day_theorems (PROPOSITIONS FIRSTORDER) ())
+
 thm (Sine2 () () ((sin ((τ) / (2))) = (0)) (
   TauNonnegative
   (τ) LessEqualReflexivity
@@ -94,6 +97,4 @@ Now we have <code>√ 0</code>.
   SquareRootZero
   applyEqualityTransitivity
 ))
-
-#export (THEOREMS blah blah blah
 </jh>
