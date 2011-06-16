@@ -128,7 +128,7 @@ We can take the square root of any nonnegative real number.
 <jh>
 term (real (√ real))
 stmt (SquareRoot () () ((x ≥ (0)) → (((√ x) · (√ x)) = x)))
-stmt (SquareRootPositive () () ((√ x) ≥ (0)))
+stmt (SquareRootNonnegative () () ((√ x) ≥ (0)))
 </jh>
 
 == Trigonometry ==
@@ -177,6 +177,7 @@ stmt (SinePeriod () () ((sin (θ + (τ))) = (sin θ)))
 === Negation ===
 <jh>
 stmt (SineNegation () () ((sin (- θ)) = (- (sin θ))))
+stmt (CosineNegation () () ((cos (- θ)) = (cos θ)))
 </jh>
 
 === Addition ===
@@ -206,6 +207,7 @@ stmt (ZeroNumerator () () ((a ≠ (0)) → (((0) / a) = (0))))
 stmt (SquareRootZero () () ((√ (0)) = (0)))
 
 stmt (TwoNotZero () () ((2) ≠ (0)))
+stmt (Tau4MinusTau2 () () ((((τ) / (4)) − ((τ) / (2))) = (- ((τ) / (4)))))
 </jh>
 
 === Half angle formulas ===
