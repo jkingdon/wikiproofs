@@ -57,20 +57,7 @@ If you have finished all the exercises to this point, you have proved everything
 and verify the page. If the export verifies, it means your proof module has proved all the statements in the Tau day theorems interface. Congratulations!
 
 == Theorems 2 ==
-
-== More proofs ==
-{{under construction}}
-
-given sin 0 = 0, then prove sin τ = 0
-
-The remainder of the exercise consists of applying the half angle....
-  sin (τ / 2) = 0 (from SineHalfAngle and cos τ)
-  what next?
-half angle
-third angle
-whatever calculations they need in terms of √ and what-not
-
-export to [[Interface:Tau day theorems]]
+If you want to keep going, there is another set of exercises at [[Interface:Tau day theorems 2]]. They are intended to be done in order, often with each result leading to the next one, but there isn't as detailed a set of instructions as there was for the first set.
 
 == What next? ==
 You can find another example explaining how to write proofs at [[Help:Tutorial]]. To find things to contribute to, browse [[:Category:Pages needing cleanup]]. Feel free to ask questions at [[WP:TEA]].
