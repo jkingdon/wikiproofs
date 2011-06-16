@@ -1,0 +1,41 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
+| importedby = none yet
+| exportedby = ''you get to write it''
+}}
+
+This is what one is supposed to prove for the [[Help:Tau day|Tau day]] exercises.
+
+<jh>
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+
+kindbind (object real)
+var (real x y z θ α)
+
+term (real (+ real real))
+term (real (− real real))
+term (real (· real real))
+term (real (/ real real))
+term (real (√ real))
+term (real (sin real))
+term (real (cos real))
+term (real (τ))
+term (real (0))
+term (real (1))
+term (real (2))
+term (real (4))
+
+stmt (TauIsPeriodOfSine () () ((sin (θ + (τ))) = (sin θ)))
+
+stmt (TauIsPeriodOfSineQuarterTurn () ()
+  ((sin ((α + ((τ) / (4))) + (τ))) = (sin (α + ((τ) / (4)))))
+)
+
+stmt (CosinePeriod () () ((cos (θ + (τ))) = (cos θ)))
+
+stmt (CosineTau () () ((cos (τ)) = (1)))
+</jh>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Tutorial]]
