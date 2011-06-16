@@ -98,5 +98,22 @@ Now we have <code>√ 0</code>.
   applyEqualityTransitivity
 ))
 
+thm (CosineNegative4 () () ((cos (- ((τ) / (4)))) = (0)) (
+  Tau4MinusTau2
+  swapEquality
+  buildCosine
+
+  ((τ) / (2)) CosineComplement
+  applyEqualityTransitivity
+
+  Sine2
+  applyEqualityTransitivity
+))
+
+# cos (τ / 4)
+# cos (τ / 8)
+# sin (τ / 8)
+# then third-angle
+
 export (THEOREMS2 Interface:Tau_day_theorems_2 (PROPOSITIONS FIRSTORDER) ())
 </jh>
