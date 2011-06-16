@@ -128,7 +128,7 @@ We can take the square root of any nonnegative real number.
 <jh>
 term (real (√ real))
 stmt (SquareRoot () () ((x ≥ (0)) → (((√ x) · (√ x)) = x)))
-stmt (SquareRootPositive () () ((√ x) ≥ (0)))
+stmt (SquareRootNonnegative () () ((√ x) ≥ (0)))
 </jh>
 
 == Trigonometry ==
