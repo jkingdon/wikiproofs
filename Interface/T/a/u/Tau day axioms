@@ -177,6 +177,7 @@ stmt (SinePeriod () () ((sin (θ + (τ))) = (sin θ)))
 === Negation ===
 <jh>
 stmt (SineNegation () () ((sin (- θ)) = (- (sin θ))))
+stmt (CosineNegation () () ((cos (- θ)) = (cos θ)))
 </jh>
 
 === Addition ===
