@@ -27,8 +27,7 @@ stmt (AdditionCommutativity () () ((x + y) = (y + x)))
 stmt (AdditionAssociativity () () (((x + y) + z) = (x + (y + z))))
 </jh>
 
-Here are some convenience theorems which follow from commutativity and associat
-ivity:
+Here are some convenience theorems which follow from commutativity and associativity:
 <jh>
 stmt (Addition23 () () (((x + y) + z) = ((x + z) + y)))
 </jh>
