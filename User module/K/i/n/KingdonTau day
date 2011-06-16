@@ -97,4 +97,6 @@ Now we have <code>√ 0</code>.
   SquareRootZero
   applyEqualityTransitivity
 ))
+
+export (THEOREMS2 Interface:Tau_day_theorems_2 (PROPOSITIONS FIRSTORDER) ())
 </jh>
