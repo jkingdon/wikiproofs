@@ -1,0 +1,33 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
+| importedby = none yet
+| exportedby = ''you get to write it''
+}}
+
+This is the second page of theorems one might prove for [[Help:Tau day|Tau day]]. If you find them too hard, there are hints at [[Help:Tau day theorems 2 hints]].
+
+<jh>
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+
+kindbind (object real)
+var (real x y z θ α)
+
+term (real (+ real real))
+term (real (− real real))
+term (real (· real real))
+term (real (/ real real))
+term (real (√ real))
+term (real (sin real))
+term (real (cos real))
+term (real (τ))
+term (real (0))
+term (real (1))
+term (real (2))
+term (real (4))
+
+stmt (Sine2 () () ((sin ((τ) / (2))) = (0)))
+</jh>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Tutorial]]
