@@ -20,14 +20,14 @@ thm (TauIsPeriodOfSineQuarterTurn () ()
 )
 
 thm (CosinePeriodLemma1 () ()
-  (((θ + ((τ) / (4))) + (τ)) = ((θ + (τ)) + ((τ) / (4)))) (
+  ((sin ((θ + ((τ) / (4))) + (τ))) = (sin ((θ + (τ)) + ((τ) / (4))))) (
   θ ((τ) / (4)) (τ) Addition23
+  buildSine
 ))
 
 thm (CosinePeriodLemma2 () ()
   ((sin ((θ + ((τ) / (4))) + (τ))) = (cos (θ + (τ)))) (
   θ CosinePeriodLemma1
-  buildSine
 
   (θ + (τ)) SineShift
   applyEqualityTransitivity
