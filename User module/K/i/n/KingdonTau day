@@ -114,7 +114,7 @@ thm (Cosine4 () () ((cos ((τ) / (4))) = (0)) (
   ((τ) / (4)) CosineNegation
   swapEquality
 
-  CosineNegation4
+  CosineNegative4
   applyEqualityTransitivity
 ))
 
@@ -123,6 +123,7 @@ thm (Cosine8 () () ((cos ((τ) / (8))) = ((√ (2)) / (2))) (
 The first step is <code>cos (τ / 8) = cos ((τ / 4) / 2)</code>
 <jh>
   (τ) EighthQuarterHalf
+  buildCosine
 </jh>
 Now we apply the half angle formula, which is <code>cos ((τ / 4) / 2) = √ ((1 + cos (τ / 4)) / 2)</code>.
 <jh>
@@ -168,8 +169,6 @@ thm (Sine8 () () ((sin ((τ) / (8))) = ((√ (2)) / (2))) (
   Cosine8
   applyEqualityTransitivity
 ))
-
-# then third-angle
 
 export (THEOREMS2 Interface:Tau_day_theorems_2 (PROPOSITIONS FIRSTORDER) ())
 </jh>

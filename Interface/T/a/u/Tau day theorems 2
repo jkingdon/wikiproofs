@@ -14,6 +14,7 @@ kindbind (object real)
 var (real x y z θ α)
 
 term (real (+ real real))
+term (real (- real))
 term (real (− real real))
 term (real (· real real))
 term (real (/ real real))
@@ -25,8 +26,13 @@ term (real (0))
 term (real (1))
 term (real (2))
 term (real (4))
+term (real (8))
 
 stmt (Sine2 () () ((sin ((τ) / (2))) = (0)))
+stmt (CosineNegative4 () () ((cos (- ((τ) / (4)))) = (0)))
+stmt (Cosine4 () () ((cos ((τ) / (4))) = (0)))
+stmt (Cosine8 () () ((cos ((τ) / (8))) = ((√ (2)) / (2))))
+stmt (Sine8 () () ((sin ((τ) / (8))) = ((√ (2)) / (2))))
 </jh>
 
 {{DEFAULTSORT:{{PAGENAME}}}}

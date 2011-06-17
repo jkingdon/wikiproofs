@@ -1,0 +1,15 @@
+This page is part of the [[Help:Tau day|tau day exercises]].
+
+Specifically, it is a series of hints for proving [[Interface:Tau day theorems 2]] and is aimed at people who have gone through the exercises, tried to figure out Tau day theorems 2, but have not gotten it and would like a hint.
+
+The first one, sin (τ / 2), can be derived from sin τ by SineHalfAngle.
+
+The second one, cos (- τ / 4), is the complementary angle to τ / 2.
+
+The third one, cos (τ / 4), follows by CosineNegation.
+
+The fourth one, cos (τ / 8), follows by the half angle formula.
+
+The last one, sin (τ / 8), follows by complementary angles.
+
+[[Category:Tutorial]]
