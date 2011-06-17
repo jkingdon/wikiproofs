@@ -212,7 +212,7 @@ stmt (Tau4MinusTau2 () () ((((τ) / (4)) − ((τ) / (2))) = (- ((τ) / (4)))))
 stmt (QuarterMinusEighth () () (((x / (4)) − (x / (8))) = (x / (8))))
 stmt (NegativeTau2LessEqualTau4 () () ((- ((τ) / (2))) ≤ ((τ) / (4))))
 stmt (Tau4LessEqualTau2 () () (((τ) / (4)) ≤ ((τ) / (2))))
-stmt (EighthQuarterHalfEightFourTwo () () ((x / (8)) = ((x / (4)) / (2))))
+stmt (EighthQuarterHalf () () ((x / (8)) = ((x / (4)) / (2))))
 </jh>
 
 === Half angle formulas ===
