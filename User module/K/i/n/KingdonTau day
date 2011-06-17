@@ -170,7 +170,5 @@ thm (Sine8 () () ((sin ((τ) / (8))) = ((√ (2)) / (2))) (
   applyEqualityTransitivity
 ))
 
-# then third-angle
-
 export (THEOREMS2 Interface:Tau_day_theorems_2 (PROPOSITIONS FIRSTORDER) ())
 </jh>
