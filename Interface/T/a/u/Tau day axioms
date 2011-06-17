@@ -205,9 +205,14 @@ stmt (TauNonnegative () () ((0) ≤ (τ)))
 stmt (SelfSubtraction () () ((a − a) = (0)))
 stmt (ZeroNumerator () () ((a ≠ (0)) → (((0) / a) = (0))))
 stmt (SquareRootZero () () ((√ (0)) = (0)))
+stmt (SquareRootOneHalf () () ((√ ((1) / (2))) = ((√ (2)) / (2))))
 
 stmt (TwoNotZero () () ((2) ≠ (0)))
 stmt (Tau4MinusTau2 () () ((((τ) / (4)) − ((τ) / (2))) = (- ((τ) / (4)))))
+stmt (QuarterMinusEighth () () (((x / (4)) − (x / (8))) = (x / (8))))
+stmt (NegativeTau2LessEqualTau4 () () ((- ((τ) / (2))) ≤ ((τ) / (4))))
+stmt (Tau4LessEqualTau2 () () (((τ) / (4)) ≤ ((τ) / (2))))
+stmt (EighthQuarterHalfEightFourTwo () () ((x / (8)) = ((x / (4)) / (2))))
 </jh>
 
 === Half angle formulas ===
