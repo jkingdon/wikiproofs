@@ -4,7 +4,7 @@ Wikiproofs.org is a site where we write math proofs in a formal language which i
 
 The best way to further explain wikiproofs is by example, and by getting you to start writing some proofs. We have no objection to celebrating tau day in the customary fashion of serving two pies, but this tau day project involves proving some simple statements involving τ. We explain everything you need to know about the mathematics and the proof system, and you should be able to get your first proof written and verified within 6 minutes and 28 seconds (getting to the end may take somewhat longer than that, but not the whole tau day).
 
-To play along, start by editing a ''proof module''. You can [http://wikiproofs.org/w/index.php?title=Special:UserLogin&type=signup&returnto=Help:Tau_day create your own account] and create a page at [[User module:YourUsername/Tau day]], or you can use the [[Sandbox]].
+To play along, start by editing a ''proof module''. You can [http://wikiproofs.org/w/index.php?title=Special:UserLogin&type=signup&returnto=Help:Tau_day create your own account] and create a page at [[User module:YourUsername/Tau day]], or you can use the [[Sandbox]]. If you get stuck at any point, let us know at [[WP:TEA]]. We'd be glad to help, or would love to hear feedback about where it got difficult or boring for you.
 
 == First proof ==
 Start by putting the following text into your module:
