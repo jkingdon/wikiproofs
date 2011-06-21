@@ -21,7 +21,7 @@ Our first exercise is to show how proofs work by writing a very simple proof. It
 
 Edit the page and move the cursor above the &lt;/jh&gt; (everything we will be talking about in this exercise is a formal proof, which means it goes between the &lt;jh&gt; and &lt;/jh&gt; tags). The jh stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on wikiproofs.
 
-Then we need to declare a variable. So first add "var (real θ)" to your proof module, which declares a variable named θ. All the variables we will be adding are real numbers, which is what the "real" means.
+Then we need to declare a variable. So first add "var (real θ)" to your proof module, which declares a variable named θ. If your keyboard doesn't have θ, you can insert it by clicking on θ below the edit window. All the variables we will be adding are real numbers, which is what the "real" means.
 
 Next add "thm (TauIsPeriodOfSine () ()". This indicates we are proving a result called "TauIsPeriodOfSine". The empty parentheses are for distinct variable constraints and hypotheses, neither of which we need to worry about for now.
 
@@ -30,11 +30,18 @@ Now we need to state what we are going to be proving. In normal mathemetical not
 
 Anyway, what we are proving is <code>sin (θ + τ) = sin θ</code> and we express it almost that way in JHilbert. The main difference is that we need parentheses for everything. So add <code>((sin (θ + (τ))) = (sin θ))</code> to your proof.
 
-The only thing remaining is the actual proof.  A proof is a set of invocations of existing statements. For this first proof, we just need one invocation, which corresponds to what we are trying to prove. So we will be invoking <code>SinePeriod</code> (which you can find at [[Interface:Tau day axioms]]). To invoke it, we need to notice that <code>SinePeriod</code> contains one variable: <code>θ</code>. If you are unclear on what is a variable and what is not, notice that <code>θ</code> was defined on the Tau day axioms page with <code>var</code>, but <code>sin</code> and <code>τ</code> were defined with <code>term</code> (the statement also contains <code>=</code>, which was also defined using <code>term</code>, but that was in another interface, [[Interface:First-order logic with quantifiability]]).
+The only thing remaining is the actual proof.  A proof is a set of invocations of existing statements. For this first proof, we just need one invocation, which corresponds to what we are trying to prove. So we will be invoking <code>SinePeriod</code> (which you can find at [[Interface:Tau day axioms]]). To invoke it, we need to notice that <code>SinePeriod</code> contains one variable: <code>θ</code>.
 
-To invoke a statement, we give expansions for each of the variables which need filling in, in the order in which they occur in the statement, and then the name of the statement. In this example, that is <code>θ SinePeriod</code>. The entire proof is enclosed in parentheses, so add <code>(θ SinePeriod)</code> to your proof module. Then add <code>)</code> (to close out the <code>thm</code>) and &lt;/jh&gt; on a line by itself, to match the &lt;jh&gt; we put in a while ago.
+To invoke a statement, we give expansions for each of the variables which need filling in, in the order in which they occur in the statement, and then the name of the statement. In this example, that is <code>θ SinePeriod</code>. The entire proof is enclosed in parentheses, so add <code>(θ SinePeriod)</code> to your proof module. Then add <code>)</code> (to close out the <code>thm</code>).
 
-That's a completed proof. Hit preview (or save, to save your work back to the wiki), and you should see "Proof module parsed successfully" again. If you get an error, there's a list of error messages near the bottom of [[Help:JHilbert]].
+That's a completed proof. It should look like this:
+  var (real θ)
+  thm (TauIsPeriodOfSine () ()
+    ((sin (θ + (τ))) = (sin θ))
+    (θ SinePeriod)
+  )
+
+Hit preview (or save, to save your work back to the wiki), and you should see "Proof module parsed successfully" again. If you get an error, there's a list of error messages near the bottom of [[Help:JHilbert]].
 
 == An easy variation on that proof ==
 When we invoke a statement in a proof, we can plug anything in for the expansion of a variable. Your next exercise is to use this fact to prove <code>sin ((α + τ / 4) + τ) = sin (α + τ / 4)</code> (which is the same as the previous result but with <code>α + τ / 4</code> in place of <code>θ</code>). Call your theorem <code>TauIsPeriodOfSineQuarterTurn</code>. You will need to declare the variable <code>α</code> (just as we declared <code>θ</code> earlier). Come back to this page once you've gotten this new proof to verify.
