@@ -1,125 +1,161 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
    width="255"
    height="175"
-   id="svg1367">
+   id="svg1367"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="Proof of lemma l7_20 in Narboux.svg">
+  <metadata
+     id="metadata28">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="800"
+     inkscape:window-height="480"
+     id="namedview26"
+     showgrid="false"
+     inkscape:zoom="1.5828571"
+     inkscape:cx="77.131655"
+     inkscape:cy="79.322298"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1367" />
   <defs
      id="defs1369" />
-  <g
-     id="layer1">
-    <g
-       transform="matrix(1.301825,0,0,1.301825,2.232713,-0.338811)"
-       id="g1345">
-      <polygon
-         points="25.733,67.454 11.061,122.215 152.793,122.215 182.138,12.693 40.405,12.693 25.733,67.454 "
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10"
-         id="polygon3" />
-      <line
-         id="line5"
-         y2="12.693"
-         x2="182.138"
-         y1="122.215"
-         x1="11.061"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <line
-         id="line7"
-         y2="12.693"
-         x2="40.404999"
-         y1="122.215"
-         x1="152.793"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <line
-         id="line9"
-         y2="98.416"
-         x2="56.124001"
-         y1="91.251999"
-         x1="51.536999"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <line
-         id="line11"
-         y2="43.655998"
-         x2="141.661"
-         y1="36.493"
-         x1="137.075"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <line
-         id="line13"
-         y2="92.383003"
-         x2="128.274"
-         y1="98.472"
-         x1="122.338"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <line
-         id="line15"
-         y2="91.195"
-         x2="127.054"
-         y1="97.287003"
-         x1="121.119"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <line
-         id="line17"
-         y2="37.620998"
-         x2="72.080002"
-         y1="43.713001"
-         x1="66.143997"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <line
-         id="line19"
-         y2="36.436001"
-         x2="70.861"
-         y1="42.525002"
-         x1="64.925003"
-         stroke-miterlimit="10"
-         style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10" />
-      <text
-         transform="translate(0,131.3774)"
-         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
-         id="text21">D</text>
-      <text
-         transform="translate(153.981,132.9521)"
-         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
-         id="text23">C</text>
-      <text
-         transform="translate(184.896,11.5063)"
-         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
-         id="text25">B</text>
-      <text
-         transform="translate(30.915,9.9404)"
-         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
-         id="text27">A</text>
-      <text
-         transform="translate(91.5127,85.5405)"
-         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
-         id="text29">E</text>
-      <polyline
-         id="polyline31"
-         points="74.975,125.204 83.344,122.215 74.975,119.226 78.323,122.215 " />
-      <polyline
-         id="polyline33"
-         points="104.32,15.682 112.689,12.693 104.32,9.704 107.668,12.693 " />
-      <polyline
-         id="polyline35"
-         points="26.821,74.944 26.099,66.087 21.047,73.397 24.8,70.938 " />
-      <polyline
-         id="polyline37"
-         points="24.656,83.028 23.933,74.17 18.881,81.481 22.634,79.021 " />
-      <polyline
-         id="polyline39"
-         points="168.553,74.944 167.831,66.087 162.779,73.397 166.532,70.938 " />
-      <polyline
-         id="polyline41"
-         points="166.388,83.028 165.667,74.17 160.614,81.481 164.367,79.021 " />
-    </g>
-  </g>
+  <polygon
+     points="40.405,12.693 25.733,67.454 25.733,67.454 11.061,122.215 152.793,122.215 182.138,12.693 "
+     style="fill:none;stroke:#000000;stroke-width:0.99629998;stroke-miterlimit:10"
+     id="polygon3"
+     transform="matrix(1.301825,0,0,1.301825,2.232713,-0.338811)" />
+  <line
+     id="line5"
+     y2="16.185253"
+     x2="239.34451"
+     y1="158.76373"
+     x1="16.632198"
+     stroke-miterlimit="10"
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10" />
+  <line
+     id="line7"
+     y2="16.185253"
+     x2="54.832951"
+     y1="158.76373"
+     x1="201.14246"
+     stroke-miterlimit="10"
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10" />
+  <line
+     id="line9"
+     y2="92.978905"
+     x2="39.116871"
+     y1="90.081123"
+     x1="28.428524"
+     stroke-miterlimit="10"
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10" />
+  <line
+     id="line13"
+     y2="153.30711"
+     x2="119.14346"
+     y1="164.37648"
+     x1="119.28429"
+     stroke-miterlimit="10"
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10" />
+  <line
+     id="line15"
+     y2="153.33658"
+     x2="116.92681"
+     y1="164.40776"
+     x1="117.07134"
+     stroke-miterlimit="10"
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10" />
+  <text
+     style="font-size:15.6218996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
+     id="text21"
+     sodipodi:linespacing="125%"
+     x="2.232713"
+     y="170.69157">D</text>
+  <text
+     style="font-size:15.6218996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
+     id="text23"
+     sodipodi:linespacing="125%"
+     x="202.68903"
+     y="172.74156">C</text>
+  <text
+     style="font-size:15.6218996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
+     id="text25"
+     sodipodi:linespacing="125%"
+     x="242.93495"
+     y="14.640378">B</text>
+  <text
+     style="font-size:15.6218996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
+     id="text27"
+     sodipodi:linespacing="125%"
+     x="42.478634"
+     y="12.60185">A</text>
+  <text
+     style="font-size:15.6218996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
+     id="text29"
+     sodipodi:linespacing="125%"
+     x="121.36623"
+     y="111.01995">P</text>
+  <text
+     sodipodi:linespacing="125%"
+     id="text3005"
+     style="font-size:15.6218996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman"
+     x="168.20375"
+     y="77.924873">P′</text>
+  <line
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10"
+     stroke-miterlimit="10"
+     x1="212.27328"
+     y1="95.767044"
+     x2="222.96164"
+     y2="98.664825"
+     id="line3007" />
+  <line
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10"
+     stroke-miterlimit="10"
+     x1="140.72723"
+     y1="21.423485"
+     x2="140.58641"
+     y2="10.354118"
+     id="line3042" />
+  <line
+     style="fill:none;stroke:#000000;stroke-width:1.29700828;stroke-miterlimit:10"
+     stroke-miterlimit="10"
+     x1="138.5143"
+     y1="21.454765"
+     x2="138.36977"
+     y2="10.383583"
+     id="line3044" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     d="m 55.394286,16.858249 106.768014,49.140092 39.31208,92.919449 0,0"
+     id="path3048"
+     inkscape:connector-curvature="0" />
 </svg>

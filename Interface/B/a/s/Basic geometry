@@ -380,7 +380,8 @@ stmt (EquidistantMidpoint () ()
   (((collinear A M B) ∧ (M A ≡ M B)) → ((A = B) ∨ (M is-midpoint-of A B))))
 </jh>
 
-The diagonals of a parallelogram bisect each other. (TODO: need an image for this one).<ref>l7_21 in Narboux</ref> (By "parallelogram" here we mean a quadrilateral whose opposite sides are congruent; there is no direct statement concerning parallel lines).
+[[File:Color parallelogram.svg|thumb|right]]
+The diagonals of a parallelogram bisect each other.<ref>l7_21 in Narboux</ref> (By "parallelogram" here we mean a quadrilateral whose opposite sides are congruent; there is no direct statement concerning parallel lines).
 <jh>
 #stmt (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧

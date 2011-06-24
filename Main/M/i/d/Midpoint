@@ -327,6 +327,18 @@ thm (EquidistantMidpoint () ()
 ))
 </jh>
 
+== Diagonals bisect each other ==
+[[File:Proof of lemma l7_20 in Narboux.svg|220px|The proof constructs P′ and shows that P = P′]]
+Given a "parallelogram" (that is, a quadrilateral with opposite sides congruent; we haven't yet developed any theory of parallel lines), the diagonals bisect each other.
+
+<jh>
+#stmt (ParallelogramDiagonals () ()
+#  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+#      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+#      (collinear A P C)) ∧ (collinear B P D)) →
+#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
+</jh>
+
 == Export ==
 We now export to [[Interface:Midpoint]].
 <jh>
