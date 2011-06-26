@@ -27,7 +27,7 @@ Start by putting the following text into your module:
   import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER) ())
   </jh>
 
-Everything between the <code><jh>…</jh></code>-tags is interpreted by the proof verifier. The <code>jh</code> stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on Wikiproofs. The ''import'' statements tell the verifier to make use of some previously proved, or assumed, results. They provide logic (''and'', ''or'', ''implies'', etc.) and real numbers which are familiar numbers such as 1, &ndash;5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
+Everything between the <code><jh>…</jh></code>-tags is interpreted by the proof verifier. The <code>jh</code> stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on Wikiproofs. The ''import'' statements tell the verifier to make use of some previously proved, or assumed, results. They provide logic (''and'', ''or'', ''implies'', etc.) and real numbers which are familiar numbers such as 1, -5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
 
 Once you have copy-pasted those imports into your proof module, hit the preview button. You should see "Proof module parsed successfully" at the bottom of the page in green.
 
