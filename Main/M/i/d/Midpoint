@@ -331,13 +331,31 @@ thm (EquidistantMidpoint () ()
 [[File:Proof of lemma l7_20 in Narboux.svg|220px|The proof constructs P′ and shows that P = P′]]
 Given a "parallelogram" (that is, a quadrilateral with opposite sides congruent; we haven't yet developed any theory of parallel lines), the diagonals bisect each other.
 
+First we construct a point <code>p′</code> which is like <code>P</code> but as far from <code>D</code> as <code>P</code> is from <code>B</code>. That is, <code>B D P ≅ D B P′</code>
 <jh>
-#stmt (ParallelogramDiagonals () ()
+thm (ParallelogramDiagonals-pprime
+  ((p′ A) (p′ B) (p′ C) (p′ D) (p′ P)) ()
+  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) →
+    (∃ p′ (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B (value p′))))) (
+      todo: construct
+))
+
+#thm (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
 #      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
 #      (collinear A P C)) ∧ (collinear B P D)) →
-#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
+#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))) (
+#        
+#))
 </jh>
+
+thm (CollinearityConstructDegenerateTriangle ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) () (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))) (
+
 
 == Export ==
 We now export to [[Interface:Midpoint]].
