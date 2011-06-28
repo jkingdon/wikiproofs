@@ -342,7 +342,37 @@ thm (ParallelogramDiagonals-pprime
       (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
       (collinear A P C)) ∧ (collinear B P D)) ∧
       (B D P ≅ D B (value p′))))) (
-      todo: construct
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+          (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+          (collinear A P C)) ∧ (collinear B P D))
+          ImplicationReflexivity
+</jh>
+Next, we construct <code>p′</code>, starting with <code>collinear B D P</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C))
+          (collinear B P D)
+          ConjunctionLeftElimination
+
+        B P D Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+The other thing for the construction is <code>B D ≡ D B</code>.
+<jh>
+        B D CongruenceABBA
+        introduceRightConjunctToConsequent
+</jh>
+This lets us conclude <code>∃ p′ B D P ≡ D B p′</code>.
+<jh>
+        B D P D B p′ CollinearityConstructDegenerateTriangle
+        applySyllogism
+</jh>
+Now we just need to repeat the formulas from the antecedent and move them inside the quantifier.
+<jh>
+        composeConjunction
+        todo: predicate logic
 ))
 
 #thm (ParallelogramDiagonals () ()
@@ -350,12 +380,8 @@ thm (ParallelogramDiagonals-pprime
 #      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
 #      (collinear A P C)) ∧ (collinear B P D)) →
 #    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))) (
-#        
 #))
 </jh>
-
-thm (CollinearityConstructDegenerateTriangle ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) () (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))) (
-
 
 == Export ==
 We now export to [[Interface:Midpoint]].
