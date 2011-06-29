@@ -74,13 +74,7 @@ thm (MidpointUniqueness-bprime ((b′ A) (b′ B) (b′ P) (b′ P′)) ()
         b′ A B SymmetricPoint
         introduceRightConjunctToConsequent
 
-        b′
-          ((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′))
-          (A is-midpoint-of B (value b′))
-          ThereExistsConjunctionMovement
-        eliminateBiconditionalForward
-
-        applySyllogism
+        moveLeftConjunctIntoThereExistsInConsequent
 ))
 </jh>
 
@@ -372,7 +366,7 @@ This lets us conclude <code>∃ p′ B D P ≡ D B p′</code>.
 Now we just need to repeat the formulas from the antecedent and move them inside the quantifier.
 <jh>
         composeConjunction
-        todo: predicate logic
+        moveLeftConjunctIntoThereExistsInConsequent
 ))
 
 #thm (ParallelogramDiagonals () ()
