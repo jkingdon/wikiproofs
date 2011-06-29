@@ -313,6 +313,13 @@ stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ (
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
+Here are rules for some of these:
+<jh>
+stmt (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
+  ((antecedent → (φ ∧ (∃ x ψ))))
+  (antecedent → (∃ x (φ ∧ ψ))))
+</jh>
+
 ==== Scattering and gathering ====
 If we have two formulas joined by a conjunction, one quantified over one variable and the other quantified over another, we can express the quantifiers either at the beginning or with the formulas they apply to.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed August 8, 2010</ref> We refer to this process as gathering (that is, gathering the quantifiers together at the start of the formula) or scattering (the opposite).
 <jh>

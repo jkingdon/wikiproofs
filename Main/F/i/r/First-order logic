@@ -1102,6 +1102,19 @@ thm (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → 
 ))
 </jh>
 
+Here are some rules, for convenience:
+<jh>
+thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
+  ((H (antecedent → (φ ∧ (∃ x ψ)))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 === Adding ∃ to the antecedent of a theorem ===
 
 A consequence of <code>ForAllImplicationConsequentMovement</code> is that if we have a theorem which is an implication, we can add ∃ to the antecedent (provided the consequent does not contain the variable we are quantifying over).
