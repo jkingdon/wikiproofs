@@ -368,6 +368,43 @@ Now we just need to repeat the formulas from the antecedent and move them inside
         composeConjunction
         moveLeftConjunctIntoThereExistsInConsequent
 ))
+</jh>
+
+The point <code>P′</code> is on the line <code>B D</code>. The proof is by <code>CollinearityDegenerateTriangle</code>, which in this case is <code>collinear B D P ∧ B D P ≅ D B P′ → collinear D B P′</code>.
+<jh>
+thm (ParallelogramDiagonals-d-b-pprime () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (collinear D B P′)
+  ) (
+</jh>
+<code>collinear B D P</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        B Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+<code>B D P ≅ D B P′</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        B D P D B P′ CollinearityDegenerateTriangle
+        applySyllogism
+))
 
 #thm (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
