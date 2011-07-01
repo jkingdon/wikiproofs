@@ -493,7 +493,7 @@ thm (ParallelogramDiagonals-p-c-pprime-a () ()
       (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
       (collinear A P C)) ∧ (collinear B P D)) ∧
       (B D P ≅ D B P′)) →
-    (P C ≡ P' A)
+    (P C ≡ P′ A)
   ) (
 </jh>
 <code>B ≠ D</code>:
@@ -563,6 +563,33 @@ Applying five segment we are done.
         applySyllogism
 ))
 
+</jh>
+Those two congruences suffice to provide <code>A P C ≅ C P′ A</code>.
+<jh>
+thm (ParallelogramDiagonals-a-p-c-c-pprime-a () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (A P C ≅ C P′ A)
+  ) (
+</jh>
+<code>A P ≡ C P′</code>:
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-a-pprime-c
+        commuteCongruenceInConsequent
+</jh>
+<code>A C ≡ C A</code>:
+<jh>
+        A C CongruenceABBA
+        introduceRightConjunctToConsequent
+        composeConjunction
+</jh>
+<code>P C ≡ P′ A</code>:
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-c-pprime-a
+        composeConjunction
+))
 
 #thm (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
