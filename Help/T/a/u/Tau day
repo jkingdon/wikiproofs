@@ -1,12 +1,15 @@
-Happy tau day, everyone.<ref>[http://tauday.com/ tauday.com]</ref>
+Happy '''tau day''', everyone.<ref>[http://tauday.com/ tauday.com]</ref>
 
 Wikiproofs.org is a site where we write math proofs in a formal language which is automatically checked for correctness. We assume axioms and prove theorems from them. Eventually, we hope to prove all of mathematics from a small set of axioms, the axioms of logic and set theory. To get there, we want as many people participating as possible. Our tau day exercises introduce how to write proofs for wikiproofs and provide a (hopefully fun) puzzle for tau day. '''Warning''': Writing formal proofs can be addictive.<ref>[http://www.nongnu.org/isarmathlib/ IsarMathLib] home page, accessed June 20, 2011</ref><ref>Gerwin Klein, Slide 3, [http://www.cse.unsw.edu.au/%7Ekleing/teaching/thprv-04/slides/lecture1_4.pdf NICTA Advanced Course: Theorem Proving - Principles, Techniques, Applications], accessed June 20, 2011</ref><ref>John Harrison (August 13, 1996), [http://www.rbjones.com/rbjpub/logic/jrh0120.htm Experience of formalized mathematics], accessed June 20, 2011</ref> Don't say we didn't warn you.
 
-The best way to further explain wikiproofs is by example, and by getting you to start writing some proofs. We have no objection to celebrating tau day in the customary fashion of serving two pies, but this tau day project involves proving some simple statements involving τ. We explain everything you need to know about the mathematics and the proof system, and you should be able to get your first proof written and verified within 6 minutes and 28 seconds (getting to the end may take somewhat longer than that, but not the whole tau day).
+The best way to further explain Wikiproofs is by example, and by getting you to start writing some proofs. We have no objection to celebrating tau day in the customary fashion of serving two pies, but this tau day project involves proving some simple statements involving τ. We explain everything you need to know about the mathematics and the proof system, and you should be able to get your first proof written and verified within 6 minutes and 28 seconds (getting to the end may take somewhat longer than that, but not the whole tau day).
 
 To play along, start by editing a ''proof module''. You can [http://wikiproofs.org/w/index.php?title=Special:UserLogin&type=signup&returnto=Help:Tau_day create your own account] and create a page at [[User module:YourUsername/Tau day]], or you can use the [[Sandbox]]. If you get stuck at any point, let us know at [[WP:TEA]]. We'd be glad to help, or would love to hear feedback about where it got difficult or boring for you.
 
 == First proof ==
+
+=== The first step ===
+
 Start by putting the following text into your module:
 
   &lt;jh&gt;
@@ -15,22 +18,26 @@ Start by putting the following text into your module:
   import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER) ())
   &lt;/jh&gt;
 
-Those statements tell the proof verifier to make use of some previously proved, or assumed, results. They provide logic (and, or, implies, etc) and real numbers which are familiar numbers such as 1, -5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
+Everything between the <code>&lt;jh&gt;…&lt;/jh&gt;</code>-tags is interpreted by the proof verifier. The <code>jh</code> stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on Wikiproofs. The ''import'' statements tell the verifier to make use of some previously proved, or assumed, results. They provide logic (''and'', ''or'', ''implies'', etc.) and real numbers which are familiar numbers such as 1, -5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
 
 Once you have copy-pasted those imports into your proof module, hit the preview button. You should see "Proof module parsed successfully" at the bottom of the page in green.
 
+=== A small exercise ===
+
 Our first exercise is to show how proofs work by writing a very simple proof. It is just a restatement of something in the tau day axioms file, but with a new name.
 
-Edit the page and move the cursor above the &lt;/jh&gt; (everything we will be talking about in this exercise is a formal proof, which means it goes between the &lt;jh&gt; and &lt;/jh&gt; tags). The jh stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on wikiproofs.
+Edit the page and move the cursor above the &lt;/jh&gt; (everything we will be talking about in this exercise is a formal proof, which means it goes between the &lt;jh&gt; and &lt;/jh&gt; tags).
 
-Then we need to declare a variable. So first add "var (real θ)" to your proof module, which declares a variable named θ. If your keyboard doesn't have θ, you can insert it by clicking on θ below the edit window. All the variables we will be adding are real numbers, which is what the "real" means.
+Then we need to declare a variable. So first add <code>var (real θ)</code> to your proof module, which declares a variable named θ. If your keyboard doesn't have θ, you can insert it by clicking on θ below the edit window. All the variables we will be adding are real numbers, which is what the "real" means.
 
-Next add "thm (TauIsPeriodOfSine () ()". This indicates we are proving a result called "TauIsPeriodOfSine". The empty parentheses are for distinct variable constraints and hypotheses, neither of which we need to worry about for now.
+Next add <code>thm (TauIsPeriodOfSine () ()</code>. This indicates we are proving a result called ''TauIsPeriodOfSine''. The empty parentheses are for distinct variable constraints and hypotheses, neither of which we need to worry about for now.
 
 [[File:Unit_circle.svg|thumb|right|geometric explanation for why we might define sine and cosine the way we do]]
-Now we need to state what we are going to be proving. In normal mathemetical notation we'd state it as <code>sin (θ + τ) = sin θ</code>. Tau (τ) is the ratio of a circle's circumference to its radius. Theta is an angle and sin is the sine function. If you don't remember sine from high school trigonometry, don't worry. One of the nice things about wikiproofs is that even if you don't have a deep understanding of the concept behind what you are proving, you can still see how each step follows from the previous one. So if you like you can just think of the statements in [[Interface:Tau day axioms]] as strings of meaningless symbols, where the rules of the game of assembling them into proofs are given in that file and the others we imported (together with a very simple set of rules built into JHilbert).
+Now we need to state what we are going to be proving. In normal mathemetical notation we'd state it as <code>sin (θ + τ) = sin θ</code>. Tau (τ) is the ratio of a circle's circumference to its radius. Theta is an angle and sin is the sine function. If you don't remember sine from high school trigonometry, don't worry. One of the nice things about Wikiproofs is that even if you don't have a deep understanding of the concept behind what you are proving, you can still see how each step follows from the previous one. So if you like you can just think of the statements in [[Interface:Tau day axioms]] as strings of meaningless symbols, where the rules of the game of assembling them into proofs are given in that file and the others we imported (together with a very simple set of rules built into JHilbert).
 
 Anyway, what we are proving is <code>sin (θ + τ) = sin θ</code> and we express it almost that way in JHilbert. The main difference is that we need parentheses for everything. So add <code>((sin (θ + (τ))) = (sin θ))</code> to your proof.
+
+=== The actual proof ===
 
 The only thing remaining is the actual proof.  A proof is a set of invocations of existing statements. For this first proof, we just need one invocation, which corresponds to what we are trying to prove. So we will be invoking <code>SinePeriod</code> (which you can find at [[Interface:Tau day axioms]]). To invoke it, we need to notice that <code>SinePeriod</code> contains one variable: <code>θ</code>.
 
@@ -55,7 +62,7 @@ The next proof is <code>sin ((θ + τ / 4) + τ) = sin ((θ + τ) + τ / 4)</cod
 Our next proof is <code>sin ((θ + τ / 4) + τ) = cos (θ + τ)</code>, which we'll call <code>CosinePeriodLemma2</code>. The first two steps are to invoke <code>CosinePeriodLemma1</code> and <code>SineShift</code>, in that order. Look at those two statements and see if you can see what you need to plug in for the variables in each case. When we write two statement invocations after one other, they are put on a proof [[w:stack (data structure)|stack]]. So then we can invoke something which takes two statements off the proof stack, in this case <code>applyEqualityTransitivity</code> (which is located in [[Interface:First-order logic with quantifiability]]). That's the final step in this proof, so verify and save this proof.
 
 == Cosine period ==
-The next theorem to prove <code>CosinePeriod</code>, which is <code>cos (θ + τ) = cos θ</code>. You'll prove it with <code>CosinePeriodLemma2</code>, <code>SinePeriod</code>, and <code>SineShift</code> (in that order), together with <code>swapEquality</code> and <code>applyEqualityTransitivity</code> (both in [[Interface:First-order logic with quantifiability]]) to join the pieces together. Figure out what to plug into the variables for each of those theorems, and where you need the <code>swapEquality</code> and <code>applyEqualityTransitivity</code>. Verify and save that proof.
+The next theorem to prove is <code>CosinePeriod</code>, which is <code>cos (θ + τ) = cos θ</code>. You'll prove it with <code>CosinePeriodLemma2</code>, <code>SinePeriod</code>, and <code>SineShift</code> (in that order), together with <code>swapEquality</code> and <code>applyEqualityTransitivity</code> (both in [[Interface:First-order logic with quantifiability]]) to join the pieces together. Figure out what to plug into the variables for each of those theorems, and where you need the <code>swapEquality</code> and <code>applyEqualityTransitivity</code>. Verify and save that proof.
 
 == Cosine of tau ==
 In an effort to keep this exercise to something which could be completed on tau day, we'll make this the last theorem to prove: <code>cos τ = 1</code>. Prove it using <code>AdditiveIdentityLeft</code>, <code>CosinePeriod</code>, and <code>Cosine0</code>, with <code>swapEquality</code> and <code>applyEqualityTransitivity</code> to help. You'll also need <code>buildCosine</code> which is similar to the <code>buildSine</code> we saw a few sections ago.
