@@ -1,0 +1,16 @@
+[[Image:Nuvola apps important.svg|50px|left]] The theorems described here are deprecated. They should not be used in new proofs, and you can help wikiproofs by finding existing usages and {{{1}}}. Once existing usages have been removed, these theorems can be removed from wikiproofs. See [[Help:Contents]] if you haven't yet figured out how to edit and write proofs, or ask at [[WP:TEA]] if you have any questions.
+<includeonly>
+[[Category:Pages defining deprecated theorems]]
+</includeonly><noinclude>
+
+== Usage ==
+
+<pre>
+{{deprecated | description of how to remove them }}
+</pre>
+When a theorem doesn't have the best name or is not quite the most convenient or logical way of stating the theorem, we may change it. If the number of usages is small, it is easiest to just change all of them right away. But if the usages aren't changed right away, the old theorem can be left as a deprecated theorem. This template discourages people from using it in new proofs and also describes how they can help clean them up. The description should finish a sentence starting "you can help wikiproofs by finding existing usages and". For example, "renaming eliminateLeftConjunction to eliminateLeftConjuct" or "rearranging the proof to use xxx instead".
+
+Using this template automatically places the interface into [[:Category:Pages defining deprecated theorems]].
+
+[[Category:Cleanup templates|{{PAGENAME}}]]
+</noinclude>
