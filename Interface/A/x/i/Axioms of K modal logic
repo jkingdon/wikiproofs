@@ -19,7 +19,7 @@ var (formula p q)
 
 The rule of necessitation is analogous to the axiom of generalization of [[Interface:First-order logic|predicate logic]].<ref>axiom N, page 20 of Hughes and Cresswell</ref><ref>Necessitation Rule of Garson</ref>
 <jh>
-stmt (Necessitation () (p) (□ p))
+stmt (necessitate () (p) (□ p))
 </jh>
 
 We can distribute necessity across an implication.<ref>axiom K, page 20 of Hughes and Cresswell</ref><ref>Distribution Axiom of Garson</ref>
