@@ -1,0 +1,3 @@
+Pages in this category define theorems which are deprecated (that is, we want to replace them with other theorems). This often just a simple rename, or a slight rearrangement. Removing usages of deprecated theorems is an excellent way to get started contributing to wikiproofs, as the tasks are not difficult but it is a chance to get acquainted with different parts of wikiproofs and how to edit proofs. Every page in this category should transclude [[Template:deprecated]] which will explain how a specific deprecated theorem should be removed.
+
+[[Category:Pages needing cleanup]]
