@@ -34,6 +34,10 @@ Here are the characters commonly used on wikiproofs which are not found on most 
 |-
 |≅ || ?= || congruent || [[Interface:Basic geometry|geometry]]
 |-
+| □ || OS || necessary || [[Interface:Modal logic|modal logic]]
+|-
+| ◊ || LZ || possible || [[Interface:Modal logic|modal logic]]
+|-
 |∅ || /0 || empty set || [[Interface:Set theory|set theory]]
 |-
 |∈ || (- || is element || [[Interface:Set theory|set theory]]
