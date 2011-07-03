@@ -1,3 +1,8 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus]]
+| importedby = none yet
+| exportedby = [[K modal logic]]
+}}
 Here are some theorems designed to illustrate [[w:Modal logic|modal logic]]. We build on [[Interface:Classical propositional calculus|classical propositional logic]]. The theorems here hold in the weakest commonly studied modal logic, called K.
 
 We add two concepts to propositional logic, ''necessity'' and ''possibility''. The formula <code>□ p</code> means that <code>p</code> is necessarily true and <code>◊ p</code> means that <code>p</code> is possibly true. They behave a little bit like the quantifiers ∀ and ∃ of [[Interface:First-order logic|predicate logic]], although they don't quantify a particular variable.
@@ -62,6 +67,8 @@ Possibility distributes or collects across a disjunction.<ref>theorem K6, page 2
 <jh>
 stmt (PossibilityDisjunction () () ((◊ (p ∨ q)) ↔ ((◊ p) ∨ (◊ q))))
 </jh>
+
+TODO: there are more, for example in Hughes and Cresswell beyond page 29.
 
 == Notes ==
 <references/>
