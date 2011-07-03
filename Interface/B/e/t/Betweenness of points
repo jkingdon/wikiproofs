@@ -71,7 +71,7 @@ term (formula (between point point point))
 
 There are no points between a point and itself.
 <jh>
-stmt (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)))
+stmt (IndivisibilityBiconditional () () ((between x y x) ↔ (x = y)))
 </jh>
 
 A point is between itself and any second point.
@@ -178,6 +178,13 @@ stmt (BetweennessBuilder () () (
   → ((between x0 x1 x2) ↔ (between y0 y1 y2))
 ))
 </jh>
+
+== Deprecated ==
+{{deprecated|renaming IndivisibilityBidirectional to IndivisibilityBiconditional to better match how we name such theorems elsewhere. This might also involve making sure the various interfaces define IndivisibilityBiconditional}}
+<jh>
+stmt (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)))
+</jh>
+
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Euclidean geometries (general) and generalizations]]
