@@ -1,0 +1,18 @@
+{{interfaces
+| imports = [[Interface:Axioms of K modal logic]]
+| exports = [[Interface:K modal logic]]
+}}
+
+We import [[Interface:Classical propositional calculus]] and the modal logic axioms.
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+#import (AXIOMS Interface:Axioms_of_K_modal_logic (PROPOSITIONAL) ())
+</jh>
+
+{{under construction}}
+
+<jh>
+#export (K Interface:K_modal_logic (PROPOSITIONAL) ())
+</jh>
+
+[[Category:Modal logic]]
