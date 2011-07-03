@@ -1,0 +1,37 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]]
+| importedby = [[K modal logic]]
+| exportedby = none
+}}
+
+[[w:Modal logic|Modal logic]] builds on [[Interface:Classical propositional calculus|propositional logic]] and adds two concepts, ''necessity'' and ''possibility''. The formula <code>□ p</code> means that <code>p</code> is necessarily true and <code>◊ p</code> means that <code>p</code> is possibly true. They behave a little bit like the quantifiers ∀ and ∃ of [[Interface:First-order logic|predicate logic]], although they don't quantify a particular variable.
+
+Here we present axioms for the weakest commonly studied modal logic, called K.
+
+<jh>
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+
+term (formula (□ formula))
+term (formula (◊ formula))
+
+var (formula p q)
+</jh>
+
+The rule of necessitation is analogous to the axiom of generalization of [[Interface:First-order logic|predicate logic]].<ref>axiom N, page 20 of Hughes and Cresswell</ref><ref>Necessitation Rule of Garson</ref>
+<jh>
+stmt (Necessitation () (p) (□ p))
+</jh>
+
+We can distribute necessity across an implication.<ref>axiom K, page 20 of Hughes and Cresswell</ref><ref>Distribution Axiom of Garson</ref>
+<jh>
+stmt (NecessityImplication () () ((□ (p → q)) → ((□ p) → (□ q))))
+</jh>
+
+== References ==
+<references/>
+
+== Referenced works ==
+* George Edward Hughes, M. J. Cresswell (1996), ''[http://books.google.com/books?id=_CB5wiBeaA4C&pg=PA10&lpg=PA10&dq=Hughes+and+Cresswell&source=bl&ots=4PvqMtOndk&sig=aqiTslpP3TnbI4wbQv3bSCJAYhs&hl=en&ei=ZXwPTob4Ocbr0gGpn7WDDg&sa=X&oi=book_result&ct=result&resnum=10&ved=0CF4Q6AEwCQ#v=onepage&q=Hughes%20and%20Cresswell&f=false A new introduction to modal logic]'', ISBN 978-0415126007.
+* Garson, James (first published Tue Feb 29, 2000; substantive revision Fri Oct 2, 2009) "[http://plato.stanford.edu/entries/logic-modal/ Modal Logic]", ''Stanford Encyclopedia of Philosophy'', Edward N. Zalta (ed.). [http://plato.stanford.edu/archives/fall2009/entries/logic-modal/ Fall 2009] version.
+
+[[Category:Modal logic]]
