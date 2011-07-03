@@ -817,8 +817,8 @@ The <code>∃ q′</code> quantifier is now unneeded, so remove it.
 ))
 </jh>
 
-== Export ==
-We now export to [[Interface:Betweenness of points]].
+== BetweenBuilder is deprecated ==
+{{deprecated|renaming BetweenBuilder to BetweennessBuilder everywhere. During the transition it is probably best to ensure that both are defined (at least where they are still both used)}}
 
 We are in the process of renaming <code>BetweenBuilder</code> to <code>BetweennessBuilder</code>. Until it is renamed everywhere, just prove one in terms of the other (they are identical except the name).
 <jh>
@@ -829,7 +829,12 @@ thm (BetweennessBuilder () () (
 ) (
         x0 y0 x1 y1 x2 y2 BetweenBuilder
 ))
+</jh>
 
+== Export ==
+We now export to [[Interface:Betweenness of points]].
+
+<jh>
 export (RESULTS Interface:Betweenness_of_points (CLASSICAL FIRSTORDER) ())
 </jh>
 
