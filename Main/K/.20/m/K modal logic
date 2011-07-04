@@ -6,7 +6,20 @@
 We import [[Interface:Classical propositional calculus]] and the modal logic axioms.
 <jh>
 import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
-#import (AXIOMS Interface:Axioms_of_K_modal_logic (PROPOSITIONAL) ())
+import (AXIOMS Interface:Axioms_of_K_modal_logic (PROPOSITIONAL) ())
+
+var (formula p q)
+</jh>
+
+Many of the proofs here are from Hughes and Cresswell but are not always cited individually.
+<jh>
+thm (addNecessity () ((H (p → q))) ((□ p) → (□ q)) (
+        H
+        necessitate
+
+        p q NecessityImplication
+        applyModusPonens
+))
 </jh>
 
 {{under construction}}
