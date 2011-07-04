@@ -291,6 +291,13 @@ stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ (
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
+Here is a rule for one of these:
+<jh>
+stmt (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
+  ((antecedent → (φ ∧ (∃ x ψ))))
+  (antecedent → (∃ x (φ ∧ ψ))))
+</jh>
+
 ==== Scattering and gathering ====
 If we have two formulas joined by a conjunction, one quantified over one variable and the other quantified over another, we can express the quantifiers either at the beginning or with the formulas they apply to.<ref>[http://us.metamath.org/mpeuni/eeanv.html eeanv], metamath's set.mm, accessed August 8, 2010</ref> We name the propositions <code>φx</code> and <code>ψy</code> to express the idea that <code>φx</code> will typically contain <code>x</code> and <code>ψy</code> will typically contain <code>y</code>.
 <jh>
