@@ -13,7 +13,7 @@ param (CLASSICAL Interface:Classical_propositional_calculus () ())
 param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 </jh>
 
-The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined in the obvious way as sets of points, as this is a first-order theory).
+The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined as sets of points, as this is a first-order theory).
 <jh>
 kindbind (object point)
 var (point x y z w u v A B C D E M P Q R S)
@@ -369,8 +369,8 @@ stmt (SymmetricPointMidpoint () ()
 === Midpoint exists and is unique ===
 The midpoint exists<ref>TODO: add this</ref> and is unique.<ref>l7_17 in Narboux</ref><ref>[http://aleph0.clarku.edu/~djoyce/java/elements/bookI/propI10.html Proposition 10] in book I of Euclid's Elements</ref>
 <jh>
-#stmt (MidpointUniqueness () ()
-#  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
+stmt (MidpointUniqueness () ()
+  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
 </jh>
 
 === Several other midpoint theorems ===

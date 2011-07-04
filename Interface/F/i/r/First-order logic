@@ -313,7 +313,7 @@ stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ (
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
-Here are rules for some of these:
+Here is a rule for one of these:
 <jh>
 stmt (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
   ((antecedent → (φ ∧ (∃ x ψ))))

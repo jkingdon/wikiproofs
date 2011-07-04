@@ -1102,7 +1102,7 @@ thm (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → 
 ))
 </jh>
 
-Here are some rules, for convenience:
+Here is a rule version, for convenience:
 <jh>
 thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
   ((H (antecedent → (φ ∧ (∃ x ψ)))))

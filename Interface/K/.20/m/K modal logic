@@ -1,0 +1,80 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus]]
+| importedby = none yet
+| exportedby = [[K modal logic]]
+}}
+Here are some theorems designed to illustrate [[w:Modal logic|modal logic]]. We build on [[Interface:Classical propositional calculus|classical propositional logic]]. The theorems here hold in the weakest commonly studied modal logic, called K.
+
+We add two concepts to propositional logic, ''necessity'' and ''possibility''. The formula <code>□ p</code> means that <code>p</code> is necessarily true and <code>◊ p</code> means that <code>p</code> is possibly true. They behave a little bit like the quantifiers ∀ and ∃ of [[Interface:First-order logic|predicate logic]], although they don't quantify a particular variable.
+<jh>
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+term (formula (□ formula))
+term (formula (◊ formula))
+
+var (formula p q)
+</jh>
+
+Necessity can be collected across a disjunction<ref>exercise 1.1(b), page 17 and theorem K4, page 25 of Hughes and Cresswell</ref> and collected or distributed across a conjunction<ref>exercise 1.1(c), page 17 and theorem K3, page 23 of Hughes and Cresswell</ref>
+<jh>
+stmt (NecessityDisjunctionCollection () () (((□ p) ∨ (□ q)) → (□ (p ∨ q))))
+stmt (NecessityConjunction () () ((□ (p ∧ q)) ↔ ((□ p) ∧ (□ q))))
+</jh>
+
+The converse of <code>NecessityDisjunctionCollection</code> does not hold but there is result which is a bit like its converse.<ref>theorem K9, page 29 of Hughes and Cresswell</ref>
+<jh>
+stmt (NecessityDisjunctionDistribution () () ((□ (p ∨ q)) → ((□ p) ∨ (◊ q))))
+</jh>
+
+Possibility can be distributed across a conjunction.<ref>theorem K8, page 29 of Hughes and Cresswell</ref>
+<jh>
+stmt (PossibilityConjunction () () ((◊ (p ∧ q)) → ((◊ p) → (◊ q))))
+</jh>
+
+We can distribute necessity across an implication.<ref>axiom K, page 20 of Hughes and Cresswell</ref><ref>Distribution Axiom of Garson</ref>
+<jh>
+stmt (NecessityImplication () () ((□ (p → q)) → ((□ p) → (□ q))))
+</jh>
+
+Here is a rule form of <code>NecessityImplication</code><ref>theorem DR1, page 25 of Hughes and Cresswell</ref> and the corresponding rule for the biconditional.<ref>theorem DR2, page 26 of Hughes and Cresswell</ref>
+<jh>
+stmt (addNecessity () ((p → q)) ((□ p) → (□ q)))
+stmt (buildNecessity () ((p ↔ q)) ((□ p) ↔ (□ q)))
+</jh>
+
+Similar rules hold for possiblity.<ref>theorem DR3, page 29 of Hughes and Cresswell</ref>
+<jh>
+stmt (addPossibility () ((p → q)) ((◊ p) → (◊ q)))
+</jh>
+
+Necessity or possibility of an implication is equivalent to an implication involving one necessity and one possibility.<ref>exercise 1.1(e), page 17 of Hughes and Cresswell</ref><ref>theorem K7, page 28 of Hughes and Cresswell</ref>
+<jh>
+stmt (NecessityPossibilityImplication () () ((□ (p → q)) ↔ ((◊ p) → (□ q))))
+stmt (PossibilityNecessityImplication () () ((◊ (p → q)) ↔ ((□ p) → (◊ q))))
+</jh>
+
+The rule of necessitation is analogous to the axiom of generalization of [[Interface:First-order logic|predicate logic]].<ref>axiom N, page 20 of Hughes and Cresswell</ref><ref>Necessitation Rule of Garson</ref>
+<jh>
+stmt (necessitate () (p) (□ p))
+</jh>
+
+Necessity and possibility are related by negations<ref><code>NecessityPossibility</code> is theorem K5, page 27 of Hughes and Cresswell and <code>PossibilityNecessity</code> is Def M, page 14 of Hughes and Cresswell</ref>
+<jh>
+stmt (NecessityPossibility () () ((□ p) ↔ (¬ (◊ (¬ p)))))
+stmt (PossibilityNecessity () () ((◊ p) ↔ (¬ (□ (¬ p)))))
+</jh>
+
+Possibility distributes or collects across a disjunction.<ref>theorem K6, page 28 of Hughes and Cresswell</ref>
+<jh>
+stmt (PossibilityDisjunction () () ((◊ (p ∨ q)) ↔ ((◊ p) ∨ (◊ q))))
+</jh>
+
+TODO: there are more, for example in Hughes and Cresswell beyond page 29.
+
+== Notes ==
+<references/>
+
+== Referenced works ==
+* George Edward Hughes, M. J. Cresswell (1996), ''[http://books.google.com/books?id=_CB5wiBeaA4C&pg=PA10&lpg=PA10&dq=Hughes+and+Cresswell&source=bl&ots=4PvqMtOndk&sig=aqiTslpP3TnbI4wbQv3bSCJAYhs&hl=en&ei=ZXwPTob4Ocbr0gGpn7WDDg&sa=X&oi=book_result&ct=result&resnum=10&ved=0CF4Q6AEwCQ#v=onepage&q=Hughes%20and%20Cresswell&f=false A new introduction to modal logic]'', ISBN 978-0415126007.
+* Garson, James (first published Tue Feb 29, 2000; substantive revision Fri Oct 2, 2009) "[http://plato.stanford.edu/entries/logic-modal/ Modal Logic]", ''Stanford Encyclopedia of Philosophy'', Edward N. Zalta (ed.). [http://plato.stanford.edu/archives/fall2009/entries/logic-modal/ Fall 2009] version.
+
+[[Category:Modal logic]]

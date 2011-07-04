@@ -474,9 +474,9 @@ There exist two distinct points. In symbols, <code>∃ a ∃ b a ≠ b</code>.<r
 
 Formalizing this proof has two parts. The first one follows the informal proof above and gets us as far as showing <code>a ≠ b</code> or <code>b ≠ c</code>. The second part does the predicate logic needed to switch variables and combine the two inequalities.
 
-The first thing is a lemma bidirectionalizing <code>Indivisibility</code>.
+The first thing is a lemma biconditionalizing <code>Indivisibility</code>.
 <jh>
-thm (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)) (
+thm (IndivisibilityBiconditional () () ((between x y x) ↔ (x = y)) (
         x y Indivisibility
 
         x x BetweenAAB
@@ -490,6 +490,11 @@ thm (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)) (
         detachImplicationBiconditional
 
         introduceBiconditionalFromImplications
+))
+
+# deprecated synonym
+thm (IndivisibilityBidirectional () () ((between x y x) ↔ (x = y)) (
+        x y IndivisibilityBiconditional
 ))
 
 thm (TwonessLemma ((a b c)) () (∃ a (∃ b (∃ c (((value a) ≠ (value b)) ∨ ((value b) ≠ (value c)))))) (
@@ -812,8 +817,8 @@ The <code>∃ q′</code> quantifier is now unneeded, so remove it.
 ))
 </jh>
 
-== Export ==
-We now export to [[Interface:Betweenness of points]].
+== BetweenBuilder is deprecated ==
+{{deprecated|renaming BetweenBuilder to BetweennessBuilder everywhere. During the transition it is probably best to ensure that both are defined (at least where they are still both used)}}
 
 We are in the process of renaming <code>BetweenBuilder</code> to <code>BetweennessBuilder</code>. Until it is renamed everywhere, just prove one in terms of the other (they are identical except the name).
 <jh>
@@ -824,7 +829,12 @@ thm (BetweennessBuilder () () (
 ) (
         x0 y0 x1 y1 x2 y2 BetweenBuilder
 ))
+</jh>
 
+== Export ==
+We now export to [[Interface:Betweenness of points]].
+
+<jh>
 export (RESULTS Interface:Betweenness_of_points (CLASSICAL FIRSTORDER) ())
 </jh>
 

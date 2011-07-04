@@ -630,9 +630,8 @@ thm (eliminateRightConjunctInConsequent ()
 </jh>
 
 === Deprecated ===
-These theorems are likely to disappear in a future version of this interface.
+{{deprecated|renaming eliminateLeftConjunctionInConsequent to eliminateLeftConjunctInConsequent and eliminateRightConjunctionInConsequent to eliminateRightConjunctInConsequent}}
 
-The following two are synonyms for <code>eliminateLeftConjunctInConsequent</code> and <code>eliminateRightConjunctInConsequent</code>.
 <jh>
 thm (eliminateLeftConjunctionInConsequent ()
   ((H (antecedent → (p ∧ q))))

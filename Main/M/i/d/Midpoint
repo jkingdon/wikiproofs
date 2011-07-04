@@ -322,7 +322,7 @@ thm (EquidistantMidpoint () ()
 </jh>
 
 == Diagonals bisect each other ==
-[[File:Proof of lemma l7_20 in Narboux.svg|220px|The proof constructs P′ and shows that P = P′]]
+[[File:Proof of lemma l7 21 in Narboux.svg|220px|The proof constructs P′ and shows that P = P′]]
 Given a "parallelogram" (that is, a quadrilateral with opposite sides congruent; we haven't yet developed any theory of parallel lines), the diagonals bisect each other.
 
 First we construct a point <code>p′</code> which is like <code>P</code> but as far from <code>D</code> as <code>P</code> is from <code>B</code>. That is, <code>B D P ≅ D B P′</code>
@@ -389,7 +389,7 @@ thm (ParallelogramDiagonals-d-b-pprime () ()
           ConjunctionRightElimination
         eliminateLeftConjunctInConsequent
 
-        B Collinearity23
+        B P D Collinearity23
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
@@ -414,7 +414,7 @@ thm (ParallelogramDiagonals-p-a-pprime-c () ()
       (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
       (collinear A P C)) ∧ (collinear B P D)) ∧
       (B D P ≅ D B P′)) →
-    (P A ≡ P' C)
+    (P A ≡ P′ C)
   ) (
 </jh>
 For five segment, we first need <code>B ≠ D</code>.
@@ -438,6 +438,11 @@ Next is <code>collinear B D P</code>.
           (B D P ≅ D B P′)
           ConjunctionRightElimination
         eliminateLeftConjunctInConsequent
+
+        B P D Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
         composeConjunction
 </jh>
 Next is <code>B D P ≅ D B P′</code>.
@@ -517,6 +522,11 @@ thm (ParallelogramDiagonals-p-c-pprime-a () ()
           (B D P ≅ D B P′)
           ConjunctionRightElimination
         eliminateLeftConjunctInConsequent
+
+        B P D Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
         composeConjunction
 </jh>
 <code>B D P ≅ D B P′</code>:
@@ -583,7 +593,6 @@ thm (ParallelogramDiagonals-a-p-c-c-pprime-a () ()
 <jh>
         A C CongruenceABBA
         introduceRightConjunctToConsequent
-        composeConjunction
 </jh>
 <code>P C ≡ P′ A</code>:
 <jh>
