@@ -322,7 +322,7 @@ thm (EquidistantMidpoint () ()
 </jh>
 
 == Diagonals bisect each other ==
-[[File:Proof of lemma l7_20 in Narboux.svg|220px|The proof constructs P′ and shows that P = P′]]
+[[File:Proof of lemma l7 21 in Narboux.svg|220px|The proof constructs P′ and shows that P = P′]]
 Given a "parallelogram" (that is, a quadrilateral with opposite sides congruent; we haven't yet developed any theory of parallel lines), the diagonals bisect each other.
 
 First we construct a point <code>p′</code> which is like <code>P</code> but as far from <code>D</code> as <code>P</code> is from <code>B</code>. That is, <code>B D P ≅ D B P′</code>
