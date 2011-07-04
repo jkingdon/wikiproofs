@@ -11,15 +11,52 @@ import (AXIOMS Interface:Axioms_of_K_modal_logic (PROPOSITIONAL) ())
 var (formula p q)
 </jh>
 
-Many of the proofs here are from Hughes and Cresswell but are not always cited individually.
+Many of the proofs here are from Hughes and Cresswell. Their designations are often given in comments (typically one or two letters followed by digits).
 <jh>
-thm (addNecessity () ((H (p → q))) ((□ p) → (□ q)) (
+thm (addNecessity () ((H (p → q))) ((□ p) → (□ q)) ( #DR1
         H
         necessitate
 
         p q NecessityImplication
         applyModusPonens
 ))
+
+thm (NecessityConjunctionForward () () ((□ (p ∧ q)) → ((□ p) ∧ (□ q))) ( #K1
+        p q ConjunctionRightElimination
+        addNecessity
+
+        p q ConjunctionLeftElimination
+        addNecessity
+
+        composeConjunction
+))
+
+thm (NecessityConjunctionReverse () () (((□ p) ∧ (□ q)) → (□ (p ∧ q))) ( #K2
+        p q ConjunctionRightIntroduction
+        addNecessity
+
+        q (p ∧ q) NecessityImplication
+        applySyllogism
+
+        import
+))
+
+thm (NecessityConjunction () () ((□ (p ∧ q)) ↔ ((□ p) ∧ (□ q))) ( #K3
+        p q NecessityConjunctionForward
+        p q NecessityConjunctionReverse
+        introduceBiconditionalFromImplications
+))
+
+thm (NecessityDisjunctionCollection () () (((□ p) ∨ (□ q)) → (□ (p ∨ q))) ( #K4
+        p q DisjunctionRightIntroduction
+        addNecessity
+
+        q p DisjunctionLeftIntroduction
+        addNecessity
+
+        composeDisjunction
+))
+
 </jh>
 
 {{under construction}}
