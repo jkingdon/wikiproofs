@@ -27,7 +27,7 @@ stmt (NecessityDisjunctionDistribution () () ((□ (p ∨ q)) → ((□ p) ∨ (
 
 Possibility can be distributed across a conjunction.<ref>theorem K8, page 29 of Hughes and Cresswell</ref>
 <jh>
-stmt (PossibilityConjunction () () ((◊ (p ∧ q)) → ((◊ p) → (◊ q))))
+stmt (PossibilityConjunction () () ((◊ (p ∧ q)) → ((◊ p) ∧ (◊ q))))
 </jh>
 
 We can distribute necessity across an implication.<ref>axiom K, page 20 of Hughes and Cresswell</ref><ref>Distribution Axiom of Garson</ref>
