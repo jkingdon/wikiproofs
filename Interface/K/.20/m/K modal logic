@@ -41,9 +41,10 @@ stmt (addNecessity () ((p → q)) ((□ p) → (□ q)))
 stmt (buildNecessity () ((p ↔ q)) ((□ p) ↔ (□ q)))
 </jh>
 
-Similar rules hold for possiblity.<ref>theorem DR3, page 29 of Hughes and Cresswell</ref>
+Similar rules hold for possiblity.<ref>addPossibility is theorem DR3, page 29 of Hughes and Cresswell</ref>
 <jh>
 stmt (addPossibility () ((p → q)) ((◊ p) → (◊ q)))
+stmt (buildPossibility () ((p ↔ q)) ((◊ p) ↔ (◊ q)))
 </jh>
 
 Necessity or possibility of an implication is equivalent to an implication involving one necessity and one possibility.<ref>exercise 1.1(e), page 17 of Hughes and Cresswell</ref><ref>theorem K7, page 28 of Hughes and Cresswell</ref>
