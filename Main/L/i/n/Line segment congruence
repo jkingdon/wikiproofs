@@ -179,6 +179,7 @@ thm (commuteCongruenceInConsequent () ((H (antecedent → (x y ≡ z w))))
 ))
 </jh>
 
+{{deprecated|1 = converting this version of CongruenceIdentityFromEquality, <code>x = y → (x y ≡ z w → z = w)</code>, to the imported one in [[Interface:Basic geometry]], <code>x = y ∧ x y ≡ z w → z = w</code>}}
 The next lemma is a convenience form of <code>CongruenceIdentity</code>.<ref>not in Narboux</ref>
 <jh>
 thm (CongruenceIdentityFromEquality () () ((x = y) → ((x y ≡ z w) → (z = w))) (
