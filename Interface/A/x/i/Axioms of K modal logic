@@ -12,7 +12,6 @@ Here we present axioms for the weakest commonly studied modal logic, called K.
 param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 
 term (formula (□ formula))
-term (formula (◊ formula))
 
 var (formula p q)
 </jh>
@@ -25,6 +24,11 @@ stmt (necessitate () (p) (□ p))
 We can distribute necessity across an implication.<ref>axiom K, page 20 of Hughes and Cresswell</ref><ref>Distribution Axiom of Garson</ref>
 <jh>
 stmt (NecessityImplication () () ((□ (p → q)) → ((□ p) → (□ q))))
+</jh>
+
+We define possibility in terms of necessity.
+<jh>
+def ((◊ p) (¬ (□ (¬ p))))
 </jh>
 
 == References ==
