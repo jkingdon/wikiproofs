@@ -199,12 +199,8 @@ thm (NecessityDisjunctionDistribution () () ((□ (p ∨ q)) → ((□ p) ∨ (�
         eliminateBiconditionalReverse
         applySyllogism
 ))
-</jh>
 
-{{under construction}}
-
-<jh>
-#export (K Interface:K_modal_logic (PROPOSITIONAL) ())
+export (K Interface:K_modal_logic (PROPOSITIONAL) ())
 </jh>
 
 == Referenced works ==
