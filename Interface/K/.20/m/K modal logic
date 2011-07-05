@@ -58,10 +58,13 @@ The rule of necessitation is analogous to the axiom of generalization of [[Inter
 stmt (necessitate () (p) (□ p))
 </jh>
 
-Necessity and possibility are related by negations<ref><code>NecessityPossibility</code> is theorem K5, page 27 of Hughes and Cresswell and <code>PossibilityNecessity</code> is Def M, page 14 of Hughes and Cresswell</ref>
+Necessity and possibility are related by negations<ref><code>NecessityPossibility</code> is theorem K5, page 27 of Hughes and Cresswell and <code>PossibilityNecessity</code> is Def M, page 14 of Hughes and Cresswell. NegationNecessity and NegationPossibility are special cases of LMI on page 28</ref>
 <jh>
 stmt (NecessityPossibility () () ((□ p) ↔ (¬ (◊ (¬ p)))))
 stmt (PossibilityNecessity () () ((◊ p) ↔ (¬ (□ (¬ p)))))
+
+stmt (NegationNecessity () () ((¬ (□ p)) ↔ (◊ (¬ p))))
+stmt (NegationPossibility () () ((¬ (◊ p)) ↔ (□ (¬ p))))
 </jh>
 
 Possibility distributes or collects across a disjunction.<ref>theorem K6, page 28 of Hughes and Cresswell</ref>
