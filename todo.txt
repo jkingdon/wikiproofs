@@ -90,5 +90,3 @@ To do with network:
 
 * notation for congruent angles. Convention is ∠ABC ≅ ∠DEF, right?  Then maybe (A B C ∠≅ D E F) for us?
 
-* Continue changing CongruenceIdentityFromEquality to be the imported version.
-
