@@ -57,6 +57,148 @@ thm (NecessityDisjunctionCollection () () (((□ p) ∨ (□ q)) → (□ (p ∨
         composeDisjunction
 ))
 
+thm (buildNecessity () ((H (p ↔ q))) ((□ p) ↔ (□ q)) ( #DR2
+        H
+        eliminateBiconditionalReverse
+        addNecessity
+
+        H
+        eliminateBiconditionalForward
+        addNecessity
+
+        introduceBiconditionalFromImplications
+))
+
+thm (PossibilityNecessity () () ((◊ p) ↔ (¬ (□ (¬ p)))) (
+        (◊ p) BiconditionalReflexivity
+))
+
+thm (NecessityPossibility () () ((□ p) ↔ (¬ (◊ (¬ p)))) ( #K5
+        (□ p) DoubleNegation
+
+        p DoubleNegation
+        buildNecessity
+        addNegation
+        addNegation
+        applyBiconditionalTransitivity
+))
+</jh>
+Hughes and Cresswell provide a general rule, called LMI, which allows one to move negation across any number of □ and ◊, provided that each □ is changed to ◊ and vice versa. JHilbert doesn't let us express it quite that way, but the next two theorems let us do that kind of rearrangement in several steps.
+<jh>
+thm (NegationNecessity () () ((¬ (□ p)) ↔ (◊ (¬ p))) (        
+        p NecessityPossibility
+        addNegation
+
+        (◊ (¬ p)) DoubleNegation
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (NegationPossibility () () ((¬ (◊ p)) ↔ (□ (¬ p))) (
+        p PossibilityNecessity
+        addNegation
+
+        (□ (¬ p)) DoubleNegation
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (PossibilityDisjunction () () ((◊ (p ∨ q)) ↔ ((◊ p) ∨ (◊ q))) ( #K6
+        (p ∨ q) PossibilityNecessity
+
+        p q DeMorganPDP
+        buildNecessity
+        addNegation
+        applyBiconditionalTransitivity
+
+        # Now we have ¬ □ (¬ p ∧ ¬ q)
+
+        (¬ p) (¬ q) NecessityConjunction
+        addNegation
+        applyBiconditionalTransitivity
+
+        # Now we have ¬ (□ ¬ p ∧ □ ¬ q)
+
+        (□ (¬ p)) (□ (¬ q)) DeMorganPCP
+        applyBiconditionalTransitivity
+))
+
+thm (addPossibility () ((H (p → q))) ((◊ p) → (◊ q)) ( #DR3
+        H
+        introduceTransposition
+        addNecessity
+        introduceTransposition
+))
+
+thm (buildPossibility () ((H (p ↔ q))) ((◊ p) ↔ (◊ q)) (
+        H
+        addNegation
+        buildNecessity
+        addNegation
+))
+
+thm (PossibilityNecessityImplication () () ((◊ (p → q)) ↔ ((□ p) → (◊ q))) ( #K7
+        p q ImplicationDisjunction
+        buildPossibility
+
+        # we have ◊ (¬ p ∨ q)
+
+        (¬ p) q PossibilityDisjunction
+        applyBiconditionalTransitivity
+
+        # we have ◊ ¬ p ∨ ◊ q
+
+        (◊ (¬ p)) (◊ q) DisjunctionImplication
+        applyBiconditionalTransitivity
+
+        # we have ¬ ◊ ¬ p → ◊ q
+        p NecessityPossibility
+        swapBiconditional
+        (◊ q) buildImplicationConsequent
+        applyBiconditionalTransitivity
+))
+
+thm (PossibilityConjunction () () ((◊ (p ∧ q)) → ((◊ p) ∧ (◊ q))) ( #K8
+        p q ConjunctionRightElimination
+        addPossibility
+
+        p q ConjunctionLeftElimination
+        addPossibility
+
+        composeConjunction
+))
+
+thm (NecessityDisjunctionDistribution () () ((□ (p ∨ q)) → ((□ p) ∨ (◊ q))) ( #K9
+        p q DisjunctionCommutativity
+        eliminateBiconditionalReverse
+        addNecessity
+
+        # we now have □ (q ∨ p)
+        q p DisjunctionImplication
+        eliminateBiconditionalReverse
+        addNecessity
+        applySyllogism
+
+        # we now have □ (¬ q → p)
+        (¬ q) p NecessityImplication
+        applySyllogism
+
+        # we now have □ ¬ q → □ p
+        q NegationPossibility
+        (□ p) buildImplicationConsequent
+        eliminateBiconditionalForward
+        applySyllogism
+
+        # we now have ¬ ◊ q → □ p
+        (◊ q) (□ p) DisjunctionImplication
+        eliminateBiconditionalForward
+        applySyllogism
+
+        # we now have ◊ q ∨ □ p
+        (◊ q) (□ p) DisjunctionCommutativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
 </jh>
 
 {{under construction}}
@@ -64,5 +206,8 @@ thm (NecessityDisjunctionCollection () () (((□ p) ∨ (□ q)) → (□ (p ∨
 <jh>
 #export (K Interface:K_modal_logic (PROPOSITIONAL) ())
 </jh>
+
+== Referenced works ==
+* George Edward Hughes, M. J. Cresswell (1996), ''[http://books.google.com/books?id=_CB5wiBeaA4C&pg=PA10&lpg=PA10&dq=Hughes+and+Cresswell&source=bl&ots=4PvqMtOndk&sig=aqiTslpP3TnbI4wbQv3bSCJAYhs&hl=en&ei=ZXwPTob4Ocbr0gGpn7WDDg&sa=X&oi=book_result&ct=result&resnum=10&ved=0CF4Q6AEwCQ#v=onepage&q=Hughes%20and%20Cresswell&f=false A new introduction to modal logic]'', ISBN 978-0415126007.
 
 [[Category:Modal logic]]
