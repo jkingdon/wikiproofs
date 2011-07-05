@@ -47,9 +47,8 @@ stmt (addPossibility () ((p → q)) ((◊ p) → (◊ q)))
 stmt (buildPossibility () ((p ↔ q)) ((◊ p) ↔ (◊ q)))
 </jh>
 
-Necessity or possibility of an implication is equivalent to an implication involving one necessity and one possibility.<ref>exercise 1.1(e), page 17 of Hughes and Cresswell</ref><ref>theorem K7, page 28 of Hughes and Cresswell</ref>
+Possibility of an implication is equivalent to an implication involving one necessity and one possibility.<ref>exercise 1.1(e), page 17 of Hughes and Cresswell</ref><ref>theorem K7, page 28 of Hughes and Cresswell</ref>
 <jh>
-stmt (NecessityPossibilityImplication () () ((□ (p → q)) ↔ ((◊ p) → (□ q))))
 stmt (PossibilityNecessityImplication () () ((◊ (p → q)) ↔ ((□ p) → (◊ q))))
 </jh>
 
