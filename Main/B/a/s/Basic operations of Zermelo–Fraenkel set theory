@@ -452,30 +452,6 @@ We need <code>x ∈ ⋃ A ↔ x ∈ ⋃ B</code>, or expanding the unions accord
 ))
 </jh>
 
-=== Union of a singleton ===
-We don't directly have a notation for the (unique) set for which a formula holds. However, we have the machinery to define it. First we form the set of all x for which the formula holds, which will be a singleton. Then we can apply the next theorem, which is <code>⋃ { A } = A</code>.<ref>[http://us.metamath.org/mpeuni/unisn.html unisn], metamath's set.mm, accessed 2011</ref>
-<jh>
-#thm (UnionSingleton () () ((⋃ (singleton A)) = A) (
-  # TODO: look at metamath proof, but here's a start:
-  # y = A → (x ∈ y ↔ x ∈ A)
-  # y = A ∧ x ∈ y → x ∈ A
-  # x ∈ y ∧ y ∈ { A } → x ∈ A
-  # ∃ y (x ∈ y ∧ y ∈ { A }) → x ∈ A
-  #   by addThereExistsToAntecedent (y x) (y A)
-  # x ∈ ⋃ { A } → x ∈ A
-  # So ⋃ { A } ⊆ A which is one half
-  #####
-  #want: A ⊆ ⋃ { A }
-  # A ∈ { A }
-  # x ∈ A → x ∈ A ∧ A ∈ { A }
-  # y = A → (x ∈ y ∧ y ∈ { A } ↔ x ∈ A ∧ A ∈ { A })
-  # [ A / y ] (x ∈ y ∧ y ∈ { A }) ↔ x ∈ A ∧ A ∈ { A }
-  #   by makeSubstExplicit (y A) (y x)
-  # [ A / y ] (x ∈ y ∧ y ∈ { A }) → ∃ y (x ∈ y ∧ y ∈ { A })
-  # x ∈ A → ∃ y (x ∈ y ∧ y ∈ { A }) by syllogism
-#))
-</jh>
-
 === Union idempotence ===
 The binary union operation is idempotent: <code>A ∪ A = A</code>.<ref>[http://us.metamath.org/mpeuni/unidm.html unidm], metamath's set.mm, accessed February 14, 2011</ref>
 <jh>
@@ -487,6 +463,20 @@ thm (UnionIdempotence ( (x A)) () ((A ∪ A) = A) (
         applyBiconditionalTransitivity
 
         applyExtensionality
+))
+</jh>
+
+=== Union of a singleton ===
+We don't directly have a notation for the (unique) set for which a formula holds. However, we have the machinery to define it. First we form the set of all x for which the formula holds, which will be a singleton. Then we can apply the next theorem, which is <code>⋃ { A } = A</code>.<ref>[http://us.metamath.org/mpeuni/unisn.html unisn], metamath's set.mm, accessed 2011</ref>
+
+The proof is <code>⋃ { A } = ⋃ { A, A } = A ∪ A = A</code>.
+<jh>
+thm (UnionSingleton () () ((⋃ (singleton A)) = A) (
+        A SingletonUnorderedPair
+        buildUnion
+
+        A UnionIdempotence
+        applyEqualityTransitivity
 ))
 </jh>
 
