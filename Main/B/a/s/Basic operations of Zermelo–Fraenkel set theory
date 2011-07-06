@@ -464,6 +464,15 @@ We don't directly have a notation for the (unique) set for which a formula holds
   #   by addThereExistsToAntecedent (y x) (y A)
   # x ∈ ⋃ { A } → x ∈ A
   # So ⋃ { A } ⊆ A which is one half
+  #####
+  #want: A ⊆ ⋃ { A }
+  # A ∈ { A }
+  # x ∈ A → x ∈ A ∧ A ∈ { A }
+  # y = A → (x ∈ y ∧ y ∈ { A } ↔ x ∈ A ∧ A ∈ { A })
+  # [ A / y ] (x ∈ y ∧ y ∈ { A }) ↔ x ∈ A ∧ A ∈ { A }
+  #   by makeSubstExplicit (y A) (y x)
+  # [ A / y ] (x ∈ y ∧ y ∈ { A }) → ∃ y (x ∈ y ∧ y ∈ { A })
+  # x ∈ A → ∃ y (x ∈ y ∧ y ∈ { A }) by syllogism
 #))
 </jh>
 
