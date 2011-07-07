@@ -152,6 +152,7 @@ stmt (MembershipUnionRightIntroduction () () ((A ∈ B) → (A ∈ (B ∪ C))))
 stmt (MembershipUnionLeftIntroduction () () ((A ∈ C) → (A ∈ (B ∪ C))))
 
 stmt (UnionIdempotence () () ((A ∪ A) = A))
+stmt (UnionSingleton () () ((⋃ (singleton A)) = A))
 </jh>
 
 An unordered pair is the union of singletons for each of its elements.
@@ -224,6 +225,7 @@ stmt (buildOrderedPairRRInConsequent ()
 stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A ψ)))
 
 stmt (UnionBuilder () () ((A = B) → ((⋃ A) = (⋃ B))))
+stmt (buildUnion () ((A = B)) ((⋃ A) = (⋃ B)))
 </jh>
 
 == Extensionality ==
