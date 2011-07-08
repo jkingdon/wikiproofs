@@ -1865,7 +1865,7 @@ thm (*4.7 () () ((p → q) ↔ (p → (p ∧ q))) (
 We start with the forward implication. We stick <code>p → p</code> on the proof stack, and then start with <code>(p → p) ∧ (p → q) → (p → p ∧ q)</code>
 <jh>
         p ImplicationReflexivity
-        p p q ConjunctionComposition
+        p p q Comp
 </jh>
 Exporting and detaching <code>p → p</code> finishes the forward implication.
 <jh>
@@ -1906,7 +1906,10 @@ The only thing left is to combine with <code>(p → q) ↔ (p → p ∧ q)</code
 
 thm (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))) ( # *4.73
         q p AntecedentIntroduction
+
         p q *4.71
+        eliminateBiconditionalReverse
+
         applySyllogism
 ))
 </jh>

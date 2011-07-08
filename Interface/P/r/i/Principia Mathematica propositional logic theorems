@@ -288,6 +288,12 @@ Here is a version of <code>AntecedentDistribution</code> with one of the implica
 stmt (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))))
 </jh>
 
+==== Biconditional and conjunction ====
+A true conjunct does not affect the truth of a proposition.
+<jh>
+stmt (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))))
+</jh>
+
 == Rules ==
 
 Each propositional calculus needs at least one rule of detachment (modus ponens appears to be the most common). However, it will be convenient to have certain toolbox of rules implementing often used statements.
@@ -410,9 +416,9 @@ stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) �
 </jh>
 
 === Deprecated ===
-The rules in this section are deprecated; that is, they are likely to disappear in a future version of this interface.
+{{deprecated|renaming eliminateLeftConjunction to eliminateLeftConjunct and eliminateRightConjunction to eliminateRightConjunct}}
 
-The following two are synonyms for <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code>. The names <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code> are preferred because the whole conjunction is not being eliminated, just one of the conjuncts.
+The names <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code> are preferred because the whole conjunction is not being eliminated, just one of the conjuncts.
 <jh>
 stmt (eliminateLeftConjunction () ((p ∧ q)) q)
 stmt (eliminateRightConjunction () ((p ∧ q)) p)

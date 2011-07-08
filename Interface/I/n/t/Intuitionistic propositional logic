@@ -263,6 +263,12 @@ Here is a version of <code>AntecedentDistribution</code> with one of the implica
 stmt (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))))
 </jh>
 
+==== Biconditional and conjunction ====
+A true conjunct does not affect the truth of a proposition.
+<jh>
+stmt (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))))
+</jh>
+
 == Rules ==
 
 Here we supply rules corresponding to many of the theorems above, including those rules from [[Interface:Principia Mathematica propositional logic theorems]] which hold intuitionistically.

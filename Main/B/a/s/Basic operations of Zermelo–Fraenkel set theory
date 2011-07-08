@@ -450,6 +450,13 @@ We need <code>x ∈ ⋃ A ↔ x ∈ ⋃ B</code>, or expanding the unions accord
         x (⋃ A) (⋃ B) Extensionality
         applySyllogism
 ))
+
+thm (buildUnion () ((H (A = B)))
+  ((⋃ A) = (⋃ B)) (
+        H
+        A B UnionBuilder
+        applyModusPonens
+))
 </jh>
 
 === Union idempotence ===

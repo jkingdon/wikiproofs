@@ -455,23 +455,40 @@ The left side of that is just <code>B ∈ domain R</code>; the right side is a s
 </jh>
 
 ==== The domain of a singleton relation ====
-Consider a relation which just contains a single ordered pair: <code>{ 〈A, B〉 }</code>. Its domain is simply <code>{ A }</code>.<ref>[http://us.metamath.org/mpeuni/dmsnop.html dmsnop], metamath's set.mm, accessed July 5, 2011</ref>
+Consider a relation which just contains a single ordered pair: <code>{ 〈A, B〉 }</code>. Its domain is simply <code>{ A }</code>.<ref>[http://us.metamath.org/mpeuni/dmsnop.html dmsnop], metamath's set.mm, accessed July 5, 2011</ref>
 
 <jh>
-thm (DomainSingletonRelation ( (x A) (x B)) ()
-  ((domain (singleton (orderedPair A B))) = (singleton A)) (
-        (value x) (singleton (orderedPair A B))) y Domain
-        y (value x) A B DomainSingletonRelationLemma
-        applyBiconditionalTransitivity
+#thm (DomainSingletonRelationLemma ((y C) (y A)) ()
+#  ((∃ y ((orderedPair C (value y)) ∈ (singleton (orderedPair A B)))) ↔ (C = A)) (
+#        (orderedPair C (value y)) (orderedPair A B) Singleton
+#        C (value y) A B OrderedPairTheorem
+#        applyBiconditionalTransitivity
 </jh>
-That gives us <code>x ∈ domain { 〈A, B〉 } ↔ x = A</code>. We now just transform the right hand side to <code>x ∈ { A }</code> and apply extensionality.
+So far that gives us <code>〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ y = B</code>. Now we add <code>∃ y</code> to both sides, and then move <code>C = A</code> outside the quantifier.
 <jh>
-        (value x) A Singleton
-        swapBiconditional
-        applyBiconditionalTransitivity
+#        y buildThereExists
 
-        applyExtensionality
-))
+#        y (C = A) ((value y) = B) ThereExistsConjunctionMovement
+#        applyBiconditionalTransitivity
+</jh>
+We have <code>∃ y 〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ ∃ y y = B</code> and the <code>∃ y y = B</code> part is a theorem (<code>Quantifiability</code>).
+<jh>
+#        y B Quantifiability
+# TODO: most obvious way from here is via http://us.metamath.org/mpeuni/biantru.html
+# or perhaps http://us.metamath.org/mpeuni/iba.html which is much the same
+#))
+
+#thm (DomainSingletonRelation () ()
+#  ((domain (singleton (orderedPair A B))) = (singleton A)) (
+# proof:
+# ∃ y 〈x, y〉 ∈ { 〈A, B〉 } ↔ x = A   by DomainSingletonRelationLemma
+# x ∈ domain { 〈A, B〉 } ↔ ∃ y 〈x, y〉 ∈ { 〈A, B〉 } by Domain
+# x ∈ domain { 〈A, B〉 } ↔ x = A applyBiconditionalTransitivity
+# x ∈ domain { 〈A, B〉 } ↔ x ∈ { A }  by Singleton
+# domain { 〈A, B〉 } = { A }  by applyExtensionality (x A) (x B)
+
+# (second half of metamath proof is the proper class case)
+#))
 </jh>
 
 == Cartesian product ==
