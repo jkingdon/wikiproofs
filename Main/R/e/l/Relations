@@ -473,9 +473,11 @@ So far that gives us <code>〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ y = B</co
 </jh>
 We have <code>∃ y 〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ ∃ y y = B</code> and the <code>∃ y y = B</code> part is a theorem (<code>Quantifiability</code>).
 <jh>
-#        y B Quantifiability
-# TODO: most obvious way from here is via http://us.metamath.org/mpeuni/biantru.html
-# or perhaps http://us.metamath.org/mpeuni/iba.html which is much the same
+        y B Quantifiability
+        (∃ y ((value y) = B)) (C = A) BiconditionalConjunct
+        applyModusPonens
+        swapBiconditional
+        applyBiconditionalTransitivity
 #))
 
 #thm (DomainSingletonRelation () ()
