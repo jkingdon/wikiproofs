@@ -288,6 +288,12 @@ Here is a version of <code>AntecedentDistribution</code> with one of the implica
 stmt (ImplicationDistributionOverBiconditional () () ((p → (q ↔ r)) ↔ ((p → q) ↔ (p → r))))
 </jh>
 
+==== Biconditional and conjunction ====
+A true conjunct does not affect the truth of a proposition.
+<jh>
+stmt (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))))
+</jh>
+
 == Rules ==
 
 Each propositional calculus needs at least one rule of detachment (modus ponens appears to be the most common). However, it will be convenient to have certain toolbox of rules implementing often used statements.
