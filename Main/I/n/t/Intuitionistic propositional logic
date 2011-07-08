@@ -1355,6 +1355,47 @@ thm (collectRightConjunction () ((H ((p ∧ r) ∨ (q ∧ r)))) ((p ∨ q) ∧ r
 ))
 </jh>
 
+=== Biconditional and conjunction ===
+A true conjunct does not affect the truth of a proposition. The proof from [[Principia Mathematica propositional logic]] is valid intuitionistically without change.
+
+<jh>
+thm (*4.7 () () ((p → q) ↔ (p → (p ∧ q))) (
+        p ImplicationReflexivity
+        p p q ConjunctionCompositionForward
+
+        export
+        applyModusPonens
+
+        p q ConjunctionLeftElimination
+        p addCommonAntecedent
+
+        introduceBiconditionalFromImplications
+))
+
+thm (*4.71 () () ((p → q) ↔ (p ↔ (p ∧ q))) (
+        p q *4.7
+
+        p q ConjunctionRightElimination
+
+        ((p ∧ q) → p) (p → (p ∧ q)) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        p (p ∧ q) BiconditionalReverseElimination
+        introduceBiconditionalFromImplications
+
+        applyBiconditionalTransitivity
+))
+
+thm (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))) ( # *4.73
+        q p AntecedentIntroduction
+
+        p q *4.71
+        eliminateBiconditionalReverse
+
+        applySyllogism
+))
+</jh>
+
 == Modus Ponens ==
 This is just an implication corresponding to the modus ponens rule:
 <jh>
