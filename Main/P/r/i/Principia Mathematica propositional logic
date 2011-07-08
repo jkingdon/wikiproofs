@@ -1855,6 +1855,65 @@ thm (collectNegationNCN () ((H ((¬ p) ∧ (¬ q)))) (¬ (p ∨ q)) (
 ))
 </jh>
 
+=== Biconditional and conjunction ===
+A true conjunct does not affect the truth of a proposition, or in symbols <code>q → (p ↔ p ∧ q)</code>.
+
+Before we prove that statement itself, we prove two equivalences involving implications and conjunctions. We will be using them in the proof of the result stated above.
+<jh>
+thm (*4.7 () () ((p → q) ↔ (p → (p ∧ q))) (
+</jh>
+We start with the forward implication. We stick <code>p → p</code> on the proof stack, and then start with <code>(p → p) ∧ (p → q) → (p → p ∧ q)</code>
+<jh>
+        p ImplicationReflexivity
+        p p q Comp
+</jh>
+Exporting and detaching <code>p → p</code> finishes the forward implication.
+<jh>
+        export
+        applyModusPonens
+</jh>
+The reverse direction is even easier.
+<jh>
+        p q ConjunctionLeftElimination
+        p addCommonAntecedent
+
+        introduceBiconditionalFromImplications
+))
+
+thm (*4.71 () () ((p → q) ↔ (p ↔ (p ∧ q))) (
+</jh>
+We first stick two things on the stack for later use.
+<jh>
+        p q *4.7
+
+        p q ConjunctionRightElimination
+
+</jh>
+Now we start with <code>(p ∧ q → p) → ((p → p ∧ q) → (p ↔ p ∧ q))</code>, and then detach the antecedent (a theorem) to give <code>(p → p ∧ q) → (p ↔ p ∧ q)</code>
+<jh>
+        ((p ∧ q) → p) (p → (p ∧ q)) ConjunctionLeftIntroduction
+        applyModusPonens
+</jh>
+The converse of that statement, <code>(p ↔ p ∧ q) → (p → p ∧ q)</code>, is even simpler. So combining the two, we get <code>(p → p ∧ q) ↔ (p ↔ p ∧ q)</code>
+<jh>
+        p (p ∧ q) BiconditionalReverseElimination
+        introduceBiconditionalFromImplications
+</jh>
+The only thing left is to combine with <code>(p → q) ↔ (p → p ∧ q)</code> which we left on the proof stack.
+<jh>
+        applyBiconditionalTransitivity
+))
+
+thm (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))) ( # *4.73
+        q p AntecedentIntroduction
+
+        p q *4.71
+        eliminateBiconditionalReverse
+
+        applySyllogism
+))
+</jh>
+
 === Biconditionalized composition ===
 
 We earlier proved composition laws for disjunction and conjunction:
