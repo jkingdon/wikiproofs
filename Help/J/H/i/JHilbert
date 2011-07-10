@@ -114,7 +114,7 @@ This means that you are trying to invoke a theorem which has a distinct variable
 
  Required distinct variable constraints are not a subset of actual distinct variable constraints 
 
-This means that somewhere in the proof there is an invocation of a theorem which has a distinct variable constraint, but the theorem you are trying to prove does not have a distinct variable constraint which assures that the invocation is OK.  See [[Example of required distinct variable constraints are not a subset of actual distinct variable constraint]].
+This means that somewhere in the proof there is an invocation of a theorem which has a distinct variable constraint, but the theorem you are trying to prove does not have a distinct variable constraint which assures that the invocation is OK.  See [[Example of required distinct variable constraints are not a subset of actual distinct variable constraint]]. If you can't see where the variable which is causing the problem is, consider the possibility that it resulted from the automatic expansion of a definition (TODO: add an example of this).
 
 == External links ==
 
