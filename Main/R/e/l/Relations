@@ -458,25 +458,27 @@ The left side of that is just <code>B ∈ domain R</code>; the right side is a s
 Consider a relation which just contains a single ordered pair: <code>{ 〈A, B〉 }</code>. Its domain is simply <code>{ A }</code>.<ref>[http://us.metamath.org/mpeuni/dmsnop.html dmsnop], metamath's set.mm, accessed July 5, 2011</ref>
 
 <jh>
-#thm (DomainSingletonRelationLemma ((y C) (y A)) ()
-#  ((∃ y ((orderedPair C (value y)) ∈ (singleton (orderedPair A B)))) ↔ (C = A)) (
-#        (orderedPair C (value y)) (orderedPair A B) Singleton
-#        C (value y) A B OrderedPairTheorem
-#        applyBiconditionalTransitivity
+thm (DomainSingletonRelationLemma ((y C) (y A)) ()
+  ((∃ y ((orderedPair C (value y)) ∈ (singleton (orderedPair A B)))) ↔ (C = A)) (
+        (orderedPair C (value y)) (orderedPair A B) Singleton
+        C (value y) A B OrderedPairTheorem
+        applyBiconditionalTransitivity
 </jh>
 So far that gives us <code>〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ y = B</code>. Now we add <code>∃ y</code> to both sides, and then move <code>C = A</code> outside the quantifier.
 <jh>
-#        y buildThereExists
+        y buildThereExists
 
-#        y (C = A) ((value y) = B) ThereExistsConjunctionMovement
-#        applyBiconditionalTransitivity
+        y (C = A) ((value y) = B) ThereExistsConjunctionMovement
+        applyBiconditionalTransitivity
 </jh>
 We have <code>∃ y 〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ ∃ y y = B</code> and the <code>∃ y y = B</code> part is a theorem (<code>Quantifiability</code>).
 <jh>
-#        y B Quantifiability
-# TODO: most obvious way from here is via http://us.metamath.org/mpeuni/biantru.html
-# or perhaps http://us.metamath.org/mpeuni/iba.html which is much the same
-#))
+        y B Quantifiability
+        (∃ y ((value y) = B)) (C = A) BiconditionalConjunct
+        applyModusPonens
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
 
 #thm (DomainSingletonRelation () ()
 #  ((domain (singleton (orderedPair A B))) = (singleton A)) (
