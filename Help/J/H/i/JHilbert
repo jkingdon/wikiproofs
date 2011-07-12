@@ -116,6 +116,8 @@ This means that you are trying to invoke a theorem which has a distinct variable
 
 This means that somewhere in the proof there is an invocation of a theorem which has a distinct variable constraint, but the theorem you are trying to prove does not have a distinct variable constraint which assures that the invocation is OK.  See [[Example of required distinct variable constraints are not a subset of actual distinct variable constraint]].
 
+If you can't see where the variable which is causing the problem is, consider the possibility that it resulted from the automatic expansion of a definition. For example, see various applications of <code>LessEqual</code> in [http://wikiproofs.org/w/index.php?title=Basic_arithmetic&oldid=1867 Basic arithmetic]. (TODO: add a self-contained example, in the style of the others on this page, and maybe also an example where similar issues, such as expanding multiple definitions in one theorem, lead to "Attempt to prove result by illegal dummy assignment" or other errors). The solution is using a theorem like <code>LessEqual</code> to expand the definition, and/or moving your proof into a separate module in which the term is declared with <code>term</code> rather than <code>def</code> (for example, the way that [http://wikiproofs.org/w/index.php?title=Basic_operations_of_Zermelo%E2%80%93Fraenkel_set_theory&oldid=2366 Basic operations of Zermelo–Fraenkel set theory] is separate from [http://wikiproofs.org/w/index.php?title=First_steps_in_set_theory&oldid=2159 First steps in set theory]).
+
 == External links ==
 
 There's another partial JHilbert manual at:

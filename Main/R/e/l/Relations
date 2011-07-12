@@ -458,18 +458,18 @@ The left side of that is just <code>B ∈ domain R</code>; the right side is a s
 Consider a relation which just contains a single ordered pair: <code>{ 〈A, B〉 }</code>. Its domain is simply <code>{ A }</code>.<ref>[http://us.metamath.org/mpeuni/dmsnop.html dmsnop], metamath's set.mm, accessed July 5, 2011</ref>
 
 <jh>
-#thm (DomainSingletonRelationLemma ((y C) (y A)) ()
-#  ((∃ y ((orderedPair C (value y)) ∈ (singleton (orderedPair A B)))) ↔ (C = A)) (
-#        (orderedPair C (value y)) (orderedPair A B) Singleton
-#        C (value y) A B OrderedPairTheorem
-#        applyBiconditionalTransitivity
+thm (DomainSingletonRelationLemma ((y C) (y A)) ()
+  ((∃ y ((orderedPair C (value y)) ∈ (singleton (orderedPair A B)))) ↔ (C = A)) (
+        (orderedPair C (value y)) (orderedPair A B) Singleton
+        C (value y) A B OrderedPairTheorem
+        applyBiconditionalTransitivity
 </jh>
 So far that gives us <code>〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ y = B</code>. Now we add <code>∃ y</code> to both sides, and then move <code>C = A</code> outside the quantifier.
 <jh>
-#        y buildThereExists
+        y buildThereExists
 
-#        y (C = A) ((value y) = B) ThereExistsConjunctionMovement
-#        applyBiconditionalTransitivity
+        y (C = A) ((value y) = B) ThereExistsConjunctionMovement
+        applyBiconditionalTransitivity
 </jh>
 We have <code>∃ y 〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ ∃ y y = B</code> and the <code>∃ y y = B</code> part is a theorem (<code>Quantifiability</code>).
 <jh>
@@ -478,19 +478,36 @@ We have <code>∃ y 〈C, y〉 ∈ { 〈A, B〉 } ↔ C = A ∧ ∃ y y = B</cod
         applyModusPonens
         swapBiconditional
         applyBiconditionalTransitivity
-#))
+))
 
-#thm (DomainSingletonRelation () ()
-#  ((domain (singleton (orderedPair A B))) = (singleton A)) (
-# proof:
-# ∃ y 〈x, y〉 ∈ { 〈A, B〉 } ↔ x = A   by DomainSingletonRelationLemma
-# x ∈ domain { 〈A, B〉 } ↔ ∃ y 〈x, y〉 ∈ { 〈A, B〉 } by Domain
-# x ∈ domain { 〈A, B〉 } ↔ x = A applyBiconditionalTransitivity
-# x ∈ domain { 〈A, B〉 } ↔ x ∈ { A }  by Singleton
-# domain { 〈A, B〉 } = { A }  by applyExtensionality (x A) (x B)
+thm (DomainSingletonRelation (  (x A) (x B) (y x) (y A) (y B)
+  (x′ y′) (x′ A) (x′ B) (x′ x) (y′ A) (y′ B) (y′ x)) ()
+  ((domain (singleton (orderedPair A B))) = (singleton A)) (
+</jh>
+Because we are still in the same proof module as the definition of <code>domain</code>, we need to expand the definition manually (rather than automatically), and specify some distinct variable constraints for <code>x′</code> and <code>y′</code>.
+<jh>
+        (singleton (orderedPair A B)) x′ y′ Domain-def
+        (value x) buildMembershipLL
+        swapBiconditional
+</jh>
+We start with <code>x ∈ domain { 〈A, B〉 } ↔ ∃ y 〈x, y〉 ∈ { 〈A, B〉 }</code>
+<jh>
+        (value x) (singleton (orderedPair A B)) y Domain
+        applyBiconditionalTransitivity
+</jh>
+The right hand side is equivalent to <code>x = A</code> by our lemma,
+<jh>
+        y (value x) A B DomainSingletonRelationLemma
+        applyBiconditionalTransitivity
+</jh>
+and to <code>x ∈ { A }</code>, which is all we need to apply extensionality.
+<jh>
+        (value x) A Singleton
+        swapBiconditional
+        applyBiconditionalTransitivity
 
-# (second half of metamath proof is the proper class case)
-#))
+        applyExtensionality
+))
 </jh>
 
 == Cartesian product ==

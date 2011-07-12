@@ -112,6 +112,8 @@ The domain of a relation is a set consisting of all of the first elements of the
 term (object (domain object))
 stmt (Domain ((y B) (y R)) ()
   ((B ∈ (domain R)) ↔ (∃ y ((orderedPair B (value y)) ∈ R))))
+stmt (DomainSingletonRelation () ()
+  ((domain (singleton (orderedPair A B))) = (singleton A)))
 </jh>
 
 == Subset ==
