@@ -15,7 +15,7 @@ thm (valid () () (r → (s → r)) (
 ))
 </jh>
 
-Here's one which produces a statement which has the right form, but the wrong variables.  It will blow up with an error message, probably "Attempt to prove result by illegal dummy assignment".
+Here's one which produces a statement which has the right form, but the wrong variables. {{error expected|Attempt to prove result by illegal dummy assignment}}
 
 <jh>
 thm (invalid () () (r → (s → s)) (
