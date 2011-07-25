@@ -192,7 +192,10 @@ thm (PairingObject ((A y z w) (B y z w)) () (∃ w (∀ z (((value z) ∈ (value
 ))
 </jh>
 
-== Object version of extensionality ==
+== Extensionality ==
+Extensionality, that sets with the same elements are equal, is an axiom. Here we prove a few simple consequences of that axiom.
+
+=== Objects instead of variables ===
 Here is a variant of extensionality, <code>∀ z (z ∈ A ↔ z ∈ B) → A = B</code>, which changes variables to objects. We first prove a lemma.
 
 <jh>
@@ -212,7 +215,8 @@ This lemma changes <code>x</code> to <code>A</code>, using <code>VariableToObjec
         VariableToObject
 ))
 
-thm (Extensionality ((A z) (B z) (z y) (A y) (B y)) () ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)) (
+thm (Extensionality ((A z) (B z)  (z y) (A y) (B y)) ()
+  ((∀ z (((value z) ∈ A) ↔ ((value z) ∈ B))) → (A = B)) (
 </jh>
 To prove this, we change <code>y</code> to <code>B</code>, using <code>VariableToObject</code> applied to <code>y = B → ((∀ z (z ∈ A ↔ z ∈ y) → A = y) ↔ (∀ z (z ∈ A ↔ z ∈ B) → A = B))</code>
 <jh>
@@ -238,6 +242,56 @@ thm (applyExtensionality ((x A) (x B))
         x generalize
         x A B Extensionality
         applyModusPonens
+))
+</jh>
+
+=== Biconditional ===
+
+Although the converse of <code>Extensionality</code> is just a substitution, the biconditionalized version of <code>Extensionality</code> will be convenient sometimes.
+<jh>
+thm (ExtensionalityBiconditional ((A z) (B z)) ()
+  ((A = B) ↔ (∀ z (((value z) ∈ A) ↔ ((value z) ∈ B)))) (
+        A B (value z) MembershipBuilderLL
+        z addForAllToConsequent
+
+        z A B Extensionality
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+=== Version without distinct variable constraints ===
+Here's a version of <code>Extensionality</code> which replaces the distinct variable constraints with <code>is-not-free-in</code>.<ref>[http://us.metamath.org/mpeuni/cleqf.html cleqf], metamath's set.mm, accessed July, 2011</ref>
+<jh>
+thm (ExtensionalityNotFree ((y A) (y B) (y x))
+  ((HA (x is-not-free-in ((value y) ∈ A)))
+   (HB (x is-not-free-in ((value y) ∈ B)))
+  )
+  ((A = B) ↔ (∀ x (((value x) ∈ A) ↔ ((value x) ∈ B)))) (
+        A B y ExtensionalityBiconditional
+</jh>
+The key to the proof is <code>∀ x (x ∈ A ↔ x ∈ B) ↔ ∀ y (y ∈ A ↔ y ∈ B)</code>. It comes about as a variable change, specifically <code>ChangeVariableForAllNotFree</code>. The first step is <code>x is-not-free-in (y ∈ A ↔ y ∈ B)</code>.
+<jh>
+        HA
+        HB
+        biconditionalNotFree
+</jh>
+Next we need <code>y is-not-free-in (x ∈ A ↔ x ∈ B)</code>.
+<jh>
+        y (((value x) ∈ A) ↔ ((value x) ∈ B)) DistinctNotFree
+</jh>
+Finally is <code>x = y → (x ∈ A ↔ x ∈ B) ↔ (y ∈ A ↔ y ∈ B)</code>.
+<jh>
+        (value x) (value y) A MembershipBuilderRR
+        (value x) (value y) B MembershipBuilderRR
+        buildBiconditionalInConsequent
+
+        ChangeVariableForAllNotFree
+</jh>
+That gives us <code>∀ x (x ∈ A ↔ x ∈ B) ↔ ∀ y (y ∈ A ↔ y ∈ B)</code>. Now we just need to combine with <code>ExtensionalityBiconditional</code>.
+<jh>
+        swapBiconditional
+        applyBiconditionalTransitivity
 ))
 </jh>
 
@@ -511,16 +565,6 @@ thm (SubsetTransitivity ( (x A) (x B) (x C)) () (((A ⊆ B) ∧ (B ⊆ C)) → (
 
 Antisymmetry and reflexivity follow from the equivalence <code>A = B ↔ A ⊆ B ∧ B ⊆ A</code>.  To prove this equivalence, take <code>∀ x (x ∈ A ↔ x ∈ B)</code>, decompose the biconditional into implications, and distribute the quantifier across both of them. The left side is <code>A = B</code> by extensionality, and the right side is <code>A ⊆ B ∧ B ⊆ A</code> by <code>Subset</code>.<ref>[http://us.metamath.org/mpeuni/eqss.html eqss], metamath's set.mm, accessed February 20, 2011</ref>
 <jh>
-thm (ExtensionalityBiconditional ((A z) (B z)) ()
-  ((A = B) ↔ (∀ z (((value z) ∈ A) ↔ ((value z) ∈ B)))) (
-        A B (value z) MembershipBuilderLL
-        z addForAllToConsequent
-
-        z A B Extensionality
-
-        introduceBiconditionalFromImplications
-))
-
 thm (EqualitySubset ( (x A) (x B)) ()
   ((A = B) ↔ ((A ⊆ B) ∧ (B ⊆ A))) (
         A B x ExtensionalityBiconditional
