@@ -183,7 +183,43 @@ thm (SingletonUnorderedPair ( (x A)) ()
 
 == Separation ==
 
-=== Separation builder ===
+=== Builder ===
+
+Here we provide a builder for separation.
+
+<jh>
+thm (SeparationBuilder ((x A) (x B)  (y x) (y A) (y φ) (y B) (y ψ)) ()
+  (((A = B) ∧ (∀ x (φ ↔ ψ))) → ((separate x A φ) = (separate x B ψ))) (
+</jh>
+To apply extensionality, we want <code>y ∈ { x ∈ A | φ } ↔ y ∈ { x ∈ B | ψ }</code>. The first step in that direction will be <code>y ∈ A ↔ y ∈ B</code>.
+<jh>
+        (A = B) (∀ x (φ ↔ ψ)) ConjunctionRightElimination
+        A B (value y) MembershipBuilderLL
+        applySyllogism
+</jh>
+Next is <code>[ y / x ] φ ↔ [ y / x ] ψ</code>
+<jh>
+        (A = B) (∀ x (φ ↔ ψ)) ConjunctionLeftElimination
+        x φ ψ (value y) SubstBuilder
+        applySyllogism
+</jh>
+Combining those gives <code>y ∈ A ∧ [ y / x ] φ ↔ y ∈ B ∧ [ y / x ] ψ</code>, and it is only necessary to apply <code>Separation</code> to both sides.
+<jh>
+        buildConjunctionInConsequent
+
+        (value y) x A φ Separation
+        (value y) x B ψ Separation
+        buildBiconditional
+        eliminateBiconditionalForward
+        applySyllogism
+
+        y addForAllToConsequent
+        y (separate x A φ) (separate x B ψ) Extensionality
+        applySyllogism
+))
+</jh>
+
+=== A rule ===
 Here's a builder based on equivalent formulas: <code>(φ ↔ ψ) → { x ∈ A | φ } = { x ∈ A | ψ }</code>.
 
 The first lemma is <code>C ∈ { x ∈ A | φ } ↔ C ∈ { x ∈ A | ψ }</code>.
