@@ -99,21 +99,43 @@ thm (buildSubstReplacement () ((H (s = t)))
 ==== Implication builder ====
 Analogous to our other implication builders, this theorem takes an implication and lets us add <code>subst</code> to both sides. The proof is just a straightforward application of the existing builders for conjunction and ∃.
 <jh>
-thm (addSubst ((y s) (y x) (y ψ) (y φ)) ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
-        H
-        ((value x) = (value y)) conjoinLL
-        x addThereExists
-        ((value y) = s) conjoinLL
-        y addThereExists
+thm (SubstAddition ((y s) (y x) (y ψ) (y φ)) () ((∀ x (φ → ψ)) → ((subst s x φ) → (subst s x ψ))) (
+        φ ψ ((value x) = (value y)) ConjunctionMultiplicationLL
+        x addForAll
+
+        x (((value x) = (value y)) ∧ φ) (((value x) = (value y)) ∧ ψ) ForAllImplicationThereExists
+        applySyllogism
+
+        (∃ x (((value x) = (value y)) ∧ φ))
+          (∃ x (((value x) = (value y)) ∧ ψ))
+          ((value y) = s) ConjunctionMultiplicationLL
+        applySyllogism
+
+        y addForAllToConsequent
+        y
+          (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))
+          (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ ψ)))
+          ForAllImplicationThereExists
+        applySyllogism
 </jh>
 Now we just need to apply the definition of <code>subst</code> and we are done:
 <jh>
         s x φ y Subst
-        swapBiconditional transformAntecedent
+        swapBiconditional
 
         s x ψ y Subst
-        eliminateBiconditionalForward
+        swapBiconditional
+
+        buildImplication
+        eliminateBiconditionalReverse
         applySyllogism
+))
+
+thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstAddition
+        applyModusPonens
 ))
 </jh>
 
