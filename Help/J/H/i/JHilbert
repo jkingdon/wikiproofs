@@ -122,6 +122,10 @@ If you can't see where the variable which is causing the problem is, consider th
 
 A theorem invocation has the wrong kind. For example, with just about anything built on [[Interface:First-order logic]], saying <code>x<code> when <code>(value x)</code> is needed will produce this error. See [[Example of kind mismatch]].
 
+ Proof step is neither a symbol nor a hypothesis
+
+A proof contains an atom which is not a hypothesis, a variable, or the name of a previous theorem. This can happen by misspelling a theorem name, forgetting to list a previously proved theorem in an appropriate interface, or failing to declare a variable. See [[Example of proof step is neither a symbol nor a hypothesis]].
+
 == External links ==
 
 There's another partial JHilbert manual at:
