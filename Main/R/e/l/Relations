@@ -454,6 +454,36 @@ The left side of that is just <code>B ∈ domain R</code>; the right side is a s
 ))
 </jh>
 
+==== Builder ====
+Here we prove the domain builder from the definition. Another proof would invoke <code>Domain</code> and extensionality, although that would be more awkward as long as JHilbert's automatic expansion of definitions can lead to distinct variable problems.
+<jh>
+thm (DomainBuilder ( (y R) (y S) (y x) (x R) (x S)) () ((R = S) → ((domain R) = (domain S))) (
+</jh>
+We prove the builder based on the definition <code>{ x ∈ ⋃ ⋃ R | ∃ y 〈x, y〉 ∈ R }</code>. The first step is <code>R = S → ⋃ ⋃ R = ⋃ ⋃ S</code>.
+<jh>
+        R S UnionBuilder
+        (⋃ R) (⋃ S) UnionBuilder
+        applySyllogism
+</jh>
+Next is <code>R = S → ∀ x (∃ y 〈x, y〉 ∈ R ↔ ∃ y 〈x, y〉 ∈ S)</code>
+<jh>
+        R S (orderedPair (value x) (value y)) MembershipBuilderLL
+        y buildThereExistsInConsequent
+        x addForAllToConsequent
+</jh>
+Now we can apply the separation builder.
+<jh>
+        composeConjunction
+        (⋃ (⋃ R))
+          (⋃ (⋃ S))
+          x
+          (∃ y ((orderedPair (value x) (value y)) ∈ R))
+          (∃ y ((orderedPair (value x) (value y)) ∈ S))
+          SeparationBuilder
+        applySyllogism
+))
+</jh>
+
 ==== The domain of a singleton relation ====
 Consider a relation which just contains a single ordered pair: <code>{ 〈A, B〉 }</code>. Its domain is simply <code>{ A }</code>.<ref>[http://us.metamath.org/mpeuni/dmsnop.html dmsnop], metamath's set.mm, accessed July 5, 2011</ref>
 
@@ -507,6 +537,25 @@ and to <code>x ∈ { A }</code>, which is all we need to apply extensionality.
         applyBiconditionalTransitivity
 
         applyExtensionality
+))
+</jh>
+
+== The first and second elements of an ordered pair ==
+Here we attend to a notational detail: given an ordered pair, we want an expression for its first or second element. We define the first element of <code>C</code> as <code>⋃ domain { C }</code>.
+<jh>
+def ((1st C) (⋃ (domain (singleton C))))
+</jh>
+
+The builder for <code>1st</code> follows straightforwardly for the builders for the things which make up the definition.
+<jh>
+thm (FirstBuilder () () ((A = B) → ((1st A) = (1st B))) (
+        A B SingletonBuilder
+
+        (singleton A) (singleton B) DomainBuilder
+        applySyllogism
+
+        (domain (singleton A)) (domain (singleton B)) UnionBuilder
+        applySyllogism
 ))
 </jh>
 
