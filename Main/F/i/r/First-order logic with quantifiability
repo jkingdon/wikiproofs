@@ -99,27 +99,66 @@ thm (buildSubstReplacement () ((H (s = t)))
 ==== Implication builder ====
 Analogous to our other implication builders, this theorem takes an implication and lets us add <code>subst</code> to both sides. The proof is just a straightforward application of the existing builders for conjunction and ∃.
 <jh>
-thm (addSubst ((y s) (y x) (y ψ) (y φ)) ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
-        H
-        ((value x) = (value y)) conjoinLL
-        x addThereExists
-        ((value y) = s) conjoinLL
-        y addThereExists
+thm (SubstAddition ((y s) (y x) (y ψ) (y φ)) () ((∀ x (φ → ψ)) → ((subst s x φ) → (subst s x ψ))) (
+        φ ψ ((value x) = (value y)) ConjunctionMultiplicationLL
+        x addForAll
+
+        x (((value x) = (value y)) ∧ φ) (((value x) = (value y)) ∧ ψ) ForAllImplicationThereExists
+        applySyllogism
+
+        (∃ x (((value x) = (value y)) ∧ φ))
+          (∃ x (((value x) = (value y)) ∧ ψ))
+          ((value y) = s) ConjunctionMultiplicationLL
+        applySyllogism
+
+        y addForAllToConsequent
+        y
+          (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))
+          (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ ψ)))
+          ForAllImplicationThereExists
+        applySyllogism
 </jh>
 Now we just need to apply the definition of <code>subst</code> and we are done:
 <jh>
         s x φ y Subst
-        swapBiconditional transformAntecedent
+        swapBiconditional
 
         s x ψ y Subst
-        eliminateBiconditionalForward
+        swapBiconditional
+
+        buildImplication
+        eliminateBiconditionalReverse
         applySyllogism
+))
+
+thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstAddition
+        applyModusPonens
 ))
 </jh>
 
 ==== Biconditional builder ====
-The builder for the biconditional is very similar to the implication builder.  It could be proved much the way we proved the implication builder, but we derive it from the implication builder.<ref>Similar to [http://us.metamath.org/mpeuni/sbbii.html sbbii] in metamath's set.mm, accessed February 24, 2010, except that <code>s</code> is an <code>object</code> not a <code>variable</code></ref>
+The builder for the biconditional is very similar to the implication builder.  It could be proved much the way we proved the implication builder, but we derive it from the implication builder.
 
+<jh>
+thm (SubstBuilder () () ((∀ x (φ ↔ ψ)) → ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+        x φ ψ s SubstAddition
+        applySyllogism
+
+        φ ψ BiconditionalForwardElimination
+        x addForAll
+        x ψ φ s SubstAddition
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
+Here is a rule form.<ref>Similar to [http://us.metamath.org/mpeuni/sbbii.html sbbii] in metamath's set.mm, accessed February 24, 2010, except that <code>s</code> is an <code>object</code> not a <code>variable</code></ref>
 <jh>
 thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
         H eliminateBiconditionalReverse
