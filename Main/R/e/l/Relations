@@ -559,6 +559,18 @@ thm (FirstBuilder () () ((A = B) → ((1st A) = (1st B))) (
 ))
 </jh>
 
+This theorem shows that <code>1st</code> really does extract the first element of an ordered pair. It follows readily from <code>DomainSingletonRelation</code> and our definitions, and can be summarized as <code>⋃ domain { 〈A, B〉 } = ⋃ { A } = A</code>.
+<jh>
+thm (First () () ((1st (orderedPair A B)) = A) (
+        A B DomainSingletonRelation
+        buildUnion
+
+        A UnionSingleton
+
+        applyEqualityTransitivity
+))
+</jh>
+
 == Cartesian product ==
 The Cartesian product of two sets is the set of all ordered pairs consisting of one set from the first given set and one set from the second given set.
 
