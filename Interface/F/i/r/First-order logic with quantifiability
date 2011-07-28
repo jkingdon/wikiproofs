@@ -367,6 +367,9 @@ stmt (makeSubstExplicit ((x s) (x ψ))
 
 We can add <code>subst</code> to both sides of an implication or a biconditional.
 <jh>
+stmt (SubstAddition () () ((∀ x (φ → ψ)) → ((subst s x φ) → (subst s x ψ))))
+stmt (SubstBuilder () () ((∀ x (φ ↔ ψ)) → ((subst s x φ) ↔ (subst s x ψ))))
+
 stmt (addSubst () ((φ → ψ)) ((subst s x φ) → (subst s x ψ)))
 stmt (buildSubst () ((φ ↔ ψ)) ((subst s x φ) ↔ (subst s x ψ)))
 </jh>
