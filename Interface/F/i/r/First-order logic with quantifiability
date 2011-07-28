@@ -420,6 +420,21 @@ stmt (ChangeVariableExplicitForAll ((y φ) (x y)) ()
   ((∀ x φ) ↔ (∀ y (subst (value y) x φ))))
 </jh>
 
+Here are versions of the implicit ones with explicit freeness hypotheses rather than distinct variable constraints.
+<jh>
+stmt (ChangeVariableThereExistsNotFree
+  ((x y))
+  ((x is-not-free-in φy)
+   (y is-not-free-in φx)
+   (((value x) = (value y)) → (φx ↔ φy)))
+  ((∃ x φx) ↔ (∃ y φy)))
+stmt (ChangeVariableForAllNotFree ((x y))
+  ((x is-not-free-in φy)
+   (y is-not-free-in φx)
+   (((value x) = (value y)) → (φx ↔ φy)))
+  ((∀ x φx) ↔ (∀ y φy)))
+</jh>
+
 A similar transformation is possible for substitution.
 <jh>
 stmt (ChangeVariableSubstitution

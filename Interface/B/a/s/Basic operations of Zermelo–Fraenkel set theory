@@ -201,6 +201,15 @@ stmt (Extensionality ((A z) (B z)) () ((∀ z (((value z) ∈ A) ↔ ((value z) 
 stmt (applyExtensionality ((x A) (x B)) ((((value x) ∈ A) ↔ ((value x) ∈ B))) (A = B))
 </jh>
 
+Here's a variant with explicit freeness hypotheses rather than distinct variable constraints.
+<jh>
+stmt (ExtensionalityNotFree ((y A) (y B) (y x))
+  ((x is-not-free-in ((value y) ∈ A))
+   (x is-not-free-in ((value y) ∈ B))
+  )
+  ((A = B) ↔ (∀ x (((value x) ∈ A) ↔ ((value x) ∈ B)))))
+</jh>
+
 == References ==
 <references/>
 
