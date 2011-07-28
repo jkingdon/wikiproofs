@@ -186,6 +186,8 @@ stmt (SingletonBuilder () () ((A = B) → ((singleton A) = (singleton B))))
 
 stmt (UnorderedPairBuilder () () (((A0 = B0) ∧ (A1 = B1)) → ((unorderedPair A0 A1) = (unorderedPair B0 B1))))
 
+stmt (SeparationBuilder ((x A) (x B)) ()
+  (((A = B) ∧ (∀ x (φ ↔ ψ))) → ((separate x A φ) = (separate x B ψ))))
 stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A ψ)))
 
 stmt (UnionBuilder () () ((A = B) → ((⋃ A) = (⋃ B))))
