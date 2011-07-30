@@ -599,7 +599,123 @@ thm (ParallelogramDiagonals-a-p-c-c-pprime-a () ()
         A B C D P P′ ParallelogramDiagonals-p-c-pprime-a
         composeConjunction
 ))
+</jh>
 
+We're ready for <code>P = P′</code>. The proof is by <code>LineIntersection</code>, which in this case expands to <code>¬ collinear A C B ∧ B ≠ D ∧ collinear A C P ∧ collinear A C P′ ∧ collinear B D P ∧ collinear B D P′ → P = P′</code>.
+<jh>
+thm (ParallelogramDiagonals-p-pprime () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (P = P′)
+  ) (
+</jh>
+<code>¬ collinear A C B</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B C Collinearity23
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+<code>B ≠ D</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A C P</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A P C Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>collinear A C P′</code>. Because <code>A</code>, <code>P</code>, and <code>C</code> are collinear and <code>A P C ≅ C P′ A</code> we can conclude <code>P′</code> is also collinear with them.
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C D P P′ ParallelogramDiagonals-a-p-c-c-pprime-a
+
+        composeConjunction
+
+        A P C C P′ A CollinearityDegenerateTriangle
+        applySyllogism
+
+        A C P′ CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B D P</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        B P D Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B D P′</code>:
+<jh>
+        A B C D P P′ ParallelogramDiagonals-d-b-pprime
+
+        D B P′ Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+We are ready to apply <code>LineIntersection</code>.
+<jh>
+        A C B D P P′ LineIntersection
+        applySyllogism
+))
+</jh>
+
+<jh>
 #thm (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
 #      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
