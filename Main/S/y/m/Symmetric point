@@ -11,7 +11,7 @@ We import the theorems of [[Interface:Classical propositional calculus|propositi
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-import (START Interface:Line_segment_inequality (CLASSICAL FIRSTORDER) ())
+import (START Interface:Out_lines (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F M P Q R S X Y Z A′ B′ C′ D′ E′ B″ C″ P′ Q′ R′ S′ X′ Y′)
 var (point P1 P2)
