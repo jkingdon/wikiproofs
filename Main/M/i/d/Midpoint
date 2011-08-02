@@ -715,6 +715,93 @@ We are ready to apply <code>LineIntersection</code>.
 ))
 </jh>
 
+Now that we have <code>P = P′</code> we are mostly there. The next step is showing <code>P is-midpoint-of A C</code>
+
+<jh>
+thm (ParallelogramDiagonals-p-a-c () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (P is-midpoint-of A C)
+  ) (
+</jh>
+To apply <code>EquidistantMidpoint</code> we first will need <code>A ≠ C</code>. We derive it from <code>¬ collinear A B C<code>, by means of <code>A = C → collinear A B C</code>
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B CollinearityABA
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B A C CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        detachImplicationBiconditional
+
+        (A = C) (collinear A B C) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applySyllogism
+</jh>
+Next we need <code>collinear A P C</code>.
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Next is <code>P A ≡ P C</code>, which follows from <code>P A ≡ P′ C</code> and a substitution.
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-a-pprime-c
+
+        A B C D P P′ ParallelogramDiagonals-p-pprime
+
+        P EqualityReflexivity
+        A EqualityReflexivity
+        C EqualityReflexivity
+        P P A A P P′ C C CongruenceBuilder
+        detach2of2
+        detach2of3
+        detach1of2
+
+        applySyllogism
+
+        eliminateBiconditionalReverseInConsequent
+        applyModusPonensInConsequent
+
+        composeConjunction
+</jh>
+Now we apply <code>EquidistantMidpoint</code>, which first gives us <code>A = C ∨ P is-midpoint-of A C</code>,
+<jh>
+        A P C EquidistantMidpoint
+        applySyllogism
+</jh>
+and then <code>P is-midpoint-of A C</code>.
+<jh>
+        (A = C) (P is-midpoint-of A C) DisjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+</jh>
+
+Now we are ready to combine this with the construction of <code>P′</code> to produce our result.
 <jh>
 #thm (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
