@@ -145,14 +145,6 @@ stmt (InnerSegmentConstruction
   (∃ p (((between Q A (value p)) ∨ (between Q (value p) A)) ∧ (Q (value p) ≡ B C))))
 </jh>
 
-== Existence of distinct points ==
-Here we can construct a point distinct from a given point, or a point distinct from a given point extended along a given line segment.
-<jh>
-stmt (PointConstructionDifferent ((c A) (c B)) ()
-  (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
-stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
-</jh>
-
 == Inequality of line segments ==
 The formula <code>A B ≤ C D</code> means that the line segment <code>A B</code> is shorter than (or the same length as) the line segment <code>C D</code>.
 <jh>
@@ -303,6 +295,37 @@ stmt (CollinearityConstructDegenerateTriangle
   (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))))
 </jh>
 
+== Existence of distinct points ==
+Here we can construct a point distinct from a given point, or a point distinct from a given point extended along a given line segment.
+<jh>
+stmt (PointConstructionDifferent ((c A) (c B)) ()
+  (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
+stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
+</jh>
+
+There exist three non-collinear points.
+<jh>
+stmt (LowerDimensionCollinearity ((a b c)) ()
+  (∃ a (∃ b (∃ c (¬ (collinear (value a) (value b) (value c)))))))
+</jh>
+
+Given a line, there is a point which is not on that line.
+<jh>
+stmt (PointNotOnLine ((c A) (c B)) ()
+  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))))
+</jh>
+
+== Intersecting lines ==
+If two distinct, non-degenerate lines intersect, they intersect in a single point.
+
+<jh>
+stmt (LineIntersection () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (P = Q)))
+</jh>
+
 == Midpoints ==
 A point is the midpoint of a line segment if it is between the endpoints and is equidistant from each one.
 <jh>
@@ -375,12 +398,6 @@ var (variable xx yy)
 stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b) (a b xx yy)) () 
   ((∃ a (∀ xx (∀ yy ((φx ∧ ψy) → (between (value a) (value xx) (value yy))))))
   → (∃ b (∀ xx (∀ yy ((φx ∧ ψy) → (between (value xx) (value b) (value yy))))))))
-stmt (LowerDimension ((a b c)) ()
-  (∃ a (∃ b (∃ c
-    (((¬ (between (value a) (value b) (value c)))
-     ∧ (¬ (between (value b) (value c) (value a))))
-     ∧ (¬ (between (value c) (value a) (value b)))
-)))))
 stmt (UpperDimension () ()
   (((((x u ≡ x v) ∧ (y u ≡ y v)) ∧ (z u ≡ z v)) ∧ (u ≠ v))
   → (((between x y z) ∨ (between y z x)) ∨ (between z x y))))
