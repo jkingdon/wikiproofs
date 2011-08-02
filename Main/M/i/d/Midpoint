@@ -751,7 +751,7 @@ To apply <code>EquidistantMidpoint</code> we first will need <code>A ≠ C</code
 
         (A = C) (collinear A B C) Transposition
         eliminateBiconditionalReverse
-        applySyllogism
+        applyModusPonens
 
         applySyllogism
 </jh>
@@ -781,7 +781,7 @@ Next is <code>P A ≡ P C</code>, which follows from <code>P A ≡ P′ C</code>
 
         applySyllogism
 
-        eliminateBiconditionalReverseInConsequent
+        eliminateBiconditionalForwardInConsequent
         applyModusPonensInConsequent
 
         composeConjunction
