@@ -599,7 +599,210 @@ thm (ParallelogramDiagonals-a-p-c-c-pprime-a () ()
         A B C D P P′ ParallelogramDiagonals-p-c-pprime-a
         composeConjunction
 ))
+</jh>
 
+We're ready for <code>P = P′</code>. The proof is by <code>LineIntersection</code>, which in this case expands to <code>¬ collinear A C B ∧ B ≠ D ∧ collinear A C P ∧ collinear A C P′ ∧ collinear B D P ∧ collinear B D P′ → P = P′</code>.
+<jh>
+thm (ParallelogramDiagonals-p-pprime () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (P = P′)
+  ) (
+</jh>
+<code>¬ collinear A C B</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B C Collinearity23
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+<code>B ≠ D</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>collinear A C P</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A P C Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Next is <code>collinear A C P′</code>. Because <code>A</code>, <code>P</code>, and <code>C</code> are collinear and <code>A P C ≅ C P′ A</code> we can conclude <code>P′</code> is also collinear with them.
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C D P P′ ParallelogramDiagonals-a-p-c-c-pprime-a
+
+        composeConjunction
+
+        A P C C P′ A CollinearityDegenerateTriangle
+        applySyllogism
+
+        A C P′ CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B D P</code>:
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        B P D Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B D P′</code>:
+<jh>
+        A B C D P P′ ParallelogramDiagonals-d-b-pprime
+
+        D B P′ Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+We are ready to apply <code>LineIntersection</code>.
+<jh>
+        A C B D P P′ LineIntersection
+        applySyllogism
+))
+</jh>
+
+Now that we have <code>P = P′</code> we are mostly there. The next step is showing <code>P is-midpoint-of A C</code>
+
+<jh>
+thm (ParallelogramDiagonals-p-a-c () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (P is-midpoint-of A C)
+  ) (
+</jh>
+To apply <code>EquidistantMidpoint</code> we first will need <code>A ≠ C</code>. We derive it from <code>¬ collinear A B C<code>, by means of <code>A = C → collinear A B C</code>
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B CollinearityABA
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B A C CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        detachImplicationBiconditional
+
+        (A = C) (collinear A B C) Transposition
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        applySyllogism
+</jh>
+Next we need <code>collinear A P C</code>.
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Next is <code>P A ≡ P C</code>, which follows from <code>P A ≡ P′ C</code> and a substitution.
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-a-pprime-c
+
+        A B C D P P′ ParallelogramDiagonals-p-pprime
+
+        P EqualityReflexivity
+        A EqualityReflexivity
+        C EqualityReflexivity
+        P P A A P P′ C C CongruenceBuilder
+        detach2of2
+        detach2of3
+        detach1of2
+
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+
+        composeConjunction
+</jh>
+Now we apply <code>EquidistantMidpoint</code>, which first gives us <code>A = C ∨ P is-midpoint-of A C</code>,
+<jh>
+        A P C EquidistantMidpoint
+        applySyllogism
+</jh>
+and then <code>P is-midpoint-of A C</code>.
+<jh>
+        (A = C) (P is-midpoint-of A C) DisjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+</jh>
+
+Now we are ready to combine this with the construction of <code>P′</code> to produce our result.
+<jh>
 #thm (ParallelogramDiagonals () ()
 #  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
 #      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
