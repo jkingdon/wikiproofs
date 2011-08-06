@@ -726,7 +726,7 @@ thm (ParallelogramDiagonals-p-a-c () ()
     (P is-midpoint-of A C)
   ) (
 </jh>
-To apply <code>EquidistantMidpoint</code> we first will need <code>A ≠ C</code>. We derive it from <code>¬ collinear A B C<code>, by means of <code>A = C → collinear A B C</code>
+We'll be applying <code>EquidistantMidpoint</code>, and first will need <code>A ≠ C</code>. We derive it from <code>¬ collinear A B C<code>, by means of <code>A = C → collinear A B C</code>
 <jh>
         ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
             (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
@@ -794,6 +794,102 @@ Now we apply <code>EquidistantMidpoint</code>, which first gives us <code>A = C 
 and then <code>P is-midpoint-of A C</code>.
 <jh>
         (A = C) (P is-midpoint-of A C) DisjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+</jh>
+
+The proof of <code>P is-midpoint-of B D</code> is similar.
+<jh>
+thm (ParallelogramDiagonals-p-b-d () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (P is-midpoint-of B D)
+  ) (
+</jh>
+We'll be applying <code>EquidistantMidpoint</code>, and first will need <code>B ≠ D</code>.
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Next is <code>collinear B P D</code>. We start with <code>collinear D B P′</code>,
+<jh>
+        A B C D P P′ ParallelogramDiagonals-d-b-pprime
+</jh>
+substitute <code>P</code> for <code>P′</code>,
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-pprime
+
+        D EqualityReflexivity
+        B EqualityReflexivity
+        D D B B P P′ CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+</jh>
+and rotate.
+<jh>
+        D B P CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>P B ≡ P D</code>. We start with <code>B P ≡ D P′</code>,
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionLeftElimination
+        B D P D B P′ Congruence13
+        applySyllogism
+</jh>
+substitute <code>P<code> for <code>P′</code>,
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-pprime
+
+        P EqualityReflexivity
+        D EqualityReflexivity
+        B EqualityReflexivity
+        B B P P D D P P′ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+</jh>
+and commute the points on each side of the congruence.
+<jh>
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+Now we apply <code>EquidistantMidpoint</code>, which first gives us <code>B = D ∨ P is-midpoint-of B D</code>,
+<jh>
+        B P D EquidistantMidpoint
+        applySyllogism
+</jh>
+and then <code>P is-midpoint-of B D</code>.
+<jh>
+        (B = D) (P is-midpoint-of B D) DisjunctionImplication
         eliminateBiconditionalReverse
         applySyllogism
 
