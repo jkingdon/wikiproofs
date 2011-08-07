@@ -395,11 +395,11 @@ stmt (EquidistantMidpoint () ()
 [[File:Color parallelogram.svg|thumb|right]]
 The diagonals of a parallelogram bisect each other.<ref>l7_21 in Narboux</ref> (By "parallelogram" here we mean a quadrilateral whose opposite sides are congruent; there is no direct statement concerning parallel lines).
 <jh>
-#stmt (ParallelogramDiagonals () ()
-#  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
-#      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
-#      (collinear A P C)) ∧ (collinear B P D)) →
-#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
+stmt (ParallelogramDiagonals () ()
+  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) →
+    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
 </jh>
 
 == Tarski's axioms ==

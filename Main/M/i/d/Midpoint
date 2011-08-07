@@ -899,12 +899,23 @@ and then <code>P is-midpoint-of B D</code>.
 
 Now we are ready to combine this with the construction of <code>P′</code> to produce our result.
 <jh>
-#thm (ParallelogramDiagonals () ()
-#  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
-#      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
-#      (collinear A P C)) ∧ (collinear B P D)) →
-#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))) (
-#))
+thm (ParallelogramDiagonals
+  ((p′ A) (p′ B) (p′ C) (p′ D) (p′ P)) ()
+  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) →
+    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))) (
+        A B C D P p′ ParallelogramDiagonals-pprime
+
+        A B C D P (value p′) ParallelogramDiagonals-p-a-c
+        A B C D P (value p′) ParallelogramDiagonals-p-b-d
+        composeConjunction
+        p′ addThereExists
+
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
 
 == Export ==
