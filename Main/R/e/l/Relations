@@ -465,7 +465,7 @@ We prove the builder based on the definition <code>{ x ∈ ⋃ ⋃ R | ∃ y 〈
         (⋃ R) (⋃ S) UnionBuilder
         applySyllogism
 </jh>
-Next is <code>R = S → ∀ x (∃ y 〈x, y〉 ∈ R ↔ ∃ y 〈x, y〉 ∈ S)</code>
+Next is <code>R = S → ∀ x (∃ y 〈x, y〉 ∈ R ↔ ∃ y 〈x, y〉 ∈ S)</code>
 <jh>
         R S (orderedPair (value x) (value y)) MembershipBuilderLL
         y buildThereExistsInConsequent
@@ -559,7 +559,7 @@ thm (FirstBuilder () () ((A = B) → ((1st A) = (1st B))) (
 ))
 </jh>
 
-This theorem shows that <code>1st</code> really does extract the first element of an ordered pair. It follows readily from <code>DomainSingletonRelation</code> and our definitions, and can be summarized as <code>⋃ domain { 〈A, B〉 } = ⋃ { A } = A</code>.
+This theorem shows that <code>1st</code> really does extract the first element of an ordered pair. It follows readily from <code>DomainSingletonRelation</code> and our definitions, and can be summarized as <code>⋃ domain { 〈A, B〉 } = ⋃ { A } = A</code>.
 <jh>
 thm (First () () ((1st (orderedPair A B)) = A) (
         A B DomainSingletonRelation
