@@ -85,6 +85,12 @@ term (object (orderedPair object object))
 stmt (OrderedPairTheorem () () (((orderedPair A0 B0) = (orderedPair A1 B1)) ↔ ((A0 = A1) ∧ (B0 = B1))))
 </jh>
 
+We can extract the first element of an ordered pair.
+<jh>
+term (object (1st object))
+stmt (First () () ((1st (orderedPair A B)) = A))
+</jh>
+
 == Relations ==
 A relation is a set of ordered pairs. We define <code>relation A</code> as a formula meaning "A is a relation". We customarily use the letters <code>R, S, and T</code> for relations.
 <jh>
@@ -228,6 +234,9 @@ stmt (buildSeparation ((x A)) ((φ ↔ ψ)) ((separate x A φ) = (separate x A �
 
 stmt (UnionBuilder () () ((A = B) → ((⋃ A) = (⋃ B))))
 stmt (buildUnion () ((A = B)) ((⋃ A) = (⋃ B)))
+
+stmt (FirstBuilder () () ((A = B) → ((1st A) = (1st B))))
+stmt (DomainBuilder () () ((A = B) → ((domain A) = (domain B))))
 </jh>
 
 == Extensionality ==
