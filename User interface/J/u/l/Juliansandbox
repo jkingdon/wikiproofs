@@ -1,0 +1,31 @@
+<jh>
+
+kind (nat)
+kind (formula)
+
+var (nat x y z)
+
+term (formula (= nat nat))
+
+stmt (eqreflexive () () (x = x)) # 1st Peano axiom
+stmt (eqsymmetric () ((x = y)) (y = x)) # 2nd Peano axiom
+stmt (eqtransitive () ((x = y) (y = z)) (x = z)) # 3rd Peano axiom
+
+term (nat (0)) # 5th Peano axiom
+term (nat (succ nat)) # 6th Peano axiom, a
+
+stmt (succfunc () ((x = y)) ((succ x) = (succ y))) # 6th Peano axiom, b
+stmt (succinj () (((succ x) = (succ y))) (x = y)) # 8th Peano axiom
+
+def ((1) (succ (0)))
+def ((2) (succ (1)))
+def ((3) (succ (2)))
+def ((4) (succ (3)))
+
+term (nat (+ nat nat))
+
+stmt (addsym () () ((x + y) = (y + x)))
+stmt (addzero () () (x = (x + (0))))
+stmt (addsucc () () ((succ (x + y)) = (x + (succ y))))
+
+</jh>
