@@ -1,0 +1,42 @@
+beginning of type string
+
+<jh>
+
+kind (string)
+
+kind (formula)
+
+var (string x y z)
+
+term (formula (= string string))
+
+stmt (eqreflexive () () 
+  (x = x)
+)
+
+stmt (eqsymmetric () (
+  (x = y)
+) 
+  (y = x)
+)
+
+stmt (eqtransitive () (
+  (x = y) 
+  (y = z)
+) 
+  (x = z)
+)
+
+term (string (ε))
+
+term (string (+ string string))
+
+stmt (addempty () () 
+  (x = (x + (ε)))
+)
+
+stmt (addassoc () () ( 
+  ((x + y) + z) = (x + (y + z)))
+)
+
+</jh>
