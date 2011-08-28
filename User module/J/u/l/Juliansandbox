@@ -1,0 +1,17 @@
+<jh>
+import (NAT User_interface:Julian/sandbox () ())
+
+thm (2+2=4 () () (((2) + (2)) = (4)) (
+
+  (2) addzero
+  succfunc         
+  (2) (0) addsucc          
+  eqtransitive         
+  succfunc         
+  (2) (1) addsucc         
+  eqtransitive         
+  eqsymmetric 
+
+))
+
+</jh>
