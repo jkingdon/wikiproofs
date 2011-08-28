@@ -1,6 +1,52 @@
 <jh>
 import (NAT User_interface:Julian/sandbox () ())
 
+
+var (nat a b)
+
+</jh>
+
+
+
+<jh>
+thm (example1 () (
+
+)
+  (a = a)
+(
+  a eqreflexive
+))
+
+</jh>
+
+
+<jh>
+thm (succEq1 () (
+  (H (a = (a + b)))
+) 
+  ((succ a) = (a + (succ b)))
+(
+  H
+  succfunc
+  a b addsucc
+  eqtransitive
+))
+</jh>
+
+<jh>
+thm (2+1=3 () (
+
+) 
+  (((2) + (1)) = (3)) 
+(
+  (2) addzero
+  succEq1
+  eqsymmetric
+))
+</jh>
+
+
+<jh>
 thm (2+2=4 () () (((2) + (2)) = (4)) (
 
 </jh>
@@ -48,7 +94,8 @@ thm (2+2=4 () () (((2) + (2)) = (4)) (
 </jh>
 [5]': (((2) + (2)) = (4))
 
-&#x220e;
+<!-- &#x220e; -->
+&#x25A0;
 
 <jh>
 
