@@ -20,6 +20,21 @@ thm (example1 () (
 </jh>
 
 
+
+<jh>
+thm (succEq0 () (
+)
+  ((succ a) = (a + (1)))
+(
+  a addzero
+  succfunc
+  a (0) addsucc
+  eqtransitive
+))
+
+</jh>
+
+
 <jh>
 thm (succEq1 () (
   (H (a = (a + b)))
@@ -32,6 +47,7 @@ thm (succEq1 () (
   eqtransitive
 ))
 </jh>
+
 
 <jh>
 thm (2+1=3 () (
