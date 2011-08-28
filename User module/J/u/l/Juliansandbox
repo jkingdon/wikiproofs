@@ -1,23 +1,120 @@
 <jh>
-import (NAT User_interface:Julian/MIU_system () ())
+import (NAT User_interface:Julian/sandbox () ())
+
+
+var (nat a b)
+
+</jh>
 
 
 
-thm (MIIIIU () (
+<jh>
+thm (example1 () (
 
 )
-  (|-  ( ( ( ( (M) + ( (I) + (I) ) ) + (I) ) + (I) ) + (U) ) )
+  (a = a)
 (
-
-  initial   # MI
-  rule2     # MII
-  assoc1
-  rule2     # MIIII
-  assoc2
-  rule1     # MIIIIU
-
+  a eqreflexive
 ))
 
+</jh>
 
+
+
+<jh>
+thm (succEq0 () (
+)
+  ((succ a) = (a + (1)))
+(
+  a addzero
+  succfunc
+  a (0) addsucc
+  eqtransitive
+))
+
+</jh>
+
+
+<jh>
+thm (succEq1 () (
+  (H (a = (a + b)))
+) 
+  ((succ a) = (a + (succ b)))
+(
+  H
+  succfunc
+  a b addsucc
+  eqtransitive
+))
+</jh>
+
+
+<jh>
+thm (2+1=3 () (
+
+) 
+  (((2) + (1)) = (3)) 
+(
+  (2) addzero
+  succEq1
+  eqsymmetric
+))
+</jh>
+
+
+<jh>
+thm (2+2=4 () () (((2) + (2)) = (4)) (
+
+</jh>
+
+((2) = ((2) + (0)))
+<jh>
+  (2) addzero
+</jh>
+
+[1]: ((succ (2)) = (succ ((2) + (0))))
+<jh>
+  succfunc
+</jh>
+
+[2]: ((succ ((2) + (0))) = ((2) + (succ (0))))
+<jh>
+  (2) (0) addsucc
+</jh>
+
+[1] + [2]: ((succ (2)) = ((2) + (succ (0))))
+<jh>
+  eqtransitive
+</jh>
+
+[3]: ((succ (succ (2))) = (succ ((2) + (succ (0)))))
+
+[3]': ((succ (succ (2))) = (succ ((2) + (1))))
+<jh>
+  succfunc
+</jh>
+
+[4]: ((succ ((2) + (1))) = ((2) + (succ (1))))
+<jh>
+  (2) (1) addsucc
+</jh>
+
+[3]' + [4]: ((succ (succ (2))) = ((2) + (succ (1))))
+<jh>
+  eqtransitive
+</jh>
+
+[5]: (((2) + (succ (1))) = (succ (succ (2))))
+<jh>
+  eqsymmetric
+</jh>
+[5]': (((2) + (2)) = (4))
+
+<!-- &#x220e; -->
+&#x25A0;
+
+<jh>
+
+))
 
 </jh>
