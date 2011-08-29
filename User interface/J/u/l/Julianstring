@@ -6,7 +6,7 @@ kind (string)
 
 kind (formula)
 
-var (string x y z)
+var (string x x1 x2 y y1 y2 z)
 
 term (formula (= string string))
 
@@ -31,12 +31,21 @@ term (string (ε))
 
 term (string (+ string string))
 
-stmt (addempty () () 
+stmt (addempty () (
+) 
   (x = (x + (ε)))
 )
 
-stmt (addassoc () () ( 
-  ((x + y) + z) = (x + (y + z)))
+stmt (addassoc () (
+) 
+  (((x + y) + z) = (x + (y + z)))
+)
+
+stmt (repl () (
+  (x1 = y1)
+  ((x1 + x2) = (y1 + y2))
+) 
+  (x2 = y2)
 )
 
 </jh>
