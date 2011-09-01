@@ -1,0 +1,82 @@
+MIU system<ref>D. Hofstadter; "Gödel, Escher, Bach: an Eternal Golden Braid"; Vintage Books Edition; May 1989</ref>, naïve approach:
+
+<jh>
+kind (miu)
+term (miu (M)) 
+term (miu (I))
+term (miu (U))
+term (miu (+ miu miu))
+
+kind (validmiu)
+term (validmiu (|- miu))
+
+var (miu x y z)
+
+
+stmt (assoc1 () (
+  (|- ( (x + y) + z ) )
+) 
+  (|- ( x + (y + z) ) )
+)
+
+
+stmt (assoc2 () (
+  (|- ( x + (y + z) ) )
+) 
+  (|- ( (x + y) + z ) )
+)
+
+
+stmt (initial () (
+
+) 
+  (|- ( (M) + (I) ) )
+)
+
+
+stmt (rule1 () (
+  (|- ( x  + (I) ) )
+) 
+  (|- ( ( x  + (I) ) + (U) ) )
+)
+
+
+stmt (rule2 () (
+  (|- ( (M) + x ) )
+) 
+  (|- ( ( (M) + x ) + x ) )
+)
+
+
+stmt (rule3 () (
+  (|- ( ( ( ( x + (I) ) + (I) ) + (I) ) + y ) )
+) 
+  (|- ( ( x + (U) ) + y ) )
+)
+
+
+stmt (rule3' () (
+  (|- ( ( ( x + (I) ) + (I) ) + (I) ) )
+) 
+  (|- ( x + (U) ) )
+)
+
+
+stmt (rule4 () (
+  (|- ( ( ( x + (U) ) + (U) ) + y ) )
+) 
+  (|- ( x + y ) )
+)
+
+
+stmt (rule4' () (
+  (|- ( ( x + (U) ) + (U) ) )
+) 
+  (|- x )
+)
+
+
+</jh>
+
+
+<references/>
