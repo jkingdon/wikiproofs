@@ -726,7 +726,7 @@ thm (ParallelogramDiagonals-p-a-c () ()
     (P is-midpoint-of A C)
   ) (
 </jh>
-To apply <code>EquidistantMidpoint</code> we first will need <code>A ≠ C</code>. We derive it from <code>¬ collinear A B C<code>, by means of <code>A = C → collinear A B C</code>
+We'll be applying <code>EquidistantMidpoint</code>, and first will need <code>A ≠ C</code>. We derive it from <code>¬ collinear A B C<code>, by means of <code>A = C → collinear A B C</code>
 <jh>
         ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
             (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
@@ -801,15 +801,130 @@ and then <code>P is-midpoint-of A C</code>.
 ))
 </jh>
 
+The proof of <code>P is-midpoint-of B D</code> is similar.
+<jh>
+thm (ParallelogramDiagonals-p-b-d () ()
+  ((((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) ∧
+      (B D P ≅ D B P′)) →
+    (P is-midpoint-of B D)
+  ) (
+</jh>
+We'll be applying <code>EquidistantMidpoint</code>, and first will need <code>B ≠ D</code>.
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Next is <code>collinear B P D</code>. We start with <code>collinear D B P′</code>,
+<jh>
+        A B C D P P′ ParallelogramDiagonals-d-b-pprime
+</jh>
+substitute <code>P</code> for <code>P′</code>,
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-pprime
+
+        D EqualityReflexivity
+        B EqualityReflexivity
+        D D B B P P′ CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+</jh>
+and rotate.
+<jh>
+        D B P CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>P B ≡ P D</code>. We start with <code>B P ≡ D P′</code>,
+<jh>
+        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+            (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+            (collinear A P C)) ∧ (collinear B P D))
+          (B D P ≅ D B P′)
+          ConjunctionLeftElimination
+        B D P D B P′ Congruence13
+        applySyllogism
+</jh>
+substitute <code>P<code> for <code>P′</code>,
+<jh>
+        A B C D P P′ ParallelogramDiagonals-p-pprime
+
+        P EqualityReflexivity
+        D EqualityReflexivity
+        B EqualityReflexivity
+        B B P P D D P P′ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+</jh>
+and commute the points on each side of the congruence.
+<jh>
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+Now we apply <code>EquidistantMidpoint</code>, which first gives us <code>B = D ∨ P is-midpoint-of B D</code>,
+<jh>
+        B P D EquidistantMidpoint
+        applySyllogism
+</jh>
+and then <code>P is-midpoint-of B D</code>.
+<jh>
+        (B = D) (P is-midpoint-of B D) DisjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+</jh>
+
 Now we are ready to combine this with the construction of <code>P′</code> to produce our result.
 <jh>
-#thm (ParallelogramDiagonals () ()
-#  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
-#      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
-#      (collinear A P C)) ∧ (collinear B P D)) →
-#    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))) (
-#))
+thm (ParallelogramDiagonals
+  ((p′ A) (p′ B) (p′ C) (p′ D) (p′ P)) ()
+  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) →
+    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))) (
+        A B C D P p′ ParallelogramDiagonals-pprime
+
+        A B C D P (value p′) ParallelogramDiagonals-p-a-c
+        A B C D P (value p′) ParallelogramDiagonals-p-b-d
+        composeConjunction
+        p′ addThereExists
+
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
+
+== Joining the midpoints ==
+[[File:Lemma l7_22 in Narboux.svg|thumb|right]]
+This one may be hard to describe in a single sentence. The theorem is that given the configuration shown in the diagram, the point <code>C</code> is on the line segment connecting the midpoints <code>M1</code> and <code>M2</code>. In symbols, <code>between A1 C A2 ∧ between B1 C B2 ∧ C A1 ≡ C B1 ∧ C A2 ≡ C B2 ∧ M1 is-midpoint-of A1 B1 ∧ M2 is-midpoint-of A2 B2 → between M1 C M2<code>.<ref>l7_22 in Narboux</ref>
+
+The proof starts by assuming, without loss of generality, that <code>C A1 ≤ C A2</code>.<ref>l7_22_aux in Narboux</ref>
+
+For now, we omit the (lengthy) proof here, as we don't yet need it.
 
 == Export ==
 We now export to [[Interface:Midpoint]].
