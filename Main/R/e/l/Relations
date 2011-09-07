@@ -629,6 +629,36 @@ The left side of that is just <code>B ∈ range R</code>; the right side is a su
 ))
 </jh>
 
+==== Builder ====
+Here we prove the range builder, in a similar way to how we proved the domain builder.
+<jh>
+thm (RangeBuilder ( (y R) (y S) (y x) (x R) (x S)) () ((R = S) → ((range R) = (range S))) (
+</jh>
+We prove the builder based on the definition <code>{ y ∈ ⋃ ⋃ R | ∃ x 〈x, y〉 ∈ R }</code>. The first step is <code>R = S → ⋃ ⋃ R = ⋃ ⋃ S</code>.
+<jh>
+        R S UnionBuilder
+        (⋃ R) (⋃ S) UnionBuilder
+        applySyllogism
+</jh>
+Next is <code>R = S → ∀ y (∃ x 〈x, y〉 ∈ R ↔ ∃ x 〈x, y〉 ∈ S)</code>
+<jh>
+        R S (orderedPair (value x) (value y)) MembershipBuilderLL
+        x buildThereExistsInConsequent
+        y addForAllToConsequent
+</jh>
+Now we can apply the separation builder.
+<jh>
+        composeConjunction
+        (⋃ (⋃ R))
+          (⋃ (⋃ S))
+          y
+          (∃ x ((orderedPair (value x) (value y)) ∈ R))
+          (∃ x ((orderedPair (value x) (value y)) ∈ S))
+          SeparationBuilder
+        applySyllogism
+))
+</jh>
+
 == The first and second elements of an ordered pair ==
 Here we attend to a notational detail: given an ordered pair, we want an expression for its first or second element. We define the first element of <code>C</code> as <code>⋃ domain { C }</code>.
 <jh>
