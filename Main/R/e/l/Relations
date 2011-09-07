@@ -659,6 +659,66 @@ Now we can apply the separation builder.
 ))
 </jh>
 
+==== The range of a singleton relation ====
+Analogously to domain, the range of <code>{ 〈A, B〉 }</code> is simply <code>{ B }</code>.<ref>[http://us.metamath.org/mpeuni/rnsnop.html rnsnop], metamath's set.mm, accessed 2011</ref>
+
+<jh>
+thm (RangeSingletonRelationLemma ((x C) (x B)) ()
+  ((∃ x ((orderedPair (value x) C) ∈ (singleton (orderedPair A B)))) ↔ (C = B)) (
+        (orderedPair (value x) C) (orderedPair A B) Singleton
+        (value x) C A B OrderedPairTheorem
+        applyBiconditionalTransitivity
+</jh>
+So far that gives us <code>〈x, C〉 ∈ { 〈A, B〉 } ↔ x = A ∧ C = B</code>. Now we add <code>∃ x</code> to both sides, and then move <code>C = B</code> outside the quantifier.
+<jh>
+        x buildThereExists
+
+        x ((value x) = A) (C = B) ThereExistsConjunctionRightMovement
+        applyBiconditionalTransitivity
+</jh>
+We have <code>∃ x 〈x, C〉 ∈ { 〈A, B〉 } ↔ ∃ x x = A ∧ C = B</code> and the <code>∃ x x = A</code> part is a theorem (<code>Quantifiability</code>).
+<jh>
+        x A Quantifiability
+        (∃ x ((value x) = A)) (C = B) BiconditionalConjunct
+        applyModusPonens
+
+        (C = B) (∃ x ((value x) = A)) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (RangeSingletonRelation (  (x A) (x B) (y x) (y A) (y B)
+  (x′ y′) (x′ A) (x′ B) (x′ x) (x′ y) (y′ A) (y′ B) (y′ x) (y′ y)) ()
+  ((range (singleton (orderedPair A B))) = (singleton B)) (
+</jh>
+Because we are still in the same proof module as the definition of <code>range</code>, we need to expand the definition manually (rather than automatically), and specify some distinct variable constraints for <code>x′</code> and <code>y′</code>.
+<jh>
+        (singleton (orderedPair A B)) x′ y′ Range-def
+        (value y) buildMembershipLL
+        swapBiconditional
+</jh>
+We start with <code>y ∈ range { 〈A, B〉 } ↔ ∃ x 〈x, y〉 ∈ { 〈A, B〉 }</code>
+<jh>
+        (value y) (singleton (orderedPair A B)) x Range
+        applyBiconditionalTransitivity
+</jh>
+The right hand side is equivalent to <code>y = B</code> by our lemma,
+<jh>
+        x (value y) A B RangeSingletonRelationLemma
+        applyBiconditionalTransitivity
+</jh>
+and to <code>y ∈ { B }</code>, which is all we need to apply extensionality.
+<jh>
+        (value y) B Singleton
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        applyExtensionality
+))
+</jh>
+
 == The first and second elements of an ordered pair ==
 Here we attend to a notational detail: given an ordered pair, we want an expression for its first or second element. We define the first element of <code>C</code> as <code>⋃ domain { C }</code>.
 <jh>
