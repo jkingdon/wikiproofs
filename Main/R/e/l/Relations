@@ -540,6 +540,95 @@ and to <code>x ∈ { A }</code>, which is all we need to apply extensionality.
 ))
 </jh>
 
+=== Range ===
+We define [[w:range (mathematics)|range]] analogously to domain: the values which the second members of the ordered pairs in the relation can take on. At least for functions, range is sometimes defined to a be a set which contains the values, but here we pick the definition where it contains exactly the values and no others.
+<jh>
+def ((range R) (separate y (⋃ (⋃ R)) (∃ x ((orderedPair (value x) (value y)) ∈ R))))
+</jh>
+
+Metamath defines the range as the domain of the [[w:inverse relation|inverse relation]]. We haven't yet proved that the inverse relation exists, so at least for now we handle range much like we handled domain, rather than defining range in terms of domain.<ref>[http://us.metamath.org/mpeuni/df-rn.html df-rn], metamath's set.mm, accessed February 5, 2011</ref>
+
+==== A theorem expressing what the range is ====
+As with domain, we provide a theorem to fold or unfold the definition while specifying the dummy variables in the definition. Also as with domain, we won't need this once we prove <code>Range</code> below.
+<jh>
+thm (Range-def
+  ((x R) (y R) (x y)  (x′ y′) (x′ y) (x y′) (x′ R) (y′ R) (x′ x) (y′ y)) ()
+  ((range R) = (separate y (⋃ (⋃ R)) (∃ x ((orderedPair (value x) (value y)) ∈ R)))) (
+</jh>
+We start by changing <code>y′</code> to <code>y</code>, that is <code>{ y′ ∈ ⋃ ⋃ R | ∃ x′ 〈 x′, y′ 〉 ∈ R } = { y ∈ ⋃ ⋃ R | ∃ x′ 〈 x′, y 〉 ∈ R }</code>.
+<jh>
+        (value y′) (value y) (value x′) OrderedPairBuilderLL
+        R buildMembershipRRInConsequent
+        x′ buildThereExistsInConsequent
+        (⋃ (⋃ R)) ChangeVariableSeparation
+</jh>
+Then we show <code>∃ x′ 〈 x′, y 〉 ∈ R ↔ ∃ x 〈 x, y 〉 ∈ R</code>,
+<jh>
+        (value x′) (value x) (value y) OrderedPairBuilderRR
+        R buildMembershipRRInConsequent
+        ChangeVariableThereExists
+</jh>
+and combine the two parts.
+<jh>
+        y (⋃ (⋃ R)) buildSeparation
+        applyEqualityTransitivity
+))
+</jh>
+
+The next lemma is <code>∃ x 〈x, A〉 ∈ R → A ∈ ⋃ ⋃ R</code>, which goes most of the way towards showing that our definition of range does what we expect it to.
+<jh>
+thm (Range-2 ((x A) (x R)) ()
+  ((∃ x ((orderedPair (value x) A) ∈ R)) → (A ∈ (⋃ (⋃ R)))) (
+</jh>
+First we put <code>A ∈ { x, A }</code> on the proof stack for later use.
+<jh>
+        A (value x) UnorderedPairRightMembership
+</jh>
+Leaving that aside for the moment, we start with <code>Domain-1</code>, which is <code>〈 x, A 〉 ∈ R → { x, A } ∈ ⋃ R</code>, and turn the consequent into <code>{ x, A } ⊆ ⋃ ⋃ R</code>.
+<jh>
+        (value x) A R Domain-1
+
+        (unorderedPair (value x) A) (⋃ R) MembershipSubsetUnion
+        applySyllogism
+</jh>
+Now we turn <code>{ x, A } ⊆ ⋃ ⋃ R</code> into <code>A ∈ { x, A } → A ∈ ⋃ ⋃ R</code>,
+<jh>
+        (unorderedPair (value x) A) (⋃ (⋃ R)) A SubsetMembership
+        applySyllogism
+</jh>
+and then detach <code>A ∈ { x, A }</code>. That gives us <code>〈 x, A 〉 ∈ R → A ∈ ⋃ ⋃ R</code> so adding <code>∃ x</code> to the antecedent we are done.
+<jh>
+        detachImplicationImplication
+        x addThereExistsToAntecedent
+))
+</jh>
+
+We're now ready to prove the main result, <code>B ∈ range R ↔ ∃ x 〈x, B〉 ∈ R</code>.<ref>[http://us.metamath.org/mpeuni/elrn2.html elrn2], metamath's set.mm, accessed February, 2011</ref> The proof follows fairly directly from the previous lemma, via <code>FormulaBound</code> and a substitution.
+<jh>
+thm (Range ((x B) (x R)  (x y) (y B) (y R)) ()
+  ((B ∈ (range R)) ↔ (∃ x ((orderedPair (value x) B) ∈ R))) (
+</jh>
+We expand <code>range R</code> so that we can specify the variables involved.
+<jh>
+        R y x Range-def
+        B buildMembershipLL
+</jh>
+We first apply <code>FormulaBound</code> to get <code>B ∈ { y ∈ ⋃ ⋃ R | ∃ x 〈 x, y 〉 ∈ R } ↔ [ B / y ] ∃ x 〈 x, y 〉 ∈ R</code>.
+<jh>
+        x (value y) R Range-2
+        B FormulaBound
+        applyBiconditionalTransitivity
+</jh>
+The left side of that is just <code>B ∈ range R</code>; the right side is a subsitution away from being what we need.
+<jh>
+        (value y) B (value x) OrderedPairBuilderLL
+        R buildMembershipRRInConsequent
+        x buildThereExistsInConsequent
+        makeSubstExplicit
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == The first and second elements of an ordered pair ==
 Here we attend to a notational detail: given an ordered pair, we want an expression for its first or second element. We define the first element of <code>C</code> as <code>⋃ domain { C }</code>.
 <jh>
