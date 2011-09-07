@@ -738,13 +738,43 @@ thm (FirstBuilder () () ((A = B) → ((1st A) = (1st B))) (
 ))
 </jh>
 
-This theorem shows that <code>1st</code> really does extract the first element of an ordered pair. It follows readily from <code>DomainSingletonRelation</code> and our definitions, and can be summarized as <code>⋃ domain { 〈A, B〉 } = ⋃ { A } = A</code>.
+This theorem shows that <code>1st</code> really does extract the first element of an ordered pair. The proof follows readily from <code>DomainSingletonRelation</code> and our definitions, and can be summarized as <code>⋃ domain { 〈A, B〉 } = ⋃ { A } = A</code>.
 <jh>
 thm (First () () ((1st (orderedPair A B)) = A) (
         A B DomainSingletonRelation
         buildUnion
 
         A UnionSingleton
+
+        applyEqualityTransitivity
+))
+</jh>
+
+Similarly, the second element of <code>C</code> is <code>⋃ range { C }</code>.
+<jh>
+def ((2nd C) (⋃ (range (singleton C))))
+</jh>
+
+The builder for <code>2nd</code> is proved much like the one for <code>1st</code>.
+<jh>
+thm (SecondBuilder () () ((A = B) → ((2nd A) = (2nd B))) (
+        A B SingletonBuilder
+
+        (singleton A) (singleton B) RangeBuilder
+        applySyllogism
+
+        (range (singleton A)) (range (singleton B)) UnionBuilder
+        applySyllogism
+))
+</jh>
+
+Likewise, <code>2nd</code> really does extract the second element of an ordered pair. The proof is <code>⋃ range { 〈A, B〉 } = ⋃ { B } = B</code>.
+<jh>
+thm (Second () () ((2nd (orderedPair A B)) = B) (
+        A B RangeSingletonRelation
+        buildUnion
+
+        B UnionSingleton
 
         applyEqualityTransitivity
 ))
