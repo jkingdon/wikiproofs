@@ -85,10 +85,12 @@ term (object (orderedPair object object))
 stmt (OrderedPairTheorem () () (((orderedPair A0 B0) = (orderedPair A1 B1)) ↔ ((A0 = A1) ∧ (B0 = B1))))
 </jh>
 
-We can extract the first element of an ordered pair.
+We can extract the first or second element of an ordered pair.
 <jh>
 term (object (1st object))
 stmt (First () () ((1st (orderedPair A B)) = A))
+term (object (2nd object))
+stmt (Second () () ((2nd (orderedPair A B)) = B))
 </jh>
 
 == Relations ==
@@ -120,6 +122,15 @@ stmt (Domain ((y B) (y R)) ()
   ((B ∈ (domain R)) ↔ (∃ y ((orderedPair B (value y)) ∈ R))))
 stmt (DomainSingletonRelation () ()
   ((domain (singleton (orderedPair A B))) = (singleton A)))
+</jh>
+
+The range is a set containing exactly the values which the second members of the ordered pairs in the relation can take on (as opposed to the other common definition, which is a set which is a superset of what we call the range).
+<jh>
+term (object (range object))
+stmt (Range ((x B) (x R)) ()
+  ((B ∈ (range R)) ↔ (∃ x ((orderedPair (value x) B) ∈ R))))
+stmt (RangeSingletonRelation () ()
+  ((range (singleton (orderedPair A B))) = (singleton B)))
 </jh>
 
 == Subset ==
@@ -236,7 +247,9 @@ stmt (UnionBuilder () () ((A = B) → ((⋃ A) = (⋃ B))))
 stmt (buildUnion () ((A = B)) ((⋃ A) = (⋃ B)))
 
 stmt (FirstBuilder () () ((A = B) → ((1st A) = (1st B))))
-stmt (DomainBuilder () () ((A = B) → ((domain A) = (domain B))))
+stmt (SecondBuilder () () ((A = B) → ((2nd A) = (2nd B))))
+stmt (DomainBuilder () () ((R = S) → ((domain R) = (domain S))))
+stmt (RangeBuilder () () ((R = S) → ((range R) = (range S))))
 </jh>
 
 == Extensionality ==
