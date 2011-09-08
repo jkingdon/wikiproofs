@@ -44,6 +44,15 @@ We define congruence using the usual definitions for Cartesian two-dimensional s
 #))
 </jh>
 
+Betweenness is a matter of asserting that the slopes of the line segments between pairs of points are equal, and that the signs of the differences between the coordinates of the points are the same.<ref>Tarski and Givant, page 201</ref>
+<jh>
+def ((between A B C)
+  ((((((1st A) − (1st B)) · ((2nd B) − (2nd C))) = (((2nd A) − (2nd B)) · ((1st B) − (1st C)))) ∧
+  ((0) ≤ (((1st A) − (1st B)) · ((1st B) − (1st C))))) ∧
+  ((0) ≤ (((2nd A) − (2nd B)) · ((2nd B) − (2nd C)))))
+)
+</jh>
+
 Now we export to [[Interface:Tarski's geometry axioms]]. (Or, rather, we will when we are ready).
 <jh>
 #export (TARSKI Interface:Tarski's_geometry_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
