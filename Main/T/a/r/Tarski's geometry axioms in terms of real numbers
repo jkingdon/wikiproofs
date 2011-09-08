@@ -34,7 +34,7 @@ var (formula φ)
 def ((subst s x φ) (set.subst s x φ))
 </jh>
 
-We define congruence using the usual definitions for Cartesian two-dimensional space.<ref>Tarski and Givant, page 201</ref> The definition is interesting if <code>A</code> is an ordered pair <code>〈1st A, 2nd A〉</code>, where <code>1st A</code> and <code>2nd A</code> are real numbers, and likewise for <code>B</code>, <code>C</code>, and <code>D</code>.
+We define congruence using the usual Pythagorean theorem based definition for Cartesian two-dimensional space. The Tarski and Givant paper has a diagram.<ref>Tarski and Givant, page 201</ref> The definition is interesting if <code>A</code> is an ordered pair <code>〈1st A, 2nd A〉</code>, where <code>1st A</code> and <code>2nd A</code> are real numbers, and likewise for <code>B</code>, <code>C</code>, and <code>D</code>.
 <jh>
 #def ((≡ A B C D) (
 #  ((((1st A) − (1st B)) · ((1st A) − (1st B))) +
@@ -44,7 +44,7 @@ We define congruence using the usual definitions for Cartesian two-dimensional s
 #))
 </jh>
 
-Betweenness is a matter of asserting that the slopes of the line segments between pairs of points are equal, and that the signs of the differences between the coordinates of the points are the same.<ref>Tarski and Givant, page 201</ref>
+Betweenness is a matter of asserting that the slopes of the line segments between pairs of points are equal, and that the signs of the differences between the coordinates of the points are correct. Again, the Tarski and Givant paper has a diagram and more explanation.<ref>Tarski and Givant, page 201</ref>
 <jh>
 def ((between A B C)
   ((((((1st A) − (1st B)) · ((2nd B) − (2nd C))) = (((2nd A) − (2nd B)) · ((1st B) − (1st C)))) ∧
