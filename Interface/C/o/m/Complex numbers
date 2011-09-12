@@ -130,12 +130,22 @@ term (object (- object))
 stmt (ComplexAdditiveInverseClosed () () ((z ∈ (ℂ)) → ((- z) ∈ (ℂ))))
 stmt (ComplexAdditiveInverse () () ((z ∈ (ℂ)) → ((z + (- z)) = (0))))
 </jh>
-
 We can subtract any complex (real?) number from another. In case your screen doesn't show it clearly, the minus sign is a different character (longer) than the negation sign above.
 <jh>
 term (object (− object object))
 stmt (SubtractionClosed () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) ∈ (ℂ))))
 stmt (Subtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) = (z + (- w)))))
+</jh>
+
+==== Properties of negation ====
+Negation distributes across multiplication in the familiar ways.<ref>[http://us.metamath.org/mpeuni/mul2neg.html mul2neg], metamath's set.mm, accessed 2011</ref>
+<jh>
+stmt (MultiplicationNegativeNegative () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → (((- z) · (- w)) = (z · w))))
+</jh>
+
+Negating a subtraction is the same as reversing the operands to the subtraction.<ref>[http://us.metamath.org/mpeuni/negsubdi2.html negsubdi2], metamath's set.mm, accessed 2011</ref>
+<jh>
+stmt (NegativeSubtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((- (z − w)) = (w − z))))
 </jh>
 
 === Multiplicative inverse and division ===
