@@ -34,6 +34,7 @@ var (formula φ)
 def ((subst s x φ) (set.subst s x φ))
 </jh>
 
+== Congruence ==
 We define congruence using the usual Pythagorean theorem based definition for Cartesian two-dimensional space. The Tarski and Givant paper has a diagram.<ref>Tarski and Givant, page 201</ref> The definition is interesting if <code>A</code> is an ordered pair <code>〈1st A, 2nd A〉</code>, where <code>1st A</code> and <code>2nd A</code> are real numbers, and likewise for <code>B</code>, <code>C</code>, and <code>D</code>.
 <jh>
 def ((≡ A B C D) (
@@ -44,6 +45,20 @@ def ((≡ A B C D) (
 ))
 </jh>
 
+=== Distance from A to B is the distance from B to A ===
+Here we will prove <code>A B ≡ B A</code>. Or rather, we can prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B ≡ B A</code> (TODO: figure out how the A ∈ ℝ × ℝ relates to Interface:Restricting_all_quantifiers and what we can export).
+
+{{under construction}} TODO: need A ∈ B × C → 1st A ∈ B ∧ 2nd A ∈ C (this is a corollary of OrderedPairCartesianProduct but probably worth stating on its own)
+<jh>
+#thm (CongruenceABBA () () (A B ≡ B A) (
+</jh>
+The left hand side of the definition of congruence expands to <code>(1st A − 1st B) · (1st A − 1st B) + (2nd A − 2nd B) · (2nd A − 2nd B)</code>, which we first transform to <code>(- (1st B − 1st A)) · (- (1st B − 1st A)) + (- (1st B − 1st A)) · (- (1st B − 1st A))<code>.
+<jh>
+#        (1st B) (1st A) 
+#))
+</jh>
+
+== Betweenness ==
 Betweenness is a matter of asserting that the slopes of the line segments between pairs of points are equal, and that the signs of the differences between the coordinates of the points are correct. Again, the Tarski and Givant paper has a diagram and more explanation.<ref>Tarski and Givant, page 201</ref>
 <jh>
 def ((between A B C)
