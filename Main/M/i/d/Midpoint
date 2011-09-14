@@ -926,6 +926,13 @@ The proof starts by assuming, without loss of generality, that <code>C A1 ≤ C 
 
 For now, we omit the (lengthy) proof here, as we don't yet need it.
 
+== Existence of the midpoint (given a point equidistant) ==
+If there is a point equidistant from the endpoints of a line segment, there exists a midpoint of the line segment.<ref>l7_25 in Narboux</ref> In a future chapter, we will be able to remove the hypothesis and just prove that the midpoint always exists, but this result is one of the steps on the way towards that proof.
+<jh>
+#thm (MidpointExistsGivenEquidistant () () ((C A ≡ C B) → (∃ x ((value x) is-midpoint-of A B))) (
+#))
+</jh>
+
 == Export ==
 We now export to [[Interface:Midpoint]].
 <jh>
