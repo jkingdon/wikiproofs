@@ -928,6 +928,9 @@ For now, we omit the (lengthy) proof here, as we don't yet need it.
 
 == Existence of the midpoint (given a point equidistant) ==
 If there is a point equidistant from the endpoints of a line segment, there exists a midpoint of the line segment.<ref>l7_25 in Narboux</ref> In a future chapter, we will be able to remove the hypothesis and just prove that the midpoint always exists, but this result is one of the steps on the way towards that proof.
+
+[[File:Proof of lemma l7_25 in Narboux.svg]]
+The hypothesis is <code>C A ≡ C B</code>. If <code>A</code>, <code>B</code>, and <code>C</code> are collinear we are done, so assume they are non-collinear for the rest of the proof. Next extend line segment <code>C A</code> to a distinct point <code>P</code> and extend line segment <code>C B<code> by the same distance to a point <code>Q</code>. Let <code>R</code> be the intersection of <code>A Q</code> and <code>B P</code>. Then let <code>X</code> be the intersection of <code>A B</code> and <code>C R</code>.
 <jh>
 #thm (MidpointExistsGivenEquidistant () () ((C A ≡ C B) → (∃ x ((value x) is-midpoint-of A B))) (
 #))
