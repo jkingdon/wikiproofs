@@ -138,6 +138,17 @@ stmt (SubtractionClosed () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) 
 stmt (Subtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) = (z + (- w)))))
 </jh>
 
+==== Properties of negation ====
+Negation distributes across multiplication in the familiar ways.<ref>[http://us.metamath.org/mpeuni/mul2neg.html mul2neg], metamath's set.mm, accessed 2011</ref>
+<jh>
+stmt (MultiplicationNegativeNegative () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → (((- z) · (- w)) = (z · w))))
+</jh>
+
+Negating a subtraction is the same as reversing the operands to the subtraction.<ref>[http://us.metamath.org/mpeuni/negsubdi2.html negsubdi2], metamath's set.mm, accessed 2011</ref>
+<jh>
+stmt (NegativeSubtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((- (z − w)) = (w − z))))
+</jh>
+
 === Multiplicative inverse and division ===
 Every nonzero complex number has a multiplicative inverse.<ref>[http://us.metamath.org/mpeuni/reccl.html reccl], metamath's set.mm, accessed June 9, 2011</ref>
 <jh>
