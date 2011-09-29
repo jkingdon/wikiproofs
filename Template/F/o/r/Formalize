@@ -1,0 +1,17 @@
+[[Image:Zeichen 123.svg|50px]]
+This page does not contain any formal ([[Help:JHilbert|JHilbert]]) math statements or proofs. Wikiproofs is a site for formalizations, not general mathematical content (see [[WP:SCOPE]]). The first step is probably to state some results as a JHilbert interface (building on top of [[Interface:Complex numbers]], [[Interface:Basic arithmetic]], [[Interface:Basic geometry]], or whatever makes sense), and then figure out what is needed to prove them (the prerequisites can be proved from first principles and theorems we already have, or at least stated as "axioms" which might later be theorems if the missing proofs are then supplied). Pages which do not contain any formalizations are subject to deletion, however, so if your desire is an informal proof or non-proof discussion of a topic, consider contributing to sites such as [http://proofwiki.org Proofwiki] or [https://secure.wikimedia.org/wikipedia/en/wiki/Wikipedia:WikiProject_Mathematics Wikipedia].
+<includeonly>
+[[Category:Pages needing formalization]]
+</includeonly><noinclude>
+
+== Usage ==
+
+<pre>
+{{formalize}}
+</pre>
+This cleanup template is for pages which do not have any JHilbert content at all (they might range from a drunken effort like "THE PYTHAGOREAN THEOREM IS DA BOMB" to a more serious, but unformalized, discussion of a mathematical topic). If the page states some results, but they are not yet proven, use [[:Template:unproven]] instead. If a contributor seems to be making an attempt to use JHilbert, help them with specifics or at least point them to [[Help:JHilbert]] and [[WP:TEA]].
+
+Using this template automatically places the interface into [[:Category:Pages needing formalization]].
+
+[[Category:Cleanup templates|{{PAGENAME}}]]
+</noinclude>
