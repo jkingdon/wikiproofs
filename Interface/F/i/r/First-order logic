@@ -145,6 +145,8 @@ stmt (ThereExistsConjunctionCombining () ()
   (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
 stmt (ThereExistsConjunctionRightCombining () ()
   (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))))
+
+stmt (combineThereExistsForAll () ((∃ x φ) (∀ x ψ)) (∃ x (φ ∧ ψ)))
 </jh>
 
 == Generalization and specialization ==

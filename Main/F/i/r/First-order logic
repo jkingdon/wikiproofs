@@ -593,7 +593,7 @@ The right side, <code>¬ ∀ x (φ → ¬ ψ)</code>, is only slightly more comp
 ))
 </jh>
 
-It will also be convenient to have a commuted version.
+It will also be convenient to have a commuted version,
 <jh>
 thm (ThereExistsConjunctionRightCombining () ()
   (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))) (
@@ -607,6 +607,17 @@ thm (ThereExistsConjunctionRightCombining () ()
         eliminateBiconditionalReverse
         x addThereExists
         applySyllogism
+))
+</jh>
+
+and a rule.
+<jh>
+thm (combineThereExistsForAll () ((HEXIST (∃ x φ)) (HALL (∀ x ψ))) (∃ x (φ ∧ ψ)) (
+        HEXIST
+        HALL
+        introduceConjunction
+        x φ ψ ThereExistsConjunctionRightCombining
+        applyModusPonens
 ))
 </jh>
 

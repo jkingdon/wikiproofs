@@ -972,13 +972,7 @@ Now we extend <code>d Q</code> to a point <code>p</code> such that <code>Q p ≡
         p (value d) Q B C SegmentConstruction
         d generalize
 
-        introduceConjunction
-
-        d
-          ((between A Q (value d)) ∧ (Q ≠ (value d)))
-          (∃ p ((between (value d) Q (value p)) ∧ (Q (value p) ≡ B C)))
-          ThereExistsConjunctionRightCombining
-        applyModusPonens
+        combineThereExistsForAll
 
         p
           ((between A Q (value d)) ∧ (Q ≠ (value d)))
