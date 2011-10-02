@@ -1036,7 +1036,62 @@ Detaching <code>A = B ∨ C is-midpoint-of A B</code> we are done.
 [[File:Proof of lemma l7_25 in Narboux.svg|construction of <code>P</code>, <code>Q</code>, <code>R</code>, and <code>X</code>]]
 We have already handled the case in which <code>A</code>, <code>B</code>, and <code>C</code> are collinear, so assume they are non-collinear for the rest of the proof. Next extend line segment <code>C A</code> to a distinct point <code>P</code> and extend line segment <code>C B<code> by the same distance to a point <code>Q</code>. Let <code>R</code> be the intersection of <code>A Q</code> and <code>B P</code>. Then let <code>X</code> be the intersection of <code>A B</code> and <code>C R</code>.
 
+We first construct <code>P</code> and <code>Q</code>.
 <jh>
+thm (MidpointExistsGivenEquidistant-p-q-1 ((q C) (q B) (q A) (q p) (p C) (p A)) ()
+  (∃ p (∃ q
+  (((between C A (value p)) ∧ (A ≠ (value p))) ∧
+    ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
+    )) (
+        p C A PointConstructionDifferent
+
+        q C B A (value p) SegmentConstruction
+        p generalize
+
+        combineThereExistsForAll
+
+        q
+          ((between C A (value p)) ∧ (A ≠ (value p)))
+          ((between C B (value q)) ∧ (B (value q) ≡ A (value p)))
+          ThereExistsConjunctionMovement
+        p buildThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (MidpointExistsGivenEquidistant-p-q ((q C) (q B) (q A) (q p) (p C) (p B) (p A)) ()
+  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) →
+  (∃ p (∃ q
+  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A (value p)) ∧ (A ≠ (value p))) ∧
+    ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
+    )))) (
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B)) ImplicationReflexivity
+
+        p q C A B MidpointExistsGivenEquidistant-p-q-1
+
+        introduceRightConjunctToConsequent
+
+        p
+          ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          (∃ q (((between C A (value p)) ∧ (A ≠ (value p))) ∧
+            ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
+            )
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+
+        q
+          ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          (((between C A (value p)) ∧ (A ≠ (value p))) ∧
+            ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
+          ThereExistsConjunctionMovement
+        p buildThereExists
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+#Like this? Or more like the Connectivity for betweenness example?
 #thm (MidpointExistsGivenEquidistant-p-q-r-x ((x A) (x B) (x C)) ()
 #  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) →
 #  (∃ p (∃ q (∃ r (∃ x
@@ -1044,11 +1099,6 @@ We have already handled the case in which <code>A</code>, <code>B</code>, and <c
 #  ((between C B (value q)) ∧ (B (value q) ≡ A (value p)))) ∧
 #  ((between A (value r) (value q)) ∧ (between B (value r) (value p)))) ∧
 #  ((between A (value x) B) ∧ (between (value r) (value x) C)))))))) (
-</jh>
-Here is how we'll construct the four points. Not yet hooked up into a proof.
-<jh>
-#        p C A PointConstructionDifferent
-#        q C B A (value p) SegmentConstruction
 #        (value p) A C (value q) B r Pasch
 #        C A (value p) B (value r) x Pasch
 #))
