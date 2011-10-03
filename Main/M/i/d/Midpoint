@@ -1102,6 +1102,91 @@ thm (MidpointExistsGivenEquidistant-p-q ((q C) (q B) (q A) (q p) (p C) (p B) (p 
 #        (value p) A C (value q) B r Pasch
 #        C A (value p) B (value r) x Pasch
 #))
+
+thm (MidpointExistsGivenEquidistant-r ((r A) (r B) (r C) (r P) (r Q)) ()
+  ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+    ((between C B Q) ∧ (B Q ≡ A P)))
+    ) →
+    (∃ r
+      ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+        (((between C A P) ∧ (A ≠ P)) ∧
+          ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+        ((between A (value r) Q) ∧ (between B (value r) P)))
+    )) (
+        (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+          ((between C B Q) ∧ (B Q ≡ A P))))
+        ImplicationReflexivity
+</jh>
+To construct <code>r</code>, we first need <code>between P A C</code>,
+<jh>
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        swapBetweennessInConsequent
+</jh>
+and then <code>between Q B C</code>. Applying <code>Pasch<code> then gives us
+<code>∃ r (between A r Q ∧ between B r P)</code>.
+<jh>
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        swapBetweennessInConsequent
+
+        composeConjunction
+
+        P A C Q B r Pasch
+        applySyllogism
+</jh>
+Moving the quantifier to the start of the consequent we are done.
+<jh>
+        composeConjunction
+
+        r
+          (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P))))
+          ((between A (value r) Q) ∧ (between B (value r) P))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+# TODO: restate this to reflect already having MidpointExistsGivenEquidistant-r
+#thm (MidpointExistsGivenEquidistant-r-x ((x A) (x B) (x C)) ()
+#  ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+#    (((between C A P) ∧ (A ≠ P)) ∧
+#    ((between C B Q) ∧ (B Q ≡ A P)))
+#    ) →
+#    (∃ r (∃ x 
+#      (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+#        (((between C A P) ∧ (A ≠ P)) ∧
+#          ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+#        ((between A (value r) Q) ∧ (between B (value r) P))) ∧
+#        ((between A (value x) B) ∧ (between (value r) (value x) C)))
+#    ))) (
+
+</jh>
+To construct <code>x</code> we need <code>between C A P</code>
+<jh>
+#        ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+#          (((between C A P) ∧ (A ≠ P)) ∧
+#            ((between C B Q) ∧ (B Q ≡ A P)))
+#          ConjunctionLeftElimination
+#        eliminateRightConjunctInConsequent
+#        eliminateRightConjunctInConsequent
+</jh>
+and <code>between B r P</code>
+<jh>
+#        C A P B (value r) x Pasch
+#))
 </jh>
 
 <jh>
