@@ -1210,9 +1210,127 @@ Moving <code>∃ x</code> to the start of the consequent we are done.
 
 [[File:Proof of lemma l7_25 in Narboux.svg|P B ≡ Q A]]
 The next step is showing that <code>P B ≡ Q A</code>. This by outer five segment on baselines <code>C A P</code> and <code>C B Q</code> and points <code>B</code> and <code>A</code>.
-    C ≠ A ∧ between C A P ∧ between C B Q ∧ C A ≡ C B ∧ A P ≡ B Q
-      C B ≡ C A ∧ A B ≡ B A
+<jh>
+thm (MidpointExistsGivenEquidistant-p-b-q-a () () (
+  (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) →
+  (P B ≡ Q A)
+  ) (
+</jh>
+The first thing we need for outer five segment is <code>C ≠ A<code>, which follows from <code>¬ collinear A B C</code>
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
+        A B CollinearityABA
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B C A CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        detachImplicationBiconditionalRight
+        introduceTransposition
+
+        applySyllogism
+</jh>
+The first baseline is <code>between C A P</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+The second baseline is <code>between C B Q</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+The first baseline congruence is <code>C A ≡ C B</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+The other baseline congruence is <code>A P ≡ B Q</code>
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The first congruence for the points is <code>C B ≡ C A</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The other congruence for the points is <code>A B ≡ B A</code>.
+<jh>
+        A B CongruenceABBA
+        introduceRightConjunctToConsequent
+
+        C A P C B Q B A OuterFiveSegment
+        applySyllogism
+))
+</jh>
 
 TODO: an outline of remaining steps:
   A R ≡ R B
