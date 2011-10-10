@@ -1368,13 +1368,109 @@ and then <code>B P ≡ A Q</code>.
 ))
 </jh>
 
+We next prove <code>R A ≡ R′ B</code> via inner five segment with baselines <code>B R P</code> and <code>A R′ Q</code> and points <code>A</code> and <code>B</code>.
+
+<jh>
+thm (MidpointExistsGivenEquidistant-r-a-rprime-b
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (R A ≡ R′ B)
+  ) (
+</jh>
+<code>between B R P</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>between A R′ Q</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+</jh>
+The first baseline congruence is <code>B P ≡ A Q</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+
+        A B C P Q R X MidpointExistsGivenEquidistant-p-b-q-a
+        applySyllogism
+
+        commuteCongruenceInConsequent
+        composeConjunction
+</jh>
+The second baseline congruence is <code>R P ≡ R′ Q</code>, which follows from <code>B R P ≅ A R′ Q</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        B R P A R′ Q Congruence23
+        applySyllogism
+        composeConjunction
+</jh>
+The first point congruence is <code>B A ≡ A B</code>.
+<jh>
+        B A CongruenceABBA
+        introduceRightConjunctToConsequent
+</jh>
+The second point congruence is <code>P A ≡ Q B</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+        commuteCongruenceInConsequent
+        composeConjunction
+
+        B R P A R′ Q A B InnerFiveSegment
+        applySyllogism
+))
+</jh>
+
 TODO: an outline of remaining steps:
   A R ≡ R B
   C ≠ R ∧ collinear C R X ∧ C A ≡ C B ∧ R A ≡ R B → X A ≡ X B (l4_17 aka EquidistantLine)
   collinear A B R (more likely, ¬ collinear A B R)
 
-  inner five segment with baselines B R P and A R′ Q and points A and B
-    gives R A ≡ R′ B
   inner five segment with baselines B R P and A R′ Q and points Q and P
     gives Q R ≡ P R′
   A R Q ≅ B R′ P
