@@ -336,10 +336,6 @@ thm (ParallelogramDiagonals-pprime
       (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
       (collinear A P C)) ∧ (collinear B P D)) ∧
       (B D P ≅ D B (value p′))))) (
-        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
-          (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
-          (collinear A P C)) ∧ (collinear B P D))
-          ImplicationReflexivity
 </jh>
 Next, we construct <code>p′</code>, starting with <code>collinear B D P</code>.
 <jh>
@@ -365,8 +361,7 @@ This lets us conclude <code>∃ p′ B D P ≡ D B p′</code>.
 </jh>
 Now we just need to repeat the formulas from the antecedent and move them inside the quantifier.
 <jh>
-        composeConjunction
-        moveLeftConjunctIntoThereExistsInConsequent
+        repeatAntecedentThereExists
 ))
 </jh>
 
@@ -1334,14 +1329,20 @@ The other congruence for the points is <code>A B ≡ B A</code>.
 
 Now we construct a point <code>r′</code> which is at a point along the line segment <code>A Q</code> corresponding to where <code>R</code> is along <code>B P</code>. We'll be trying to show that <code>r′<code> in fact equals <code>R</code>, but first we need to construct it.
 <jh>
-thm (MidpointExistsGivenEquidistant-rprime ((B r′) (R r′) (P r′) (A r′) (Q r′)) () (
+thm (MidpointExistsGivenEquidistant-rprime
+  ((A r′) (B r′) (C r′) (P r′) (Q r′) (R r′) (X r′)) () (
   (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
     (((between C A P) ∧ (A ≠ P)) ∧
       ((between C B Q) ∧ (B Q ≡ A P)))) ∧
     ((between A R Q) ∧ (between B R P))) ∧
     ((between A X B) ∧ (between R X C))) →
-  (∃ r′ ((between A (value r′) Q) ∧ (B R P ≅ A (value r′) Q)))
-  ) (
+  (∃ r′ ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+      (((between C A P) ∧ (A ≠ P)) ∧
+        ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+      ((between A R Q) ∧ (between B R P))) ∧
+      ((between A X B) ∧ (between R X C))) ∧
+    ((between A (value r′) Q) ∧ (B R P ≅ A (value r′) Q)))
+  )) (
 </jh>
 We construct <code>r′</code> using <code>InnerDegenerateTriangle</code>. To do so, first we need <code>between B R P</code>,
 <jh>
@@ -1362,6 +1363,8 @@ and then <code>B P ≡ A Q</code>.
 
         B R P A Q r′ InnerDegenerateTriangle
         applySyllogism
+
+        repeatAntecedentThereExists
 ))
 </jh>
 
