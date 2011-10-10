@@ -1113,7 +1113,7 @@ thm (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → 
 ))
 </jh>
 
-Here is a rule version, for convenience:
+Here are a few rules, for convenience:
 <jh>
 thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
   ((H (antecedent → (φ ∧ (∃ x ψ)))))
@@ -1123,6 +1123,15 @@ thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
         x φ ψ ThereExistsConjunctionMovement
         eliminateBiconditionalForward
         applySyllogism
+))
+
+thm (repeatAntecedentThereExists ((x antecedent))
+  ((H (antecedent → (∃ x ψ))))
+  (antecedent → (∃ x (antecedent ∧ ψ))) (
+        antecedent ImplicationReflexivity
+        H
+        composeConjunction
+        moveLeftConjunctIntoThereExistsInConsequent
 ))
 </jh>
 

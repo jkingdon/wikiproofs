@@ -293,11 +293,14 @@ stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ (
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
-Here is a rule for one of these:
+Here are a few rules based on these:
 <jh>
 stmt (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
   ((antecedent → (φ ∧ (∃ x ψ))))
   (antecedent → (∃ x (φ ∧ ψ))))
+stmt (repeatAntecedentThereExists ((x antecedent))
+  ((antecedent → (∃ x ψ)))
+  (antecedent → (∃ x (antecedent ∧ ψ))))
 </jh>
 
 ==== Scattering and gathering ====
