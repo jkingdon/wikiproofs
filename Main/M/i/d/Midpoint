@@ -1370,8 +1370,9 @@ and then <code>B P ≡ A Q</code>.
 
 We next prove <code>R A ≡ R′ B</code> via inner five segment with baselines <code>B R P</code> and <code>A R′ Q</code> and points <code>A</code> and <code>B</code>.
 
+Because we will re-use the same baselines a little later, it is convenient to move the portion of the proof regarding the baselines into a lemma.
 <jh>
-thm (MidpointExistsGivenEquidistant-r-a-rprime-b
+thm (MidpointExistsGivenEquidistant-b-r-p-a-rprime-q
   () () (
   ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
     (((between C A P) ∧ (A ≠ P)) ∧
@@ -1379,7 +1380,7 @@ thm (MidpointExistsGivenEquidistant-r-a-rprime-b
     ((between A R Q) ∧ (between B R P))) ∧
     ((between A X B) ∧ (between R X C))) ∧
     ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
-    (R A ≡ R′ B)
+    ((((between B R P) ∧ (between A R′ Q)) ∧ (B P ≡ A Q)) ∧ (R P ≡ R′ Q))
   ) (
 </jh>
 <code>between B R P</code>:
@@ -1437,6 +1438,22 @@ The second baseline congruence is <code>R P ≡ R′ Q</code>, which follows fro
         B R P A R′ Q Congruence23
         applySyllogism
         composeConjunction
+))
+
+thm (MidpointExistsGivenEquidistant-r-a-rprime-b
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (R A ≡ R′ B)
+  ) (
+</jh>
+We've already proved what we need for the baselines:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-r-p-a-rprime-q
 </jh>
 The first point congruence is <code>B A ≡ A B</code>.
 <jh>
@@ -1466,13 +1483,57 @@ The second point congruence is <code>P A ≡ Q B</code>.
 ))
 </jh>
 
+Next we apply inner five segment with baselines <code>B R P</code> and <code>A R′ Q</code> and points <code>Q</code> and <code>P</code> to give <code>Q R ≡ P R′</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-q-r-p-rprime
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (Q R ≡ P R′)
+  ) (
+</jh>
+We've already proved what we need for the baselines:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-r-p-a-rprime-q
+</jh>
+The first congruence for the non-baseline points is <code>B Q ≡ A P</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+</jh>
+The other congruence for the non-baseline points is <code>P Q ≡ Q P</code>.
+<jh>
+        P Q CongruenceABBA
+        introduceRightConjunctToConsequent
+</jh>
+Inner five segment then gives us <code>R Q ≡ R′ P</code>, which only needs to be commuted.
+<jh>
+        B R P A R′ Q Q P InnerFiveSegment
+        applySyllogism
+        commuteCongruenceInConsequent
+))
+</jh>
+
 TODO: an outline of remaining steps:
   A R ≡ R B
   C ≠ R ∧ collinear C R X ∧ C A ≡ C B ∧ R A ≡ R B → X A ≡ X B (l4_17 aka EquidistantLine)
   collinear A B R (more likely, ¬ collinear A B R)
 
-  inner five segment with baselines B R P and A R′ Q and points Q and P
-    gives Q R ≡ P R′
   A R Q ≅ B R′ P
   CollinearityDegenerateTriangle
   R = R′
