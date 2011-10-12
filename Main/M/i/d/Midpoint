@@ -1529,25 +1529,100 @@ Inner five segment then gives us <code>R Q ≡ R′ P</code>, which only needs t
 ))
 </jh>
 
-TODO: an outline of remaining steps:
-  A R ≡ R B
-  C ≠ R ∧ collinear C R X ∧ C A ≡ C B ∧ R A ≡ R B → X A ≡ X B (l4_17 aka EquidistantLine)
-  collinear A B R (more likely, ¬ collinear A B R)
+[[File:Proof of lemma l7_25 in Narboux.svg|Proving collinear B R′ P gets us close to R = R′]]
+The last two congruences gives us what we need for <code>A R Q ≅ B R′ P</code>, which in turn implies <code>collinear B R′ P<code>.  Looking at the diagram it should be clear that <code>R′</code> has little hope of remaining different from <code>R</code>, although we are still a few steps from proving that <code>R = R′</code>.
 
-  A R Q ≅ B R′ P
-  CollinearityDegenerateTriangle
+<jh>
+thm (MidpointExistsGivenEquidistant-a-r-q-b-rprime-p
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (A R Q ≅ B R′ P)
+  ) (
+</jh>
+<code>A R ≡ B R′</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-r-a-rprime-b
+        commuteCongruenceInConsequent
+
+</jh>
+<code>A Q ≡ B P</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+
+        A B C P Q R X MidpointExistsGivenEquidistant-p-b-q-a
+        swapCongruenceInConsequent
+        commuteCongruenceInConsequent
+        applySyllogism
+        composeConjunction
+
+</jh>
+<code>R Q ≡ R′ P</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-q-r-p-rprime
+        commuteCongruenceInConsequent
+        composeConjunction
+))
+
+thm (MidpointExistsGivenEquidistant-b-rprime-p
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (collinear B R′ P)
+  ) (
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A R Q BetweennessCollinearity
+        applySyllogism
+
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-a-r-q-b-rprime-p
+        composeConjunction
+
+        A R Q B R′ P CollinearityDegenerateTriangle
+        applySyllogism
+))
+</jh>
+
+TODO: an outline of remaining steps:
   R = R′
   B ≠ P
   A ≠ Q
   B ≠ Q
   LineIntersection
-    ¬ collinear A B C ∧ C ≠ D ∧ collinear A B P ∧ collinear A B Q ∧ 
-      collinear C D P ∧ collinear C D Q → P = Q, substitutions A Q B P R R′, in some order
+    ¬ collinear A Q B ∧ B ≠ P ∧ collinear A Q R (OK) ∧ collinear A Q R′ (OK) ∧ 
+      collinear B P R (OK) ∧ collinear B P R′ (OK) → R = R′
   B ≠ R
   CollinearityOuterTransitivity
     P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear P A B
     apply this 4 times, somehow involving
     collinear B C A, collinear A B C, collinear A R B, collinear B P A, collinear A B C
+
+  A R ≡ R B
+  C ≠ R ∧ collinear C R X ∧ C A ≡ C B ∧ R A ≡ R B → X A ≡ X B (l4_17 aka EquidistantLine)
+  collinear A B R (more likely, ¬ collinear A B R)
   want: between A X B ∧ A X ≡ X B, former we have by construction
 
 <jh>
