@@ -1606,13 +1606,87 @@ thm (MidpointExistsGivenEquidistant-b-rprime-p
 ))
 </jh>
 
+We're getting closer to proving <code>R = R′</code> via <code>LineIntersection</code> (which says that the intersection of two lines is unique, if we rule out some degenerate cases). Next we need <code>B ≠ P</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-b-p
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (B ≠ P)
+  ) (
+</jh>
+At the end of the proof we'll need <code>¬ collinear A B C<code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+Sooner than that we'll need <code>collinear A P C<code>, which follows from <code>between C A P</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        C A P BetweennessCollinearity
+        applySyllogism
+
+        C A P CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We take the substitution <code>B = P → (collinear A B C ↔ collinear A P C)</code>,
+<jh>
+        A EqualityReflexivity
+        C EqualityReflexivity
+        A A B P C C CollinearityBuilder
+        detach2of2
+        detach1of2
+</jh>
+detach the <code>collinear A P C</code>,
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+        applySyllogism
+</jh>
+transpose to <code>¬ collinear A B C → B ≠ P</code>,
+<jh>
+        (B = P) (collinear A B C) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+and detach <code>¬ collinear A B C</code>.
+<jh>
+        applyModusPonensInConsequent
+))
+</jh>
+
 TODO: an outline of remaining steps:
   R = R′
-  B ≠ P
   A ≠ Q
   B ≠ Q
   LineIntersection
-    ¬ collinear A Q B ∧ B ≠ P ∧ collinear A Q R (OK) ∧ collinear A Q R′ (OK) ∧ 
+    ¬ collinear A Q B ∧ B ≠ P (OK) ∧ collinear A Q R (OK) ∧ collinear A Q R′ (OK) ∧ 
       collinear B P R (OK) ∧ collinear B P R′ (OK) → R = R′
   B ≠ R
   CollinearityOuterTransitivity
@@ -1620,8 +1694,9 @@ TODO: an outline of remaining steps:
     apply this 4 times, somehow involving
     collinear B C A, collinear A B C, collinear A R B, collinear B P A, collinear A B C
 
-  A R ≡ R B
-  C ≠ R ∧ collinear C R X ∧ C A ≡ C B ∧ R A ≡ R B → X A ≡ X B (l4_17 aka EquidistantLine)
+  A R ≡ R B (from R = R′)
+  C ≠ R ∧ collinear C R X (OK) ∧ C A ≡ C B (OK) ∧ R A ≡ R B (OK) →
+    X A ≡ X B (l4_17 aka EquidistantLine)
   collinear A B R (more likely, ¬ collinear A B R)
   want: between A X B ∧ A X ≡ X B, former we have by construction
 
