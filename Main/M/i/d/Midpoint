@@ -1681,7 +1681,165 @@ and detach <code>¬ collinear A B C</code>.
 ))
 </jh>
 
-TODO: an outline of remaining steps:
+The last thing we need to be ready to apply <code>LineIntersection</code> is <code>¬ collinear A Q B</code>. We will show <code>collinear A Q B → collinear A B C</code> by <code>CollinearityOuterTransitivity</code> on <code>B Q C</code> and <code>B Q A</code>. Here our proof seems to be streamlined from Narboux's, which applies <code>CollinearityOuterTransitivity</code> four times, not just one (TODO: re-check this statement when we're done with MidpointExistsGivenEquidistant).
+
+The first part is <code>B ≠ Q</code>.
+
+<jh>
+thm (MidpointExistsGivenEquidistant-b-q
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (B ≠ Q)
+  ) (
+</jh>
+We pick out <code>A ≠ P</code> for later use,
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+and do the same for <code>B Q ≡ A P</code>
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Then we take <code>B = Q ∧ B Q ≡ A P → A = P</code> and detach the <code>B Q ≡ A P</code>.
+<jh>
+        B Q A P CongruenceIdentityFromEquality
+        export
+        applyComm
+        applySyllogism
+</jh>
+Transposing and detaching <code>A ≠ P</code> gives us <code>B ≠ Q</code>.
+<jh>
+        (B = Q) (A = P) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+        applyModusPonensInConsequent
+))
+
+thm (MidpointExistsGivenEquidistant-a-q-b
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (¬ (collinear A Q B))
+  ) (
+</jh>
+We'll start with putting several things on the proof stack which we'll use later in the proof. The first one is <code>¬ collinear B C A</code>
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B C CollinearityRotation
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>collinear B Q C</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        C B Q BetweennessCollinearity
+        applySyllogism
+
+        C B Q CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>B ≠ Q</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-q
+</jh>
+Now we take <code>B ≠ Q ∧ collinear B Q C ∧ collinear B Q A → collinear B C A</code> and detach the first two conjuncts.
+<jh>
+        B Q C A CollinearityOuterTransitivity
+        export
+        export
+        applySyllogism
+        applyModusPonensInConsequent
+</jh>
+Transposing and detaching gives us <code>¬ collinear B Q A</code>.
+<jh>
+        (collinear B Q A) (collinear B C A) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+</jh>
+We just need to rearrange that into <code>¬ collinear A Q B</code>
+<jh>
+        B Q A Collinearity13
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+TODO: an outline of possibly remaining steps (might not need most of these, though)
+  maybe collinear A Q B → collinear A B C?
+    A ≠ Q (SEE BELOW), A Q B (HYP), A Q R (HAVE) → A B R
+    B ≠ R (NEED), B R A (PREVIOUS), B R P (HAVE) → B A P
+    A ≠ P (HAVE), A P B (PREVIOUS), A P C (HAVE) → B A C
+
+    B ≠ P (HAVE), B P R′ (HAVE), B P R (HAVE) → B R′ R
+
+    B ≠ Q (SEE BELOW), B Q C (HAVE), B Q A (HYP) → B C A  (THIS ONE LINE DOES IT???)
+
+    B ≠ Q (from A ≠ P and B Q ≡ A P)
+    A ≠ Q (from B ≠ P and B R P ≅ A R′ Q)
+
+
+    NO? B ≠ Q, B Q A (NEED), B Q C (HAVE) → B A C
+
+    Have: collinear B R′ P, haven't used it yet
   R = R′
   A ≠ Q
   B ≠ Q
