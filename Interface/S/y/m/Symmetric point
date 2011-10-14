@@ -16,7 +16,7 @@ param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) (
 The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined in the obvious way as sets of points, as this is a first-order theory).
 <jh>
 kindbind (object point)
-var (point x y z w u v A B C D E M P Q R S)
+var (point x y z w u v A B C D E M P Q R S X)
 var (point x′ y′ z′ u′ A′ B′ C′ D′ P′ Q′ R′ S′)
 var (point P1 P2)
 
@@ -208,6 +208,20 @@ A point, itself, and any second point are collinear.
 stmt (CollinearityAAB () () (collinear A A B))
 stmt (CollinearityABB () () (collinear A B B))
 stmt (CollinearityABA () () (collinear A B A))
+</jh>
+
+=== Transitivity ===
+These three theorems are all variations of the same theme, which is that given two collinear predicates sharing two unequal points, all four points are collinear. The words "outer" and "inner" do not signify a fundamentally different theorem (as they do for betweenness or five segment); they just refer to a minor rearrangement.
+<jh>
+stmt (CollinearityOuterTransitivity () ()
+  ((((P ≠ Q) ∧ (collinear P Q A)) ∧ (collinear P Q B)) →
+  (collinear P A B)))
+stmt (CollinearityInnerTransitivity () ()
+  ((((P ≠ Q) ∧ (collinear P Q A)) ∧ (collinear P Q B)) →
+  (collinear Q A B)))
+stmt (CollinearityCollinearity () ()
+  ((((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q)) →
+    ((collinear X P Q) ↔ (collinear X P S))))
 </jh>
 
 == Determining lines, or points, by distance to two points ==
