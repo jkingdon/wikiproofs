@@ -1925,7 +1925,61 @@ Applying <code>LineIntersection</code> we are done.
         applySyllogism
 ))
 </jh>
-		
+
+Now that we have <code>R = R′</code> we are in the home stretch. <code>A R ≡ R B</code> is next.
+<jh>
+thm (MidpointExistsGivenEquidistant-a-r-r-b
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (A R ≡ R B)
+  ) (
+</jh>
+First we put <code>B R ≡ A R′</code> on the stack for use a bit later.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        B R P A R′ Q Congruence12
+        applySyllogism
+</jh>
+Next is <code>R = R′</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-r-rprime
+</jh>
+<code>R = R′ → (B R ≡ A R ↔ B R ≡ A R′)</code>:
+<jh>
+        R EqualityReflexivity
+        A EqualityReflexivity
+        B EqualityReflexivity
+        B B R R A A R R′ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+</jh>
+Combining those pieces we get <code>B R ≡ A R</code>,
+<jh>
+        applySyllogism
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+</jh>
+which we rearrange to <code>A R ≡ R B</code>.
+<jh>
+        swapCongruenceInConsequent
+        commuteCongruenceRightInConsequent
+))
+</jh>
+
 TODO: an outline of possibly remaining steps (might not need most of these, though)
   maybe collinear A Q B → collinear A B C?
     A ≠ Q (SEE BELOW), A Q B (HYP), A Q R (HAVE) → A B R
@@ -1933,8 +1987,6 @@ TODO: an outline of possibly remaining steps (might not need most of these, thou
     A ≠ P (HAVE), A P B (PREVIOUS), A P C (HAVE) → B A C
 
     B ≠ P (HAVE), B P R′ (HAVE), B P R (HAVE) → B R′ R
-
-    B ≠ Q (SEE BELOW), B Q C (HAVE), B Q A (HYP) → B C A  (THIS ONE LINE DOES IT???)
 
     B ≠ Q (from A ≠ P and B Q ≡ A P)
     A ≠ Q (from B ≠ P and B R P ≅ A R′ Q)
@@ -1949,7 +2001,6 @@ TODO: an outline of possibly remaining steps (might not need most of these, thou
     apply this 4 times, somehow involving
     collinear B C A, collinear A B C, collinear A R B, collinear B P A, collinear A B C
 
-  A R ≡ R B (from R = R′)
   C ≠ R ∧ collinear C R X (OK) ∧ C A ≡ C B (OK) ∧ R A ≡ R B (OK) →
     X A ≡ X B (l4_17 aka EquidistantLine)
   collinear A B R (more likely, ¬ collinear A B R)
