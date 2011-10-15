@@ -1823,6 +1823,109 @@ We just need to rearrange that into <code>¬ collinear A Q B</code>
 ))
 </jh>
 
+It is now time for <code>R = R′</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-r-rprime
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (R = R′)
+  ) (
+</jh>
+The proof is via <code>LineIntersection</code> on the lines <code>A Q</code> and <code>B P</code>. First we need <code>¬ collinear A Q B</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-a-q-b
+</jh>
+<code>B ≠ P</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-p
+        composeConjunction
+</jh>
+<code>collinear A Q R</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A R Q BetweennessCollinearity
+        applySyllogism
+
+        A R Q Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear A Q R′</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        A R′ Q BetweennessCollinearity
+        applySyllogism
+
+        A R′ Q Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B P R</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        B R P BetweennessCollinearity
+        applySyllogism
+
+        B R P Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B P R′</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-rprime-p
+
+        B R′ P Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying <code>LineIntersection</code> we are done.
+<jh>
+        A Q B P R R′ LineIntersection
+        applySyllogism
+))
+</jh>
+		
 TODO: an outline of possibly remaining steps (might not need most of these, though)
   maybe collinear A Q B → collinear A B C?
     A ≠ Q (SEE BELOW), A Q B (HYP), A Q R (HAVE) → A B R
@@ -1838,14 +1941,8 @@ TODO: an outline of possibly remaining steps (might not need most of these, thou
 
 
     NO? B ≠ Q, B Q A (NEED), B Q C (HAVE) → B A C
-
-    Have: collinear B R′ P, haven't used it yet
-  R = R′
   A ≠ Q
   B ≠ Q
-  LineIntersection
-    ¬ collinear A Q B ∧ B ≠ P (OK) ∧ collinear A Q R (OK) ∧ collinear A Q R′ (OK) ∧ 
-      collinear B P R (OK) ∧ collinear B P R′ (OK) → R = R′
   B ≠ R
   CollinearityOuterTransitivity
     P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear P A B
