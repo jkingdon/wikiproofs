@@ -1980,7 +1980,114 @@ which we rearrange to <code>A R ≡ R B</code>.
 ))
 </jh>
 
+[[File:Proof of lemma l7_25 in Narboux.svg|since <code>C</code> and <code>R</code> are equidistant from <code>A</code> and <code>B</code>, so is <code>X</code>]]
+We're almost ready to apply <code>EquidistantLine</code>. We still need <code>C ≠ R</code>, though. If <code>C</code> were equal to <code>R</code>, then <code>between R X C</code> would imply that <code>C = X</code>, and <code>between A X B</code> would imply <code>collinear A B C</code>, which is a contradiction.
+<jh>
+thm (MidpointExistsGivenEquidistant-c-r
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (C ≠ R)
+  ) (
+</jh>
+At the end of the proof we'll need <code>¬ collinear A B C</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+We start with <code>between C X R</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapBetweennessInConsequent
+</jh>
+Next is <code>between C X R → (C = R → C = X)</code>, which follows from <code>C = R ∧ between C X R → C = X</code> and some rearrangement.
+<jh>
+        C R X IndivisibilityFromEquality
+        export
+        applyComm
+</jh>
+Combining those we get <code>C = R → C = X</code>.
+<jh>
+        applySyllogism
+</jh>
+Leaving that on the stack for a while, we go to <code>between A X B</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+<code>C = X → (between A C B ↔ between A X B)</code>:
+<jh>
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A C X B B BetweennessBuilder
+        detach2of2
+        detach1of2
+</jh>
+Now we detach the <code>between A X B</code>.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+        applySyllogism
+</jh>
+We have <code>C = X</code> implies <code>between A C B</code>, which in implies <code>collinear A B C</code>.
+<jh>
+        import
+
+        A C B BetweennessCollinearity
+
+        A C B Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applySyllogism
+        export
+</jh>
+Combining this with <code>C = R → C = X</code> gives us <code>C = R → collinear A B C</code>.
+<jh>
+        applySyllogismInConsequent
+</jh>
+<jh>
+        introduceTranspositionInConsequent
+        applyModusPonensInConsequent
+))
+</jh>
+
 TODO: an outline of possibly remaining steps (might not need most of these, though)
+  need: C ≠ R
+    between A X B ∧ between R X C
+    C = X → (between A X B ↔ between A C B)
+    C = X → between A C B
+    C = X → collinear A B C
+    C = R → collinear A B C
+    ¬ collinear A B C → C ≠ R
   maybe collinear A Q B → collinear A B C?
     A ≠ Q (SEE BELOW), A Q B (HYP), A Q R (HAVE) → A B R
     B ≠ R (NEED), B R A (PREVIOUS), B R P (HAVE) → B A P
