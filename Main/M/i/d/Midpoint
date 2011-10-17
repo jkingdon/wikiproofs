@@ -2074,45 +2074,97 @@ Combining this with <code>C = R → C = X</code> gives us <code>C = R → collin
 <jh>
         applySyllogismInConsequent
 </jh>
+Now we pick up <code>¬ collinear A B C</code> from the proof stack and conclude <code>C ≠ R</code>.
 <jh>
         introduceTranspositionInConsequent
         applyModusPonensInConsequent
 ))
 </jh>
 
-TODO: an outline of possibly remaining steps (might not need most of these, though)
-  need: C ≠ R
-    between A X B ∧ between R X C
-    C = X → (between A X B ↔ between A C B)
-    C = X → between A C B
-    C = X → collinear A B C
-    C = R → collinear A B C
-    ¬ collinear A B C → C ≠ R
-  maybe collinear A Q B → collinear A B C?
-    A ≠ Q (SEE BELOW), A Q B (HYP), A Q R (HAVE) → A B R
-    B ≠ R (NEED), B R A (PREVIOUS), B R P (HAVE) → B A P
-    A ≠ P (HAVE), A P B (PREVIOUS), A P C (HAVE) → B A C
+We're now ready to conclude <code>X is-midpoint-of A B</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-x-midpoint
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (X is-midpoint-of A B)
+  ) (
+</jh>
+The first half of <code>X is-midpoint-of A B</code> is <code>between A X B</code>, which is true by construction.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+The other half is <code>A X ≡ X B</code>. We will conclude <code>X A ≡ X B</code> by <code>EquidistantLine</code> (noting that each of <code>C</code> and <code>R</code> are equidistant from <code>A</code> and <code>B</code>, and <code>X</code> is on the same line). First we need  <code>C ≠ R</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-c-r
+</jh>
+Next is <code>collinear C R X</code>
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
-    B ≠ P (HAVE), B P R′ (HAVE), B P R (HAVE) → B R′ R
+        R X C BetweennessCollinearity
+        applySyllogism
 
-    B ≠ Q (from A ≠ P and B Q ≡ A P)
-    A ≠ Q (from B ≠ P and B R P ≅ A R′ Q)
+        C R X CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
 
+        composeConjunction
+</jh>
+Now we just need equidistance to the two known points, first <code>C A ≡ C B</code>,
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
-    NO? B ≠ Q, B Q A (NEED), B Q C (HAVE) → B A C
-  A ≠ Q
-  B ≠ Q
-  B ≠ R
-  CollinearityOuterTransitivity
-    P ≠ Q ∧ collinear P Q A ∧ collinear P Q B → collinear P A B
-    apply this 4 times, somehow involving
-    collinear B C A, collinear A B C, collinear A R B, collinear B P A, collinear A B C
+        composeConjunction
+</jh>
+and then <code>R A ≡ R B</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-a-r-r-b
+        commuteCongruenceLeftInConsequent
 
-  C ≠ R ∧ collinear C R X (OK) ∧ C A ≡ C B (OK) ∧ R A ≡ R B (OK) →
-    X A ≡ X B (l4_17 aka EquidistantLine)
-  collinear A B R (more likely, ¬ collinear A B R)
-  want: between A X B ∧ A X ≡ X B, former we have by construction
+        composeConjunction
+</jh>
+Applying <code>EquidistantLine</code> gives us <code>X A ≡ X B</code> which we commute to <code>A X ≡ X B</code>, and that's all we need for <code>X is-midpoint-of A B</code>.
+<jh>
+        C R X A B EquidistantLine
+        applySyllogism
+        commuteCongruenceLeftInConsequent
 
+        composeConjunction
+))
+</jh>
+
+A bit of logic finishes the proof.
 <jh>
 #thm (MidpointExistsGivenEquidistant-x-midpoint () ()
 #  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
