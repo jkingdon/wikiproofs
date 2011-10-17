@@ -627,6 +627,24 @@ thm (eliminateRightConjunctInConsequent ()
         p q ConjunctionRightElimination
         applySyllogism
 ))
+
+thm (introduceTranspositionInConsequent ()
+  ((H (antecedent → (p → q))))
+  (antecedent → ((¬ q) → (¬ p))) (
+        H
+        p q Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (eliminateTranspositionInConsequent ()
+  ((H (antecedent → ((¬ q) → (¬ p)))))
+  (antecedent → (p → q)) (
+        H
+        p q Transposition
+        eliminateBiconditionalForward
+        applySyllogism
+))
 </jh>
 
 === Deprecated ===

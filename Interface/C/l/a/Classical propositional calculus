@@ -501,6 +501,13 @@ stmt (exportInConsequent ()
 
 stmt (eliminateLeftConjunctInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
 stmt (eliminateRightConjunctInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
+
+stmt (introduceTranspositionInConsequent ()
+  ((antecedent → (p → q)))
+  (antecedent → ((¬ q) → (¬ p))))
+stmt (eliminateTranspositionInConsequent ()
+  ((antecedent → ((¬ q) → (¬ p))))
+  (antecedent → (p → q)))
 </jh>
 
 === Theorems partly in the consequent ===
