@@ -2225,7 +2225,7 @@ thm (MidpointExistsGivenEquidistant ((x A) (x B) (x C)) ()
 == Export ==
 We now export to [[Interface:Midpoint]].
 <jh>
-#export (RESULTS Interface:Midpoint (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Midpoint (CLASSICAL FIRSTORDER) ())
 </jh>
 
 Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
