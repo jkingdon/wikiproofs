@@ -2175,9 +2175,49 @@ A bit of logic finishes the proof.
 #    (X is-midpoint-of A B)) (
 #))
 
-#thm (MidpointExistsGivenEquidistant-noncollinear ((x A) (x B) (x C)) ()
-#  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) → (∃ x ((value x) is-midpoint-of A B))) (
-#))
+thm (MidpointExistsGivenEquidistant-noncollinear
+  ((x A) (x B) (x C)
+
+   (p A) (p B) (p C) (q A) (q B) (q C) (p q)
+   (r A) (r B) (r C) (r p) (r q)
+   (x p) (x q) (x r)
+   (r′ A) (r′ B) (r′ C) (r′ p) (r′ q) (r′ r) (r′ x)
+   ) ()
+  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) → (∃ x ((value x) is-midpoint-of A B))) (
+        A B C p q MidpointExistsGivenEquidistant-p-q
+
+        A B C (value p) (value q) r MidpointExistsGivenEquidistant-r
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        A B C (value p) (value q) (value r) x MidpointExistsGivenEquidistant-x
+        r addThereExists
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        A B C (value p) (value q) (value r) (value x) r′ MidpointExistsGivenEquidistant-rprime
+        x addThereExists
+        r addThereExists
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        A B C (value p) (value q) (value r) (value x) (value r′)
+          MidpointExistsGivenEquidistant-x-midpoint
+        r′ addThereExists
+        removeThereExistsInConsequent
+        x addThereExists
+        r addThereExists
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
 
 #thm (MidpointExistsGivenEquidistant () () ((C A ≡ C B) → (∃ x ((value x) is-midpoint-of A B))) (
 #        A B C x MidpointExistsGivenEquidistant-collinear
