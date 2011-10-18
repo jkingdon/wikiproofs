@@ -2166,15 +2166,6 @@ Applying <code>EquidistantLine</code> gives us <code>X A ≡ X B</code> which we
 
 A bit of logic finishes the proof.
 <jh>
-#thm (MidpointExistsGivenEquidistant-x-midpoint () ()
-#  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
-#        (((between C A P) ∧ (A ≠ P)) ∧
-#          ((between C B Q) ∧ (B Q ≡ A P)))) ∧
-#        ((between A R Q) ∧ (between B R P))) ∧
-#        ((between A X B) ∧ (between R X C))) →
-#    (X is-midpoint-of A B)) (
-#))
-
 thm (MidpointExistsGivenEquidistant-noncollinear
   ((x A) (x B) (x C)
 
@@ -2219,15 +2210,16 @@ thm (MidpointExistsGivenEquidistant-noncollinear
         removeThereExistsInConsequent
 ))
 
-#thm (MidpointExistsGivenEquidistant () () ((C A ≡ C B) → (∃ x ((value x) is-midpoint-of A B))) (
-#        A B C x MidpointExistsGivenEquidistant-collinear
-#        export
+thm (MidpointExistsGivenEquidistant ((x A) (x B) (x C)) ()
+  ((C A ≡ C B) → (∃ x ((value x) is-midpoint-of A B))) (
+        A B C x MidpointExistsGivenEquidistant-collinear
+        export
 
-#        A B C x MidpointExistsGivenEquidistant-noncollinear
-#        export
+        A B C x MidpointExistsGivenEquidistant-noncollinear
+        export
 
-#        eliminateCases
-#))
+        eliminateCases
+))
 </jh>
 
 == Export ==
