@@ -17,10 +17,10 @@ The kind <code>object</code>, defined in first-order logic, represents a point. 
 <jh>
 kindbind (object point)
 var (point x y z w u v A B C D E M P Q R S X)
-var (point x′ y′ z′ u′ A′ B′ C′ D′ P′ Q′ R′ S′)
+var (point x′ y′ z′ u′ A′ B′ C′ D′ M′ P′ Q′ R′ S′)
 var (point P1 P2)
 
-var (variable a b c a′ b′ c′ e f p p′)
+var (variable a b c a′ b′ c′ e f m p p′)
 var (formula antecedent)
 </jh>
 
@@ -407,15 +407,15 @@ stmt (SymmetricPointMidpoint () ()
 
 The midpoint exists and is unique. We don't yet have the full existence theorem; that comes in a later chapter.
 <jh>
-thm (MidpointExistsGivenEquidistant ((x A) (x B) (x C)) ()
-  ((C A ≡ C B) → (∃ x ((value x) is-midpoint-of A B))))
-thm (MidpointUniqueness () ()
+stmt (MidpointExistsGivenEquidistant ((m A) (m B) (m C)) ()
+  ((C A ≡ C B) → (∃ m ((value m) is-midpoint-of A B))))
+stmt (MidpointUniqueness () ()
   (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
 </jh>
 
 A point which is equidistant to the two distinct endpoints of a line segment, and on the same line as them, is the midpoint of that line segment.
 <jh>
-thm (EquidistantMidpoint () ()
+stmt (EquidistantMidpoint () ()
   (((collinear A M B) ∧ (M A ≡ M B)) →
     ((A = B) ∨ (M is-midpoint-of A B))))
 </jh>
