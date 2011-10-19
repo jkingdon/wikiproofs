@@ -18,6 +18,11 @@ var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
 var (variable a a′ b b′ c c′ d d′ e e′ f p p′ q r r′ x x′ y y′ z)
 </jh>
 
+== Right angles ==
+Here is a predicate which can be thought of as recognizing whether <code>A B</code> is perpendicular to <code>B C<code>. We call it <code>is-right-angle</code> even though it is not tied to any larger theory of angles (that will come later).<ref>Definition Per in Narboux</ref> The definition can be read as "<code>∠ A B C</code> is a right angle iff the symmetric point of <code>C</code> around <code>B</code> is as far from <code>A</code> as <code>C</code> is".
+<jh>
+def ((is-right-angle A B C) (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))))
+</jh>
 
 == Export ==
 We now export to [[Interface:Orthogonality]].
