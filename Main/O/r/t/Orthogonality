@@ -24,6 +24,13 @@ Here is a predicate which can be thought of as recognizing whether <code>A B</co
 def ((is-right-angle A B C) (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))))
 </jh>
 
+=== Can interchange legs of a right angle ===
+Although it isn't obvious from the definition, the roles of the two points which aren't the vertex are equivalent.<ref>l8_2 in Narboux</ref> To prove this, expand <code>is-right-angle A B C</code> according to the definition into <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>. Then let <code>a′</code> be the symmetric point of <code>A</code> around <code>B</code>. Since reflecting through a point preserves distances (<code>SymmetricPointDistance</code>), <code>A C ≡ a′ c′</code> and <code>A c′ ≡ a′ C</code>. This and <code>MidpointSymmetry</code> allows us to show <code>is-right-angle C B A</code> by the definition.
+<jh>
+#thm (RightAngleSymmetryImplication () () ((is-right-angle A B C) → (is-right-angle C B A)) (
+#))
+</jh>
+
 == Export ==
 We now export to [[Interface:Orthogonality]].
 <jh>
