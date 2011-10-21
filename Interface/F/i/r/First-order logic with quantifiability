@@ -309,6 +309,8 @@ If we have two formulas joined by a conjunction, one quantified over one variabl
 var (formula ψy)
 stmt (ThereExistsScattering ((φx y) (ψy x)) ()
   ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))))
+stmt (gatherThereExistsInConsequent ((φx y) (ψy x)) ((antecedent → ((∃ x φx) ∧ (∃ y ψy))))
+  (antecedent → (∃ x (∃ y (φx ∧ ψy)))))
 </jh>
 
 ==== Adding quantifiers to theorems which are implications ====
