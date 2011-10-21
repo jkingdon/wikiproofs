@@ -1035,56 +1035,37 @@ Our plan is to show that <code>X</code> is the midpoint of <code>A B</code>. To 
 
 We first construct <code>P</code> and <code>Q</code>.
 <jh>
-thm (MidpointExistsGivenEquidistant-p-q-1 ((q C) (q B) (q A) (q p) (p C) (p A)) ()
-  (∃ p (∃ q
-  (((between C A (value p)) ∧ (A ≠ (value p))) ∧
-    ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
-    )) (
+thm (MidpointExistsGivenEquidistant-p ((p A) (p B) (p C)) ()
+  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) →
+    (∃ p (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+      ((between C A (value p)) ∧ (A ≠ (value p)))))
+  ) (
         p C A PointConstructionDifferent
-
-        q C B A (value p) SegmentConstruction
-        p generalize
-
-        combineThereExistsForAll
-
-        q
-          ((between C A (value p)) ∧ (A ≠ (value p)))
-          ((between C B (value q)) ∧ (B (value q) ≡ A (value p)))
-          ThereExistsConjunctionMovement
-        p buildThereExists
-        eliminateBiconditionalForward
-        applyModusPonens
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B)) introduceAntecedent
+        repeatAntecedentThereExists
 ))
 
-thm (MidpointExistsGivenEquidistant-p-q ((q C) (q B) (q A) (q p) (p C) (p B) (p A)) ()
-  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) →
-  (∃ p (∃ q
-  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
-    (((between C A (value p)) ∧ (A ≠ (value p))) ∧
-    ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
-    )))) (
-        ((¬ (collinear A B C)) ∧ (C A ≡ C B)) ImplicationReflexivity
-
-        p q C A B MidpointExistsGivenEquidistant-p-q-1
-
-        introduceRightConjunctToConsequent
-
-        p
-          ((¬ (collinear A B C)) ∧ (C A ≡ C B))
-          (∃ q (((between C A (value p)) ∧ (A ≠ (value p))) ∧
-            ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
-            )
-          ThereExistsConjunctionMovement
-        eliminateBiconditionalForward
-        applySyllogism
-
-        q
-          ((¬ (collinear A B C)) ∧ (C A ≡ C B))
-          (((between C A (value p)) ∧ (A ≠ (value p))) ∧
-            ((between C B (value q)) ∧ (B (value q) ≡ A (value p))))
-          ThereExistsConjunctionMovement
-        p buildThereExists
-        eliminateBiconditionalForward
+thm (MidpointExistsGivenEquidistant-q ((q C) (q B) (q A) (q P)) ()
+  ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧ ((between C A P) ∧ (A ≠ P))) →
+  (∃ q
+    (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+      (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B (value q)) ∧ (B (value q) ≡ A P))))
+      )) (
+        q C B A P SegmentConstruction
+        (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          ((between C A P) ∧ (A ≠ P)))
+          introduceAntecedent
+        repeatAntecedentThereExists
+</jh>
+For no especially good reason, for the rest of the proof we parenthesize the formula differently. We could rewrite the rest of the proof, but at least for now it will be less work to just regroup here.
+<jh>
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          ((between C A P) ∧ (A ≠ P))
+          ((between C B (value q)) ∧ (B (value q) ≡ A P))
+          ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        q addThereExists
         applySyllogism
 ))
 
@@ -2175,7 +2156,11 @@ thm (MidpointExistsGivenEquidistant-noncollinear
    (r′ A) (r′ B) (r′ C) (r′ p) (r′ q) (r′ r) (r′ x)
    ) ()
   (((¬ (collinear A B C)) ∧ (C A ≡ C B)) → (∃ x ((value x) is-midpoint-of A B))) (
-        A B C p q MidpointExistsGivenEquidistant-p-q
+        A B C p MidpointExistsGivenEquidistant-p
+
+        A B C (value p) q MidpointExistsGivenEquidistant-q
+        p addThereExists
+        applySyllogism
 
         A B C (value p) (value q) r MidpointExistsGivenEquidistant-r
         q addThereExists
