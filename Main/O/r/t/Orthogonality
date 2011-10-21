@@ -13,9 +13,10 @@ import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 import (START Interface:Midpoint (CLASSICAL FIRSTORDER) ())
 
+var (formula antecedent)
 var (point A B C D E F M P Q R S X Y Z)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
-var (variable a a′ b b′ c c′ d d′ e e′ f p p′ q r r′ x x′ y y′ z)
+var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ x x′ y y′ z)
 </jh>
 
 == Right angles ==
@@ -24,11 +25,126 @@ Here is a predicate which can be thought of as recognizing whether <code>A B</co
 def ((is-right-angle A B C) (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))))
 </jh>
 
-=== Can interchange legs of a right angle ===
-Although it isn't obvious from the definition, the roles of the two points which aren't the vertex are equivalent.<ref>l8_2 in Narboux</ref> To prove this, expand <code>is-right-angle A B C</code> according to the definition into <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>. Then let <code>a′</code> be the symmetric point of <code>A</code> around <code>B</code>. Since reflecting through a point preserves distances (<code>SymmetricPointDistance</code>), <code>A C ≡ a′ c′</code> and <code>A c′ ≡ a′ C</code>. This and <code>MidpointSymmetry</code> allows us to show <code>is-right-angle C B A</code> by the definition.
+As usual, we'll need to restate the definition as a theorem.
 <jh>
-#thm (RightAngleSymmetryImplication () () ((is-right-angle A B C) → (is-right-angle C B A)) (
-#))
+thm (IsRightAngle ((c′ A) (c′ B) (c′ C)  (c″ c′) (c″ A) (c″ B) (c″ C)) ()
+  ((is-right-angle A B C) ↔
+    (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′))))) (
+</jh>
+The left hand side's variable of quantification is implicit, but we can use c″ in this proof.
+First we need <code>c″ = c′ → (B is-midpoint-of C c″ ↔ B is-midpoint-of C c′)
+<jh>
+        B EqualityReflexivity
+        C EqualityReflexivity
+        B B C C (value c″) (value c′) MidpointBuilder
+        detach2of3
+        detach1of2
+</jh>
+Next is <code>c″ = c′ → (A C ≡ A c″ ↔ A C ≡ A c′)</code>.
+<jh>
+        C EqualityReflexivity
+        A EqualityReflexivity
+        A EqualityReflexivity
+        A A C C A A (value c″) (value c′) CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+</jh>
+Combining these two and applying <code>ChangeVariableThereExists</code> we are done.
+<jh>
+        buildConjunctionInConsequent
+        ChangeVariableThereExists
+))
+</jh>
+
+=== A convenience rule ===
+TODO: move this to where we define <code>CongruenceTransitivity</code>.
+<jh>
+thm (applyCongruenceTransitivityInConsequent ()
+  ((H1 (antecedent → (A B ≡ C D))) (H2 (antecedent → (C D ≡ E F))))
+  (antecedent → (A B ≡ E F)) (
+        H1
+        H2
+        composeConjunction
+        A B C D E F CongruenceTransitivity
+        applySyllogism
+))
+</jh>
+
+=== Can interchange legs of a right angle ===
+Although it isn't obvious from the definition, the roles of the two points which aren't the vertex are equivalent.<ref>l8_2 in Narboux</ref> To prove this, expand <code>is-right-angle A B C</code> according to the definition into <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>. Then let <code>a′</code> be the symmetric point of <code>A</code> around <code>B</code>. Since reflecting through a point preserves distances (<code>SymmetricPointDistance</code>), <code>A c′ ≡ a′ C</code>. This allows us to show <code>is-right-angle C B A</code> by the definition.
+<jh>
+thm (RightAngleSymmetryImplicationLemma () ()
+  ((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧ (B is-midpoint-of A A′)) →
+  ((B is-midpoint-of A A′) ∧ (C A ≡ C A′))) (
+        ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))
+          (B is-midpoint-of A A′)
+          ConjunctionLeftElimination
+
+</jh>
+Next is <code>B is-midpoint-of C C′ ∧ B is-midpoint-of A A′</code>, which will let us apply <code>SymmetricPointDistance</code>.
+<jh>
+        ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))
+          (B is-midpoint-of A A′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))
+          (B is-midpoint-of A A′)
+          ConjunctionLeftElimination
+
+        B A A′ MidpointSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B C C′ A′ A SymmetricPointDistance
+        applySyllogism
+</jh>
+That gives us <code>C′ A ≡ C A′</code>. We combine it with <code>A C ≡ A C′</code> to give <code>C A ≡ C A′</code>.
+<jh>
+        swapCongruenceInConsequent
+        commuteCongruenceRightInConsequent
+
+        ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))
+          (B is-midpoint-of A A′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+
+        applyCongruenceTransitivityInConsequent
+        swapCongruenceInConsequent
+        commuteCongruenceLeftInConsequent
+</jh>
+Now we just need to hook together <code>B is-midpoint-of A A′</code> and <code>C A ≡ C A′</code>.
+<jh>
+        composeConjunction
+))
+
+thm (RightAngleSymmetryImplication
+  ((c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
+  ((is-right-angle A B C) → (is-right-angle C B A)) (
+</jh>
+First we rewrite <code>is-right-angle A B C</code> to explicitly quantify with the variable <code>c′</code>.
+<jh>
+        A B C c′ IsRightAngle
+        eliminateBiconditionalReverse
+</jh>
+Next we construct <code>a′</code>.
+<jh>
+        a′ B A SymmetricPoint
+        introduceRightConjunctToConsequent
+        gatherThereExistsInConsequent
+</jh>
+That gives us <code>∃ c′ ∃ a′ (B is-midpoint-of C c′ ∧ A C ≡ A c′ ∧ B is-midpoint-of A a′)</code>. We're looking for <code>∃ a′ (B is-midpoint-of A a′ ∧ C A ≡ C a′)</code>.
+<jh>
+        B C (value c′) A (value a′) RightAngleSymmetryImplicationLemma
+        a′ addThereExists
+        c′ addThereExists
+        applySyllogism
+        removeThereExistsInConsequent
+))
 </jh>
 
 == Export ==
