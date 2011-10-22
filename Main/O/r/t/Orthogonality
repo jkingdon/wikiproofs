@@ -145,6 +145,13 @@ That gives us <code>∃ c′ ∃ a′ (B is-midpoint-of C c′ ∧ A C ≡ A c�
         applySyllogism
         removeThereExistsInConsequent
 ))
+
+thm (RightAngleSymmetry () ()
+  ((is-right-angle A B C) ↔ (is-right-angle C B A)) (
+        A B C RightAngleSymmetryImplication
+        C B A RightAngleSymmetryImplication
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 == Export ==
