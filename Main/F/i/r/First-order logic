@@ -1125,6 +1125,16 @@ thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
         applySyllogism
 ))
 
+thm (moveRightConjunctIntoThereExistsInConsequent ((x ψ))
+  ((H (antecedent → ((∃ x φ) ∧ ψ))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
 thm (repeatAntecedentThereExists ((x antecedent))
   ((H (antecedent → (∃ x ψ))))
   (antecedent → (∃ x (antecedent ∧ ψ))) (
