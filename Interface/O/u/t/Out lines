@@ -210,6 +210,7 @@ stmt (CollinearityABA () () (collinear A B A))
 </jh>
 
 === Transitivity ===
+These three theorems are all variations of the same theme, which is that given two collinear predicates sharing two unequal points, all four points are collinear. The words "outer" and "inner" do not signify a fundamentally different theorem (as they do for betweenness or five segment); they just refer to a minor rearrangement.
 <jh>
 stmt (CollinearityOuterTransitivity () ()
   ((((P ≠ Q) ∧ (collinear P Q A)) ∧ (collinear P Q B)) →
