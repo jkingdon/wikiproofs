@@ -46,9 +46,10 @@ def ((≡ A B C D) (
 </jh>
 
 === Distance from A to B is the distance from B to A ===
-Here we will prove <code>A B ≡ B A</code>. Or rather, we can prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B ≡ B A</code> (TODO: figure out how the A ∈ ℝ × ℝ relates to Interface:Restricting_all_quantifiers and what we can export).
+Here we will prove <code>A B ≡ B A</code>. Or rather, we can prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B ≡ B A</code> (TODO: figure out how <code>A ∈ ℝ × ℝ</code> relates to [[Interface:Restricting all quantifiers]] and what we can export).
 
-{{under construction}} TODO: need A ∈ B × C → 1st A ∈ B ∧ 2nd A ∈ C (this is a corollary of OrderedPairCartesianProduct but probably worth stating on its own)
+{{under construction}}
+TODO: need A ∈ B × C → 1st A ∈ B ∧ 2nd A ∈ C (this is a corollary of OrderedPairCartesianProduct but probably worth stating on its own)
 <jh>
 #thm (CongruenceABBA () () (A B ≡ B A) (
 </jh>
