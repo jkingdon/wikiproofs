@@ -593,7 +593,7 @@ The right side, <code>¬ ∀ x (φ → ¬ ψ)</code>, is only slightly more comp
 ))
 </jh>
 
-It will also be convenient to have a commuted version.
+It will also be convenient to have a commuted version,
 <jh>
 thm (ThereExistsConjunctionRightCombining () ()
   (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))) (
@@ -607,6 +607,17 @@ thm (ThereExistsConjunctionRightCombining () ()
         eliminateBiconditionalReverse
         x addThereExists
         applySyllogism
+))
+</jh>
+
+and a rule.
+<jh>
+thm (combineThereExistsForAll () ((HEXIST (∃ x φ)) (HALL (∀ x ψ))) (∃ x (φ ∧ ψ)) (
+        HEXIST
+        HALL
+        introduceConjunction
+        x φ ψ ThereExistsConjunctionRightCombining
+        applyModusPonens
 ))
 </jh>
 
@@ -1102,7 +1113,7 @@ thm (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → 
 ))
 </jh>
 
-Here is a rule version, for convenience:
+Here are a few rules, for convenience:
 <jh>
 thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
   ((H (antecedent → (φ ∧ (∃ x ψ)))))
@@ -1112,6 +1123,25 @@ thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
         x φ ψ ThereExistsConjunctionMovement
         eliminateBiconditionalForward
         applySyllogism
+))
+
+thm (moveRightConjunctIntoThereExistsInConsequent ((x ψ))
+  ((H (antecedent → ((∃ x φ) ∧ ψ))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (repeatAntecedentThereExists ((x antecedent))
+  ((H (antecedent → (∃ x ψ))))
+  (antecedent → (∃ x (antecedent ∧ ψ))) (
+        antecedent ImplicationReflexivity
+        H
+        composeConjunction
+        moveLeftConjunctIntoThereExistsInConsequent
 ))
 </jh>
 
@@ -1162,6 +1192,20 @@ Then we pull much the same trick with <code>y</code> (but it is easier as there 
         swapBiconditional
 ))
 </jh>
+
+Here is a rule form.
+<jh>
+thm (gatherThereExistsInConsequent ((φx y) (ψy x)) ((H (antecedent → ((∃ x φx) ∧ (∃ y ψy)))))
+  (antecedent → (∃ x (∃ y (φx ∧ ψy)))) (
+        H
+        x y φx ψy ThereExistsScattering
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+== Distinctors ==
+So far we've just dealt with distinct variables via distinct variable constraints, and in fact that is sufficient for everything we need. Here we sketch out how we could introduce a formula <code>x is-distinct-from y</code>. We would define it to <code>¬ ∀x x = y</code>.<ref>See ax10o and other theorems in the section "Axioms ax-10 and ax-11" of metamath's set.mm, accessed 2011</ref>. Then we could prove theorems like <code>x is-distinct-from y ↔ y is-distinct-from x</code><ref>easy consequence of ax10, metamath's set.mm</ref> or <code>¬ x is-distinct-from y → x is-not-free-in ∀ y φ</code>.<ref>follows readily from ax10o, metamath's set.mm</ref> Such a development is interesting if one wishes to avoid distinct variable constraints, but the convenience of distinct variable constraints is large enough that we prefer to use them when we can.
 
 == Quantifier order: ∃ x ∀ y to ∀ y ∃ x ==
 We put aside switching the order of quantifiers for a while, but <code>is-not-free-in</code> enables us to make some more progress on it.<ref>[http://us.metamath.org/mpeuni/19.12.html 19.12] in metamath's set.mm, accessed February 22, 2010</ref>
