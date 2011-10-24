@@ -86,15 +86,7 @@ So far we have the construction of <code>c′</code> and <code>d′</code>, spec
         d′ generalize
         c′ generalize
 
-        introduceConjunction
-
-        c′
-          (∃ d′ (((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
-            ((between A C (value d′)) ∧ (C (value d′) ≡ C D))))
-          (∀ d′ (∃ b′ ((between A (value c′) (value b′))
-            ∧ ((value c′) (value b′) ≡ C B))))
-          ThereExistsConjunctionRightCombining
-        applyModusPonens
+        combineThereExistsForAll
 
         d′
           (((between A D (value c′)) ∧ (D (value c′) ≡ C D)) ∧
