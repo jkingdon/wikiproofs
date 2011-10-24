@@ -145,6 +145,8 @@ stmt (ThereExistsConjunctionCombining () ()
   (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))))
 stmt (ThereExistsConjunctionRightCombining () ()
   (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))))
+
+stmt (combineThereExistsForAll () ((∃ x φ) (∀ x ψ)) (∃ x (φ ∧ ψ)))
 </jh>
 
 == Generalization and specialization ==
@@ -313,11 +315,17 @@ stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ (
 stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 </jh>
 
-Here is a rule for one of these:
+Here are a few rules based on these:
 <jh>
 stmt (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
   ((antecedent → (φ ∧ (∃ x ψ))))
   (antecedent → (∃ x (φ ∧ ψ))))
+stmt (moveRightConjunctIntoThereExistsInConsequent ((x ψ))
+  ((antecedent → ((∃ x φ) ∧ ψ)))
+  (antecedent → (∃ x (φ ∧ ψ))))
+stmt (repeatAntecedentThereExists ((x antecedent))
+  ((antecedent → (∃ x ψ)))
+  (antecedent → (∃ x (antecedent ∧ ψ))))
 </jh>
 
 ==== Scattering and gathering ====
@@ -325,6 +333,8 @@ If we have two formulas joined by a conjunction, one quantified over one variabl
 <jh>
 stmt (ThereExistsScattering ((φx y) (ψy x)) ()
   ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))))
+stmt (gatherThereExistsInConsequent ((φx y) (ψy x)) ((antecedent → ((∃ x φx) ∧ (∃ y ψy))))
+  (antecedent → (∃ x (∃ y (φx ∧ ψy)))))
 </jh>
 
 ==== Adding quantifiers to theorems which are implications ====
