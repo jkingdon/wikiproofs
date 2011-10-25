@@ -16,6 +16,7 @@ import (START Interface:Midpoint (CLASSICAL FIRSTORDER) ())
 var (formula antecedent)
 var (point A B C D E F M P Q R S X Y Z)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
+var (point C″)
 var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ x x′ y y′ z)
 </jh>
 
@@ -235,6 +236,119 @@ Applying <code>EquidistantLine</code> gives <code>A′ C ≡ A′ c′</code>, w
         A′ B C c′ IsRightAngle
         eliminateBiconditionalForward
         applySyllogism
+))
+</jh>
+
+=== Reflecting about the vertex ===
+Reflecting one of the points of a right angle through the vertex of that angle produces a right angle. In symbols, <code>is-right-angle A B C ∧ B is-midpoint-of C C′ → is-right-angle A B C′</code>.<ref>l8_4 in Narboux</ref>.
+
+The proof will start by expanding the definition of <code>is-right-angle</code> into <code>∃ c″ (B is-midpoint-of C c″ ∧ A C ≡ A c″)</code>. Then the result of reflecting <code>C</code> through <code>B<code> is unique, so <code>C″ = C′</code>, which is our first lemma.
+<jh>
+thm (RightAngleSymmetricPoint-cdoubleprime-cprime () ()
+  ((((B is-midpoint-of C C″) ∧ (A C ≡ A C″)) ∧ (B is-midpoint-of C C′)) →
+  (C″ = C′)) (
+        ((B is-midpoint-of C C″) ∧ (A C ≡ A C″))
+          (B is-midpoint-of C C′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((B is-midpoint-of C C″) ∧ (A C ≡ A C″))
+          (B is-midpoint-of C C′)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        B C C″ C′ SymmetricPointUniqueness
+        applySyllogism
+))
+
+thm (RightAngleSymmetricPoint
+  ( (c″ A) (c″ B) (c″ C) (c″ C′) (p A) (p B) (p C) (p C′) (p c″)) ()
+  (((is-right-angle A B C) ∧ (B is-midpoint-of C C′)) → (is-right-angle A B C′)) (
+</jh>
+First we expand the definition of <code>is-right-angle</code> into <code>∃ c″ (B is-midpoint-of C c″ ∧ A C ≡ A c″)</code> and move <code>B is-midpoint-of C C′</code> inside the quantifier.
+<jh>
+        A B C c″ IsRightAngle
+        eliminateBiconditionalReverse
+
+        (B is-midpoint-of C C′) conjoinRR
+        moveRightConjunctIntoThereExistsInConsequent
+</jh>
+To prove <code>is-right-angle A B C′</code> we need a point which is the symmetric point of <code>C′</code> through <code>B</code>, and the point which fits the bill is <code>C</code>. So we need <code>B is-midpoint-of C′ C ∧ A C′ ≡ A C</code>. The first half we already have.
+<jh>
+        ((B is-midpoint-of C (value c″)) ∧ (A C ≡ A (value c″)))
+          (B is-midpoint-of C C′)
+          ConjunctionLeftElimination
+
+        B C C′ MidpointSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+To get <code>A C′ ≡ A C</code> we just need to substitute <code>C′</code> for <code>c″</code>. We start with <code>A C ≡ A c″</code>.
+<jh>
+        ((B is-midpoint-of C (value c″)) ∧ (A C ≡ A (value c″)))
+          (B is-midpoint-of C C′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+</jh>
+Next is <code>c″ = C′</code> and <code>c″ = C′ → (A C ≡ A c″ ↔ A C ≡ A C′)</code>.
+<jh>
+        B C (value c″) A C′ RightAngleSymmetricPoint-cdoubleprime-cprime
+
+        C EqualityReflexivity
+        A EqualityReflexivity
+        A EqualityReflexivity
+        A A C C A A (value c″) C′ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        applySyllogism
+</jh>
+We combine that with <code>A C ≡ A c″</code> to get <code>A C ≡ A C′</code>.
+<jh>
+        eliminateBiconditionalReverseInConsequent
+        applyModusPonensInConsequent
+</jh>
+So now we have <code>B is-midpoint-of C′ C ∧ A C′ ≡ A C</code>.
+<jh>
+        swapCongruenceInConsequent
+        composeConjunction
+</jh>
+Now we need to replace <code>C</code> with a variable quantified by <code>∃</code>. The first step is <code>p = C → (B is-midpoint-of C′ p ∧ A C′ ≡ A p ↔ B is-midpoint-of C′ C ∧ A C′ ≡ A C)</code>.
+<jh>
+        B EqualityReflexivity
+        C′ EqualityReflexivity
+        B B C′ C′ (value p) C MidpointBuilder
+        detach2of3
+        detach1of2
+
+        C′ EqualityReflexivity
+        A EqualityReflexivity
+        A EqualityReflexivity
+        A A C′ C′ A A (value p) C CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+</jh>
+Next is <code>B is-midpoint-of C′ C ∧ A C′ ≡ A C → [ C / p ] (B is-midpoint-of C′ p ∧ A C′ ≡ A p)</code>,
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+and in turn <code>∃ p (B is-midpoint-of C′ p ∧ A C′ ≡ A p)</code>.
+<jh>
+        C p ((B is-midpoint-of C′ (value p)) ∧ (A C′ ≡ A (value p)))
+          ThereExistsIntroductionFromObject
+</jh>
+Now we need to combine with the construction of <code>c″</code> and remove the no-longer-needed <code>∃ c″</code>.
+<jh>
+        applySyllogism
+        c″ addThereExists
+        applySyllogism
+        removeThereExistsInConsequent
 ))
 </jh>
 
