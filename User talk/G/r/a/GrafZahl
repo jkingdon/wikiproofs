@@ -82,11 +82,3 @@ Hi, I submitted some changes to JHilbert back in August, but accidentally submit
   git pull git://github.com/jkingdon/jhilbert.git wiki
 
 if you want all of the changes). [[User:Kingdon|Kingdon]] 01:56, 24 October 2011 (UTC)
-
-== JHilbert fixes ==
-
-Hi, I submitted some changes to JHilbert back in August, but accidentally submitted them to my own github account rather than yours. They are at https://github.com/jkingdon/jhilbert/pull/1 which should also have some explanation of what is there (just ask if you have any questions, though). Also let me know if there is anything I can do to make it easier to review and/or pull them (from the git command line, I think it would just be
-
-  git pull git://github.com/jkingdon/jhilbert.git wiki
-
-if you want all of the changes). [[User:Kingdon|Kingdon]] 02:03, 24 October 2011 (UTC)
