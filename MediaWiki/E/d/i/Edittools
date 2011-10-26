@@ -1,7 +1,7 @@
 <!-- Text here will be shown below edit and upload forms. -->
 <div id="specialchars">
 <p class="specialbasic" id="Logic symbols">
-<charinsert>⊤ ⊥ ¬ ∧ ∨ → ↔ ∀ ∃ ≠ ≡ ≅ □ ◊ ∠</charinsert>
+<charinsert>⊤ ⊥ ¬ ∧ ∨ → ↔ ∀ ∃ ≠ ≡ ≅ □ ◊ ∠ ⟂</charinsert>
 </p>
 
 <p class="specialbasic" id="Set theory">
