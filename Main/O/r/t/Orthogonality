@@ -352,6 +352,44 @@ Now we need to combine with the construction of <code>c″</code> and remove the
 ))
 </jh>
 
+=== Degenerate cases ===
+In defining <code>is-right-angle</code> we also encompassed degenerate cases, in this case where the vertex and one point defining a leg are the same.<ref>l8_5 in Narboux</ref>
+<jh>
+thm (IsRightAngleABB ( (p A) (p B)) () (is-right-angle A B B) (
+</jh>
+Expanding what we are trying to prove from the definition of <code>is-right-angle</code>, we need <code>∃ p (B is-midpoint-of B p ∧ A B ≡ A p)</code>. The point <code>B</code> suffices. So the first step is <code>B is-midpoint-of B B ∧ A B ≡ A B</code>.
+<jh>
+        B MidpointReflexivity
+        A B CongruenceReflexivity
+        introduceConjunction
+</jh>
+Next is <code>p = B → (B is-midpoint-of B p ∧ A B ≡ A p ↔ B is-midpoint-of B B ∧ A B ≡ A B)<code>.
+<jh>
+        B EqualityReflexivity
+        B EqualityReflexivity
+        B B B B (value p) B MidpointBuilder
+        detach2of3
+        detach1of2
+
+        B EqualityReflexivity
+        A EqualityReflexivity
+        A EqualityReflexivity
+        A A B B A A (value p) B CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+</jh>
+That's what we need for <code>∃ p (B is-midpoint-of B p ∧ A B ≡ A p)</code>.
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
+        introduceThereExistsFromObject
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Orthogonality]].
 <jh>
