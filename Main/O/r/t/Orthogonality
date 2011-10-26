@@ -59,7 +59,7 @@ Combining these two and applying <code>ChangeVariableThereExists</code> we are d
 </jh>
 
 === A convenience rule ===
-TODO: move this to where we define <code>CongruenceTransitivity</code>.
+{{cleanup|moving applyCongruenceTransitivityInConsequent to where we define <code>CongruenceTransitivity</code>}}
 <jh>
 thm (applyCongruenceTransitivityInConsequent ()
   ((H1 (antecedent → (A B ≡ C D))) (H2 (antecedent → (C D ≡ E F))))
