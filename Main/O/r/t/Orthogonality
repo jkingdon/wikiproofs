@@ -390,6 +390,158 @@ That's what we need for <code>∃ p (B is-midpoint-of B p ∧ A B ≡ A p)</code
 ))
 </jh>
 
+=== One leg between two points on the perpendicular ===
+There are a few cases which imply we are dealing with a degenerate <code>is-right-angle</code>. Here's one in which the point defining one leg is between two points which both lie on the perpendicular. Specifically, <code>is-right-angle A B C ∧ is-right-angle A′ B C ∧ between A C A′ → B = C</code>.<ref>l8_6 in Narboux</ref>
+
+The proof first expands both occurrences of <code>is-right-angle</code> according to the definition to get points <code>c′</code> and <code>c″</code> for which <code>(B is-midpoint-of C c′ ∧ A C ≡ A c′) ∧ (B is-midpoint-of C c″ ∧ A′ C ≡ A′ c″) ∧ between A C A′</code>.
+
+Then we apply <code>SymmetricPointDistance</code> to get <code>C′ C″ ≡ C C</code>, which in turn implies <code>C′ = C″</code>.
+<jh>
+thm (IsRightAngleBetween-cprime-cdoubleprime () ()
+  (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+    ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
+    (between A C A′)) →
+    (C′ = C″)) (
+        (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+          ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″)))
+          (between A C A′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+          ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″)))
+          (between A C A′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        B C C′ C C″ SymmetricPointDistance
+        applySyllogism
+
+        C′ C″ C CongruenceIdentity
+        applySyllogism
+))
+</jh>
+Next is <code>A′ C ≡ A′ C′</code> which is just a matter of substituting <code>C′</code> for <code>C″</code>.
+<jh>
+thm (IsRightAngleBetween-aprime-c-aprime-cprime () ()
+  (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+    ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
+    (between A C A′)) →
+    (A′ C ≡ A′ C′)) (
+        (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+          ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″)))
+          (between A C A′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        B C C′ A C″ A′ IsRightAngleBetween-cprime-cdoubleprime
+</jh>
+The substitution is <code>C′ = C″ → (A′ C ≡ A′ C′ ↔ A′ C ≡ A′ C″)</code>.
+<jh>
+        C EqualityReflexivity
+        A′ EqualityReflexivity
+        A′ EqualityReflexivity
+        A′ A′ C C A′ A′ C′ C″ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+))
+</jh>
+Next we apply <code>BetweennessTwoDistanceUniqueness</code> which in this case is <code>between A C A′ ∧ A C ≡ A C′ ∧ A′ C ≡ A′ C′ → C = C′</code>.
+<jh>
+thm (IsRightAngleBetween-c-cprime () ()
+  (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+    ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
+    (between A C A′)) →
+    (C = C′)) (
+        (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+          ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″)))
+          (between A C A′)
+          ConjunctionLeftElimination
+
+        (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+          ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″)))
+          (between A C A′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        B C C′ A C″ A′ IsRightAngleBetween-aprime-c-aprime-cprime
+        composeConjunction
+
+        A C A′ C′ BetweennessTwoDistanceUniqueness
+        applySyllogism
+))
+</jh>
+
+From here we get <code>B is-midpoint-of C C</code> by substituting <code>C</code> for <code>C′</code>, which in turn implies <code>B = C</code>.
+<jh>
+thm (IsRightAngleBetween-b-c () ()
+  (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+    ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
+    (between A C A′)) →
+    (B = C)) (
+        (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+          ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″)))
+          (between A C A′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        B C C′ A C″ A′ IsRightAngleBetween-c-cprime
+
+        B EqualityReflexivity
+        C EqualityReflexivity
+        B B C C C C′ MidpointBuilder
+        detach2of3
+        detach1of2
+
+        applySyllogism
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+
+        B C MidpointIndivisibility
+        applySyllogism
+))
+
+thm (IsRightAngleBetween
+  ( (c′ A) (c′ B) (c′ C) (c′ A′) (c′ c″) (c″ A) (c″ B) (c″ C) (c″ A′)) ()
+  ((((is-right-angle A B C) ∧ (is-right-angle A′ B C)) ∧ (between A C A′)) → (B = C)) (
+        A B C c′ IsRightAngle
+        eliminateBiconditionalReverse
+
+        (between A C A′) conjoinRR
+        moveRightConjunctIntoThereExistsInConsequent
+
+        A′ B C c″ IsRightAngle
+        eliminateBiconditionalReverse
+        (between A C A′) conjoinRR
+        moveRightConjunctIntoThereExistsInConsequent
+
+        c′ addThereExists
+        applySyllogism
+
+        B C (value c′) A (value c″) A′ IsRightAngleBetween-b-c
+        c″ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Orthogonality]].
 <jh>
