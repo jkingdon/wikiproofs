@@ -521,14 +521,21 @@ thm (IsRightAngleBetween
         A B C c′ IsRightAngle
         eliminateBiconditionalReverse
 
-        (between A C A′) conjoinRR
-        moveRightConjunctIntoThereExistsInConsequent
-
         A′ B C c″ IsRightAngle
         eliminateBiconditionalReverse
+
+        conjoin
+        gatherThereExistsInConsequent
+
         (between A C A′) conjoinRR
         moveRightConjunctIntoThereExistsInConsequent
 
+        c″
+          (((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′))) ∧
+            ((B is-midpoint-of C (value c″)) ∧ (A′ C ≡ A′ (value c″))))
+          (between A C A′)
+          ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
         c′ addThereExists
         applySyllogism
 
