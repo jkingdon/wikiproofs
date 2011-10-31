@@ -549,6 +549,39 @@ thm (IsRightAngleBetween
 ))
 </jh>
 
+=== Swapping the vertex with one of the legs ===
+Another degenerate case is <code>is-right-angle A B C ∧ is-right-angle A C B → B = C</code>.<ref>l8_7 in Narboux</ref>
+
+Let <code>A′</code> be the symmetric point of <code>A</code> through the point <code>C</code>.
+
+  assume B != C (if not, we are done)
+
+  expand is-right-angle A B C by definition to give Cprime
+    ∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))
+
+  is-right-angle B C A ∧ B ≠ C ∧ collinear C B c′ → is-right-angle c′ C A by RightAngleLeg
+    use RightAngleSymmetry to get the is-right-angle B C A
+
+  By IsRightAngle (or an easy deduction thereof relying on symmetric point uniqueness),
+    ((C is-midpoint-of A A′) ∧ (c′ A ≡ c′ A′))
+    might want to write that as A C′ ≡ A′ C′
+
+  Cong A' C A' C'
+  congruence transitivity (twice)
+  is-right-angle A′ B C
+    is-right-angle C B A and C != B and collinear Aprime C A -> is-right-angle Aprime B C by RightAngleLeg
+      (check this, too tired right now)
+
+  expand by definition to give Cprime???
+  apply IsRightAngleBetween
+
+<jh>
+thm (IsRightAngleVertexLeg () ()
+  (((is-right-angle A B C) ∧ (is-right-angle A C B)) → (B = C)) (
+        
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Orthogonality]].
 <jh>
