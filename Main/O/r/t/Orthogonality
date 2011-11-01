@@ -554,10 +554,36 @@ Another degenerate case is <code>is-right-angle A B C ∧ is-right-angle A C B �
 
 Let <code>A′</code> be the symmetric point of <code>A</code> through the point <code>C</code>.
 
-  assume B != C (if not, we are done)
+First assume <code>B ≠ C</code> (if not, we are done). Then expand <code>is-right-angle A B C</code> by the definition: <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>. We also flip <code>is-right-angle A C B</code> to <code>is-right-angle B C A</code> and expand it according to the definition: <code>∃ a′ (C is-midpoint-of A a′ ∧ B A ≡ B a′)</code>.
+<jh>
+thm (IsRightAngleVertexLeg-cprime
+  ((c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
+    (∃ c′
+      ((B ≠ C) ∧
+        (((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′))) ∧
+        (∃ a′ ((C is-midpoint-of A (value a′)) ∧ (B A ≡ B (value a′))))
+      ))
+    )) (
+        A B C c′ IsRightAngle
+        eliminateBiconditionalReverse
 
-  expand is-right-angle A B C by definition to give Cprime
-    ∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))
+        A C B RightAngleSymmetry
+        eliminateBiconditionalReverse
+
+        B C A a′ IsRightAngle
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        conjoin
+        moveRightConjunctIntoThereExistsInConsequent
+</jh>
+That gives <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′ ∧ ∃ a′ (C is-midpoint-of A a′ ∧ B A ≡ B a′))</code>. Adding <code>B ≠ C</code> is all we need.
+<jh>
+        (B ≠ C) conjoinLL
+        moveLeftConjunctIntoThereExistsInConsequent
+))
+</jh>
 
   is-right-angle B C A ∧ B ≠ C ∧ collinear C B c′ → is-right-angle c′ C A by RightAngleLeg
     use RightAngleSymmetry to get the is-right-angle B C A
@@ -565,21 +591,36 @@ Let <code>A′</code> be the symmetric point of <code>A</code> through the point
   By IsRightAngle (or an easy deduction thereof relying on symmetric point uniqueness),
     ((C is-midpoint-of A A′) ∧ (c′ A ≡ c′ A′))
     might want to write that as A C′ ≡ A′ C′
+    
+  A C ≡ A c′ ∧ A c′ ≡ A′ C′ → A C ≡ A′ C′ (transitivity)
 
-  Cong A' C A' C'
-  congruence transitivity (twice)
+  A C ≡ A′ C (by construction of A′).
+  Thus A′ C ≡ A′ C′ by transitivity
+
   is-right-angle A′ B C
-    is-right-angle C B A and C != B and collinear Aprime C A -> is-right-angle Aprime B C by RightAngleLeg
-      (check this, too tired right now)
+    B is-midpoint-of C C′ ∧ A′ C ≡ A′ C′
 
-  expand by definition to give Cprime???
-  apply IsRightAngleBetween
+  apply IsRightAngleBetween with everything substituting for itself.
+    A B C A′ IsRightAngleBetween
 
 <jh>
-thm (IsRightAngleVertexLeg () ()
-  (((is-right-angle A B C) ∧ (is-right-angle A C B)) → (B = C)) (
-        
-))
+#thm (IsRightAngleVertexLeg-b-not-c () ()
+#  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
+#    (B = C)) (
+#        
+#))
+
+#thm (IsRightAngleVertexLeg () ()
+#  (((is-right-angle A B C) ∧ (is-right-angle A C B)) → (B = C)) (
+#        (B = C)
+#          ((is-right-angle A B C) ∧ (is-right-angle A C B))
+#          AntecedentIntroduction
+#
+#        B C A IsRightAngleVertexLeg-b-not-c
+#        export
+#
+#        eliminateCases
+#))
 </jh>
 
 == Export ==
