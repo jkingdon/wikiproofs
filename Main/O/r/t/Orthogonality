@@ -28,7 +28,7 @@ def ((is-right-angle A B C) (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A 
 
 As usual, we'll need to restate the definition as a theorem.
 <jh>
-thm (IsRightAngle ((c′ A) (c′ B) (c′ C)  (c″ c′) (c″ A) (c″ B) (c″ C)) ()
+thm (RightAngle ((c′ A) (c′ B) (c′ C)  (c″ c′) (c″ A) (c″ B) (c″ C)) ()
   ((is-right-angle A B C) ↔
     (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′))))) (
 </jh>
@@ -129,7 +129,7 @@ thm (RightAngleSymmetryImplication
 </jh>
 First we rewrite <code>is-right-angle A B C</code> to explicitly quantify with the variable <code>c′</code>.
 <jh>
-        A B C c′ IsRightAngle
+        A B C c′ RightAngle
         eliminateBiconditionalReverse
 </jh>
 Next we construct <code>a′</code>.
@@ -163,7 +163,7 @@ thm (RightAngleLeg ( (c′ A) (c′ B) (c′ C) (c′ A′)) ()
 </jh>
 Expanding the definition of <code>is-right-angle A B C</code>, we have <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>.
 <jh>
-        A B C c′ IsRightAngle
+        A B C c′ RightAngle
         eliminateBiconditionalReverse
 </jh>
 Now we add in <code>A ≠ B</code> and <code>collinear B A A′</code> and move them inside the quantifier. That gives <code>is-right-angle A B C ∧ A ≠ B ∧ collinear B A A′ → ∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′ ∧ A ≠ B ∧ collinear B A A′</code>.
@@ -233,7 +233,7 @@ Applying <code>EquidistantLine</code> gives <code>A′ C ≡ A′ c′</code>, w
         c′ addThereExists
         applySyllogism
 
-        A′ B C c′ IsRightAngle
+        A′ B C c′ RightAngle
         eliminateBiconditionalForward
         applySyllogism
 ))
@@ -267,7 +267,7 @@ thm (RightAngleSymmetricPoint
 </jh>
 First we expand the definition of <code>is-right-angle</code> into <code>∃ c″ (B is-midpoint-of C c″ ∧ A C ≡ A c″)</code> and move <code>B is-midpoint-of C C′</code> inside the quantifier.
 <jh>
-        A B C c″ IsRightAngle
+        A B C c″ RightAngle
         eliminateBiconditionalReverse
 
         (B is-midpoint-of C C′) conjoinRR
@@ -355,7 +355,7 @@ Now we need to combine with the construction of <code>c″</code> and remove the
 === Degenerate cases ===
 In defining <code>is-right-angle</code> we also encompassed degenerate cases, in this case where the vertex and one point defining a leg are the same.<ref>l8_5 in Narboux</ref>
 <jh>
-thm (IsRightAngleABB ( (p A) (p B)) () (is-right-angle A B B) (
+thm (RightAngleABB ( (p A) (p B)) () (is-right-angle A B B) (
 </jh>
 Expanding what we are trying to prove from the definition of <code>is-right-angle</code>, we need <code>∃ p (B is-midpoint-of B p ∧ A B ≡ A p)</code>. The point <code>B</code> suffices. So the first step is <code>B is-midpoint-of B B ∧ A B ≡ A B</code>.
 <jh>
@@ -397,7 +397,7 @@ The proof first expands both occurrences of <code>is-right-angle</code> accordin
 
 Then we apply <code>SymmetricPointDistance</code> to get <code>C′ C″ ≡ C C</code>, which in turn implies <code>C′ = C″</code>.
 <jh>
-thm (IsRightAngleBetween-cprime-cdoubleprime () ()
+thm (RightAngleBetween-cprime-cdoubleprime () ()
   (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
     ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
     (between A C A′)) →
@@ -427,7 +427,7 @@ thm (IsRightAngleBetween-cprime-cdoubleprime () ()
 </jh>
 Next is <code>A′ C ≡ A′ C′</code> which is just a matter of substituting <code>C′</code> for <code>C″</code>.
 <jh>
-thm (IsRightAngleBetween-aprime-c-aprime-cprime () ()
+thm (RightAngleBetween-aprime-c-aprime-cprime () ()
   (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
     ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
     (between A C A′)) →
@@ -439,7 +439,7 @@ thm (IsRightAngleBetween-aprime-c-aprime-cprime () ()
         eliminateLeftConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
-        B C C′ A C″ A′ IsRightAngleBetween-cprime-cdoubleprime
+        B C C′ A C″ A′ RightAngleBetween-cprime-cdoubleprime
 </jh>
 The substitution is <code>C′ = C″ → (A′ C ≡ A′ C′ ↔ A′ C ≡ A′ C″)</code>.
 <jh>
@@ -459,7 +459,7 @@ The substitution is <code>C′ = C″ → (A′ C ≡ A′ C′ ↔ A′ C ≡ A
 </jh>
 Next we apply <code>BetweennessTwoDistanceUniqueness</code> which in this case is <code>between A C A′ ∧ A C ≡ A C′ ∧ A′ C ≡ A′ C′ → C = C′</code>.
 <jh>
-thm (IsRightAngleBetween-c-cprime () ()
+thm (RightAngleBetween-c-cprime () ()
   (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
     ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
     (between A C A′)) →
@@ -477,7 +477,7 @@ thm (IsRightAngleBetween-c-cprime () ()
         eliminateLeftConjunctInConsequent
         composeConjunction
 
-        B C C′ A C″ A′ IsRightAngleBetween-aprime-c-aprime-cprime
+        B C C′ A C″ A′ RightAngleBetween-aprime-c-aprime-cprime
         composeConjunction
 
         A C A′ C′ BetweennessTwoDistanceUniqueness
@@ -487,7 +487,7 @@ thm (IsRightAngleBetween-c-cprime () ()
 
 From here we get <code>B is-midpoint-of C C</code> by substituting <code>C</code> for <code>C′</code>, which in turn implies <code>B = C</code>.
 <jh>
-thm (IsRightAngleBetween-b-c () ()
+thm (RightAngleBetween-b-c () ()
   (((((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
     ((B is-midpoint-of C C″) ∧ (A′ C ≡ A′ C″))) ∧
     (between A C A′)) →
@@ -499,7 +499,7 @@ thm (IsRightAngleBetween-b-c () ()
         eliminateRightConjunctInConsequent
         eliminateRightConjunctInConsequent
 
-        B C C′ A C″ A′ IsRightAngleBetween-c-cprime
+        B C C′ A C″ A′ RightAngleBetween-c-cprime
 
         B EqualityReflexivity
         C EqualityReflexivity
@@ -515,13 +515,13 @@ thm (IsRightAngleBetween-b-c () ()
         applySyllogism
 ))
 
-thm (IsRightAngleBetween
+thm (RightAngleBetween
   ( (c′ A) (c′ B) (c′ C) (c′ A′) (c′ c″) (c″ A) (c″ B) (c″ C) (c″ A′)) ()
   ((((is-right-angle A B C) ∧ (is-right-angle A′ B C)) ∧ (between A C A′)) → (B = C)) (
-        A B C c′ IsRightAngle
+        A B C c′ RightAngle
         eliminateBiconditionalReverse
 
-        A′ B C c″ IsRightAngle
+        A′ B C c″ RightAngle
         eliminateBiconditionalReverse
 
         conjoin
@@ -539,7 +539,7 @@ thm (IsRightAngleBetween
         c′ addThereExists
         applySyllogism
 
-        B C (value c′) A (value c″) A′ IsRightAngleBetween-b-c
+        B C (value c′) A (value c″) A′ RightAngleBetween-b-c
         c″ addThereExists
         c′ addThereExists
         applySyllogism
@@ -556,7 +556,7 @@ Let <code>A′</code> be the symmetric point of <code>A</code> through the point
 
 First assume <code>B ≠ C</code> (if not, we are done). Then expand <code>is-right-angle A B C</code> by the definition: <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>. We also flip <code>is-right-angle A C B</code> to <code>is-right-angle B C A</code> and expand it according to the definition: <code>∃ a′ (C is-midpoint-of A a′ ∧ B A ≡ B a′)</code>.
 <jh>
-thm (IsRightAngleVertexLeg-cprime
+thm (RightAngleVertexLeg-cprime
   ((c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
   (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
     (∃ c′
@@ -565,13 +565,13 @@ thm (IsRightAngleVertexLeg-cprime
         (∃ a′ ((C is-midpoint-of A (value a′)) ∧ (B A ≡ B (value a′))))
       ))
     )) (
-        A B C c′ IsRightAngle
+        A B C c′ RightAngle
         eliminateBiconditionalReverse
 
         A C B RightAngleSymmetry
         eliminateBiconditionalReverse
 
-        B C A a′ IsRightAngle
+        B C A a′ RightAngle
         eliminateBiconditionalReverse
         applySyllogism
 
@@ -588,7 +588,7 @@ That gives <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′ ∧ ∃ a�
   is-right-angle B C A ∧ B ≠ C ∧ collinear C B c′ → is-right-angle c′ C A by RightAngleLeg
     use RightAngleSymmetry to get the is-right-angle B C A
 
-  By IsRightAngle (or an easy deduction thereof relying on symmetric point uniqueness),
+  By RightAngle (or an easy deduction thereof relying on symmetric point uniqueness),
     ((C is-midpoint-of A A′) ∧ (c′ A ≡ c′ A′))
     might want to write that as A C′ ≡ A′ C′
     
@@ -600,23 +600,23 @@ That gives <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′ ∧ ∃ a�
   is-right-angle A′ B C
     B is-midpoint-of C C′ ∧ A′ C ≡ A′ C′
 
-  apply IsRightAngleBetween with everything substituting for itself.
-    A B C A′ IsRightAngleBetween
+  apply RightAngleBetween with everything substituting for itself.
+    A B C A′ RightAngleBetween
 
 <jh>
-#thm (IsRightAngleVertexLeg-b-not-c () ()
+#thm (RightAngleVertexLeg-b-not-c () ()
 #  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
 #    (B = C)) (
 #        
 #))
 
-#thm (IsRightAngleVertexLeg () ()
+#thm (RightAngleVertexLeg () ()
 #  (((is-right-angle A B C) ∧ (is-right-angle A C B)) → (B = C)) (
 #        (B = C)
 #          ((is-right-angle A B C) ∧ (is-right-angle A C B))
 #          AntecedentIntroduction
 #
-#        B C A IsRightAngleVertexLeg-b-not-c
+#        B C A RightAngleVertexLeg-b-not-c
 #        export
 #
 #        eliminateCases
