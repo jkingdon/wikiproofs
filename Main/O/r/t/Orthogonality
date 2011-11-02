@@ -585,8 +585,61 @@ That gives <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′ ∧ ∃ a�
 ))
 </jh>
 
-  is-right-angle B C A ∧ B ≠ C ∧ collinear C B c′ → is-right-angle c′ C A by RightAngleLeg
-    use RightAngleSymmetry to get the is-right-angle B C A
+Now we apply <code>RightAngleLeg</code> to get <code>is-right-angle c′ C A</code>.
+
+<jh>
+thm (RightAngleVertexLeg-cprime-c-a
+  ((a′ A) (a′ B) (a′ C)) ()
+  (((B ≠ C) ∧
+    (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+    (∃ a′ ((C is-midpoint-of A (value a′)) ∧ (B A ≡ B (value a′))))
+    )) →
+    (is-right-angle C′ C A)
+    ) (
+</jh>
+First is <code>is-right-angle B C A</code>.
+<jh>
+        (B ≠ C)
+          (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+            (∃ a′ ((C is-midpoint-of A (value a′)) ∧
+              (B A ≡ B (value a′)))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        B C A a′ RightAngle
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Next is <code>B ≠ C</code>.
+<jh>
+        (B ≠ C)
+          (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+            (∃ a′ ((C is-midpoint-of A (value a′)) ∧
+              (B A ≡ B (value a′)))))
+          ConjunctionRightElimination
+
+        composeConjunction
+</jh>
+Finally is <code>collinear C B C′</code>.
+<jh>
+        (B ≠ C)
+          (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
+            (∃ a′ ((C is-midpoint-of A (value a′)) ∧
+              (B A ≡ B (value a′)))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        C B C′ BetweennessCollinearity
+        applySyllogism
+
+        composeConjunction
+
+        B C A C′ RightAngleLeg
+        applySyllogism
+))
+</jh>
 
   By RightAngle (or an easy deduction thereof relying on symmetric point uniqueness),
     ((C is-midpoint-of A A′) ∧ (c′ A ≡ c′ A′))
