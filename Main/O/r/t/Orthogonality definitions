@@ -552,7 +552,7 @@ thm (RightAngleBetween
 == Export ==
 We now export to [[Interface:Orthogonality definitions]].
 <jh>
-#export (RESULTS Interface:Orthogonality_definitions (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Orthogonality_definitions (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
