@@ -15,7 +15,7 @@ import (START Interface:Symmetric_point (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F M P Q R S X Y Z)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
-var (variable a a′ b b′ c c′ d d′ e e′ f p p′ x x′ y y′ z)
+var (variable a a′ b b′ c c′ d d′ e e′ f p p′ q r r′ x x′ y y′ z)
 </jh>
 
 == Midpoint builder ==
@@ -336,10 +336,6 @@ thm (ParallelogramDiagonals-pprime
       (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
       (collinear A P C)) ∧ (collinear B P D)) ∧
       (B D P ≅ D B (value p′))))) (
-        ((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
-          (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
-          (collinear A P C)) ∧ (collinear B P D))
-          ImplicationReflexivity
 </jh>
 Next, we construct <code>p′</code>, starting with <code>collinear B D P</code>.
 <jh>
@@ -365,8 +361,7 @@ This lets us conclude <code>∃ p′ B D P ≡ D B p′</code>.
 </jh>
 Now we just need to repeat the formulas from the antecedent and move them inside the quantifier.
 <jh>
-        composeConjunction
-        moveLeftConjunctIntoThereExistsInConsequent
+        repeatAntecedentThereExists
 ))
 </jh>
 
@@ -925,6 +920,1292 @@ This one may be hard to describe in a single sentence. The theorem is that given
 The proof starts by assuming, without loss of generality, that <code>C A1 ≤ C A2</code>.<ref>l7_22_aux in Narboux</ref>
 
 For now, we omit the (lengthy) proof here, as we don't yet need it.
+
+== Existence of the midpoint (given a point equidistant) ==
+If there is a point equidistant from the endpoints of a line segment, there exists a midpoint of the line segment. In symbols, <code>C A ≡ C B → ∃ x x is-midpoint-of A B<code>. <ref>l7_25 in Narboux</ref> In a future chapter, we will be able to remove the hypothesis and just prove that the midpoint always exists, but this result is one of the steps on the way towards that proof.
+
+First, we take care of a trivial case, in which <code>A</code>, <code>B</code>, and <code>C</code> are collinear. This case has two cases, the first of which is <code>A = B</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-a-b ((x A) (x B)) ()
+  ((((collinear A B C) ∧ (C A ≡ C B)) ∧ (A = B)) → (∃ x ((value x) is-midpoint-of A B))) (
+</jh>
+We start with <code>A is-midpoint-of A A</code>.
+<jh>
+        A MidpointReflexivity
+</jh>
+This in turn implies <code>∃ x x is-midpoint-of A A<code> via the substitution <code>x = A → (x is-midpoint-of A A ↔ A is-midpoint-of A A)</code>.
+<jh>
+        A EqualityReflexivity
+        A EqualityReflexivity
+        (value x) A A A A A MidpointBuilder
+        detach2of2
+        detach2of2
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
+
+        introduceThereExistsFromObject
+</jh>
+We apply the substitution <code>A = B → (∃ x x is-midpoint-of A A ↔ ∃ x x is-midpoint-of A B)</code>.
+<jh>
+        (value x) EqualityReflexivity
+        A EqualityReflexivity
+        (value x) (value x) A A A B MidpointBuilder
+        detach2of3
+        detach1of2
+        x buildThereExistsInConsequent
+
+        detachImplicationBiconditional
+</jh>
+That gives us <code>A = B → ∃ x x is-midpoint-of A B</code> so we just need to introduce an antecedent to be done.
+<jh>
+        ((collinear A B C) ∧ (C A ≡ C B)) introduceAntecedent
+        import
+))
+</jh>
+
+The other collinear case is <code>C is-midpoint-of A B</code>, which is even simpler (<code>C</code> is the desired midpoint).
+<jh>
+thm (MidpointExistsGivenEquidistant-c-a-b ((x A) (x B) (x C)) ()
+  ((((collinear A B C) ∧ (C A ≡ C B)) ∧ (C is-midpoint-of A B))
+    → (∃ x ((value x) is-midpoint-of A B))) (
+        A EqualityReflexivity
+        B EqualityReflexivity
+        (value x) C A A B B MidpointBuilder
+        detach2of2
+        detach2of2
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+
+        C x ((value x) is-midpoint-of A B) ThereExistsIntroductionFromObject
+        applySyllogism
+
+        ((collinear A B C) ∧ (C A ≡ C B)) introduceAntecedent
+        import
+))
+</jh>
+
+Now we are ready for the collinear case itself.
+<jh>
+thm (MidpointExistsGivenEquidistant-collinear ((x A) (x B) (x C)) ()
+  (((collinear A B C) ∧ (C A ≡ C B)) → (∃ x ((value x) is-midpoint-of A B))) (
+</jh>
+The first step is <code>A = B ∨ C is-midpoint-of A B<code>.
+<jh>
+        A B C Collinearity23
+        eliminateBiconditionalReverse
+        (C A ≡ C B) conjoinRR
+
+        A C B EquidistantMidpoint
+        applySyllogism
+</jh>
+The <code>A = B</code> case is <code>collinear A B C ∧ C A ≡ C B ∧ A = B → ∃ x x is-midpoint-of A B</code>.
+<jh>
+        A B C x MidpointExistsGivenEquidistant-a-b
+        export
+</jh>
+The <code>C is-midpoint-of A B<code> case is <code>collinear A B C ∧ C A ≡ C B ∧ C is-midpoint-of A B → ∃ x x is-midpoint-of A B</code>.
+<jh>
+        A B C x MidpointExistsGivenEquidistant-c-a-b
+        export
+
+        composeConjunction
+</jh>
+We combine the cases, to get <code>collinear A B C ∧ C A ≡ C B → (A = B ∨ C is-midpoint-of A B → ∃ x x is-midpoint-of A B).
+<jh>
+        (A = B)
+          (∃ x ((value x) is-midpoint-of A B))
+          (C is-midpoint-of A B)
+          DisjunctionComposition
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Detaching <code>A = B ∨ C is-midpoint-of A B</code> we are done.
+<jh>
+        applyModusPonensInConsequent
+))
+</jh>
+
+[[File:Proof of lemma l7_25 in Narboux.svg|construction of <code>P</code>, <code>Q</code>, <code>R</code>, and <code>X</code>]]
+We have already handled the case in which <code>A</code>, <code>B</code>, and <code>C</code> are collinear, so assume they are non-collinear for the rest of the proof. Next extend line segment <code>C A</code> to a distinct point <code>P</code> and extend line segment <code>C B<code> by the same distance to a point <code>Q</code>. Let <code>R</code> be the intersection of <code>A Q</code> and <code>B P</code>. Then let <code>X</code> be the intersection of <code>A B</code> and <code>C R</code>.
+
+Our plan is to show that <code>X</code> is the midpoint of <code>A B</code>. To do so, we'll prove <code>A R ≡ B R</code>, so <code>EquidistantLine</code> will give us <code>A X ≡ B X</code>.
+
+We first construct <code>P</code> and <code>Q</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-p ((p A) (p B) (p C)) ()
+  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) →
+    (∃ p (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+      ((between C A (value p)) ∧ (A ≠ (value p)))))
+  ) (
+        p C A PointConstructionDifferent
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B)) introduceAntecedent
+        repeatAntecedentThereExists
+))
+
+thm (MidpointExistsGivenEquidistant-q ((q C) (q B) (q A) (q P)) ()
+  ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧ ((between C A P) ∧ (A ≠ P))) →
+  (∃ q
+    (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+      (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B (value q)) ∧ (B (value q) ≡ A P))))
+      )) (
+        q C B A P SegmentConstruction
+        (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          ((between C A P) ∧ (A ≠ P)))
+          introduceAntecedent
+        repeatAntecedentThereExists
+</jh>
+For no especially good reason, for the rest of the proof we parenthesize the formula differently. We could rewrite the rest of the proof, but at least for now it will be less work to just regroup here.
+<jh>
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          ((between C A P) ∧ (A ≠ P))
+          ((between C B (value q)) ∧ (B (value q) ≡ A P))
+          ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        q addThereExists
+        applySyllogism
+))
+
+thm (MidpointExistsGivenEquidistant-r ((r A) (r B) (r C) (r P) (r Q)) ()
+  ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+    ((between C B Q) ∧ (B Q ≡ A P)))
+    ) →
+    (∃ r
+      ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+        (((between C A P) ∧ (A ≠ P)) ∧
+          ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+        ((between A (value r) Q) ∧ (between B (value r) P)))
+    )) (
+        (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+          ((between C B Q) ∧ (B Q ≡ A P))))
+        ImplicationReflexivity
+</jh>
+To construct <code>r</code>, we first need <code>between P A C</code>,
+<jh>
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        swapBetweennessInConsequent
+</jh>
+and then <code>between Q B C</code>. Applying <code>Pasch<code> then gives us
+<code>∃ r (between A r Q ∧ between B r P)</code>.
+<jh>
+        ((¬ (collinear A B C)) ∧ (C A ≡ C B))
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        swapBetweennessInConsequent
+
+        composeConjunction
+
+        P A C Q B r Pasch
+        applySyllogism
+</jh>
+Moving the quantifier to the start of the consequent we are done.
+<jh>
+        composeConjunction
+
+        r
+          (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P))))
+          ((between A (value r) Q) ∧ (between B (value r) P))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (MidpointExistsGivenEquidistant-x ((x A) (x B) (x C) (x P) (x Q) (x R)) ()
+  (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) →
+    (∃ x
+      (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+        (((between C A P) ∧ (A ≠ P)) ∧
+          ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+        ((between A R Q) ∧ (between B R P))) ∧
+        ((between A (value x) B) ∧ (between R (value x) C)))
+    )) (
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+        ImplicationReflexivity
+</jh>
+To construct <code>x</code> we need <code>between C A P</code>
+<jh>
+        (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P))))
+          ((between A R Q) ∧ (between B R P))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+and <code>between B R P</code>. Now we apply <code>Pasch</code> to get <code>∃ x (between A x B ∧ between R x C)</code>.
+<jh>
+        (((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P))))
+          ((between A R Q) ∧ (between B R P))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        C A P B R x Pasch
+        applySyllogism
+</jh>
+Moving <code>∃ x</code> to the start of the consequent we are done.
+<jh>
+        composeConjunction
+
+        x
+          ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P)))
+          ((between A (value x) B) ∧ (between R (value x) C))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+[[File:Proof of lemma l7_25 in Narboux.svg|P B ≡ Q A]]
+The next step is showing that <code>P B ≡ Q A</code>. This by outer five segment on baselines <code>C A P</code> and <code>C B Q</code> and points <code>B</code> and <code>A</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-p-b-q-a () () (
+  (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) →
+  (P B ≡ Q A)
+  ) (
+</jh>
+The first thing we need for outer five segment is <code>C ≠ A<code>, which follows from <code>¬ collinear A B C</code>
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B CollinearityABA
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B C A CollinearityBuilder
+        detach2of3
+        detach1of2
+
+        detachImplicationBiconditionalRight
+        introduceTransposition
+
+        applySyllogism
+</jh>
+The first baseline is <code>between C A P</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+The second baseline is <code>between C B Q</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+The first baseline congruence is <code>C A ≡ C B</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+The other baseline congruence is <code>A P ≡ B Q</code>
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The first congruence for the points is <code>C B ≡ C A</code>.
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        swapCongruenceInConsequent
+
+        composeConjunction
+</jh>
+The other congruence for the points is <code>A B ≡ B A</code>.
+<jh>
+        A B CongruenceABBA
+        introduceRightConjunctToConsequent
+
+        C A P C B Q B A OuterFiveSegment
+        applySyllogism
+))
+</jh>
+
+Now we construct a point <code>r′</code> which is at a point along the line segment <code>A Q</code> corresponding to where <code>R</code> is along <code>B P</code>. We'll be trying to show that <code>r′<code> in fact equals <code>R</code>, but first we need to construct it.
+<jh>
+thm (MidpointExistsGivenEquidistant-rprime
+  ((A r′) (B r′) (C r′) (P r′) (Q r′) (R r′) (X r′)) () (
+  (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) →
+  (∃ r′ ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+      (((between C A P) ∧ (A ≠ P)) ∧
+        ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+      ((between A R Q) ∧ (between B R P))) ∧
+      ((between A X B) ∧ (between R X C))) ∧
+    ((between A (value r′) Q) ∧ (B R P ≅ A (value r′) Q)))
+  )) (
+</jh>
+We construct <code>r′</code> using <code>InnerDegenerateTriangle</code>. To do so, first we need <code>between B R P</code>,
+<jh>
+        ((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+          (((between C A P) ∧ (A ≠ P)) ∧
+            ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+          ((between A R Q) ∧ (between B R P)))
+          ((between A X B) ∧ (between R X C))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+and then <code>B P ≡ A Q</code>.
+<jh>
+        A B C P Q R X MidpointExistsGivenEquidistant-p-b-q-a
+        commuteCongruenceInConsequent
+        composeConjunction
+
+        B R P A Q r′ InnerDegenerateTriangle
+        applySyllogism
+
+        repeatAntecedentThereExists
+))
+</jh>
+
+We next prove <code>R A ≡ R′ B</code> via inner five segment with baselines <code>B R P</code> and <code>A R′ Q</code> and points <code>A</code> and <code>B</code>.
+
+Because we will re-use the same baselines a little later, it is convenient to move the portion of the proof regarding the baselines into a lemma.
+<jh>
+thm (MidpointExistsGivenEquidistant-b-r-p-a-rprime-q
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    ((((between B R P) ∧ (between A R′ Q)) ∧ (B P ≡ A Q)) ∧ (R P ≡ R′ Q))
+  ) (
+</jh>
+<code>between B R P</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>between A R′ Q</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+</jh>
+The first baseline congruence is <code>B P ≡ A Q</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+
+        A B C P Q R X MidpointExistsGivenEquidistant-p-b-q-a
+        applySyllogism
+
+        commuteCongruenceInConsequent
+        composeConjunction
+</jh>
+The second baseline congruence is <code>R P ≡ R′ Q</code>, which follows from <code>B R P ≅ A R′ Q</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        B R P A R′ Q Congruence23
+        applySyllogism
+        composeConjunction
+))
+
+thm (MidpointExistsGivenEquidistant-r-a-rprime-b
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (R A ≡ R′ B)
+  ) (
+</jh>
+We've already proved what we need for the baselines:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-r-p-a-rprime-q
+</jh>
+The first point congruence is <code>B A ≡ A B</code>.
+<jh>
+        B A CongruenceABBA
+        introduceRightConjunctToConsequent
+</jh>
+The second point congruence is <code>P A ≡ Q B</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+        commuteCongruenceInConsequent
+        composeConjunction
+
+        B R P A R′ Q A B InnerFiveSegment
+        applySyllogism
+))
+</jh>
+
+Next we apply inner five segment with baselines <code>B R P</code> and <code>A R′ Q</code> and points <code>Q</code> and <code>P</code> to give <code>Q R ≡ P R′</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-q-r-p-rprime
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (Q R ≡ P R′)
+  ) (
+</jh>
+We've already proved what we need for the baselines:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-r-p-a-rprime-q
+</jh>
+The first congruence for the non-baseline points is <code>B Q ≡ A P</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+</jh>
+The other congruence for the non-baseline points is <code>P Q ≡ Q P</code>.
+<jh>
+        P Q CongruenceABBA
+        introduceRightConjunctToConsequent
+</jh>
+Inner five segment then gives us <code>R Q ≡ R′ P</code>, which only needs to be commuted.
+<jh>
+        B R P A R′ Q Q P InnerFiveSegment
+        applySyllogism
+        commuteCongruenceInConsequent
+))
+</jh>
+
+[[File:Proof of lemma l7_25 in Narboux.svg|Proving collinear B R′ P gets us close to R = R′]]
+The last two congruences gives us what we need for <code>A R Q ≅ B R′ P</code>, which in turn implies <code>collinear B R′ P<code>.  Looking at the diagram it should be clear that <code>R′</code> has little hope of remaining different from <code>R</code>, although we are still a few steps from proving that <code>R = R′</code>.
+
+<jh>
+thm (MidpointExistsGivenEquidistant-a-r-q-b-rprime-p
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (A R Q ≅ B R′ P)
+  ) (
+</jh>
+<code>A R ≡ B R′</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-r-a-rprime-b
+        commuteCongruenceInConsequent
+
+</jh>
+<code>A Q ≡ B P</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+
+        A B C P Q R X MidpointExistsGivenEquidistant-p-b-q-a
+        swapCongruenceInConsequent
+        commuteCongruenceInConsequent
+        applySyllogism
+        composeConjunction
+
+</jh>
+<code>R Q ≡ R′ P</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-q-r-p-rprime
+        commuteCongruenceInConsequent
+        composeConjunction
+))
+
+thm (MidpointExistsGivenEquidistant-b-rprime-p
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (collinear B R′ P)
+  ) (
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A R Q BetweennessCollinearity
+        applySyllogism
+
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-a-r-q-b-rprime-p
+        composeConjunction
+
+        A R Q B R′ P CollinearityDegenerateTriangle
+        applySyllogism
+))
+</jh>
+
+We're getting closer to proving <code>R = R′</code> via <code>LineIntersection</code> (which says that the intersection of two lines is unique, if we rule out some degenerate cases). Next we need <code>B ≠ P</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-b-p
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (B ≠ P)
+  ) (
+</jh>
+At the end of the proof we'll need <code>¬ collinear A B C<code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+Sooner than that we'll need <code>collinear A P C<code>, which follows from <code>between C A P</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        C A P BetweennessCollinearity
+        applySyllogism
+
+        C A P CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+We take the substitution <code>B = P → (collinear A B C ↔ collinear A P C)</code>,
+<jh>
+        A EqualityReflexivity
+        C EqualityReflexivity
+        A A B P C C CollinearityBuilder
+        detach2of2
+        detach1of2
+</jh>
+detach the <code>collinear A P C</code>,
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+        applySyllogism
+</jh>
+transpose to <code>¬ collinear A B C → B ≠ P</code>,
+<jh>
+        (B = P) (collinear A B C) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+and detach <code>¬ collinear A B C</code>.
+<jh>
+        applyModusPonensInConsequent
+))
+</jh>
+
+The last thing we need to be ready to apply <code>LineIntersection</code> is <code>¬ collinear A Q B</code>. We will show <code>collinear A Q B → collinear A B C</code> by <code>CollinearityOuterTransitivity</code> on <code>B Q C</code> and <code>B Q A</code>. Here our proof seems to be streamlined from Narboux's, which applies <code>CollinearityOuterTransitivity</code> four times, not just one (TODO: re-check this statement when we're done with MidpointExistsGivenEquidistant).
+
+The first part is <code>B ≠ Q</code>.
+
+<jh>
+thm (MidpointExistsGivenEquidistant-b-q
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (B ≠ Q)
+  ) (
+</jh>
+We pick out <code>A ≠ P</code> for later use,
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+and do the same for <code>B Q ≡ A P</code>
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+Then we take <code>B = Q ∧ B Q ≡ A P → A = P</code> and detach the <code>B Q ≡ A P</code>.
+<jh>
+        B Q A P CongruenceIdentityFromEquality
+        export
+        applyComm
+        applySyllogism
+</jh>
+Transposing and detaching <code>A ≠ P</code> gives us <code>B ≠ Q</code>.
+<jh>
+        (B = Q) (A = P) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+        applyModusPonensInConsequent
+))
+
+thm (MidpointExistsGivenEquidistant-a-q-b
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (¬ (collinear A Q B))
+  ) (
+</jh>
+We'll start with putting several things on the proof stack which we'll use later in the proof. The first one is <code>¬ collinear B C A</code>
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B C CollinearityRotation
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>collinear B Q C</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        C B Q BetweennessCollinearity
+        applySyllogism
+
+        C B Q CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>B ≠ Q</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-q
+</jh>
+Now we take <code>B ≠ Q ∧ collinear B Q C ∧ collinear B Q A → collinear B C A</code> and detach the first two conjuncts.
+<jh>
+        B Q C A CollinearityOuterTransitivity
+        export
+        export
+        applySyllogism
+        applyModusPonensInConsequent
+</jh>
+Transposing and detaching gives us <code>¬ collinear B Q A</code>.
+<jh>
+        (collinear B Q A) (collinear B C A) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonensInConsequent
+</jh>
+We just need to rearrange that into <code>¬ collinear A Q B</code>
+<jh>
+        B Q A Collinearity13
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+It is now time for <code>R = R′</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-r-rprime
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (R = R′)
+  ) (
+</jh>
+The proof is via <code>LineIntersection</code> on the lines <code>A Q</code> and <code>B P</code>. First we need <code>¬ collinear A Q B</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-a-q-b
+</jh>
+<code>B ≠ P</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-p
+        composeConjunction
+</jh>
+<code>collinear A Q R</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A R Q BetweennessCollinearity
+        applySyllogism
+
+        A R Q Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear A Q R′</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        A R′ Q BetweennessCollinearity
+        applySyllogism
+
+        A R′ Q Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B P R</code>:
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        B R P BetweennessCollinearity
+        applySyllogism
+
+        B R P Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear B P R′</code>:
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-b-rprime-p
+
+        B R′ P Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+Applying <code>LineIntersection</code> we are done.
+<jh>
+        A Q B P R R′ LineIntersection
+        applySyllogism
+))
+</jh>
+
+Now that we have <code>R = R′</code> we are in the home stretch. <code>A R ≡ R B</code> is next.
+<jh>
+thm (MidpointExistsGivenEquidistant-a-r-r-b
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (A R ≡ R B)
+  ) (
+</jh>
+First we put <code>B R ≡ A R′</code> on the stack for use a bit later.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        B R P A R′ Q Congruence12
+        applySyllogism
+</jh>
+Next is <code>R = R′</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-r-rprime
+</jh>
+<code>R = R′ → (B R ≡ A R ↔ B R ≡ A R′)</code>:
+<jh>
+        R EqualityReflexivity
+        A EqualityReflexivity
+        B EqualityReflexivity
+        B B R R A A R R′ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+</jh>
+Combining those pieces we get <code>B R ≡ A R</code>,
+<jh>
+        applySyllogism
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+</jh>
+which we rearrange to <code>A R ≡ R B</code>.
+<jh>
+        swapCongruenceInConsequent
+        commuteCongruenceRightInConsequent
+))
+</jh>
+
+[[File:Proof of lemma l7_25 in Narboux.svg|since <code>C</code> and <code>R</code> are equidistant from <code>A</code> and <code>B</code>, so is <code>X</code>]]
+We're almost ready to apply <code>EquidistantLine</code>. We still need <code>C ≠ R</code>, though. If <code>C</code> were equal to <code>R</code>, then <code>between R X C</code> would imply that <code>C = X</code>, and <code>between A X B</code> would imply <code>collinear A B C</code>, which is a contradiction.
+<jh>
+thm (MidpointExistsGivenEquidistant-c-r
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (C ≠ R)
+  ) (
+</jh>
+At the end of the proof we'll need <code>¬ collinear A B C</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+We start with <code>between C X R</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapBetweennessInConsequent
+</jh>
+Next is <code>between C X R → (C = R → C = X)</code>, which follows from <code>C = R ∧ between C X R → C = X</code> and some rearrangement.
+<jh>
+        C R X IndivisibilityFromEquality
+        export
+        applyComm
+</jh>
+Combining those we get <code>C = R → C = X</code>.
+<jh>
+        applySyllogism
+</jh>
+Leaving that on the stack for a while, we go to <code>between A X B</code>.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+<code>C = X → (between A C B ↔ between A X B)</code>:
+<jh>
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A C X B B BetweennessBuilder
+        detach2of2
+        detach1of2
+</jh>
+Now we detach the <code>between A X B</code>.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+        applySyllogism
+</jh>
+We have <code>C = X</code> implies <code>between A C B</code>, which in implies <code>collinear A B C</code>.
+<jh>
+        import
+
+        A C B BetweennessCollinearity
+
+        A C B Collinearity23
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applySyllogism
+        export
+</jh>
+Combining this with <code>C = R → C = X</code> gives us <code>C = R → collinear A B C</code>.
+<jh>
+        applySyllogismInConsequent
+</jh>
+Now we pick up <code>¬ collinear A B C</code> from the proof stack and conclude <code>C ≠ R</code>.
+<jh>
+        introduceTranspositionInConsequent
+        applyModusPonensInConsequent
+))
+</jh>
+
+We're now ready to conclude <code>X is-midpoint-of A B</code>.
+<jh>
+thm (MidpointExistsGivenEquidistant-x-midpoint
+  () () (
+  ((((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+    (((between C A P) ∧ (A ≠ P)) ∧
+      ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+    ((between A R Q) ∧ (between B R P))) ∧
+    ((between A X B) ∧ (between R X C))) ∧
+    ((between A R′ Q) ∧ (B R P ≅ A R′ Q))) →
+    (X is-midpoint-of A B)
+  ) (
+</jh>
+The first half of <code>X is-midpoint-of A B</code> is <code>between A X B</code>, which is true by construction.
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+The other half is <code>A X ≡ X B</code>. We will conclude <code>X A ≡ X B</code> by <code>EquidistantLine</code> (noting that each of <code>C</code> and <code>R</code> are equidistant from <code>A</code> and <code>B</code>, and <code>X</code> is on the same line). First we need  <code>C ≠ R</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-c-r
+</jh>
+Next is <code>collinear C R X</code>
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        R X C BetweennessCollinearity
+        applySyllogism
+
+        C R X CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+
+        composeConjunction
+</jh>
+Now we just need equidistance to the two known points, first <code>C A ≡ C B</code>,
+<jh>
+        (((((¬ (collinear A B C)) ∧ (C A ≡ C B)) ∧
+            (((between C A P) ∧ (A ≠ P)) ∧
+              ((between C B Q) ∧ (B Q ≡ A P)))) ∧
+            ((between A R Q) ∧ (between B R P))) ∧
+            ((between A X B) ∧ (between R X C)))
+          ((between A R′ Q) ∧ (B R P ≅ A R′ Q))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+and then <code>R A ≡ R B</code>.
+<jh>
+        A B C P Q R X R′ MidpointExistsGivenEquidistant-a-r-r-b
+        commuteCongruenceLeftInConsequent
+
+        composeConjunction
+</jh>
+Applying <code>EquidistantLine</code> gives us <code>X A ≡ X B</code> which we commute to <code>A X ≡ X B</code>, and that's all we need for <code>X is-midpoint-of A B</code>.
+<jh>
+        C R X A B EquidistantLine
+        applySyllogism
+        commuteCongruenceLeftInConsequent
+
+        composeConjunction
+))
+</jh>
+
+A bit of logic finishes the proof.
+<jh>
+thm (MidpointExistsGivenEquidistant-noncollinear
+  ((x A) (x B) (x C)
+
+   (p A) (p B) (p C) (q A) (q B) (q C) (p q)
+   (r A) (r B) (r C) (r p) (r q)
+   (x p) (x q) (x r)
+   (r′ A) (r′ B) (r′ C) (r′ p) (r′ q) (r′ r) (r′ x)
+   ) ()
+  (((¬ (collinear A B C)) ∧ (C A ≡ C B)) → (∃ x ((value x) is-midpoint-of A B))) (
+        A B C p MidpointExistsGivenEquidistant-p
+
+        A B C (value p) q MidpointExistsGivenEquidistant-q
+        p addThereExists
+        applySyllogism
+
+        A B C (value p) (value q) r MidpointExistsGivenEquidistant-r
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        A B C (value p) (value q) (value r) x MidpointExistsGivenEquidistant-x
+        r addThereExists
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        A B C (value p) (value q) (value r) (value x) r′ MidpointExistsGivenEquidistant-rprime
+        x addThereExists
+        r addThereExists
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        A B C (value p) (value q) (value r) (value x) (value r′)
+          MidpointExistsGivenEquidistant-x-midpoint
+        r′ addThereExists
+        removeThereExistsInConsequent
+        x addThereExists
+        r addThereExists
+        q addThereExists
+        p addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+
+thm (MidpointExistsGivenEquidistant ((x A) (x B) (x C)) ()
+  ((C A ≡ C B) → (∃ x ((value x) is-midpoint-of A B))) (
+        A B C x MidpointExistsGivenEquidistant-collinear
+        export
+
+        A B C x MidpointExistsGivenEquidistant-noncollinear
+        export
+
+        eliminateCases
+))
+</jh>
 
 == Export ==
 We now export to [[Interface:Midpoint]].
