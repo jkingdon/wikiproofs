@@ -1,0 +1,16 @@
+[[Image:Zeichen 123.svg|50px]] This page or section needs cleanup. You can help wikiproofs by {{{1}}}. See [[Help:Contents]] if you haven't yet figured out how to edit and write proofs, or ask at [[WP:TEA]] if you have any questions.
+<includeonly>
+[[Category:Pages needing cleanup]]
+</includeonly><noinclude>
+
+== Usage ==
+
+<pre>
+{{cleanup | message }}
+</pre>
+Put this template on pages which need cleanup, but for which none of the more specific [[:Category:Cleanup templates|cleanup templates]] applies. It is similar in spirit to [[:Template:Under construction]] but makes it a bit easier to say specifically what is needed.
+
+Using this template automatically places the interface into [[:Category:Pages needing cleanup]].
+
+[[Category:Cleanup templates|{{PAGENAME}}]]
+</noinclude>
