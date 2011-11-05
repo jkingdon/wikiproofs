@@ -1,0 +1,479 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
+| importedby = [[Orthogonality definitions]]
+| exportedby = [[Midpoint]]
+}}
+
+{{geometry series brief}}
+
+We build on [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]] (including equality):
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+The kind <code>object</code>, defined in first-order logic, represents a point. We do not directly have a concept of lines, angles, or circles (nor can these be defined in the obvious way as sets of points, as this is a first-order theory).
+<jh>
+kindbind (object point)
+var (point x y z w u v A B C D E M P Q R S X)
+var (point x′ y′ z′ u′ A′ B′ C′ D′ M′ P′ Q′ R′ S′)
+var (point P1 P2)
+
+var (variable a b c a′ b′ c′ e f m p p′)
+var (formula antecedent)
+</jh>
+
+== Congruence of line segments ==
+We introduce congruence of line segments; <code>(x y ≡ w z)</code> means that the line segment <code>x y</code> is the same length as the line segment <code>w z</code>. This property is also known as equidistance.
+<jh>
+term (formula (≡ point point point point))
+</jh>
+
+There are a variety of ways of expressing the idea that congruence is not affected by the order in which we list the line segment's endpoints.
+<jh>
+stmt (CongruenceLeftCommutativity () () ((x y ≡ z w) ↔ (y x ≡ z w)))
+stmt (CongruenceRightCommutativity () () ((x y ≡ z w) ↔ (x y ≡ w z)))
+stmt (CongruenceCommutativity () () ((x y ≡ z w) ↔ (y x ≡ w z)))
+
+stmt (commuteCongruenceLeftInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (y x ≡ z w)))
+stmt (commuteCongruenceRightInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (x y ≡ w z)))
+stmt (commuteCongruenceInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (y x ≡ w z)))
+</jh>
+
+The congruence relation has the attributes of an equivalence relation between line segments.
+<jh>
+stmt (CongruenceReflexivity () () (x y ≡ x y))
+stmt (CongruenceSymmetry () () ((x y ≡ z w) ↔ (z w ≡ x y)))
+stmt (CongruenceTransitivity () () (((x y ≡ z w) ∧ (z w ≡ u v)) → (x y ≡ u v)))
+
+stmt (CongruenceABBA () () (x y ≡ y x))
+stmt (swapCongruenceInConsequent () ((antecedent → (x y ≡ z w)))
+  (antecedent → (z w ≡ x y)))
+</jh>
+
+A segment which has zero length starts and ends at the same point (although saying "zero length" is a bit of a shortcut, as our theory is not based on real numbers or any other numbers).
+<jh>
+stmt (CongruenceIdentity () () ((x y ≡ z z) → (x = y)))
+stmt (CongruenceIdentityLeft () () ((x x ≡ y z) → (y = z)))
+stmt (CongruenceTrivialIdentity () () (y y ≡ x x))
+stmt (CongruenceIdentityFromEquality () () (((x = y) ∧ (x y ≡ z w)) → (z = w)))
+</jh>
+
+== Betweenness ==
+The other fundamental formula is betweenness; <code>(between x y z)</code> signifies "y is between x and z".
+
+<jh>
+term (formula (between point point point))
+</jh>
+
+There are no points between a point and itself.
+<jh>
+stmt (IndivisibilityBiconditional () () ((between x y x) ↔ (x = y)))
+stmt (IndivisibilityFromEquality () () (((x = z) ∧ (between x y z)) → (x = y)))
+</jh>
+
+A point is between itself and any second point.
+<jh>
+stmt (BetweenABB () () (between A B B))
+stmt (BetweenAAB () () (between A A B))
+</jh>
+
+In addition, this situation (a point is between itself and another) is the only way that betweenness can hold both as-is and with the first two points exchanged.
+<jh>
+stmt (BetweennessEquality () () (((between A B C) ∧ (between B A C)) → (A = B)))
+</jh>
+
+The two endpoints of a betweenness relation are interchangeable.
+<jh>
+stmt (BetweennessSymmetry () () ((between A B C) ↔ (between C B A)))
+
+stmt (swapBetweennessInConsequent () ((antecedent → (between A B C)))
+  (antecedent → (between C B A)))
+</jh>
+
+=== Transitivity ===
+In this section we present six similar theorems which involve four points on a line. Given two betweenness relationships, we conclude a third. Three of the six are just versions of the other three which are flipped left-to-right.
+<jh>
+stmt (BetweennessInnerTransitivity () ()
+  (((between A B D) ∧ (between B C D)) → (between A B C)))
+stmt (BetweennessInnerTransitivityFlipped () ()
+  (((between A B C) ∧ (between A C D)) → (between B C D)))
+
+stmt (BetweennessOuterTransitivity () ()
+  ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between A B D)))
+stmt (BetweennessOuterTransitivityFlipped () ()
+  ((((between A B C) ∧ (between B C D)) ∧ (B ≠ C)) → (between A C D)))
+
+stmt (BetweennessMiddleTransitivity () ()
+  (((between A B D) ∧ (between B C D)) → (between A C D)))
+stmt (BetweennessMiddleTransitivityFlipped () ()
+  (((between A B C) ∧ (between A C D)) → (between A B D)))
+</jh>
+
+=== Connectivity ===
+<jh>
+stmt (BetweennessOuterConnectivity () ()
+  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
+    ((between A C D) ∨ (between A D C))))
+stmt (BetweennessMiddleConnectivity () ()
+  ((((A ≠ B) ∧ (between A B C)) ∧ (between A B D)) →
+    ((between B C D) ∨ (between B D C))))
+stmt (BetweennessInnerConnectivity () ()
+  (((between A B D) ∧ (between A C D)) →
+    ((between A B C) ∨ (between A C B))))
+</jh>
+
+== Segment construction ==
+A line segment can be extended beyond one of its endpoints by a specified distance (where by "distance" we mean a second line segment, which the constructed segment is to be congruent to). The segment extended this way is unique.
+<jh>
+stmt (SegmentConstruction ((a w) (a x) (a y) (a z)) ()
+  (∃ a ((between w x (value a)) ∧ (x (value a) ≡ y z))))
+stmt (SegmentConstructionUniqueness () ()
+  ((((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧
+    (between Q A y)) ∧ (A y ≡ B C)) →
+  (x = y)))
+</jh>
+
+Here is a similar construction, but from one of the given endpoints towards the other one, rather than away from it.
+<jh>
+stmt (InnerSegmentConstruction
+  ((p Q) (p A) (p B) (p C)) ()
+  (∃ p (((between Q A (value p)) ∨ (between Q (value p) A)) ∧ (Q (value p) ≡ B C))))
+</jh>
+
+== Inequality of line segments ==
+The formula <code>A B ≤ C D</code> means that the line segment <code>A B</code> is shorter than (or the same length as) the line segment <code>C D</code>.
+<jh>
+term (formula (≤ point point point point))
+def ((≥ A B C D) (C D ≤ A B))
+</jh>
+
+There are two equivalent ways of expressing this concept in terms of congruence. We can either cut off <code>C D</code> with a point <code>e</code> such that <code>A B ≡ C e</code>, or we can extend <code>A B</code> to a point <code>f</code> such that <code>A f ≡ C D</code>.
+<jh>
+stmt (LessEqualCutoff
+  ((e A) (e B) (e C) (e D)) ()
+  ((A B ≤ C D) ↔ (∃ e ((between C (value e) D) ∧ (A B ≡ C (value e))))))
+stmt (LessEqualExtension
+  ((f A) (f B) (f C) (f D)) ()
+  ((A B ≤ C D) ↔ (∃ f ((between A B (value f)) ∧ (A (value f) ≡ C D)))))
+</jh>
+
+Given congruences between two pairs of line segments, a <code>≤</code> relationship between the first pair carries over to the second pair.
+<jh>
+stmt (LessEqualCongruence () ()
+  ((((A B ≤ C D) ∧ (A B ≡ A′ B′)) ∧ (C D ≡ C′ D′))
+    → (A′ B′ ≤ C′ D′)))
+</jh>
+
+=== Total order ===
+It has the [[w:total order|properties of a total order]]:
+<jh>
+var (point A0 A1 B0 B1 C0 C1)
+stmt (LessEqualTransitivity () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ C0 C1)) → (A0 A1 ≤ C0 C1)))
+stmt (LessEqualAntisymmetry () () (((A0 A1 ≤ B0 B1) ∧ (B0 B1 ≤ A0 A1)) → (A0 A1 ≡ B0 B1)))
+stmt (LessEqualTotality () () ((A0 A1 ≤ B0 B1) ∨ (B0 B1 ≤ A0 A1)))
+</jh>
+
+A number of other properties follow from those.
+<jh>
+stmt (LessEqualReflexivity () () (A0 A1 ≤ A0 A1))
+
+def ((< A0 A1 B0 B1) ((A0 A1 ≤ B0 B1) ∧ (¬ (A0 A1 ≡ B0 B1))))
+def ((> B0 B1 A0 A1) (A0 A1 < B0 B1))
+</jh>
+
+=== Empty segments and inequality ===
+<jh>
+stmt (ZeroSmallest () () (A A ≤ B C))
+stmt (LessEqualZero () () ((A B ≤ C C) → (A = B)))
+</jh>
+
+== Collinearity ==
+To say that three points are collinear is just to say that one of them is between the other two (in any order).<ref>Definition Col in Narboux</ref>
+<jh>
+def ((collinear x y z) (((between x y z) ∨ (between y z x)) ∨ (between z x y)))
+stmt (BetweennessCollinearity () () ((between x y z) → (collinear x y z)))
+stmt (CollinearityRotation () () ((collinear x y z) ↔ (collinear y z x)))
+stmt (Collinearity23 () () ((collinear x y z) ↔ (collinear x z y)))
+stmt (Collinearity12 () () ((collinear x y z) ↔ (collinear y x z)))
+stmt (Collinearity13 () () ((collinear x y z) ↔ (collinear z y x)))
+</jh>
+
+A point, itself, and any second point are collinear.
+<jh>
+stmt (CollinearityAAB () () (collinear A A B))
+stmt (CollinearityABB () () (collinear A B B))
+stmt (CollinearityABA () () (collinear A B A))
+</jh>
+
+=== Transitivity ===
+These three theorems are all variations of the same theme, which is that given two collinear predicates sharing two unequal points, all four points are collinear. The words "outer" and "inner" do not signify a fundamentally different theorem (as they do for betweenness or five segment); they just refer to a minor rearrangement.
+<jh>
+stmt (CollinearityOuterTransitivity () ()
+  ((((P ≠ Q) ∧ (collinear P Q A)) ∧ (collinear P Q B)) →
+  (collinear P A B)))
+stmt (CollinearityInnerTransitivity () ()
+  ((((P ≠ Q) ∧ (collinear P Q A)) ∧ (collinear P Q B)) →
+  (collinear Q A B)))
+stmt (CollinearityCollinearity () ()
+  ((((P ≠ Q) ∧ (S ≠ P)) ∧ (collinear S P Q)) →
+    ((collinear X P Q) ↔ (collinear X P S))))
+</jh>
+
+== Determining lines, or points, by distance to two points ==
+If two given points are equidistant to each of two distinct points on a line, they are equidistant to every point on that line.
+<jh>
+stmt (EquidistantLine () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) ∧ (B P ≡ B Q)) → (C P ≡ C Q)))
+</jh>
+
+On a given line, the distance to two points can uniquely determine a point. We have two versions: one in which the two given points are distinct, and one in which they are endpoints of a line segment on which the point lies.
+<jh>
+stmt (CollinearTwoDistanceUniqueness () ()
+  (((((A ≠ B) ∧ (collinear A B C)) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
+stmt (BetweennessTwoDistanceUniqueness () () ((((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) → (C = C′)))
+</jh>
+
+For the previous theorems, two distances are needed because the point <code>C′</code> is not known to be on the line containing <code>A</code>, <code>B</code>, and <code>C</code>. If we know that the points which are to be shown equal are on the same line, and the same side of the point <code>A</code>, then one congruence suffices.
+<jh>
+stmt (BetweennessOneDistanceUniqueness () ()
+  (((between A B C) ∧ (A B ≡ A C)) → (B = C)))
+stmt (SameSegmentOneDistanceUniqueness () ()
+  ((((between A D B) ∧ (between A E B)) ∧ (A D ≡ A E)) → (D = E)))
+</jh>
+
+== Triangle congruence ==
+=== Triangle congruence defined ===
+At least for now, we define triangle congruence here (rather than provide a theorem providing this definition, which corresponds to the familiar side-side-side property of triangle congruence). The definition allows degenerate triangles: the points may be collinear, and need not all be distinct from each other.
+<jh>
+def ((≅ x y z x′ y′ z′) (((x y ≡ x′ y′) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)))
+</jh>
+The corresponding sides of congruent (possibly degenerate) triangles are congruent.
+<jh>
+stmt (Congruence12 () () ((A B C ≅ A′ B′ C′) → (A B ≡ A′ B′)))
+stmt (Congruence23 () () ((A B C ≅ A′ B′ C′) → (B C ≡ B′ C′)))
+stmt (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)))
+</jh>
+
+Rotate the order of points in a triangle congruence.
+<jh>
+stmt (CongruenceRotation () () ((A B C ≅ A′ B′ C′) ↔ (B C A ≅ B′ C′ A′)))
+</jh>
+
+=== Five segment ===
+<gallery>
+File:Five segment.svg|Outer five segment
+File:Inner five segment.svg|Inner five segment
+</gallery>
+The five segment theorems are variations of the familiar congruences for triangles (although without any explicit reference to angles).
+<jh>
+stmt (OuterFiveSegment () ()
+  ((((((((x ≠ y) ∧ (between x y z)) ∧ (between x′ y′ z′))
+     ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (y u ≡ y′ u′))
+   → (z u ≡ z′ u′))
+)
+stmt (InnerFiveSegment () ()
+  (((((((between x y z) ∧ (between x′ y′ z′))
+    ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))
+  → (y u ≡ y′ u′)))
+stmt (FiveSegment () ()
+  ((((((A ≠ B) ∧ (collinear A B C)) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))
+   → (C D ≡ C′ D′)))
+</jh>
+
+=== Three segment ===
+The three segment theorems can be thought of as degenerate cases of five segment, or as basic properties of points on a line.
+<jh>
+stmt (OuterThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x y ≡ x′ y′)) ∧ (y z ≡ y′ z′)) → (x z ≡ x′ z′)))
+stmt (InnerThreeSegment () ()
+  (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) → (x y ≡ x′ y′)))
+</jh>
+
+=== Some degenerate triangle congruence theorems ===
+<jh>
+stmt (BetweennessDegenerateTriangle
+  () ()
+  (((between A B C) ∧ (A B C ≅ A′ B′ C′)) → (between A′ B′ C′)))
+stmt (CollinearityDegenerateTriangle () ()
+  (((collinear A B C) ∧ (A B C ≅ A′ B′ C′)) → (collinear A′ B′ C′)))
+stmt (InnerDegenerateTriangle
+  ((b′ A) (b′ B) (b′ C) (b′ A′) (b′ C′)) ()
+  (((between A B C) ∧ (A C ≡ A′ C′)) → (∃ b′ ((between A′ (value b′) C′) ∧ (A B C ≅ A′ (value b′) C′)))))
+stmt (CollinearityConstructDegenerateTriangle
+  ((c′ A) (c′ B) (c′ C) (c′ A′) (c′ B′)) ()
+  (((collinear A B C) ∧ (A B ≡ A′ B′)) → (∃ c′ (A B C ≅ A′ B′ (value c′)))))
+</jh>
+
+== Existence of distinct points ==
+Here we can construct a point distinct from a given point, or a point distinct from a given point extended along a given line segment.
+<jh>
+stmt (PointConstructionDifferent ((c A) (c B)) ()
+  (∃ c ((between A B (value c)) ∧ (B ≠ (value c)))))
+stmt (AnotherPoint ((b A)) () (∃ b (A ≠ (value b))))
+</jh>
+
+There exist three non-collinear points.
+<jh>
+stmt (LowerDimensionCollinearity ((a b c)) ()
+  (∃ a (∃ b (∃ c (¬ (collinear (value a) (value b) (value c)))))))
+</jh>
+
+Given a line, there is a point which is not on that line.
+<jh>
+stmt (PointNotOnLine ((c A) (c B)) ()
+  ((A ≠ B) → (∃ c (¬ (collinear A B (value c))))))
+</jh>
+
+== Intersecting lines ==
+If two distinct, non-degenerate lines intersect, they intersect in a single point.
+
+<jh>
+stmt (LineIntersection () ()
+  (((((((¬ (collinear A B C)) ∧ (C ≠ D)) ∧
+    (collinear A B P)) ∧ (collinear A B Q)) ∧
+    (collinear C D P)) ∧ (collinear C D Q)) →
+    (P = Q)))
+</jh>
+
+== Midpoints ==
+A point is the midpoint of a line segment if it is between the endpoints and is equidistant from each one.
+<jh>
+def ((is-midpoint-of M A B) ((between A M B) ∧ (A M ≡ M B)))
+</jh>
+
+Whether a point is the midpoint does not depend on the order in which we list the endpoints.
+<jh>
+stmt (MidpointSymmetry () ()
+  ((M is-midpoint-of A B) ↔ (M is-midpoint-of B A)))
+</jh>
+
+An empty line segment has as its midpoint its endpoint.
+<jh>
+stmt (MidpointIndivisibility () () ((M is-midpoint-of A A) → (M = A)))
+stmt (MidpointReflexivity () () (A is-midpoint-of A A))
+</jh>
+
+=== Reflection through a point ===
+[[w:Point reflection|Point symmetry]], or reflection through a point, refers to the process of starting with a single point (which in special cases might be called the origin or the center) and mapping every point to a point directly opposite the given point (at the same distance).
+
+The symmetric point exists and is unique.
+<jh>
+stmt (SymmetricPoint ((p′ A) (p′ P)) ()
+  (∃ p′ (A is-midpoint-of P (value p′))))
+stmt (SymmetricPointUniqueness () ()
+  (((A is-midpoint-of P P1) ∧ (A is-midpoint-of P P2)) →
+    (P1 = P2)))
+</jh>
+
+Mapping to the symmetric point is one to one.
+<jh>
+stmt (SymmetricPointOneToOne () ()
+  (((A is-midpoint-of P1 P) ∧ (A is-midpoint-of P2 P)) →
+    (P1 = P2)))
+</jh>
+
+Mapping all points to the symmetric point preserves distance, line segment congruence, betweenness, and midpointness.
+<jh>
+stmt (SymmetricPointDistance () ()
+  (((A is-midpoint-of P′ P) ∧ (A is-midpoint-of Q′ Q)) →
+  (P Q ≡ P′ Q′)))
+stmt (SymmetricPointBetweenness () ()
+  (((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (between P Q R)) →
+    (between P′ Q′ R′)))
+stmt (SymmetricPointCongruence () ()
+  ((((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (A is-midpoint-of S S′)) ∧
+      (P Q ≡ R S)) →
+    (P′ Q′ ≡ R′ S′)))
+stmt (SymmetricPointMidpoint () ()
+  (((((A is-midpoint-of P P′) ∧
+      (A is-midpoint-of Q Q′)) ∧
+      (A is-midpoint-of R R′)) ∧
+      (P is-midpoint-of Q R)) →
+    (P′ is-midpoint-of Q′ R′)))
+</jh>
+
+=== More midpoint theorems ===
+
+The midpoint exists and is unique. We don't yet have the full existence theorem; that comes in a later chapter.
+<jh>
+stmt (MidpointExistsGivenEquidistant ((m A) (m B) (m C)) ()
+  ((C A ≡ C B) → (∃ m ((value m) is-midpoint-of A B))))
+stmt (MidpointUniqueness () ()
+  (((A is-midpoint-of P P′) ∧ (B is-midpoint-of P P′)) → (A = B)))
+</jh>
+
+A point which is equidistant to the two distinct endpoints of a line segment, and on the same line as them, is the midpoint of that line segment.
+<jh>
+stmt (EquidistantMidpoint () ()
+  (((collinear A M B) ∧ (M A ≡ M B)) →
+    ((A = B) ∨ (M is-midpoint-of A B))))
+</jh>
+
+[[File:Color parallelogram.svg|thumb|right]]
+The diagonals of a parallelogram bisect each other.<ref>l7_21 in Narboux</ref> (By "parallelogram" here we mean a quadrilateral whose opposite sides are congruent; there is no direct statement concerning parallel lines).
+<jh>
+stmt (ParallelogramDiagonals () ()
+  (((((((¬ (collinear A B C)) ∧ (B ≠ D)) ∧
+      (A B ≡ C D)) ∧ (B C ≡ D A)) ∧
+      (collinear A P C)) ∧ (collinear B P D)) →
+    ((P is-midpoint-of A C) ∧ (P is-midpoint-of B D))))
+</jh>
+
+== Tarski's axioms ==
+We repeat those axioms which are not subsumed by the theorems we have proved so far. Explanations are at [[Interface:Tarski's geometry axioms]].
+<jh>
+stmt (Pasch ((a x) (a u) (a z) (a y) (a v)) () (((between x u z) ∧ (between y v z)) → (∃ a ((between u (value a) y) ∧ (between v (value a) x)))))
+var (formula φx ψy)
+var (variable xx yy)
+stmt (Continuity ((φx yy) (φx a) (φx b) (ψy xx) (ψy a) (ψy b) (a b xx yy)) () 
+  ((∃ a (∀ xx (∀ yy ((φx ∧ ψy) → (between (value a) (value xx) (value yy))))))
+  → (∃ b (∀ xx (∀ yy ((φx ∧ ψy) → (between (value xx) (value b) (value yy))))))))
+stmt (UpperDimension () ()
+  (((((x u ≡ x v) ∧ (y u ≡ y v)) ∧ (z u ≡ z v)) ∧ (u ≠ v))
+  → (((between x y z) ∨ (between y z x)) ∨ (between z x y))))
+stmt (AxiomEuclid ((a b x) (a b u) (a b v) (a b y) (a b z)) () (
+  (((between x u v) ∧ (between y u z)) ∧ (x ≠ u))
+  → (∃ a (∃ b (((between x y (value a)) ∧ (between x z (value b))) ∧ (between (value a) v (value b)))))))
+</jh>
+
+== Builders ==
+As usual, we need to state that equals can be substituted for equals via builders.
+<jh>
+var (point x0 x1 x2 x3 y0 y1 y2 y3)
+stmt (CongruenceBuilder () () (
+  ((((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2)) ∧ (x3 = y3))
+  → ((x0 x1 ≡ x2 x3) ↔ (y0 y1 ≡ y2 y3))
+))
+stmt (BetweennessBuilder () () (
+  (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+  → ((between x0 x1 x2) ↔ (between y0 y1 y2))
+))
+stmt (CollinearityBuilder () () (
+  (((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2))
+  → ((collinear x0 x1 x2) ↔ (collinear y0 y1 y2))
+))
+stmt (LessEqualBuilder () () (
+  ((((x0 = y0) ∧ (x1 = y1)) ∧ (x2 = y2)) ∧ (x3 = y3))
+  → ((x0 x1 ≤ x2 x3) ↔ (y0 y1 ≤ y2 y3))
+))
+stmt (MidpointBuilder () () ((((M = M′) ∧ (A = A′)) ∧ (B = B′)) →
+  ((M is-midpoint-of A B) ↔ (M′ is-midpoint-of A′ B′))))
+</jh>
+
+== References ==
+<references/>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
