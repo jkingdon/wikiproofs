@@ -31,31 +31,49 @@ Let <code>A′</code> be the symmetric point of <code>A</code> through the point
 First assume <code>B ≠ C</code> (if not, we are done). Then expand <code>is-right-angle A B C</code> by the definition: <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>. We also flip <code>is-right-angle A C B</code> to <code>is-right-angle B C A</code> and expand it according to the definition: <code>∃ a′ (C is-midpoint-of A a′ ∧ B A ≡ B a′)</code>.
 <jh>
 thm (RightAngleVertexLeg-cprime
-  ((c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
+  ((c′ A) (c′ B) (c′ C)) ()
   (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
     (∃ c′
-      ((B ≠ C) ∧
-        (((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′))) ∧
-        (∃ a′ ((C is-midpoint-of A (value a′)) ∧ (B A ≡ B (value a′))))
-      ))
-    )) (
+      (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′))))
+  )) (
+        (B ≠ C)
+          ((is-right-angle A B C) ∧ (is-right-angle A C B))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
         A B C c′ RightAngle
         eliminateBiconditionalReverse
+        applySyllogism
+
+        repeatAntecedentThereExists
+))
+
+thm (RightAngleVertexLeg-aprime
+  ((C′ a′) (a′ A) (a′ B) (a′ C)) ()
+  (
+    (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) →
+    (∃ a′
+      ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A (value a′)) ∧ (B A ≡ B (value a′))))
+  )) (
+        ((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B)))
+          ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A C B RightAngleSymmetry
         eliminateBiconditionalReverse
+        applySyllogism
 
         B C A a′ RightAngle
         eliminateBiconditionalReverse
         applySyllogism
 
-        conjoin
-        moveRightConjunctIntoThereExistsInConsequent
-</jh>
-That gives <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′ ∧ ∃ a′ (C is-midpoint-of A a′ ∧ B A ≡ B a′))</code>. Adding <code>B ≠ C</code> is all we need.
-<jh>
-        (B ≠ C) conjoinLL
-        moveLeftConjunctIntoThereExistsInConsequent
+        repeatAntecedentThereExists
 ))
 </jh>
 
@@ -63,45 +81,46 @@ Now we apply <code>RightAngleLeg</code> to get <code>is-right-angle c′ C A</co
 
 <jh>
 thm (RightAngleVertexLeg-cprime-c-a
-  ((a′ A) (a′ B) (a′ C)) ()
-  (((B ≠ C) ∧
-    (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
-    (∃ a′ ((C is-midpoint-of A (value a′)) ∧ (B A ≡ B (value a′))))
-    )) →
+  () ()
+  (
+    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
     (is-right-angle C′ C A)
-    ) (
+  ) (
 </jh>
 First is <code>is-right-angle B C A</code>.
 <jh>
-        (B ≠ C)
-          (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
-            (∃ a′ ((C is-midpoint-of A (value a′)) ∧
-              (B A ≡ B (value a′)))))
-          ConjunctionLeftElimination
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
-        B C A a′ RightAngle
-        eliminateBiconditionalForward
+        A C B RightAngleSymmetry
+        eliminateBiconditionalReverse
         applySyllogism
 </jh>
 Next is <code>B ≠ C</code>.
 <jh>
-        (B ≠ C)
-          (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
-            (∃ a′ ((C is-midpoint-of A (value a′)) ∧
-              (B A ≡ B (value a′)))))
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
           ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
 Finally is <code>collinear C B C′</code>.
 <jh>
-        (B ≠ C)
-          (((B is-midpoint-of C C′) ∧ (A C ≡ A C′)) ∧
-            (∃ a′ ((C is-midpoint-of A (value a′)) ∧
-              (B A ≡ B (value a′)))))
-          ConjunctionLeftElimination
-        eliminateRightConjunctInConsequent
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
         eliminateRightConjunctInConsequent
         eliminateRightConjunctInConsequent
 
