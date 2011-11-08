@@ -134,8 +134,14 @@ Finally is <code>collinear C B C′</code>.
 ))
 </jh>
 
-  By RightAngle (or an easy deduction thereof relying on symmetric point uniqueness),
-    ((C is-midpoint-of A A′) ∧ (c′ A ≡ c′ A′))
+We can paraphrase the definition of <code>is-right-angle C′ C A</code> as "the symmetric point of <code>A</code> through <code>C</code> is the same distance from <code>C′</code> as <code>A</code> is". By symmetric point uniqueness, said symmetric point is just <code>A′</code>. The following lemma expresses this.
+<jh>
+#thm (RightAngleVertexLeg-uniqueness-lemma
+#  () ()
+#  (((is-right-angle C′ C A) ∧ (C is-midpoint-of A A′)) → (C′ A ≡ C′ A′)) (
+#        
+#))
+</jh>
     might want to write that as A C′ ≡ A′ C′
     
   A C ≡ A c′ ∧ A c′ ≡ A′ C′ → A C ≡ A′ C′ (transitivity)
@@ -150,10 +156,33 @@ Finally is <code>collinear C B C′</code>.
     A B C A′ RightAngleBetween
 
 <jh>
-#thm (RightAngleVertexLeg-b-not-c () ()
+#thm (RightAngleVertexLeg-b-not-c-1 () ()
+#  (
+#    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+#      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+#      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+#    (B = C)
+#  ) (
+#        
+#))
+
+#thm (RightAngleVertexLeg-b-not-c
+#  ( (c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
 #  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
 #    (B = C)) (
-#        
+#        B C A c′ RightAngleVertexLeg-cprime
+
+#        B C A (value c′) a′ RightAngleVertexLeg-aprime
+#        c′ addThereExists
+#        applySyllogism
+
+#        B C A (value c′) (value a′) RightAngleVertexLeg-b-not-c-1
+#        a′ addThereExists
+#        c′ addThereExists
+#        applySyllogism
+
+#       removeThereExistsInConsequent
+#       removeThereExistsInConsequent
 #))
 
 #thm (RightAngleVertexLeg () ()
