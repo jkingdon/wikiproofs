@@ -134,13 +134,74 @@ Finally is <code>collinear C B C′</code>.
 ))
 </jh>
 
-We can paraphrase the definition of <code>is-right-angle C′ C A</code> as "the symmetric point of <code>A</code> through <code>C</code> is the same distance from <code>C′</code> as <code>A</code> is". By symmetric point uniqueness, said symmetric point is just <code>A′</code>. The following lemma expresses this.
+We can paraphrase the definition of <code>is-right-angle C′ C A</code> as "the symmetric point of <code>A</code> through <code>C</code> is the same distance from <code>C′</code> as <code>A</code> is". By symmetric point uniqueness, said symmetric point is just <code>A′</code>. We express this via the "uniqueness lemma", <code>is-right-angle C′ C A ∧ C is-midpoint-of A A′ → C′ A ≡ C′ A′</code>, which we prove after a few lemmas which reflect parts of its proof.
 <jh>
-#thm (RightAngleVertexLeg-uniqueness-lemma
-#  () ()
-#  (((is-right-angle C′ C A) ∧ (C is-midpoint-of A A′)) → (C′ A ≡ C′ A′)) (
-#        
-#))
+thm (RightAngleVertexLeg-uniqueness-lemma-z-aprime () ()
+  ((((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z)) ∧ (C is-midpoint-of A A′)) → (Z = A′)) (
+        ((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z))
+          (C is-midpoint-of A A′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z))
+          (C is-midpoint-of A A′)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        C A Z A′ SymmetricPointUniqueness
+        applySyllogism
+))
+
+thm (RightAngleVertexLeg-uniqueness-lemma-cprime-a-cprime-aprime () ()
+  ((((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z)) ∧ (C is-midpoint-of A A′)) → (C′ A ≡ C′ A′)) (
+        ((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z))
+          (C is-midpoint-of A A′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        C A Z C′ A′ RightAngleVertexLeg-uniqueness-lemma-z-aprime
+
+        A EqualityReflexivity
+        C′ EqualityReflexivity
+        C′ EqualityReflexivity
+        C′ C′ A A C′ C′ Z A′ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+        eliminateBiconditionalReverseInConsequent
+
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+
+thm (RightAngleVertexLeg-uniqueness-lemma
+  ( (z C′) (z C) (z A) (z A′)) ()
+  (((is-right-angle C′ C A) ∧ (C is-midpoint-of A A′)) → (C′ A ≡ C′ A′)) (
+        (is-right-angle C′ C A)
+          (C is-midpoint-of A A′)
+          ConjunctionRightElimination
+
+        C′ C A z RightAngle
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (is-right-angle C′ C A)
+          (C is-midpoint-of A A′)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        moveRightConjunctIntoThereExistsInConsequent
+</jh>
+The consequent is now <code>∃ z (C is-midpoint-of A z ∧ C′ A ≡ C′ z ∧ C is-midpoint-of A A′)</code>, so we just need to combine with the lemmas we already proved.
+<jh>
+        C A (value z) C′ A′ RightAngleVertexLeg-uniqueness-lemma-cprime-a-cprime-aprime
+        z addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
     might want to write that as A C′ ≡ A′ C′
     
