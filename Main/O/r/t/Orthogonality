@@ -23,6 +23,48 @@ var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ x x′ y
 == Right angles ==
 We've proved a number of the results relating to <code>is-right-angle</code> in [[Orthogonality definitions]]. Here we pick up a few more (particularly ones for which the automatic expansion of definitions in [[Orthogonality definitions]] is inconvenient, and ones which follow from those).
 
+=== Proving is-right-angle from an object ===
+To prove <code>is-right-angle</code> from <code>RightAngle</code> requires that we come up with a point which satisfies the conditions of <code>RightAngle</code>. Here's a theorem which handles the logic involved in going from that point to an expression containing <code>∃</code>.<ref>not in Narboux, as coq handles this sort of thing</ref>
+<jh>
+thm (RightAngleObject ( (z A) (z B) (z C) (z Z)) ()
+  (((B is-midpoint-of C Z) ∧ (A C ≡ A Z)) →
+    (is-right-angle A B C)) (
+</jh>
+Our substitution is <code>z = Z → (B is-midpoint-of C z ∧ A C ≡ A z ↔ B is-midpoint-of C Z ∧ A C ≡ A Z)</code>.
+<jh>
+        B EqualityReflexivity
+        C EqualityReflexivity
+        B B C C (value z) Z MidpointBuilder
+        detach2of3
+        detach1of2
+
+        C EqualityReflexivity
+        A EqualityReflexivity
+        A EqualityReflexivity
+        A A C C A A (value z) Z CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+</jh>
+Now we just turn that into <code>∃</code> and apply <code>RightAngle</code>.
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+
+        Z
+          z
+          ((B is-midpoint-of C (value z)) ∧ (A C ≡ A (value z)))
+          ThereExistsIntroductionFromObject
+        applySyllogism
+
+        A B C z RightAngle
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 === Swapping the vertex with one of the legs ===
 Another degenerate case is <code>is-right-angle A B C ∧ is-right-angle A C B → B = C</code>.<ref>l8_7 in Narboux</ref>
 
@@ -256,8 +298,33 @@ Next is <code>A C′ ≡ A′ C′</code>, which follows readily from the unique
 ))
 </jh>
 
-  is-right-angle A′ B C
-    B is-midpoint-of C C′ ∧ A′ C ≡ A′ C′
+Next is <code>is-right-angle A′ B C</code>.
+<jh>
+#thm (RightAngleVertexLeg-aprime-b-c () ()
+#  (
+#    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+#      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+#      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+#    (is-right-angle A′ B C)
+#  ) (
+</jh>
+We start with <code>B is-midpoint-of C C′ ∧ A′ C ≡ A′ C′</code>.
+<jh>
+#        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+#            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+#          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+#          ConjunctionRightElimination
+#        eliminateLeftConjunctInConsequent
+#        eliminateRightConjunctInConsequent
+
+#        B C A C′ A′ RightAngleVertexLeg-aprime-c-aprime-cprime
+
+#        composeConjunction
+</jh>
+Applying <code>RightAngleObject</code> we are done.
+<jh>
+#))
+</jh>
 
   apply RightAngleBetween with everything substituting for itself.
     A B C A′ RightAngleBetween
