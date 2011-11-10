@@ -203,12 +203,58 @@ The consequent is now <code>∃ z (C is-midpoint-of A z ∧ C′ A ≡ C′ z �
         removeThereExistsInConsequent
 ))
 </jh>
-    might want to write that as A C′ ≡ A′ C′
-    
-  A C ≡ A c′ ∧ A c′ ≡ A′ C′ → A C ≡ A′ C′ (transitivity)
 
-  A C ≡ A′ C (by construction of A′).
-  Thus A′ C ≡ A′ C′ by transitivity
+Our next step is <code>A′ C ≡ A′ C′</code>.
+<jh>
+thm (RightAngleVertexLeg-aprime-c-aprime-cprime () ()
+  (
+    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+    (A′ C ≡ A′ C′)
+  ) (
+</jh>
+We start with <code>A′ C ≡ A C</code>, from the construction of <code>A′</code>.
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+        commuteCongruenceLeftInConsequent
+</jh>
+Next is <code>A C ≡ A C′</code>
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        applyCongruenceTransitivityInConsequent
+</jh>
+Next is <code>A C′ ≡ A′ C′</code>, which follows readily from the uniqueness lemma. The uniqueness lemma needs <code>is-right-angle C′ C A</code> and <code>C is-midpoint-of A A′</code>, and it gives us <code>C′ A ≡ C′ A′</code>.
+<jh>
+        B C A C′ A′ RightAngleVertexLeg-cprime-c-a
+
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        C′ C A A′ RightAngleVertexLeg-uniqueness-lemma
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        applyCongruenceTransitivityInConsequent
+))
+</jh>
 
   is-right-angle A′ B C
     B is-midpoint-of C C′ ∧ A′ C ≡ A′ C′
