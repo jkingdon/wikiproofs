@@ -300,30 +300,32 @@ Next is <code>A C′ ≡ A′ C′</code>, which follows readily from the unique
 
 Next is <code>is-right-angle A′ B C</code>.
 <jh>
-#thm (RightAngleVertexLeg-aprime-b-c () ()
-#  (
-#    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
-#      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
-#      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
-#    (is-right-angle A′ B C)
-#  ) (
+thm (RightAngleVertexLeg-aprime-b-c () ()
+  (
+    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+    (is-right-angle A′ B C)
+  ) (
 </jh>
 We start with <code>B is-midpoint-of C C′ ∧ A′ C ≡ A′ C′</code>.
 <jh>
-#        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
-#            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
-#          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
-#          ConjunctionRightElimination
-#        eliminateLeftConjunctInConsequent
-#        eliminateRightConjunctInConsequent
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
-#        B C A C′ A′ RightAngleVertexLeg-aprime-c-aprime-cprime
+        B C A C′ A′ RightAngleVertexLeg-aprime-c-aprime-cprime
 
-#        composeConjunction
+        composeConjunction
 </jh>
 Applying <code>RightAngleObject</code> we are done.
 <jh>
-#))
+        B C C′ A′ RightAngleObject
+        applySyllogism
+))
 </jh>
 
   apply RightAngleBetween with everything substituting for itself.
