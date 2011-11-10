@@ -366,36 +366,36 @@ Finally we need <code>between A C A′</code>
         applySyllogism
 ))
 
-#thm (RightAngleVertexLeg-b-not-c
-#  ( (c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
-#  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
-#    (B = C)) (
-#        B C A c′ RightAngleVertexLeg-cprime
+thm (RightAngleVertexLeg-b-not-c
+  ( (c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
+    (B = C)) (
+        B C A c′ RightAngleVertexLeg-cprime
 
-#        B C A (value c′) a′ RightAngleVertexLeg-aprime
-#        c′ addThereExists
-#        applySyllogism
+        B C A (value c′) a′ RightAngleVertexLeg-aprime
+        c′ addThereExists
+        applySyllogism
 
-#        B C A (value c′) (value a′) RightAngleVertexLeg-b-not-c-1
-#        a′ addThereExists
-#        c′ addThereExists
-#        applySyllogism
+        B C A (value c′) (value a′) RightAngleVertexLeg-b-not-c-1
+        a′ addThereExists
+        c′ addThereExists
+        applySyllogism
 
-#       removeThereExistsInConsequent
-#       removeThereExistsInConsequent
-#))
+       removeThereExistsInConsequent
+       removeThereExistsInConsequent
+))
 
-#thm (RightAngleVertexLeg () ()
-#  (((is-right-angle A B C) ∧ (is-right-angle A C B)) → (B = C)) (
-#        (B = C)
-#          ((is-right-angle A B C) ∧ (is-right-angle A C B))
-#          AntecedentIntroduction
-#
-#        B C A RightAngleVertexLeg-b-not-c
-#        export
-#
-#        eliminateCases
-#))
+thm (RightAngleVertexLeg () ()
+  (((is-right-angle A B C) ∧ (is-right-angle A C B)) → (B = C)) (
+        (B = C)
+          ((is-right-angle A B C) ∧ (is-right-angle A C B))
+          AntecedentIntroduction
+
+        B C A RightAngleVertexLeg-b-not-c
+        export
+
+        eliminateCases
+))
 </jh>
 
 == Export ==
