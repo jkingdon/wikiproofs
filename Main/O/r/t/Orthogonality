@@ -417,6 +417,64 @@ thm (RightAngleLegItself () () ((is-right-angle A B A) → (A = B)) (
 ))
 </jh>
 
+=== Three points which are both perpendicular and collinear ===
+If three points are both perpendicular and collinear, then one of the legs must be an empty line segment.<ref>l8_9 in Narboux</ref>
+<jh>
+thm (RightAngleCollinear () () (((is-right-angle A B C) ∧ (collinear A B C)) → ((A = B) ∨ (C = B))) (
+</jh>
+The <code>A = B</code> case is trivial.
+<jh>
+        (A = B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionRightElimination
+
+        (A = B) (C = B) DisjunctionRightIntroduction
+        applySyllogism
+
+        export
+</jh>
+The <code>A ≠ B</code> case is only slightly harder. We apply <code>RightAngleLeg</code> which in this case is <code>is-right-angle A B C ∧ A ≠ B ∧ collinear B A C → is-right-angle C B C</code>.
+<jh>
+        (A ≠ B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        (A ≠ B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionRightElimination
+        composeConjunction
+
+        (A ≠ B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        A B C Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A B C C RightAngleLeg
+        applySyllogism
+</jh>
+Then <code>C = B</code> immediately follows from <code>is-right-angle C B C</code>.
+<jh>
+        C B RightAngleLegItself
+        applySyllogism
+
+        (C = B) (A = B) DisjunctionLeftIntroduction
+        applySyllogism
+
+        export
+</jh>
+Combining the cases we are done.
+<jh>
+        eliminateCases
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Orthogonality]].
 <jh>
