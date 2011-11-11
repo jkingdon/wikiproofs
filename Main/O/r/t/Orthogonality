@@ -398,6 +398,25 @@ thm (RightAngleVertexLeg () ()
 ))
 </jh>
 
+=== A leg which is perpendicular to itself ===
+Another degenerate case is <code>is-right-angle A B A → A = B</code>.<ref>l8_8 in Narboux</ref> The proof is that <code>RightAngleVertexLeg</code> gives us <code>is-right-angle A B A ∧ is-right-angle A A B → A = B</code>, but <code>is-right-angle A A B</code> is a theorem, so we are done.
+<jh>
+thm (RightAngleLegItself () () ((is-right-angle A B A) → (A = B)) (
+        B A RightAngleABB
+
+        B A A RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        A B A RightAngleVertexLeg
+        detach2of2
+
+        B A EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == Export ==
 We now export to [[Interface:Orthogonality]].
 <jh>
