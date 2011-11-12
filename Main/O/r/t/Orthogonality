@@ -587,17 +587,27 @@ thm (RightAngleCongruence-dprime ((d′ A) (d′ B) (d′ C) (d′ A′) (d′ B
 ))
 </jh>
 
-The <code>B ≠ C</code> case starts by concluding <code>B′ ≠ C′</code>.
+Having constructed our points, we can get going, starting with <code>B′ ≠ C′</code>, which follows from <code>B ≠ C</code> and <code>A B C ≅ A′ B′ C′</code>.
 <jh>
 thm (RightAngleCongruence-bprime-not-cprime () ()
-  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (B′ ≠ C′)) (
-        (B ≠ C)
-          ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))
+  ((((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ D′)) →
+    (B′ ≠ C′)) (
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
           ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
 
-        (B ≠ C)
-          ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))
-          ConjunctionLeftElimination
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
         eliminateLeftConjunctInConsequent
 
         A B C A′ B′ C′ Congruence23
@@ -609,9 +619,31 @@ thm (RightAngleCongruence-bprime-not-cprime () ()
         applySyllogism
 ))
 
-#thm (RightAngleCongruence-b-not-c () ()
-#  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (is-right-angle A′ B′ C′)) (
+#thm (RightAngleCongruence-b-not-c-from-d-dprime () ()
+#  ((((B ≠ C) ∧
+#    (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+#      (A B C ≅ A′ B′ C′))) ∧
+#    (B′ is-midpoint-of C′ D′)) →
+#  (is-right-angle A′ B′ C′)) (
 #....
+#))
+
+#thm (RightAngleCongruence-b-not-c
+#  ((d d′ A) (d d′ B) (d d′ C) (d d′ A′) (d d′ B′) (d d′ C′)) ()
+#  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (is-right-angle A′ B′ C′)) (
+#        B C A A′ B′ C′ d RightAngleCongruence-d
+
+#        B C A A′ B′ C′ (value d) d′ RightAngleCongruence-dprime
+#        d addThereExists
+#        applySyllogism
+
+#        B C A A′ B′ C′ (value d) (value d′) RightAngleCongruence-b-not-c-from-d-dprime
+#        d addThereExists
+#        d′ addThereExists
+#        applySyllogism
+
+#        removeThereExistsInConsequent
+#        removeThereExistsInConsequent
 #))
 
 #thm (RightAngleCongruence () () (((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′)) → (is-right-angle A′ B′ C′)) (
