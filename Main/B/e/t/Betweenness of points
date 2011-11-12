@@ -624,39 +624,54 @@ Any line segment <code>A B</code> can be extended beyond <code>B</code> to a poi
 
 First we prove a lemma which just rearranges <code>CongruenceIdentityFromEquality</code>.
 <jh>
-thm (PointConstructionDifferentLemma () () (((A B ≡ C D) ∧ (C ≠ D)) → (A ≠ B)) (
+thm (CongruenceIdentityFromEqualityImported () () (((A = B) ∧ (A B ≡ C D)) → (C = D)) (
         A B C D CongruenceIdentityFromEquality
+        import
+))
+
+thm (NegatedCongruenceIdentityFromEquality () ()
+  (((A ≠ B) ∧ (A B ≡ C D)) → (C ≠ D)) (
+        A B C D CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (A ≠ B) conjoinLL
+
+        C D A B CongruenceIdentityFromEqualityImported
+        export
         applyComm
 
-        (A = B) (C = D) Transposition
+        (C = D) (A = B) Transposition
         eliminateBiconditionalReverse
         applySyllogism
 
+        applyComm
         import
+        applySyllogism
 ))
+
 </jh>
-The next lemma is just rearranging conjuncts and applying the previous lemma.
+The next lemma is just rearranging conjuncts and applying <code>NegatedCongruenceIdentityFromEquality</code>.
 <jh>
 thm (PointConstructionDifferentLemma2 () () ((((between A B C) ∧ (B C ≡ x y)) ∧ (x ≠ y)) → ((between A B C) ∧ (B ≠ C))) (
 </jh>
 First we pick out <code>between A B C</code>.
 <jh>
         ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-</jh>
-Next we pick out <code>B C ≡ x y</code>.
-<jh>
-        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Next we pick out <code>x ≠ y</code>.
 <jh>
         ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionLeftElimination
 </jh>
-Combining the second two results and applying the previous lemma gives us <code>B ≠ C</code>.
+Next we pick out <code>B C ≡ x y</code> and swap it to <code>x y ≡ B C</code>.
+<jh>
+        ((between A B C) ∧ (B C ≡ x y)) (x ≠ y) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+</jh>
+Combining the second two results and applying <code>NegatedCongruenceIdentityFromEquality</code> gives us <code>B ≠ C</code>.
 <jh>
         composeConjunction
-        B C x y PointConstructionDifferentLemma
+        x y B C NegatedCongruenceIdentityFromEquality
         applySyllogism
 </jh>
 Combining <code>between A B C</code> and <code>B ≠ C</code> finishes the proof.
