@@ -549,6 +549,48 @@ thm (RightAngleBetween
 ))
 </jh>
 
+=== Builder ===
+We prove the builder for <code>is-right-angle</code> similarly to other builders: by applying builders for each of the expressions which make up the definition.<ref>not in Narboux</ref>
+<jh>
+thm (RightAngleBuilder ( (z A) (z B) (z C) (z A′) (z B′) (z C′)) ()
+  ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) → ((is-right-angle A B C) ↔ (is-right-angle A′ B′ C′))) (
+        ((A = A′) ∧ (B = B′)) (C = C′) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        ((A = A′) ∧ (B = B′)) (C = C′) ConjunctionLeftElimination
+        composeConjunction
+
+        (value z) EqualityReflexivity
+        B B′ C C′ (value z) (value z) MidpointBuilder
+        detach2of2
+
+        applySyllogism
+
+        ((A = A′) ∧ (B = B′)) (C = C′) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((A = A′) ∧ (B = B′)) (C = C′) ConjunctionLeftElimination
+        composeConjunction
+
+        ((A = A′) ∧ (B = B′)) (C = C′) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        (value z) EqualityReflexivity
+        A A′ C C′ A A′ (value z) (value z) CongruenceBuilder
+        detach2of2
+        applySyllogism
+
+        buildConjunctionInConsequent
+        z buildThereExistsInConsequent
+
+        A B C z RightAngle
+        swapBiconditional
+        transformImplicationBiconditionalLeft
+))
+</jh>
+def ((is-right-angle A B C) (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))))
+
 == Export ==
 We now export to [[Interface:Orthogonality definitions]].
 <jh>

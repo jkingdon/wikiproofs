@@ -494,6 +494,8 @@ stmt (LessEqualBuilder () () (
 ))
 stmt (MidpointBuilder () () ((((M = M′) ∧ (A = A′)) ∧ (B = B′)) →
   ((M is-midpoint-of A B) ↔ (M′ is-midpoint-of A′ B′))))
+stmt (RightAngleBuilder () ()
+  ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) → ((is-right-angle A B C) ↔ (is-right-angle A′ B′ C′))))
 </jh>
 
 == References ==
