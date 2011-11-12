@@ -806,15 +806,34 @@ and finally <code>A D ≡ A′ D′</code>.
 ))
 </jh>
 
+That's all the major pieces of <code>is-right-angle A′ B′ C′</code>. We just need to do a bit of assembly.
+
 <jh>
-#thm (RightAngleCongruence-b-not-c-from-d-dprime () ()
-#  ((((B ≠ C) ∧
-#    (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
-#      (A B C ≅ A′ B′ C′))) ∧
-#    (B′ is-midpoint-of C′ D′)) →
-#  (is-right-angle A′ B′ C′)) (
-#....
-#))
+thm (RightAngleCongruence-aprime-bprime-cprime () ()
+  ((((B ≠ C) ∧
+    (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+      (A B C ≅ A′ B′ C′))) ∧
+    (B′ is-midpoint-of C′ D′)) →
+  (is-right-angle A′ B′ C′)) (
+</jh>
+The first piece is <code>B′ is-midpoint-of C′ D′</code>,
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionLeftElimination
+</jh>
+and the second piece is <code>A′ C′ ≡ A′ D′</code>.
+<jh>
+        B C D A A′ B′ C′ D′ RightAngleCongruence-aprime-cprime-aprime-dprime
+        composeConjunction
+</jh>
+We can now turn those two pieces into <code>is-right-angle A′ B′ C′</code>.
+<jh>
+        B′ C′ D′ A′ RightAngleObject
+        applySyllogism
+))
 
 #thm (RightAngleCongruence-b-not-c
 #  ((d d′ A) (d d′ B) (d d′ C) (d d′ A′) (d d′ B′) (d d′ C′)) ()
@@ -825,7 +844,7 @@ and finally <code>A D ≡ A′ D′</code>.
 #        d addThereExists
 #        applySyllogism
 
-#        B C A A′ B′ C′ (value d) (value d′) RightAngleCongruence-b-not-c-from-d-dprime
+#        B C A A′ B′ C′ (value d) (value d′) RightAngleCongruence-aprime-bprime-cprime
 #        d addThereExists
 #        d′ addThereExists
 #        applySyllogism
