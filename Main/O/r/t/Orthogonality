@@ -618,7 +618,150 @@ thm (RightAngleCongruence-bprime-not-cprime () ()
         B C B′ C′ NegatedCongruenceIdentityFromEquality
         applySyllogism
 ))
+</jh>
 
+Next is outer five segment with baselines <code>C B D<code> and <code>C′ B′ D′</code> and points <code>A</code> and <code>A′</code>, to get <code>D A ≡ D′ A′</code>.
+
+<jh>
+thm (RightAngleCongruence-d-a-dprime-aprime () ()
+  ((((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ D′)) →
+    (D A ≡ D′ A′)) (
+</jh>
+<code>C ≠ B</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        B C EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+<code>between C B D</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>between C′ B′ D′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>C B ≡ C′ B′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence23
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+Next is <code>B D ≡ B′ D′</code>, which follows from <code>B D ≡ B C</code>, <code>B C ≡ B′ C′</code>, and <code>B′ C′ ≡ B′ D′</code>.
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+        commuteCongruenceRightInConsequent
+
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence23
+        applySyllogism
+        applyCongruenceTransitivityInConsequent
+
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        commuteCongruenceLeftInConsequent
+        applyCongruenceTransitivityInConsequent
+
+        composeConjunction
+</jh>
+<code>C A ≡ C′ A′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence13
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+<code>B A ≡ B′ A′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence12
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+Applying outer five segment gives us <code>D A ≡ D′ A′</code>.
+<jh>
+        C B D C′ B′ D′ A A′ OuterFiveSegment
+        applySyllogism
+))
+</jh>
+
+<jh>
 #thm (RightAngleCongruence-b-not-c-from-d-dprime () ()
 #  ((((B ≠ C) ∧
 #    (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
