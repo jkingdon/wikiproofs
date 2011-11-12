@@ -493,6 +493,29 @@ thm (RightAngleABBFromEquality () ()
 ))
 </jh>
 
+=== A congruence theorem ===
+The only reason we rederive this theorem, rather than importing it, is to avoid editing all the interfaces between [[Betweenness of points]] and here.
+<jh>
+thm (NegatedCongruenceIdentityFromEquality () ()
+  (((A ≠ B) ∧ (A B ≡ C D)) → (C ≠ D)) (
+        A B C D CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (A ≠ B) conjoinLL
+
+        C D A B CongruenceIdentityFromEquality
+        export
+        applyComm
+
+        (C = D) (A = B) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyComm
+        import
+        applySyllogism
+))
+</jh>
+
 === An angle congruent to a right angle is a right angle ===
 That is, <code>is-right-angle A B C ∧ A B C ≅ A′ B′ C′ → is-right-angle A′ B′ C′</code>.<ref>l8_10 in Narboux</ref>
 
@@ -520,6 +543,34 @@ thm (RightAngleCongruence-b-c () ()
         B′ C′ A′ RightAngleABBFromEquality
         applySyllogism
 ))
+</jh>
+
+The <code>B ≠ C</code> case starts by concluding <code>B′ ≠ C′</code>.
+<jh>
+thm (RightAngleCongruence-bprime-not-cprime () ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (B′ ≠ C′)) (
+        (B ≠ C)
+          ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))
+          ConjunctionRightElimination
+
+        (B ≠ C)
+          ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence23
+        applySyllogism
+
+        composeConjunction
+
+        B C B′ C′ NegatedCongruenceIdentityFromEquality
+        applySyllogism
+))
+
+#thm (RightAngleCongruence-b-not-c () ()
+#  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (is-right-angle A′ B′ C′)) (
+#....
+#))
 
 #thm (RightAngleCongruence () () (((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′)) → (is-right-angle A′ B′ C′)) (
 #        B C A A′ B′ C′ RightAngleCongruence-b-c
