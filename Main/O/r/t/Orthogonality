@@ -761,6 +761,51 @@ Applying outer five segment gives us <code>D A ≡ D′ A′</code>.
 ))
 </jh>
 
+Now we apply transitivity on some line segment congruences which we already have to get <code>A′ C′ ≡ A′ D′</code>.
+
+<jh>
+thm (RightAngleCongruence-aprime-cprime-aprime-dprime () ()
+  ((((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ D′)) →
+    (A′ C′ ≡ A′ D′)) (
+</jh>
+First is <code>A′ C′ ≡ A C</code>,
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence13
+        applySyllogism
+        swapCongruenceInConsequent
+</jh>
+followed by <code>A C ≡ A D</code>,
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        applyCongruenceTransitivityInConsequent
+</jh>
+and finally <code>A D ≡ A′ D′</code>.
+<jh>
+        B C D A A′ B′ C′ D′ RightAngleCongruence-d-a-dprime-aprime
+        commuteCongruenceInConsequent
+        applyCongruenceTransitivityInConsequent
+))
+</jh>
+
 <jh>
 #thm (RightAngleCongruence-b-not-c-from-d-dprime () ()
 #  ((((B ≠ C) ∧
