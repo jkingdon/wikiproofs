@@ -547,7 +547,7 @@ thm (RightAngleCongruence-b-c () ()
 
 Here's the sketch of the <code>B ≠ C</code> case. Let <code>D</code> be the point we get by expanding the definition of <code>is-right-angle A B C</code> (that is, <code>B is-midpoint-of C D ∧ A C ≡ A D</code>). Let <code>D′</code> be the symmetric point of <code>C′</code> through <code>B′</code>. Now we just need <code>A′ C′ ≡ A′ D′</code>. We apply outer five segment with baselines <code>C B D<code> and <code>C′ B′ D′</code> and points <code>A</code> and <code>A′</code>, which gives us <code>D A ≡ D′ A′</code>. We have <code>A C ≡ A D</code> from the construction of <code>D</code> and <code>A′ C′ ≡ A C</code> from <code>A B C ≅ A′ B′ C′</code>. So by transitivity, we have <code>A′ C′ ≡ A′ D′</code> which is what we needed.
 
-It will be most convenient to start with the construction of <code>D</code> and <code>D′</code>. First, <code>D</code>, which is just expanding the definition of <code>is-right-angle</code> and moving terms inside the quantifier.
+It will be most convenient to start with the construction of <code>D</code> and <code>D′</code>. First we construct <code>D</code> by expanding the definition of <code>is-right-angle</code> and moving terms inside the quantifier.
 <jh>
 thm (RightAngleCongruence-d ((d A) (d B) (d C) (d A′) (d B′) (d C′)) ()
   (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) →
@@ -562,6 +562,28 @@ thm (RightAngleCongruence-d ((d A) (d B) (d C) (d A′) (d B′) (d C′)) ()
 
         (B ≠ C) conjoinLL
         moveLeftConjunctIntoThereExistsInConsequent
+))
+</jh>
+
+Next we construct <code>D′</code> as the symmetric point of <code>C′</code> through <code>B′</code>.
+<jh>
+thm (RightAngleCongruence-dprime ((d′ A) (d′ B) (d′ C) (d′ A′) (d′ B′) (d′ C′) (d′ D)) ()
+  (((B ≠ C) ∧
+    (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+      (A B C ≅ A′ B′ C′))) →
+    (∃ d′ (((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ (value d′)))
+    )
+  ) (
+        d′ B′ C′ SymmetricPoint
+
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          introduceAntecedent
+        repeatAntecedentThereExists
 ))
 </jh>
 
