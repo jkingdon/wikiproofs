@@ -835,33 +835,33 @@ We can now turn those two pieces into <code>is-right-angle A′ B′ C′</code>
         applySyllogism
 ))
 
-#thm (RightAngleCongruence-b-not-c
-#  ((d d′ A) (d d′ B) (d d′ C) (d d′ A′) (d d′ B′) (d d′ C′)) ()
-#  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (is-right-angle A′ B′ C′)) (
-#        B C A A′ B′ C′ d RightAngleCongruence-d
+thm (RightAngleCongruence-b-not-c
+  ((d d′ A) (d d′ B) (d d′ C) (d d′ A′) (d d′ B′) (d d′ C′)) ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (is-right-angle A′ B′ C′)) (
+        B C A A′ B′ C′ d RightAngleCongruence-d
 
-#        B C A A′ B′ C′ (value d) d′ RightAngleCongruence-dprime
-#        d addThereExists
-#        applySyllogism
+        B C (value d) A A′ B′ C′ d′ RightAngleCongruence-dprime
+        d addThereExists
+        applySyllogism
 
-#        B C A A′ B′ C′ (value d) (value d′) RightAngleCongruence-aprime-bprime-cprime
-#        d addThereExists
-#        d′ addThereExists
-#        applySyllogism
+        B C (value d) A A′ B′ C′ (value d′) RightAngleCongruence-aprime-bprime-cprime
+        d′ addThereExists
+        d addThereExists
+        applySyllogism
 
-#        removeThereExistsInConsequent
-#        removeThereExistsInConsequent
-#))
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
 
-#thm (RightAngleCongruence () () (((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′)) → (is-right-angle A′ B′ C′)) (
-#        B C A A′ B′ C′ RightAngleCongruence-b-c
-#        export
+thm (RightAngleCongruence () () (((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′)) → (is-right-angle A′ B′ C′)) (
+        B C A A′ B′ C′ RightAngleCongruence-b-c
+        export
 
-#        B C A A′ B′ C′ RightAngleCongruence-b-not-c
-#        export
+        B C A A′ B′ C′ RightAngleCongruence-b-not-c
+        export
 
-#        eliminateCases
-#))
+        eliminateCases
+))
 </jh>
 
 == Export ==
