@@ -597,10 +597,44 @@ The line <code>A B</code> is perpendicular to the line <code>C D</code> at the p
 
 <jh>
 def ((⟂at A B C D X)
-  (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X A D)) ∧
+  (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
    (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
      (is-right-angle (value u) X (value v)))))))
 </jh>
+
+=== Definition as a theorem ===
+As usual, we'll need a theorem form of the definition.
+<jh>
+#thm (PerpendicularAt () () ((A B C D ⟂at X) ↔
+#  (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+#   (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+#     (is-right-angle (value u) X (value v))))))) (
+#        ugh
+#))
+</jh>
+
+=== Symmetry ===
+Here we prove <code>A B C D ⟂at X ↔ C D A B ⟂at X</code>.<ref>l8_12 in Narboux</ref> The concept is pretty simple: expand the definition and apply symmetry to each piece. The only thing which makes this proof a bit long is the number of pieces.
+jh-will-start
+thm (PerpendicularAtSymmetry () () ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
+        ((A ≠ B) ∧ (C ≠ D))
+          (collinear X A B)
+          (collinear X C D)
+          ConjunctionAssociativity
+
+        (A ≠ B) (C ≠ D) ConjunctionSymmetry
+        (collinear X A B) (collinear X C D) ConjunctionSymmetry
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        ((C ≠ D) ∧ (A ≠ B))
+          (collinear X C D)
+          (collinear X A B)
+          ConjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+jh-will-end
 
 == Export ==
 We now export to [[Interface:Orthogonality definitions]].
