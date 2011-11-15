@@ -17,7 +17,7 @@ var (formula antecedent)
 var (point A B C D E F M P Q R S X Y Z)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
 var (point C″)
-var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ x x′ y y′ z)
+var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u v x x′ y y′ z)
 </jh>
 
 == Right angles ==
@@ -589,7 +589,18 @@ thm (RightAngleBuilder ( (z A) (z B) (z C) (z A′) (z B′) (z C′)) ()
         transformImplicationBiconditionalLeft
 ))
 </jh>
-def ((is-right-angle A B C) (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))))
+
+== Perpendicular lines at a point ==
+We'll return to <code>is-right-angle</code> in the next proof module, [[Orthogonality]]. But first we define the other predicates related to orthogonality.
+
+The line <code>A B</code> is perpendicular to the line <code>C D</code> at the point <code>X</code> if that point lies on both lines and if choosing one point from each line plus the vertex <code>X</code> always produces a right angle. In symbols, <code>A B C D ⟂at X</code> is defined as <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X A D ∧ ∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>.
+
+<jh>
+def ((⟂at A B C D X)
+  (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X A D)) ∧
+   (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+     (is-right-angle (value u) X (value v)))))))
+</jh>
 
 == Export ==
 We now export to [[Interface:Orthogonality definitions]].
