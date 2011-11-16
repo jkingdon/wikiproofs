@@ -88,3 +88,9 @@ if you want all of the changes). [[User:Kingdon|Kingdon]] 01:56, 24 October 2011
 Have you had a chance to look at https://github.com/jkingdon/jhilbert/pull/1 ?
 
 I just added another change there, which is to make ⟂ (perpendicular) a legal character within the name of an atom. Wikiproofs.org currently disallows it (because the version of java in use is based on unicode 4.0 and this character was introduced in 4.1). Avoiding this character does not strike me as a particularly good solution, as it is a fairly basic piece of notation in geometry contexts. [[User:Kingdon|Kingdon]] 02:49, 16 November 2011 (UTC)
+
+== Fix to perpendicular character ==
+
+Have you had a chance to look at https://github.com/jkingdon/jhilbert/pull/1 ?
+
+I just added another change there, which is to make ⟂ (perpendicular) a legal character within the name of an atom. Wikiproofs.org currently disallows it (because the version of java in use is based on unicode 4.0 and this character was introduced in 4.1). Avoiding this character does not strike me as a particularly good solution, as it is a fairly basic piece of notation in geometry contexts. [[User:Kingdon|Kingdon]] 02:55, 16 November 2011 (UTC)
