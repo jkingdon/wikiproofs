@@ -17,7 +17,7 @@ var (formula antecedent)
 var (point A B C D E F M P Q R S X Y Z)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
 var (point C″)
-var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ x x′ y y′ z)
+var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v v′ x x′ y y′ z)
 </jh>
 
 == Right angles ==
@@ -863,6 +863,103 @@ thm (RightAngleCongruence () () (((is-right-angle A B C) ∧ (A B C ≅ A′ B�
         eliminateCases
 ))
 </jh>
+
+== Perpendicular lines at a point ==
+The line <code>A B</code> is perpendicular to the line <code>C D</code> at the point <code>X</code> if that point lies on both lines and if choosing one point from each line plus the vertex <code>X</code> always produces a right angle. In symbols, <code>A B C D ⟂at X</code> is defined as <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X A D ∧ ∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>.
+
+<jh>
+def ((⟂at A B C D X)
+  (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+   (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+     (is-right-angle (value u) X (value v)))))))
+</jh>
+
+=== Definition as a theorem ===
+As usual, we'll need a theorem form of the definition.
+<jh>
+thm (PerpendicularAt
+  ((u v A) (u v B) (u v C) (u v D) (u v X)   (u′ v′ u v) (u′ v′ A) (u′ v′ B) (u′ v′ C) (u′ v′ D) (u′ v′ X)) ()
+  ((A B C D ⟂at X) ↔
+    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+     (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+       (is-right-angle (value u) X (value v))))))) (
+</jh>
+We start with <code>v = v′ → ((collinear u A B ∧ collinear v C D → is-right-angle u X v) ↔ (collinear u A B ∧ collinear v′ C D → is-right-angle u X v′))</code>.
+<jh>
+        D EqualityReflexivity
+        C EqualityReflexivity
+        (value v) (value v′) C C D D CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear (value u) A B) buildConjunctionLLInConsequent
+
+        (value u) EqualityReflexivity
+        X EqualityReflexivity
+        (value u) (value u) X X (value v) (value v′) RightAngleBuilder
+        detach2of3
+        detach1of2
+
+        buildImplicationInConsequent
+</jh>
+We turn that into <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v) ↔ ∀ u ∀ v′ (collinear u A B ∧ collinear v′ C D → is-right-angle u X v′)</code>.
+<jh>
+        ChangeVariableForAll
+        u buildForAll
+</jh>
+Now we pull the same trick for <code>u</code>, starting with <code>u = u′ → (∀ v′ (collinear u A B ∧ collinear v′ C D → is-right-angle u X v′) ↔ ∀ v′ (collinear u′ A B ∧ collinear v′ C D → is-right-angle u′ X v′))</code>.
+<jh>
+        B EqualityReflexivity
+        A EqualityReflexivity
+        (value u) (value u′) A A B B CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear (value v′) C D) buildConjunctionRRInConsequent
+
+        (value v′) EqualityReflexivity
+        X EqualityReflexivity
+        (value u) (value u′) X X (value v′) (value v′) RightAngleBuilder
+        detach2of3
+        detach2of2
+
+        buildImplicationInConsequent
+
+        v′ buildForAllInConsequent
+
+        ChangeVariableForAll
+
+        applyBiconditionalTransitivity
+</jh>
+That's the hard part; the bit outside the quantifiers needs no extra work.
+<jh>
+        ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) buildConjunctionLL
+        swapBiconditional
+))
+</jh>
+
+=== Symmetry ===
+Here we prove <code>A B C D ⟂at X ↔ C D A B ⟂at X</code>.<ref>l8_12 in Narboux</ref> The concept is pretty simple: expand the definition and apply symmetry to each piece. The only thing which makes this proof a bit long is the number of pieces.
+jh-will-start
+thm (PerpendicularAtSymmetry () () ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
+        ((A ≠ B) ∧ (C ≠ D))
+          (collinear X A B)
+          (collinear X C D)
+          ConjunctionAssociativity
+
+        (A ≠ B) (C ≠ D) ConjunctionSymmetry
+        (collinear X A B) (collinear X C D) ConjunctionSymmetry
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        ((C ≠ D) ∧ (A ≠ B))
+          (collinear X C D)
+          (collinear X A B)
+          ConjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+jh-will-end
 
 == Export ==
 We now export to [[Interface:Orthogonality]].
