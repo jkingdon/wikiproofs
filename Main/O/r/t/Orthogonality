@@ -940,15 +940,24 @@ That's the hard part; the bit outside the quantifiers needs no extra work.
 
 === Symmetry ===
 Here we prove <code>A B C D ⟂at X ↔ C D A B ⟂at X</code>.<ref>l8_12 in Narboux</ref> The concept is pretty simple: expand the definition and apply symmetry to each piece. The only thing which makes this proof a bit long is the number of pieces.
-jh-will-start
-thm (PerpendicularAtSymmetry () () ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
+<jh>
+thm (PerpendicularAtSymmetry
+  ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
+  ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
+</jh>
+Before we get started, we'll expand <code>A B C D ⟂at X</code> according to the definition.
+<jh>
+        A B C D X u v PerpendicularAt
+</jh>
+Working on the left hand part of the definition, we just need to apply conjunction commutativity and associativity.
+<jh>
         ((A ≠ B) ∧ (C ≠ D))
           (collinear X A B)
           (collinear X C D)
           ConjunctionAssociativity
 
-        (A ≠ B) (C ≠ D) ConjunctionSymmetry
-        (collinear X A B) (collinear X C D) ConjunctionSymmetry
+        (A ≠ B) (C ≠ D) ConjunctionCommutativity
+        (collinear X A B) (collinear X C D) ConjunctionCommutativity
         buildConjunction
         applyBiconditionalTransitivity
 
@@ -958,8 +967,32 @@ thm (PerpendicularAtSymmetry () () ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
           ConjunctionAssociativity
         swapBiconditional
         applyBiconditionalTransitivity
+</jh>
+That's the easy part. Next is <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v) ↔ ∀ v ∀ u (collinear v C D ∧ collinear u A B → is-right-angle v X u)</code>
+<jh>
+        (collinear (value u) A B) (collinear (value v) C D) ConjunctionCommutativity
+        (value u) X (value v) RightAngleSymmetry
+        buildImplication
+
+        v buildForAll
+        u buildForAll
+
+        u v
+          (((collinear (value v) C D) ∧ (collinear (value u) A B)) →
+            (is-right-angle (value v) X (value u)))
+          ForAllCommutation
+        applyBiconditionalTransitivity
+</jh>
+Now we just need to combine the two halves and unexpand the definition on the right side.
+<jh>
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        C D A B X v u PerpendicularAt
+        swapBiconditional
+        applyBiconditionalTransitivity
 ))
-jh-will-end
+</jh>
 
 == Export ==
 We now export to [[Interface:Orthogonality]].
