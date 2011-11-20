@@ -865,7 +865,7 @@ thm (RightAngleCongruence () () (((is-right-angle A B C) ∧ (A B C ≅ A′ B�
 </jh>
 
 == Perpendicular lines at a point ==
-The line <code>A B</code> is perpendicular to the line <code>C D</code> at the point <code>X</code> if that point lies on both lines and if choosing one point from each line plus the vertex <code>X</code> always produces a right angle. In symbols, <code>A B C D ⟂at X</code> is defined as <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X A D ∧ ∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>.
+The line <code>A B</code> is perpendicular to the line <code>C D</code> at the point <code>X</code> if that point lies on both lines and if choosing one point from each line plus the vertex <code>X</code> always produces a right angle. In symbols, <code>A B C D ⟂at X</code> is defined as <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ ∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>.
 
 <jh>
 def ((⟂at A B C D X)
@@ -992,6 +992,43 @@ Now we just need to combine the two halves and unexpand the definition on the ri
         swapBiconditional
         applyBiconditionalTransitivity
 ))
+</jh>
+
+=== Only one point on each line is needed ===
+The definition of <code>⟂at</code> might seem a bit odd, in that it would intuitively appear that one point on each line which forms a right angle would suffice, rather than needing to make an assertion about all points on those lines. In fact, this intuition is correct subject to the condition that the points being chosen on the line do not equal the vertex. In symbols, <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ ∃ u ∃ v (collinear u A B ∧ collinear v C D ∧ u ≠ X ∧ v ≠ X ∧ is-right-angle u X v) → A B C D ⟂at X</code>.<ref>l8_13_2 in Narboux</ref>
+
+Proof outline:
+  Let U0 be a point for which collinear U0 A B
+  • collinear A X U0 by CollinearityOuterTransitivity (from U0 A B and X A B)
+  • collinear B U U0 by CollinearityOuterTransitivity (from B A U and B A U0)
+  • collinear A U X by CollinearityOuterTransitivity (from A B U and A B X)
+  • collinear B U X by CollinearityOuterTransitivity (from B A U and B A X)
+  • RightAngleLeg
+    is-right-angle u X v ∧ u ≠ X ∧ collinear X u U0 → is-right-angle U0 X v
+  • cases for B = U and B ≠ U
+  • substitute with/for U
+  • collinear B X U0 by CollinearityInnerTransitivity
+  • collinear U U0 X by CollinearityInnerTransitivity
+  • RightAngleSymmetry
+  • RightAngleLeg
+  • RightAngleSymmetry
+  • collinear D V V0 by CollinearityOuterTransitivity
+  • collinear C V V0 by CollinearityOuterTransitivity
+  • collinear C V X by CollinearityOuterTransitivity
+  • collinear C V0 X by CollinearityOuterTransitivity
+  • cases for C = X and C ≠ X
+  • substitute with/for X
+<jh>
+#thm (PerpendicularAtThereExists ()
+#  ((u v A) (u v B) (u v C) (u v D) (u v X)) ()
+#  (
+#    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+#     (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+#       ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+#       (is-right-angle (value u) X (value v)))))) →
+#    (A B C D ⟂at X)
+#  ) (
+#))
 </jh>
 
 == Export ==
