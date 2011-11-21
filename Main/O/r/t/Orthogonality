@@ -14,10 +14,12 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Orthogonality_definitions (CLASSICAL FIRSTORDER) ())
 
 var (formula antecedent)
-var (point A B C D E F M P Q R S X Y Z)
+var (point A B C D E F M P Q R S U V X Y Z)
+var (point U0 V0)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
 var (point C″)
 var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v v′ x x′ y y′ z)
+var (variable u0 v0)
 </jh>
 
 == Right angles ==
@@ -997,19 +999,63 @@ Now we just need to combine the two halves and unexpand the definition on the ri
 === Only one point on each line is needed ===
 The definition of <code>⟂at</code> might seem a bit odd, in that it would intuitively appear that one point on each line which forms a right angle would suffice, rather than needing to make an assertion about all points on those lines. In fact, this intuition is correct subject to the condition that the points being chosen on the line do not equal the vertex. In symbols, <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ ∃ u ∃ v (collinear u A B ∧ collinear v C D ∧ u ≠ X ∧ v ≠ X ∧ is-right-angle u X v) → A B C D ⟂at X</code>.<ref>l8_13_2 in Narboux</ref>
 
-Proof outline:
-  lemma (will apply this twice, first time as written, second time with C D V0 X V U)
-  A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X →
-    is-right-angle U0 X V
+The proof is based on the idea that <code>A</code>, <code>B</code>, <code>u</code> are on a line and we'll also consider an arbitrary point, which we'll call <code>U0</code>, on that line. We'll use <code>RightAngleLeg</code> to turn <code>is-right-angle u X v</code> to <code>is-right-angle U0 X v</code> (and some collinearity transitivity to set up the hypotheses for <code>RightAngleLeg</code>). Then we'll do much the same for <code>C</code>, <code>D</code>, <code>v</code>, and an arbitrary point <code>V0</code> on the line <code>C D<code>, which will turn <code>is-right-angle v X U0</code> to <code>is-right-angle V0 X U0</code>. Fortunately, the first half and the similar half are similar enough that we can break it off into a lemma which we'll be able to apply twice.
 
-  Let U0 be an arbitrary point for which collinear U0 A B
+The lemma is <code>A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X → is-right-angle U0 X V</code> In this case, <code>RightAngleLeg</code> is <code>is-right-angle U X V ∧ U ≠ X ∧ collinear X U U0 → is-right-angle U0 X V</code>. The first two hypotheses we have, so the first part of our proof is headed towards <code>collinear X U U0</code>. We'll start with four applications of collinearity transitivity.
   • collinear A X U0 by CollinearityOuterTransitivity (from A ≠ B, U0 A B and X A B)
+
+<jh>
+thm (PerpendicularAtThereExists-a-x-u0 () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear A X U0)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        A B X U0 CollinearityOuterTransitivity
+        applySyllogism
+))
+
+#thm (PerpendicularAtThereExists-half () ()
+#  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+#      (is-right-angle U X V)) ∧ (U ≠ X)) →
+#    (is-right-angle U0 X V)) (
+#))
+</jh>
+
+Proof outline:
+  apply:
+    A B U0 X U V PerpendicularAtThereExists-half
+    C D V0 X V U0 PerpendicularAtThereExists-half
+
   • collinear B U U0 by CollinearityOuterTransitivity (from B ≠ A, B A U and B A U0)
   • collinear A U X by CollinearityOuterTransitivity (from A ≠ B, A B U and A B X)
   • collinear B U X by CollinearityOuterTransitivity (from B ≠ A, B A U and B A X)
-  • RightAngleLeg
-    is-right-angle u X v ∧ u ≠ X ∧ collinear X u U0 → is-right-angle U0 X v
-    so, want collinear X U U0
   • cases for B = U and B ≠ U
   • the B = U case
     • collinear B X U0 by CollinearityInnerTransitivity (from A ≠ B, A B X and A B U0)
