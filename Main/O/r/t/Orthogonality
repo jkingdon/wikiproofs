@@ -998,24 +998,35 @@ Now we just need to combine the two halves and unexpand the definition on the ri
 The definition of <code>⟂at</code> might seem a bit odd, in that it would intuitively appear that one point on each line which forms a right angle would suffice, rather than needing to make an assertion about all points on those lines. In fact, this intuition is correct subject to the condition that the points being chosen on the line do not equal the vertex. In symbols, <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ ∃ u ∃ v (collinear u A B ∧ collinear v C D ∧ u ≠ X ∧ v ≠ X ∧ is-right-angle u X v) → A B C D ⟂at X</code>.<ref>l8_13_2 in Narboux</ref>
 
 Proof outline:
-  Let U0 be a point for which collinear U0 A B
-  • collinear A X U0 by CollinearityOuterTransitivity (from U0 A B and X A B)
-  • collinear B U U0 by CollinearityOuterTransitivity (from B A U and B A U0)
-  • collinear A U X by CollinearityOuterTransitivity (from A B U and A B X)
-  • collinear B U X by CollinearityOuterTransitivity (from B A U and B A X)
+  lemma (will apply this twice, first time as written, second time with C D V0 X V U)
+  A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X →
+    is-right-angle U0 X V
+
+  Let U0 be an arbitrary point for which collinear U0 A B
+  • collinear A X U0 by CollinearityOuterTransitivity (from A ≠ B, U0 A B and X A B)
+  • collinear B U U0 by CollinearityOuterTransitivity (from B ≠ A, B A U and B A U0)
+  • collinear A U X by CollinearityOuterTransitivity (from A ≠ B, A B U and A B X)
+  • collinear B U X by CollinearityOuterTransitivity (from B ≠ A, B A U and B A X)
   • RightAngleLeg
     is-right-angle u X v ∧ u ≠ X ∧ collinear X u U0 → is-right-angle U0 X v
+    so, want collinear X U U0
   • cases for B = U and B ≠ U
-  • substitute with/for U
-  • collinear B X U0 by CollinearityInnerTransitivity
-  • collinear U U0 X by CollinearityInnerTransitivity
-  • RightAngleSymmetry
+  • the B = U case
+    • collinear B X U0 by CollinearityInnerTransitivity (from A ≠ B, A B X and A B U0)
+    • substitute U for B to turn this into collinear X U U0
+  • the B ≠ U case
+    • collinear U U0 X by CollinearityInnerTransitivity (from B ≠ U, B U U0 and B U X)
+  • RightAngleSymmetry to give is-right-angle v X U0
+
+  Let V0 be an arbitrary point for which collinear V0 C D
   • RightAngleLeg
-  • RightAngleSymmetry
-  • collinear D V V0 by CollinearityOuterTransitivity
-  • collinear C V V0 by CollinearityOuterTransitivity
-  • collinear C V X by CollinearityOuterTransitivity
-  • collinear C V0 X by CollinearityOuterTransitivity
+    is-right-angle v X U0 ∧ v ≠ X ∧ collinear X v V0 → is-right-angle V0 X U0
+    so, want collinear X V V0
+  • RightAngleSymmetry to give is-right-angle U0 X V0
+  • collinear D V V0 by CollinearityOuterTransitivity (from C ≠ D, C D V and C D V0)
+  • collinear C V V0 by CollinearityOuterTransitivity (from C ≠ D, C D V and C D V0)
+  • collinear C V X by CollinearityOuterTransitivity (from C ≠ D, C D V and C D X)
+  • collinear C V0 X by CollinearityOuterTransitivity (from C ≠ D, C D V0 and C D X)
   • cases for C = X and C ≠ X
   • substitute with/for X
 <jh>
