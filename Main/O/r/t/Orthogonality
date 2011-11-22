@@ -1170,6 +1170,47 @@ thm (PerpendicularAtThereExists-b-u-x () ()
         A B U X CollinearityInnerTransitivity
         applySyllogism
 ))
+</jh>
+
+At this point we prove <code>collinear X U U0</code> by considering <code>B = U</code> and <code>B ≠ U</code> cases.
+
+For the <code>B = U</code> case, we first apply transitivity to give <code>collinear B X U0</code> (from <code>A ≠ B</code>, <code>A B X</code> and <code>A B U0</code>).
+<jh>
+thm (PerpendicularAtThereExists-b-x-u0 () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear B X U0)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        A B X U0 CollinearityInnerTransitivity
+        applySyllogism
+))
 
 #thm (PerpendicularAtThereExists-half () ()
 #  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
