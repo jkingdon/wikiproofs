@@ -1042,7 +1042,7 @@ thm (PerpendicularAtThereExists-a-x-u0 () ()
 ))
 </jh>
 
-The second collinearity is <code>collinear B U U0</code> by transitivity from <code>B ≠ A</code>, <code>collinear B A U</code> and <code>collinear B A U0
+The second collinearity is <code>collinear B U U0</code> by transitivity from <code>B ≠ A</code>, <code>collinear B A U</code> and <code>collinear B A U0</code>.
 
 <jh>
 thm (PerpendicularAtThereExists-b-u-u0 () ()
@@ -1094,6 +1094,44 @@ thm (PerpendicularAtThereExists-b-u-u0 () ()
         B A U U0 CollinearityOuterTransitivity
         applySyllogism
 ))
+</jh>
+
+The third collinearity is <code>collinear A U X</code> by transitivity from <code>A ≠ B</code>, <code>collinear A B U</code> and <code>collinear A B X</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-a-u-x () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear A U X)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        A B U X CollinearityOuterTransitivity
+        applySyllogism
+))
 
 #thm (PerpendicularAtThereExists-half () ()
 #  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
@@ -1107,7 +1145,6 @@ Proof outline:
     A B U0 X U V PerpendicularAtThereExists-half
     C D V0 X V U0 PerpendicularAtThereExists-half
 
-  • collinear A U X by CollinearityOuterTransitivity (from A ≠ B, A B U and A B X)
   • collinear B U X by CollinearityOuterTransitivity (from B ≠ A, B A U and B A X)
   • cases for B = U and B ≠ U
   • the B = U case
