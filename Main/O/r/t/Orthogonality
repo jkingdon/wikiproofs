@@ -1211,6 +1211,50 @@ thm (PerpendicularAtThereExists-b-x-u0 () ()
         A B X U0 CollinearityInnerTransitivity
         applySyllogism
 ))
+</jh>
+The rest of the <code>B = U</code> case is just substituting <code>U</code> for <code>B</code> in <code>collinear B X U0</code> to get <code>collinear X U U0</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-b-u () ()
+  (((B = U) ∧ ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X))) →
+    (collinear X U U0)) (
+</jh>
+First we apply the previous result to get <code>collinear B X U0</code>.
+<jh>
+        (B = U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionLeftElimination
+
+        A B U0 X U V PerpendicularAtThereExists-b-x-u0
+        applySyllogism
+
+</jh>
+Now we use a substitution to get <code>collinear B X U0 → collinear U X U0</code>.
+<jh>
+        (B = U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionRightElimination
+
+        X EqualityReflexivity
+        U0 EqualityReflexivity
+        B U X X U0 U0 CollinearityBuilder
+        detach2of2
+        detach2of2
+
+        applySyllogism
+        eliminateBiconditionalReverseInConsequent
+</jh>
+Combining those two and adjusting the order of the operands we are done.
+<jh>
+        applyModusPonensInConsequent
+
+        U X U0 Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+))
 
 #thm (PerpendicularAtThereExists-half () ()
 #  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
@@ -1224,10 +1268,6 @@ Proof outline:
     A B U0 X U V PerpendicularAtThereExists-half
     C D V0 X V U0 PerpendicularAtThereExists-half
 
-  • cases for B = U and B ≠ U
-  • the B = U case
-    • collinear B X U0 by CollinearityInnerTransitivity (from A ≠ B, A B X and A B U0)
-    • substitute U for B to turn this into collinear X U U0
   • the B ≠ U case
     • collinear U U0 X by CollinearityInnerTransitivity (from B ≠ U, B U U0 and B U X)
   • RightAngleSymmetry to give is-right-angle v X U0
