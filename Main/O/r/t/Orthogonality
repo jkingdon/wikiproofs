@@ -1255,6 +1255,52 @@ Combining those two and adjusting the order of the operands we are done.
         eliminateBiconditionalReverse
         applySyllogism
 ))
+</jh>
+
+The <code>B ≠ U</code> case applies transitivity to <code>B ≠ U</code>, <code>collinear B U U0</code> and <code>collinear B U X</code>, to give <code>collinear U U0 X</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-b-not-u () ()
+  (((B ≠ U) ∧ ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X))) →
+    (collinear X U U0)) (
+        (B ≠ U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionRightElimination
+
+        (B ≠ U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionLeftElimination
+        A B U0 X U V PerpendicularAtThereExists-b-u-u0
+        applySyllogism
+        composeConjunction
+
+        (B ≠ U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionLeftElimination
+        A B U0 X U V PerpendicularAtThereExists-b-u-x
+        applySyllogism
+        composeConjunction
+
+        B U U0 X CollinearityInnerTransitivity
+        applySyllogism
+
+        X U U0 CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+</jh>
+Combining the two cases gives <code>collinear X U U0</code>.
+<jh>
+#thm (PerpendicularAtThereExists-x-u-u0 () ()
+#  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+#      (is-right-angle U X V)) ∧ (U ≠ X)) →
+#    (collinear X U U0)) (
+#))
 
 #thm (PerpendicularAtThereExists-half () ()
 #  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
