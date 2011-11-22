@@ -1132,6 +1132,44 @@ thm (PerpendicularAtThereExists-a-u-x () ()
         A B U X CollinearityOuterTransitivity
         applySyllogism
 ))
+</jh>
+
+The fourth collinearity is <code>collinear B U X</code> by transitivity from <code>A ≠ B</code>, <code>collinear A B U</code> and <code>collinear A B X</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-b-u-x () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear B U X)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        A B U X CollinearityInnerTransitivity
+        applySyllogism
+))
 
 #thm (PerpendicularAtThereExists-half () ()
 #  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
@@ -1145,7 +1183,6 @@ Proof outline:
     A B U0 X U V PerpendicularAtThereExists-half
     C D V0 X V U0 PerpendicularAtThereExists-half
 
-  • collinear B U X by CollinearityOuterTransitivity (from B ≠ A, B A U and B A X)
   • cases for B = U and B ≠ U
   • the B = U case
     • collinear B X U0 by CollinearityInnerTransitivity (from A ≠ B, A B X and A B U0)
