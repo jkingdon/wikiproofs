@@ -2213,7 +2213,7 @@ We now export to [[Interface:Midpoint]].
 export (RESULTS Interface:Midpoint (CLASSICAL FIRSTORDER) ())
 </jh>
 
-Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
+Also, we export to [[Interface:Basic geometry]] since it hasn't yet been updated for anything after this point.
 <jh>
 export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
 </jh>
