@@ -283,7 +283,7 @@ stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in
 If a variable is not free in a formula, it is legitimate to add or remove quantifiers from that formula:
 <jh>
 stmt (ForAllAddRemoveNotFree () ((x is-not-free-in φ)) ((∀ x φ) ↔ φ))
-stmt (ThereExistsAddRemove () ((x is-not-free-in φ)) ((∃ x φ) ↔ φ))
+stmt (ThereExistsAddRemoveNotFree () ((x is-not-free-in φ)) ((∃ x φ) ↔ φ))
 </jh>
 
 === Moving formulas in and out of quantification ===
