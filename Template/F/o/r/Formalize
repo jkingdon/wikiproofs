@@ -9,7 +9,7 @@ This page does not contain any formal ([[Help:JHilbert|JHilbert]]) math statemen
 <pre>
 {{formalize}}
 </pre>
-This cleanup template is for pages which do not have any JHilbert content at all (they might range from a drunken effort like "THE PYTHAGOREAN THEOREM IS DA BOMB" to a more serious, but unformalized, discussion of a mathematical topic). If the page states some results, but they are not yet proven, use [[:Template:unproven]] instead. If a contributor seems to be making an attempt to use JHilbert, help them with specifics or at least point them to [[Help:JHilbert]] and [[WP:TEA]].
+This cleanup template is for pages which do not have any JHilbert content at all (they might range from a drunken effort like "THE PYTHAGOREAN THEOREM IS DA BOMB" to a more serious, but unformalized, discussion of a mathematical topic). If the page has a JHilbert statement of some results, but they are not yet proven, use [[:Template:unproven]] instead. If a contributor seems to be making an attempt to use JHilbert, help them with specifics or at least point them to [[Help:JHilbert]] and [[WP:TEA]].
 
 Using this template automatically places the interface into [[:Category:Pages needing formalization]].
 
