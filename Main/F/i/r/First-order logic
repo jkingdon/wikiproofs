@@ -846,7 +846,7 @@ thm (biconditionalNotFree ()
 
 Quantifying with ∃ over a variable which is not free in a formula has no effect:<ref>[http://us.metamath.org/mpeuni/19.9.html 19.9] in metamath's set.mm, accessed February 20, 2010</ref>
 <jh>
-thm (ThereExistsAddRemove () ((H (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
+thm (ThereExistsAddRemoveNotFree () ((H (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
         H
         negateNotFree
         transposeWithNegatedAntecedent
@@ -858,7 +858,7 @@ thm (ThereExistsAddRemove () ((H (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
 
 thm (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ) (
         x φ DistinctNotFree
-        ThereExistsAddRemove
+        ThereExistsAddRemoveNotFree
 ))
 
 thm (removeThereExists ((x φ)) ((H (∃ x φ))) φ (
@@ -877,7 +877,7 @@ thm (removeThereExistsInConsequent ((x φ)) ((H (antecedent → (∃ x φ)))) (a
 
 The same is true of ∀:<ref>[http://us.metamath.org/mpeuni/19.3.html 19.3] in metamath's set.mm, accessed February 21, 2010</ref>
 <jh>
-thm (ForAllAddRemove () ((H (x is-not-free-in φ))) ((∀ x φ) ↔ φ) (
+thm (ForAllAddRemoveNotFree () ((H (x is-not-free-in φ))) ((∀ x φ) ↔ φ) (
         x φ Specialization
         H
         introduceBiconditionalFromImplications
@@ -942,7 +942,7 @@ The corresponding theorem for ∃ is similar:<ref>[http://us.metamath.org/mpeuni
 thm (ThereExistsAntecedentMovementNotFree () ((H (x is-not-free-in φ))) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
         x φ ψ ThereExistsImplication
 
-        H ForAllAddRemove
+        H ForAllAddRemoveNotFree
         (∃ x ψ) BiconditionalReflexivity
         buildImplication
 
@@ -957,7 +957,7 @@ thm (ForAllImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((∀ x 
 For the forward direction we first distribute to <code>∃ x φ → ∃ x ψ</code> and then remove the quantifier on <code>ψ</code>.
 <jh>
         x φ ψ ForAllImplicationThereExists
-        H ThereExistsAddRemove eliminateBiconditionalReverse
+        H ThereExistsAddRemoveNotFree eliminateBiconditionalReverse
         (∃ x φ) addCommonAntecedent
         applySyllogism
 </jh>
@@ -990,7 +990,7 @@ thm (ThereExistsImplicationConsequentMovement () ((H (x is-not-free-in ψ))) ((�
         x φ ψ ThereExistsImplication
 
         (∀ x φ) BiconditionalReflexivity
-        H ThereExistsAddRemove
+        H ThereExistsAddRemoveNotFree
         buildImplication
 
         applyBiconditionalTransitivity
@@ -1048,7 +1048,7 @@ thm (ForAllConjunctionMovement () ((H (x is-not-free-in φ))) ((∀ x (φ ∧ ψ
         x φ ψ ForAllConjunction
 
         H
-        ForAllAddRemove
+        ForAllAddRemoveNotFree
         (∀ x ψ) BiconditionalReflexivity
         buildConjunction
 
@@ -1589,7 +1589,7 @@ thm (sbie-forward ()
         sbie-2
 
         HFREE
-        ThereExistsAddRemove
+        ThereExistsAddRemoveNotFree
         eliminateBiconditionalReverse
         applySyllogism
 ))

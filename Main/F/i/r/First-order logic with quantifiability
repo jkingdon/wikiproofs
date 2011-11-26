@@ -313,7 +313,7 @@ thm (ImplicitSubstitutionForAll () ((HFREE (x is-not-free-in ψ)))
 Starting with <code>x = s → (φ ↔ ψ)</code>, we first add <code>∀x</code> in front of the <code>ψ</code>:
 <jh>
         HFREE
-        ForAllAddRemove swapBiconditional
+        ForAllAddRemoveNotFree swapBiconditional
 
         φ ψ (∀ x ψ) BiconditionalTransitivity export
 
@@ -340,7 +340,7 @@ We will show that the right side, <code>∀ x (x = s → ∀ x ψ)</code>, is eq
 </jh>
 The reverse direction is introducing an antecedent and messing around with quantifiers:
 <jh>
-        HFREE ForAllAddRemove eliminateBiconditionalForward
+        HFREE ForAllAddRemoveNotFree eliminateBiconditionalForward
 
         (∀ x ψ) ((value x) = s) AntecedentIntroduction
         a5i
