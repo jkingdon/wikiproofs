@@ -60,6 +60,8 @@ stmt (CongruenceIdentity () () ((x y ≡ z z) → (x = y)))
 stmt (CongruenceIdentityLeft () () ((x x ≡ y z) → (y = z)))
 stmt (CongruenceTrivialIdentity () () (y y ≡ x x))
 stmt (CongruenceIdentityFromEqualityImported () () (((x = y) ∧ (x y ≡ z w)) → (z = w)))
+stmt (NegatedCongruenceIdentityFromEquality () ()
+  (((A ≠ B) ∧ (A B ≡ C D)) → (C ≠ D)))
 </jh>
 
 == Betweenness ==
