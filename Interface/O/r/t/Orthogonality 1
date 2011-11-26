@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
-| importedby = [[Orthogonality definitions]]
-| exportedby = [[Midpoint]]
+| importedby = [[Orthogonality]]
+| exportedby = [[Orthogonality definitions]]
 }}
 
 {{geometry series brief}}
