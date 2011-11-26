@@ -16,7 +16,7 @@ thm (valid ((x y)) () (((value x) = (value x)) → (∀ y ((value x) = (value x)
 ))
 </jh>
 
-Here's one which violates the distinct variable constraint, because the variable x appears in both the formula <code>x = x</code> and the variable.  It will blow up with an error message, probably "Distinct variable constraint violation: Intersection of cartesian product factors is not empty".
+Here's one which violates the distinct variable constraint, because the variable x appears in both the formula <code>x = x</code> and the variable.  {{error expected|Distinct variable constraint violation: Intersection of cartesian product factors is not empty}}
 
 <jh>
 thm (invalid () () (((value x) = (value x)) → (∀ x ((value x) = (value x)))) (
