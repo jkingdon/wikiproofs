@@ -1296,11 +1296,18 @@ thm (PerpendicularAtThereExists-b-not-u () ()
 </jh>
 Combining the two cases gives <code>collinear X U U0</code>.
 <jh>
-#thm (PerpendicularAtThereExists-x-u-u0 () ()
-#  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-#      (is-right-angle U X V)) ∧ (U ≠ X)) →
-#    (collinear X U U0)) (
-#))
+thm (PerpendicularAtThereExists-x-u-u0 () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear X U U0)) (
+        B U A U0 X V PerpendicularAtThereExists-b-u
+        export
+
+        B U A U0 X V PerpendicularAtThereExists-b-not-u
+        export
+
+        eliminateCases
+))
 
 #thm (PerpendicularAtThereExists-half () ()
 #  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
