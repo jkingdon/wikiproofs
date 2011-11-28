@@ -1337,6 +1337,114 @@ thm (PerpendicularAtThereExists-half () ()
 ))
 </jh>
 
+Now we apply this lemma twice to give <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ (collinear U A B ∧ collinear V C D ∧ U ≠ X ∧ V ≠ X ∧ is-right-angle U X V) ∧ (collinear U0 A B ∧ collinear V0 C D) → is-right-angle U0 X V0</code>.
+
+The first application of the lemma is <code>A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X → is-right-angle U0 X V</code>.
+<jh>
+thm (PerpendicularAtThereExists-u0-x-v () ()
+  (((((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+  (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V))) ∧
+  ((collinear U0 A B) ∧ (collinear V0 C D))) →
+  (is-right-angle U0 X V)) (
+</jh>
+<code>A ≠ B</code>.
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+</jh>
+<code>collinear A B U0</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        U0 A B CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear A B X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        X A B CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear A B U</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        U A B CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>is-right-angle U X V</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>U ≠ X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A B U0 X U V PerpendicularAtThereExists-half
+        applySyllogism
+))
+</jh>
+
+<jh>
+#thm (PerpendicularAtThereExists-u0-x-v0 () ()
+#  (((((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+#  (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V))) ∧
+#  ((collinear U0 A B) ∧ (collinear V0 C D))) →
+#  (is-right-angle U0 X V0)) (
+#))
+</jh>
+
 Proof outline:
   apply:
     A B U0 X U V PerpendicularAtThereExists-half
