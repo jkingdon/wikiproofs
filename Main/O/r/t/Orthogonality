@@ -1436,33 +1436,104 @@ thm (PerpendicularAtThereExists-u0-x-v () ()
 ))
 </jh>
 
+Applying the lemma a second time is only slightly more complicated.
+
 <jh>
-#thm (PerpendicularAtThereExists-u0-x-v0 () ()
-#  (((((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
-#  (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V))) ∧
-#  ((collinear U0 A B) ∧ (collinear V0 C D))) →
-#  (is-right-angle U0 X V0)) (
-#))
+thm (PerpendicularAtThereExists-u0-x-v0 () ()
+  (((((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+  (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V))) ∧
+  ((collinear U0 A B) ∧ (collinear V0 C D))) →
+  (is-right-angle U0 X V0)) (
+</jh>
+<code>C ≠ D</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear C D V0</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        V0 C D CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear C D X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        X C D CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear C D V</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        V C D CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+At this point our proof builds on the previous proof. <code>is-right-angle V X U0</code>:
+<jh>
+        A B C D X U V U0 V0 PerpendicularAtThereExists-u0-x-v
+
+        U0 X V RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>V ≠ X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        C D V0 X V U0 PerpendicularAtThereExists-half
+        applySyllogism
+
+        V0 X U0 RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
 </jh>
 
-Proof outline:
-  apply:
-    A B U0 X U V PerpendicularAtThereExists-half
-    C D V0 X V U0 PerpendicularAtThereExists-half
-
-  • RightAngleSymmetry to give is-right-angle v X U0
-
-  Let V0 be an arbitrary point for which collinear V0 C D
-  • RightAngleLeg
-    is-right-angle v X U0 ∧ v ≠ X ∧ collinear X v V0 → is-right-angle V0 X U0
-    so, want collinear X V V0
-  • RightAngleSymmetry to give is-right-angle U0 X V0
-  • collinear D V V0 by CollinearityOuterTransitivity (from C ≠ D, C D V and C D V0)
-  • collinear C V V0 by CollinearityOuterTransitivity (from C ≠ D, C D V and C D V0)
-  • collinear C V X by CollinearityOuterTransitivity (from C ≠ D, C D V and C D X)
-  • collinear C V0 X by CollinearityOuterTransitivity (from C ≠ D, C D V0 and C D X)
-  • cases for C = X and C ≠ X
-  • substitute with/for X
 <jh>
 #thm (PerpendicularAtThereExists ()
 #  ((u v A) (u v B) (u v C) (u v D) (u v X)) ()
