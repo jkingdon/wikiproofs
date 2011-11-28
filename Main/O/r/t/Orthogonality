@@ -1503,7 +1503,7 @@ thm (PerpendicularAtThereExists-u0-x-v0 () ()
 
         composeConjunction
 </jh>
-At this point our proof builds on the previous proof. <code>is-right-angle V X U0</code>:
+At this point our proof builds on the previous proof. We need <code>is-right-angle V X U0</code>.
 <jh>
         A B C D X U V U0 V0 PerpendicularAtThereExists-u0-x-v
 
@@ -1533,6 +1533,54 @@ At this point our proof builds on the previous proof. <code>is-right-angle V X U
         applySyllogism
 ))
 </jh>
+
+Now we need to handle the logic to turn that into our desired theorem.
+
+<jh>
+thm (PerpendicularAtThereExists-1
+  ((u v A) (u v B) (u v C) (u v D) (u v X) (u v U0) (u v V0)) ()
+  (
+    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+      (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+        ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+        (is-right-angle (value u) X (value v)))))) →
+  (((collinear U0 A B) ∧ (collinear V0 C D)) →
+    (is-right-angle U0 X V0))) (
+</jh>
+First we move the quantifiers to the start.
+<jh>
+        u
+          ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+            ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+              (is-right-angle (value u) X (value v))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+
+        v
+          ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+            ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+              (is-right-angle (value u) X (value v)))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        u addThereExists
+        applySyllogism
+</jh>
+Now we apply <code>PerpendicularAtThereExists-u0-x-v0</code>.
+<jh>
+        A B C D X (value u) (value v) U0 V0 PerpendicularAtThereExists-u0-x-v0
+        export
+
+        v addThereExists
+        u addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+</jh>
+
 
 <jh>
 #thm (PerpendicularAtThereExists ()
