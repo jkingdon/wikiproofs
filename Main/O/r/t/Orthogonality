@@ -1579,20 +1579,30 @@ Now we apply <code>PerpendicularAtThereExists-u0-x-v0</code>.
         removeThereExistsInConsequent
         removeThereExistsInConsequent
 ))
-</jh>
 
+thm (PerpendicularAtThereExists
+  ((u v A) (u v B) (u v C) (u v D) (u v X)
 
-<jh>
-#thm (PerpendicularAtThereExists ()
-#  ((u v A) (u v B) (u v C) (u v D) (u v X)) ()
-#  (
-#    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
-#     (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
-#       ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
-#       (is-right-angle (value u) X (value v)))))) →
-#    (A B C D ⟂at X)
-#  ) (
-#))
+   (u v u0 v0) (u0 v0 A) (u0 v0 B) (u0 v0 C) (u0 v0 D) (u0 v0 X)) ()
+  (
+    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+      (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+        ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+        (is-right-angle (value u) X (value v)))))) →
+    (A B C D ⟂at X)
+  ) (
+        ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+            ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+            (is-right-angle (value u) X (value v)))))
+          ConjunctionRightElimination
+
+        A B C D X u v (value u0) (value v0) PerpendicularAtThereExists-1
+        v0 addForAllToConsequent
+        u0 addForAllToConsequent
+
+        composeConjunction
+))
 </jh>
 
 == Export ==
