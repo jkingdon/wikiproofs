@@ -1001,48 +1001,9 @@ The definition of <code>⟂at</code> might seem a bit odd, in that it would intu
 
 The proof is based on the idea that <code>A</code>, <code>B</code>, <code>u</code> are on a line and we'll also consider an arbitrary point, which we'll call <code>U0</code>, on that line. We'll use <code>RightAngleLeg</code> to turn <code>is-right-angle u X v</code> to <code>is-right-angle U0 X v</code> (and some collinearity transitivity to set up the hypotheses for <code>RightAngleLeg</code>). Then we'll do much the same for <code>C</code>, <code>D</code>, <code>v</code>, and an arbitrary point <code>V0</code> on the line <code>C D<code>, which will turn <code>is-right-angle v X U0</code> to <code>is-right-angle V0 X U0</code>. Fortunately, the first half and the similar half are similar enough that we can break it off into a lemma which we'll be able to apply twice.
 
-The lemma is <code>A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X → is-right-angle U0 X V</code>. In this case, <code>RightAngleLeg</code> is <code>is-right-angle U X V ∧ U ≠ X ∧ collinear X U U0 → is-right-angle U0 X V</code>. The first two hypotheses we have, so the first part of our proof is headed towards <code>collinear X U U0</code>. We'll start with four applications of collinearity transitivity.
+The lemma is <code>A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X → is-right-angle U0 X V</code>. In this case, <code>RightAngleLeg</code> is <code>is-right-angle U X V ∧ U ≠ X ∧ collinear X U U0 → is-right-angle U0 X V</code>. The first two hypotheses we have, so the first part of our proof is headed towards <code>collinear X U U0</code>. We'll start by applying collinearity transitivity twice.<ref>based on Narboux's proof of l8_13_2 but streamlined, as Narboux also asserts <code>collinear A X U0</code> and <code>collinear A U X</code>, which don't seem to be used.</ref>
 
-The first is <code>collinear A X U0</code>, which follows from <code>A ≠ B</code>, <code>collinear A B X</code>, and <code>collinear A B U0</code>. {{cleanup|deleting this if it is never used}}
-<jh>
-thm (PerpendicularAtThereExists-a-x-u0 () ()
-  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-      (is-right-angle U X V)) ∧ (U ≠ X)) →
-    (collinear A X U0)) (
-        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-            (is-right-angle U X V))
-          (U ≠ X)
-          ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-
-        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-            (is-right-angle U X V))
-          (U ≠ X)
-          ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateLeftConjunctInConsequent
-        composeConjunction
-
-        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-            (is-right-angle U X V))
-          (U ≠ X)
-          ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateLeftConjunctInConsequent
-        composeConjunction
-
-        A B X U0 CollinearityOuterTransitivity
-        applySyllogism
-))
-</jh>
-
-The second collinearity is <code>collinear B U U0</code> by transitivity from <code>B ≠ A</code>, <code>collinear B A U</code> and <code>collinear B A U0</code>.
+The first collinearity is <code>collinear B U U0</code> by transitivity from <code>B ≠ A</code>, <code>collinear B A U</code> and <code>collinear B A U0</code>.
 
 <jh>
 thm (PerpendicularAtThereExists-b-u-u0 () ()
@@ -1096,45 +1057,7 @@ thm (PerpendicularAtThereExists-b-u-u0 () ()
 ))
 </jh>
 
-The third collinearity is <code>collinear A U X</code> by transitivity from <code>A ≠ B</code>, <code>collinear A B U</code> and <code>collinear A B X</code>. {{cleanup|deleting this if it is never used}}
-
-<jh>
-thm (PerpendicularAtThereExists-a-u-x () ()
-  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-      (is-right-angle U X V)) ∧ (U ≠ X)) →
-    (collinear A U X)) (
-        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-            (is-right-angle U X V))
-          (U ≠ X)
-          ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-
-        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-            (is-right-angle U X V))
-          (U ≠ X)
-          ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
-        eliminateLeftConjunctInConsequent
-        composeConjunction
-
-        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
-            (is-right-angle U X V))
-          (U ≠ X)
-          ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
-        eliminateRightConjunctInConsequent
-        eliminateLeftConjunctInConsequent
-        composeConjunction
-
-        A B U X CollinearityOuterTransitivity
-        applySyllogism
-))
-</jh>
-
-The fourth collinearity is <code>collinear B U X</code> by transitivity from <code>A ≠ B</code>, <code>collinear A B U</code> and <code>collinear A B X</code>.
+The other collinearity is <code>collinear B U X</code> by transitivity from <code>A ≠ B</code>, <code>collinear A B U</code> and <code>collinear A B X</code>.
 
 <jh>
 thm (PerpendicularAtThereExists-b-u-x () ()
