@@ -1528,6 +1528,12 @@ thm (PerpendicularAtThereExists
 ))
 </jh>
 
+== Perpendicular lines ==
+Saying that lines are perpendicular at a point is the main step towards saying those lines are perpendicular. The connection is pretty simple: <code>A B ⟂ C D</code> is defined as <code>∃ x A B C D ⟂at x</code>.
+<jh>
+def ((⟂ A B C D) (∃ x (A B C D ⟂at (value x))))
+</jh>
+
 == Export ==
 We now export to [[Interface:Orthogonality]].
 <jh>
