@@ -1554,13 +1554,106 @@ thm (noteContradiction () ((HTRUE (φ → ψ)) (HFALSE (φ → (¬ ψ)))) (¬ φ
 ))
 </jh>
 
+Narboux doesn't explicitly state the following lemma (apparently the coq tactics in Narboux cover it), but it states that if lines are perpendicular at a point, they form a right angle there. The proof may seem a bit long, but the idea is simple: expand <code>A B C D ⟂at X</code> according to the definition to get <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>. Substitute <code>A</code> for <code>u</code> and <code>C</code> for <code>v</code> to get <code>collinear A A B ∧ collinear C C D → is-right-angle A X C</code>, and then detach <code>collinear A A B</code> and <code>collinear C C D</code> as they are theorems.
+
+<jh>
+thm (PerpendicularAtRightAngle ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
+  ((A B C D ⟂at X) → (is-right-angle A X C)) (
+</jh>
+We put the theorems on the proof stack for use at the end, and then expand <code>⟂at</code>.
+<jh>
+        C D CollinearityAAB
+        A B CollinearityAAB
+
+        A B C D X u v PerpendicularAt
+        eliminateBiconditionalReverse
+
+        ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+            (is-right-angle (value u) X (value v)))))
+          ConjunctionLeftElimination
+        applySyllogism
+
+</jh>
+Now we substitute <code>A</code> for <code>u</code>.
+<jh>
+        A specializeToObjectInConsequent
+
+        B EqualityReflexivity
+        A EqualityReflexivity
+        (value u) A A A B B CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear (value v) C D) buildConjunctionRRInConsequent
+
+        (value v) EqualityReflexivity
+        X EqualityReflexivity
+        (value u) A X X (value v) (value v) RightAngleBuilder
+        detach2of3
+        detach2of2
+
+        buildImplicationInConsequent
+        v buildForAllInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we substitute <code>C</code> for <code>v</code>.
+<jh>
+        C specializeToObjectInConsequent
+
+        D EqualityReflexivity
+        C EqualityReflexivity
+        (value v) C C C D D CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear A A B) buildConjunctionLLInConsequent
+
+        A EqualityReflexivity
+        X EqualityReflexivity
+        A A X X (value v) C RightAngleBuilder
+        detach2of3
+        detach1of2
+
+        buildImplicationInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we detach the two degenerate collinearities.
+<jh>
+        exportInConsequent
+        detachImplicationImplication
+        detachImplicationImplication
+))
+</jh>
+We are now ready to return to irreflexivity, starting with <code>⟂at</code>.
 <jh>
 #thm (PerpendicularIrreflexivityAt () () (¬ (A B A B ⟂at X)) (
-#
+</jh>
+<code>A ≠ B</code>:
+<jh>
+#        (A B A B ⟂at X) ConjunctionRightElimination
+#        eliminateRightConjunctInConsequent
+#        eliminateRightConjunctInConsequent
+#        eliminateRightConjunctInConsequent
+</jh>
+The first step in the proof of <code>A = B</code> is <code>is-right-angle A X A</code>.
+<jh>
+#...
 #))
 
 #thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
-#
+#        A B (value x) PerpendicularIrreflexivityAt
+#        x generalize
+
+#        x (A B A B ⟂at X) NotThereExists
+#        eliminateBiconditionalForward
+#        applyModusPonens
 #))
 </jh>
 
