@@ -1607,6 +1607,16 @@ Now we detach the two degenerate collinearities.
 ))
 </jh>
 
+=== Commutativity and symmetry ===
+As with line segment congruence, we use the word ''commutativity'' to refer to exchanging the points within each line (that is, <code>A B C D ⟂at X ↔ B A D C ⟂at X</code>), and the word ''symmetry'' to exchanging the two lines (<code>A B C D ⟂at X ↔ C D A B ⟂at X</code>).
+
+We start with symmetry.<ref>perp_in_symmetry in Narboux</ref>
+<jh>
+#thm (PerpendicularAtSymmetry () ()
+#  ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
+#))
+</jh>
+
 == Perpendicular lines ==
 Saying that lines are perpendicular at a point is the main step towards saying those lines are perpendicular. The connection is pretty simple: <code>A B ⟂ C D</code> is defined as <code>∃ x A B C D ⟂at x</code>.
 <jh>
