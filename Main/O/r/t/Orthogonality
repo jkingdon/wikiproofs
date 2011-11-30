@@ -1527,32 +1527,7 @@ thm (PerpendicularAtThereExists
 ))
 </jh>
 
-== Perpendicular lines ==
-Saying that lines are perpendicular at a point is the main step towards saying those lines are perpendicular. The connection is pretty simple: <code>A B ⟂ C D</code> is defined as <code>∃ x A B C D ⟂at x</code>.
-<jh>
-def ((⟂ A B C D) (∃ x (A B C D ⟂at (value x))))
-</jh>
-
-=== No line is perpendicular to itself ===
-Here we show <code>¬ A B ⟂ A B</code>. The proof is by contradiction: <code>A ≠ B</code> from the definition, but <code>A = B</code> will follow from two applications of <code>RightAngleLegItself</code>.
-
-Partly to avoid having to use both of the symbols <code>⊥</code> (falsity) and <code>⟂</code> (perpendicular) in close proximity, we first prove a propositional logic theorem.
-<jh>
-var (formula φ ψ)
-thm (noteContradiction () ((HTRUE (φ → ψ)) (HFALSE (φ → (¬ ψ)))) (¬ φ) (
-        HTRUE
-        HFALSE
-        composeConjunction
-
-        ψ Contradiction
-        eliminateBiconditionalReverse
-        applySyllogism
-
-        φ NegationImplication
-        eliminateBiconditionalForward
-        applyModusPonens
-))
-</jh>
+=== Perpendicular lines meet at right angles ===
 
 Narboux doesn't explicitly state the following lemma (apparently the coq tactics in Narboux cover it), but it states that if lines are perpendicular at a point, they form a right angle there. The proof may seem a bit long, but the idea is simple: expand <code>A B C D ⟂at X</code> according to the definition to get <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>. Substitute <code>A</code> for <code>u</code> and <code>C</code> for <code>v</code> to get <code>collinear A A B ∧ collinear C C D → is-right-angle A X C</code>, and then detach <code>collinear A A B</code> and <code>collinear C C D</code> as they are theorems.
 
@@ -1631,7 +1606,35 @@ Now we detach the two degenerate collinearities.
         detachImplicationImplication
 ))
 </jh>
-We are now ready to return to irreflexivity, starting with <code>⟂at</code>.
+
+== Perpendicular lines ==
+Saying that lines are perpendicular at a point is the main step towards saying those lines are perpendicular. The connection is pretty simple: <code>A B ⟂ C D</code> is defined as <code>∃ x A B C D ⟂at x</code>.
+<jh>
+def ((⟂ A B C D) (∃ x (A B C D ⟂at (value x))))
+</jh>
+
+=== A propositional logic theorem involving contradictions ===
+
+Partly to avoid having to use both of the symbols <code>⊥</code> (falsity) and <code>⟂</code> (perpendicular) in close proximity, we first prove a propositional logic theorem.
+<jh>
+var (formula φ ψ)
+thm (noteContradiction () ((HTRUE (φ → ψ)) (HFALSE (φ → (¬ ψ)))) (¬ φ) (
+        HTRUE
+        HFALSE
+        composeConjunction
+
+        ψ Contradiction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        φ NegationImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== No line is perpendicular to itself ===
+Here we show <code>¬ A B ⟂ A B</code>. The proof is by contradiction: <code>A ≠ B</code> from the definition, but <code>A = B</code> will follow from two applications of <code>RightAngleLegItself</code>.
 <jh>
 #thm (PerpendicularIrreflexivityAt () () (¬ (A B A B ⟂at X)) (
 </jh>
@@ -1644,7 +1647,7 @@ We are now ready to return to irreflexivity, starting with <code>⟂at</code>.
 </jh>
 The first step in the proof of <code>A = B</code> is <code>is-right-angle A X A</code>.
 <jh>
-#...
+#        A B A B X PerpendicularAtRightAngle
 #))
 
 #thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
