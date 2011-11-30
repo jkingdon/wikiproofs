@@ -1640,14 +1640,41 @@ Here we show <code>¬ A B ⟂ A B</code>. The proof is by contradiction: <code>A
 </jh>
 <code>A ≠ B</code>:
 <jh>
-#        (A B A B ⟂at X) ConjunctionRightElimination
+#        (A B A B ⟂at X) ImplicationReflexivity
+#        eliminateRightConjunctInConsequent
 #        eliminateRightConjunctInConsequent
 #        eliminateRightConjunctInConsequent
 #        eliminateRightConjunctInConsequent
 </jh>
-The first step in the proof of <code>A = B</code> is <code>is-right-angle A X A</code>.
+Moving onto <code>A = B</code>, we start with <code>is-right-angle A X A</code> which in turn implies <code>A = X</code>.
 <jh>
 #        A B A B X PerpendicularAtRightAngle
+#        A X RightAngleLegItself
+#        applySyllogism
+</jh>
+Then <code>is-right-angle B X B</code> implies <code>X = B</code>.
+<jh>
+#        A B A B X PerpendicularAtCommutativity
+#        eliminateBiconditionalReverse
+
+#        B A B A X PerpendicularAtRightAngle
+#        applySyllogism
+
+#        B X RightAngleLegItself
+#        applySyllogism
+
+#        B X EqualitySymmetry
+#        eliminateBiconditionalReverse
+#        applySyllogism
+</jh>
+Combining those equalities we get <code>A = B</code>, which is a contradiction, as desired.
+<jh>
+#        composeConjunction
+
+#        A X B EqualityTransitivity
+#        applySyllogism
+
+#        noteContradiction
 #))
 
 #thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
