@@ -22,7 +22,7 @@ param (CLASSICAL Interface:Classical_propositional_calculus () ())
 
 By convention we use φ, ψ, χ, and θ to represent formulas:
 <jh>
-var (formula φ ψ χ θ φx φs φy)
+var (formula φ ψ χ θ φx φs φy antecedent)
 </jh>
 
 We use the term ''object'' to refer to something which is subject to quantification or equality. From an axiomatic point of view, what is a valid object is defined implicitly, by axioms such as those of [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[w:Peano axioms|Peano arithmetic]].
@@ -149,7 +149,6 @@ and can be removed if the variable does not occur in the formula.
 <jh>
 stmt (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ))
 stmt (removeThereExists ((x φ)) ((∃ x φ)) φ)
-var (formula antecedent)
 stmt (removeThereExistsInConsequent ((x φ)) ((antecedent → (∃ x φ))) (antecedent → φ))
 </jh>
 
@@ -414,6 +413,7 @@ stmt (introduceThereExistsFromObject () ((subst s x φ)) (∃ x φ))
 Specialization as conventionally cited contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref><ref>Hirst and Hirst, axiom 4 on page 51</ref>
 <jh>
 stmt (SpecializationToObject () () ((∀ x φ) → (subst s x φ)))
+stmt (specializeToObjectInConsequent () ((antecedent → (∀ x φ))) (antecedent → (subst s x φ)))
 </jh>
 
 === Changing the quantified variable ===

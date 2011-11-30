@@ -281,6 +281,16 @@ Now we just need to apply the definition of <code>subst</code> and we are done:
         applySyllogism))
 </jh>
 
+== A rule ==
+<jh>
+var (formula antecedent)
+thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antecedent → (subst s x φ)) (
+        H
+        x φ s SpecializationToObject
+        applySyllogism
+))
+</jh>
+
 == Quantifiers and equality ==
 
 Here we prove a number of results involving equality and quantifiers. Many of them will pave the way for results involving explicit (subst) substitution.
