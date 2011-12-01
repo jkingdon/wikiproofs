@@ -940,7 +940,7 @@ That's the hard part; the bit outside the quantifiers needs no extra work.
 </jh>
 
 === Symmetry ===
-Here we prove <code>A B C D ⟂at X ↔ C D A B ⟂at X</code>.<ref>l8_12 in Narboux</ref> The concept is pretty simple: expand the definition and apply symmetry to each piece. The only thing which makes this proof a bit long is the number of pieces.
+Here we prove <code>A B C D ⟂at X ↔ C D A B ⟂at X</code>.<ref>l8_12 and perp_in_symmetry in Narboux</ref> The concept is pretty simple: expand the definition and apply symmetry to each piece. The only thing which makes this proof a bit long is the number of pieces.
 <jh>
 thm (PerpendicularAtSymmetry
   ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
@@ -1529,7 +1529,7 @@ thm (PerpendicularAtThereExists
 
 === Perpendicular lines meet at right angles ===
 
-Narboux doesn't explicitly state the following lemma (apparently the coq tactics in Narboux cover it), but it states that if lines are perpendicular at a point, they form a right angle there. The proof may seem a bit long, but the idea is simple: expand <code>A B C D ⟂at X</code> according to the definition to get <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>. Substitute <code>A</code> for <code>u</code> and <code>C</code> for <code>v</code> to get <code>collinear A A B ∧ collinear C C D → is-right-angle A X C</code>, and then detach <code>collinear A A B</code> and <code>collinear C C D</code> as they are theorems.
+Narboux doesn't explicitly state the following lemma (apparently his coq tactics cover it), but it states that if lines are perpendicular at a point, they form a right angle there. The proof may seem a bit long, but the idea is simple: expand <code>A B C D ⟂at X</code> according to the definition to get <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>. Substitute <code>A</code> for <code>u</code> and <code>C</code> for <code>v</code> to get <code>collinear A A B ∧ collinear C C D → is-right-angle A X C</code>, and then detach <code>collinear A A B</code> and <code>collinear C C D</code> as they are theorems.
 
 <jh>
 thm (PerpendicularAtRightAngle ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
@@ -1607,13 +1607,13 @@ Now we detach the two degenerate collinearities.
 ))
 </jh>
 
-=== Commutativity and symmetry ===
+=== Commutativity ===
 As with line segment congruence, we use the word ''commutativity'' to refer to exchanging the points within each line (that is, <code>A B C D ⟂at X ↔ B A D C ⟂at X</code>), and the word ''symmetry'' to exchanging the two lines (<code>A B C D ⟂at X ↔ C D A B ⟂at X</code>).
 
-We start with symmetry.<ref>perp_in_symmetry in Narboux</ref>
+We already proved symmetry, so next is commutativity on the left side.<ref>perp_in_left_commutativity in Narboux</ref>
 <jh>
-#thm (PerpendicularAtSymmetry () ()
-#  ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
+#thm (PerpendicularAtLeftCommutativity () ()
+#  ((A B C D ⟂at X) ↔ (B A C D ⟂at X)) (
 #))
 </jh>
 
