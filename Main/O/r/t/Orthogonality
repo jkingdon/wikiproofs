@@ -1610,11 +1610,39 @@ Now we detach the two degenerate collinearities.
 === Commutativity ===
 As with line segment congruence, we use the word ''commutativity'' to refer to exchanging the points within each line (that is, <code>A B C D ⟂at X ↔ B A D C ⟂at X</code>), and the word ''symmetry'' to exchanging the two lines (<code>A B C D ⟂at X ↔ C D A B ⟂at X</code>).
 
-We already proved symmetry, so next is commutativity on the left side.<ref>perp_in_left_commutativity in Narboux</ref>
+We already proved symmetry, so next is commutativity on the left side.<ref>perp_in_left_commutativity in Narboux</ref> The proof is a straightforward exercise in expanding the definition and then commuting the relevant pieces.
 <jh>
-#thm (PerpendicularAtLeftCommutativity () ()
-#  ((A B C D ⟂at X) ↔ (B A C D ⟂at X)) (
-#))
+thm (PerpendicularAtLeftCommutativity ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
+  ((A B C D ⟂at X) ↔ (B A C D ⟂at X)) (
+        A B C D X u v PerpendicularAt
+
+        A B EqualitySymmetry
+        addNegation
+
+        (C ≠ D) buildConjunctionRR
+
+        X A B Collinearity23
+        buildConjunction
+
+        (collinear X C D) buildConjunctionRR
+
+        (value u) A B Collinearity23
+
+        (collinear (value v) C D) buildConjunctionRR
+
+        (is-right-angle (value u) X (value v)) buildImplicationConsequent
+
+        v buildForAll
+        u buildForAll
+
+        buildConjunction
+
+        applyBiconditionalTransitivity
+
+        B A C D X u v PerpendicularAt
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Perpendicular lines ==
