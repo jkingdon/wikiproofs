@@ -1699,55 +1699,55 @@ thm (noteContradiction () ((HTRUE (φ → ψ)) (HFALSE (φ → (¬ ψ)))) (¬ φ
 === No line is perpendicular to itself ===
 Here we show <code>¬ A B ⟂ A B</code>. The proof is by contradiction: <code>A ≠ B</code> from the definition, but <code>A = B</code> will follow from two applications of <code>RightAngleLegItself</code>.
 <jh>
-#thm (PerpendicularIrreflexivityAt () () (¬ (A B A B ⟂at X)) (
+thm (PerpendicularIrreflexivityAt () () (¬ (A B A B ⟂at X)) (
 </jh>
-<code>A ≠ B</code>:
+We start with <code>is-right-angle A X A</code> which in turn implies <code>A = X</code>.
 <jh>
-#        (A B A B ⟂at X) ImplicationReflexivity
-#        eliminateRightConjunctInConsequent
-#        eliminateRightConjunctInConsequent
-#        eliminateRightConjunctInConsequent
-#        eliminateRightConjunctInConsequent
-</jh>
-Moving onto <code>A = B</code>, we start with <code>is-right-angle A X A</code> which in turn implies <code>A = X</code>.
-<jh>
-#        A B A B X PerpendicularAtRightAngle
-#        A X RightAngleLegItself
-#        applySyllogism
+        A B A B X PerpendicularAtRightAngle
+        A X RightAngleLegItself
+        applySyllogism
 </jh>
 Then <code>is-right-angle B X B</code> implies <code>X = B</code>.
 <jh>
-#        A B A B X PerpendicularAtCommutativity
-#        eliminateBiconditionalReverse
+        A B A B X PerpendicularAtCommutativity
+        eliminateBiconditionalReverse
 
-#        B A B A X PerpendicularAtRightAngle
-#        applySyllogism
+        B A B A X PerpendicularAtRightAngle
+        applySyllogism
 
-#        B X RightAngleLegItself
-#        applySyllogism
+        B X RightAngleLegItself
+        applySyllogism
 
-#        B X EqualitySymmetry
-#        eliminateBiconditionalReverse
-#        applySyllogism
+        B X EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
-Combining those equalities we get <code>A = B</code>, which is a contradiction, as desired.
+Combining those equalities we get <code>A = B</code>,
 <jh>
-#        composeConjunction
+        composeConjunction
 
-#        A X B EqualityTransitivity
-#        applySyllogism
+        A X B EqualityTransitivity
+        applySyllogism
+</jh>
+but that contradicts <code>A ≠ B</code>, which we already have.
+<jh>
+        (A B A B ⟂at X) ImplicationReflexivity
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
-#        noteContradiction
-#))
+        noteContradiction
+))
 
-#thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
-#        A B (value x) PerpendicularIrreflexivityAt
-#        x generalize
+thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
+        A B (value x) PerpendicularIrreflexivityAt
+        x generalize
 
-#        x (A B A B ⟂at X) NotThereExists
-#        eliminateBiconditionalForward
-#        applyModusPonens
-#))
+        x (A B A B ⟂at (value x)) NotThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 == Export ==
