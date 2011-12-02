@@ -1659,6 +1659,17 @@ thm (PerpendicularAtRightCommutativity () ()
 ))
 </jh>
 
+Commutativity follows from left and right commutativity.<ref>perp_in_commutativity in Narboux</ref>
+<jh>
+thm (PerpendicularAtCommutativity () ()
+  ((A B C D ⟂at X) ↔ (B A D C ⟂at X)) (
+        A B C D X PerpendicularAtLeftCommutativity
+
+        B A C D X PerpendicularAtRightCommutativity
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Perpendicular lines ==
 Saying that lines are perpendicular at a point is the main step towards saying those lines are perpendicular. The connection is pretty simple: <code>A B ⟂ C D</code> is defined as <code>∃ x A B C D ⟂at x</code>.
 <jh>
