@@ -1607,6 +1607,156 @@ Now we detach the two degenerate collinearities.
 ))
 </jh>
 
+=== Builder ===
+Equals can be substituted for equals, in the context of <code>⟂at</code>. Because the definition of <code>⟂at</code> is long, this proof is kind of long, but it is just a straightforward application of the builders for everything making up the definition of <code>⟂at</code>.
+<jh>
+thm (PerpendicularAtBuilder
+  ( (u v A) (u v B) (u v C) (u v D) (u v X) (u v A′) (u v B′) (u v C′) (u v D′) (u v X′)) ()
+  ((((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′)) ∧ (X = X′)) → ((A B C D ⟂at X) ↔ (A′ B′ C′ D′ ⟂at X′))) (
+</jh>
+<code>A ≠ B ↔ A′ ≠ B′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A A′ B B′ EqualityBuilder
+        applySyllogism
+        addNegationInConsequent
+
+</jh>
+<code>C ≠ D ↔ C′ ≠ D′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+
+        ((A = A′) ∧ (B = B′)) (C = C′) (D = D′) ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        applySyllogism
+        eliminateLeftConjunctInConsequent
+
+        C C′ D D′ EqualityBuilder
+        applySyllogism
+        addNegationInConsequent
+
+        buildConjunctionInConsequent
+</jh>
+<code>collinear X A B ↔ collinear X′ A′ B′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionLeftElimination
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        X X′ A A′ B B′ CollinearityBuilder
+        applySyllogism
+
+        buildConjunctionInConsequent
+</jh>
+<code>collinear X C D ↔ collinear X′ C′ D′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionLeftElimination
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        X X′ C C′ D D′ CollinearityBuilder
+        applySyllogism
+
+        buildConjunctionInConsequent
+</jh>
+What we have left is <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>, starting with <code>collinear u A B</code>.
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (value u) EqualityReflexivity
+        (value u) (value u) A A′ B B′ CollinearityBuilder
+        detach1of3
+
+        applySyllogism
+</jh>
+<code>collinear v C D</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+
+        ((A = A′) ∧ (B = B′)) (C = C′) (D = D′) ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        applySyllogism
+        eliminateLeftConjunctInConsequent
+
+        (value v) EqualityReflexivity
+        (value v) (value v) C C′ D D′ CollinearityBuilder
+        detach1of3
+
+        applySyllogism
+
+        buildConjunctionInConsequent
+</jh>
+<code>is-right-angle u X v</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionLeftElimination
+
+        (value u) EqualityReflexivity
+        (value v) EqualityReflexivity
+        (value u) (value u) X X′ (value v) (value v) RightAngleBuilder
+        detach2of2
+        detach1of2
+
+        applySyllogism
+
+        buildImplicationInConsequent
+</jh>
+Now we add the quantifiers.
+<jh>
+        v buildForAllInConsequent
+        u buildForAllInConsequent
+
+        buildConjunctionInConsequent
+))
+</jh>
+
 === Commutativity ===
 As with line segment congruence, we use the word ''commutativity'' to refer to exchanging the points within each line (that is, <code>A B C D ⟂at X ↔ B A D C ⟂at X</code>), and the word ''symmetry'' to exchanging the two lines (<code>A B C D ⟂at X ↔ C D A B ⟂at X</code>).
 
@@ -1697,7 +1847,7 @@ thm (noteContradiction () ((HTRUE (φ → ψ)) (HFALSE (φ → (¬ ψ)))) (¬ φ
 </jh>
 
 === No line is perpendicular to itself ===
-Here we show <code>¬ A B ⟂ A B</code>. The proof is by contradiction: <code>A ≠ B</code> from the definition, but <code>A = B</code> will follow from two applications of <code>RightAngleLegItself</code>.
+Here we show <code>¬ A B ⟂ A B</code>. The proof is by contradiction: <code>A ≠ B</code> from the definition, but <code>A = B</code> will follow from two applications of <code>RightAngleLegItself</code>.<ref>l8_14_1 in Narboux</ref>
 <jh>
 thm (PerpendicularIrreflexivityAt () () (¬ (A B A B ⟂at X)) (
 </jh>
@@ -1748,6 +1898,14 @@ thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
         eliminateBiconditionalForward
         applyModusPonens
 ))
+</jh>
+
+=== Being perpendicular at any point implies being perpendicular ===
+That is, <code>A B C D ⟂at X → A B ⟂ C D</code>.<ref>l8_14_2_1a in Narboux</ref>
+<jh>
+#thm (PerpendicularAtPerpendicular ( (x A) (x B) (x C) (x D) (x X)) ()
+#  ((A B C D ⟂at X) → (A B ⟂ C D)) (
+#))
 </jh>
 
 == Export ==
