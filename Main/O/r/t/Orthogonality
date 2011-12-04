@@ -1903,8 +1903,26 @@ thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
 === Being perpendicular at any point implies being perpendicular ===
 That is, <code>A B C D ⟂at X → A B ⟂ C D</code>.<ref>l8_14_2_1a in Narboux</ref>
 <jh>
+# TODO: time to move to a new file, probably, as we need x to be distinct
+# from (A B C D ⟂at X) and having it auto-expanded makes that hard.
 #thm (PerpendicularAtPerpendicular ( (x A) (x B) (x C) (x D) (x X)) ()
 #  ((A B C D ⟂at X) → (A B ⟂ C D)) (
+#        A EqualityReflexivity
+#        B EqualityReflexivity
+#        C EqualityReflexivity
+#        D EqualityReflexivity
+#        A A B B C C D D (value x) X PerpendicularAtBuilder
+#        detach2of3
+#        detach2of3
+#        detach2of3
+#        detach1of2
+
+#        makeSubstExplicit
+
+#        eliminateBiconditionalForward
+
+#        X x (A B C D ⟂at (value x)) ThereExistsIntroductionFromObject
+#        applySyllogism
 #))
 </jh>
 
