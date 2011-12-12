@@ -1,0 +1,16 @@
+Here's an example of a definition which introduces a variable (that is, it has a variable found on the right hand side of the definition and not on the left hand side). Eventually, JHilbert may provide a way to define an abbreviation, which will not be allowed to introduce variables (which is why this page has a somewhat funny title).
+
+The easiest way to get some kinds and terms to work with is going to be to import one of our existing interfaces; here we pick [[Interface:Classical_propositional_calculus]].
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+Here is a definition which introduces a variable. If JHilbert had the ability to say we are creating an abbreviation instead of a definition, trying to create this one as an abbreviation might be an error such as "Attempt to introduce variables in the right hand side of an abbreviation". But for now, it is legal.
+
+<jh>
+var (formula p)
+def ((falsity) (p ∧ (¬ p)))
+</jh>
+
+[[Category:Help]]
+[[Category:JHilbert]]
