@@ -1,0 +1,3 @@
+== Legality of new RHS variables in abbreviations ==
+
+Actually, new RHS variables in abbreviation will remain legal ''for proof modules''. Proof modules are never imported anywhere, so no dummy variables are required. The extra variables are simply dragged along silently. This is quite practical for an abbreviation of an expression appearing multiple times in one or more proofs in the same proof module (just as you would abbreviate a common subexpression with a letter or (*) in a regular paper). In interface modules, of course, such an abbreviation should generate an error.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 14:25, 20 December 2011 (UTC)
