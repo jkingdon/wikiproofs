@@ -15,7 +15,7 @@ thm (valid () () (r → (s → r)) (
 ))
 </jh>
 
-Here's one which produces a statement which does not have the right form.  It will blow up with an error message, probably "Consequent of theorem does not match proof result".
+Here's one which produces a statement which does not have the right form.  {{error expected|Consequent of theorem does not match proof result}}
 
 <jh>
 thm (invalid () () ((r → s) → r) (
