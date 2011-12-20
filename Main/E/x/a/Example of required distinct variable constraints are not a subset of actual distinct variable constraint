@@ -16,7 +16,7 @@ thm (valid ((x y)) () (((value x) = (value x)) → (∀ y ((value x) = (value x)
 ))
 </jh>
 
-Here's the same proof without the distinct variable constraint between <code>x</code> and <code>y</code>. It violates the distinct variable constraint which results from invoking <code>Generalization</code>, because it is not valid if <code>x</code> and <code>y</code> are expanded to the same variable.  It will blow up with an error message, probably "Required distinct variable constraints are not a subset of actual distinct variable constraints".
+Here's the same proof without the distinct variable constraint between <code>x</code> and <code>y</code>. It violates the distinct variable constraint which results from invoking <code>Generalization</code>, because it is not valid if <code>x</code> and <code>y</code> are expanded to the same variable.  {{error expected|Required distinct variable constraints are not a subset of actual distinct variable constraints}}
 
 <jh>
 thm (invalid () () (((value x) = (value x)) → (∀ y ((value x) = (value x)))) (
