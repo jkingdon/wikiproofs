@@ -29,7 +29,7 @@ For example, <code>term (formula (¬ formula))</code> defines a term called ¬ o
  def (''new-defined'' ''definition'')
 For example, 
  def ((¬ p) (p | p))
-defines ¬ in terms of |.  A variable which appears on the right hand side but not the left hand side is called a ''dummy'' and is given unique variables (As of 2010, the functioning of dummies is unsafe and subject to change; see [[Wikiproofs:JHilbert definition soundness]]).
+defines ¬ in terms of |.  A variable which appears on the right hand side but not the left hand side is called a ''dummy'' and is given unique variables (As of 2010, the functioning of dummies is unsafe and subject to change; see [[Wikiproofs:JHilbert definition soundness]]). A definition which has no dummies is called an ''abbreviation'' (for now, this is just something we use in discussing JHilbert; JHilbert does not currently treat abbreviations differently from any other definition). For an example of a dummy variable, see [[Example of abbreviation which tries to introduce a variable]] (which is named in anticipation of future JHilbert features in which defining an abbreviation, instead of a definition, with a dummy variable might be an error). For two examples of how abbreviations are expanded in error cases, see [[Example of abbreviations and consequent of theorem does not match proof result]] and [[Example of abbreviations and illegal variable assignment]].
 
 * Statements.  Statements are either axioms (in which case there will be no modules which exports this interface, as axioms cannot be proved) or statements to be proved (in which case, some module will prove the statement and export the interface).
  stmt (''new-statement'' (''distinct-variables'') (''hypothesis'') (''consequent''))
@@ -93,11 +93,11 @@ This generally means there is another more informative error somewhere else on t
 
  Attempt to prove result by illegal dummy assignment
 
-This means that the statement left on the proof stack at the end of the proof has the same arrangement of terms as what you are trying to prove, but the variables don't line up. It can be something as mundane as proving <code>x = y</code> when what you need is <code>y = x</code> (see [[Illegal dummy assignment example]]).
+This means that the statement left on the proof stack at the end of the proof has the same arrangement of terms as what you are trying to prove, but the variables don't line up. It can be something as mundane as proving <code>x = y</code> when what you need is <code>y = x</code> (see [[Illegal dummy assignment example]]). For an example which shows this error in the context of automatic abbreviation expansion, see [[Example of abbreviations and illegal variable assignment]].
 
  Consequent of theorem does not match proof result
 
-The statement left on the proof stack does not have the same arrangement of terms as what you are trying to prove. For an example, see [[Example of consequent of theorem does not match proof result]].
+The statement left on the proof stack does not have the same arrangement of terms as what you are trying to prove. For an example, see [[Example of consequent of theorem does not match proof result]]. For an example which shows this error in the context of automatic abbreviation expansion, see [[Example of abbreviations and consequent of theorem does not match proof result]].
 
  Unification error while popping hypotheses from proof stack: Invalid change of variable assignment 
 
