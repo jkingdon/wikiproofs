@@ -1,6 +1,6 @@
 {{interfaces
 | imports = [[Interface:Midpoint]]
-| exports = [[Interface:Orthogonality definitions]]
+| exports = [[Interface:Orthogonality 1]]
 }}
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
@@ -591,9 +591,9 @@ thm (RightAngleBuilder ( (z A) (z B) (z C) (z A′) (z B′) (z C′)) ()
 </jh>
 
 == Export ==
-We now export to [[Interface:Orthogonality definitions]].
+We now export to [[Interface:Orthogonality 1]].
 <jh>
-export (RESULTS Interface:Orthogonality_definitions (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Orthogonality_1 (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==

@@ -1,17 +1,17 @@
 {{interfaces
-| imports = [[Interface:Midpoint]]
-| exports = [[Interface:Orthogonality]]
+| imports = [[Interface:Orthogonality 1]]
+| exports = [[Interface:Orthogonality 2]]
 }}
 
 This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
 
-Here we prove results involving perpendicular lines. This also enables us to prove the existence of the midpoint of a line segment.
+This page is one of several involving perpendicular lines. We prove some additional theorems about <code>is-right-angle</code>, and then define two predicates saying that lines are perpendicular. A future page will enable us to prove the existence of the midpoint of a line segment.
 
-We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Orthogonality definitions|geometry results so far]] and define some variables:
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Orthogonality 1|geometry results so far]] and define some variables:
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
-import (START Interface:Orthogonality_definitions (CLASSICAL FIRSTORDER) ())
+import (START Interface:Orthogonality_1 (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F M P Q R S U V X Y Z)
 var (point U0 V0)
@@ -1927,9 +1927,9 @@ That is, <code>A B C D ⟂at X → A B ⟂ C D</code>.<ref>l8_14_2_1a in Narboux
 </jh>
 
 == Export ==
-We now export to [[Interface:Orthogonality]].
+We now export to [[Interface:Orthogonality 2]].
 <jh>
-#export (RESULTS Interface:Orthogonality (CLASSICAL FIRSTORDER) ())
+#export (RESULTS Interface:Orthogonality_2 (CLASSICAL FIRSTORDER) ())
 </jh>
 
 Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
