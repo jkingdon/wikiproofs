@@ -533,8 +533,15 @@ These are analogues to modus ponens, but where some other portion of the formula
 <jh>
 stmt (detach1of2 () (p ((p ∧ q) → r)) (q → r))
 stmt (detach2of2 () (q ((p ∧ q) → r)) (p → r))
+
+stmt (detach1of3 () (p (((p ∧ q) ∧ r) → consequent)) ((q ∧ r) → consequent))
 stmt (detach2of3 () (q (((p ∧ q) ∧ r) → consequent)) ((p ∧ r) → consequent))
+# Invoke detach2of2 to detach the third of three antecedents
+
 stmt (detach1of4 () (p ((((p ∧ q) ∧ r) ∧ s) → consequent)) (((q ∧ r) ∧ s) → consequent))
+# Invoke detach2of3 to detach the third of four antecedents
+# Invoke detach2of2 to detach the fourth of four antecedents
+
 stmt (detachImplicationBiconditional () (q (p → (q ↔ r))) (p → r))
 stmt (detachImplicationBiconditionalRight () (r (p → (q ↔ r))) (p → q))
 stmt (detachImplicationImplication () (p (antecedent → (p → q))) (antecedent → q))
