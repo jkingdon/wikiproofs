@@ -21,7 +21,10 @@ var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v
 </jh>
 
 == Right angles ==
-Here is a predicate which can be thought of as recognizing whether <code>A B</code> is perpendicular to <code>B C<code>. We call it <code>is-right-angle</code> even though it is not tied to any larger theory of angles (that will come later).<ref>Definition Per in Narboux</ref> The definition can be read as "<code>∠ A B C</code> is a right angle iff the symmetric point of <code>C</code> around <code>B</code> is as far from <code>A</code> as <code>C</code> is".
+[[File:Perpendicular-coloured.svg|thumb|right]]
+Our treatment of perpendicularity, on the page and following ones, is in terms of three related concepts. First is the perpendicularity of a line segment and another line segment which share an endpoint, in this diagram whether <code>A B</code> is perpendicular to <code>B C</code>. The second is whether a line segment is perpendicular to another line segment at a given point, for example whether <code>A B</code> is perpendicular to <code>C D</code> (or whether they are perpendicular if <code>A B</code> is specified by <code>A</code> and another point, not shown, on the line <code>A B</code>). The third is similar, but just whether there is a point where the two lines are perpendicular, without needing to mention that point explicitly.
+
+We start with the first of those, a predicate which can be thought of as recognizing whether <code>A B</code> is perpendicular to <code>B C<code>. We call it <code>is-right-angle</code> even though it is not tied to any larger theory of angles (that will come later).<ref>Definition Per in Narboux</ref> The definition can be read as "<code>∠ A B C</code> is a right angle iff the symmetric point of <code>C</code> around <code>B</code> is as far from <code>A</code> as <code>C</code> is".
 <jh>
 def ((is-right-angle A B C) (∃ c′ ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′)))))
 </jh>
