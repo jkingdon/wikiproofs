@@ -46,6 +46,18 @@ thm (detach2of2 () ((H q) (HIMP ((p ∧ q) → r))) (p → r) (
 ))
 
 var (formula consequent)
+thm (detach1of3 () ((H p) (HIMP (((p ∧ q) ∧ r) → consequent))) ((q ∧ r) → consequent) (
+        H
+
+        HIMP
+        export
+        export
+
+        applyModusPonens
+
+        import
+))
+
 thm (detach2of3 () ((H q) (HIMP (((p ∧ q) ∧ r) → consequent))) ((p ∧ r) → consequent) (
         H
 
