@@ -281,7 +281,7 @@ Now we just need to apply the definition of <code>subst</code> and we are done:
         applySyllogism))
 </jh>
 
-== A rule ==
+=== A rule ===
 <jh>
 var (formula antecedent)
 thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antecedent → (subst s x φ)) (
