@@ -1,0 +1,32 @@
+Here's an example of an abbreviation, and expanding it either in a valid way, or in a way which produces an error.
+
+The easiest way to get some kinds and terms to work with is going to be to import one of our existing interfaces; here we pick [[Interface:Classical_propositional_calculus]].
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+Our abbreviation is for one particular way of defining [[w:Sheffer stroke|negated conjunction]]. Because the right hand side of the abbreviation contains exactly those variables found on the left hand side, it is a case where JHilbert's current <code>def</code> provides all the functionality which is envisaged for a new abbreviation feature.
+
+<jh>
+var (formula p q)
+def ((| p q) ((¬ p) ∨ (¬ q)))
+</jh>
+
+The abbreviation can be used, and expanded to <code>¬ p ∨ ¬ q</code>.
+
+<jh>
+thm (Valid () () ((p | q) → ((¬ p) ∨ (¬ q))) (
+        (p | q) ImplicationReflexivity
+))
+</jh>
+
+And it gets expanded the same way in error cases. {{error expected|Consequent of theorem does not match proof result}}
+
+<jh>
+thm (Invalid () () ((p | q) → ((¬ p) ∨ q)) (
+        (p | q) ImplicationReflexivity
+))
+</jh>
+
+[[Category:Help]]
+[[Category:JHilbert]]
