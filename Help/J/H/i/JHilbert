@@ -32,7 +32,7 @@ For example,
 defines ¬ in terms of |.  A variable which appears on the right hand side but not the left hand side is called a ''dummy'' and is given unique variables (As of 2010, the functioning of dummies is unsafe and subject to change; see [[Wikiproofs:JHilbert definition soundness]]). Related to definitions are ''abbreviations'', the intention of which is to allow expressing something more concisely without the complexities of being able to introduce dummy variables. For now, JHilbert does not have distinct definition and abbreviation features, and <code>def</code> needs to serve for both. To see examples of how an abbreviation feature might be defined, see [[Interface:Example of abbreviation which tries to introduce a variable]] and [[Example of abbreviation in proof module which contains a variable]]. For two examples of how abbreviations are expanded in error cases, see [[Example of abbreviations and consequent of theorem does not match proof result]] and [[Example of abbreviations and illegal variable assignment]].
 
 * Statements.  Statements are either axioms (in which case there will be no modules which exports this interface, as axioms cannot be proved) or statements to be proved (in which case, some module will prove the statement and export the interface).
- stmt (''new-statement'' (''distinct-variables'') (''hypothesis'') (''consequent''))
+ stmt (''new-statement'' (''distinct-variables'') (''hypotheses'') (''consequent''))
 For example, one version of the famous [[w:modus ponens|modus ponens]] states that from the hypotheses p and p → q, one can conclude q:
  stmt (applyModusPonens () (p (p → q)) q)
 :*Distinct variables.  The distinct variables are a list of pairs of variables, for example:
