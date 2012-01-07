@@ -1,1 +1,1 @@
-<!-- bump MediaWiki:Sitenotice_id when adding a new site notice here -->
+After some breakage, [[mw:Extension:JHilbert|Extension:JHilbert]] is now working again. If you still find broken pages, it's most likely a caching issue: add <code>&action=purge</code> to the URL and hard-reload the page. If you still find any bugs, please notify me on my talk page.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 23:32, 4 January 2012 (UTC)

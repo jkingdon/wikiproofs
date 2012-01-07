@@ -1,0 +1,18 @@
+Here's an example of a definition which introduces a variable (that is, it has a variable found on the right hand side of the definition and not on the left hand side). Eventually, JHilbert may provide a way to define an abbreviation, which in an interface will not be allowed to introduce variables.
+
+First we define a few kinds and terms.
+<jh>
+kind (formula)
+term (formula (∧ formula formula))
+term (formula (¬ formula))
+</jh>
+
+Here is a definition which introduces a variable. If JHilbert had the ability to say we are creating an abbreviation instead of a definition, trying to create this one as an abbreviation might be an error such as "Attempt to introduce variables in the right hand side of an abbreviation". But for now, it is legal.
+
+<jh>
+var (formula p)
+def ((falsity) (p ∧ (¬ p)))
+</jh>
+
+[[Category:Help]]
+[[Category:JHilbert]]

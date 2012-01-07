@@ -1,0 +1,25 @@
+Here's an example of trying to prove something which might look like it applies a definition validly, but does not involve a consistent assignment of variables, and is thus not a valid proof.
+
+The easiest way to get some kinds and terms to work with is going to be to import one of our existing interfaces; here we pick [[Interface:Classical_propositional_calculus]].
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+Here's a definition with a dummy variable (because <code>p</code> is found on the right hand side, but not the left hand side, of the definition).
+<jh>
+var (formula p)
+def ((falsity) (p ∨ (¬ p)))
+</jh>
+
+If we are supposed to prove <code>(p ∨ (¬ p)) ↔ (falsity)</code> it suffices to prove <code>(p ∨ (¬ p)) ↔ (q ∨ (¬ q))</code> (see [[Principia Mathematica propositional logic#statTautology|Tautology]]) but it is not sufficient to prove <code>(p ∨ (¬ p)) ↔ (p ∨ (¬ p))</code>.
+
+The error is based on the idea that <code>(p ∨ (¬ p)) → (falsity)</code>, when expanded, has two different variables on the two halves of the implication, but <code>(falsity) → (falsity)</code> has the same variable in both places. {{error expected|Attempt to prove result by illegal dummy assignment}}
+
+<jh>
+thm (Invalid () () ((p ∨ (¬ p)) → (falsity)) (
+        (falsity) ImplicationReflexivity
+))
+</jh>
+
+[[Category:Help]]
+[[Category:JHilbert]]

@@ -1,0 +1,24 @@
+Here's an example of a definition which introduces a variable (that is, it has a variable found on the right hand side of the definition and not on the left hand side). Eventually, JHilbert may provide a way to define it as an abbreviation. In a proof module, such an abbreviation is expected to simply be shorthand for using that named variable (unlike an interface, where having an abbreviation introduce a variable is expected to be an error, as shown in [[Interface:Example of abbreviation which tries to introduce a variable]]).
+
+The easiest way to get some kinds and terms to work with is going to be to import one of our existing interfaces; here we pick [[Interface:Classical_propositional_calculus]].
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+Here is a definition which introduces a variable. If JHilbert had the ability to say we are creating an abbreviation instead of a definition, then it would have a different meaning. For now, it is legal but when expanded, expands to a new variable instead of to <code>p</code>.
+
+<jh>
+var (formula p)
+def ((notp) (¬ p))
+</jh>
+
+When the abbreviation feature is implemented, it will then be legal to invoke it to produce the specific variable <code>p</code> (unlike most JHilbert features, in which invoking a definition or term involves substituting for all variables). At the moment, however, it is an error, because the variable resulting from the expansion of <code>(notp)</code> is not <code>p</code> itself. {{error expected|Attempt to prove result by illegal dummy assignment}}
+
+<jh>
+thm (Valid () () (p ∨ (notp)) (
+        p TertiumNonDatur
+))
+</jh>
+
+[[Category:Help]]
+[[Category:JHilbert]]
