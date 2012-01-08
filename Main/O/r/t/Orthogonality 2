@@ -1929,7 +1929,7 @@ That is, <code>A B C D ⟂at X → A B ⟂ C D</code>.<ref>l8_14_2_1a in Narboux
 == Export ==
 We now export to [[Interface:Orthogonality 2]].
 <jh>
-#export (RESULTS Interface:Orthogonality_2 (CLASSICAL FIRSTORDER) ())
+export (RESULTS Interface:Orthogonality_2 (CLASSICAL FIRSTORDER) ())
 </jh>
 
 Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
