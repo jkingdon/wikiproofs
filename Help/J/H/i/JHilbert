@@ -45,6 +45,8 @@ For example, one version of the famous [[w:modus ponens|modus ponens]] states th
  ((φ x) (φ y) (x y))
 ::This can save a lot of typing in some cases.
 
+* No proofs, kindbind, or exports. The <code>thm</code>, <code>kindbind</code>, and <code>export</code> commands, which exist for proof modules, are not valid in interfaces. See [[Example of attempt to prove a theorem in an interface]], [[Example of attempt to alias kinds in an interface]] and [[Example of attempt to export from an interface]].
+
 == Modules ==
 * Import statements. These represent kinds, terms, definitions and statements (either axioms, or statements proved elsewhere) to be assumed in proofs.
  import (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
@@ -79,6 +81,8 @@ For example, if you have a kind called formula and you want .formula to refer to
 * Export statements.  Once a module has proved everything it wants to, it can export those proofs to an interface.
  export (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
 See import for a description of identifier, page, parameters, and prefix.
+
+* No kind definitions, statements, parameters, or terms. Kinds, statements, or terms must be defined in interfaces and then imported into proof modules. It is valid to prove or define something and then export it to a statement or term, but the statement or term lives in the interface, not the proof module directly. Kinds are like axioms in that they are assumed, not proved or defined (unless of course a kind is aliased to another kind via <code>kindbind</code>, in which case it is analogous to a term or statement this way). That is, the <code>stmt</code>, <code>kind</code>, and <code>term</code> commands, which exist for interfaces, are not valid in proof modules. See [[Example of attempt to define a statement in a proof module]], [[Example of attempt to define a kind in a proof module]] and [[Example of attempt to define a term in a proof module]]. Also, the parameter mechanism involves just putting <code>param</code> in an interface, not a proof module; see [[Example of attempt to define a parameter in a proof module]].
 
 == Troubleshooting ==
 :''Some of the contents of this section may be specific to the wiki, as opposed to JHilbert run in other ways''
