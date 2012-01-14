@@ -115,7 +115,4 @@ stmt (SpecializationToObject () () ((∀ x φ) → (subst s x φ)))
 == References ==
 <references/>
 
-== External links ==
-*[[w:First-order logic]]
-
 [[Category:Classical first-order logic|{{PAGENAME}}]]
