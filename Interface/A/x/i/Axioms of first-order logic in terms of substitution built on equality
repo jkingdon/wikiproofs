@@ -90,6 +90,34 @@ stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
 stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
 </jh>
 
+== Substitution ==
+We first define the <code>subst</code> term:
+
+<jh>
+term (formula (subst object variable formula))
+</jh>
+
+so for example <code>(subst s x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>s</code>. In more conventional notation this would be <code>[ s / x ] φ</code> (or, using a common but potentially ambiguous notation, changing <code>φ(x)</code> to <code>φ(s)</code>).
+
+In many treatments of predicate logic, this is treated as a syntactic operation. For example <code>[ y / x ] ∀ z z ≤ x</code> is equivalent to plugging in <code>y</code> for <code>x</code> to get <code>∀ z z ≤ y</code>. It is then necessary to provide a condition that the substitution (in this case <code>y</code>) is not "captured" by any quantifiers. For example it is not legitimate to expand <code>[ y / x ] ∀ y y ≤ x</code> into <code>∀ y y ≤ y</code>. Margaris provides this in the definition of "admits".<ref>Margaris, page 48</ref> In our case, we treat substitution as following from equality. For example, <code>x = y → (∀ z z ≤ x ↔ ∀ z z ≤ y)</code> suffices to prove <code>([ y / x ] ∀ z z ≤ x) ↔ ∀ z z ≤ y</code>. The equivalent to the "admits" concept is the distinct variable constraint between <code>x</code> and <code>s</code> in the following theorem, together with normal predicate logic rules for adding quantifiers to the consequent in building up the formula <code>x = s → (φ ↔ ψ)</code>.
+
+TODO: expand on an example which shows that the <code>x s</code> is needed, for example the following. Might want to assume <code>makeSubstExplicit</code> without it, and derive a contradiction.
+
+  ∀ x ¬ ∀ y y = x
+  ¬ ∀ y y = y
+  x = y → (¬ ∀ y y = x ↔ ¬ ∀ y y = y)
+
+<jh>
+stmt (makeSubstExplicit ((x s) (x ψ))
+  ((((value x) = s) → (φ ↔ ψ)))
+  ((subst s x φ) ↔ ψ))
+</jh>
+
+== Specialization ==
+<jh>
+stmt (SpecializationToObject () () ((∀ x φ) → (subst s x φ)))
+</jh>
+
 == References ==
 <references/>
 
