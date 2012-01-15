@@ -51,6 +51,15 @@ and transpose to get <code>[ s / x ] φ → ¬ ∀ x ¬ φ<code>, which is what 
 ))
 </jh>
 
+Here's a rule form.<ref>Theorem 17.4, Margaris, page 75</ref>
+<jh>
+thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
+        H
+        s x φ ThereExistsIntroductionFromObject
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
