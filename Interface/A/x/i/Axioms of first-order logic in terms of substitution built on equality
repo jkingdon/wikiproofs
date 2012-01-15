@@ -107,7 +107,28 @@ stmt (makeSubstExplicit ((x s) (x ψ))
   ((subst s x φ) ↔ ψ))
 </jh>
 
+Quite aside from the details of what substitutions are proper in the context of quantifiers, we also need to define substitution generally. The most obvious definition is a recursive one. It requires a bit of notation we don't otherwise need: <code>substTerm s x t<code> is a term (object) which is the result of substituting <code>s</code> for <code>x</code> in the term <code>t</code>. It can be found in metamath as <code><u>[</u> s / x <u>]</u> t</code>.<ref>df-csb in metamath</ref>
+
+  substTerm s x x = s
+  substTerm s x z = z (where z is distinct from x)
+  substTerm s x (t OP u) = (substTerm s x t) OP (substTerm s x u)
+    where OP is any operation defined by a module which includes first-order logic
+  subst s x (t PRED u) ↔ (substTerm s x t) PRED (substTerm s x u)
+    where PRED is any predicate defined by a module which includes first-order logic
+
+The procedure which has been followed by modules building on first-order logic (that is, [[Interface:First-order logic]] or [[Interface:First-order logic with quantifiability]]) is to define an axiom for each operation or predicate which states that equals can be substituted for equals. We call such axioms builders and they take the form <code>x = x′ ∧ y = y′ → x OP y = x′ OP y′<code>. Because these builders are in terms of equality, <code>makeSubstExplicit</code> covers all of the above four cases in defining substitution. But our recursive definition of substitution isn't quite complete. We also need
+
+  subst s x (φ ∨ ψ) ↔ subst s x φ ∨ subst s x ψ
+
+and likewise for the other propositional logic connectives. In fact, this whole discussion of recursive definitions is basically a long-winded way of justifying adopting the following two axioms, which say that substitution can be distributed across connectives (we don't need axioms for the other connectives, as the corresponding statements about the other connectives follow from the following two axioms).
+
+<jh>
+stmt (SubstNegation () () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))))
+stmt (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))))
+</jh>
+
 == Specialization ==
+Having defined substitution, we are prepared to adopt our final first-order logic axiom, which is A5 in Margaris.<ref>Margaris, page 49</ref>
 <jh>
 stmt (SpecializationToObject () () ((∀ x φ) → (subst s x φ)))
 </jh>
