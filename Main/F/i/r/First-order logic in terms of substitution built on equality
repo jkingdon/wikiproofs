@@ -5,8 +5,8 @@
 
 We import some interfaces and define some variables:
 <jh>
-import (CLASSICAL Interface:Classical_propositional_calculus () ())
-import (AXIOMS Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (CLASSICAL) ())
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (AXIOMS Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (PROPOSITIONAL) ())
 
 var (formula φ ψ χ θ)
 var (object s t u s0 s1 t0 t1)
@@ -33,20 +33,22 @@ def ((∃ x φ) (¬ (∀ x (¬ φ))))
 Introducing <code>∃</code> from a substitution is closely related to specializing <code>∀</code> to a substitution.<ref>Theorem 17.3, Margaris, page 75</ref>
 
 <jh>
-#thm (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)) (
+thm (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)) (
 </jh>
 We start with <code>∀ x ¬ φ → [ s / x ] ¬ φ</code>,
 <jh>
-#        x (¬ φ) s SpecializationToObject
+        x (¬ φ) s SpecializationToObject
 </jh>
 turn the consequent into <code>¬ [ s / x ] φ</code>,
 <jh>
-# HERE A MIRACLE OCCURS
+        s x φ SubstNegation
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh> 
 and transpose to get <code>[ s / x ] φ → ¬ ∀ x ¬ φ<code>, which is what we want.
 <jh>
-#        transposeWithNegatedConsequent
-#))
+        transposeWithNegatedConsequent
+))
 </jh>
 
 == Export ==
