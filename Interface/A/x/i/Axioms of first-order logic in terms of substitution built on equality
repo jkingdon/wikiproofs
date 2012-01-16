@@ -59,7 +59,7 @@ term (formula (∀ variable formula))
 
 Universal quantification can be distributed across implication. This is axiom A4 in Margaris.<ref>Margaris, page 49</ref>
 <jh>
-stmt (QuantifiedImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) )
+stmt (ForAllImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) )
 </jh>
 
 == Free variables ==
