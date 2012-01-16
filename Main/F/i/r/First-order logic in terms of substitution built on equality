@@ -91,6 +91,15 @@ thm (ThereExistsIntroduction () () (φ → (∃ x φ)) (
 ))
 </jh>
 
+The previous results let us conclude <code>∀ x φ → ∃ x φ</code>.<ref>Theorem 17.6, Margaris, page 76</ref>
+<jh>
+thm (ForAllThereExists () () ((∀ x φ) → (∃ x φ)) (
+        x φ Specialization
+        φ x ThereExistsIntroduction
+        applySyllogism
+))
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
