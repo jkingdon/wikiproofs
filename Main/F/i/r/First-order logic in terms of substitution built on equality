@@ -72,7 +72,11 @@ thm (Specialization () () ((∀ x φ) → φ) (
         applySyllogism
 ))
 
-#stmt (specialize () ((∀ x φ)) φ)
+thm (specialize () ((H (∀ x φ))) φ (
+        H
+        x φ Specialization
+        applyModusPonens
+))
 </jh>
 
 == Export ==
