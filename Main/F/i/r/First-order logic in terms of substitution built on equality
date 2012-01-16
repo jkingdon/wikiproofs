@@ -13,13 +13,35 @@ var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
-== Rule form of specialization ==
+== A few rules based on axioms ==
 Here is a rule form of <code>SpecializationToObject</code>.<ref>Theorem 17.1 in Margaris, page 74</ref>
 <jh>
 thm (specializeToObject () ((H (∀ x φ))) (subst s x φ) (
         H
         x φ s SpecializationToObject
         applyModusPonens
+))
+</jh>
+
+=== Builder for ∀ ===
+For convenience, we define some rules concerning building up formulas. From <code>φ → ψ</code> we want to be able to get <code>∀ x φ → ∀ x ψ</code>.
+<jh>
+thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
+        H
+        x generalize
+
+        x φ ψ ForAllImplication
+
+        applyModusPonens
+))
+</jh>
+
+The builder for the biconditional follows trivially:
+<jh>
+thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
+        H eliminateBiconditionalReverse x addForAll
+        H eliminateBiconditionalForward x addForAll
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
@@ -97,6 +119,48 @@ thm (ForAllThereExists () () ((∀ x φ) → (∃ x φ)) (
         x φ Specialization
         φ x ThereExistsIntroduction
         applySyllogism
+))
+</jh>
+
+== Quantifier commutation ==
+We can exchange the order of universal quantifiers.<ref>Theorem 17.10, Margaris, page 78</ref> Margaris's proof doesn't quite work as-is, as it relies on the deduction theorem, but a fairly small variation of it avoids this problem.
+<jh>
+thm (ForAllCommutationImplication () () ((∀ x (∀ y φ)) → (∀ y (∀ x φ))) (
+</jh>
+First we add <code>∀ x</code> to the start of <code>∀ x ∀ y φ</code>.
+<jh>
+        x (∀ y φ) BoundForAllNotFree
+        GeneralizationNotFree
+</jh>
+Then we add <code>∀ y</code> to the start.
+<jh>
+        y φ BoundForAllNotFree
+        x addForAllNotFree
+        x addForAllNotFree
+        GeneralizationNotFree
+        applySyllogism
+</jh>
+That gives us <code>∀ y ∀ x ∀ x ∀ y φ</code> and dropping the last two quantifiers we are done.
+<jh>
+        y φ Specialization
+        x addForAll
+        x addForAll
+        y addForAll
+        applySyllogism
+
+        x φ Specialization
+        x addForAll
+        y addForAll
+        applySyllogism
+))
+</jh>
+
+The biconditional version follows trivially.<ref>Theorem 19.2, Margaris, page 91, which metamath cites as 19.5</ref>
+<jh>
+thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
+        x y φ ForAllCommutationImplication
+        y x φ ForAllCommutationImplication
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
