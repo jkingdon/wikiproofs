@@ -116,7 +116,7 @@ Quite aside from the details of what substitutions are proper in the context of 
   subst s x (t PRED u) ↔ (substTerm s x t) PRED (substTerm s x u)
     where PRED is any predicate defined by a module which includes first-order logic
 
-The procedure which has been followed by modules building on first-order logic (that is, [[Interface:First-order logic]] or [[Interface:First-order logic with quantifiability]]) is to define an axiom for each operation or predicate which states that equals can be substituted for equals. We call such axioms builders and they take the form <code>x = x′ ∧ y = y′ → x OP y = x′ OP y′<code>. Because these builders are in terms of equality, <code>makeSubstExplicit</code> covers all of the above four cases in defining substitution. But our recursive definition of substitution isn't quite complete. We also need
+The procedure which has been followed by modules building on first-order logic (that is, [[Interface:First-order logic]] or [[Interface:First-order logic with quantifiability]]) is to define an axiom for each operation or predicate which states that equals can be substituted for equals. We call such axioms builders and they take the form <code>x = x′ ∧ y = y′ → x OP y = x′ OP y′<code>. Because these builders are in terms of equality, <code>makeSubstExplicit</code> covers most of the above cases in defining substitution. But our recursive definition of substitution isn't quite complete. We also need
 
   subst s x (φ ∨ ψ) ↔ subst s x φ ∨ subst s x ψ
 
@@ -125,6 +125,12 @@ and likewise for the other propositional logic connectives. In fact, this whole 
 <jh>
 stmt (SubstNegation () () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))))
 stmt (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))))
+</jh>
+
+We also need to state that substituting a variable for itself has no effect (TODO: does this naturally follow from something which more closely fits the mold of the recursive definition above?). Margaris states this but does not justify it, apparently treating it as an obvious consequence of a syntactic definition of substitution.<ref>Margaris, page 76</ref>
+
+<jh>
+stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
 </jh>
 
 == Specialization ==
