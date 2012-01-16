@@ -60,7 +60,7 @@ thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
 ))
 </jh>
 
-== Specialization without a substitution ==
+== Specialization and existential introduction without a substitution ==
 If we substitute a variable for itself, we get the following special case of substitution, which Margaris calls "An important special case".<ref>Margaris, page 76</ref>
 
 <jh>
@@ -76,6 +76,18 @@ thm (specialize () ((H (∀ x φ))) φ (
         H
         x φ Specialization
         applyModusPonens
+))
+</jh>
+
+Likewise, <code>φ → ∃ x φ</code> is a special case of <code>[ s / x ] φ → ∃ x φ</code>.<ref>Margaris, page 76</ref>
+
+<jh>
+thm (ThereExistsIntroduction () () (φ → (∃ x φ)) (
+        x φ SubstItself
+        eliminateBiconditionalForward
+
+        (value x) x φ ThereExistsIntroductionFromObject
+        applySyllogism
 ))
 </jh>
 
