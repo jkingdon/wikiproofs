@@ -62,9 +62,36 @@ Universal quantification can be distributed across implication. This is axiom A4
 stmt (QuantifiedImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) )
 </jh>
 
-The ability to [[w:Generalization (logic)|generalize]] when the variable does not occur in the formula is axiom A6 in Margaris.<ref>Margaris, page 49</ref>
+== Free variables ==
+Margaris defines free variables in terms of whether the variable has any occurences in a subformula which quantifies the occurence in question.<ref>Margaris, page 48</ref> At first glance, this might appear to be impossible to express in JHilbert, but we can actually express it fairly directly (at least, as much of it as we need). There is one subtlety: Margaris states that the presence of a non-bound occurence is a necessary and sufficient condition. We only provide one direction of this: we provide various ways to conclude that a variable is not free in a formula, but no way to show that a variable is free in one. This fits in better with the metamath-inspired treatment at [[Interface:Axioms of first-order logic]] and turns to be all we need to express Margaris's axioms.
+
 <jh>
-stmt (Generalization ((x φ)) () (φ → (∀ x φ)))
+term (formula (is-not-free-in variable formula))
+</jh>
+
+Most of the cases are straightforward: <code>x</code> is not free in <code>∀ x φ</code>, or a formula in which it does not occur, and whether it is free in another formula depends on whether it is free in each of the subformulas which make up that formula.
+<jh>
+stmt (BoundForAllNotFree () () (x is-not-free-in (∀ x φ)))
+stmt (DistinctNotFree ((x φ)) () (x is-not-free-in φ))
+
+stmt (addForAllNotFree () ((x is-not-free-in φ)) (x is-not-free-in (∀ y φ)))
+
+stmt (negateNotFree () ((x is-not-free-in φ)) (x is-not-free-in (¬ φ)))
+stmt (implicationNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ → ψ))
+)
+</jh>
+
+We have handled the cases of "each of the subformulas which make up that formula" for logical connectives and quantifiers. But how can we deal with operations and predicates (which aren't even defined here, but instead in a module which imports first-order logic)? For example, suppose there is a predicate <code>φ | ψ<code> and <code>(φ | ψ) ↔ ¬ (φ ∧ ψ)</code> is a theorem. We want to show that <code>x is-not-free-in (s | t)</code> follows from <code>x is-not-free-in φ</code> and <code>x is-not-free-in ψ</code>. The following axiom (together with the ones already presented) allows us to make that conclusion.
+<jh>
+stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)))
+</jh>
+
+== Generalization ==
+The ability to [[w:Generalization (logic)|generalize]] when the variable is not free in the formula is axiom A6 in Margaris.<ref>Margaris, page 49</ref>
+<jh>
+stmt (GeneralizationNotFree () ((x is-not-free-in φ)) (φ → (∀ x φ)))
 </jh>
 
 The ability to generalize a theorem, even if the variable occurs in the formula, has two cases for Margaris. Margaris adopts an axiom schema called <code>Ax Gen</code> which is the ability to generalize an axiom,<ref>Margaris, page 49</ref> and from that derives the ability to generalize a theorem.<ref>Theorem 17.7, Margaris, page 76</ref> Because we do not have any way of distinguishing between an axiom and a theorem, we adopt the more general form as an axiom.
