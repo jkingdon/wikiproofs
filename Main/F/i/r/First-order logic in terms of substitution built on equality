@@ -60,6 +60,21 @@ thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
 ))
 </jh>
 
+== Specialization without a substitution ==
+If we substitute a variable for itself, we get the following special case of substitution, which Margaris calls "An important special case".<ref>Margaris, page 76</ref>
+
+<jh>
+thm (Specialization () () ((∀ x φ) → φ) (
+        x φ (value x) SpecializationToObject
+
+        x φ SubstItself
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+#stmt (specialize () ((∀ x φ)) φ)
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
