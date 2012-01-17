@@ -181,6 +181,13 @@ The other variations are direct consequences of this one.
 #thm (addThereExistsToAntecedentNotFree ()
 #  ((HFREE (x is-not-free-in ψ)) (HIMP (φ → ψ)))
 #  ((∃ x φ) → ψ) (
+#        HIMP
+#        x generalize
+
+#        HFREE
+#        φ ThereExistsAntecedentIntroduction
+
+#        applyModusPonens
 #))
 </jh>
 
