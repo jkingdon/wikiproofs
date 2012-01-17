@@ -164,6 +164,15 @@ thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
 ))
 </jh>
 
+== Adding existential quantification to the antecedent ==
+Margaris expresses many of his proofs in terms of a rule which he calls ''Rule C''.<ref>Theorem 17.12, Margaris, page 79</ref> Our version of rule C is that given <code>φ → ψ</code> we can conclude <code>∃ φ → ψ</code>, provided that <code>x</code> is not free in <code>Ψ</code>. Margaris' version basically combines this with the deduction theorem.
+<jh>
+#thm (addThereExistsToAntecedentNotFree ()
+#  ((HFREE (x is-not-free-in ψ)) (HIMP (φ → ψ)))
+#  ((∃ x φ) → ψ) (
+#))
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
