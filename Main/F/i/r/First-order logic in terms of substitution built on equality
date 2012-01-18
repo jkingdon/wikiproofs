@@ -215,17 +215,17 @@ Then we turn <code>¬ ψ → ∀ x ¬ φ</code> into <code>¬ ∀ x ¬ φ → ψ
 
 The other variations are direct consequences of this one.
 <jh>
-#thm (addThereExistsToAntecedentNotFree ()
-#  ((HFREE (x is-not-free-in ψ)) (HIMP (φ → ψ)))
-#  ((∃ x φ) → ψ) (
-#        HIMP
-#        x generalize
+thm (addThereExistsToAntecedentNotFree ()
+  ((HFREE (x is-not-free-in ψ)) (HIMP (φ → ψ)))
+  ((∃ x φ) → ψ) (
+        HIMP
+        x generalize
 
-#        HFREE
-#        φ ThereExistsAntecedentIntroduction
+        HFREE
+        φ ThereExistsAntecedentIntroductionNotFree
 
-#        applyModusPonens
-#))
+        applyModusPonens
+))
 
 #thm (addThereExistsToAntecedent ((x ψ))
 #  ((H (φ → ψ)))
