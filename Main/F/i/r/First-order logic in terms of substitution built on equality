@@ -313,6 +313,7 @@ thm (addThereExistsToAntecedent ((x ψ))
 We now prove a number of theorems using the ability to add there exists to the antecedent.
 
 === There exists across a conjunction ===
+There exists can be split across a conjunction.<ref>Theorem 17.14, Margaris, page 80</ref>
 <jh>
 thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))) (
 </jh>
