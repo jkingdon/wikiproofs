@@ -224,9 +224,24 @@ thm (conjunctionNotFree ()
 
 === Biconditional ===
 <jh>
-#stmt (biconditionalNotFree ()
-#  ((x is-not-free-in φ) (x is-not-free-in ψ))
-#  (x is-not-free-in (φ ↔ ψ)))
+thm (biconditionalNotFree ()
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ↔ ψ)) (
+        HPHI
+        HPSI
+        implicationNotFree
+
+        HPSI
+        HPHI
+        implicationNotFree
+
+        conjunctionNotFree
+
+        φ ψ BiconditionalImplication
+        x buildNotFree
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 == Adding existential quantification to the antecedent ==
