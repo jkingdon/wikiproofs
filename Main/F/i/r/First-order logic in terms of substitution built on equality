@@ -341,6 +341,26 @@ The other part of the proof is <code>φ ∧ ψ → ∃ x φ ∧ ∃ x ψ</code>.
 ))
 </jh>
 
+=== Adding there exists to both sides of an implication ===
+Here we prove <code>∀ x (φ → ψ) → (∃ x φ → ∃ x ψ)</code>.<ref>Theorem 17.15, Margaris, page 80</ref>
+<jh>
+thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))) (
+</jh>
+We start with <code>∀ x (φ → ψ) → ∀ x (φ → ∃ x ψ)</code>.
+<jh>
+        ψ x ThereExistsIntroduction
+        φ addCommonAntecedent
+        x addForAll
+</jh>
+Combining that with <code>∀ x (φ → ∃ x ψ) → (∃ x φ → ∃ x ψ)</code> we are done.
+<jh>
+        x ψ BoundThereExistsNotFree
+        φ ThereExistsAntecedentIntroductionNotFree
+
+        applySyllogism
+))
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
