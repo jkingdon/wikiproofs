@@ -314,30 +314,30 @@ We now prove a number of theorems using the ability to add there exists to the a
 
 === There exists across a conjunction ===
 <jh>
-#thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))) (
+thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))) (
 </jh>
 We start with <code>x is-not-free-in (∃ x φ ∧ ∃ x ψ)</code>.
 <jh>
-#        x φ BoundThereExistsNotFree
-#        x ψ BoundThereExistsNotFree
-#        conjunctionNotFree
+        x φ BoundThereExistsNotFree
+        x ψ BoundThereExistsNotFree
+        conjunctionNotFree
 </jh>
 The other part of the proof is <code>φ ∧ ψ → ∃ x φ ∧ ∃ x ψ</code>.
 <jh>
-#        φ ψ ConjunctionRightElimination
+        φ ψ ConjunctionRightElimination
 
-#        φ x ThereExistsIntroduction
-#        applySyllogism
+        φ x ThereExistsIntroduction
+        applySyllogism
 
-#        φ ψ ConjunctionLeftElimination
+        φ ψ ConjunctionLeftElimination
 
-#        ψ x ThereExistsIntroduction
-#        applySyllogism
+        ψ x ThereExistsIntroduction
+        applySyllogism
 
-#        composeConjunction
+        composeConjunction
 
-#        addThereExistsToAntecedentNotFree
-#))
+        addThereExistsToAntecedentNotFree
+))
 </jh>
 
 == Export ==
