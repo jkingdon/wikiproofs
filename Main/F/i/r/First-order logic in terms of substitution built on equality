@@ -227,13 +227,13 @@ thm (addThereExistsToAntecedentNotFree ()
         applyModusPonens
 ))
 
-#thm (addThereExistsToAntecedent ((x ψ))
-#  ((H (φ → ψ)))
-#  ((∃ x φ) → ψ) (
-#        x φ DistinctNotFree
-#        H
-#        addThereExistsToAntecedentNotFree
-#))
+thm (addThereExistsToAntecedent ((x ψ))
+  ((H (φ → ψ)))
+  ((∃ x φ) → ψ) (
+        x ψ DistinctNotFree
+        H
+        addThereExistsToAntecedentNotFree
+))
 </jh>
 
 == Export ==
