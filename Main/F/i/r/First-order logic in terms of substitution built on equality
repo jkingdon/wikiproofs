@@ -164,16 +164,53 @@ thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
 ))
 </jh>
 
+== Adding and removing quantifiers ==
+Although Margaris does not tackle the biconditionalized version of this theorem until later, it will be convenient to prove it now. It is that <code>∀ x φ ↔ φ</code>, if <code>x</code> is not free in <code>φ</code>.<ref>Theorem 19.1, Margaris, page 90, cited by metamath as 19.3</ref>
+
+<jh>
+thm (ForAllAddRemoveNotFree () ((XFREE (x is-not-free-in φ))) ((∀ x φ) ↔ φ) (
+        x φ Specialization
+
+        XFREE
+        GeneralizationNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Adding existential quantification to the antecedent ==
 Margaris expresses many of his proofs in terms of a rule which he calls ''Rule C''.<ref>Theorem 17.12, Margaris, page 79</ref> We give a few variants of rule C, one is that given <code>φ → ψ</code> we can conclude <code>∃ φ → ψ</code>, provided that <code>x</code> is not free in <code>Ψ</code>. Margaris' version basically combines this with the deduction theorem.
 
 The first variation is Theorem 17.11 in Margaris.<ref>Margaris, page 78</ref>
 <jh>
-#thm (ThereExistsAntecedentIntroductionNotFree ()
-#  ((HFREE (x is-not-free-in ψ)))
-#  ((∀ x (φ → ψ)) → ((∃ x φ) → ψ)) (
-#should be able to use Margaris's proof
-#))
+thm (ThereExistsAntecedentIntroductionNotFree ()
+  ((HFREE (x is-not-free-in ψ)))
+  ((∀ x (φ → ψ)) → ((∃ x φ) → ψ)) (
+</jh>
+We start with <code>∀ x (φ → ψ) → (∀ x ¬ ψ → ∀ x ¬ φ)</code>.
+<jh>
+        φ ψ Transposition
+        eliminateBiconditionalReverse
+        x addForAll
+
+        x (¬ ψ) (¬ φ) ForAllImplication
+        applySyllogism
+</jh>
+Now we change <code>∀ x ¬ ψ</code> to <code>¬ ψ</code>.
+<jh>
+        HFREE
+        negateNotFree
+
+        ForAllAddRemoveNotFree
+
+        transformImplicationImplicationAntecedent
+</jh>
+Then we turn <code>¬ ψ → ∀ x ¬ φ</code> into <code>¬ ∀ x ¬ φ → ψ</code>, which is all we need.
+<jh>
+        ψ (∀ x (¬ φ)) TranspositionWithNegatedAntecedent
+        eliminateBiconditionalReverse
+        applySyllogism
+))
 </jh>
 
 The other variations are direct consequences of this one.
