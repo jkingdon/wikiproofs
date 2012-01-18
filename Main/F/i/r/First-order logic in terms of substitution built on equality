@@ -169,7 +169,7 @@ Margaris expresses many of his proofs in terms of a rule which he calls ''Rule C
 
 The first variation is Theorem 17.11 in Margaris.<ref>Margaris, page 78</ref>
 <jh>
-#thm (ThereExistsAntecedentIntroduction ()
+#thm (ThereExistsAntecedentIntroductionNotFree ()
 #  ((HFREE (x is-not-free-in ψ)))
 #  ((∀ x (φ → ψ)) → ((∃ x φ) → ψ)) (
 #should be able to use Margaris's proof
@@ -188,6 +188,14 @@ The other variations are direct consequences of this one.
 #        φ ThereExistsAntecedentIntroduction
 
 #        applyModusPonens
+#))
+
+#thm (addThereExistsToAntecedent ((x ψ))
+#  ((H (φ → ψ)))
+#  ((∃ x φ) → ψ) (
+#        x φ DistinctNotFree
+#        H
+#        addThereExistsToAntecedentNotFree
 #))
 </jh>
 
