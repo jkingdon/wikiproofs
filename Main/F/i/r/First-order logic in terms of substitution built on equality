@@ -403,6 +403,30 @@ thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
 ))
 </jh>
 
+== Equivalence and replacement ==
+Although we don't develop a detailed theory of equivalence and replacement (involving substituting equals for equals) quite the way that Margaris presents it, many of the theorems in this chapter of Margaris apply here.
+
+=== Adding for-all to the consequent ===
+Here we prove <code>∀ x (φ → ψ) ↔ (φ → ∀ x ψ)</code>, where <code>x</code> is not free in <code>φ</code>,<ref>#21 in Margaris, page 90, cited by metamath as 19.21</ref> and some related theorems and rules. Although Margaris does not emphasize this theorem, it forms the counterpart to adding there exists to the antecedent. That is, Margaris proofs which invoke Rule C can be translated fairly directly into proofs which invoke <code>addThereExistsToAntecedentNotFree</code>, and Margaris proofs which invoke generalization can be translated similarly into proofs which invoke <code>addForAllToConsequentNotFree</code>.
+
+<jh>
+#thm (ForAllConsequentNotFree ()
+#  ((HFREE (x is-not-free-in φ)))
+#  ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
+#))
+
+#thm (addForAllToConsequentNotFree () ((HFREE (x is-not-free-in φ)) (HIMP (φ → ψ)))
+#  (φ → (∀ x ψ)) (
+#))
+</jh>
+
+=== For all across a quantifier ===
+We can distribute for all across a quantifier.<ref>Theorem 18.1, Margaris, page 83</ref>
+<jh>
+#thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))) (
+#))
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
