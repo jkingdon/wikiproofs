@@ -392,9 +392,15 @@ Now we can prove <code>φ → ∃ y ∃ x φ</code> and then add the quantifiers
 
         addThereExistsToAntecedentNotFree
 ))
+</jh>
 
-#thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
-#))
+The biconditional version follows trivially.<ref>#11 on Margaris, page 89, which metamath cites as 19.11</ref>
+<jh>
+thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
+        x y φ ThereExistsCommutationImplication
+        y x φ ThereExistsCommutationImplication
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 == Export ==
