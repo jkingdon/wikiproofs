@@ -245,9 +245,17 @@ thm (biconditionalNotFree ()
 </jh>
 
 === Existential quantification ===
+In a manner similar to the connectives, freeness for <code>∃</code> follows from the corresponding axioms for <code>∀</code>.
 <jh>
 thm (BoundThereExistsNotFree () () (x is-not-free-in (∃ x φ)) (
         x (¬ φ) BoundForAllNotFree
+        negateNotFree
+))
+
+thm (addThereExistsNotFree () ((HFREE (x is-not-free-in φ))) (x is-not-free-in (∃ y φ)) (
+        HFREE
+        negateNotFree
+        y addForAllNotFree
         negateNotFree
 ))
 </jh>
@@ -359,6 +367,34 @@ Combining that with <code>∀ x (φ → ∃ x ψ) → (∃ x φ → ∃ x ψ)</c
 
         applySyllogism
 ))
+</jh>
+
+=== There exists commutation ===
+The next theorem is <code>∃ x ∃ y φ → ∃ y ∃ x φ</code>.<ref>Theorem 17.17, Margaris, page 81</ref>  We could, of course, prove this as a consequence of the corresponding theorem for <code>∀</code>, but instead we follow Margaris's proof, which adds the quantifiers with <code>ThereExistsIntroduction</code> and removes them with <code>addThereExistsToAntecedentNotFree</code>.
+<jh>
+thm (ThereExistsCommutationImplication () () ((∃ x (∃ y φ)) → (∃ y (∃ x φ))) (
+</jh>
+When we invoke <code>addThereExistsToAntecedentNotFree</code>, it will expect the freeness hypotheses before the implications, so we start by sticking <code>x is-not-free-in ∃ y ∃ x φ</code> and <code>y is-not-free-in ∃ y ∃ x φ</code> onto the proof stack.
+<jh>
+        x φ BoundThereExistsNotFree
+        y addThereExistsNotFree
+
+        y (∃ x φ) BoundThereExistsNotFree
+</jh>
+Now we can prove <code>φ → ∃ y ∃ x φ</code> and then add the quantifiers to the antecedent.
+<jh>
+        φ x ThereExistsIntroduction
+
+        (∃ x φ) y ThereExistsIntroduction
+        applySyllogism
+
+        addThereExistsToAntecedentNotFree
+
+        addThereExistsToAntecedentNotFree
+))
+
+#thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
+#))
 </jh>
 
 == Export ==
