@@ -452,21 +452,21 @@ Now specialization and adding for all to the consequent finish the job.
         addForAllToConsequentNotFree
 ))
 
-#thm (ForAllConsequentNotFree ()
-#  ((HFREE (x is-not-free-in φ)))
-#  ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
-#        HFREE
-#        x φ ψ ForAllConsequentNotFreeForward
+thm (ForAllConsequentNotFree ()
+  ((HFREE (x is-not-free-in φ)))
+  ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
+        HFREE
+        ψ ForAllConsequentNotFreeForward
 
-#        HFREE
-#        φ x ψ ForAllConsequentNotFreeReverse
+        HFREE
+        ψ ForAllConsequentNotFreeReverse
 
-#        introduceBiconditionalFromImplications
-#))
+        introduceBiconditionalFromImplications
+))
 </jh>
 
-=== For all across a quantifier ===
-We can distribute for all across a quantifier.<ref>Theorem 18.1, Margaris, page 83</ref>
+=== For all across a biconditional ===
+We can distribute for all across a biconditional.<ref>Theorem 18.1, Margaris, page 83</ref>
 <jh>
 #thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))) (
 #))
