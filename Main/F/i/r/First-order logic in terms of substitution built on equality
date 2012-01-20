@@ -466,10 +466,28 @@ thm (ForAllConsequentNotFree ()
 </jh>
 
 === For all across a biconditional ===
-We can distribute for all across a biconditional.<ref>Theorem 18.1, Margaris, page 83</ref>
+We can distribute for all across a biconditional.<ref>Theorem 18.1, Margaris, page 83</ref> Although we probably could more or less follow Margaris's proof using <code>ForAllConsequentNotFree</code> and the like, there are some complications in translating that proof to our setup (which lacks the deduction theorem), so we opt for a simpler proof based more directly on <code>ForAllImplication</code>.
 <jh>
-#thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))) (
-#))
+thm (ForAllBiconditionalImplication () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) → (∀ x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ ForAllImplication
+        applySyllogism
+))
+
+thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))) (
+        x φ ψ ForAllBiconditionalImplication
+
+        φ ψ BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        x addForAll
+
+        x ψ φ ForAllBiconditionalImplication
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
 </jh>
 
 == Export ==
