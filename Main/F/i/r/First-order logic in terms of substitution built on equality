@@ -435,10 +435,22 @@ thm (addForAllToConsequentNotFree () ((HFREE (x is-not-free-in φ)) (HIMP (φ �
         applyModusPonens
 ))
 
-#thm (ForAllConsequentNotFreeReverse ()
-#  ((HFREE (x is-not-free-in φ)))
-#  ((φ → (∀ x ψ)) → (∀ x (φ → ψ))) (
-#))
+thm (ForAllConsequentNotFreeReverse ()
+  ((HFREE (x is-not-free-in φ)))
+  ((φ → (∀ x ψ)) → (∀ x (φ → ψ))) (
+</jh>
+This proof is adapted from metamath.<ref>[http://us.metamath.org/mpeuni/19.21.html 19.21], metamath's set.mm, accessed Jan 2012</ref> We start with <code>x is-not-free-in (φ → ∀ x ψ)<code>.
+<jh>
+        HFREE
+        x ψ BoundForAllNotFree
+        implicationNotFree
+</jh>
+Now specialization and adding for all to the consequent finish the job.
+<jh>
+        x ψ Specialization
+        φ addCommonAntecedent
+        addForAllToConsequentNotFree
+))
 
 #thm (ForAllConsequentNotFree ()
 #  ((HFREE (x is-not-free-in φ)))
