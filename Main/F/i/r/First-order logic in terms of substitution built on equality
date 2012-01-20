@@ -424,6 +424,17 @@ thm (ForAllConsequentNotFreeForward ()
         applySyllogism
 ))
 
+thm (addForAllToConsequentNotFree () ((HFREE (x is-not-free-in φ)) (HIMP (φ → ψ)))
+  (φ → (∀ x ψ)) (
+        HIMP
+        x generalize
+
+        HFREE
+        ψ ForAllConsequentNotFreeForward
+
+        applyModusPonens
+))
+
 #thm (ForAllConsequentNotFreeReverse ()
 #  ((HFREE (x is-not-free-in φ)))
 #  ((φ → (∀ x ψ)) → (∀ x (φ → ψ))) (
@@ -439,10 +450,6 @@ thm (ForAllConsequentNotFreeForward ()
 #        φ x ψ ForAllConsequentNotFreeReverse
 
 #        introduceBiconditionalFromImplications
-#))
-
-#thm (addForAllToConsequentNotFree () ((HFREE (x is-not-free-in φ)) (HIMP (φ → ψ)))
-#  (φ → (∀ x ψ)) (
 #))
 </jh>
 
