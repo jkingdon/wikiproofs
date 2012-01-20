@@ -410,10 +410,19 @@ Although we don't develop a detailed theory of equivalence and replacement (invo
 Here we prove <code>∀ x (φ → ψ) ↔ (φ → ∀ x ψ)</code>, where <code>x</code> is not free in <code>φ</code>,<ref>#21 in Margaris, page 90, cited by metamath as 19.21</ref> and some related theorems and rules. Although Margaris does not emphasize this theorem, it forms the counterpart to adding there exists to the antecedent. That is, Margaris proofs which invoke Rule C can be translated fairly directly into proofs which invoke <code>addThereExistsToAntecedentNotFree</code>, and Margaris proofs which invoke generalization combined with the deduction theorem can be translated similarly into proofs which invoke <code>addForAllToConsequentNotFree</code>.
 
 <jh>
-#thm (ForAllConsequentNotFreeForward ()
-#  ((HFREE (x is-not-free-in φ)))
-#  ((∀ x (φ → ψ)) → (φ → (∀ x ψ))) (
-#))
+thm (ForAllConsequentNotFreeForward ()
+  ((HFREE (x is-not-free-in φ)))
+  ((∀ x (φ → ψ)) → (φ → (∀ x ψ))) (
+        x φ ψ ForAllImplication
+
+        HFREE
+        ForAllAddRemoveNotFree
+        eliminateBiconditionalForward
+
+        (∀ x ψ) addCommonConsequent
+
+        applySyllogism
+))
 
 #thm (ForAllConsequentNotFreeReverse ()
 #  ((HFREE (x is-not-free-in φ)))
