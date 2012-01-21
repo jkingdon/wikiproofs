@@ -490,6 +490,9 @@ thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x �
 ))
 </jh>
 
+=== Replacement ===
+For Margaris, the ability to replace a formula with one which is equivalent to it is stated in terms of substituting a formula for a subformula of a larger formula. The equivalent for us can accomplish the same things, but is a bit more low-level, and consists of various theorems involving biconditionals. We have already seen <code>buildForAll</code> and the equivalents for propositional logic.
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
