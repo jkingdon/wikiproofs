@@ -491,7 +491,15 @@ thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x �
 </jh>
 
 === Replacement ===
-For Margaris, the ability to replace a formula with one which is equivalent to it is stated in terms of substituting a formula for a subformula of a larger formula. The equivalent for us can accomplish the same things, but is a bit more low-level, and consists of various theorems involving biconditionals. We have already seen <code>buildForAll</code> and the equivalents for propositional logic.
+For Margaris, the ability to replace a formula with one which is equivalent to it is stated in terms of substituting a formula for a subformula of a larger formula. The equivalent for us can accomplish the same things, but is a bit more low-level, and consists of various theorems involving biconditionals. We have already seen <code>buildForAll</code> and similar theorems for propositional logic. Here is the counterpart for <code>∃</code>.
+<jh>
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        H
+        addNegation
+        x buildForAll
+        addNegation
+))
+</jh>
 
 == Export ==
 <jh>
