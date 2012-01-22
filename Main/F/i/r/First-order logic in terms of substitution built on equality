@@ -586,9 +586,15 @@ thm (ChangeVariableThereExists
 ))
 </jh>
 
+== Equality ==
+Margaris considers equality in chapter 21.<ref>Margaris, page 104</ref> Most of the theorems there we have already adopted as axioms, but there are a variety of convenience theorems and the like to prove before we can export to [[Interface:First-order logic with quantifiability]].
+<jh>
+def ((≠ s t) (¬ (s = t)))
+</jh>
+
 == Export ==
 <jh>
-#export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+#export (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
 </jh>
 
 == References ==
