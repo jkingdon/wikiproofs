@@ -569,6 +569,23 @@ The reverse implication is much the same. We just need to start out by transform
 ))
 </jh>
 
+=== Change of variable in ∃ ===
+Although it should be possible to provide the corresponding theorem for ∃ via <code>ThereExistsIntroductionFromObject</code> and the like, to keep things simple we just follow Margaris' proof which derives it from the one for ∀.<ref>Theorem 18.8, Margaris, page 86</ref>
+<jh>
+thm (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        H
+        φx φy NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableForAll
+        addNegation
+))
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
