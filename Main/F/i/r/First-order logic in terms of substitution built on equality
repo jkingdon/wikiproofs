@@ -586,6 +586,18 @@ thm (ChangeVariableThereExists
 ))
 </jh>
 
+== Other theorems ==
+In chapter 19, Margaris restates a number of theorems already proved, proves a few additional ones, and states a number while leaving the proof as exercises.<ref>Margaris, page 89</ref> Here we prove those which we haven't proved yet and which we need to export to [[Interface:First-order logic with quantifiability]].
+
+=== Negating there-exists ===
+The theorem <code>¬ ∃ x φ ↔ ∀ x ¬ φ</code> is an easy consequence of our definition of ∃.<ref>Theorem 19.3, Margaris, page 91, cited by metamath as 19.7</ref>
+<jh>
+thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
+        (∀ x (¬ φ)) DoubleNegation
+        swapBiconditional
+))
+</jh>
+
 == Equality ==
 Margaris considers equality in chapter 21.<ref>Margaris, page 104</ref> Most of the theorems there we have already adopted as axioms, but there are a variety of convenience theorems and the like to prove before we can export to [[Interface:First-order logic with quantifiability]].
 <jh>
