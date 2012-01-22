@@ -501,6 +501,16 @@ thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
 ))
 </jh>
 
+=== Negation and quantifiers ===
+Margaris next proves <code>∀ x φ ↔ ¬ ∃ x ¬ φ</code>, using replacement.<ref>Theorem 18.5, Margaris, page 85</ref> We don't need that particular theorem to export to [[Interface:First-order logic with quantifiability]], so we can demonstrate the same replacement-like reasoning with <code>∃ x ¬ φ ↔ ¬ ∀ x φ</code>.<ref>Theorem scheme 14, Margaris, page 90</ref> The proof starts with <code>φ ↔ ¬ ¬ φ</code>, but we then need to replace this formula within a quantifier and a negation, which in Margaris is done with the replacement theorem and in our case is done with <code>buildForAll</code> and <code>addNegation</code>.
+<jh>
+thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
+        φ DoubleNegation
+        x buildForAll
+        addNegation
+))
+</jh>
+
 == Export ==
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
