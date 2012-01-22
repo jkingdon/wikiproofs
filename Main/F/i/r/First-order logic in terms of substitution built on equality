@@ -608,6 +608,25 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
 ))
 </jh>
 
+=== Commuting ∃ followed by ∀ ===
+∃ followed by ∀ can be switched.<ref>Theorem 19.4, Margaris, page 91, cited by metamath as 19.12</ref>
+<jh>
+thm (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))) (
+        y φ BoundForAllNotFree
+        x addThereExistsNotFree
+
+        x φ BoundThereExistsNotFree
+
+        y φ Specialization
+        φ x ThereExistsIntroduction
+        applySyllogism
+
+        addThereExistsToAntecedentNotFree
+
+        addForAllToConsequentNotFree
+))
+</jh>
+
 === Biconditionalized version of ForAllImplicationThereExists ===
 This is a biconditionalized variation of a theorem we already proved.<ref>Theorem 19.6, Margaris, page 91, cited by metamath as 19.18</ref>
 <jh>
