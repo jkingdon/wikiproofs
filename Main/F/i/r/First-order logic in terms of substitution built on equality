@@ -8,7 +8,7 @@ We import some interfaces and define some variables:
 import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 import (AXIOMS Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (PROPOSITIONAL) ())
 
-var (formula φ ψ χ θ)
+var (formula φ ψ χ θ φx φy)
 var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
@@ -463,6 +463,14 @@ thm (ForAllConsequentNotFree ()
 
         introduceBiconditionalFromImplications
 ))
+
+thm (addForAllToConsequent ((x φ))
+  ((H (φ → ψ)))
+  (φ → (∀ x ψ)) (
+        x φ DistinctNotFree
+        H
+        addForAllToConsequentNotFree
+))
 </jh>
 
 === For all across a biconditional ===
@@ -508,6 +516,56 @@ thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
         φ DoubleNegation
         x buildForAll
         addNegation
+))
+</jh>
+
+=== Change of variable in ∀ ===
+We now turn to changing the variable of quantification. Margaris explains this in terms of whether two formulas <code>φ(x)</code> and <code>φ(y)</code> are ''similar''. Our equivalent is fairly close; the distinct variable constraint between <code>x</code> and <code>y</code> corresponds to Margaris' requirement of two distinct variables; the distinct variable constraints <code>(y φx) (x φy)</code> correspond to Margaris' statement that <code>x</code> must not be free in <code>φ(y)</code> and <code>y</code> must not be free in <code>φ(x)</code>. Margaris' requirement that <code>φ(x)</code> be the same as <code>[ x / y ] φ(y)</code> and that <code>φ(y)</code> be the same as <code>[ y / x ] φ(x)</code> correspond to the hypothesis <code>x = y → (φx ↔ φy)</code>. These definitions in Margaris can be found on page 86, which also contains Margaris' statement of <code>ChangeVariableForAll<code>, which is Theorem 18.6.
+
+<jh>
+thm (ChangeVariableForAllImplication ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) → (∀ y φy)) (
+</jh>
+We start with <code>∀ x φx → [ y / x ] φx</code> and then add <code>∀ y</code> to the consequent.
+<jh>
+        x φx (value y) SpecializationToObject
+        y addForAllToConsequent
+</jh>
+Our hypothesis easily leads to <code>[ y / x ] φx ↔ φy</code>.
+<jh>
+        H
+        makeSubstExplicit
+</jh>
+Combining those two results we are done.
+<jh>
+        eliminateBiconditionalReverse
+        y addForAll
+        applySyllogism
+))
+
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+</jh>
+The forward implication is what we just proved.
+<jh>
+        H ChangeVariableForAllImplication
+
+</jh>
+The reverse implication is much the same. We just need to start out by transforming the hypothesis into <code>y = x → (φy ↔ φx)</code>.
+<jh>
+        H
+        (value x) (value y) EqualitySymmetry
+        transformAntecedent
+
+        φx φy BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableForAllImplication
+
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
