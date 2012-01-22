@@ -369,6 +369,16 @@ Combining that with <code>∀ x (φ → ∃ x ψ) → (∃ x φ → ∃ x ψ)</c
 ))
 </jh>
 
+The rule form will also be convenient.
+<jh>
+thm (addThereExists () ((H (φ → ψ))) ((∃ x φ) → (∃ x ψ)) (
+        H
+        x generalize
+        x φ ψ ForAllImplicationThereExists
+        applyModusPonens
+))
+</jh>
+
 === There exists commutation ===
 The next theorem is <code>∃ x ∃ y φ → ∃ y ∃ x φ</code>.<ref>Theorem 17.17, Margaris, page 81</ref>  We could, of course, prove this as a consequence of the corresponding theorem for <code>∀</code>, but instead we follow Margaris's proof, which adds the quantifiers with <code>ThereExistsIntroduction</code> and removes them with <code>addThereExistsToAntecedentNotFree</code>.
 <jh>
