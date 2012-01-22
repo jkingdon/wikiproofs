@@ -608,18 +608,38 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
 ))
 </jh>
 
+=== Biconditionalized version of ForAllImplicationThereExists ===
+This is a biconditionalized variation of a theorem we already proved.<ref>Theorem 19.6, Margaris, page 91, cited by metamath as 19.18</ref>
+<jh>
+thm (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ ForAllImplicationThereExists
+        applySyllogism
+
+        φ ψ BiconditionalForwardElimination
+        x addForAll
+
+        x ψ φ ForAllImplicationThereExists
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
 == Other theorems ==
 Here we present a few theorems which are convenience theorems, or other fairly simple deductions from theorems we have.
 <jh>
-#thm (buildThereExistsInConsequent ((x φ))
-#  ((H (φ → (ψ ↔ χ))))
-#  (φ → ((∃ x ψ) ↔ (∃ x χ))) (
-#        H
-#        x addForAllToConsequent
+thm (buildThereExistsInConsequent ((x φ))
+  ((H (φ → (ψ ↔ χ))))
+  (φ → ((∃ x ψ) ↔ (∃ x χ))) (
+        H
+        x addForAllToConsequent
 
-#        x ψ χ ForAllBiconditionalThereExists
-#        applySyllogism
-#))
+        x ψ χ ForAllBiconditionalThereExists
+        applySyllogism
+))
 </jh>
 
 == Equality ==
