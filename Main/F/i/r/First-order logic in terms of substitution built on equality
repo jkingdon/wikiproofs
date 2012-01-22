@@ -596,7 +596,7 @@ thm (ChangeVariableThereExists
 ))
 </jh>
 
-== Other theorems ==
+== Theorems stated in chapter 19 of Margaris ==
 In chapter 19, Margaris restates a number of theorems already proved, proves a few additional ones, and states a number while leaving the proof as exercises.<ref>Margaris, page 89</ref> Here we prove those which we haven't proved yet and which we need to export to [[Interface:First-order logic with quantifiability]].
 
 === Negating there-exists ===
@@ -606,6 +606,20 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
         (∀ x (¬ φ)) DoubleNegation
         swapBiconditional
 ))
+</jh>
+
+== Other theorems ==
+Here we present a few theorems which are convenience theorems, or other fairly simple deductions from theorems we have.
+<jh>
+#thm (buildThereExistsInConsequent ((x φ))
+#  ((H (φ → (ψ ↔ χ))))
+#  (φ → ((∃ x ψ) ↔ (∃ x χ))) (
+#        H
+#        x addForAllToConsequent
+
+#        x ψ χ ForAllBiconditionalThereExists
+#        applySyllogism
+#))
 </jh>
 
 == Equality ==
