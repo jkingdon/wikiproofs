@@ -474,7 +474,7 @@ thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ)
 
 === There-exists across a disjunction ===
 
-This one follows from <code>ForAllConjunction</code> via DeMorgan's law and a little bit of negation rearranging.
+This one follows from <code>ForAllConjunction</code> via DeMorgan's law and a little bit of negation rearranging.<ref>[http://us.metamath.org/mpeuni/19.43.html 19.43], metamath's set.mm, accessed January 22, 2012</ref>
 <jh>
 thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))) (
         φ ψ DeMorganPDP
