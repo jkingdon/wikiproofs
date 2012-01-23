@@ -1224,38 +1224,7 @@ At this point we have (expanding the definition of <code>is-not-free-in</code>) 
 ))
 </jh>
 
-== Quantifier order: ∀ y ∃ x to ∃ x ∀ y (sometimes) ==
-We also prove one case in which ∀ y ∃ x can be switched to ∃ x ∀ y, but it is subject to various discrete variable constraints.<ref>[http://us.metamath.org/mpeuni/19.12vv.html 19.12vv] in metamath's set.mm, accessed February 22, 2010</ref>
-
-<jh>
-thm (ForAllThereExistsImplicationCommutation ((x y) (ψ x) (φ y)) ()
-  ((∃ x (∀ y (φ → ψ))) ↔ (∀ y (∃ x (φ → ψ)))) (
-        y φ DistinctNotFree
-        ψ ForAllImplicationAntecedentMovement
-
-        x buildThereExists
-</jh>
-The left hand side is now <code>∃ x ∀ y (φ → ψ)</code>.  We will be transforming the right hand side through a series of equivalences.  So far we have <code>∃ x (φ → ∀ y ψ)</code>.
-<jh>
-        x (∀ y ψ) DistinctNotFree
-        φ ThereExistsImplicationConsequentMovement
-        applyBiconditionalTransitivity
-</jh>
-That gets us to <code>∀ x φ → ∀ y ψ</code>
-<jh>
-        y (∀ x φ) DistinctNotFree
-        ψ ForAllImplicationAntecedentMovement swapBiconditional
-        applyBiconditionalTransitivity
-</jh>
-which gives us <code>∀ y (∀ x φ → ψ)</code>
-<jh>
-        x ψ DistinctNotFree
-        φ ThereExistsImplicationConsequentMovement swapBiconditional
-        y buildForAll
-
-        applyBiconditionalTransitivity
-))
-</jh>
+The converse does not in general hold. Metamath includes one particular case where it does,<ref>[http://us.metamath.org/mpeuni/19.12vv.html 19.12vv] in metamath's set.mm, accessed January 22, 2012</ref> although it is a curiosity more than anything which is needed in proofs.
 
 == Quantifiers and equality ==
 Here we prove a number of results involving equality and quantifiers.  Many of them will pave the way for results involving explicit (<code>subst</code>) substitution.
