@@ -731,6 +731,13 @@ thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ 
 ))
 </jh>
 
+=== Distribution of there-exists across an implication ===
+When distributing ∃ across an implication, the quantifier on the antecedent changes to ∀.<ref>Theorem 19.10, Margaris, page 93, cited by metamath as 19.35</ref>
+<jh>
+#thm (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))) (
+#))
+</jh>
+
 == Other theorems ==
 Here we present a few theorems which are convenience theorems, or other fairly simple deductions from theorems we have.
 <jh>
