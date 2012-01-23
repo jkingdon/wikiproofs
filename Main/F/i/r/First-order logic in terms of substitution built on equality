@@ -647,6 +647,51 @@ thm (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) �
 ))
 </jh>
 
+=== Distribution of for-all over conjunction ===
+Here we prove <code>∀ x (φ ∧ ψ) ↔ ∀ x φ ∧ ∀ x ψ</code>.<ref>Theorem 19.7, Margaris, page 92, cited by metamath as 19.26</ref> As Margaris does, we prove the forward and reverse directions separately.
+<jh>
+thm (ForAllConjunctionForward () () ((∀ x (φ ∧ ψ)) → ((∀ x φ) ∧ (∀ x ψ))) (
+        φ ψ ConjunctionRightElimination
+        x addForAll
+
+        φ ψ ConjunctionLeftElimination
+        x addForAll
+
+        composeConjunction
+))
+
+thm (ForAllConjunctionReverse () () (((∀ x φ) ∧ (∀ x ψ)) → (∀ x (φ ∧ ψ))) (
+</jh>
+First is <code>x is-not-free-in (∀ x φ ∧ ∀ x ψ)</code>.
+<jh>
+        x φ BoundForAllNotFree
+        x ψ BoundForAllNotFree
+        conjunctionNotFree
+</jh>
+Next is <code>∀ x φ ∧ ∀ x ψ → φ ∧ ψ</code>.
+<jh>
+        (∀ x φ) (∀ x ψ) ConjunctionRightElimination
+        x φ Specialization
+        applySyllogism
+
+        (∀ x φ) (∀ x ψ) ConjunctionLeftElimination
+        x ψ Specialization
+        applySyllogism
+
+        composeConjunction
+</jh>
+Adding <code>∀ x</code> to the consequent finishes the job.
+<jh>
+        addForAllToConsequentNotFree
+))
+
+thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))) (
+        x φ ψ ForAllConjunctionForward
+        x φ ψ ForAllConjunctionReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Other theorems ==
 Here we present a few theorems which are convenience theorems, or other fairly simple deductions from theorems we have.
 <jh>
