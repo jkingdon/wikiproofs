@@ -732,10 +732,25 @@ thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ 
 </jh>
 
 === Distribution of there-exists across an implication ===
-When distributing ∃ across an implication, the quantifier on the antecedent changes to ∀.<ref>Theorem 19.10, Margaris, page 93, cited by metamath as 19.35</ref>
+When distributing ∃ across an implication, the quantifier on the antecedent changes to ∀.<ref>Theorem 19.10, Margaris, page 93, cited by metamath as 19.35</ref> Margaris first proves the forward (easy) direction, and then gives two proofs of the reverse direction, which basically amount to rewriting the implication as either a conjunction or a disjunction with the suitable amount of negation. We pick disjunction, and use equivalences so that the proof also takes care of the forward direction too.
 <jh>
-#thm (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))) (
-#))
+thm (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))) (
+        φ ψ ImplicationDisjunction
+        x buildThereExists
+
+        x (¬ φ) ψ ThereExistsDisjunction
+        applyBiconditionalTransitivity
+
+        x φ NotForAll
+        swapBiconditional
+        (∃ x ψ) BiconditionalReflexivity
+        buildDisjunction
+        applyBiconditionalTransitivity
+
+        (∀ x φ) (∃ x ψ) ImplicationDisjunction
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Other theorems ==
