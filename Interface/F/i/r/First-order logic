@@ -109,17 +109,12 @@ stmt (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))))
 stmt (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))))
 </jh>
 
-∃ followed by ∀ can be switched:
+∃ followed by ∀ can be switched,
 <jh>
 stmt (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))))
 </jh>
 
-but the converse is only possible in special cases:
-<jh>
-stmt (ForAllThereExistsImplicationCommutation ((x y) (ψ x) (φ y)) ()
-  ((∃ x (∀ y (φ → ψ))) ↔ (∀ y (∃ x (φ → ψ))))
-)
-</jh>
+but the converse does not in general hold.
 
 == Combining quantified statements ==
 Quantifiers of the same variable can sometimes be combined or split:
