@@ -609,7 +609,7 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
 </jh>
 
 === Adding and removing there exists ===
-We already proved that <code>∀ x φ ↔ φ</code> if <code>x</code> is not free in <code>φ</code>. Here we prove the analogous result for <code>∃</code>.<ref>Theorem scheme 9, Margaris, page 89</ref>
+We already proved that <code>∀ x φ ↔ φ</code> if <code>x</code> is not free in <code>φ</code>. Here we prove the analogous result for <code>∃</code>.<ref>Theorem scheme 9, Margaris, page 89, cited by metamath as 19.9</ref>
 <jh>
 thm (ThereExistsAddRemoveNotFree () ((HFREE (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
         HFREE
@@ -773,9 +773,31 @@ There are a variety of theorems which involve moving a formula in or out of the 
 ==== There exists and conjunction ====
 First is moving a conjunction into or out of existential quantification.<ref>Theorem scheme 42, Margaris, page 90, cited by metamath as 19.42</ref>
 <jh>
+thm (ThereExistsConjunctionMovementNotFreeForward () ((HFREE (x is-not-free-in φ)))
+  ((∃ x (φ ∧ ψ)) → (φ ∧ (∃ x ψ))) (
+</jh>
+For the forward direction, we start with <code>∃ x (φ ∧ ψ) → ∃ x φ ∧ ∃ x ψ</code>.
+<jh>
+        x φ ψ ThereExistsConjunction
+</jh>
+Then we can remove the quantifier from <code>∃ x φ</code> to finish the forward direction.
+<jh>
+        HFREE
+        ThereExistsAddRemoveNotFree
+        eliminateBiconditionalReverse
+        (∃ x ψ) conjoinRR
+        applySyllogism
+</jh>
+The reverse direction starts with <code>φ ∧ ∃ x ψ → ∃ x (φ ∧ ∃ x ψ)</code>
+TODO: and then what???
+<jh>
+#        HFREE
+#        x ψ BoundThereExistsNotFree
+#        conjunctionNotFree
+))
+
 #thm (ThereExistsConjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
 #  ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
-#))
 
 #stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 #stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
