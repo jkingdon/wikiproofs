@@ -709,7 +709,7 @@ thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ)
 === Distribution of there-exists across a disjunction ===
 Here is <code>∃ x (φ ∨ ψ) ↔ ∃ x φ ∨ ∃ x ψ</code>.<ref>Theorem scheme 43, Margaris, page 90</ref> Margaris leaves the proof as an exercise, so we need to decide whether to derive it from <code>ForAllConjunction</code> using our definition of ∃ and DeMorgan's law, or derive it from other theorems which involved ∃. We elect the latter.
 <jh>
-thm (ThereExistsDisjunctionForward () () ((∃ x (φ ∨ ψ)) → ((∃ x φ) ∨ (∃ x ψ))) (
+thm (ThereExistsDisjunctionSplitting () () ((∃ x (φ ∨ ψ)) → ((∃ x φ) ∨ (∃ x ψ))) (
 </jh>
 A bit later we'll need <code>x is-not-free-in (∃ x φ ∨ ∃ x ψ)</code>
 <jh>
@@ -728,7 +728,7 @@ Now we are ready to add <code>∃ x</code> to the antecedent.
         addThereExistsToAntecedentNotFree
 ))
 
-thm (ThereExistsDisjunctionReverse () () (((∃ x φ) ∨ (∃ x ψ)) → (∃ x (φ ∨ ψ))) (
+thm (ThereExistsDisjunctionCombining () () (((∃ x φ) ∨ (∃ x ψ)) → (∃ x (φ ∨ ψ))) (
         φ ψ DisjunctionRightIntroduction
         x addThereExists
 
@@ -739,8 +739,8 @@ thm (ThereExistsDisjunctionReverse () () (((∃ x φ) ∨ (∃ x ψ)) → (∃ x
 ))
 
 thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))) (
-        x φ ψ ThereExistsDisjunctionForward
-        x φ ψ ThereExistsDisjunctionReverse
+        x φ ψ ThereExistsDisjunctionSplitting
+        x φ ψ ThereExistsDisjunctionCombining
         introduceBiconditionalFromImplications
 ))
 </jh>
