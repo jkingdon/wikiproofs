@@ -802,9 +802,25 @@ A bit of propositional logic and we are done.
         import
         introduceBiconditionalFromImplications
 ))
+</jh>
 
-#stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
-#stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
+Here are two easy consequences stated in terms of distinct variables rather than freeness hypotheses.
+<jh>
+thm (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsConjunctionMovementNotFree
+))
+
+thm (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)) (
+        φ ψ ConjunctionCommutativity
+        x buildThereExists
+
+        x ψ φ ThereExistsConjunctionMovement
+        applyBiconditionalTransitivity
+
+        ψ (∃ x φ) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Other theorems ==
