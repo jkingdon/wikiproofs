@@ -773,8 +773,8 @@ There are a variety of theorems which involve moving a formula in or out of the 
 ==== There exists and conjunction ====
 First is moving a conjunction into or out of existential quantification.<ref>Theorem scheme 42, Margaris, page 90, cited by metamath as 19.42</ref>
 <jh>
-thm (ThereExistsConjunctionMovementNotFreeForward () ((HFREE (x is-not-free-in φ)))
-  ((∃ x (φ ∧ ψ)) → (φ ∧ (∃ x ψ))) (
+thm (ThereExistsConjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
+  ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
 </jh>
 For the forward direction, we start with <code>∃ x (φ ∧ ψ) → ∃ x φ ∧ ∃ x ψ</code>.
 <jh>
@@ -788,16 +788,20 @@ Then we can remove the quantifier from <code>∃ x φ</code> to finish the forwa
         (∃ x ψ) conjoinRR
         applySyllogism
 </jh>
-The reverse direction starts with <code>φ ∧ ∃ x ψ → ∃ x (φ ∧ ∃ x ψ)</code>
-TODO: and then what???
+The proof of the reverse direction is taken from metamath.<ref>[http://us.metamath.org/mpeuni/19.41.html 19.41], metamath's set.mm, 25 May 2011</ref>. It starts with <code>φ → (ψ → (φ ∧ ψ))</code>, and adds quantifiers to the consequent to get <code>φ → (∃ x ψ → ∃ x (φ ∧ ψ))</code>.
 <jh>
-#        HFREE
-#        x ψ BoundThereExistsNotFree
-#        conjunctionNotFree
-))
+        HFREE
+        φ ψ ConjunctionRightIntroduction
+        addForAllToConsequentNotFree
 
-#thm (ThereExistsConjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
-#  ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+        x ψ (φ ∧ ψ) ForAllImplicationThereExists
+        applySyllogism
+</jh>
+A bit of propositional logic and we are done.
+<jh>
+        import
+        introduceBiconditionalFromImplications
+))
 
 #stmt (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
 #stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)))
