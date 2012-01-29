@@ -895,9 +895,131 @@ thm (Generalization ((x φ)) () (φ → (∀ x φ)) (
 </jh>
 
 == Equality ==
-Margaris considers equality in chapter 21.<ref>Margaris, page 104</ref> Most of the theorems there we have already adopted as axioms, but there are a variety of convenience theorems and the like to prove before we can export to [[Interface:First-order logic with quantifiability]].
+Margaris considers equality in chapter 21.<ref>Margaris, page 104</ref> Most of the theorems there we have already adopted as axioms, but there are a variety of convenience theorems and the like to prove before we can export to [[Interface:First-order logic with quantifiability]]. In most cases we can just take the same proofs from [[First-order logic]].
 <jh>
 def ((≠ s t) (¬ (s = t)))
+
+thm (EqualityBuilderRR () () ((s0 = s1) → ((s0 = t) ↔ (s1 = t))) (
+        s0 s1 EqualitySymmetry
+        eliminateBiconditionalReverse
+
+        s1 s0 t EqualityTransitivity
+        export
+
+        applySyllogism
+
+        s0 s1 t EqualityTransitivity
+        export
+
+        composeConjunction
+
+        (s0 = t) (s1 = t) BiconditionalImplication eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (commute2 () () (((s0 = t0) ↔ (s1 = t1)) → ((t0 = s0) ↔ (t1 = s1))) (
+        s0 t0 EqualitySymmetry
+        s1 t1 EqualitySymmetry
+        buildBiconditional
+        eliminateBiconditionalReverse
+))
+
+thm (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))) (
+        s0 s1 t EqualityBuilderRR
+        s0 t s1 t commute2
+        applySyllogism
+))
+
+thm (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))) (
+        (s0 = s1) (t0 = t1) ConjunctionRightElimination
+        s0 s1 t0 EqualityBuilderRR
+        applySyllogism
+
+        (s0 = s1) (t0 = t1) ConjunctionLeftElimination
+        t0 t1 s1 EqualityBuilderLL
+        applySyllogism
+
+        composeConjunction
+
+        (s0 = t0) (s1 = t0) (s1 = t1) BiconditionalTransitivity
+        applySyllogism
+))
+
+thm (buildEquality () ((HX (s0 = s1)) (HY (t0 = t1))) ((s0 = t0) ↔ (s1 = t1)) (
+        HX
+        HY
+        introduceConjunction
+        s0 s1 t0 t1 EqualityBuilder
+        applyModusPonens
+))
+
+thm (buildEqualityRR () ((H (s0 = s1))) ((s0 = t) ↔ (s1 = t)) (
+        H
+        t EqualityReflexivity
+        introduceConjunction
+
+        s0 s1 t t EqualityBuilder
+
+        applyModusPonens
+))
+
+thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
+        s EqualityReflexivity
+        H
+        introduceConjunction
+
+        s s t0 t1 EqualityBuilder
+
+        applyModusPonens
+))
+thm (buildEqualityInConsequent ()
+  ((HN (φ → (s0 = s1)))
+   (HM (φ → (t0 = t1))))
+  (φ → ((s0 = t0) ↔ (s1 = t1))) (
+        HN HM composeConjunction
+        s0 s1 t0 t1 EqualityBuilder
+        applySyllogism
+))
+
+thm (buildEqualityRRInConsequent ()
+  ((H (φ → (s0 = s1))))
+  (φ → ((s0 = t) ↔ (s1 = t))) (
+        H
+        t EqualityReflexivity φ introduceAntecedent
+        buildEqualityInConsequent
+))
+
+thm (buildEqualityLLInConsequent ()
+  ((H (φ → (t0 = t1))))
+  (φ → ((s = t0) ↔ (s = t1))) (
+        s EqualityReflexivity φ introduceAntecedent
+        H
+        buildEqualityInConsequent
+))
+</jh>
+
+=== Quantifiability ===
+<jh>
+#thm (Quantifiability () () (∃ x ((value x) = s)) (
+</jh>
+We stick <code>s = s</code> on the proof stack for later use.
+<jh>
+#        s EqualityReflexivity
+</jh>
+We start with <code>x = s → (x = s ↔ s = s)</code>.
+<jh>
+#        (value x) s s EqualityBuilderRR
+</jh>
+That in turn implies <code>([ s / x ] s = x) ↔ s = s</code>, which of course implies <code>[ s / x ] s = x</code>.
+<jh>
+#        makeSubstExplicit
+#        eliminateBiconditionalForward
+#        applyModusPonens
+</jh>
+And that is enough to give us <code>∃ x x = s</code>
+<jh>
+#        introduceThereExistsFromObject
+#))
 </jh>
 
 == Export ==
