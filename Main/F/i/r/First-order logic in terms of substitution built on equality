@@ -824,7 +824,7 @@ thm (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((
 </jh>
 
 === Combining one universal and one existential quantifier ===
-
+Suppose we have one formula which holds for all values of a variable, and another which holds for some value. Then there is a value for which both hold. In symbols, <code>∀ x φ ∧ ∃ x ψ → ∃ x (φ ∧ ψ)</code>.<ref>Theorem scheme 29, Margaris, page 90, cited by metamath as 19.29</ref>
 <jh>
 thm (ThereExistsConjunctionCombining () ()
   (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))) (
@@ -834,6 +834,23 @@ thm (ThereExistsConjunctionCombining () ()
 
         x φ Specialization
         ψ conjoinRR
+        x addThereExists
+        applySyllogism
+))
+</jh>
+
+It will also be convenient to have a commuted version.
+<jh>
+thm (ThereExistsConjunctionRightCombining () ()
+  (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))) (
+        (∃ x φ) (∀ x ψ) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        x ψ φ ThereExistsConjunctionCombining
+        applySyllogism
+
+        ψ φ ConjunctionCommutativity
+        eliminateBiconditionalReverse
         x addThereExists
         applySyllogism
 ))
