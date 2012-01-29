@@ -887,6 +887,11 @@ thm (buildForAllInConsequent ((x φ))
         x ψ χ ForAllBiconditional
         applySyllogism
 ))
+
+thm (Generalization ((x φ)) () (φ → (∀ x φ)) (
+        x φ DistinctNotFree
+        GeneralizationNotFree
+))
 </jh>
 
 == Equality ==
@@ -896,8 +901,14 @@ def ((≠ s t) (¬ (s = t)))
 </jh>
 
 == Export ==
+We can export first-order logic now.
 <jh>
 #export (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+</jh>
+
+We also export the axiom of quantifiability, just to emphasize that this "axiom" is not just a (possibly arbitrary seeming) statement about proper classes, but is a consequence of substitution rules such as those described in Margaris.
+<jh>
+#export (QUANTIFIABILITY Interface:Axiom_of_quantifiability (PROPOSITIONAL) ())
 </jh>
 
 == References ==
