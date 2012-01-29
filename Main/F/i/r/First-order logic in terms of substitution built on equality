@@ -823,6 +823,22 @@ thm (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((
 ))
 </jh>
 
+=== Combining one universal and one existential quantifier ===
+
+<jh>
+thm (ThereExistsConjunctionCombining () ()
+  (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))) (
+        x φ BoundForAllNotFree
+        ψ ThereExistsConjunctionMovementNotFree
+        eliminateBiconditionalForward
+
+        x φ Specialization
+        ψ conjoinRR
+        x addThereExists
+        applySyllogism
+))
+</jh>
+
 == Other theorems ==
 Here we present a few theorems which are convenience theorems, or other fairly simple deductions from theorems we have.
 <jh>
