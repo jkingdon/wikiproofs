@@ -839,7 +839,7 @@ thm (ThereExistsConjunctionCombining () ()
 ))
 </jh>
 
-It will also be convenient to have a commuted version.
+It will also be convenient to have a commuted version, and a rule.
 <jh>
 thm (ThereExistsConjunctionRightCombining () ()
   (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))) (
@@ -853,6 +853,15 @@ thm (ThereExistsConjunctionRightCombining () ()
         eliminateBiconditionalReverse
         x addThereExists
         applySyllogism
+))
+
+thm (combineThereExistsForAll () ((HEXISTS (∃ x φ)) (HALL (∀ x ψ))) (∃ x (φ ∧ ψ)) (
+        HEXISTS
+        HALL
+        introduceConjunction
+
+        x φ ψ ThereExistsConjunctionRightCombining
+        applyModusPonens
 ))
 </jh>
 
