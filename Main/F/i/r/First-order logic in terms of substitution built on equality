@@ -921,6 +921,28 @@ Margaris considers equality in chapter 21.<ref>Margaris, page 104</ref> Most of 
 <jh>
 def ((≠ s t) (¬ (s = t)))
 
+thm (swapEquality () ((H (s = t))) (t = s) (
+        H
+        s t EqualitySymmetry eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (applyEqualityTransitivity () ((H1 (s = t)) (H2 (t = u))) (s = u) (
+        H1
+        H2
+        introduceConjunction
+        s t u EqualityTransitivity
+        applyModusPonens
+))
+
+thm (applyEqualityTransitivityInConsequent () ((H1 (φ → (s = t))) (H2 (φ → (t = u)))) (φ → (s = u)) (
+        H1
+        H2
+        composeConjunction
+        s t u EqualityTransitivity
+        applySyllogism
+))
+
 thm (EqualityBuilderRR () () ((s0 = s1) → ((s0 = t) ↔ (s1 = t))) (
         s0 s1 EqualitySymmetry
         eliminateBiconditionalReverse
@@ -994,6 +1016,7 @@ thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
 
         applyModusPonens
 ))
+
 thm (buildEqualityInConsequent ()
   ((HN (φ → (s0 = s1)))
    (HM (φ → (t0 = t1))))
