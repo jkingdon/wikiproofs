@@ -872,6 +872,20 @@ The reverse direction follows from <code>x is-not-free-in (φ → ∀ x ψ)</cod
 
         introduceBiconditionalFromImplications
 ))
+
+thm (moveAntecedentOutOfForAll () ((H (∀ x (φ → ψ))) (HFREE (x is-not-free-in φ))) (φ → (∀ x ψ)) (
+        H
+
+        HFREE
+        ψ ForAllImplicationAntecedentMovement
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+
+#thm (moveAntecedentIntoForAll ()
+#  ((φ → (∀ x ψ)) (x is-not-free-in φ))
+#  (∀ x (φ → ψ)))
 </jh>
 
 === Combining one universal and one existential quantifier ===
