@@ -1000,26 +1000,26 @@ thm (buildEqualityLLInConsequent ()
 
 === Quantifiability ===
 <jh>
-#thm (Quantifiability () () (∃ x ((value x) = s)) (
+thm (Quantifiability ((x s)) () (∃ x ((value x) = s)) (
 </jh>
 We stick <code>s = s</code> on the proof stack for later use.
 <jh>
-#        s EqualityReflexivity
+        s EqualityReflexivity
 </jh>
 We start with <code>x = s → (x = s ↔ s = s)</code>.
 <jh>
-#        (value x) s s EqualityBuilderRR
+        (value x) s s EqualityBuilderRR
 </jh>
 That in turn implies <code>([ s / x ] s = x) ↔ s = s</code>, which of course implies <code>[ s / x ] s = x</code>.
 <jh>
-#        makeSubstExplicit
-#        eliminateBiconditionalForward
-#        applyModusPonens
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
 </jh>
 And that is enough to give us <code>∃ x x = s</code>
 <jh>
-#        introduceThereExistsFromObject
-#))
+        introduceThereExistsFromObject
+))
 </jh>
 
 == Export ==
