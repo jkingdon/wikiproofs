@@ -845,6 +845,35 @@ thm (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((
 ))
 </jh>
 
+==== For all and implication ====
+We can move an antecedent, which does not have the variable being quantified free, in or out of universal quantification.<ref>Theorem scheme 21, Margaris, page 90, cited by metamath as 19.21</ref>
+<jh>
+thm (ForAllImplicationAntecedentMovement () ((HFREE (x is-not-free-in φ))) ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
+</jh>
+The forward direction just distributes the quantifier over the implication and removes the unnecessary quantifier on the antecedent.
+<jh>
+        x φ ψ ForAllImplication
+
+        HFREE
+        GeneralizationNotFree
+        (∀ x ψ) addCommonConsequent
+        applySyllogism
+</jh>
+The reverse direction follows from <code>x is-not-free-in (φ → ∀ x ψ)</code> and <code>(φ → ∀ x ψ) → (φ → ψ)</code>.
+<jh>
+        HFREE
+        x ψ BoundForAllNotFree
+        implicationNotFree
+
+        x ψ Specialization
+        φ addCommonAntecedent
+
+        addForAllToConsequentNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 === Combining one universal and one existential quantifier ===
 Suppose we have one formula which holds for all values of a variable, and another which holds for some value. Then there is a value for which both hold. In symbols, <code>∀ x φ ∧ ∃ x ψ → ∃ x (φ ∧ ψ)</code>.<ref>Theorem scheme 29, Margaris, page 90, cited by metamath as 19.29</ref>
 <jh>
