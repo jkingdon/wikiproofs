@@ -8,7 +8,7 @@ We import some interfaces and define some variables:
 import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 import (AXIOMS Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (PROPOSITIONAL) ())
 
-var (formula φ ψ χ θ φx φy)
+var (formula φ ψ χ θ φx φy antecedent)
 var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
@@ -622,6 +622,28 @@ thm (ThereExistsAddRemoveNotFree () ((HFREE (x is-not-free-in φ))) ((∃ x φ) 
 ))
 </jh>
 
+Here are a few variations of basically the same theorem.
+<jh>
+thm (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ) (
+        x φ DistinctNotFree
+        ThereExistsAddRemoveNotFree
+))
+
+thm (removeThereExists ((x φ)) ((H (∃ x φ))) φ (
+        H
+        x φ NullThereExists
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (removeThereExistsInConsequent ((x φ)) ((H (antecedent → (∃ x φ)))) (antecedent → φ) (
+        H
+        x φ NullThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 === Commuting ∃ followed by ∀ ===
 ∃ followed by ∀ can be switched.<ref>Theorem 19.4, Margaris, page 91, cited by metamath as 19.12</ref>
 <jh>
@@ -1030,7 +1052,7 @@ We can export first-order logic now.
 
 We also export the axiom of quantifiability, just to emphasize that this "axiom" is not just a (possibly arbitrary seeming) statement about proper classes, but is a consequence of substitution rules such as those described in Margaris.
 <jh>
-#export (QUANTIFIABILITY Interface:Axiom_of_quantifiability (PROPOSITIONAL) ())
+#export (QUANTIFIABILITY Interface:Axiom_of_quantifiability (PROPOSITIONAL FIRSTORDER) ())
 </jh>
 
 == References ==
