@@ -22,7 +22,7 @@ The axiom:
 var (object s)
 var (variable x)
 
-stmt (Quantifiability () () (∃ x ((value x) = s)) )
+stmt (Quantifiability ((x s)) () (∃ x ((value x) = s)) )
 </jh>
 
 == Consequences ==
