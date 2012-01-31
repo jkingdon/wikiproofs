@@ -488,7 +488,7 @@ Now we can apply the separation builder.
 Consider a relation which just contains a single ordered pair: <code>{ 〈A, B〉 }</code>. Its domain is simply <code>{ A }</code>.<ref>[http://us.metamath.org/mpeuni/dmsnop.html dmsnop], metamath's set.mm, accessed July 5, 2011</ref>
 
 <jh>
-thm (DomainSingletonRelationLemma ((y C) (y A)) ()
+thm (DomainSingletonRelationLemma ((y B) (y C) (y A)) ()
   ((∃ y ((orderedPair C (value y)) ∈ (singleton (orderedPair A B)))) ↔ (C = A)) (
         (orderedPair C (value y)) (orderedPair A B) Singleton
         C (value y) A B OrderedPairTheorem
@@ -663,7 +663,7 @@ Now we can apply the separation builder.
 Analogously to domain, the range of <code>{ 〈A, B〉 }</code> is simply <code>{ B }</code>.<ref>[http://us.metamath.org/mpeuni/rnsnop.html rnsnop], metamath's set.mm, accessed 2011</ref>
 
 <jh>
-thm (RangeSingletonRelationLemma ((x C) (x B)) ()
+thm (RangeSingletonRelationLemma ((x A) (x C) (x B)) ()
   ((∃ x ((orderedPair (value x) C) ∈ (singleton (orderedPair A B)))) ↔ (C = B)) (
         (orderedPair (value x) C) (orderedPair A B) Singleton
         (value x) C A B OrderedPairTheorem
