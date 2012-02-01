@@ -883,9 +883,17 @@ thm (moveAntecedentOutOfForAll () ((H (∀ x (φ → ψ))) (HFREE (x is-not-free
         applyModusPonens
 ))
 
-#thm (moveAntecedentIntoForAll ()
-#  ((φ → (∀ x ψ)) (x is-not-free-in φ))
-#  (∀ x (φ → ψ)))
+thm (moveAntecedentIntoForAll ()
+  ((H (φ → (∀ x ψ))) (HFREE (x is-not-free-in φ)))
+  (∀ x (φ → ψ)) (
+        H
+
+        HFREE
+        ψ ForAllImplicationAntecedentMovement
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
 </jh>
 
 === Combining one universal and one existential quantifier ===
