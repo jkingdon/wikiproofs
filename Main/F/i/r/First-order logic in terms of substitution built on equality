@@ -911,10 +911,33 @@ thm (ThereExistsAntecedentMovementNotFree () ((HFREE (x is-not-free-in φ))) ((�
 </jh>
 
 ==== Moving the consequent in or out of for all ====
-When we move the consequent out of <code>∀</code>, it changes to <code>∃</code>.<ref>Theorem scheme 23, Margaris, page 90, cited by metamath as 19.23</ref>
+When we move the consequent out of <code>∀</code>, it changes to <code>∃</code>.<ref>Theorem scheme 23, Margaris, page 90, cited by metamath as 19.23</ref> The proof is based on the one in metamath.<ref>[http://us.metamath.org/mpeuni/19.23.html 19.23], metamath's set.mm, accessed 2 Feb 2012</ref>
 <jh>
-#thm (ForAllImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ))) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)) (
-#))
+thm (ForAllImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ))) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)) (
+</jh>
+The forward direction is just a matter of distributing ∀ into two existential quantifiers and getting rid of the one which doesn't do anything.
+<jh>
+        x φ ψ ForAllImplicationThereExists
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        eliminateBiconditionalReverse
+        (∃ x φ) addCommonAntecedent
+        applySyllogism
+</jh>
+The reverse direction is based on <code>φ → ∃ x φ</code> and that <code>x</code> is not free in <code>∃ x φ → ψ</code>.
+<jh>
+        x φ BoundThereExistsNotFree
+        HFREE
+        implicationNotFree
+
+        φ x ThereExistsIntroduction
+        ψ addCommonConsequent
+
+        addForAllToConsequentNotFree
+
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 === Combining one universal and one existential quantifier ===
