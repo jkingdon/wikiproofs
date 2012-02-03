@@ -940,6 +940,21 @@ The reverse direction is based on <code>φ → ∃ x φ</code> and that <code>x<
 ))
 </jh>
 
+==== Moving the consequent in or out of there exists ====
+Similar to the previous one, but with ∃ and ∀ exchanged.<ref>Theorem scheme 36, Margaris, page 90, cited by metamath as 19.36</ref>
+<jh>
+thm (ThereExistsImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ)))
+  ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)) (
+        x φ ψ ThereExistsImplication
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∀ x φ) buildImplicationAntecedent
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
 === Combining one universal and one existential quantifier ===
 Suppose we have one formula which holds for all values of a variable, and another which holds for some value. Then there is a value for which both hold. In symbols, <code>∀ x φ ∧ ∃ x ψ → ∃ x (φ ∧ ψ)</code>.<ref>Theorem scheme 29, Margaris, page 90, cited by metamath as 19.29</ref>
 <jh>
