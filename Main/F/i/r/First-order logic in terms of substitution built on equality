@@ -955,6 +955,43 @@ thm (ThereExistsImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ)))
 ))
 </jh>
 
+==== Disjunction movement ====
+We can move a conjunct out of or into there exists.<ref>Theorem scheme 45, Margaris, page 90, cited by metamath as 19.45</ref>
+<jh>
+thm (ThereExistsDisjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
+  ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ ψ ThereExistsDisjunction
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∃ x ψ) buildDisjunctionRR
+
+        applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsDisjunctionMovementNotFree
+))
+
+thm (ThereExistsDisjunctionRightMovementNotFree () ((HFREE (x is-not-free-in ψ)))
+  ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        x φ ψ ThereExistsDisjunction
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∃ x φ) buildDisjunctionLL
+
+        applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        x ψ DistinctNotFree
+        φ ThereExistsDisjunctionRightMovementNotFree
+))
+
+</jh>
+
 === Combining one universal and one existential quantifier ===
 Suppose we have one formula which holds for all values of a variable, and another which holds for some value. Then there is a value for which both hold. In symbols, <code>∀ x φ ∧ ∃ x ψ → ∃ x (φ ∧ ψ)</code>.<ref>Theorem scheme 29, Margaris, page 90, cited by metamath as 19.29</ref>
 <jh>
