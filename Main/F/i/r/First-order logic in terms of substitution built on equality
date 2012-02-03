@@ -8,7 +8,7 @@ We import some interfaces and define some variables:
 import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 import (AXIOMS Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (PROPOSITIONAL) ())
 
-var (formula φ ψ χ θ φx φy ψy antecedent)
+var (formula φ ψ χ θ φx φy φs ψy antecedent)
 var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
@@ -1283,6 +1283,27 @@ That in turn implies <code>([ s / x ] s = x) ↔ s = s</code>, which of course i
 And that is enough to give us <code>∃ x x = s</code>
 <jh>
         introduceThereExistsFromObject
+))
+</jh>
+
+=== Variable to term ===
+Although converting a variable to a term is more of a substitution concept than an equality one, since it is stated in terms of equality we prove it here. Although this theorem doesn't exist in Margaris in quite this form, it has echoes in the Margaris theorems concerning substituting equals for equals, for example 21.8.<ref>Margaris, page 107</ref>
+<jh>
+thm (VariableToObject ((x s) (x φs))
+  ((HSUBST (((value x) = s) → (φx ↔ φs)))
+   (H φx)
+  )
+  φs (
+        H
+        x generalize
+
+        x φx s SpecializationToObject
+        applyModusPonens
+
+        HSUBST
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applyModusPonens
 ))
 </jh>
 
