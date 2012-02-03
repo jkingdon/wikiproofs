@@ -1307,6 +1307,19 @@ thm (VariableToObject ((x s) (x φs))
 ))
 </jh>
 
+== Substitution ==
+Although our axioms were based on substitution and we've proved many of the substitution theorems we need, here we prove some consequences and convenience theorems.
+
+=== Substitution of a theorem remains a theorem ===
+If we have a theorem, we can add a variable substitution onto it. This is just a generalization followed by specializeToObject.
+<jh>
+thm (introduceSubst () ((H φ)) (subst s x φ) (
+        H
+        x generalize
+        s specializeToObject
+))
+</jh>
+
 == Export ==
 We can export first-order logic now.
 <jh>
