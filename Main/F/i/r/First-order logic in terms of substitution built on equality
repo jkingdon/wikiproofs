@@ -8,7 +8,7 @@ We import some interfaces and define some variables:
 import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 import (AXIOMS Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (PROPOSITIONAL) ())
 
-var (formula φ ψ χ θ φx φy antecedent)
+var (formula φ ψ χ θ φx φy ψy antecedent)
 var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
@@ -908,6 +908,11 @@ thm (ThereExistsAntecedentMovementNotFree () ((HFREE (x is-not-free-in φ))) ((�
 
         applyBiconditionalTransitivity
 ))
+
+thm (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsAntecedentMovementNotFree
+))
 </jh>
 
 ==== Moving the consequent in or out of for all ====
@@ -1031,6 +1036,73 @@ thm (combineThereExistsForAll () ((HEXISTS (∃ x φ)) (HALL (∀ x ψ))) (∃ x
 
         x φ ψ ThereExistsConjunctionRightCombining
         applyModusPonens
+))
+</jh>
+
+==== A few more movement rules ====
+Here are a few rules, for convenience:
+<jh>
+thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
+  ((H (antecedent → (φ ∧ (∃ x ψ)))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (moveRightConjunctIntoThereExistsInConsequent ((x ψ))
+  ((H (antecedent → ((∃ x φ) ∧ ψ))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (repeatAntecedentThereExists ((x antecedent))
+  ((H (antecedent → (∃ x ψ))))
+  (antecedent → (∃ x (antecedent ∧ ψ))) (
+        antecedent ImplicationReflexivity
+        H
+        composeConjunction
+        moveLeftConjunctIntoThereExistsInConsequent
+))
+</jh>
+
+==== Scattering and gathering ====
+The rules and theorems we call ''scattering'' and ''gathering'' are just consequences of the movement theorems, and as such we can use the exact same proofs as in [[First-order logic]].
+<jh>
+thm (ThereExistsScattering ((φx y) (ψy x)) ()
+  ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))) (
+        (∃ x φx) (∃ y ψy) ConjunctionCommutativity
+
+        x ψy DistinctNotFree
+        y addThereExistsNotFree
+        φx ThereExistsConjunctionMovementNotFree
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        (∃ y ψy) φx ConjunctionCommutativity
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        y φx ψy ThereExistsConjunctionMovement
+        swapBiconditional
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
+
+thm (gatherThereExistsInConsequent ((φx y) (ψy x)) ((H (antecedent → ((∃ x φx) ∧ (∃ y ψy)))))
+  (antecedent → (∃ x (∃ y (φx ∧ ψy)))) (
+        H
+        x y φx ψy ThereExistsScattering
+        eliminateBiconditionalForward
+        applySyllogism
 ))
 </jh>
 
