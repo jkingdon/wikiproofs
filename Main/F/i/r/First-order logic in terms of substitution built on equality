@@ -1320,6 +1320,14 @@ thm (introduceSubst () ((H φ)) (subst s x φ) (
 ))
 </jh>
 
+=== Substitutions which replace equal terms ===
+Replacing a variable with either of two terms has the same effect, if the two terms are equal.
+<jh>
+#thm (SubstBuilderReplacement () ()
+#  ((s = t) → ((subst s x φ) ↔ (subst t x φ))) (
+#))
+</jh>
+
 == Export ==
 We can export first-order logic now.
 <jh>
