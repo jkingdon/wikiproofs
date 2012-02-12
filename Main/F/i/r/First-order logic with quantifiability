@@ -575,7 +575,7 @@ Substituting a formula with a variable which is not free in that formula has no 
 <jh>
 thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
 </jh>
-We begin with <code>[s / x] φ → ∃ x (x = s ∧ φ)</code>.  The distinct variable constraint between <code>x</code> and <code>s</code> might not be needed.
+We begin with <code>[s / x] φ → ∃ x (x = s ∧ φ)</code>.  The distinct variable constraint between <code>x</code> and <code>s</code> prevents the quantifier from capturing an instance of the variable <code>x</code>. For example, in arithmetic <code>[ x + 1 / x ] x = x</code> holds (and means, expanding the substitution, <code>x + 1 = x + 1</code>). However, <code>∃ x (x = x + 1 ∧ x = x)</code> does not, because <code>x + 1</code> has illegitimately been moved inside the quantifier.
 <jh>
         s x φ SubstitutionThereExists
         eliminateBiconditionalReverse
