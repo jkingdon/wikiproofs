@@ -197,8 +197,26 @@ Making that substitution explicit gives us <code>subst s x (φ → ψ) ↔ (subs
 <jh>
         makeSubstExplicitNotFree
 ))
+</jh>
 
-#thm (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) ())
+Removing the distinct variable constraint is analogous to what we did for negation.
+<jh>
+thm (SubstImplication ( (y x) (y s) (y φ) (y ψ)) () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) (
+        s y x (φ → ψ) SubstitutionComposition
+        swapBiconditional
+
+        (value y) x φ ψ SubstImplicationDistinct
+        s y buildSubst
+        applyBiconditionalTransitivity
+
+        s y (subst (value y) x φ) (subst (value y) x ψ) SubstImplicationDistinct
+        applyBiconditionalTransitivity
+
+        s y x φ SubstitutionComposition
+        s y x ψ SubstitutionComposition
+        buildImplication
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Existential quantification ==
