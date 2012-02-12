@@ -232,6 +232,26 @@ thm (SubstImplication ( (y x) (y s) (y φ) (y ψ)) () ((subst s x (φ → ψ)) �
 ))
 </jh>
 
+=== Subst across disjunction ===
+Although we could prove similar results for the other three connectives in the same way, it will be slightly more convenient to just prove them from the two we already proved.
+<jh>
+thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))) (
+        φ ψ DisjunctionImplication
+        s x buildSubst
+
+        s x (¬ φ) ψ SubstImplication
+        applyBiconditionalTransitivity
+
+        s x φ SubstNegation
+        (subst s x ψ) buildImplicationConsequent
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) DisjunctionImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Existential quantification ==
 We define <code>∃</code> in terms of <code>∀</code>.<ref>Margaris, page 49</ref>
 <jh>
