@@ -250,6 +250,44 @@ thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (su
         swapBiconditional
         applyBiconditionalTransitivity
 ))
+
+thm (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))) (
+        φ ψ DeMorganNDN swapBiconditional
+        s x buildSubst
+
+        s x ((¬ φ) ∨ (¬ ψ)) SubstNegation
+        applyBiconditionalTransitivity
+
+        s x (¬ φ) (¬ ψ) SubstDisjunction
+        addNegation
+        applyBiconditionalTransitivity
+
+        s x φ SubstNegation
+        s x ψ SubstNegation
+        buildDisjunction
+        addNegation
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) DeMorganNDN
+        applyBiconditionalTransitivity
+))
+
+thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalImplication
+        s x buildSubst
+
+        s x (φ → ψ) (ψ → φ) SubstConjunction
+        applyBiconditionalTransitivity
+
+        s x φ ψ SubstImplication
+        s x ψ φ SubstImplication
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Existential quantification ==
