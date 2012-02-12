@@ -13,6 +13,8 @@ var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
+Here we derive first-order logic from axioms. The proofs are largely taken from Margaris,<ref>Margaris, Angelo (1990), ''First Order Mathematical Logic'', ISBN 978-0-486-66269-5</ref> although in some cases concepts (such as the deduction theorem) do not translate directly to JHilbert and we need to do things somewhat differently.
+
 == A few rules based on axioms ==
 Here is a rule form of <code>SpecializationToObject</code>.<ref>Theorem 17.1 in Margaris, page 74</ref>
 <jh>
