@@ -129,9 +129,6 @@ so for example <code>(subst s x φ)</code> can be thought of as a copy of <code>
 In many treatments of predicate logic, substitution is treated as a syntactic operation. For example <code>[ y / x ] ∀ z z ≤ x</code> is equivalent to plugging in <code>y</code> for <code>x</code> to get <code>∀ z z ≤ y</code>. It is then necessary to provide a condition that the substitution (in this case <code>y</code>) is not "captured" by any quantifiers. For example it is not legitimate to expand <code>[ y / x ] ∀ y y ≤ x</code> into <code>∀ y y ≤ y</code>. Margaris provides this in the definition of "admits".<ref>Margaris, page 48</ref> In our case, we treat substitution as following from equality. For example, <code>x = y → (∀ z z ≤ x ↔ ∀ z z ≤ y)</code> suffices to prove <code>([ y / x ] ∀ z z ≤ x) ↔ ∀ z z ≤ y</code>. The equivalent to the "admits" concept is the distinct variable constraint between <code>x</code> and <code>s</code> in the following theorem, together with normal predicate logic rules for adding quantifiers to the consequent in building up the formula <code>x = s → (φ ↔ ψ)</code>. (TODO: expand on an example which shows that the <code>x s</code> is needed, or otherwise explains what the admits stuff is all about in our context. My first attempt didn't quite hang together).
 
 <jh>
-stmt (makeSubstExplicit ((x s) (x ψ))
-  ((((value x) = s) → (φ ↔ ψ)))
-  ((subst s x φ) ↔ ψ))
 stmt (makeSubstExplicitNotFree ((x s))
   ((x is-not-free-in ψ) (((value x) = s) → (φ ↔ ψ)))
   ((subst s x φ) ↔ ψ))

@@ -48,6 +48,17 @@ thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
 == Substitution ==
 Margaris does not develop substitution based on axioms and proofs, but instead describes most of the substitution rules in terms of definitions expressed in English. We don't have that luxury, nor does <code>JHilbert</code> know about substitution until we teach it, so we have assumed a number of substitution results as axioms, and here we prove some theorems as consequences of them.
 
+=== Distinct variable version of makeSubstExplicitNotFree ===
+<jh>
+thm (makeSubstExplicit ((x s) (x ψ))
+  ((H (((value x) = s) → (φ ↔ ψ))))
+  ((subst s x φ) ↔ ψ) (
+        x ψ DistinctNotFree
+        H
+        makeSubstExplicitNotFree
+))
+</jh>
+
 === Substitutions which replace equal terms ===
 Replacing a variable with either of two terms has the same effect, if the two terms are equal. Since we are  assuming various builders for <code>subst</code> as axioms, we just need a rule form here.
 <jh>
