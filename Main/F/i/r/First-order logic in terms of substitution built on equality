@@ -168,6 +168,39 @@ Applying composition once more we are done.
 ))
 </jh>
 
+=== Subst across implication ===
+While we are here, we'll go ahead and prove the analogous result for the other connectives, starting with implication. The proof is very much like the one for negation, with the most obvious difference being that implication has two arguments instead of just one.
+
+<jh>
+thm (SubstImplicationDistinct ((s x)) () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) (
+</jh>
+A bit later we'll need <code>x is-not-free-in (subst s x φ → subst s x ψ)</code>, so we stick that on the proof stack.
+<jh>
+        x s φ SubstNotFree
+        x s ψ SubstNotFree
+        implicationNotFree
+</jh>
+We start with <code>x = s → ((subst x x φ → subst x x ψ) ↔ (subst s x φ → subst s x ψ))</code>,
+<jh>
+        (value x) s x φ SubstBuilderReplacement
+        (value x) s x ψ SubstBuilderReplacement
+        buildImplicationInConsequent
+</jh>
+and simplify to <code>x = s → ((φ → ψ) ↔ (subst s x φ → subst s x ψ))</code>.
+<jh>
+        x φ SubstItself
+        x ψ SubstItself
+        buildImplication
+        transformImplicationBiconditionalLeft
+</jh>
+Making that substitution explicit gives us <code>subst s x (φ → ψ) ↔ (subst s x φ → subst s x ψ)</code>, which is what we need.
+<jh>
+        makeSubstExplicitNotFree
+))
+
+#thm (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) ())
+</jh>
+
 == Existential quantification ==
 We define <code>∃</code> in terms of <code>∀</code>.<ref>Margaris, page 49</ref>
 <jh>
