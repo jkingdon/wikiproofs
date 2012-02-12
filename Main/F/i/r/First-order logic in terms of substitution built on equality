@@ -45,6 +45,129 @@ thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
 ))
 </jh>
 
+== Substitution ==
+Margaris does not develop substitution based on axioms and proofs, but instead describes most of the substitution rules in terms of definitions expressed in English. We don't have that luxury, nor does <code>JHilbert</code> know about substitution until we teach it, so we have assumed a number of substitution results as axioms, and here we prove some theorems as consequences of them.
+
+=== Substitutions which replace equal terms ===
+Replacing a variable with either of two terms has the same effect, if the two terms are equal. Since we are  assuming various builders for <code>subst</code> as axioms, we just need a rule form here.
+<jh>
+thm (buildSubstReplacement () ((H (s = t)))
+  ((subst s x φ) ↔ (subst t x φ)) (
+        H
+        s t x φ SubstBuilderReplacement
+        applyModusPonens
+))
+</jh>
+
+=== Builders ===
+We assumed <code>SubstAddition</code> as an axiom. We biconditionalize it and add some rules.
+<jh>
+thm (SubstBuilder () () ((∀ x (φ ↔ ψ)) → ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ s SubstAddition
+        applySyllogism
+
+        φ ψ BiconditionalForwardElimination
+        x addForAll
+
+        x ψ φ s SubstAddition
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+
+thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstAddition
+        applyModusPonens
+))
+
+thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstBuilder
+        applyModusPonens
+))
+</jh>
+
+=== Composition ===
+The ability to compose two substitutions is an easy consequence of <code>makeSubstExplicit</code> and <code>SubstBuilderReplacement</code>.
+
+<jh>
+thm (SubstitutionComposition ((φ y) (s y) (x y)) ()
+  ((subst s y (subst (value y) x φ)) ↔ (subst s x φ)) (
+</jh>
+We start with <code>y = s → ([ y / x ] φ ↔ [ s / x ] φ)</code>.
+<jh>
+        (value y) s x φ SubstBuilderReplacement
+</jh>
+That's all set up for <code>makeSubstExplicit</code>.
+<jh>
+        makeSubstExplicit
+))
+</jh>
+
+=== Turning an equality-based builder into the ability to move substitution across a predicate or operation ===
+Substitution can be moved in or out of a predicate or operation, provided the predicate or operation has a builder. Here we show how, for the case where the predicate is <code>¬</code> and the builder is the forward direction of <code>NegationFunction</code>.
+
+We start with the special case in which the variable being substituted is distinct from its replacement.
+<jh>
+thm (SubstNegationDistinct ((x s)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+</jh>
+A bit later we'll need <code>x is-not-free-in ¬ subst s x φ</code>, so we stick that on the proof stack.
+<jh>
+        x s φ SubstNotFree
+        negateNotFree
+</jh>
+We start with <code>x = s → (subst x x φ ↔ subst s x φ)</code>,
+<jh>
+        (value x) s x φ SubstBuilderReplacement
+</jh>
+and simplify to <code>x = s → (φ ↔ subst s x φ)</code>.
+<jh>
+        x φ SubstItself
+        transformImplicationBiconditionalLeft
+</jh>
+Now we add our predicate (here negation) to the right side, to get <code>x = s → (¬ φ ↔ ¬ subst s x φ)</code>.
+<jh>
+        φ (subst s x φ) NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Making that substitution explicit gives us <code>subst s x ¬ φ ↔ ¬ subst s x φ</code>, which is what we need.
+<jh>
+        makeSubstExplicitNotFree
+))
+</jh>
+
+Removing the distinct variable constraint is a matter of first substituting for an intermediate variable (which is distinct from everything), and then substituting the original replacement.
+<jh>
+thm (SubstNegation ( (y x) (y s) (y φ)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+        s y x (¬ φ) SubstitutionComposition
+        swapBiconditional
+</jh>
+Now we have <code>[ s / y ] [ y / x ] ¬ φ</code>, which we first transform to <code>[ s / y ] ¬ [ y / x ] φ</code>,
+<jh>
+        (value y) x φ SubstNegationDistinct
+        s y buildSubst
+        applyBiconditionalTransitivity
+</jh>
+and then <code>¬ [ s / y ] [ y / x ] φ</code>.
+<jh>
+        s y (subst (value y) x φ) SubstNegationDistinct
+        applyBiconditionalTransitivity
+</jh>
+Applying composition once more we are done.
+<jh>
+        s y x φ SubstitutionComposition
+        addNegation
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Existential quantification ==
 We define <code>∃</code> in terms of <code>∀</code>.<ref>Margaris, page 49</ref>
 <jh>
@@ -1308,7 +1431,7 @@ thm (VariableToObject ((x s) (x φs))
 </jh>
 
 == Substitution ==
-Although our axioms were based on substitution and we've proved many of the substitution theorems we need, here we prove some consequences and convenience theorems.
+Although our axioms were based on substitution and we've proved many of the substitution theorems we need, here are a few more consequences and convenience theorems.
 
 === Substitution of a theorem remains a theorem ===
 If we have a theorem, we can add a variable substitution onto it. This is just a generalization followed by specializeToObject.
@@ -1318,14 +1441,6 @@ thm (introduceSubst () ((H φ)) (subst s x φ) (
         x generalize
         s specializeToObject
 ))
-</jh>
-
-=== Substitutions which replace equal terms ===
-Replacing a variable with either of two terms has the same effect, if the two terms are equal.
-<jh>
-#thm (SubstBuilderReplacement () ()
-#  ((s = t) → ((subst s x φ) ↔ (subst t x φ))) (
-#))
 </jh>
 
 == Export ==

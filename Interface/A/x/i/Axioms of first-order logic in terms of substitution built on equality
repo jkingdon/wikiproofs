@@ -94,7 +94,7 @@ The ability to [[w:Generalization (logic)|generalize]] when the variable is not 
 stmt (GeneralizationNotFree () ((x is-not-free-in φ)) (φ → (∀ x φ)))
 </jh>
 
-The ability to generalize a theorem, even if the variable occurs in the formula, has two cases for Margaris. Margaris adopts an axiom schema called <code>Ax Gen</code> which is the ability to generalize an axiom,<ref>Margaris, page 49</ref> and from that derives the ability to generalize a theorem.<ref>Theorem 17.7, Margaris, page 76</ref> Because we do not have any way of distinguishing between an axiom and a theorem, we adopt the more general form as an axiom.
+The ability to generalize a theorem, even if the variable is free in the formula, has two cases for Margaris. Margaris adopts an axiom schema called <code>Ax Gen</code> which is the ability to generalize an axiom,<ref>Margaris, page 49</ref> and from that derives the ability to generalize a theorem.<ref>Theorem 17.7, Margaris, page 76</ref> Because we do not have any way of distinguishing between an axiom and a theorem, we adopt the more general form as an axiom.
 <jh>
 stmt (generalize () (φ) (∀ x φ))
 </jh>
@@ -132,6 +132,9 @@ In many treatments of predicate logic, substitution is treated as a syntactic op
 stmt (makeSubstExplicit ((x s) (x ψ))
   ((((value x) = s) → (φ ↔ ψ)))
   ((subst s x φ) ↔ ψ))
+stmt (makeSubstExplicitNotFree ((x s))
+  ((x is-not-free-in ψ) (((value x) = s) → (φ ↔ ψ)))
+  ((subst s x φ) ↔ ψ))
 </jh>
 
 Quite aside from the details of what substitutions are proper in the context of quantifiers, we also need to define substitution generally. The most obvious definition is a recursive one. It requires a bit of notation we don't otherwise need: <code>substTerm s x t<code> is a term (object) which is the result of substituting <code>s</code> for <code>x</code> in the term <code>t</code>. It can be found in metamath as <code><u>[</u> s / x <u>]</u> t</code>.<ref>df-csb in metamath</ref>
@@ -143,18 +146,22 @@ Quite aside from the details of what substitutions are proper in the context of 
   subst s x (t PRED u) ↔ (substTerm s x t) PRED (substTerm s x u)
     where PRED is any predicate defined by a module which includes first-order logic
 
-The procedure which has been followed by modules building on first-order logic (that is, [[Interface:First-order logic]] or [[Interface:First-order logic with quantifiability]]) is to define an axiom for each operation or predicate which states that equals can be substituted for equals. We call such axioms builders and they take the form <code>x = x′ ∧ y = y′ → x OP y = x′ OP y′<code>. Because these builders are in terms of equality, <code>makeSubstExplicit</code> covers most of the above cases in defining substitution. But our recursive definition of substitution isn't quite complete. We also need
+However, having described substitution informally in terms of this kind of recursive definition, we define it in a fairly different way, based on equality and some other axioms (which might not be a minimal axiomization, but which does suffice for our purposes). The reason for tying things into equality has to do with how the above steps are to be stated for each operation and predicate in the system.
 
-  subst s x (φ ∨ ψ) ↔ subst s x φ ∨ subst s x ψ
-
-and likewise for the other propositional logic connectives. In fact, this whole discussion of recursive definitions is basically a long-winded way of justifying adopting the following two axioms, which say that substitution can be distributed across connectives (we don't need axioms for the other connectives, as the corresponding statements about the other connectives follow from the following two axioms).
+The procedure which has been followed by modules building on first-order logic (that is, [[Interface:First-order logic]] or [[Interface:First-order logic with quantifiability]]) is to define an axiom for each operation or predicate which states that equals can be substituted for equals. We call such axioms builders and they take the form <code>x = x′ ∧ y = y′ → x OP y = x′ OP y′<code> or <code>x = x′ ∧ y = y′ → (x PRED y ↔ x′ PRED y′)</code>. Because these builders are in terms of equality, <code>makeSubstExplicit</code> covers most of the above cases in defining substitution. We adopt a few more axioms to make this work. First are some builders (or similar theorems) for <code>subst</code> itself:
 
 <jh>
-stmt (SubstNegation () () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))))
-stmt (SubstImplication () () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))))
+stmt (SubstBuilderReplacement () ()
+  ((s = t) → ((subst s x φ) ↔ (subst t x φ))))
+stmt (SubstAddition () () ((∀ x (φ → ψ)) → ((subst s x φ) → (subst s x ψ))))
 </jh>
 
-We also need to state that substituting a variable for itself has no effect (TODO: does this naturally follow from something which more closely fits the mold of the recursive definition above?). Margaris states this but does not justify it, apparently treating it as an obvious consequence of a syntactic definition of substitution.<ref>Margaris, page 76</ref>
+A substitution is like a quantifier, in that it binds the variable being substituted for.
+<jh>
+stmt (SubstNotFree ((x s)) () (x is-not-free-in (subst s x φ)))
+</jh>
+
+We also state that substituting a variable for itself has no effect. Margaris states this but does not justify it, apparently treating it as an obvious consequence of a syntactic definition of substitution.<ref>Margaris, page 76</ref>
 
 <jh>
 stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
