@@ -1715,48 +1715,50 @@ Combining that with <code>[ s / x ] x = s</code> gives <code>[ s / y ] [ s / x ]
         applyModusPonens
 ))
 
-#thm (ChangeVariableSubstitution
-#  ((y φx) (x φy) (x y) (s x) (s y))
-#  ((H (((value x) = (value y)) → (φx ↔ φy))))
-#  ((subst s x φx) ↔ (subst s y φy)) (
+thm (ChangeVariableSubstitution
+  ((y φx) (x φy) (x y) (s x) (s y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((subst s x φx) ↔ (subst s y φy)) (
 </jh>
 We'll stick our lemma on the proof stack for later.
 <jh>
-#        s y x ChangeVariableSubstitution-1
+        s y x ChangeVariableSubstitution-1
 
-#        H
+        H
 </jh>
 We now have <code>x = y → (φx ↔ φy)</code>. We add a substitution for <code>x</code> everywhere, to get <code>[ s / x ] x = y → ([ s / x ] φx ↔ [ s / x ] φy)</code>
 <jh>
-#        s x addSubst
+        s x addSubst
 
-#        x s ((value x) = (value y)) SubstNotFree
-#        addForAllToConsequentNotFree
-
-#        x φx φy s SubstBuilder
-#        applySyllogism
+        s x φx φy SubstBiconditional
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
 Now we add a substitution for <code>y</code> everywhere, to get <code>[ s / y ] [ s / x ] x = y → ([ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy)</code>.
 <jh>
-#        s y addSubst
+        s y addSubst
 
-#        y s (subst s x ((value x) = (value y))) SubstNotFree
-#        addForAllToConsequentNotFree
-
-#        y (subst s x φx) (subst s x φy) s SubstBuilder
-#        applySyllogism
+        s y (subst s x φx) (subst s x φy) SubstBiconditional
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
 Detaching the lemma we get <code>[ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy</code>.
 <jh>
-#        applyModusPonens
+        applyModusPonens
 </jh>
 Because <code>y</code> does not occur in <code>[ s / x ] φx</code>, we can remove <code>[ s / y ]</code> from the left hand side.
 <jh>
-#        swapBiconditional
-#        s y (subst s x φx) NullSubstitution
-#        applyBiconditionalTransitivity
-#        swapBiconditional
-#))
+        swapBiconditional
+        s y (subst s x φx) NullSubstitution
+        applyBiconditionalTransitivity
+        swapBiconditional
+</jh>
+Similarly, we remove <code>[ s / x ]</code> from the right hand side.
+<jh>
+        s x φy NullSubstitution
+        s y buildSubst
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Export ==
