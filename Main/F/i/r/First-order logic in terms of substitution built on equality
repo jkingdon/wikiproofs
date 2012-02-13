@@ -1719,6 +1719,11 @@ Combining that with <code>[ s / x ] x = s</code> gives <code>[ s / y ] [ s / x ]
 #  ((y φx) (x φy) (x y) (s x) (s y))
 #  ((H (((value x) = (value y)) → (φx ↔ φy))))
 #  ((subst s x φx) ↔ (subst s y φy)) (
+</jh>
+We'll stick our lemma on the proof stack for later.
+<jh>
+#        s y x ChangeVariableSubstitution-1
+
 #        H
 </jh>
 We now have <code>x = y → (φx ↔ φy)</code>. We add a substitution for <code>x</code> everywhere, to get <code>[ s / x ] x = y → ([ s / x ] φx ↔ [ s / x ] φy)</code>
@@ -1740,6 +1745,10 @@ Now we add a substitution for <code>y</code> everywhere, to get <code>[ s / y ] 
 
 #        y (subst s x φx) (subst s x φy) s SubstBuilder
 #        applySyllogism
+</jh>
+Detaching the lemma we get <code>[ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy</code>.
+<jh>
+#        applyModusPonens
 #))
 </jh>
 
