@@ -1565,6 +1565,29 @@ thm (introduceSubst () ((H φ)) (subst s x φ) (
 ))
 </jh>
 
+=== Moving substitution across quantifiers ===
+We have already shown we can move substitution across connectives. We can also move it across quantifiers (when variables are distinct).
+<jh>
+thm (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
+</jh>
+First is <code>x is-not-free-in ∃ y [ s / x ] φ</code>
+<jh>
+        x s φ SubstNotFree
+        y addThereExistsNotFree
+</jh>
+Leaving that aside for now, we start with <code>x = s → (φ ↔ [ s / x ] φ)</code>,
+<jh>
+        (value x) s x φ SubstBuilderReplacement
+        x φ SubstItself
+        transformImplicationBiconditionalLeft
+</jh>
+add the quantifier to the two sides of the biconditional, and invoke <code>makeSubstExplicit</code>.
+<jh>
+        y buildThereExistsInConsequent
+        makeSubstExplicitNotFree
+))
+</jh>
+
 == Export ==
 We can export first-order logic now.
 <jh>
