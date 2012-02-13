@@ -1676,6 +1676,62 @@ thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
 ))
 </jh>
 
+=== Change of variable in substitution ===
+Changing the bound variable in a substitution is possible, much as we do for quantifiers.
+
+We are trying to show that we can conclude <code>[ s / x ] φx ↔ [ s / y ] φy</code> from <code>x = y → (φx ↔ φy)</code> (where almost everything is distinct except that <code>φx</code> can contain <code>x</code> and <code>φy</code> can contain <code>y</code>). Without trying to sketch out the proof in detail right now, we will be adding <code>[ s / x ]</code> to the start of both sides of the implication, and likewise for <code>y</code>. The first lemma involves two variables which are equal, and substituting the same replacement for both of them.
+<jh>
+thm (ChangeVariableSubstitution-1
+  ((x y) (s x) (s y)) ()
+  (subst s y (subst s x ((value x) = (value y)))) (
+</jh>
+Might as well start with the theorem which we can elaborate into what we are trying to prove, <code>s = s</code>.
+<jh>
+        s EqualityReflexivity
+</jh>
+The elaboration begins with <code>[ s / x ] x = s ↔ s = s</code>,
+<jh>
+        (value x) s s EqualityBuilderRR
+        makeSubstExplicit
+</jh>
+which we then combine with <code>s = s</code> to give <code>[ s / x ] x = s</code>.
+<jh>
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+Now we pull the same trick with <code>y</code>. The equivalence is <code>[ s / y ] [ s / x ] x = y ↔ [ s / x ] x = s</code>, which derives from <code>y = s → ([ s / x ] x = y ↔ [ s / x ] x = s)</code>.
+<jh>
+        (value y) s (value x) EqualityBuilderLL
+        x addForAllToConsequent
+
+        x ((value x) = (value y)) ((value x) = s) s SubstBuilder
+        applySyllogism
+
+        makeSubstExplicit
+</jh>
+Combining that with <code>[ s / x ] x = s</code> gives <code>[ s / y ] [ s / x ] x = y</code>, as desired.
+<jh>
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+Here follows a rough sketch and some notes, to be fleshed out.
+
+<jh>
+#thm (ChangeVariableSubstitution
+#  ((y φx) (x φy) (x y) (s x) (s y))
+#  ((H (((value x) = (value y)) → (φx ↔ φy))))
+#  ((subst s x φx) ↔ (subst s y φy)) (
+#))
+</jh>
+
+have: x = y → (φx ↔ φy)
+  [ s / x ] x = y → ([ s / x ] φx ↔ [ s / x ] φy)
+  [ s / y ] [ s / x ] x = y → ([ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy)
+
+end of section in need of fleshing out.
+
 == Export ==
 We can export first-order logic now.
 <jh>
