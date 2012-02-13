@@ -132,6 +132,22 @@ That's all set up for <code>makeSubstExplicit</code>.
 ))
 </jh>
 
+=== Substituting a variable with something equal to itself ===
+The following result follows directly from <code>SubstBuilderReplacement</code> and <code>SubstItself</code>.
+<jh>
+thm (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))) (
+</jh>
+The first step is <code>x = s → ([ x / x ] φ ↔ [ s / x ] φ)</code>
+<jh>
+        (value x) s x φ SubstBuilderReplacement
+</jh>
+Now we turn <code>[ x / x ] φ</code> into <code>φ</code>.
+<jh>
+        x φ SubstItself
+        transformImplicationBiconditionalLeft
+))
+</jh>
+
 === Turning an equality-based builder into the ability to move substitution across a predicate or operation ===
 Substitution can be moved in or out of a predicate or operation, provided the predicate or operation has a builder. Here we show how, for the case where the predicate is <code>¬</code> and the builder is the forward direction of <code>NegationFunction</code>.
 
@@ -144,14 +160,9 @@ A bit later we'll need <code>x is-not-free-in ¬ subst s x φ</code>, so we stic
         x s φ SubstNotFree
         negateNotFree
 </jh>
-We start with <code>x = s → (subst x x φ ↔ subst s x φ)</code>,
+We start with <code>x = s → (φ ↔ subst s x φ)</code>.
 <jh>
-        (value x) s x φ SubstBuilderReplacement
-</jh>
-and simplify to <code>x = s → (φ ↔ subst s x φ)</code>.
-<jh>
-        x φ SubstItself
-        transformImplicationBiconditionalLeft
+        x s φ EqualitySubst
 </jh>
 Now we add our predicate (here negation) to the right side, to get <code>x = s → (¬ φ ↔ ¬ subst s x φ)</code>.
 <jh>
@@ -337,7 +348,7 @@ thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
 </jh>
 
 == Specialization and existential introduction without a substitution ==
-If we substitute a variable for itself, we get the following special case of substitution, which Margaris calls "An important special case".<ref>Margaris, page 76</ref>
+If we substitute a variable for itself, we get the following special case of <code>SpecializationToObject</code>, which Margaris calls "An important special case".<ref>Margaris, page 76</ref>
 
 <jh>
 thm (Specialization () () ((∀ x φ) → φ) (
@@ -1586,11 +1597,9 @@ First is <code>x is-not-free-in ∃ y [ s / x ] φ</code>
 </jh>
 Leaving that aside for now, we start with <code>x = s → (φ ↔ [ s / x ] φ)</code>,
 <jh>
-        (value x) s x φ SubstBuilderReplacement
-        x φ SubstItself
-        transformImplicationBiconditionalLeft
+        x s φ EqualitySubst
 </jh>
-add the quantifier to the two sides of the biconditional, and invoke <code>makeSubstExplicit</code>.
+add the quantifier to the two sides of the biconditional, and invoke <code>makeSubstExplicitNotFree</code>.
 <jh>
         y buildThereExistsInConsequent
         makeSubstExplicitNotFree
