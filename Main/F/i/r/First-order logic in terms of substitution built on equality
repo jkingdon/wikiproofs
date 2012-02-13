@@ -1749,6 +1749,13 @@ Now we add a substitution for <code>y</code> everywhere, to get <code>[ s / y ] 
 Detaching the lemma we get <code>[ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy</code>.
 <jh>
 #        applyModusPonens
+</jh>
+Because <code>y</code> does not occur in <code>[ s / x ] φx</code>, we can remove <code>[ s / y ]</code> from the left hand side.
+<jh>
+#        swapBiconditional
+#        s y (subst s x φx) NullSubstitution
+#        applyBiconditionalTransitivity
+#        swapBiconditional
 #))
 </jh>
 
