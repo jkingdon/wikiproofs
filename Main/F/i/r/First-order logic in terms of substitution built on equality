@@ -25,6 +25,15 @@ thm (specializeToObject () ((H (∀ x φ))) (subst s x φ) (
 ))
 </jh>
 
+Here's another slight variant of that one.
+<jh>
+thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antecedent → (subst s x φ)) (
+        H
+        x φ s SpecializationToObject
+        applySyllogism
+))
+</jh>
+
 === Builder for ∀ ===
 For convenience, we define some rules concerning building up formulas. From <code>φ → ψ</code> we want to be able to get <code>∀ x φ → ∀ x ψ</code>.
 <jh>
