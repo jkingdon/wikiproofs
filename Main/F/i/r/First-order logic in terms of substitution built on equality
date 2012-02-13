@@ -1730,10 +1730,16 @@ We now have <code>x = y → (φx ↔ φy)</code>. We add a substitution for <cod
 
 #        x φx φy s SubstBuilder
 #        applySyllogism
-#...
 </jh>
 Now we add a substitution for <code>y</code> everywhere, to get <code>[ s / y ] [ s / x ] x = y → ([ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy)</code>.
 <jh>
+#        s y addSubst
+
+#        y s (subst s x ((value x) = (value y))) SubstNotFree
+#        addForAllToConsequentNotFree
+
+#        y (subst s x φx) (subst s x φy) s SubstBuilder
+#        applySyllogism
 #))
 </jh>
 
