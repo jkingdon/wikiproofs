@@ -798,19 +798,25 @@ thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
 We now turn to changing the variable of quantification. Margaris explains this in terms of whether two formulas <code>φ(x)</code> and <code>φ(y)</code> are ''similar''. Our equivalent is fairly close; the distinct variable constraint between <code>x</code> and <code>y</code> corresponds to Margaris' requirement of two distinct variables; the distinct variable constraints <code>(y φx) (x φy)</code> correspond to Margaris' statement that <code>x</code> must not be free in <code>φ(y)</code> and <code>y</code> must not be free in <code>φ(x)</code>. Margaris' requirement that <code>φ(x)</code> be the same as <code>[ x / y ] φ(y)</code> and that <code>φ(y)</code> be the same as <code>[ y / x ] φ(x)</code> correspond to the hypothesis <code>x = y → (φx ↔ φy)</code>. These definitions in Margaris can be found on page 86, which also contains Margaris' statement of <code>ChangeVariableForAll<code>, which is Theorem 18.6.
 
 <jh>
-thm (ChangeVariableForAllImplication ((y φx) (x φy) (x y))
-  ((H (((value x) = (value y)) → (φx ↔ φy))))
+thm (ChangeVariableForAllImplicationNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
   ((∀ x φx) → (∀ y φy)) (
 </jh>
 We start with <code>∀ x φx → [ y / x ] φx</code> and then add <code>∀ y</code> to the consequent.
 <jh>
+        HFREEY
+        x addForAllNotFree
         x φx (value y) SpecializationToObject
-        y addForAllToConsequent
+        addForAllToConsequentNotFree
 </jh>
 Our hypothesis easily leads to <code>[ y / x ] φx ↔ φy</code>.
 <jh>
+        HFREEX
         H
-        makeSubstExplicit
+        makeSubstExplicitNotFree
 </jh>
 Combining those two results we are done.
 <jh>
@@ -819,17 +825,20 @@ Combining those two results we are done.
         applySyllogism
 ))
 
-thm (ChangeVariableForAll ((y φx) (x φy) (x y))
-  ((H (((value x) = (value y)) → (φx ↔ φy))))
+thm (ChangeVariableForAllNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
   ((∀ x φx) ↔ (∀ y φy)) (
 </jh>
 The forward implication is what we just proved.
 <jh>
-        H ChangeVariableForAllImplication
-
+        HFREEX HFREEY H ChangeVariableForAllImplicationNotFree
 </jh>
 The reverse implication is much the same. We just need to start out by transforming the hypothesis into <code>y = x → (φy ↔ φx)</code>.
 <jh>
+        HFREEY HFREEX
         H
         (value x) (value y) EqualitySymmetry
         transformAntecedent
@@ -838,9 +847,21 @@ The reverse implication is much the same. We just need to start out by transform
         eliminateBiconditionalReverse
         applySyllogism
 
-        ChangeVariableForAllImplication
+        ChangeVariableForAllImplicationNotFree
 
         introduceBiconditionalFromImplications
+))
+</jh>
+
+A version with distinct variables instead of freeness hypotheses is, of course, a simple consequence.
+<jh>
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableForAllNotFree
 ))
 </jh>
 
@@ -858,6 +879,45 @@ thm (ChangeVariableThereExists
 
         ChangeVariableForAll
         addNegation
+))
+
+thm (ChangeVariableThereExistsNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        HFREEX
+        negateNotFree
+
+        HFREEY
+        negateNotFree
+
+        H
+        φx φy NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableForAllNotFree
+        addNegation
+))
+</jh>
+
+=== Stating changes of variable in terms of explicit substitutions ===
+Another way to express the change variable theorems is with explicit substitution (using <code>subst</code>). The proofs from [[First-order logic with quantifiability]] work without modification.
+<jh>
+thm (ChangeVariableExplicitThereExists ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ EqualitySubst
+        ChangeVariableThereExistsNotFree
+))
+
+thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ EqualitySubst
+        ChangeVariableForAllNotFree
 ))
 </jh>
 
