@@ -1714,23 +1714,28 @@ Combining that with <code>[ s / x ] x = s</code> gives <code>[ s / y ] [ s / x ]
         eliminateBiconditionalForward
         applyModusPonens
 ))
-</jh>
 
-Here follows a rough sketch and some notes, to be fleshed out.
-
-<jh>
 #thm (ChangeVariableSubstitution
 #  ((y φx) (x φy) (x y) (s x) (s y))
 #  ((H (((value x) = (value y)) → (φx ↔ φy))))
 #  ((subst s x φx) ↔ (subst s y φy)) (
+#        H
+</jh>
+We now have <code>x = y → (φx ↔ φy)</code>. We add a substitution for <code>x</code> everywhere, to get <code>[ s / x ] x = y → ([ s / x ] φx ↔ [ s / x ] φy)</code>
+<jh>
+#        s x addSubst
+
+#        x s ((value x) = (value y)) SubstNotFree
+#        addForAllToConsequentNotFree
+
+#        x φx φy s SubstBuilder
+#        applySyllogism
+#...
+</jh>
+Now we add a substitution for <code>y</code> everywhere, to get <code>[ s / y ] [ s / x ] x = y → ([ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy)</code>.
+<jh>
 #))
 </jh>
-
-have: x = y → (φx ↔ φy)
-  [ s / x ] x = y → ([ s / x ] φx ↔ [ s / x ] φy)
-  [ s / y ] [ s / x ] x = y → ([ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy)
-
-end of section in need of fleshing out.
 
 == Export ==
 We can export first-order logic now.
