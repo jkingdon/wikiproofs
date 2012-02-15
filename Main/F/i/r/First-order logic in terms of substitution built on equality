@@ -1790,18 +1790,23 @@ Adding for-all to the consequent we are finished.
         addForAllToConsequentNotFree
 ))
 
-#thm (ImplicitForAll-2 ((x s) (x ψ)) ()
-#  ((∀ x (((value x) = s) → φ)) → (subst s x φ)) (
-#        x (((value x) = s) → φ) s SpecializationToObject
+thm (ImplicitForAll-2 ((x s) (x ψ)) ()
+  ((∀ x (((value x) = s) → φ)) → (subst s x φ)) (
+</jh>
+We'll need <code>[ s / x ] x = s</code> shortly, so we put it on the proof stack.
+<jh>
+        s x SubstEquality
 
-#        s x ((value x) = s) φ SubstImplication
-#        eliminateBiconditionalReverse
-#        applySyllogism
+        x (((value x) = s) → φ) s SpecializationToObject
+
+        s x ((value x) = s) φ SubstImplication
+        eliminateBiconditionalReverse
+        applySyllogism
 </jh>
 Now the consequent is <code>[ s / x ] x = s → [ s / x ] φ</code>. But <code>[ s / x ] x = s</code> is always true.
 <jh>
-
-#))
+        detachImplicationImplication
+))
 
 
 #thm (ImplicitForAll ((x s) (x ψ)) ((((value x) = s) → (φ ↔ ψ)))
