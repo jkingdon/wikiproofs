@@ -1821,6 +1821,23 @@ thm (ImplicitForAll ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
 ))
 </jh>
 
+=== Implicit substitution and existential quantification ===
+There is another similar expression, involving <code>∃</code>, namely <code>∃ x (x = s ∧ φ)</code>.
+<jh>
+#thm (ImplicitThereExists-1 ((x s) (x ψ)) ()
+#  ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
+#))
+
+#thm (ImplicitThereExists-2 ((x s) (x ψ)) ()
+#  ((∃ x (((value x) = s) ∧ φ)) → (subst s x φ)) (
+#        ((value x) = s) φ ConjunctionLeftElimination
+#))
+
+#thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
+#  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
+#))
+</jh>
+
 == Export ==
 We can export first-order logic now.
 <jh>
