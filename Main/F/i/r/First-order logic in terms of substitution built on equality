@@ -1676,16 +1676,12 @@ thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
 ))
 </jh>
 
-=== Change of variable in substitution ===
-Changing the bound variable in a substitution is possible, much as we do for quantifiers.
-
-We are trying to show that we can conclude <code>[ s / x ] φx ↔ [ s / y ] φy</code> from <code>x = y → (φx ↔ φy)</code> (where almost everything is distinct except that <code>φx</code> can contain <code>x</code> and <code>φy</code> can contain <code>y</code>). Without trying to sketch out the proof in detail right now, we will be adding <code>[ s / x ]</code> to the start of both sides of the implication, and likewise for <code>y</code>. The first lemma involves two variables which are equal, and substituting the same replacement for both of them.
+=== A lemma regarding substitution and equality ===
+Here we show <code>[ s / x ] x = s</code>.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1], but for a term not a variable</ref>
 <jh>
-thm (ChangeVariableSubstitution-1
-  ((x y) (s x) (s y)) ()
-  (subst s y (subst s x ((value x) = (value y)))) (
+thm (SubstEquality ((x s)) () (subst s x ((value x) = s)) (
 </jh>
-Might as well start with the theorem which we can elaborate into what we are trying to prove, <code>s = s</code>.
+We start with <code>s = s</code>.
 <jh>
         s EqualityReflexivity
 </jh>
@@ -1698,8 +1694,20 @@ which we then combine with <code>s = s</code> to give <code>[ s / x ] x = s</cod
 <jh>
         eliminateBiconditionalForward
         applyModusPonens
+))
 </jh>
-Now we pull the same trick with <code>y</code>. The equivalence is <code>[ s / y ] [ s / x ] x = y ↔ [ s / x ] x = s</code>, which derives from <code>y = s → ([ s / x ] x = y ↔ [ s / x ] x = s)</code>.
+
+=== Change of variable in substitution ===
+Changing the bound variable in a substitution is possible, much as we do for quantifiers.
+
+We are trying to show that we can conclude <code>[ s / x ] φx ↔ [ s / y ] φy</code> from <code>x = y → (φx ↔ φy)</code> (where almost everything is distinct except that <code>φx</code> can contain <code>x</code> and <code>φy</code> can contain <code>y</code>). Without trying to sketch out the proof in detail right now, we will be adding <code>[ s / x ]</code> to the start of both sides of the implication, and likewise for <code>y</code>. The first lemma is a variation of <code>SubstEquality</code> which substitutes both sides of the equality, not just one.
+<jh>
+thm (ChangeVariableSubstitution-1
+  ((x y) (s x) (s y)) ()
+  (subst s y (subst s x ((value x) = (value y)))) (
+        s x SubstEquality
+</jh>
+Having substituted one side of the equality, we pull the same trick with <code>y</code>. The equivalence is <code>[ s / y ] [ s / x ] x = y ↔ [ s / x ] x = s</code>, which derives from <code>y = s → ([ s / x ] x = y ↔ [ s / x ] x = s)</code>.
 <jh>
         (value y) s (value x) EqualityBuilderLL
         x addForAllToConsequent
@@ -1784,6 +1792,15 @@ Adding for-all to the consequent we are finished.
 
 #thm (ImplicitForAll-2 ((x s) (x ψ)) ()
 #  ((∀ x (((value x) = s) → φ)) → (subst s x φ)) (
+#        x (((value x) = s) → φ) s SpecializationToObject
+
+#        s x ((value x) = s) φ SubstImplication
+#        eliminateBiconditionalReverse
+#        applySyllogism
+</jh>
+Now the consequent is <code>[ s / x ] x = s → [ s / x ] φ</code>. But <code>[ s / x ] x = s</code> is always true.
+<jh>
+
 #))
 
 
