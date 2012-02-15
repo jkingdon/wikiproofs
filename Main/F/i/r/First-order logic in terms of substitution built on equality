@@ -1808,10 +1808,17 @@ Now the consequent is <code>[ s / x ] x = s → [ s / x ] φ</code>. But <code>[
         detachImplicationImplication
 ))
 
+thm (ImplicitForAll ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
+  ((∀ x (((value x) = s) → φ)) ↔ ψ) (
+        x s φ ImplicitForAll-2
+        s x φ ImplicitForAll-1
+        introduceBiconditionalFromImplications
 
-#thm (ImplicitForAll ((x s) (x ψ)) ((((value x) = s) → (φ ↔ ψ)))
-#  ((∀ x (((value x) = s) → φ)) ↔ ψ) (
-#))
+        H
+        makeSubstExplicit
+
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Export ==
