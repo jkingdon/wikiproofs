@@ -1824,14 +1824,30 @@ thm (ImplicitForAll ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
 === Implicit substitution and existential quantification ===
 There is another similar expression, involving <code>∃</code>, namely <code>∃ x (x = s ∧ φ)</code>.
 <jh>
-#thm (ImplicitThereExists-1 ((x s) (x ψ)) ()
+#thm (ImplicitThereExists-1 ((x s)) ()
 #  ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
 #))
 
-#thm (ImplicitThereExists-2 ((x s) (x ψ)) ()
-#  ((∃ x (((value x) = s) ∧ φ)) → (subst s x φ)) (
-#        ((value x) = s) φ ConjunctionLeftElimination
-#))
+thm (ImplicitThereExists-2 ((x s)) ()
+  ((∃ x (((value x) = s) ∧ φ)) → (subst s x φ)) (
+</jh>
+In a few steps we'll need <code>x is-not-free-in [ s / x ] φ</code>.
+<jh>
+        x s φ SubstNotFree
+</jh>
+We start with <code>x = s → (φ ↔ [ s / x ] φ)</code>,
+<jh>
+        x s φ EqualitySubst
+</jh>
+and apply propositional logic to turn it into <code>x = s ∧ φ → [ s / x ] φ</code>.
+<jh>
+        eliminateBiconditionalReverseInConsequent
+        import
+</jh>
+Adding <code>∃</code> to the antecedent we are done.
+<jh>
+        addThereExistsToAntecedentNotFree
+))
 
 #thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
 #  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
