@@ -1864,9 +1864,17 @@ Adding <code>∃</code> to the antecedent we are done.
         addThereExistsToAntecedentNotFree
 ))
 
-#thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
-#  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
-#))
+thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
+  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
+        x s φ ImplicitThereExists-2
+        s x φ ImplicitThereExists-1
+        introduceBiconditionalFromImplications
+
+        H
+        makeSubstExplicit
+
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == Export ==
