@@ -1,0 +1,1894 @@
+{{interfaces
+| imports = [[Interface:Axioms of first-order logic in terms of substitution built on equality]]
+| exports = [[Interface:First-order logic with quantifiability]]
+}}
+
+We import some interfaces and define some variables:
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (AXIOMS Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (PROPOSITIONAL) ())
+
+var (formula φ ψ χ θ φx φy φs ψy antecedent)
+var (object s t u s0 s1 t0 t1)
+var (variable x y z x0 x1 y0 y1)
+</jh>
+
+Here we derive first-order logic from axioms. The proofs are largely taken from Margaris,<ref>Margaris, Angelo (1990), ''First Order Mathematical Logic'', ISBN 978-0-486-66269-5</ref> although in some cases concepts (such as the deduction theorem) do not translate directly to JHilbert and we need to do things somewhat differently.
+
+== A few rules based on axioms ==
+Here is a rule form of <code>SpecializationToObject</code>.<ref>Theorem 17.1 in Margaris, page 74</ref>
+<jh>
+thm (specializeToObject () ((H (∀ x φ))) (subst s x φ) (
+        H
+        x φ s SpecializationToObject
+        applyModusPonens
+))
+</jh>
+
+Here's another slight variant of that one.
+<jh>
+thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antecedent → (subst s x φ)) (
+        H
+        x φ s SpecializationToObject
+        applySyllogism
+))
+</jh>
+
+=== Builder for ∀ ===
+For convenience, we define some rules concerning building up formulas. From <code>φ → ψ</code> we want to be able to get <code>∀ x φ → ∀ x ψ</code>.
+<jh>
+thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
+        H
+        x generalize
+
+        x φ ψ ForAllImplication
+
+        applyModusPonens
+))
+</jh>
+
+The builder for the biconditional follows trivially:
+<jh>
+thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
+        H eliminateBiconditionalReverse x addForAll
+        H eliminateBiconditionalForward x addForAll
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+== Substitution ==
+Margaris does not develop substitution based on axioms and proofs, but instead describes most of the substitution rules in terms of definitions expressed in English. We don't have that luxury, nor does <code>JHilbert</code> know about substitution until we teach it, so we have assumed a number of substitution results as axioms, and here we prove some theorems as consequences of them.
+
+=== Distinct variable version of makeSubstExplicitNotFree ===
+<jh>
+thm (makeSubstExplicit ((x s) (x ψ))
+  ((H (((value x) = s) → (φ ↔ ψ))))
+  ((subst s x φ) ↔ ψ) (
+        x ψ DistinctNotFree
+        H
+        makeSubstExplicitNotFree
+))
+</jh>
+
+=== Substitutions which replace equal terms ===
+Replacing a variable with either of two terms has the same effect, if the two terms are equal. Since we are  assuming various builders for <code>subst</code> as axioms, we just need a rule form here.
+<jh>
+thm (buildSubstReplacement () ((H (s = t)))
+  ((subst s x φ) ↔ (subst t x φ)) (
+        H
+        s t x φ SubstBuilderReplacement
+        applyModusPonens
+))
+</jh>
+
+=== Builders ===
+We assumed <code>SubstAddition</code> as an axiom. We biconditionalize it and add some rules.
+<jh>
+thm (SubstBuilder () () ((∀ x (φ ↔ ψ)) → ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ s SubstAddition
+        applySyllogism
+
+        φ ψ BiconditionalForwardElimination
+        x addForAll
+
+        x ψ φ s SubstAddition
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+
+thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstAddition
+        applyModusPonens
+))
+
+thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstBuilder
+        applyModusPonens
+))
+</jh>
+
+=== Composition ===
+The ability to compose two substitutions is an easy consequence of <code>makeSubstExplicit</code> and <code>SubstBuilderReplacement</code>.
+
+<jh>
+thm (SubstitutionComposition ((φ y) (s y) (x y)) ()
+  ((subst s y (subst (value y) x φ)) ↔ (subst s x φ)) (
+</jh>
+We start with <code>y = s → ([ y / x ] φ ↔ [ s / x ] φ)</code>.
+<jh>
+        (value y) s x φ SubstBuilderReplacement
+</jh>
+That's all set up for <code>makeSubstExplicit</code>.
+<jh>
+        makeSubstExplicit
+))
+</jh>
+
+=== Substituting a variable with something equal to itself ===
+The following result follows directly from <code>SubstBuilderReplacement</code> and <code>SubstItself</code>.
+<jh>
+thm (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))) (
+</jh>
+The first step is <code>x = s → ([ x / x ] φ ↔ [ s / x ] φ)</code>
+<jh>
+        (value x) s x φ SubstBuilderReplacement
+</jh>
+Now we turn <code>[ x / x ] φ</code> into <code>φ</code>.
+<jh>
+        x φ SubstItself
+        transformImplicationBiconditionalLeft
+))
+</jh>
+
+=== Turning an equality-based builder into the ability to move substitution across a predicate or operation ===
+Substitution can be moved in or out of a predicate or operation, provided the predicate or operation has a builder. Here we show how, for the case where the predicate is <code>¬</code> and the builder is the forward direction of <code>NegationFunction</code>.
+
+We start with the special case in which the variable being substituted is distinct from its replacement.
+<jh>
+thm (SubstNegationDistinct ((x s)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+</jh>
+A bit later we'll need <code>x is-not-free-in ¬ subst s x φ</code>, so we stick that on the proof stack.
+<jh>
+        x s φ SubstNotFree
+        negateNotFree
+</jh>
+We start with <code>x = s → (φ ↔ subst s x φ)</code>.
+<jh>
+        x s φ EqualitySubst
+</jh>
+Now we add our predicate (here negation) to the right side, to get <code>x = s → (¬ φ ↔ ¬ subst s x φ)</code>.
+<jh>
+        φ (subst s x φ) NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Making that substitution explicit gives us <code>subst s x ¬ φ ↔ ¬ subst s x φ</code>, which is what we need.
+<jh>
+        makeSubstExplicitNotFree
+))
+</jh>
+
+Removing the distinct variable constraint is a matter of first substituting for an intermediate variable (which is distinct from everything), and then substituting the original replacement.
+<jh>
+thm (SubstNegation ( (y x) (y s) (y φ)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+        s y x (¬ φ) SubstitutionComposition
+        swapBiconditional
+</jh>
+Now we have <code>[ s / y ] [ y / x ] ¬ φ</code>, which we first transform to <code>[ s / y ] ¬ [ y / x ] φ</code>,
+<jh>
+        (value y) x φ SubstNegationDistinct
+        s y buildSubst
+        applyBiconditionalTransitivity
+</jh>
+and then <code>¬ [ s / y ] [ y / x ] φ</code>.
+<jh>
+        s y (subst (value y) x φ) SubstNegationDistinct
+        applyBiconditionalTransitivity
+</jh>
+Applying composition once more we are done.
+<jh>
+        s y x φ SubstitutionComposition
+        addNegation
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Subst across implication ===
+While we are here, we'll go ahead and prove the analogous result for the other connectives, starting with implication. The proof is very much like the one for negation, with the most obvious difference being that implication has two arguments instead of just one.
+
+<jh>
+thm (SubstImplicationDistinct ((s x)) () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) (
+</jh>
+A bit later we'll need <code>x is-not-free-in (subst s x φ → subst s x ψ)</code>, so we stick that on the proof stack.
+<jh>
+        x s φ SubstNotFree
+        x s ψ SubstNotFree
+        implicationNotFree
+</jh>
+We start with <code>x = s → ((subst x x φ → subst x x ψ) ↔ (subst s x φ → subst s x ψ))</code>,
+<jh>
+        (value x) s x φ SubstBuilderReplacement
+        (value x) s x ψ SubstBuilderReplacement
+        buildImplicationInConsequent
+</jh>
+and simplify to <code>x = s → ((φ → ψ) ↔ (subst s x φ → subst s x ψ))</code>.
+<jh>
+        x φ SubstItself
+        x ψ SubstItself
+        buildImplication
+        transformImplicationBiconditionalLeft
+</jh>
+Making that substitution explicit gives us <code>subst s x (φ → ψ) ↔ (subst s x φ → subst s x ψ)</code>, which is what we need.
+<jh>
+        makeSubstExplicitNotFree
+))
+</jh>
+
+Removing the distinct variable constraint is analogous to what we did for negation.
+<jh>
+thm (SubstImplication ( (y x) (y s) (y φ) (y ψ)) () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) (
+        s y x (φ → ψ) SubstitutionComposition
+        swapBiconditional
+
+        (value y) x φ ψ SubstImplicationDistinct
+        s y buildSubst
+        applyBiconditionalTransitivity
+
+        s y (subst (value y) x φ) (subst (value y) x ψ) SubstImplicationDistinct
+        applyBiconditionalTransitivity
+
+        s y x φ SubstitutionComposition
+        s y x ψ SubstitutionComposition
+        buildImplication
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Subst across disjunction ===
+Although we could prove similar results for the other three connectives in the same way, it will be slightly more convenient to just prove them from the two we already proved.
+<jh>
+thm (SubstDisjunction () () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))) (
+        φ ψ DisjunctionImplication
+        s x buildSubst
+
+        s x (¬ φ) ψ SubstImplication
+        applyBiconditionalTransitivity
+
+        s x φ SubstNegation
+        (subst s x ψ) buildImplicationConsequent
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) DisjunctionImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (SubstConjunction () () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))) (
+        φ ψ DeMorganNDN swapBiconditional
+        s x buildSubst
+
+        s x ((¬ φ) ∨ (¬ ψ)) SubstNegation
+        applyBiconditionalTransitivity
+
+        s x (¬ φ) (¬ ψ) SubstDisjunction
+        addNegation
+        applyBiconditionalTransitivity
+
+        s x φ SubstNegation
+        s x ψ SubstNegation
+        buildDisjunction
+        addNegation
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) DeMorganNDN
+        applyBiconditionalTransitivity
+))
+
+thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalImplication
+        s x buildSubst
+
+        s x (φ → ψ) (ψ → φ) SubstConjunction
+        applyBiconditionalTransitivity
+
+        s x φ ψ SubstImplication
+        s x ψ φ SubstImplication
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+== Existential quantification ==
+We define <code>∃</code> in terms of <code>∀</code>.<ref>Margaris, page 49</ref>
+<jh>
+def ((∃ x φ) (¬ (∀ x (¬ φ))))
+</jh>
+
+== Existential Introduction ==
+Introducing <code>∃</code> from a substitution is closely related to specializing <code>∀</code> to a substitution.<ref>Theorem 17.3, Margaris, page 75</ref>
+
+<jh>
+thm (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)) (
+</jh>
+We start with <code>∀ x ¬ φ → [ s / x ] ¬ φ</code>,
+<jh>
+        x (¬ φ) s SpecializationToObject
+</jh>
+turn the consequent into <code>¬ [ s / x ] φ</code>,
+<jh>
+        s x φ SubstNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh> 
+and transpose to get <code>[ s / x ] φ → ¬ ∀ x ¬ φ<code>, which is what we want.
+<jh>
+        transposeWithNegatedConsequent
+))
+</jh>
+
+Here's a rule form.<ref>Theorem 17.4, Margaris, page 75</ref>
+<jh>
+thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
+        H
+        s x φ ThereExistsIntroductionFromObject
+        applyModusPonens
+))
+</jh>
+
+== Specialization and existential introduction without a substitution ==
+If we substitute a variable for itself, we get the following special case of <code>SpecializationToObject</code>, which Margaris calls "An important special case".<ref>Margaris, page 76</ref>
+
+<jh>
+thm (Specialization () () ((∀ x φ) → φ) (
+        x φ (value x) SpecializationToObject
+
+        x φ SubstItself
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (specialize () ((H (∀ x φ))) φ (
+        H
+        x φ Specialization
+        applyModusPonens
+))
+</jh>
+
+Likewise, <code>φ → ∃ x φ</code> is a special case of <code>[ s / x ] φ → ∃ x φ</code>.<ref>Margaris, page 76</ref>
+
+<jh>
+thm (ThereExistsIntroduction () () (φ → (∃ x φ)) (
+        x φ SubstItself
+        eliminateBiconditionalForward
+
+        (value x) x φ ThereExistsIntroductionFromObject
+        applySyllogism
+))
+</jh>
+
+The previous results let us conclude <code>∀ x φ → ∃ x φ</code>.<ref>Theorem 17.6, Margaris, page 76</ref>
+<jh>
+thm (ForAllThereExists () () ((∀ x φ) → (∃ x φ)) (
+        x φ Specialization
+        φ x ThereExistsIntroduction
+        applySyllogism
+))
+</jh>
+
+== Quantifier commutation ==
+We can exchange the order of universal quantifiers.<ref>Theorem 17.10, Margaris, page 78</ref> Margaris's proof doesn't quite work as-is, as it relies on the deduction theorem, but a fairly small variation of it avoids this problem.
+<jh>
+thm (ForAllCommutationImplication () () ((∀ x (∀ y φ)) → (∀ y (∀ x φ))) (
+</jh>
+First we add <code>∀ x</code> to the start of <code>∀ x ∀ y φ</code>.
+<jh>
+        x (∀ y φ) BoundForAllNotFree
+        GeneralizationNotFree
+</jh>
+Then we add <code>∀ y</code> to the start.
+<jh>
+        y φ BoundForAllNotFree
+        x addForAllNotFree
+        x addForAllNotFree
+        GeneralizationNotFree
+        applySyllogism
+</jh>
+That gives us <code>∀ y ∀ x ∀ x ∀ y φ</code> and dropping the last two quantifiers we are done.
+<jh>
+        y φ Specialization
+        x addForAll
+        x addForAll
+        y addForAll
+        applySyllogism
+
+        x φ Specialization
+        x addForAll
+        y addForAll
+        applySyllogism
+))
+</jh>
+
+The biconditional version follows trivially.<ref>Theorem 19.2, Margaris, page 91, which metamath cites as 19.5</ref>
+<jh>
+thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
+        x y φ ForAllCommutationImplication
+        y x φ ForAllCommutationImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+== Adding and removing quantifiers ==
+Although Margaris does not tackle the biconditionalized version of this theorem until later, it will be convenient to prove it now. It is that <code>∀ x φ ↔ φ</code>, if <code>x</code> is not free in <code>φ</code>.<ref>Theorem 19.1, Margaris, page 90, cited by metamath as 19.3</ref>
+
+<jh>
+thm (ForAllAddRemoveNotFree () ((XFREE (x is-not-free-in φ))) ((∀ x φ) ↔ φ) (
+        x φ Specialization
+
+        XFREE
+        GeneralizationNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+== Moving is-not-free-in across connectives ==
+The idea that a variable which is not free in the left hand and right hand sides of a connective is not free in the connected formula is basic to the understanding of what it means for a variable to not be free in a formula. We adopted this as an axiom for negation and implication. Here we prove it from the other three connectives, which follow easily from the two axioms.
+
+=== Disjunction ===
+<jh>
+thm (disjunctionNotFree ()
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ∨ ψ)) (
+        HPHI
+        negateNotFree
+
+        HPSI
+        implicationNotFree
+</jh>
+So far that's <code>x is-not-free-in (¬ φ → ψ)</code>. Turning the implication to a disjunction we are done.
+<jh>
+        φ ψ DisjunctionImplication
+        x buildNotFree
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Conjunction ===
+<jh>
+thm (conjunctionNotFree ()
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ∧ ψ)) (
+        HPHI
+        negateNotFree
+
+        HPSI
+        negateNotFree
+
+        disjunctionNotFree
+        negateNotFree
+
+        φ ψ DeMorganNDN
+        x buildNotFree
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
+=== Biconditional ===
+<jh>
+thm (biconditionalNotFree ()
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ↔ ψ)) (
+        HPHI
+        HPSI
+        implicationNotFree
+
+        HPSI
+        HPHI
+        implicationNotFree
+
+        conjunctionNotFree
+
+        φ ψ BiconditionalImplication
+        x buildNotFree
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Existential quantification ===
+In a manner similar to the connectives, freeness for <code>∃</code> follows from the corresponding axioms for <code>∀</code>.
+<jh>
+thm (BoundThereExistsNotFree () () (x is-not-free-in (∃ x φ)) (
+        x (¬ φ) BoundForAllNotFree
+        negateNotFree
+))
+
+thm (addThereExistsNotFree () ((HFREE (x is-not-free-in φ))) (x is-not-free-in (∃ y φ)) (
+        HFREE
+        negateNotFree
+        y addForAllNotFree
+        negateNotFree
+))
+</jh>
+
+== Adding existential quantification to the antecedent ==
+Margaris expresses many of his proofs in terms of a rule which he calls ''Rule C''.<ref>Theorem 17.12, Margaris, page 79</ref> We give a few variants of rule C, one is that given <code>φ → ψ</code> we can conclude <code>∃ φ → ψ</code>, provided that <code>x</code> is not free in <code>Ψ</code>. Margaris' version basically combines this with the deduction theorem.
+
+The first variation is Theorem 17.11 in Margaris.<ref>Margaris, page 78</ref>
+<jh>
+thm (ThereExistsAntecedentIntroductionNotFree ()
+  ((HFREE (x is-not-free-in ψ)))
+  ((∀ x (φ → ψ)) → ((∃ x φ) → ψ)) (
+</jh>
+We start with <code>∀ x (φ → ψ) → (∀ x ¬ ψ → ∀ x ¬ φ)</code>.
+<jh>
+        φ ψ Transposition
+        eliminateBiconditionalReverse
+        x addForAll
+
+        x (¬ ψ) (¬ φ) ForAllImplication
+        applySyllogism
+</jh>
+Now we change <code>∀ x ¬ ψ</code> to <code>¬ ψ</code>.
+<jh>
+        HFREE
+        negateNotFree
+
+        ForAllAddRemoveNotFree
+
+        transformImplicationImplicationAntecedent
+</jh>
+Then we turn <code>¬ ψ → ∀ x ¬ φ</code> into <code>¬ ∀ x ¬ φ → ψ</code>, which is all we need.
+<jh>
+        ψ (∀ x (¬ φ)) TranspositionWithNegatedAntecedent
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+The other variations are direct consequences of this one.
+<jh>
+thm (addThereExistsToAntecedentNotFree ()
+  ((HFREE (x is-not-free-in ψ)) (HIMP (φ → ψ)))
+  ((∃ x φ) → ψ) (
+        HIMP
+        x generalize
+
+        HFREE
+        φ ThereExistsAntecedentIntroductionNotFree
+
+        applyModusPonens
+))
+
+thm (addThereExistsToAntecedent ((x ψ))
+  ((H (φ → ψ)))
+  ((∃ x φ) → ψ) (
+        x ψ DistinctNotFree
+        H
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
+We now prove a number of theorems using the ability to add there exists to the antecedent.
+
+=== There exists across a conjunction ===
+There exists can be split across a conjunction.<ref>Theorem 17.14, Margaris, page 80</ref>
+<jh>
+thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))) (
+</jh>
+We start with <code>x is-not-free-in (∃ x φ ∧ ∃ x ψ)</code>.
+<jh>
+        x φ BoundThereExistsNotFree
+        x ψ BoundThereExistsNotFree
+        conjunctionNotFree
+</jh>
+The other part of the proof is <code>φ ∧ ψ → ∃ x φ ∧ ∃ x ψ</code>.
+<jh>
+        φ ψ ConjunctionRightElimination
+
+        φ x ThereExistsIntroduction
+        applySyllogism
+
+        φ ψ ConjunctionLeftElimination
+
+        ψ x ThereExistsIntroduction
+        applySyllogism
+
+        composeConjunction
+
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
+=== Adding there exists to both sides of an implication ===
+Here we prove <code>∀ x (φ → ψ) → (∃ x φ → ∃ x ψ)</code>.<ref>Theorem 17.15, Margaris, page 80</ref>
+<jh>
+thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))) (
+</jh>
+We start with <code>∀ x (φ → ψ) → ∀ x (φ → ∃ x ψ)</code>.
+<jh>
+        ψ x ThereExistsIntroduction
+        φ addCommonAntecedent
+        x addForAll
+</jh>
+Combining that with <code>∀ x (φ → ∃ x ψ) → (∃ x φ → ∃ x ψ)</code> we are done.
+<jh>
+        x ψ BoundThereExistsNotFree
+        φ ThereExistsAntecedentIntroductionNotFree
+
+        applySyllogism
+))
+</jh>
+
+The rule form will also be convenient.
+<jh>
+thm (addThereExists () ((H (φ → ψ))) ((∃ x φ) → (∃ x ψ)) (
+        H
+        x generalize
+        x φ ψ ForAllImplicationThereExists
+        applyModusPonens
+))
+</jh>
+
+=== There exists commutation ===
+The next theorem is <code>∃ x ∃ y φ → ∃ y ∃ x φ</code>.<ref>Theorem 17.17, Margaris, page 81</ref>  We could, of course, prove this as a consequence of the corresponding theorem for <code>∀</code>, but instead we follow Margaris's proof, which adds the quantifiers with <code>ThereExistsIntroduction</code> and removes them with <code>addThereExistsToAntecedentNotFree</code>.
+<jh>
+thm (ThereExistsCommutationImplication () () ((∃ x (∃ y φ)) → (∃ y (∃ x φ))) (
+</jh>
+When we invoke <code>addThereExistsToAntecedentNotFree</code>, it will expect the freeness hypotheses before the implications, so we start by sticking <code>x is-not-free-in ∃ y ∃ x φ</code> and <code>y is-not-free-in ∃ y ∃ x φ</code> onto the proof stack.
+<jh>
+        x φ BoundThereExistsNotFree
+        y addThereExistsNotFree
+
+        y (∃ x φ) BoundThereExistsNotFree
+</jh>
+Now we can prove <code>φ → ∃ y ∃ x φ</code> and then add the quantifiers to the antecedent.
+<jh>
+        φ x ThereExistsIntroduction
+
+        (∃ x φ) y ThereExistsIntroduction
+        applySyllogism
+
+        addThereExistsToAntecedentNotFree
+
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
+The biconditional version follows trivially.<ref>Theorem scheme 11 on Margaris, page 89, which metamath cites as 19.11</ref>
+<jh>
+thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
+        x y φ ThereExistsCommutationImplication
+        y x φ ThereExistsCommutationImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+== Equivalence and replacement ==
+Although we don't develop a detailed theory of equivalence and replacement (involving substituting equals for equals) quite the way that Margaris presents it, many of the theorems in this chapter of Margaris apply here.
+
+=== Adding for-all to the consequent ===
+Here we prove <code>∀ x (φ → ψ) ↔ (φ → ∀ x ψ)</code>, where <code>x</code> is not free in <code>φ</code>,<ref>Theorem scheme 21 in Margaris, page 90, cited by metamath as 19.21</ref> and some related theorems and rules. Although Margaris does not emphasize this theorem, it forms the counterpart to adding there exists to the antecedent. That is, Margaris proofs which invoke Rule C can be translated fairly directly into proofs which invoke <code>addThereExistsToAntecedentNotFree</code>, and Margaris proofs which invoke generalization combined with the deduction theorem can be translated similarly into proofs which invoke <code>addForAllToConsequentNotFree</code>.
+
+<jh>
+thm (ForAllConsequentNotFreeForward ()
+  ((HFREE (x is-not-free-in φ)))
+  ((∀ x (φ → ψ)) → (φ → (∀ x ψ))) (
+        x φ ψ ForAllImplication
+
+        HFREE
+        ForAllAddRemoveNotFree
+        eliminateBiconditionalForward
+
+        (∀ x ψ) addCommonConsequent
+
+        applySyllogism
+))
+
+thm (addForAllToConsequentNotFree () ((HFREE (x is-not-free-in φ)) (HIMP (φ → ψ)))
+  (φ → (∀ x ψ)) (
+        HIMP
+        x generalize
+
+        HFREE
+        ψ ForAllConsequentNotFreeForward
+
+        applyModusPonens
+))
+
+thm (ForAllConsequentNotFreeReverse ()
+  ((HFREE (x is-not-free-in φ)))
+  ((φ → (∀ x ψ)) → (∀ x (φ → ψ))) (
+</jh>
+This proof is adapted from metamath.<ref>[http://us.metamath.org/mpeuni/19.21.html 19.21], metamath's set.mm, accessed Jan 2012</ref> We start with <code>x is-not-free-in (φ → ∀ x ψ)<code>.
+<jh>
+        HFREE
+        x ψ BoundForAllNotFree
+        implicationNotFree
+</jh>
+Now specialization and adding for all to the consequent finish the job.
+<jh>
+        x ψ Specialization
+        φ addCommonAntecedent
+        addForAllToConsequentNotFree
+))
+
+thm (ForAllConsequentNotFree ()
+  ((HFREE (x is-not-free-in φ)))
+  ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
+        HFREE
+        ψ ForAllConsequentNotFreeForward
+
+        HFREE
+        ψ ForAllConsequentNotFreeReverse
+
+        introduceBiconditionalFromImplications
+))
+
+thm (addForAllToConsequent ((x φ))
+  ((H (φ → ψ)))
+  (φ → (∀ x ψ)) (
+        x φ DistinctNotFree
+        H
+        addForAllToConsequentNotFree
+))
+</jh>
+
+=== For all across a biconditional ===
+We can distribute for all across a biconditional.<ref>Theorem 18.1, Margaris, page 83</ref> Although we probably could more or less follow Margaris's proof using <code>ForAllConsequentNotFree</code> and the like, there are some complications in translating that proof to our setup (which lacks the deduction theorem), so we opt for a simpler proof based more directly on <code>ForAllImplication</code>.
+<jh>
+thm (ForAllBiconditionalImplication () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) → (∀ x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ ForAllImplication
+        applySyllogism
+))
+
+thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))) (
+        x φ ψ ForAllBiconditionalImplication
+
+        φ ψ BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        x addForAll
+
+        x ψ φ ForAllBiconditionalImplication
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
+=== Replacement ===
+For Margaris, the ability to replace a formula with one which is equivalent to it is stated in terms of substituting a formula for a subformula of a larger formula. The equivalent for us can accomplish the same things, but is a bit more low-level, and consists of various theorems involving biconditionals. We have already seen <code>buildForAll</code> and similar theorems for propositional logic. Here is the counterpart for <code>∃</code>.
+<jh>
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        H
+        addNegation
+        x buildForAll
+        addNegation
+))
+</jh>
+
+=== Negation and quantifiers ===
+Margaris next proves <code>∀ x φ ↔ ¬ ∃ x ¬ φ</code>, using replacement.<ref>Theorem 18.5, Margaris, page 85</ref> We don't need that particular theorem to export to [[Interface:First-order logic with quantifiability]], so we can demonstrate the same replacement-like reasoning with <code>∃ x ¬ φ ↔ ¬ ∀ x φ</code>.<ref>Theorem scheme 14, Margaris, page 90</ref> The proof starts with <code>φ ↔ ¬ ¬ φ</code>, but we then need to replace this formula within a quantifier and a negation, which in Margaris is done with the replacement theorem and in our case is done with <code>buildForAll</code> and <code>addNegation</code>.
+<jh>
+thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
+        φ DoubleNegation
+        x buildForAll
+        addNegation
+))
+</jh>
+
+=== Change of variable in ∀ ===
+We now turn to changing the variable of quantification. Margaris explains this in terms of whether two formulas <code>φ(x)</code> and <code>φ(y)</code> are ''similar''. Our equivalent is fairly close; the distinct variable constraint between <code>x</code> and <code>y</code> corresponds to Margaris' requirement of two distinct variables; the distinct variable constraints <code>(y φx) (x φy)</code> correspond to Margaris' statement that <code>x</code> must not be free in <code>φ(y)</code> and <code>y</code> must not be free in <code>φ(x)</code>. Margaris' requirement that <code>φ(x)</code> be the same as <code>[ x / y ] φ(y)</code> and that <code>φ(y)</code> be the same as <code>[ y / x ] φ(x)</code> correspond to the hypothesis <code>x = y → (φx ↔ φy)</code>. These definitions in Margaris can be found on page 86, which also contains Margaris' statement of <code>ChangeVariableForAll<code>, which is Theorem 18.6.
+
+<jh>
+thm (ChangeVariableForAllImplicationNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
+  ((∀ x φx) → (∀ y φy)) (
+</jh>
+We start with <code>∀ x φx → [ y / x ] φx</code> and then add <code>∀ y</code> to the consequent.
+<jh>
+        HFREEY
+        x addForAllNotFree
+        x φx (value y) SpecializationToObject
+        addForAllToConsequentNotFree
+</jh>
+Our hypothesis easily leads to <code>[ y / x ] φx ↔ φy</code>.
+<jh>
+        HFREEX
+        H
+        makeSubstExplicitNotFree
+</jh>
+Combining those two results we are done.
+<jh>
+        eliminateBiconditionalReverse
+        y addForAll
+        applySyllogism
+))
+
+thm (ChangeVariableForAllNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
+  ((∀ x φx) ↔ (∀ y φy)) (
+</jh>
+The forward implication is what we just proved.
+<jh>
+        HFREEX HFREEY H ChangeVariableForAllImplicationNotFree
+</jh>
+The reverse implication is much the same. We just need to start out by transforming the hypothesis into <code>y = x → (φy ↔ φx)</code>.
+<jh>
+        HFREEY HFREEX
+        H
+        (value x) (value y) EqualitySymmetry
+        transformAntecedent
+
+        φx φy BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableForAllImplicationNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+A version with distinct variables instead of freeness hypotheses is, of course, a simple consequence.
+<jh>
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableForAllNotFree
+))
+</jh>
+
+=== Change of variable in ∃ ===
+Although it should be possible to provide the corresponding theorem for ∃ via <code>ThereExistsIntroductionFromObject</code> and the like, to keep things simple we just follow Margaris' proof which derives it from the one for ∀.<ref>Theorem 18.8, Margaris, page 86</ref>
+<jh>
+thm (ChangeVariableThereExists
+  ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        H
+        φx φy NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableForAll
+        addNegation
+))
+
+thm (ChangeVariableThereExistsNotFree
+  ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        HFREEX
+        negateNotFree
+
+        HFREEY
+        negateNotFree
+
+        H
+        φx φy NegationFunction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableForAllNotFree
+        addNegation
+))
+</jh>
+
+=== Stating changes of variable in terms of explicit substitutions ===
+Another way to express the change variable theorems is with explicit substitution (using <code>subst</code>). The proofs from [[First-order logic with quantifiability]] work without modification.
+<jh>
+thm (ChangeVariableExplicitThereExists ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ EqualitySubst
+        ChangeVariableThereExistsNotFree
+))
+
+thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ EqualitySubst
+        ChangeVariableForAllNotFree
+))
+</jh>
+
+== Theorems stated in chapter 19 of Margaris ==
+In chapter 19, Margaris restates a number of theorems already proved, proves a few additional ones, and states a number while leaving the proof as exercises.<ref>Margaris, page 89</ref> Here we prove those which we haven't proved yet and which we need to export to [[Interface:First-order logic with quantifiability]].
+
+=== Negating there-exists ===
+The theorem <code>¬ ∃ x φ ↔ ∀ x ¬ φ</code> is an easy consequence of our definition of ∃.<ref>Theorem 19.3, Margaris, page 91, cited by metamath as 19.7</ref>
+<jh>
+thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
+        (∀ x (¬ φ)) DoubleNegation
+        swapBiconditional
+))
+</jh>
+
+=== Adding and removing there exists ===
+We already proved that <code>∀ x φ ↔ φ</code> if <code>x</code> is not free in <code>φ</code>. Here we prove the analogous result for <code>∃</code>.<ref>Theorem scheme 9, Margaris, page 89, cited by metamath as 19.9</ref>
+<jh>
+thm (ThereExistsAddRemoveNotFree () ((HFREE (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
+        HFREE
+        φ ImplicationReflexivity
+        addThereExistsToAntecedentNotFree
+
+        φ x ThereExistsIntroduction
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+Here are a few variations of basically the same theorem.
+<jh>
+thm (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ) (
+        x φ DistinctNotFree
+        ThereExistsAddRemoveNotFree
+))
+
+thm (removeThereExists ((x φ)) ((H (∃ x φ))) φ (
+        H
+        x φ NullThereExists
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (removeThereExistsInConsequent ((x φ)) ((H (antecedent → (∃ x φ)))) (antecedent → φ) (
+        H
+        x φ NullThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+=== Commuting ∃ followed by ∀ ===
+∃ followed by ∀ can be switched.<ref>Theorem 19.4, Margaris, page 91, cited by metamath as 19.12</ref>
+<jh>
+thm (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))) (
+        y φ BoundForAllNotFree
+        x addThereExistsNotFree
+
+        x φ BoundThereExistsNotFree
+
+        y φ Specialization
+        φ x ThereExistsIntroduction
+        applySyllogism
+
+        addThereExistsToAntecedentNotFree
+
+        addForAllToConsequentNotFree
+))
+</jh>
+
+=== Biconditionalized version of ForAllImplicationThereExists ===
+This is a biconditionalized variation of a theorem we already proved.<ref>Theorem 19.6, Margaris, page 91, cited by metamath as 19.18</ref>
+<jh>
+thm (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ ForAllImplicationThereExists
+        applySyllogism
+
+        φ ψ BiconditionalForwardElimination
+        x addForAll
+
+        x ψ φ ForAllImplicationThereExists
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
+=== Distribution of for-all over conjunction ===
+Here we prove <code>∀ x (φ ∧ ψ) ↔ ∀ x φ ∧ ∀ x ψ</code>.<ref>Theorem 19.7, Margaris, page 92, cited by metamath as 19.26</ref> As Margaris does, we prove the forward and reverse directions separately.
+<jh>
+thm (ForAllConjunctionForward () () ((∀ x (φ ∧ ψ)) → ((∀ x φ) ∧ (∀ x ψ))) (
+        φ ψ ConjunctionRightElimination
+        x addForAll
+
+        φ ψ ConjunctionLeftElimination
+        x addForAll
+
+        composeConjunction
+))
+
+thm (ForAllConjunctionReverse () () (((∀ x φ) ∧ (∀ x ψ)) → (∀ x (φ ∧ ψ))) (
+</jh>
+First is <code>x is-not-free-in (∀ x φ ∧ ∀ x ψ)</code>.
+<jh>
+        x φ BoundForAllNotFree
+        x ψ BoundForAllNotFree
+        conjunctionNotFree
+</jh>
+Next is <code>∀ x φ ∧ ∀ x ψ → φ ∧ ψ</code>.
+<jh>
+        (∀ x φ) (∀ x ψ) ConjunctionRightElimination
+        x φ Specialization
+        applySyllogism
+
+        (∀ x φ) (∀ x ψ) ConjunctionLeftElimination
+        x ψ Specialization
+        applySyllogism
+
+        composeConjunction
+</jh>
+Adding <code>∀ x</code> to the consequent finishes the job.
+<jh>
+        addForAllToConsequentNotFree
+))
+
+thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))) (
+        x φ ψ ForAllConjunctionForward
+        x φ ψ ForAllConjunctionReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+=== Distribution of there-exists across a disjunction ===
+Here is <code>∃ x (φ ∨ ψ) ↔ ∃ x φ ∨ ∃ x ψ</code>.<ref>Theorem scheme 43, Margaris, page 90</ref> Margaris leaves the proof as an exercise, so we need to decide whether to derive it from <code>ForAllConjunction</code> using our definition of ∃ and DeMorgan's law, or derive it from other theorems which involved ∃. We elect the latter.
+<jh>
+thm (ThereExistsDisjunctionSplitting () () ((∃ x (φ ∨ ψ)) → ((∃ x φ) ∨ (∃ x ψ))) (
+</jh>
+A bit later we'll need <code>x is-not-free-in (∃ x φ ∨ ∃ x ψ)</code>
+<jh>
+        x φ BoundThereExistsNotFree
+        x ψ BoundThereExistsNotFree
+        disjunctionNotFree
+</jh>
+The key part of this proof is <code>φ → ∃ x φ</code> and likewise for <code>ψ</code>.
+<jh>
+        φ x ThereExistsIntroduction
+        ψ x ThereExistsIntroduction
+        disjoin
+</jh>
+Now we are ready to add <code>∃ x</code> to the antecedent.
+<jh>
+        addThereExistsToAntecedentNotFree
+))
+
+thm (ThereExistsDisjunctionCombining () () (((∃ x φ) ∨ (∃ x ψ)) → (∃ x (φ ∨ ψ))) (
+        φ ψ DisjunctionRightIntroduction
+        x addThereExists
+
+        ψ φ DisjunctionLeftIntroduction
+        x addThereExists
+
+        composeDisjunction
+))
+
+thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))) (
+        x φ ψ ThereExistsDisjunctionSplitting
+        x φ ψ ThereExistsDisjunctionCombining
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+=== Distribution of there-exists across an implication ===
+When distributing ∃ across an implication, the quantifier on the antecedent changes to ∀.<ref>Theorem 19.10, Margaris, page 93, cited by metamath as 19.35</ref> Margaris first proves the forward (easy) direction, and then gives two proofs of the reverse direction, which basically amount to rewriting the implication as either a conjunction or a disjunction with the suitable amount of negation. We pick disjunction, and use equivalences so that the proof also takes care of the forward direction too.
+<jh>
+thm (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))) (
+        φ ψ ImplicationDisjunction
+        x buildThereExists
+
+        x (¬ φ) ψ ThereExistsDisjunction
+        applyBiconditionalTransitivity
+
+        x φ NotForAll
+        swapBiconditional
+        (∃ x ψ) BiconditionalReflexivity
+        buildDisjunction
+        applyBiconditionalTransitivity
+
+        (∀ x φ) (∃ x ψ) ImplicationDisjunction
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Movement ===
+There are a variety of theorems which involve moving a formula in or out of the scope of a quantifier (where the variable being quantified is not free in the formula). Margaris does not discuss these at length, but he does list them in the theorem schemes in chapter 19.
+
+==== There exists and conjunction ====
+First is moving a conjunction into or out of existential quantification.<ref>Theorem scheme 42, Margaris, page 90, cited by metamath as 19.42</ref>
+<jh>
+thm (ThereExistsConjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
+  ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+</jh>
+For the forward direction, we start with <code>∃ x (φ ∧ ψ) → ∃ x φ ∧ ∃ x ψ</code>.
+<jh>
+        x φ ψ ThereExistsConjunction
+</jh>
+Then we can remove the quantifier from <code>∃ x φ</code> to finish the forward direction.
+<jh>
+        HFREE
+        ThereExistsAddRemoveNotFree
+        eliminateBiconditionalReverse
+        (∃ x ψ) conjoinRR
+        applySyllogism
+</jh>
+The proof of the reverse direction is taken from metamath.<ref>[http://us.metamath.org/mpeuni/19.41.html 19.41], metamath's set.mm, 25 May 2011</ref>. It starts with <code>φ → (ψ → (φ ∧ ψ))</code>, and adds quantifiers to the consequent to get <code>φ → (∃ x ψ → ∃ x (φ ∧ ψ))</code>.
+<jh>
+        HFREE
+        φ ψ ConjunctionRightIntroduction
+        addForAllToConsequentNotFree
+
+        x ψ (φ ∧ ψ) ForAllImplicationThereExists
+        applySyllogism
+</jh>
+A bit of propositional logic and we are done.
+<jh>
+        import
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+Here are two easy consequences stated in terms of distinct variables rather than freeness hypotheses.
+<jh>
+thm (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsConjunctionMovementNotFree
+))
+
+thm (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)) (
+        φ ψ ConjunctionCommutativity
+        x buildThereExists
+
+        x ψ φ ThereExistsConjunctionMovement
+        applyBiconditionalTransitivity
+
+        ψ (∃ x φ) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+))
+</jh>
+
+==== For all and implication ====
+We can move an antecedent, which does not have the variable being quantified free, in or out of universal quantification.<ref>Theorem scheme 21, Margaris, page 90, cited by metamath as 19.21</ref>
+<jh>
+thm (ForAllImplicationAntecedentMovement () ((HFREE (x is-not-free-in φ))) ((∀ x (φ → ψ)) ↔ (φ → (∀ x ψ))) (
+</jh>
+The forward direction just distributes the quantifier over the implication and removes the unnecessary quantifier on the antecedent.
+<jh>
+        x φ ψ ForAllImplication
+
+        HFREE
+        GeneralizationNotFree
+        (∀ x ψ) addCommonConsequent
+        applySyllogism
+</jh>
+The reverse direction follows from <code>x is-not-free-in (φ → ∀ x ψ)</code> and <code>(φ → ∀ x ψ) → (φ → ψ)</code>.
+<jh>
+        HFREE
+        x ψ BoundForAllNotFree
+        implicationNotFree
+
+        x ψ Specialization
+        φ addCommonAntecedent
+
+        addForAllToConsequentNotFree
+
+        introduceBiconditionalFromImplications
+))
+
+thm (moveAntecedentOutOfForAll () ((H (∀ x (φ → ψ))) (HFREE (x is-not-free-in φ))) (φ → (∀ x ψ)) (
+        H
+
+        HFREE
+        ψ ForAllImplicationAntecedentMovement
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+
+thm (moveAntecedentIntoForAll ()
+  ((H (φ → (∀ x ψ))) (HFREE (x is-not-free-in φ)))
+  (∀ x (φ → ψ)) (
+        H
+
+        HFREE
+        ψ ForAllImplicationAntecedentMovement
+        eliminateBiconditionalForward
+
+        applyModusPonens
+))
+</jh>
+
+==== Moving antecedent in or out of there exists ====
+We can move the antecedent in or out of there exists.<ref>Theorem scheme 37, Margaris, page 90, cited by metamath as 19.37</ref>
+<jh>
+thm (ThereExistsAntecedentMovementNotFree () ((HFREE (x is-not-free-in φ))) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
+        x φ ψ ThereExistsImplication
+
+        HFREE
+        ForAllAddRemoveNotFree
+        (∃ x ψ) buildImplicationConsequent
+
+        applyBiconditionalTransitivity
+))
+
+thm (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsAntecedentMovementNotFree
+))
+</jh>
+
+==== Moving the consequent in or out of for all ====
+When we move the consequent out of <code>∀</code>, it changes to <code>∃</code>.<ref>Theorem scheme 23, Margaris, page 90, cited by metamath as 19.23</ref> The proof is based on the one in metamath.<ref>[http://us.metamath.org/mpeuni/19.23.html 19.23], metamath's set.mm, accessed 2 Feb 2012</ref>
+<jh>
+thm (ForAllImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ))) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)) (
+</jh>
+The forward direction is just a matter of distributing ∀ into two existential quantifiers and getting rid of the one which doesn't do anything.
+<jh>
+        x φ ψ ForAllImplicationThereExists
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        eliminateBiconditionalReverse
+        (∃ x φ) addCommonAntecedent
+        applySyllogism
+</jh>
+The reverse direction is based on <code>φ → ∃ x φ</code> and that <code>x</code> is not free in <code>∃ x φ → ψ</code>.
+<jh>
+        x φ BoundThereExistsNotFree
+        HFREE
+        implicationNotFree
+
+        φ x ThereExistsIntroduction
+        ψ addCommonConsequent
+
+        addForAllToConsequentNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+==== Moving the consequent in or out of there exists ====
+Similar to the previous one, but with ∃ and ∀ exchanged.<ref>Theorem scheme 36, Margaris, page 90, cited by metamath as 19.36</ref>
+<jh>
+thm (ThereExistsImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ)))
+  ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)) (
+        x φ ψ ThereExistsImplication
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∀ x φ) buildImplicationAntecedent
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+==== Disjunction movement ====
+We can move a conjunct out of or into there exists.<ref>Theorem scheme 45, Margaris, page 90, cited by metamath as 19.45</ref>
+<jh>
+thm (ThereExistsDisjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
+  ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ ψ ThereExistsDisjunction
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∃ x ψ) buildDisjunctionRR
+
+        applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsDisjunctionMovementNotFree
+))
+
+thm (ThereExistsDisjunctionRightMovementNotFree () ((HFREE (x is-not-free-in ψ)))
+  ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        x φ ψ ThereExistsDisjunction
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∃ x φ) buildDisjunctionLL
+
+        applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        x ψ DistinctNotFree
+        φ ThereExistsDisjunctionRightMovementNotFree
+))
+
+</jh>
+
+=== Combining one universal and one existential quantifier ===
+Suppose we have one formula which holds for all values of a variable, and another which holds for some value. Then there is a value for which both hold. In symbols, <code>∀ x φ ∧ ∃ x ψ → ∃ x (φ ∧ ψ)</code>.<ref>Theorem scheme 29, Margaris, page 90, cited by metamath as 19.29</ref>
+<jh>
+thm (ThereExistsConjunctionCombining () ()
+  (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))) (
+        x φ BoundForAllNotFree
+        ψ ThereExistsConjunctionMovementNotFree
+        eliminateBiconditionalForward
+
+        x φ Specialization
+        ψ conjoinRR
+        x addThereExists
+        applySyllogism
+))
+</jh>
+
+It will also be convenient to have a commuted version, and a rule.
+<jh>
+thm (ThereExistsConjunctionRightCombining () ()
+  (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))) (
+        (∃ x φ) (∀ x ψ) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        x ψ φ ThereExistsConjunctionCombining
+        applySyllogism
+
+        ψ φ ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        x addThereExists
+        applySyllogism
+))
+
+thm (combineThereExistsForAll () ((HEXISTS (∃ x φ)) (HALL (∀ x ψ))) (∃ x (φ ∧ ψ)) (
+        HEXISTS
+        HALL
+        introduceConjunction
+
+        x φ ψ ThereExistsConjunctionRightCombining
+        applyModusPonens
+))
+</jh>
+
+==== A few more movement rules ====
+Here are a few rules, for convenience:
+<jh>
+thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
+  ((H (antecedent → (φ ∧ (∃ x ψ)))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (moveRightConjunctIntoThereExistsInConsequent ((x ψ))
+  ((H (antecedent → ((∃ x φ) ∧ ψ))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (repeatAntecedentThereExists ((x antecedent))
+  ((H (antecedent → (∃ x ψ))))
+  (antecedent → (∃ x (antecedent ∧ ψ))) (
+        antecedent ImplicationReflexivity
+        H
+        composeConjunction
+        moveLeftConjunctIntoThereExistsInConsequent
+))
+</jh>
+
+==== Scattering and gathering ====
+The rules and theorems we call ''scattering'' and ''gathering'' are just consequences of the movement theorems, and as such we can use the exact same proofs as in [[First-order logic]].
+<jh>
+thm (ThereExistsScattering ((φx y) (ψy x)) ()
+  ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))) (
+        (∃ x φx) (∃ y ψy) ConjunctionCommutativity
+
+        x ψy DistinctNotFree
+        y addThereExistsNotFree
+        φx ThereExistsConjunctionMovementNotFree
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        (∃ y ψy) φx ConjunctionCommutativity
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        y φx ψy ThereExistsConjunctionMovement
+        swapBiconditional
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
+
+thm (gatherThereExistsInConsequent ((φx y) (ψy x)) ((H (antecedent → ((∃ x φx) ∧ (∃ y ψy)))))
+  (antecedent → (∃ x (∃ y (φx ∧ ψy)))) (
+        H
+        x y φx ψy ThereExistsScattering
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+== Other theorems ==
+Here we present a few theorems which are convenience theorems, or other fairly simple deductions from theorems we have.
+<jh>
+thm (buildThereExistsInConsequent ((x φ))
+  ((H (φ → (ψ ↔ χ))))
+  (φ → ((∃ x ψ) ↔ (∃ x χ))) (
+        H
+        x addForAllToConsequent
+
+        x ψ χ ForAllBiconditionalThereExists
+        applySyllogism
+))
+
+thm (buildForAllInConsequent ((x φ))
+  ((H (φ → (ψ ↔ χ))))
+  (φ → ((∀ x ψ) ↔ (∀ x χ))) (
+        H
+        x addForAllToConsequent
+
+        x ψ χ ForAllBiconditional
+        applySyllogism
+))
+
+thm (Generalization ((x φ)) () (φ → (∀ x φ)) (
+        x φ DistinctNotFree
+        GeneralizationNotFree
+))
+</jh>
+
+== Equality ==
+Margaris considers equality in chapter 21.<ref>Margaris, page 104</ref> Most of the theorems there we have already adopted as axioms, but there are a variety of convenience theorems and the like to prove before we can export to [[Interface:First-order logic with quantifiability]]. In most cases we can just take the same proofs from [[First-order logic]].
+<jh>
+def ((≠ s t) (¬ (s = t)))
+
+thm (swapEquality () ((H (s = t))) (t = s) (
+        H
+        s t EqualitySymmetry eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (applyEqualityTransitivity () ((H1 (s = t)) (H2 (t = u))) (s = u) (
+        H1
+        H2
+        introduceConjunction
+        s t u EqualityTransitivity
+        applyModusPonens
+))
+
+thm (applyEqualityTransitivityInConsequent () ((H1 (φ → (s = t))) (H2 (φ → (t = u)))) (φ → (s = u)) (
+        H1
+        H2
+        composeConjunction
+        s t u EqualityTransitivity
+        applySyllogism
+))
+
+thm (EqualityBuilderRR () () ((s0 = s1) → ((s0 = t) ↔ (s1 = t))) (
+        s0 s1 EqualitySymmetry
+        eliminateBiconditionalReverse
+
+        s1 s0 t EqualityTransitivity
+        export
+
+        applySyllogism
+
+        s0 s1 t EqualityTransitivity
+        export
+
+        composeConjunction
+
+        (s0 = t) (s1 = t) BiconditionalImplication eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (commute2 () () (((s0 = t0) ↔ (s1 = t1)) → ((t0 = s0) ↔ (t1 = s1))) (
+        s0 t0 EqualitySymmetry
+        s1 t1 EqualitySymmetry
+        buildBiconditional
+        eliminateBiconditionalReverse
+))
+
+thm (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))) (
+        s0 s1 t EqualityBuilderRR
+        s0 t s1 t commute2
+        applySyllogism
+))
+
+thm (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))) (
+        (s0 = s1) (t0 = t1) ConjunctionRightElimination
+        s0 s1 t0 EqualityBuilderRR
+        applySyllogism
+
+        (s0 = s1) (t0 = t1) ConjunctionLeftElimination
+        t0 t1 s1 EqualityBuilderLL
+        applySyllogism
+
+        composeConjunction
+
+        (s0 = t0) (s1 = t0) (s1 = t1) BiconditionalTransitivity
+        applySyllogism
+))
+
+thm (buildEquality () ((HX (s0 = s1)) (HY (t0 = t1))) ((s0 = t0) ↔ (s1 = t1)) (
+        HX
+        HY
+        introduceConjunction
+        s0 s1 t0 t1 EqualityBuilder
+        applyModusPonens
+))
+
+thm (buildEqualityRR () ((H (s0 = s1))) ((s0 = t) ↔ (s1 = t)) (
+        H
+        t EqualityReflexivity
+        introduceConjunction
+
+        s0 s1 t t EqualityBuilder
+
+        applyModusPonens
+))
+
+thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
+        s EqualityReflexivity
+        H
+        introduceConjunction
+
+        s s t0 t1 EqualityBuilder
+
+        applyModusPonens
+))
+
+thm (buildEqualityInConsequent ()
+  ((HN (φ → (s0 = s1)))
+   (HM (φ → (t0 = t1))))
+  (φ → ((s0 = t0) ↔ (s1 = t1))) (
+        HN HM composeConjunction
+        s0 s1 t0 t1 EqualityBuilder
+        applySyllogism
+))
+
+thm (buildEqualityRRInConsequent ()
+  ((H (φ → (s0 = s1))))
+  (φ → ((s0 = t) ↔ (s1 = t))) (
+        H
+        t EqualityReflexivity φ introduceAntecedent
+        buildEqualityInConsequent
+))
+
+thm (buildEqualityLLInConsequent ()
+  ((H (φ → (t0 = t1))))
+  (φ → ((s = t0) ↔ (s = t1))) (
+        s EqualityReflexivity φ introduceAntecedent
+        H
+        buildEqualityInConsequent
+))
+</jh>
+
+=== Quantifiability ===
+<jh>
+thm (Quantifiability ((x s)) () (∃ x ((value x) = s)) (
+</jh>
+We stick <code>s = s</code> on the proof stack for later use.
+<jh>
+        s EqualityReflexivity
+</jh>
+We start with <code>x = s → (x = s ↔ s = s)</code>.
+<jh>
+        (value x) s s EqualityBuilderRR
+</jh>
+That in turn implies <code>([ s / x ] s = x) ↔ s = s</code>, which of course implies <code>[ s / x ] s = x</code>.
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
+</jh>
+And that is enough to give us <code>∃ x x = s</code>
+<jh>
+        introduceThereExistsFromObject
+))
+</jh>
+
+=== Variable to term ===
+Although converting a variable to a term is more of a substitution concept than an equality one, since it is stated in terms of equality we prove it here. Although this theorem doesn't exist in Margaris in quite this form, it has echoes in the Margaris theorems concerning substituting equals for equals, for example 21.8.<ref>Margaris, page 107</ref>
+<jh>
+thm (VariableToObject ((x s) (x φs))
+  ((HSUBST (((value x) = s) → (φx ↔ φs)))
+   (H φx)
+  )
+  φs (
+        H
+        x generalize
+
+        x φx s SpecializationToObject
+        applyModusPonens
+
+        HSUBST
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
+== Substitution ==
+Although our axioms were based on substitution and we've proved many of the substitution theorems we need, here are a few more consequences and convenience theorems.
+
+=== Substitution of a theorem remains a theorem ===
+If we have a theorem, we can add a variable substitution onto it. This is just a generalization followed by specializeToObject.
+<jh>
+thm (introduceSubst () ((H φ)) (subst s x φ) (
+        H
+        x generalize
+        s specializeToObject
+))
+</jh>
+
+=== Moving substitution across quantifiers ===
+We have already shown we can move substitution across connectives. We can also move it across quantifiers (when variables are distinct).
+<jh>
+thm (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
+</jh>
+First is <code>x is-not-free-in ∃ y [ s / x ] φ</code>
+<jh>
+        x s φ SubstNotFree
+        y addThereExistsNotFree
+</jh>
+Leaving that aside for now, we start with <code>x = s → (φ ↔ [ s / x ] φ)</code>,
+<jh>
+        x s φ EqualitySubst
+</jh>
+add the quantifier to the two sides of the biconditional, and invoke <code>makeSubstExplicitNotFree</code>.
+<jh>
+        y buildThereExistsInConsequent
+        makeSubstExplicitNotFree
+))
+</jh>
+
+=== Substitution of a variable which does not appear ===
+If a variable does not appear in a formula, substituting it for anything does not affect the truth of the formula.
+<jh>
+thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
+        φ BiconditionalReflexivity
+        ((value x) = s) introduceAntecedent
+        makeSubstExplicit
+))
+</jh>
+
+=== A lemma regarding substitution and equality ===
+Here we show <code>[ s / x ] x = s</code>.<ref>[http://us.metamath.org/mpeuni/equsb1.html equsb1], but for a term not a variable</ref>
+<jh>
+thm (SubstEquality ((x s)) () (subst s x ((value x) = s)) (
+</jh>
+We start with <code>s = s</code>.
+<jh>
+        s EqualityReflexivity
+</jh>
+The elaboration begins with <code>[ s / x ] x = s ↔ s = s</code>,
+<jh>
+        (value x) s s EqualityBuilderRR
+        makeSubstExplicit
+</jh>
+which we then combine with <code>s = s</code> to give <code>[ s / x ] x = s</code>.
+<jh>
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Change of variable in substitution ===
+Changing the bound variable in a substitution is possible, much as we do for quantifiers.
+
+We are trying to show that we can conclude <code>[ s / x ] φx ↔ [ s / y ] φy</code> from <code>x = y → (φx ↔ φy)</code> (where almost everything is distinct except that <code>φx</code> can contain <code>x</code> and <code>φy</code> can contain <code>y</code>). Without trying to sketch out the proof in detail right now, we will be adding <code>[ s / x ]</code> to the start of both sides of the implication, and likewise for <code>y</code>. The first lemma is a variation of <code>SubstEquality</code> which substitutes both sides of the equality, not just one.
+<jh>
+thm (ChangeVariableSubstitution-1
+  ((x y) (s x) (s y)) ()
+  (subst s y (subst s x ((value x) = (value y)))) (
+        s x SubstEquality
+</jh>
+Having substituted one side of the equality, we pull the same trick with <code>y</code>. The equivalence is <code>[ s / y ] [ s / x ] x = y ↔ [ s / x ] x = s</code>, which derives from <code>y = s → ([ s / x ] x = y ↔ [ s / x ] x = s)</code>.
+<jh>
+        (value y) s (value x) EqualityBuilderLL
+        x addForAllToConsequent
+
+        x ((value x) = (value y)) ((value x) = s) s SubstBuilder
+        applySyllogism
+
+        makeSubstExplicit
+</jh>
+Combining that with <code>[ s / x ] x = s</code> gives <code>[ s / y ] [ s / x ] x = y</code>, as desired.
+<jh>
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (ChangeVariableSubstitution
+  ((y φx) (x φy) (x y) (s x) (s y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((subst s x φx) ↔ (subst s y φy)) (
+</jh>
+We'll stick our lemma on the proof stack for later.
+<jh>
+        s y x ChangeVariableSubstitution-1
+
+        H
+</jh>
+We now have <code>x = y → (φx ↔ φy)</code>. We add a substitution for <code>x</code> everywhere, to get <code>[ s / x ] x = y → ([ s / x ] φx ↔ [ s / x ] φy)</code>
+<jh>
+        s x addSubst
+
+        s x φx φy SubstBiconditional
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we add a substitution for <code>y</code> everywhere, to get <code>[ s / y ] [ s / x ] x = y → ([ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy)</code>.
+<jh>
+        s y addSubst
+
+        s y (subst s x φx) (subst s x φy) SubstBiconditional
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Detaching the lemma we get <code>[ s / y ] [ s / x ] φx ↔ [ s / y ] [ s / x ] φy</code>.
+<jh>
+        applyModusPonens
+</jh>
+Because <code>y</code> does not occur in <code>[ s / x ] φx</code>, we can remove <code>[ s / y ]</code> from the left hand side.
+<jh>
+        swapBiconditional
+        s y (subst s x φx) NullSubstitution
+        applyBiconditionalTransitivity
+        swapBiconditional
+</jh>
+Similarly, we remove <code>[ s / x ]</code> from the right hand side.
+<jh>
+        s x φy NullSubstitution
+        s y buildSubst
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Implicit substitution and universal quantification ===
+One way to express a substitution is <code>∀ x (x = s → φ)</code>.
+<jh>
+thm (ImplicitForAll-1 ((x s) (x ψ)) ()
+  ((subst s x φ) → (∀ x (((value x) = s) → φ))) (
+</jh>
+Later we'll need <code>x is-not-free in [ s / x ] φ</code>
+<jh>
+        x s φ SubstNotFree
+</jh>
+We start with <code>[ s / x ] φ → (x = s → φ)</code>.
+<jh>
+        x s φ EqualitySubst
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+</jh>
+Adding for-all to the consequent we are finished.
+<jh>
+        addForAllToConsequentNotFree
+))
+
+thm (ImplicitForAll-2 ((x s) (x ψ)) ()
+  ((∀ x (((value x) = s) → φ)) → (subst s x φ)) (
+</jh>
+We'll need <code>[ s / x ] x = s</code> shortly, so we put it on the proof stack.
+<jh>
+        s x SubstEquality
+
+        x (((value x) = s) → φ) s SpecializationToObject
+
+        s x ((value x) = s) φ SubstImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now the consequent is <code>[ s / x ] x = s → [ s / x ] φ</code>. But <code>[ s / x ] x = s</code> is always true.
+<jh>
+        detachImplicationImplication
+))
+
+thm (ImplicitForAll ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
+  ((∀ x (((value x) = s) → φ)) ↔ ψ) (
+        x s φ ImplicitForAll-2
+        s x φ ImplicitForAll-1
+        introduceBiconditionalFromImplications
+
+        H
+        makeSubstExplicit
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Implicit substitution and existential quantification ===
+There is another similar expression, involving <code>∃</code>, namely <code>∃ x (x = s ∧ φ)</code>.
+<jh>
+thm (ImplicitThereExists-1 ((x s)) ()
+  ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
+</jh>
+We start with <code>[ s / x ] φ → [ s / x ] x = s ∧ [ s / x ] φ<code>.
+<jh>
+        (subst s x φ) ImplicationReflexivity
+        s x SubstEquality
+        introduceLeftConjunctToConsequent
+</jh>
+Combining the substitutions in the consequent and then using the presence of a substitution to imply existence finishes the proof.
+<jh>
+        s x ((value x) = s) φ SubstConjunction
+        eliminateBiconditionalForward
+        applySyllogism
+
+        s x (((value x) = s) ∧ φ) ThereExistsIntroductionFromObject
+        applySyllogism
+))
+
+thm (ImplicitThereExists-2 ((x s)) ()
+  ((∃ x (((value x) = s) ∧ φ)) → (subst s x φ)) (
+</jh>
+In a few steps we'll need <code>x is-not-free-in [ s / x ] φ</code>.
+<jh>
+        x s φ SubstNotFree
+</jh>
+We start with <code>x = s → (φ ↔ [ s / x ] φ)</code>,
+<jh>
+        x s φ EqualitySubst
+</jh>
+and apply propositional logic to turn it into <code>x = s ∧ φ → [ s / x ] φ</code>.
+<jh>
+        eliminateBiconditionalReverseInConsequent
+        import
+</jh>
+Adding <code>∃</code> to the antecedent we are done.
+<jh>
+        addThereExistsToAntecedentNotFree
+))
+
+thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
+  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
+        x s φ ImplicitThereExists-2
+        s x φ ImplicitThereExists-1
+        introduceBiconditionalFromImplications
+
+        H
+        makeSubstExplicit
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
+== Export ==
+We can export first-order logic now.
+<jh>
+export (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+</jh>
+
+We also export the axiom of quantifiability, just to emphasize that this "axiom" is not just a (possibly arbitrary seeming) statement about proper classes, but is a consequence of substitution rules such as those described in Margaris.
+<jh>
+export (QUANTIFIABILITY Interface:Axiom_of_quantifiability (PROPOSITIONAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Classical first-order logic]]
