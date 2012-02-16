@@ -1824,9 +1824,24 @@ thm (ImplicitForAll ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
 === Implicit substitution and existential quantification ===
 There is another similar expression, involving <code>∃</code>, namely <code>∃ x (x = s ∧ φ)</code>.
 <jh>
-#thm (ImplicitThereExists-1 ((x s)) ()
-#  ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
-#))
+thm (ImplicitThereExists-1 ((x s)) ()
+  ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
+</jh>
+We start with <code>[ s / x ] φ → [ s / x ] x = s ∧ [ s / x ] φ<code>.
+<jh>
+        (subst s x φ) ImplicationReflexivity
+        s x SubstEquality
+        introduceLeftConjunctToConsequent
+</jh>
+Combining the substitutions in the consequent and then using the presence of a substitution to imply existence finishes the proof.
+<jh>
+        s x ((value x) = s) φ SubstConjunction
+        eliminateBiconditionalForward
+        applySyllogism
+
+        s x (((value x) = s) ∧ φ) ThereExistsIntroductionFromObject
+        applySyllogism
+))
 
 thm (ImplicitThereExists-2 ((x s)) ()
   ((∃ x (((value x) = s) ∧ φ)) → (subst s x φ)) (
