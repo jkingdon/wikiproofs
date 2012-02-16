@@ -1,0 +1,176 @@
+{{header
+ | title    = Axioms of first-order logic in terms of substitution built on equality
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Predicate logic builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. More specifically, the kind of predicate logic we define here is known as first-order logic, which is a common basis for theories such as set theory or arithmetic.
+}}
+
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]]
+| importedby = [[First-order logic in terms of substitution built on equality]]
+| exportedby = none
+}}
+
+The axioms of first-order logic are usually stated in terms of substitution of one variable or constant for another, [[w:free variable|free variables]] and [[w:bound variable|bound variables]]. Although JHilbert or metamath do not have this sort of knowledge of free variables or substitution built in, we can to some extent approximate the conventional axioms using the mechanisms we do have. Here we define substitution in terms of equality, and having done so, state axioms in terms of substitution.
+
+The axioms are (somewhat loosely) based on those in Margaris.<ref>Margaris, Angelo (1990), ''First Order Mathematical Logic'', ISBN 978-0-486-66269-5</ref>
+
+It is possible to prove everything in [[Interface:First-order logic with quantifiability]] from these axioms. Therefore, this axiomization is an alternative to the metamath-inspired axiomization [[Interface:Axioms of first-order logic]] (plus the [[Interface:Axiom of quantifiability]] which is what allows substitution to proceed smoohtly).
+
+== Formulas and objects ==
+First we build on [[Interface:Classical propositional calculus]].
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+We use φ, ψ, χ, and θ to represent formulas.
+<jh>
+var (formula φ ψ χ θ)
+</jh>
+
+We use the word ''object'' to refer to something which is subject to equality (or, indirectly, via <code>variable</code>, quantification). We define a kind called <code>object</code>, which corresponds to a [[w:First-order_logic#Terms|term]] in more conventional terminology.<ref>Margaris, page 48</ref> Theories built on first-order logic, like [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[Interface:Peano axioms|Peano arithmetic]], will define additional kinds of terms such as <code>+</code> (addition) or <code>∪</code> (union). This corresponds to the operation symbols of Margaris.<ref>Margaris, page 47</ref> Such theories will also define new kinds of formulas such as <code><</code> (less than) or <code>∈</code> (is an element of), which correspond to the predicate symbols of Margaris.<ref>Margaris, page 47</ref>
+
+<jh>
+kind (object)
+var (object s t u s0 s1 t0 t1)
+</jh>
+
+A ''variable'' is something we can quantify over.<ref>Margaris, page 47</ref>
+
+<jh>
+kind (variable)
+var (variable x y z x0 x1 y0 y1)
+</jh>
+
+A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected).
+<jh>
+term (object (value variable))
+</jh>
+
+The reverse is not possible.  Examples of objects which are not variables might be <code>s + t</code> for Peano arithmetic, or <code>s ∪ t</code> for set theory.
+
+== Quantification ==
+We extend the available formulas with [[w:Universal quantification|universal quantification]].<ref>Margaris, page 47</ref>
+<jh>
+term (formula (∀ variable formula))
+</jh>
+
+Universal quantification can be distributed across implication. This is axiom A4 in Margaris.<ref>Margaris, page 49</ref>
+<jh>
+stmt (ForAllImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) )
+</jh>
+
+== Free variables ==
+Margaris defines free variables in terms of whether the variable has any occurences in a subformula which quantifies the occurence in question.<ref>Margaris, page 48</ref> At first glance, this might appear to be impossible to express in JHilbert, but we can actually express it fairly directly (at least, as much of it as we need). There is one subtlety: Margaris states that the presence of a non-bound occurence is a necessary and sufficient condition. We only provide one direction of this: we provide various ways to conclude that a variable is not free in a formula, but no way to show that a variable is free in one. This fits in better with the metamath-inspired treatment at [[Interface:Axioms of first-order logic]] and turns to be all we need to express Margaris's axioms.
+
+<jh>
+term (formula (is-not-free-in variable formula))
+</jh>
+
+Most of the cases are straightforward: <code>x</code> is not free in <code>∀ x φ</code>, or a formula in which it does not occur, and whether it is free in another formula depends on whether it is free in each of the subformulas which make up that formula.
+<jh>
+stmt (BoundForAllNotFree () () (x is-not-free-in (∀ x φ)))
+stmt (DistinctNotFree ((x φ)) () (x is-not-free-in φ))
+
+stmt (addForAllNotFree () ((x is-not-free-in φ)) (x is-not-free-in (∀ y φ)))
+
+stmt (negateNotFree () ((x is-not-free-in φ)) (x is-not-free-in (¬ φ)))
+stmt (implicationNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ → ψ))
+)
+</jh>
+
+We have handled the cases of "each of the subformulas which make up that formula" for logical connectives and quantifiers. But how can we deal with operations and predicates (which aren't even defined here, but instead in a module which imports first-order logic)? For example, suppose there is a predicate <code>φ | ψ<code> and <code>(φ | ψ) ↔ ¬ (φ ∧ ψ)</code> is a theorem. We want to show that <code>x is-not-free-in (s | t)</code> follows from <code>x is-not-free-in φ</code> and <code>x is-not-free-in ψ</code>. The following axiom (together with the ones already presented) allows us to make that conclusion.
+<jh>
+stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)))
+</jh>
+
+== Generalization ==
+The ability to [[w:Generalization (logic)|generalize]] when the variable is not free in the formula is axiom A6 in Margaris.<ref>Margaris, page 49</ref>
+<jh>
+stmt (GeneralizationNotFree () ((x is-not-free-in φ)) (φ → (∀ x φ)))
+</jh>
+
+The ability to generalize a theorem, even if the variable is free in the formula, has two cases for Margaris. Margaris adopts an axiom schema called <code>Ax Gen</code> which is the ability to generalize an axiom,<ref>Margaris, page 49</ref> and from that derives the ability to generalize a theorem.<ref>Theorem 17.7, Margaris, page 76</ref> Because we do not have any way of distinguishing between an axiom and a theorem, we adopt the more general form as an axiom.
+<jh>
+stmt (generalize () (φ) (∀ x φ))
+</jh>
+
+Margaris defines a second quantifier (∃ for "there exists") in terms of ∀, so we have avoided it in the above axioms and do not need to define it here.
+
+There is one more axiom, specialization (including the ability to substitute). Roughly speaking it says that one can take a formula of the form <code>∀ x φ</code> and substitute a term <code>t</code> for the variable <code>x</code> inside <code>φ</code>. To state this in JHilbert, and correctly state what kinds of substitutions are permissible, will require us to define substitution, which we do mostly in terms of equality.
+
+== Equality ==
+
+=== Reflexive, symmetry, and transitive ===
+
+We introduce equality, which is reflexive, symmetry, and transitive.  For simplicity, we simply adopt these three properties as axioms, rather than a smaller set of axioms which imply them.
+
+<jh>
+term (formula (= object object))
+
+stmt (EqualityReflexivity () () (s = s))
+stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
+stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
+</jh>
+
+== Substitution ==
+We first define the <code>subst</code> term:
+
+<jh>
+term (formula (subst object variable formula))
+</jh>
+
+so for example <code>(subst s x φ)</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>s</code>. In more conventional notation this would be <code>[ s / x ] φ</code>. A common but potentially ambiguous notation for this concept is changing <code>φ(x)</code> to <code>φ(s)</code> (one way to avoid the ambiguity is to follow the rules Margaris gives in defining ''similar formulas'').<ref>Margaris, page 86</ref>
+
+In many treatments of predicate logic, substitution is treated as a syntactic operation. For example <code>[ y / x ] ∀ z z ≤ x</code> is equivalent to plugging in <code>y</code> for <code>x</code> to get <code>∀ z z ≤ y</code>. It is then necessary to provide a condition that the substitution (in this case <code>y</code>) is not "captured" by any quantifiers. For example it is not legitimate to expand <code>[ y / x ] ∀ y y ≤ x</code> into <code>∀ y y ≤ y</code>. Margaris provides this in the definition of "admits".<ref>Margaris, page 48</ref> In our case, we treat substitution as following from equality. For example, <code>x = y → (∀ z z ≤ x ↔ ∀ z z ≤ y)</code> suffices to prove <code>([ y / x ] ∀ z z ≤ x) ↔ ∀ z z ≤ y</code>. The equivalent to the "admits" concept is the distinct variable constraint between <code>x</code> and <code>s</code> in the following theorem, together with normal predicate logic rules for adding quantifiers to the consequent in building up the formula <code>x = s → (φ ↔ ψ)</code>. (TODO: expand on an example which shows that the <code>x s</code> is needed, or otherwise explains what the admits stuff is all about in our context. My first attempt didn't quite hang together).
+
+<jh>
+stmt (makeSubstExplicitNotFree ((x s))
+  ((x is-not-free-in ψ) (((value x) = s) → (φ ↔ ψ)))
+  ((subst s x φ) ↔ ψ))
+</jh>
+
+Quite aside from the details of what substitutions are proper in the context of quantifiers, we also need to define substitution generally. The most obvious definition is a recursive one. It requires a bit of notation we don't otherwise need: <code>substTerm s x t<code> is a term (object) which is the result of substituting <code>s</code> for <code>x</code> in the term <code>t</code>. It can be found in metamath as <code><u>[</u> s / x <u>]</u> t</code>.<ref>df-csb in metamath</ref>
+
+  substTerm s x x = s
+  substTerm s x z = z (where z is distinct from x)
+  substTerm s x (t OP u) = (substTerm s x t) OP (substTerm s x u)
+    where OP is any operation defined by a module which includes first-order logic
+  subst s x (t PRED u) ↔ (substTerm s x t) PRED (substTerm s x u)
+    where PRED is any predicate defined by a module which includes first-order logic
+
+However, having described substitution informally in terms of this kind of recursive definition, we define it in a fairly different way, based on equality and some other axioms (which might not be a minimal axiomization, but which does suffice for our purposes). The reason for tying things into equality has to do with how the above steps are to be stated for each operation and predicate in the system.
+
+The procedure which has been followed by modules building on first-order logic (that is, [[Interface:First-order logic]] or [[Interface:First-order logic with quantifiability]]) is to define an axiom for each operation or predicate which states that equals can be substituted for equals. We call such axioms builders and they take the form <code>x = x′ ∧ y = y′ → x OP y = x′ OP y′<code> or <code>x = x′ ∧ y = y′ → (x PRED y ↔ x′ PRED y′)</code>. Because these builders are in terms of equality, <code>makeSubstExplicit</code> covers most of the above cases in defining substitution. We adopt a few more axioms to make this work. First are some builders (or similar theorems) for <code>subst</code> itself:
+
+<jh>
+stmt (SubstBuilderReplacement () ()
+  ((s = t) → ((subst s x φ) ↔ (subst t x φ))))
+stmt (SubstAddition () () ((∀ x (φ → ψ)) → ((subst s x φ) → (subst s x ψ))))
+</jh>
+
+A substitution is like a quantifier, in that it binds the variable being substituted for.
+<jh>
+stmt (SubstNotFree ((x s)) () (x is-not-free-in (subst s x φ)))
+</jh>
+
+We also state that substituting a variable for itself has no effect. Margaris states this but does not justify it, apparently treating it as an obvious consequence of a syntactic definition of substitution.<ref>Margaris, page 76</ref>
+
+<jh>
+stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
+</jh>
+
+== Specialization ==
+Having defined substitution, we are prepared to adopt our final first-order logic axiom, which is A5 in Margaris.<ref>Margaris, page 49</ref>
+<jh>
+stmt (SpecializationToObject () () ((∀ x φ) → (subst s x φ)))
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Classical first-order logic|{{PAGENAME}}]]
