@@ -17,7 +17,7 @@ The axioms of first-order logic are usually stated in terms of substitution of o
 
 The axioms are (somewhat loosely) based on those in Margaris.<ref>Margaris, Angelo (1990), ''First Order Mathematical Logic'', ISBN 978-0-486-66269-5</ref>
 
-Our goal is to prove everything in [[Interface:First-order logic with quantifiability]] from these axioms. If successful, this will provide an alternative axiomization to the metamath-inspired axiomization [[Interface:Axioms of first-order logic]] (plus the [[Interface:Axiom of quantifiability]] which is what allows substitution to proceed smoohtly).
+It is possible to prove everything in [[Interface:First-order logic with quantifiability]] from these axioms. Therefore, this axiomization is an alternative to the metamath-inspired axiomization [[Interface:Axioms of first-order logic]] (plus the [[Interface:Axiom of quantifiability]] which is what allows substitution to proceed smoohtly).
 
 == Formulas and objects ==
 First we build on [[Interface:Classical propositional calculus]].
@@ -52,7 +52,7 @@ term (object (value variable))
 The reverse is not possible.  Examples of objects which are not variables might be <code>s + t</code> for Peano arithmetic, or <code>s ∪ t</code> for set theory.
 
 == Quantification ==
-We extend the available formulas with [[w:Universal quantification|universal quantification]].<ref>Margaris, page 47<ref>
+We extend the available formulas with [[w:Universal quantification|universal quantification]].<ref>Margaris, page 47</ref>
 <jh>
 term (formula (∀ variable formula))
 </jh>
