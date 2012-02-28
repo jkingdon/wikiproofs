@@ -1,0 +1,92 @@
+{{interfaces
+| imports = [[Interface:Orthogonality 2]]
+| exports = none yet
+}}
+
+This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
+
+This page is one of several involving perpendicular lines. We start with some theorems about the <code>⟂</code> (is perpendicular) predicate.
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Orthogonality 1|geometry results so far]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (START Interface:Orthogonality_2 (CLASSICAL FIRSTORDER) ())
+
+var (point A B C D E F M P Q R S U V X Y Z)
+var (point U0 V0)
+var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
+var (point C″)
+var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v v′ x x′ y y′ z)
+var (variable u0 v0)
+</jh>
+
+== Perpendicular lines ==
+Saying that lines are perpendicular at a point is the main step towards saying those lines are perpendicular. The connection is pretty simple: <code>A B ⟂ C D</code> is defined as <code>∃ x A B C D ⟂at x</code>.
+<jh>
+def ((⟂ A B C D) (∃ x (A B C D ⟂at (value x))))
+</jh>
+
+=== Theorem form of the definition ===
+As usual, we need a theorem corresponding to the definition.
+<jh>
+thm (Perpendicular ((x′ x A) (x′ x B) (x′ x C) (x′ x D)) ()
+  ((⟂ A B C D) ↔ (∃ x (A B C D ⟂at (value x)))) (
+        A EqualityReflexivity
+        B EqualityReflexivity
+        C EqualityReflexivity
+        D EqualityReflexivity
+        A A B B C C D D (value x′) (value x) PerpendicularAtBuilder
+        detach2of3
+        detach2of3
+        detach2of3
+        detach1of2
+
+        ChangeVariableThereExists
+))
+</jh>
+
+=== No line is perpendicular to itself ===
+Here we show <code>¬ A B ⟂ A B</code>. The interesting part of the proof was already done as <code>PerpendicularIrreflexivityAt</code>.<ref>l8_14_1 in Narboux</ref>
+<jh>
+thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
+        A B (value x) PerpendicularIrreflexivityAt
+        x generalize
+
+        x (A B A B ⟂at (value x)) NotThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Being perpendicular at any point implies being perpendicular ===
+That is, <code>A B C D ⟂at X → A B ⟂ C D</code>.<ref>l8_14_2_1a in Narboux</ref>
+<jh>
+thm (PerpendicularAtPerpendicular ( (x A) (x B) (x C) (x D) (x X)) ()
+  ((A B C D ⟂at X) → (A B ⟂ C D)) (
+        A EqualityReflexivity
+        B EqualityReflexivity
+        C EqualityReflexivity
+        D EqualityReflexivity
+        A A B B C C D D (value x) X PerpendicularAtBuilder
+        detach2of3
+        detach2of3
+        detach2of3
+        detach1of2
+
+        makeSubstExplicit
+
+        eliminateBiconditionalForward
+
+        X x (A B C D ⟂at (value x)) ThereExistsIntroductionFromObject
+        applySyllogism
+))
+</jh>
+
+== References ==
+<references/>
+* Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
