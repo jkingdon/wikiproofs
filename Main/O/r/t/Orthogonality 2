@@ -1,0 +1,1946 @@
+{{interfaces
+| imports = [[Interface:Orthogonality 1]]
+| exports = [[Interface:Orthogonality 2]]
+}}
+
+This is part of a series of modules which prove a variety of geometrical theorems starting with Tarski's axioms for geometry. We follow the formalization of Julien Narboux<ref>The formal proofs are at [http://www.lix.polytechnique.fr/Labo/Julien.Narboux/tarski.html Formalization of Tarski's geometry in the Coq proof assistant] and are described in Julien Narboux (2007), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.158.8614 Mechanical Theorem Proving in Tarski’s Geometry]", F. Botana and T. Recio (Eds.): ADG 2006, LNAI 4869, pp. 139–156</ref> which itself closely follows a treatise by Schwabhäuser, Szmielew, and Tarski.<ref>W. Schwabhäuser, W Szmielew, and A. Tarski (1983), ''Metamathematische Methoden in der Geometrie'', ISBN 0387129588</ref>
+
+This page is one of several involving perpendicular lines. We prove some additional theorems about <code>is-right-angle</code>, and then define two predicates saying that lines are perpendicular. A future page will enable us to prove the existence of the midpoint of a line segment.
+
+We import the theorems of [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|predicate logic]], and the [[Interface:Orthogonality 1|geometry results so far]] and define some variables:
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+import (START Interface:Orthogonality_1 (CLASSICAL FIRSTORDER) ())
+
+var (point A B C D E F M P Q R S U V X Y Z)
+var (point U0 V0)
+var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
+var (point C″)
+var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v v′ x x′ y y′ z)
+var (variable u0 v0)
+</jh>
+
+== Right angles ==
+We've proved a number of the results relating to <code>is-right-angle</code> in [[Orthogonality definitions]]. Here we pick up a few more (particularly ones for which the automatic expansion of definitions in [[Orthogonality definitions]] is inconvenient, and ones which follow from those).
+
+=== Proving is-right-angle from an object ===
+To prove <code>is-right-angle</code> from <code>RightAngle</code> requires that we come up with a point which satisfies the conditions of <code>RightAngle</code>. Here's a theorem which handles the logic involved in going from that point to an expression containing <code>∃</code>.<ref>not in Narboux, as coq handles this sort of thing</ref>
+<jh>
+thm (RightAngleObject ( (z A) (z B) (z C) (z Z)) ()
+  (((B is-midpoint-of C Z) ∧ (A C ≡ A Z)) →
+    (is-right-angle A B C)) (
+</jh>
+Our substitution is <code>z = Z → (B is-midpoint-of C z ∧ A C ≡ A z ↔ B is-midpoint-of C Z ∧ A C ≡ A Z)</code>.
+<jh>
+        B EqualityReflexivity
+        C EqualityReflexivity
+        B B C C (value z) Z MidpointBuilder
+        detach2of3
+        detach1of2
+
+        C EqualityReflexivity
+        A EqualityReflexivity
+        A EqualityReflexivity
+        A A C C A A (value z) Z CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+
+        buildConjunctionInConsequent
+</jh>
+Now we just turn that into <code>∃</code> and apply <code>RightAngle</code>.
+<jh>
+        makeSubstExplicit
+        eliminateBiconditionalForward
+
+        Z
+          z
+          ((B is-midpoint-of C (value z)) ∧ (A C ≡ A (value z)))
+          ThereExistsIntroductionFromObject
+        applySyllogism
+
+        A B C z RightAngle
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+=== Swapping the vertex with one of the legs ===
+Another degenerate case is <code>is-right-angle A B C ∧ is-right-angle A C B → B = C</code>.<ref>l8_7 in Narboux</ref>
+
+Let <code>A′</code> be the symmetric point of <code>A</code> through the point <code>C</code>.
+
+First assume <code>B ≠ C</code> (if not, we are done). Then expand <code>is-right-angle A B C</code> by the definition: <code>∃ c′ (B is-midpoint-of C c′ ∧ A C ≡ A c′)</code>. We also flip <code>is-right-angle A C B</code> to <code>is-right-angle B C A</code> and expand it according to the definition: <code>∃ a′ (C is-midpoint-of A a′ ∧ B A ≡ B a′)</code>.
+<jh>
+thm (RightAngleVertexLeg-cprime
+  ((c′ A) (c′ B) (c′ C)) ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
+    (∃ c′
+      (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C (value c′)) ∧ (A C ≡ A (value c′))))
+  )) (
+        (B ≠ C)
+          ((is-right-angle A B C) ∧ (is-right-angle A C B))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        A B C c′ RightAngle
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        repeatAntecedentThereExists
+))
+
+thm (RightAngleVertexLeg-aprime
+  ((C′ a′) (a′ A) (a′ B) (a′ C)) ()
+  (
+    (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) →
+    (∃ a′
+      ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A (value a′)) ∧ (B A ≡ B (value a′))))
+  )) (
+        ((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B)))
+          ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A C B RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        B C A a′ RightAngle
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        repeatAntecedentThereExists
+))
+</jh>
+
+Now we apply <code>RightAngleLeg</code> to get <code>is-right-angle c′ C A</code>.
+
+<jh>
+thm (RightAngleVertexLeg-cprime-c-a
+  () ()
+  (
+    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+    (is-right-angle C′ C A)
+  ) (
+</jh>
+First is <code>is-right-angle B C A</code>.
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A C B RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Next is <code>B ≠ C</code>.
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+Finally is <code>collinear C B C′</code>.
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        C B C′ BetweennessCollinearity
+        applySyllogism
+
+        composeConjunction
+
+        B C A C′ RightAngleLeg
+        applySyllogism
+))
+</jh>
+
+We can paraphrase the definition of <code>is-right-angle C′ C A</code> as "the symmetric point of <code>A</code> through <code>C</code> is the same distance from <code>C′</code> as <code>A</code> is". By symmetric point uniqueness, said symmetric point is just <code>A′</code>. We express this via the "uniqueness lemma", <code>is-right-angle C′ C A ∧ C is-midpoint-of A A′ → C′ A ≡ C′ A′</code>, which we prove after a few lemmas which reflect parts of its proof.
+<jh>
+thm (RightAngleVertexLeg-uniqueness-lemma-z-aprime () ()
+  ((((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z)) ∧ (C is-midpoint-of A A′)) → (Z = A′)) (
+        ((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z))
+          (C is-midpoint-of A A′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z))
+          (C is-midpoint-of A A′)
+          ConjunctionLeftElimination
+
+        composeConjunction
+
+        C A Z A′ SymmetricPointUniqueness
+        applySyllogism
+))
+
+thm (RightAngleVertexLeg-uniqueness-lemma-cprime-a-cprime-aprime () ()
+  ((((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z)) ∧ (C is-midpoint-of A A′)) → (C′ A ≡ C′ A′)) (
+        ((C is-midpoint-of A Z) ∧ (C′ A ≡ C′ Z))
+          (C is-midpoint-of A A′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        C A Z C′ A′ RightAngleVertexLeg-uniqueness-lemma-z-aprime
+
+        A EqualityReflexivity
+        C′ EqualityReflexivity
+        C′ EqualityReflexivity
+        C′ C′ A A C′ C′ Z A′ CongruenceBuilder
+        detach1of4
+        detach2of3
+        detach1of2
+        eliminateBiconditionalReverseInConsequent
+
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+
+thm (RightAngleVertexLeg-uniqueness-lemma
+  ( (z C′) (z C) (z A) (z A′)) ()
+  (((is-right-angle C′ C A) ∧ (C is-midpoint-of A A′)) → (C′ A ≡ C′ A′)) (
+        (is-right-angle C′ C A)
+          (C is-midpoint-of A A′)
+          ConjunctionRightElimination
+
+        C′ C A z RightAngle
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (is-right-angle C′ C A)
+          (C is-midpoint-of A A′)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        moveRightConjunctIntoThereExistsInConsequent
+</jh>
+The consequent is now <code>∃ z (C is-midpoint-of A z ∧ C′ A ≡ C′ z ∧ C is-midpoint-of A A′)</code>, so we just need to combine with the lemmas we already proved.
+<jh>
+        C A (value z) C′ A′ RightAngleVertexLeg-uniqueness-lemma-cprime-a-cprime-aprime
+        z addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
+</jh>
+
+Our next step is <code>A′ C ≡ A′ C′</code>.
+<jh>
+thm (RightAngleVertexLeg-aprime-c-aprime-cprime () ()
+  (
+    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+    (A′ C ≡ A′ C′)
+  ) (
+</jh>
+We start with <code>A′ C ≡ A C</code>, from the construction of <code>A′</code>.
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+        commuteCongruenceLeftInConsequent
+</jh>
+Next is <code>A C ≡ A C′</code>
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        applyCongruenceTransitivityInConsequent
+</jh>
+Next is <code>A C′ ≡ A′ C′</code>, which follows readily from the uniqueness lemma. The uniqueness lemma needs <code>is-right-angle C′ C A</code> and <code>C is-midpoint-of A A′</code>, and it gives us <code>C′ A ≡ C′ A′</code>.
+<jh>
+        B C A C′ A′ RightAngleVertexLeg-cprime-c-a
+
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        C′ C A A′ RightAngleVertexLeg-uniqueness-lemma
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        applyCongruenceTransitivityInConsequent
+))
+</jh>
+
+Next is <code>is-right-angle A′ B C</code>.
+<jh>
+thm (RightAngleVertexLeg-aprime-b-c () ()
+  (
+    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+    (is-right-angle A′ B C)
+  ) (
+</jh>
+We start with <code>B is-midpoint-of C C′ ∧ A′ C ≡ A′ C′</code>.
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        B C A C′ A′ RightAngleVertexLeg-aprime-c-aprime-cprime
+
+        composeConjunction
+</jh>
+Applying <code>RightAngleObject</code> we are done.
+<jh>
+        B C C′ A′ RightAngleObject
+        applySyllogism
+))
+</jh>
+
+<jh>
+thm (RightAngleVertexLeg-b-not-c-1 () ()
+  (
+    ((((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+      ((B is-midpoint-of C C′) ∧ (A C ≡ A C′))) ∧
+      ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))) →
+    (B = C)
+  ) (
+</jh>
+First we need <code>is-right-angle A B C</code>.
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+</jh>
+Next we need <code>is-right-angle A′ B C</code>.
+<jh>
+        B C A C′ A′ RightAngleVertexLeg-aprime-b-c
+        composeConjunction
+</jh>
+Finally we need <code>between A C A′</code>
+<jh>
+        (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) ∧
+            ((B is-midpoint-of C C′) ∧ (A C ≡ A C′)))
+          ((C is-midpoint-of A A′) ∧ (B A ≡ B A′))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+        A B C A′ RightAngleBetween
+        applySyllogism
+))
+
+thm (RightAngleVertexLeg-b-not-c
+  ( (c′ A) (c′ B) (c′ C) (c′ a′) (a′ A) (a′ B) (a′ C)) ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (is-right-angle A C B))) →
+    (B = C)) (
+        B C A c′ RightAngleVertexLeg-cprime
+
+        B C A (value c′) a′ RightAngleVertexLeg-aprime
+        c′ addThereExists
+        applySyllogism
+
+        B C A (value c′) (value a′) RightAngleVertexLeg-b-not-c-1
+        a′ addThereExists
+        c′ addThereExists
+        applySyllogism
+
+       removeThereExistsInConsequent
+       removeThereExistsInConsequent
+))
+
+thm (RightAngleVertexLeg () ()
+  (((is-right-angle A B C) ∧ (is-right-angle A C B)) → (B = C)) (
+        (B = C)
+          ((is-right-angle A B C) ∧ (is-right-angle A C B))
+          AntecedentIntroduction
+
+        B C A RightAngleVertexLeg-b-not-c
+        export
+
+        eliminateCases
+))
+</jh>
+
+=== A leg which is perpendicular to itself ===
+Another degenerate case is <code>is-right-angle A B A → A = B</code>.<ref>l8_8 in Narboux</ref> The proof is that <code>RightAngleVertexLeg</code> gives us <code>is-right-angle A B A ∧ is-right-angle A A B → A = B</code>, but <code>is-right-angle A A B</code> is a theorem, so we are done.
+<jh>
+thm (RightAngleLegItself () () ((is-right-angle A B A) → (A = B)) (
+        B A RightAngleABB
+
+        B A A RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        A B A RightAngleVertexLeg
+        detach2of2
+
+        B A EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+=== Three points which are both perpendicular and collinear ===
+If three points are both perpendicular and collinear, then one of the legs must be an empty line segment.<ref>l8_9 in Narboux</ref>
+<jh>
+thm (RightAngleCollinear () () (((is-right-angle A B C) ∧ (collinear A B C)) → ((A = B) ∨ (C = B))) (
+</jh>
+The <code>A = B</code> case is trivial.
+<jh>
+        (A = B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionRightElimination
+
+        (A = B) (C = B) DisjunctionRightIntroduction
+        applySyllogism
+
+        export
+</jh>
+The <code>A ≠ B</code> case is only slightly harder. We apply <code>RightAngleLeg</code> which in this case is <code>is-right-angle A B C ∧ A ≠ B ∧ collinear B A C → is-right-angle C B C</code>.
+<jh>
+        (A ≠ B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        (A ≠ B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionRightElimination
+        composeConjunction
+
+        (A ≠ B)
+          ((is-right-angle A B C) ∧ (collinear A B C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        A B C Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        A B C C RightAngleLeg
+        applySyllogism
+</jh>
+Then <code>C = B</code> immediately follows from <code>is-right-angle C B C</code>.
+<jh>
+        C B RightAngleLegItself
+        applySyllogism
+
+        (C = B) (A = B) DisjunctionLeftIntroduction
+        applySyllogism
+
+        export
+</jh>
+Combining the cases we are done.
+<jh>
+        eliminateCases
+))
+</jh>
+
+=== Slight variant of RightAngleABB ===
+We'll want this straightforward consequence of <code>RightAngleABB</code> in a moment.
+
+<jh>
+thm (RightAngleABBFromEquality () ()
+  ((B = C) → (is-right-angle A B C)) (
+        A B RightAngleABB
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        A A B B B C RightAngleBuilder
+        detach2of3
+        detach1of2
+
+        detachImplicationBiconditional
+))
+</jh>
+
+=== A congruence theorem ===
+The only reason we rederive this theorem, rather than importing it, is to avoid editing all the interfaces between [[Betweenness of points]] and here.
+<jh>
+thm (NegatedCongruenceIdentityFromEquality () ()
+  (((A ≠ B) ∧ (A B ≡ C D)) → (C ≠ D)) (
+        A B C D CongruenceSymmetry
+        eliminateBiconditionalReverse
+        (A ≠ B) conjoinLL
+
+        C D A B CongruenceIdentityFromEquality
+        export
+        applyComm
+
+        (C = D) (A = B) Transposition
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyComm
+        import
+        applySyllogism
+))
+</jh>
+
+=== An angle congruent to a right angle is a right angle ===
+That is, <code>is-right-angle A B C ∧ A B C ≅ A′ B′ C′ → is-right-angle A′ B′ C′</code>.<ref>l8_10 in Narboux</ref>
+
+We start with the <code>B = C</code> case, where we first conclude <code>B′ = C′</code> and so the conclusion follows from <code>RightAngleABB</code>.
+<jh>
+thm (RightAngleCongruence-b-c () ()
+  (((B = C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (is-right-angle A′ B′ C′)) (
+        (B = C)
+          ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))
+          ConjunctionRightElimination
+
+        (B = C)
+          ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence23
+        applySyllogism
+
+        composeConjunction
+
+        B C B′ C′ CongruenceIdentityFromEquality
+        applySyllogism
+
+        B′ C′ A′ RightAngleABBFromEquality
+        applySyllogism
+))
+</jh>
+
+Here's the sketch of the <code>B ≠ C</code> case. Let <code>D</code> be the point we get by expanding the definition of <code>is-right-angle A B C</code> (that is, <code>B is-midpoint-of C D ∧ A C ≡ A D</code>). Let <code>D′</code> be the symmetric point of <code>C′</code> through <code>B′</code>. Now we just need <code>A′ C′ ≡ A′ D′</code>. We apply outer five segment with baselines <code>C B D<code> and <code>C′ B′ D′</code> and points <code>A</code> and <code>A′</code>, which gives us <code>D A ≡ D′ A′</code>. We have <code>A C ≡ A D</code> from the construction of <code>D</code> and <code>A′ C′ ≡ A C</code> from <code>A B C ≅ A′ B′ C′</code>. So by transitivity, we have <code>A′ C′ ≡ A′ D′</code> which is what we needed.
+
+It will be most convenient to start with the construction of <code>D</code> and <code>D′</code>. First we construct <code>D</code> by expanding the definition of <code>is-right-angle</code> and moving terms inside the quantifier.
+<jh>
+thm (RightAngleCongruence-d ((d A) (d B) (d C) (d A′) (d B′) (d C′)) ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) →
+  (∃ d ((B ≠ C) ∧
+    (((B is-midpoint-of C (value d)) ∧ (A C ≡ A (value d))) ∧
+      (A B C ≅ A′ B′ C′))))) (
+        A B C d RightAngle
+        eliminateBiconditionalReverse
+
+        (A B C ≅ A′ B′ C′) conjoinRR
+        moveRightConjunctIntoThereExistsInConsequent
+
+        (B ≠ C) conjoinLL
+        moveLeftConjunctIntoThereExistsInConsequent
+))
+</jh>
+
+Next we construct <code>D′</code> as the symmetric point of <code>C′</code> through <code>B′</code>.
+<jh>
+thm (RightAngleCongruence-dprime ((d′ A) (d′ B) (d′ C) (d′ A′) (d′ B′) (d′ C′) (d′ D)) ()
+  (((B ≠ C) ∧
+    (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+      (A B C ≅ A′ B′ C′))) →
+    (∃ d′ (((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ (value d′)))
+    )
+  ) (
+        d′ B′ C′ SymmetricPoint
+
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          introduceAntecedent
+        repeatAntecedentThereExists
+))
+</jh>
+
+Having constructed our points, we can get going, starting with <code>B′ ≠ C′</code>, which follows from <code>B ≠ C</code> and <code>A B C ≅ A′ B′ C′</code>.
+<jh>
+thm (RightAngleCongruence-bprime-not-cprime () ()
+  ((((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ D′)) →
+    (B′ ≠ C′)) (
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence23
+        applySyllogism
+
+        composeConjunction
+
+        B C B′ C′ NegatedCongruenceIdentityFromEquality
+        applySyllogism
+))
+</jh>
+
+Next is outer five segment with baselines <code>C B D<code> and <code>C′ B′ D′</code> and points <code>A</code> and <code>A′</code>, to get <code>D A ≡ D′ A′</code>.
+
+<jh>
+thm (RightAngleCongruence-d-a-dprime-aprime () ()
+  ((((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ D′)) →
+    (D A ≡ D′ A′)) (
+</jh>
+<code>C ≠ B</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        B C EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+<code>between C B D</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>between C′ B′ D′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>C B ≡ C′ B′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence23
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+Next is <code>B D ≡ B′ D′</code>, which follows from <code>B D ≡ B C</code>, <code>B C ≡ B′ C′</code>, and <code>B′ C′ ≡ B′ D′</code>.
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapCongruenceInConsequent
+        commuteCongruenceRightInConsequent
+
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence23
+        applySyllogism
+        applyCongruenceTransitivityInConsequent
+
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        commuteCongruenceLeftInConsequent
+        applyCongruenceTransitivityInConsequent
+
+        composeConjunction
+</jh>
+<code>C A ≡ C′ A′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence13
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+<code>B A ≡ B′ A′</code>:
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence12
+        applySyllogism
+        commuteCongruenceInConsequent
+
+        composeConjunction
+</jh>
+Applying outer five segment gives us <code>D A ≡ D′ A′</code>.
+<jh>
+        C B D C′ B′ D′ A A′ OuterFiveSegment
+        applySyllogism
+))
+</jh>
+
+Now we apply transitivity on some line segment congruences which we already have to get <code>A′ C′ ≡ A′ D′</code>.
+
+<jh>
+thm (RightAngleCongruence-aprime-cprime-aprime-dprime () ()
+  ((((B ≠ C) ∧
+      (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+        (A B C ≅ A′ B′ C′))) ∧
+      (B′ is-midpoint-of C′ D′)) →
+    (A′ C′ ≡ A′ D′)) (
+</jh>
+First is <code>A′ C′ ≡ A C</code>,
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B C A′ B′ C′ Congruence13
+        applySyllogism
+        swapCongruenceInConsequent
+</jh>
+followed by <code>A C ≡ A D</code>,
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        applyCongruenceTransitivityInConsequent
+</jh>
+and finally <code>A D ≡ A′ D′</code>.
+<jh>
+        B C D A A′ B′ C′ D′ RightAngleCongruence-d-a-dprime-aprime
+        commuteCongruenceInConsequent
+        applyCongruenceTransitivityInConsequent
+))
+</jh>
+
+That's all the major pieces of <code>is-right-angle A′ B′ C′</code>. We just need to do a bit of assembly.
+
+<jh>
+thm (RightAngleCongruence-aprime-bprime-cprime () ()
+  ((((B ≠ C) ∧
+    (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+      (A B C ≅ A′ B′ C′))) ∧
+    (B′ is-midpoint-of C′ D′)) →
+  (is-right-angle A′ B′ C′)) (
+</jh>
+The first piece is <code>B′ is-midpoint-of C′ D′</code>,
+<jh>
+        ((B ≠ C) ∧
+          (((B is-midpoint-of C D) ∧ (A C ≡ A D)) ∧
+            (A B C ≅ A′ B′ C′)))
+          (B′ is-midpoint-of C′ D′)
+          ConjunctionLeftElimination
+</jh>
+and the second piece is <code>A′ C′ ≡ A′ D′</code>.
+<jh>
+        B C D A A′ B′ C′ D′ RightAngleCongruence-aprime-cprime-aprime-dprime
+        composeConjunction
+</jh>
+We can now turn those two pieces into <code>is-right-angle A′ B′ C′</code>.
+<jh>
+        B′ C′ D′ A′ RightAngleObject
+        applySyllogism
+))
+
+thm (RightAngleCongruence-b-not-c
+  ((d d′ A) (d d′ B) (d d′ C) (d d′ A′) (d d′ B′) (d d′ C′)) ()
+  (((B ≠ C) ∧ ((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′))) → (is-right-angle A′ B′ C′)) (
+        B C A A′ B′ C′ d RightAngleCongruence-d
+
+        B C (value d) A A′ B′ C′ d′ RightAngleCongruence-dprime
+        d addThereExists
+        applySyllogism
+
+        B C (value d) A A′ B′ C′ (value d′) RightAngleCongruence-aprime-bprime-cprime
+        d′ addThereExists
+        d addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+
+thm (RightAngleCongruence () () (((is-right-angle A B C) ∧ (A B C ≅ A′ B′ C′)) → (is-right-angle A′ B′ C′)) (
+        B C A A′ B′ C′ RightAngleCongruence-b-c
+        export
+
+        B C A A′ B′ C′ RightAngleCongruence-b-not-c
+        export
+
+        eliminateCases
+))
+</jh>
+
+== Perpendicular lines at a point ==
+The line <code>A B</code> is perpendicular to the line <code>C D</code> at the point <code>X</code> if that point lies on both lines and if choosing one point from each line plus the vertex <code>X</code> always produces a right angle. In symbols, <code>A B C D ⟂at X</code> is defined as <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ ∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>.
+
+<jh>
+def ((⟂at A B C D X)
+  (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+   (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+     (is-right-angle (value u) X (value v)))))))
+</jh>
+
+=== Definition as a theorem ===
+As usual, we'll need a theorem form of the definition.
+<jh>
+thm (PerpendicularAt
+  ((u v A) (u v B) (u v C) (u v D) (u v X)   (u′ v′ u v) (u′ v′ A) (u′ v′ B) (u′ v′ C) (u′ v′ D) (u′ v′ X)) ()
+  ((A B C D ⟂at X) ↔
+    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+     (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+       (is-right-angle (value u) X (value v))))))) (
+</jh>
+We start with <code>v = v′ → ((collinear u A B ∧ collinear v C D → is-right-angle u X v) ↔ (collinear u A B ∧ collinear v′ C D → is-right-angle u X v′))</code>.
+<jh>
+        D EqualityReflexivity
+        C EqualityReflexivity
+        (value v) (value v′) C C D D CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear (value u) A B) buildConjunctionLLInConsequent
+
+        (value u) EqualityReflexivity
+        X EqualityReflexivity
+        (value u) (value u) X X (value v) (value v′) RightAngleBuilder
+        detach2of3
+        detach1of2
+
+        buildImplicationInConsequent
+</jh>
+We turn that into <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v) ↔ ∀ u ∀ v′ (collinear u A B ∧ collinear v′ C D → is-right-angle u X v′)</code>.
+<jh>
+        ChangeVariableForAll
+        u buildForAll
+</jh>
+Now we pull the same trick for <code>u</code>, starting with <code>u = u′ → (∀ v′ (collinear u A B ∧ collinear v′ C D → is-right-angle u X v′) ↔ ∀ v′ (collinear u′ A B ∧ collinear v′ C D → is-right-angle u′ X v′))</code>.
+<jh>
+        B EqualityReflexivity
+        A EqualityReflexivity
+        (value u) (value u′) A A B B CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear (value v′) C D) buildConjunctionRRInConsequent
+
+        (value v′) EqualityReflexivity
+        X EqualityReflexivity
+        (value u) (value u′) X X (value v′) (value v′) RightAngleBuilder
+        detach2of3
+        detach2of2
+
+        buildImplicationInConsequent
+
+        v′ buildForAllInConsequent
+
+        ChangeVariableForAll
+
+        applyBiconditionalTransitivity
+</jh>
+That's the hard part; the bit outside the quantifiers needs no extra work.
+<jh>
+        ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) buildConjunctionLL
+        swapBiconditional
+))
+</jh>
+
+=== Symmetry ===
+Here we prove <code>A B C D ⟂at X ↔ C D A B ⟂at X</code>.<ref>l8_12 and perp_in_symmetry in Narboux</ref> The concept is pretty simple: expand the definition and apply symmetry to each piece. The only thing which makes this proof a bit long is the number of pieces.
+<jh>
+thm (PerpendicularAtSymmetry
+  ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
+  ((A B C D ⟂at X) ↔ (C D A B ⟂at X)) (
+</jh>
+Before we get started, we'll expand <code>A B C D ⟂at X</code> according to the definition.
+<jh>
+        A B C D X u v PerpendicularAt
+</jh>
+Working on the left hand part of the definition, we just need to apply conjunction commutativity and associativity.
+<jh>
+        ((A ≠ B) ∧ (C ≠ D))
+          (collinear X A B)
+          (collinear X C D)
+          ConjunctionAssociativity
+
+        (A ≠ B) (C ≠ D) ConjunctionCommutativity
+        (collinear X A B) (collinear X C D) ConjunctionCommutativity
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        ((C ≠ D) ∧ (A ≠ B))
+          (collinear X C D)
+          (collinear X A B)
+          ConjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+</jh>
+That's the easy part. Next is <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v) ↔ ∀ v ∀ u (collinear v C D ∧ collinear u A B → is-right-angle v X u)</code>
+<jh>
+        (collinear (value u) A B) (collinear (value v) C D) ConjunctionCommutativity
+        (value u) X (value v) RightAngleSymmetry
+        buildImplication
+
+        v buildForAll
+        u buildForAll
+
+        u v
+          (((collinear (value v) C D) ∧ (collinear (value u) A B)) →
+            (is-right-angle (value v) X (value u)))
+          ForAllCommutation
+        applyBiconditionalTransitivity
+</jh>
+Now we just need to combine the two halves and unexpand the definition on the right side.
+<jh>
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        C D A B X v u PerpendicularAt
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Only one point on each line is needed ===
+The definition of <code>⟂at</code> might seem a bit odd, in that it would intuitively appear that one point on each line which forms a right angle would suffice, rather than needing to make an assertion about all points on those lines. In fact, this intuition is correct subject to the condition that the points being chosen on the line do not equal the vertex. In symbols, <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ ∃ u ∃ v (collinear u A B ∧ collinear v C D ∧ u ≠ X ∧ v ≠ X ∧ is-right-angle u X v) → A B C D ⟂at X</code>.<ref>l8_13_2 in Narboux</ref>
+
+The proof is based on the idea that <code>A</code>, <code>B</code>, <code>u</code> are on a line and we'll also consider an arbitrary point, which we'll call <code>U0</code>, on that line. We'll use <code>RightAngleLeg</code> to turn <code>is-right-angle u X v</code> to <code>is-right-angle U0 X v</code> (and some collinearity transitivity to set up the hypotheses for <code>RightAngleLeg</code>). Then we'll do much the same for <code>C</code>, <code>D</code>, <code>v</code>, and an arbitrary point <code>V0</code> on the line <code>C D<code>, which will turn <code>is-right-angle v X U0</code> to <code>is-right-angle V0 X U0</code>. Fortunately, the first half and the similar half are similar enough that we can break it off into a lemma which we'll be able to apply twice.
+
+The lemma is <code>A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X → is-right-angle U0 X V</code>. In this case, <code>RightAngleLeg</code> is <code>is-right-angle U X V ∧ U ≠ X ∧ collinear X U U0 → is-right-angle U0 X V</code>. The first two hypotheses we have, so the first part of our proof is headed towards <code>collinear X U U0</code>. We'll start by applying collinearity transitivity twice.<ref>based on Narboux's proof of l8_13_2 but streamlined, as Narboux also asserts <code>collinear A X U0</code> and <code>collinear A U X</code>, which don't seem to be used.</ref>
+
+The first collinearity is <code>collinear B U U0</code> by transitivity from <code>B ≠ A</code>, <code>collinear B A U</code> and <code>collinear B A U0</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-b-u-u0 () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear B U U0)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A B EqualitySymmetry
+        addNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B U Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        A B U0 Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+
+        B A U U0 CollinearityOuterTransitivity
+        applySyllogism
+))
+</jh>
+
+The other collinearity is <code>collinear B U X</code> by transitivity from <code>A ≠ B</code>, <code>collinear A B U</code> and <code>collinear A B X</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-b-u-x () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear B U X)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        A B U X CollinearityInnerTransitivity
+        applySyllogism
+))
+</jh>
+
+At this point we prove <code>collinear X U U0</code> by considering <code>B = U</code> and <code>B ≠ U</code> cases.
+
+For the <code>B = U</code> case, we first apply transitivity to give <code>collinear B X U0</code> (from <code>A ≠ B</code>, <code>A B X</code> and <code>A B U0</code>).
+<jh>
+thm (PerpendicularAtThereExists-b-x-u0 () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear B X U0)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        A B X U0 CollinearityInnerTransitivity
+        applySyllogism
+))
+</jh>
+The rest of the <code>B = U</code> case is just substituting <code>U</code> for <code>B</code> in <code>collinear B X U0</code> to get <code>collinear X U U0</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-b-u () ()
+  (((B = U) ∧ ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X))) →
+    (collinear X U U0)) (
+</jh>
+First we apply the previous result to get <code>collinear B X U0</code>.
+<jh>
+        (B = U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionLeftElimination
+
+        A B U0 X U V PerpendicularAtThereExists-b-x-u0
+        applySyllogism
+
+</jh>
+Now we use a substitution to get <code>collinear B X U0 → collinear U X U0</code>.
+<jh>
+        (B = U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionRightElimination
+
+        X EqualityReflexivity
+        U0 EqualityReflexivity
+        B U X X U0 U0 CollinearityBuilder
+        detach2of2
+        detach2of2
+
+        applySyllogism
+        eliminateBiconditionalReverseInConsequent
+</jh>
+Combining those two and adjusting the order of the operands we are done.
+<jh>
+        applyModusPonensInConsequent
+
+        U X U0 Collinearity12
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+The <code>B ≠ U</code> case applies transitivity to <code>B ≠ U</code>, <code>collinear B U U0</code> and <code>collinear B U X</code>, to give <code>collinear U U0 X</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-b-not-u () ()
+  (((B ≠ U) ∧ ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X))) →
+    (collinear X U U0)) (
+        (B ≠ U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionRightElimination
+
+        (B ≠ U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionLeftElimination
+        A B U0 X U V PerpendicularAtThereExists-b-u-u0
+        applySyllogism
+        composeConjunction
+
+        (B ≠ U)
+          ((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V)) ∧ (U ≠ X))
+          ConjunctionLeftElimination
+        A B U0 X U V PerpendicularAtThereExists-b-u-x
+        applySyllogism
+        composeConjunction
+
+        B U U0 X CollinearityInnerTransitivity
+        applySyllogism
+
+        X U U0 CollinearityRotation
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+</jh>
+Combining the two cases gives <code>collinear X U U0</code>.
+<jh>
+thm (PerpendicularAtThereExists-x-u-u0 () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (collinear X U U0)) (
+        B U A U0 X V PerpendicularAtThereExists-b-u
+        export
+
+        B U A U0 X V PerpendicularAtThereExists-b-not-u
+        export
+
+        eliminateCases
+))
+</jh>
+
+We're now ready to prove the lemma <code>A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X → is-right-angle U0 X V</code>. We just need to apply <code>RightAngleLeg</code> which is <code>is-right-angle U X V ∧ U ≠ X ∧ collinear X U U0 → is-right-angle U0 X V</code>.
+
+<jh>
+thm (PerpendicularAtThereExists-half () ()
+  (((((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+      (is-right-angle U X V)) ∧ (U ≠ X)) →
+    (is-right-angle U0 X V)) (
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        (((((A ≠ B) ∧ (collinear A B U0)) ∧ (collinear A B X)) ∧ (collinear A B U)) ∧
+            (is-right-angle U X V))
+          (U ≠ X)
+          ConjunctionLeftElimination
+        composeConjunction
+
+        A B U0 X U V PerpendicularAtThereExists-x-u-u0
+        composeConjunction
+
+        U X V U0 RightAngleLeg
+        applySyllogism
+))
+</jh>
+
+Now we apply this lemma twice to give <code>A ≠ B ∧ C ≠ D ∧ collinear X A B ∧ collinear X C D ∧ (collinear U A B ∧ collinear V C D ∧ U ≠ X ∧ V ≠ X ∧ is-right-angle U X V) ∧ (collinear U0 A B ∧ collinear V0 C D) → is-right-angle U0 X V0</code>.
+
+The first application of the lemma is <code>A ≠ B ∧ collinear A B U0 ∧ collinear A B X ∧ collinear A B U ∧ is-right-angle U X V ∧ U ≠ X → is-right-angle U0 X V</code>.
+<jh>
+thm (PerpendicularAtThereExists-u0-x-v () ()
+  (((((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+  (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V))) ∧
+  ((collinear U0 A B) ∧ (collinear V0 C D))) →
+  (is-right-angle U0 X V)) (
+</jh>
+<code>A ≠ B</code>.
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+</jh>
+<code>collinear A B U0</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        U0 A B CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear A B X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        X A B CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear A B U</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        U A B CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>is-right-angle U X V</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+</jh>
+<code>U ≠ X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        A B U0 X U V PerpendicularAtThereExists-half
+        applySyllogism
+))
+</jh>
+
+Applying the lemma a second time is only slightly more complicated.
+
+<jh>
+thm (PerpendicularAtThereExists-u0-x-v0 () ()
+  (((((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+  (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V))) ∧
+  ((collinear U0 A B) ∧ (collinear V0 C D))) →
+  (is-right-angle U0 X V0)) (
+</jh>
+<code>C ≠ D</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+</jh>
+<code>collinear C D V0</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        V0 C D CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear C D X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        X C D CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>collinear C D V</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        V C D CollinearityRotation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+At this point our proof builds on the previous proof. We need <code>is-right-angle V X U0</code>.
+<jh>
+        A B C D X U V U0 V0 PerpendicularAtThereExists-u0-x-v
+
+        U0 X V RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        composeConjunction
+</jh>
+<code>V ≠ X</code>:
+<jh>
+        (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+          (((((collinear U A B) ∧ (collinear V C D)) ∧ (U ≠ X)) ∧ (V ≠ X)) ∧ (is-right-angle U X V)))
+          ((collinear U0 A B) ∧ (collinear V0 C D))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        C D V0 X V U0 PerpendicularAtThereExists-half
+        applySyllogism
+
+        V0 X U0 RightAngleSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
+Now we need to handle the logic to turn that into our desired theorem.
+
+<jh>
+thm (PerpendicularAtThereExists-1
+  ((u v A) (u v B) (u v C) (u v D) (u v X) (u v U0) (u v V0)) ()
+  (
+    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+      (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+        ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+        (is-right-angle (value u) X (value v)))))) →
+  (((collinear U0 A B) ∧ (collinear V0 C D)) →
+    (is-right-angle U0 X V0))) (
+</jh>
+First we move the quantifiers to the start.
+<jh>
+        u
+          ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+            ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+              (is-right-angle (value u) X (value v))))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+
+        v
+          ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+            ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+              (is-right-angle (value u) X (value v)))
+          ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        u addThereExists
+        applySyllogism
+</jh>
+Now we apply <code>PerpendicularAtThereExists-u0-x-v0</code>.
+<jh>
+        A B C D X (value u) (value v) U0 V0 PerpendicularAtThereExists-u0-x-v0
+        export
+
+        v addThereExists
+        u addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+        removeThereExistsInConsequent
+))
+
+thm (PerpendicularAtThereExists
+  ((u v A) (u v B) (u v C) (u v D) (u v X)
+
+   (u v u0 v0) (u0 v0 A) (u0 v0 B) (u0 v0 C) (u0 v0 D) (u0 v0 X)) ()
+  (
+    (((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D)) ∧
+      (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+        ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+        (is-right-angle (value u) X (value v)))))) →
+    (A B C D ⟂at X)
+  ) (
+        ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (∃ u (∃ v (((((collinear (value u) A B) ∧ (collinear (value v) C D)) ∧
+            ((value u) ≠ X)) ∧ ((value v) ≠ X)) ∧
+            (is-right-angle (value u) X (value v)))))
+          ConjunctionRightElimination
+
+        A B C D X u v (value u0) (value v0) PerpendicularAtThereExists-1
+        v0 addForAllToConsequent
+        u0 addForAllToConsequent
+
+        composeConjunction
+))
+</jh>
+
+=== Perpendicular lines meet at right angles ===
+
+Narboux doesn't explicitly state the following lemma (apparently his coq tactics cover it), but it states that if lines are perpendicular at a point, they form a right angle there. The proof may seem a bit long, but the idea is simple: expand <code>A B C D ⟂at X</code> according to the definition to get <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>. Substitute <code>A</code> for <code>u</code> and <code>C</code> for <code>v</code> to get <code>collinear A A B ∧ collinear C C D → is-right-angle A X C</code>, and then detach <code>collinear A A B</code> and <code>collinear C C D</code> as they are theorems.
+
+<jh>
+thm (PerpendicularAtRightAngle ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
+  ((A B C D ⟂at X) → (is-right-angle A X C)) (
+</jh>
+We put the theorems on the proof stack for use at the end, and then expand <code>⟂at</code>.
+<jh>
+        C D CollinearityAAB
+        A B CollinearityAAB
+
+        A B C D X u v PerpendicularAt
+        eliminateBiconditionalReverse
+
+        ((((A ≠ B) ∧ (C ≠ D)) ∧ (collinear X A B)) ∧ (collinear X C D))
+          (∀ u (∀ v (((collinear (value u) A B) ∧ (collinear (value v) C D)) →
+            (is-right-angle (value u) X (value v)))))
+          ConjunctionLeftElimination
+        applySyllogism
+
+</jh>
+Now we substitute <code>A</code> for <code>u</code>.
+<jh>
+        A specializeToObjectInConsequent
+
+        B EqualityReflexivity
+        A EqualityReflexivity
+        (value u) A A A B B CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear (value v) C D) buildConjunctionRRInConsequent
+
+        (value v) EqualityReflexivity
+        X EqualityReflexivity
+        (value u) A X X (value v) (value v) RightAngleBuilder
+        detach2of3
+        detach2of2
+
+        buildImplicationInConsequent
+        v buildForAllInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we substitute <code>C</code> for <code>v</code>.
+<jh>
+        C specializeToObjectInConsequent
+
+        D EqualityReflexivity
+        C EqualityReflexivity
+        (value v) C C C D D CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear A A B) buildConjunctionLLInConsequent
+
+        A EqualityReflexivity
+        X EqualityReflexivity
+        A A X X (value v) C RightAngleBuilder
+        detach2of3
+        detach1of2
+
+        buildImplicationInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we detach the two degenerate collinearities.
+<jh>
+        exportInConsequent
+        detachImplicationImplication
+        detachImplicationImplication
+))
+</jh>
+
+=== Builder ===
+Equals can be substituted for equals, in the context of <code>⟂at</code>. Because the definition of <code>⟂at</code> is long, this proof is kind of long, but it is just a straightforward application of the builders for everything making up the definition of <code>⟂at</code>.
+<jh>
+thm (PerpendicularAtBuilder
+  ( (u v A) (u v B) (u v C) (u v D) (u v X) (u v A′) (u v B′) (u v C′) (u v D′) (u v X′)) ()
+  ((((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′)) ∧ (X = X′)) → ((A B C D ⟂at X) ↔ (A′ B′ C′ D′ ⟂at X′))) (
+</jh>
+<code>A ≠ B ↔ A′ ≠ B′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        A A′ B B′ EqualityBuilder
+        applySyllogism
+        addNegationInConsequent
+
+</jh>
+<code>C ≠ D ↔ C′ ≠ D′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+
+        ((A = A′) ∧ (B = B′)) (C = C′) (D = D′) ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        applySyllogism
+        eliminateLeftConjunctInConsequent
+
+        C C′ D D′ EqualityBuilder
+        applySyllogism
+        addNegationInConsequent
+
+        buildConjunctionInConsequent
+</jh>
+<code>collinear X A B ↔ collinear X′ A′ B′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionLeftElimination
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        X X′ A A′ B B′ CollinearityBuilder
+        applySyllogism
+
+        buildConjunctionInConsequent
+</jh>
+<code>collinear X C D ↔ collinear X′ C′ D′</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionLeftElimination
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        X X′ C C′ D D′ CollinearityBuilder
+        applySyllogism
+
+        buildConjunctionInConsequent
+</jh>
+What we have left is <code>∀ u ∀ v (collinear u A B ∧ collinear v C D → is-right-angle u X v)</code>, starting with <code>collinear u A B</code>.
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        (value u) EqualityReflexivity
+        (value u) (value u) A A′ B B′ CollinearityBuilder
+        detach1of3
+
+        applySyllogism
+</jh>
+<code>collinear v C D</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionRightElimination
+
+        ((A = A′) ∧ (B = B′)) (C = C′) (D = D′) ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        applySyllogism
+        eliminateLeftConjunctInConsequent
+
+        (value v) EqualityReflexivity
+        (value v) (value v) C C′ D D′ CollinearityBuilder
+        detach1of3
+
+        applySyllogism
+
+        buildConjunctionInConsequent
+</jh>
+<code>is-right-angle u X v</code>:
+<jh>
+        ((((A = A′) ∧ (B = B′)) ∧ (C = C′)) ∧ (D = D′))
+          (X = X′)
+          ConjunctionLeftElimination
+
+        (value u) EqualityReflexivity
+        (value v) EqualityReflexivity
+        (value u) (value u) X X′ (value v) (value v) RightAngleBuilder
+        detach2of2
+        detach1of2
+
+        applySyllogism
+
+        buildImplicationInConsequent
+</jh>
+Now we add the quantifiers.
+<jh>
+        v buildForAllInConsequent
+        u buildForAllInConsequent
+
+        buildConjunctionInConsequent
+))
+</jh>
+
+=== Commutativity ===
+As with line segment congruence, we use the word ''commutativity'' to refer to exchanging the points within each line (that is, <code>A B C D ⟂at X ↔ B A D C ⟂at X</code>), and the word ''symmetry'' to exchanging the two lines (<code>A B C D ⟂at X ↔ C D A B ⟂at X</code>).
+
+We already proved symmetry, so next is commutativity on the left side.<ref>perp_in_left_commutativity in Narboux</ref> The proof is a straightforward exercise in expanding the definition and then commuting the relevant pieces.
+<jh>
+thm (PerpendicularAtLeftCommutativity ( (u v A) (u v B) (u v C) (u v D) (u v X)) ()
+  ((A B C D ⟂at X) ↔ (B A C D ⟂at X)) (
+        A B C D X u v PerpendicularAt
+
+        A B EqualitySymmetry
+        addNegation
+
+        (C ≠ D) buildConjunctionRR
+
+        X A B Collinearity23
+        buildConjunction
+
+        (collinear X C D) buildConjunctionRR
+
+        (value u) A B Collinearity23
+
+        (collinear (value v) C D) buildConjunctionRR
+
+        (is-right-angle (value u) X (value v)) buildImplicationConsequent
+
+        v buildForAll
+        u buildForAll
+
+        buildConjunction
+
+        applyBiconditionalTransitivity
+
+        B A C D X u v PerpendicularAt
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Right commutativity follows from left commutativity and symmetry.<ref>perp_in_right_commutativity in Narboux</ref>
+<jh>
+thm (PerpendicularAtRightCommutativity () ()
+  ((A B C D ⟂at X) ↔ (A B D C ⟂at X)) (
+        A B C D X PerpendicularAtSymmetry
+
+        C D A B X PerpendicularAtLeftCommutativity
+        applyBiconditionalTransitivity
+
+        D C A B X PerpendicularAtSymmetry
+        applyBiconditionalTransitivity
+))
+</jh>
+
+Commutativity follows from left and right commutativity.<ref>perp_in_commutativity in Narboux</ref>
+<jh>
+thm (PerpendicularAtCommutativity () ()
+  ((A B C D ⟂at X) ↔ (B A D C ⟂at X)) (
+        A B C D X PerpendicularAtLeftCommutativity
+
+        B A C D X PerpendicularAtRightCommutativity
+        applyBiconditionalTransitivity
+))
+</jh>
+
+== Perpendicular lines ==
+Saying that lines are perpendicular at a point is the main step towards saying those lines are perpendicular. The connection is pretty simple: <code>A B ⟂ C D</code> is defined as <code>∃ x A B C D ⟂at x</code>.
+<jh>
+def ((⟂ A B C D) (∃ x (A B C D ⟂at (value x))))
+</jh>
+
+=== A propositional logic theorem involving contradictions ===
+
+Partly to avoid having to use both of the symbols <code>⊥</code> (falsity) and <code>⟂</code> (perpendicular) in close proximity, we first prove a propositional logic theorem.
+<jh>
+var (formula φ ψ)
+thm (noteContradiction () ((HTRUE (φ → ψ)) (HFALSE (φ → (¬ ψ)))) (¬ φ) (
+        HTRUE
+        HFALSE
+        composeConjunction
+
+        ψ Contradiction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        φ NegationImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== No line is perpendicular to itself ===
+Here we show <code>¬ A B ⟂ A B</code>. The proof is by contradiction: <code>A ≠ B</code> from the definition, but <code>A = B</code> will follow from two applications of <code>RightAngleLegItself</code>.<ref>l8_14_1 in Narboux</ref>
+<jh>
+thm (PerpendicularIrreflexivityAt () () (¬ (A B A B ⟂at X)) (
+</jh>
+We start with <code>is-right-angle A X A</code> which in turn implies <code>A = X</code>.
+<jh>
+        A B A B X PerpendicularAtRightAngle
+        A X RightAngleLegItself
+        applySyllogism
+</jh>
+Then <code>is-right-angle B X B</code> implies <code>X = B</code>.
+<jh>
+        A B A B X PerpendicularAtCommutativity
+        eliminateBiconditionalReverse
+
+        B A B A X PerpendicularAtRightAngle
+        applySyllogism
+
+        B X RightAngleLegItself
+        applySyllogism
+
+        B X EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Combining those equalities we get <code>A = B</code>,
+<jh>
+        composeConjunction
+
+        A X B EqualityTransitivity
+        applySyllogism
+</jh>
+but that contradicts <code>A ≠ B</code>, which we already have.
+<jh>
+        (A B A B ⟂at X) ImplicationReflexivity
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        noteContradiction
+))
+
+thm (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)) (
+        A B (value x) PerpendicularIrreflexivityAt
+        x generalize
+
+        x (A B A B ⟂at (value x)) NotThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Being perpendicular at any point implies being perpendicular ===
+That is, <code>A B C D ⟂at X → A B ⟂ C D</code>.<ref>l8_14_2_1a in Narboux</ref>
+<jh>
+# TODO: time to move to a new file, probably, as we need x to be distinct
+# from (A B C D ⟂at X) and having it auto-expanded makes that hard.
+#thm (PerpendicularAtPerpendicular ( (x A) (x B) (x C) (x D) (x X)) ()
+#  ((A B C D ⟂at X) → (A B ⟂ C D)) (
+#        A EqualityReflexivity
+#        B EqualityReflexivity
+#        C EqualityReflexivity
+#        D EqualityReflexivity
+#        A A B B C C D D (value x) X PerpendicularAtBuilder
+#        detach2of3
+#        detach2of3
+#        detach2of3
+#        detach1of2
+
+#        makeSubstExplicit
+
+#        eliminateBiconditionalForward
+
+#        X x (A B C D ⟂at (value x)) ThereExistsIntroductionFromObject
+#        applySyllogism
+#))
+</jh>
+
+== Export ==
+We now export to [[Interface:Orthogonality 2]].
+<jh>
+export (RESULTS Interface:Orthogonality_2 (CLASSICAL FIRSTORDER) ())
+</jh>
+
+Also, since this is currently the last proof module for geometry, we export to [[Interface:Basic geometry]].
+<jh>
+export (GEOMETRY Interface:Basic_geometry (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+* Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
