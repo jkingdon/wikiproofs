@@ -513,17 +513,6 @@ stmt (PerpendicularAtCommutativity () ()
 stmt (PerpendicularIrreflexivityAt () () (¬ (A B A B ⟂at X)))
 </jh>
 
-=== Perpendiculararity ===
-If lines are perpendicular at any point, they are said to be perpendicular (<code>A B ⟂ C D</code>)
-<jh>
-term (formula (⟂ point point point point))
-</jh>
-
-This relationship is irreflexive.
-<jh>
-stmt (PerpendicularIrreflexivity () () (¬ (A B ⟂ A B)))
-</jh>
-
 == Tarski's axioms ==
 We repeat those axioms which are not subsumed by the theorems we have proved so far. Explanations are at [[Interface:Tarski's geometry axioms]].
 <jh>
