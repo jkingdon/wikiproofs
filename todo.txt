@@ -46,15 +46,6 @@ Items which may be doable without a network connection:
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
 
 * Needed to derive geometry axioms from reals (page 201 of Givant1999)
-  - to define ≡
-    • subtraction
-    • 1st, 2nd
-      - op1sta ⋃ domain { 〈A, B〉 } = A
-        • dmsnop domain { 〈A, B〉 } = { A } (metamath proof is involved)
-        • (have) unieq UnionBuilder A = B → ⋃ A = ⋃ B
-        • (have) unisn ⋃ { A } = A
-        (each of these is proved in terms of various things we probably want,
-        but don't have yet)
   - ≤ for reals (defined in terms of <)
   - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceABBA)
   - builders for +, ·
