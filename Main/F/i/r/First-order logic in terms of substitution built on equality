@@ -1888,6 +1888,53 @@ We also export the axiom of quantifiability, just to emphasize that this "axiom"
 export (QUANTIFIABILITY Interface:Axiom_of_quantifiability (PROPOSITIONAL FIRSTORDER) ())
 </jh>
 
+== Metamath axiomization of first-order logic ==
+We also export the metamath axiomization of first-order logic, to provide a the solution to a modified version of the problem stated at [http://us.metamath.org/award2003.html#17 17] on the metamath site.
+
+First we need some alternate names or very slight rearrangements for some of our existing axioms or theorems.
+<jh>
+thm (QuantifiedImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) (
+        x φ ψ ForAllImplication
+))
+
+thm (QuantifierCommutation () () ( (∀ x (∀ y φ)) → (∀ y (∀ x φ)) ) (
+        x y φ ForAllCommutation
+        eliminateBiconditionalReverse
+))
+</jh>
+
+We also need to export <code>QuantifiedNegation</code>, which is an easy consequence of our theory of free variables.
+<jh>
+thm (QuantifiedNegation () () ( (¬ (∀ x φ)) → (∀ x (¬ (∀ x φ))) ) (
+        x φ BoundForAllNotFree
+        negateNotFree
+
+        ForAllAddRemoveNotFree
+        eliminateBiconditionalForward
+))
+</jh>
+
+Although metamath has <code>Existence</code> without <code>Quantifiability</code>, for our purposes we might just try to prove the former as a special case of the latter. {{cleanup|figuring out how ExistenceDistinct and ExistenceNotDistinct could be combined into a proof of Existence, or finding another proof}}
+<jh>
+thm (ExistenceDistinct ((x y)) () (¬ (∀ x (¬ ((value x) = (value y))))) (
+        x (value y) Quantifiability
+))
+
+thm (ExistenceNotDistinct () () (¬ (∀ x (¬ ((value x) = (value x))))) (
+        (value x) EqualityReflexivity
+        ((value x) = (value x)) x ThereExistsIntroduction
+        applyModusPonens
+))
+</jh>
+
+{{cleanup|also proving QuantifierSubstitution and VariableSubstitution}}
+
+Once we are done, here we would export the metamath axioms.
+
+<jh>
+#export (METAMATH Interface:Axioms_of_first-order_logic (PROPOSITIONAL) ())
+</jh>
+
 == References ==
 <references/>
 
