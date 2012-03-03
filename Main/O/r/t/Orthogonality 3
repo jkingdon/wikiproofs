@@ -83,6 +83,90 @@ thm (PerpendicularAtPerpendicular ( (x A) (x B) (x C) (x D) (x X)) ()
 ))
 </jh>
 
+=== Uniqueness of intersection point ===
+If two lines are perpendicular at a point, they intersect only at that point. In symbols, <code>A B C D ⟂at X ∧ collinear Y A B ∧ collinear Y C D → X = Y</code>.<ref>l8_14_2_1b in Narboux</ref>
+
+To prove this we first show <code>is-right-angle Y X Y</code> which follows directly from the <code>∀ p ∀ q (collinear p A B ∧ collinear q C D → is-right-angle p X q)</code> part of <code>PerpendicularAt</code>.
+<jh>
+thm (PerpendicularAtUniqueIntersection-Y-X-Y ( (p q A) (p q B) (p q C) (p q D) (p q X) (p q Y)) ()
+  ((((A B C D ⟂at X) ∧ (collinear Y A B)) ∧ (collinear Y C D)) → (is-right-angle Y X Y)) (
+</jh>
+Towards the end of the proof, we'll need <code>A B C D ⟂at X ∧ collinear Y A B ∧ collinear Y C D → collinear Y A B ∧ collinear Y C D</code>. So we stick this on the proof stack.
+<jh>
+        ((A B C D ⟂at X) ∧ (collinear Y A B)) (collinear Y C D) ConjunctionRightElimination
+        eliminateLeftConjunctionInConsequent
+
+        ((A B C D ⟂at X) ∧ (collinear Y A B)) (collinear Y C D) ConjunctionLeftElimination
+
+        composeConjunction
+</jh>
+Leaving that aside, we now expand <code>⟂at</code> and pick out the part we care about.
+<jh>
+        ((A B C D ⟂at X) ∧ (collinear Y A B)) (collinear Y C D) ConjunctionRightElimination
+        eliminateRightConjunctionInConsequent
+
+        A B C D X p q PerpendicularAt
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        eliminateLeftConjunctInConsequent
+
+        Y specializeToObjectInConsequent
+</jh>
+The consequent is now <code>[ Y / p ] ∀ q (collinear p A B ∧ collinear q C D → is-right-angle p X q)</code>, so we next perform the substitution.
+<jh>
+        B EqualityReflexivity
+        A EqualityReflexivity
+        (value p) Y A A B B CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear (value q) C D) buildConjunctionRRInConsequent
+
+        (value q) EqualityReflexivity
+        X EqualityReflexivity
+        (value p) Y X X (value q) (value q) RightAngleBuilder
+        detach2of3
+        detach2of2
+
+        buildImplicationInConsequent
+
+        q buildForAllInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        Y specializeToObjectInConsequent
+</jh>
+The consequent is <code>[ Y / q ] (collinear Y A B ∧ collinear q C D → is-right-angle Y X q)</code>, so again we perform the substitution.
+<jh>
+        D EqualityReflexivity
+        C EqualityReflexivity
+        (value q) Y C C D D CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        (collinear Y A B) buildConjunctionLLInConsequent
+
+        Y EqualityReflexivity
+        X EqualityReflexivity
+        Y Y X X (value q) Y RightAngleBuilder
+        detach2of3
+        detach1of2
+
+        buildImplicationInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+Now we have <code>A B C D ⟂at X ∧ collinear Y A B ∧ collinear Y C D → (collinear Y A B ∧ collinear Y C D → is-right-angle Y X Y)</code> and we want something which is similar, but which only mentions each collinearity antecedent once.
+<jh>
+        applyModusPonensInConsequent
+))
+</jh>
+
 == References ==
 <references/>
 * Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
