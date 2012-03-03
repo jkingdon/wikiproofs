@@ -167,6 +167,19 @@ Now we have <code>A B C D ⟂at X ∧ collinear Y A B ∧ collinear Y C D → (c
 ))
 </jh>
 
+From <code>is-right-angle Y X Y</code>, it is a short step to <code>X = Y</code>.
+<jh>
+thm (PerpendicularAtUniqueIntersection () ()
+  ((((A B C D ⟂at X) ∧ (collinear Y A B)) ∧ (collinear Y C D)) → (X = Y)) (
+        A B C D X Y PerpendicularAtUniqueIntersection-Y-X-Y
+
+        Y X RightAngleLegItself
+        applySyllogism
+
+        swapEqualityInConsequent
+))
+</jh>
+
 == References ==
 <references/>
 * Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
