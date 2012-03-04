@@ -185,6 +185,7 @@ stmt (applyEqualityTransitivity () ((s = t) (t = u)) (s = u))
 
 Here are convenience theorems which are closely related to those:
 <jh>
+stmt (swapEqualityInConsequent () ((φ → (s = t))) (φ → (t = s)))
 stmt (applyEqualityTransitivityInConsequent () ((φ → (s = t)) (φ → (t = u))) (φ → (s = u)))
 </jh>
 
