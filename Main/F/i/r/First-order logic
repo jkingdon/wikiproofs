@@ -76,6 +76,13 @@ thm (swapEquality () ((H (s = t))) (t = s) (
         applyModusPonens
 ))
 
+thm (swapEqualityInConsequent () ((H (φ → (s = t)))) (φ → (t = s)) (
+        H
+        s t EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
 thm (applyEqualityTransitivity () ((H1 (s = t)) (H2 (t = u))) (s = u) (
         H1
         H2
