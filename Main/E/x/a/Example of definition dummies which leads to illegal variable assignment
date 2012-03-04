@@ -8,16 +8,16 @@ import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 Here's a definition with a dummy variable (because <code>p</code> is found on the right hand side, but not the left hand side, of the definition).
 <jh>
 var (formula p)
-def ((falsity) (p ∨ (¬ p)))
+def ((truth) (p ∨ (¬ p)))
 </jh>
 
-If we are supposed to prove <code>(p ∨ (¬ p)) ↔ (falsity)</code> it suffices to prove <code>(p ∨ (¬ p)) ↔ (q ∨ (¬ q))</code> (see [[Principia Mathematica propositional logic#statTautology|Tautology]]) but it is not sufficient to prove <code>(p ∨ (¬ p)) ↔ (p ∨ (¬ p))</code>.
+If we are supposed to prove <code>(p ∨ (¬ p)) ↔ (truth)</code> it suffices to prove <code>(p ∨ (¬ p)) ↔ (q ∨ (¬ q))</code> (see [[Principia Mathematica propositional logic#statTautology|Tautology]]) but it is not sufficient to prove <code>(p ∨ (¬ p)) ↔ (p ∨ (¬ p))</code>.
 
-The error is based on the idea that <code>(p ∨ (¬ p)) → (falsity)</code>, when expanded, has two different variables on the two halves of the implication, but <code>(falsity) → (falsity)</code> has the same variable in both places. {{error expected|Attempt to prove result by illegal dummy assignment}}
+The error is based on the idea that <code>(p ∨ (¬ p)) ↔ (truth)</code>, when expanded, has two different variables on the two halves of the implication, but invoking <code>BiconditionalReflexivity</code> expands the variable and then produces an expression with  the same variable in both places. {{error expected|Attempt to prove result by illegal dummy assignment}}
 
 <jh>
-thm (Invalid () () ((p ∨ (¬ p)) → (falsity)) (
-        (falsity) ImplicationReflexivity
+thm (Invalid () () ((p ∨ (¬ p)) ↔ (truth)) (
+        (truth) BiconditionalReflexivity
 ))
 </jh>
 
