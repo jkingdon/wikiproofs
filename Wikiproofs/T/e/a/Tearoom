@@ -56,7 +56,7 @@ When copying formulas from other web sites, one is sometimes nailed by similar-l
 
 * metamath uses ⋀ (U+22C0 N-ARY LOGICAL AND) for its ordinary conjunction character, we use ∧ (U+2227 LOGICAL AND).  It is easy to make the case that metamath is just wrong on this one, and at least in my font the two are moderately different from each other.
 
-:The history on this is that U+2227 was originally used, but c. 2004(?) I received complaints (and verified for myself) that it displayed as a circle in the Mozilla browser on Windows XP Professional (but not Windows XP Home). So I changed it to U+22C0 as a compromise, and also changed the OR to the n-ary version to match.  I don't know if this bug has been fixed but don't have Windows XP Pro to verify it. - Norm Megill (I'll sign up for an account later)
+:The history on this is that U+2227 was originally used, but c. 2004(?) I received complaints (and verified for myself) that it displayed as a circle in the Mozilla browser on Windows XP Professional (but not Windows XP Home). So I changed it to U+22C0 as a compromise, and also changed the OR to the n-ary version to match.  I don't know if this bug has been fixed but don't have Windows XP Pro to verify it. - Norm Megill 3 March 2012 (I'll sign up for an account later...)
 
 * We use ⋅ (U+22C5 DOT OPERATOR) for multiplication (at least, that's the one at the bottom of the edit screen). On wikipedia, at least on [[w:Peano arithmetic]], they use · (U+00B7 MIDDLE DOT). These look extremely similar, and I don't really see how we can expect contributors to try to keep them straight.
 
