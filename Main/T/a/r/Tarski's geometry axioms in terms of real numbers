@@ -19,30 +19,37 @@ We also import an interface, [[Interface:Restricting all quantifiers]], which pr
 import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers (CLASSICAL QUANTIFY_OVER_SETS SETS COMPLEX) ())
 </jh>
 
-The way that [[Interface:Restricting all quantifiers]] works, we don't have separate kinds for geometry versus sets; we merely change the way the quantifiers work.
+The interface [[Interface:Restricting all quantifiers]] defines a kind for restricted terms called <code>object</code>, which corresponds to a point.
 <jh>
 kindbind (object point)
 </jh>
 
-Now we define some variables and provide a few trivial definitions.
+Now we define some variables.
 
 <jh>
-var (variable x)
-var (object s A B C D)
+var (variable x y z w)
+var (object X Y Z W)
+var (set.variable a b c)
+var (set.object A B C D)
 var (formula φ)
+</jh>
 
-def ((subst s x φ) (set.subst s x φ))
+The following definition should perhaps go in [[Interface:Restricting all quantifiers]] although that perhaps is a question of whether that interface assumes the axiom of quantifiability.
+<jh>
+def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
 </jh>
 
 == Congruence ==
 We define congruence using the usual Pythagorean theorem based definition for Cartesian two-dimensional space. The Tarski and Givant paper has a diagram.<ref>Tarski and Givant, page 201</ref> The definition is interesting if <code>A</code> is an ordered pair <code>〈1st A, 2nd A〉</code>, where <code>1st A</code> and <code>2nd A</code> are real numbers, and likewise for <code>B</code>, <code>C</code>, and <code>D</code>.
 <jh>
-def ((≡ A B C D) (
+def ((set.≡ A B C D) (
   ((((1st A) − (1st B)) · ((1st A) − (1st B))) +
-    (((2nd A) − (2nd B)) · ((2nd A) − (2nd B)))) =
+    (((2nd A) − (2nd B)) · ((2nd A) − (2nd B)))) set.=
   ((((1st C) − (1st D)) · ((1st C) − (1st D))) +
     (((2nd C) − (2nd D)) · ((2nd C) − (2nd D))))
 ))
+
+def ((≡ X Y Z W) (set.≡ (asSet X) (asSet Y) (asSet Z) (asSet W)))
 </jh>
 
 === Distance from A to B is the distance from B to A ===
@@ -62,11 +69,13 @@ The left hand side of the definition of congruence expands to <code>(1st A − 1
 == Betweenness ==
 Betweenness is a matter of asserting that the slopes of the line segments between pairs of points are equal, and that the signs of the differences between the coordinates of the points are correct. Again, the Tarski and Givant paper has a diagram and more explanation.<ref>Tarski and Givant, page 201</ref>
 <jh>
-def ((between A B C)
-  ((((((1st A) − (1st B)) · ((2nd B) − (2nd C))) = (((2nd A) − (2nd B)) · ((1st B) − (1st C)))) ∧
+def ((set.between A B C)
+  ((((((1st A) − (1st B)) · ((2nd B) − (2nd C))) set.= (((2nd A) − (2nd B)) · ((1st B) − (1st C)))) ∧
   ((0) ≤ (((1st A) − (1st B)) · ((1st B) − (1st C))))) ∧
   ((0) ≤ (((2nd A) − (2nd B)) · ((2nd B) − (2nd C)))))
 )
+
+def ((between X Y Z) (set.between (asSet X) (asSet Y) (asSet Z)))
 </jh>
 
 Now we export to [[Interface:Tarski's geometry axioms]]. (Or, rather, we will when we are ready).
