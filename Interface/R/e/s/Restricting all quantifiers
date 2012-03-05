@@ -45,7 +45,9 @@ Now that we have defined restricted variables and restricted terms, we need to r
 <jh>
 term (set.object (asSet object))
 term (set.variable (asSetVariable variable))
-# additional statements to follow here
+
+stmt (InUniverse () () ((asSet X) ∈ (universe)))
+# possibly additional statements to follow here
 </jh>
 
 Having defined <code>asSet</code>, equality of restricted terms can be defined in terms of equality of sets.
