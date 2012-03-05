@@ -22,24 +22,56 @@ param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 param (COMPLEX Interface:Complex_number_axioms (CLASSICAL FIRSTORDER SETS) ())
 
 var (formula φ)
-
-kindbind (set.object object)
-kindbind (set.variable variable)
-
-var (variable x)
-var (object A B)
-
-def ((value x) (set.value x))
-def ((= A B) (A set.= B))
 </jh>
 
-Although the construction we are doing here isn't dependent on what set we are using for the universe of the restricted quantifiers, at least for now we specify the universe here directly. The choice of ℝ<sup>2</sup> is what we need to construct two dimensional geometry from the reals.
+Although the construction we are doing here isn't dependent on what set we are using for the universe of the restricted quantifiers, at least for now we specify the universe here directly (as a set; within the world of restrcited quantifiers, the restricted universe is implicit). The choice of ℝ<sup>2</sup> is what we need to construct two dimensional geometry from the reals.
 <jh>
 def ((universe) ((ℝ) × (ℝ)))
+</jh>
 
-def ((∀ x φ) (set.∀ x (((value x) ∈ (universe)) → φ)))
+Although the title of this page is "Restricting all quantifiers", in the presence of axioms/theorems like <code>Generalization</code>, the quantifiers interact with concepts like what values a variable can take on. That is, we need to distinguish between set variables and variables within the universe we are restricting to. Set variables are of kind <code>set.variable</code> and terms (classes) which are not restricted are of kind <code>set.object</code>. The restricted counterparts are <code>variable</code> and <code>object</code>.
+
+<jh>
+kind (object)
+kind (variable)
+
+var (set.variable a b c)
+var (set.object A B C)
+var (variable x y z)
+var (object X Y Z)
+</jh>
+
+Now that we have defined restricted variables and restricted terms, we need to relate them to sets. A restricted variable can be treated as a set (or to put it another way, the restricted universe lives within the universe of set theory).
+<jh>
+term (set.object (asSet object))
+term (set.variable (asSetVariable variable))
+
+stmt (InUniverse () () ((asSet X) ∈ (universe)))
+# possibly additional statements to follow here
+</jh>
+
+Having defined <code>asSet</code>, equality of restricted terms can be defined in terms of equality of sets.
+<jh>
+def ((= X Y) ((asSet X) set.= (asSet Y)))
+</jh>
+
+Taking the value of a restricted variable yields a restricted term. It might be possible to define <code>value</code> in terms of other things like <code>asSetVariable<code>, <code>set.value</code>, and probably others, but at least for now we define it via axioms, rather than a JHilbert definition.
+<jh>
+term (object (value variable))
+stmt (ValueValue () () ((set.value (asSetVariable x)) set.= (asSet (value x))))
+# possibly more axioms to follow
+</jh>
+
+To explain how we are going to define the restricted <code>∀</code>, we start with an example. A sample statement in the restricted universe would be <code>∀ x x = x</code> (a more realistic example might be something which holds in the restricted universe but not for all sets, but such an example would require more setup, so we start with a simple case). We'll want to define <code>∀</code> so this expands to <code>set.∀ a (a ∈ universe → a set.= a)</code> where <code>a</code> corresponds to <code>asSetVariable x</code>.
+
+<jh>
+def ((∀ x φ) (set.∀ (asSetVariable x) (((asSet (value x)) ∈ (universe)) → φ)))
+</jh>
+
+The other things we need in order to be a parameter in place of [[Interface:First-order logic with quantifiability]] can be defined in terms of the ones we already have.
+<jh>
 def ((∃ x φ) (¬ (∀ x (¬ φ))))
-def ((≠ A B) (¬ (A = B)))
+def ((≠ X Y) (¬ (X = Y)))
 def ((is-not-free-in x φ) (φ → (∀ x φ)))
 </jh>
 
