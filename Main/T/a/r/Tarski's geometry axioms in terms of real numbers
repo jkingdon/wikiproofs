@@ -53,16 +53,25 @@ def ((≡ X Y Z W) (set.≡ (asSet X) (asSet Y) (asSet Z) (asSet W)))
 </jh>
 
 === Distance from A to B is the distance from B to A ===
-Here we will prove <code>A B ≡ B A</code>. Or rather, we can prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B ≡ B A</code> (TODO: figure out how <code>A ∈ ℝ × ℝ</code> relates to [[Interface:Restricting all quantifiers]] and what we can export).
+Here we will prove <code>X Y ≡ Y X</code>. Restating this in terms of sets, we need to prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B set.≡ B A</code>.
+
+We start with a corollary to <code>OrderedPairCartesianProduct</code> which we'll perhaps move to the set theory interface someday.
+<jh>
+#thm (FirstSecondCartesianProduct () () ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))) (
+#))
+</jh>
 
 {{under construction}}
-TODO: need A ∈ B × C → 1st A ∈ B ∧ 2nd A ∈ C (this is a corollary of OrderedPairCartesianProduct but probably worth stating on its own)
 <jh>
-#thm (CongruenceABBA () () (A B ≡ B A) (
+#thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ (ℝ) × (ℝ))) → (A B set.≡ B A)) (
 </jh>
 The left hand side of the definition of congruence expands to <code>(1st A − 1st B) · (1st A − 1st B) + (2nd A − 2nd B) · (2nd A − 2nd B)</code>, which we first transform to <code>(- (1st B − 1st A)) · (- (1st B − 1st A)) + (- (1st B − 1st A)) · (- (1st B − 1st A))<code>.
 <jh>
 #        (1st B) (1st A) 
+#))
+
+#thm (CongruenceABBA () () (X Y ≡ Y X) (
+# This should be a relatively straightforward application of InUniverse
 #))
 </jh>
 
