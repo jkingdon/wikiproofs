@@ -24,7 +24,7 @@ import (BASIC Interface:Basic_operations_of_Zermelo–Fraenkel_set_theory (CLASS
 As usual, capital letters starting from <code>A</code> are set expressions (that is, objects or "classes") and lowercase letters starting with <code>x</code> are set variables.
 <jh>
 var (object A B C D A0 A1 B0 B1 α β Z)
-var (variable a b x y z w a′ b′ x′ y′ z′)
+var (variable a b c x y z w a′ b′ x′ y′ z′)
 var (formula φ ψ antecedent)
 </jh>
 
@@ -1016,6 +1016,37 @@ Each half of that is equivalent to a membership formula (that is, <code>∃ a (A
         buildConjunction
         applyBiconditionalTransitivity
 ))
+</jh>
+
+=== Membership in a cartesian product in terms of first and second elements ===
+Another similar relationship between being a member of a cartesian product and being an ordered pair whose elements are members of the classes making up the cartesian product is <code>A ∈ B × C → 1st A ∈ B ∧ 2nd A ∈ C</code>. Metamath has several biconditional versions of this,<ref>[http://us.metamath.org/mpeuni/elxp6.html elxp6], [http://us.metamath.org/mpeuni/elxp7.html elxp7], metamath's set.mm</ref> but we start with this one (the missing piece to biconditionalize it is something saying that <code>A<code> is an ordered pair).
+
+<jh>
+#thm (FirstSecondCartesianProduct ((a b A) (a b B) (a b C)) ()
+#  ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))) (
+#        A B C b c MembershipCartesianProduct
+#        eliminateBiconditionalReverse
+</jh>
+Next we need <code>A = 〈b, c〉 ∧ b ∈ B ∧ c ∈ C → 1st A ∈ B</code>. We start with <code>1st A = b</code>.
+<jh>
+#        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
+#          ((value c) ∈ C)
+#          ConjunctionRightElimination
+#        eliminateRightConjunctInConsequent
+
+#        A (orderedPair (value b) (value c)) FirstBuilder
+#        applySyllogism
+
+#        (value b) (value c) First
+#        introduceRightConjunctToConsequent
+
+#        (1st A) (1st (orderedPair (value b) (value c))) (value b) EqualityTransitivity
+#        applySyllogism
+</jh>
+From there we can get <code>1st A ∈ B</code>.
+<jh>
+        
+#))
 </jh>
 
 == To be added ==
