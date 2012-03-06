@@ -1024,7 +1024,7 @@ Another similar relationship between being a member of a cartesian product and b
 The proof is a fairly straightforward application of <code>MembershipCartesianProduct</code>. We'll split it up into a series of lemmas.
 
 <jh>
-thm (FirstSecondCartesianProduct-a-b ((a b A) (a b B) (a b C)) ()
+thm (FirstSecondCartesianProduct-A-b ((a b A) (a b B) (a b C)) ()
   ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
     ((value c) ∈ C)) → ((1st A) = (value b))) (
         ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
@@ -1042,6 +1042,23 @@ thm (FirstSecondCartesianProduct-a-b ((a b A) (a b B) (a b C)) ()
         applySyllogism
 ))
 
+thm (FirstSecondCartesianProduct-A-B ((a b A) (a b B) (a b C)) ()
+  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
+    ((value c) ∈ C)) → ((1st A) ∈ B)) (
+        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
+          ((value c) ∈ C)
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        A b c B C FirstSecondCartesianProduct-A-b
+
+        (1st A) (value b) B MembershipBuilderRR
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+))
+
 #thm (FirstSecondCartesianProduct ((a b A) (a b B) (a b C)) ()
 #  ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))) (
 #        A B C b c MembershipCartesianProduct
@@ -1049,8 +1066,6 @@ thm (FirstSecondCartesianProduct-a-b ((a b A) (a b B) (a b C)) ()
 </jh>
 Next we need <code>A = 〈b, c〉 ∧ b ∈ B ∧ c ∈ C → 1st A ∈ B</code>.
 <jh>
-#        (1st A) (value b) B MembershipBuilderRR
-#        applySyllogism
 
         
 #))
