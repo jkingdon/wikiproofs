@@ -1021,30 +1021,37 @@ Each half of that is equivalent to a membership formula (that is, <code>∃ a (A
 === Membership in a cartesian product in terms of first and second elements ===
 Another similar relationship between being a member of a cartesian product and being an ordered pair whose elements are members of the classes making up the cartesian product is <code>A ∈ B × C → 1st A ∈ B ∧ 2nd A ∈ C</code>. Metamath has several biconditional versions of this,<ref>[http://us.metamath.org/mpeuni/elxp6.html elxp6], [http://us.metamath.org/mpeuni/elxp7.html elxp7], metamath's set.mm</ref> but we start with this one (the missing piece to biconditionalize it is something saying that <code>A<code> is an ordered pair).
 
+The proof is a fairly straightforward application of <code>MembershipCartesianProduct</code>. We'll split it up into a series of lemmas.
+
 <jh>
+thm (FirstSecondCartesianProduct-a-b ((a b A) (a b B) (a b C)) ()
+  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
+    ((value c) ∈ C)) → ((1st A) = (value b))) (
+        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
+          ((value c) ∈ C)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        A (orderedPair (value b) (value c)) FirstBuilder
+        applySyllogism
+
+        (value b) (value c) First
+        introduceRightConjunctToConsequent
+
+        (1st A) (1st (orderedPair (value b) (value c))) (value b) EqualityTransitivity
+        applySyllogism
+))
+
 #thm (FirstSecondCartesianProduct ((a b A) (a b B) (a b C)) ()
 #  ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))) (
 #        A B C b c MembershipCartesianProduct
 #        eliminateBiconditionalReverse
 </jh>
-Next we need <code>A = 〈b, c〉 ∧ b ∈ B ∧ c ∈ C → 1st A ∈ B</code>. We start with <code>1st A = b</code>.
+Next we need <code>A = 〈b, c〉 ∧ b ∈ B ∧ c ∈ C → 1st A ∈ B</code>.
 <jh>
-#        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
-#          ((value c) ∈ C)
-#          ConjunctionRightElimination
-#        eliminateRightConjunctInConsequent
-
-#        A (orderedPair (value b) (value c)) FirstBuilder
+#        (1st A) (value b) B MembershipBuilderRR
 #        applySyllogism
 
-#        (value b) (value c) First
-#        introduceRightConjunctToConsequent
-
-#        (1st A) (1st (orderedPair (value b) (value c))) (value b) EqualityTransitivity
-#        applySyllogism
-</jh>
-From there we can get <code>1st A ∈ B</code>.
-<jh>
         
 #))
 </jh>
