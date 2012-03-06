@@ -1058,6 +1058,31 @@ thm (FirstSecondCartesianProduct-A-B ((a b A) (a b B) (a b C)) ()
         eliminateBiconditionalForwardInConsequent
         applyModusPonensInConsequent
 ))
+</jh>
+We've now proved <code>1st A ∈ B</code>, which is half of what we are trying to prove. The proof of the other half is very similar.
+<jh>
+thm (FirstSecondCartesianProduct-A-c ((a b A) (a b B) (a b C)) ()
+  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
+    ((value c) ∈ C)) → ((2nd A) = (value c))) (
+        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
+          ((value c) ∈ C)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        A (orderedPair (value b) (value c)) SecondBuilder
+        applySyllogism
+
+        (value b) (value c) Second
+        introduceRightConjunctToConsequent
+
+        (2nd A) (2nd (orderedPair (value b) (value c))) (value c) EqualityTransitivity
+        applySyllogism
+))
+
+#thm (FirstSecondCartesianProduct-A-C ((a b A) (a b B) (a b C)) ()
+#  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
+#    ((value c) ∈ C)) → ((2nd A) ∈ C)) (
+#))
 
 #thm (FirstSecondCartesianProduct ((a b A) (a b B) (a b C)) ()
 #  ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))) (
