@@ -1025,12 +1025,12 @@ The proof is a fairly straightforward application of <code>MembershipCartesianPr
 
 <jh>
 thm (FirstSecondCartesianProduct-A-b ((a b A) (a b B) (a b C)) ()
-  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
-    ((value c) ∈ C)) → ((1st A) = (value b))) (
-        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
-          ((value c) ∈ C)
+  (((A = (orderedPair (value b) (value c))) ∧
+    (((value b) ∈ B) ∧ ((value c) ∈ C))) →
+    ((1st A) = (value b))) (
+        (A = (orderedPair (value b) (value c)))
+          (((value b) ∈ B) ∧ ((value c) ∈ C))
           ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
 
         A (orderedPair (value b) (value c)) FirstBuilder
         applySyllogism
@@ -1043,12 +1043,13 @@ thm (FirstSecondCartesianProduct-A-b ((a b A) (a b B) (a b C)) ()
 ))
 
 thm (FirstSecondCartesianProduct-A-B ((a b A) (a b B) (a b C)) ()
-  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
-    ((value c) ∈ C)) → ((1st A) ∈ B)) (
-        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
-          ((value c) ∈ C)
-          ConjunctionRightElimination
-        eliminateLeftConjunctInConsequent
+  (((A = (orderedPair (value b) (value c))) ∧
+    (((value b) ∈ B) ∧ ((value c) ∈ C))) →
+    ((1st A) ∈ B)) (
+        (A = (orderedPair (value b) (value c)))
+          (((value b) ∈ B) ∧ ((value c) ∈ C))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
 
         A b c B C FirstSecondCartesianProduct-A-b
 
@@ -1062,12 +1063,12 @@ thm (FirstSecondCartesianProduct-A-B ((a b A) (a b B) (a b C)) ()
 We've now proved <code>1st A ∈ B</code>, which is half of what we are trying to prove. The proof of the other half is very similar.
 <jh>
 thm (FirstSecondCartesianProduct-A-c ((a b A) (a b B) (a b C)) ()
-  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
-    ((value c) ∈ C)) → ((2nd A) = (value c))) (
-        ((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B))
-          ((value c) ∈ C)
+  (((A = (orderedPair (value b) (value c))) ∧
+    (((value b) ∈ B) ∧ ((value c) ∈ C))) →
+    ((2nd A) = (value c))) (
+        (A = (orderedPair (value b) (value c)))
+          (((value b) ∈ B) ∧ ((value c) ∈ C))
           ConjunctionRightElimination
-        eliminateRightConjunctInConsequent
 
         A (orderedPair (value b) (value c)) SecondBuilder
         applySyllogism
@@ -1079,20 +1080,40 @@ thm (FirstSecondCartesianProduct-A-c ((a b A) (a b B) (a b C)) ()
         applySyllogism
 ))
 
-#thm (FirstSecondCartesianProduct-A-C ((a b A) (a b B) (a b C)) ()
-#  ((((A = (orderedPair (value b) (value c))) ∧ ((value b) ∈ B)) ∧
-#    ((value c) ∈ C)) → ((2nd A) ∈ C)) (
-#))
+thm (FirstSecondCartesianProduct-A-C ((a b A) (a b B) (a b C)) ()
+  (((A = (orderedPair (value b) (value c))) ∧
+    (((value b) ∈ B) ∧ ((value c) ∈ C))) →
+    ((2nd A) ∈ C)) (
+        (A = (orderedPair (value b) (value c)))
+          (((value b) ∈ B) ∧ ((value c) ∈ C))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
 
-#thm (FirstSecondCartesianProduct ((a b A) (a b B) (a b C)) ()
+        A b c B C FirstSecondCartesianProduct-A-c
+
+        (2nd A) (value c) C MembershipBuilderRR
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+))
+
+#thm (FirstSecondCartesianProduct ( (a b A) (a b B) (a b C)) ()
 #  ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))) (
 #        A B C b c MembershipCartesianProduct
 #        eliminateBiconditionalReverse
-</jh>
-Next we need <code>A = 〈b, c〉 ∧ b ∈ B ∧ c ∈ C → 1st A ∈ B</code>.
-<jh>
 
-        
+#        A b c B C FirstSecondCartesianProduct-A-B
+#        A b c B C FirstSecondCartesianProduct-A-C
+#        composeConjunction
+
+#        c addThereExists
+#        b addThereExists
+
+#        applySyllogism
+
+#        removeThereExistsInConsequent
+#        removeThereExistsInConsequent
 #))
 </jh>
 
