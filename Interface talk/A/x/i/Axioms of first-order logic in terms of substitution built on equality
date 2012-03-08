@@ -1,1 +1,4 @@
+== freeness and theorems ==
 Question:  Is "(x is-not-free-in x = x)" true or false in this axiomatization? [[User:Norm|Norm]] 19:05, 7 March 2012 (UTC)
+
+: Neither it nor its negation are provable. At least, that was my intention. This might seem like an odd choice to make (in the sense of "shouldn't we clarify this one way or the other?"), but it doesn't seem like being able to prove or disprove the above formula impairs one's ability to use free variables the way one needs to. At least, that has been my experience to date. [[User:Kingdon|Kingdon]] 05:49, 8 March 2012 (UTC)
