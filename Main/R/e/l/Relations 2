@@ -1,0 +1,43 @@
+{{header
+ | title    = Relations 2
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Here we pick up where we left off in [[Relations]] and prove additional theorems about ordered pairs, relations, and functions. }}
+{{interfaces
+| imports = [[Interface:Relations 1]]
+| exports = [[Interface:Set theory]]
+}}
+
+We first import [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]].
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+We also import [[Interface:Relations 1]], which covers set theory up until this point. 
+<jh>
+import (START Interface:Relations_1 (CLASSICAL FIRSTORDER) ())
+</jh>
+
+As usual, capital letters starting from <code>A</code> are set expressions (that is, terms or "classes") and lowercase letters starting with <code>x</code> are set variables.
+<jh>
+var (object A B C D A0 A1 B0 B1 α β Z)
+var (variable a b x y z w a′ b′ x′ y′ z′)
+var (formula φ ψ antecedent)
+</jh>
+
+== To be added ==
+Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
+
+== Export ==
+We are ready to export to [[Interface:Set theory]].
+<jh>
+export (RESULT Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Other classical set theory]]
