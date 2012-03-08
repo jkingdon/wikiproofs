@@ -27,6 +27,8 @@ thm (Invalid ((p x)) () ((truth) → (∀ x (truth))) (
 ))
 </jh>
 
+{{cleanup|replacing the above example with one which would be valid except for the automatic expansion. This often comes up in real life in <code>removeThereExistsInConsequent</code> for example}}
+
 This combination of the automatic expansion of definitions and the way that distinct variables work is a significant inconvenience in using definitions as they currently exist in JHilbert. One workaround is to expand the definitions manually (which allows the distinct variable constraints to be expressed explicitly), and another is to export to an interface in which the definition is not a <code>def</code> but a <code>term</code>.
 
 An example of expanding the definitions manually is <code>LessEqual</code> in [http://wikiproofs.org/w/index.php?title=Basic_arithmetic&oldid=1867 Basic arithmetic]. An example of moving the proof into a separate module in which the term is declared with <code>term</code> rather than <code>def</code> is the way that [http://wikiproofs.org/w/index.php?title=Basic_operations_of_Zermelo%E2%80%93Fraenkel_set_theory&oldid=2366 Basic operations of Zermelo–Fraenkel set theory] is separate from [http://wikiproofs.org/w/index.php?title=First_steps_in_set_theory&oldid=2159 First steps in set theory].
