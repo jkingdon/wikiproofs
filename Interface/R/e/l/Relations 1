@@ -1,6 +1,6 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
-| importedby = [[Interface:Complex number axioms]] and others
+| importedby = [[Relations 2]]
 | exportedby = [[Relations]]
 }}
 
