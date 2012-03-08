@@ -2,6 +2,28 @@
  | notes = This page is for discussing the actual implementation of JHilbert, as opposed to its [[Wikiproofs:JHilbert specification|specification]] or [[Wikiproofs:Formal description of JHilbert|formal description]].
 }}
 
+The JHilbert proof verifier is not perfect, and we can use the help of software developers to help fix it. This page contains some tips on downloading, building and running JHilbert, some incremental improvements which build on the current JHilbert implementation, and some larger projects and longer-term visions as well. There is no shortage of projects, so please dig in if you see anything which interests you, or ask at [[WP:TEA]] if you have any questions.
+
+== Downloading, building and running JHilbert ==
+The JHilbert source code is  [https://github.com/TheCount/jhilbert on github] (also see the fork of [https://github.com/jkingdon/jhilbert jkingdon]) and contributions are certainly welcome. 
+
+=== Tests ===
+You can use Wikiproofs as a testsuite, by downloading the wikiproofs content [https://github.com/jkingdon/wikiproofs here] and then running JHilbert on it (<code>java -jar jhilbert.jar --wiki</code>). Everything should verify except where flagged by [[Template:error expected]], which JHilbert when run with  <code>--wiki</code> looks for and then expects it to fail.
+
+== Projects ==
+Here are a few ideas, but feel free to work on whatever strikes your fancy.
+* [[Wikiproofs:JHilbert definition soundness]] (the thinking as of 2012 seems to be that two replacement features are needed, abbreviations as described at [[Help:JHilbert]] and definitions which are closer to what you'd see in ghilbert versions from 2011 or newer, or something along those lines).
+* Expand the testsuite
+* Make it possible to run the verifier with <code>--wiki</code> on all files in one command. This is expected to be significantly faster than writing a loop as a shell script and invoking jhilbert on each file, because it would avoid java startup time.
+* (somewhat related to the previous) Make --wiki write output such as "processing file xxx" and the like to a log file, reserving standard output/error for errors (and probably a much smaller number of messages).
+* Specifying non-distinct variables instead of distinct variables, as described at [[User:Norm]]
+* Implement precedence so we don't need so many parentheses.
+* Provide a way to handle syntaxes like <code>〈a, b〉</code> instead of <code>(orderedPair a b)</code> or <code>{ a | φ }</code> instead of <code>(abstract a φ)</code>. Not clear how general this can be and not introduce ambiguities or excessive complexity, but it would be something along the lines of turning <code>〈a, b〉</code> into <code>(〈,〉 a b)</code> and <code>{ a | φ }</code> into <code>({|} a φ)</code>. Perhaps the new syntax would need to start and end with constant strings rather than variables, as in the above examples.
+* Profile JHilbert and figure out whether it could be faster (probably yes).
+* What are your thoughts? Feel free to ask on the talk page for input.
+
+If a new feature has a clear migration from the existing wikiproofs (such as requiring a new syntax to enable it which could be used on some, but not all, pages), that is generally a good thing and probably possible in most cases, but we're also willing to require wikiproofs pages to be edited if there seems to be a clear advantage in a feature which requires that.
+
 == Plan of action ==
 
 The current JHilbert implementation is in a bit of a sad state for the following reasons:
@@ -27,9 +49,6 @@ The kernel could be compiled into a library, like <code>libhilbert.so</code>, or
 :I've started a C kernel library implementation on [https://github.com/TheCount/hilbert-kernel github].--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 22:00, 27 February 2011 (UTC)
 
 --[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 17:58, 5 March 2010 (UTC)
-
-== External links ==
-* [http://github.com/jkingdon/jhilbert  jkingdon/jhilbert] on github, as of September 20, 2010, adds a few unit tests beyond the official jhilbert-8 distribution.
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:JHilbert]]
