@@ -1,0 +1,15 @@
+I maintain the [http://us.metamath.org/ Metamath] site.
+
+== (Non-)distinct variables ==
+
+[http://us.metamath.org/mpegif/mmset.html#distinct Distinct variable conditions] have sometimes been problematic for newcomers.  I think part of this is because in many cases, the Metamath (and JHilbert) usage are the opposite from how they are specified in ordinary math texts.  After the introductory presentation of the axioms, logic and math texts typically implicitly assume that all individual variables are distinct if they have different names, and also that a variable doesn't occur in a wff or term variable unless it is listed explicitly in parentheses after the wff or term, such as phi(x) or A(x).
+
+Right now, in order for a human to recognize that phi(x) is meant, he/she must go through the distinct variable list to determine the <B>absence</B> of a phi and x constraint.  Because this is confusing, I have sometimes explicitly mentioned in a theorem's comment that phi(x) is meant e.g. in theorem [http://us.metamath.org/mpegif/axsep.html axsep].
+
+Off and on I have toyed with the idea of specifying the <B>complement</B> of the distinct variable list instead of the current method.  The proof verifier would be the same except for the front-end parsing.  So ( phi x ) would mean that x may occur in phi.  This would be closer to the textbook usage phi(x).  In the Metamath language, we could use e.g.  $n ("not necessarily distinct") to specify "$n phi x $." in place of the current $d.  Unspecified variables would be required to be distinct (disjoint) from all others.
+
+We could adopt the convention that all but at most one variable in a $n list would be an individual variable, just as we do for $d lists in the current [http://us2.metamath.org:88/mpegif/mmrecent.html set.mm] set theory database now.  In other words "$n phi x y $." and "$n x y z $." would be allowed but not "$n phi psi $."  Thus we would have to make the (ordinarily somewhat meaningless) "$n phi psi $." implicit, corresponding to the absence of "$d phi psi $." in set.mm.  This would eliminate the need to specify $n statements in propositional calculus.  A small issue with such implicit treatment is that individual variables would have to be treated differently from wff and class (term) variables, thus complicating the language slightly; right now the Metamath language is agnostic with respect to variable types (kinds).
+
+An automatic translation of $d's to $n's and vice versa should be straightforward.  Of course a given database could only use either $d or $n throughout since otherwise we would not know how to interpret the absence of either.  I think the size of set.mm would decrease significantly with $n's in place of $d's, particularly in later theorems involving applications of set theory.
+
+I don't have any near-term plans to change the Metamath language.  Among other things, there are half a dozen verifiers that would need updating.  I am just throwing out this idea as a possible consideration for future languages (not necessarily JHilbert).  Continue the discussion here if you'd like.

@@ -1,0 +1,37 @@
+Here's an example of an expanding definition causing a distinct variable constraint to be violated.
+
+The easiest way to get some kinds, terms, and statements with distinct variable constraints to work with is going to be to import one of our existing interfaces; here we pick [[Interface:First-order logic]].
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (PREDICATE Interface:First-order_logic (PROPOSITIONAL) ())
+</jh>
+
+Here's a definition with a dummy variable (because <code>p</code> is found on the right hand side, but not the left hand side, of the definition).
+<jh>
+var (formula p)
+def ((truth) (p ∨ (¬ p)))
+</jh>
+
+Here is an example of a valid theorem with a distinct variable constraint.
+<jh>
+var (variable x)
+thm (Valid ((p x)) () ((p ∨ (¬ p)) → (∀ x (p ∨ (¬ p)))) (
+        (p ∨ (¬ p)) x Generalization
+))
+</jh>
+
+Now suppose we want to prove <code>(truth) → ∀ x (truth)</code>, which looks similar but which has a definition. What happens is that the definition gets expanded, and then JHilbert complains about the lack of a distinct variable constraint between <code>x</code> and the unnamed variable. {{error expected|Required distinct variable constraints are not a subset of actual distinct variable constraints}}
+<jh>
+thm (Invalid ((p x)) () ((truth) → (∀ x (truth))) (
+        (truth) x Generalization
+))
+</jh>
+
+This combination of the automatic expansion of definitions and the way that distinct variables work is a significant inconvenience in using definitions as they currently exist in JHilbert. One workaround is to expand the definitions manually (which allows the distinct variable constraints to be expressed explicitly), and another is to export to an interface in which the definition is not a <code>def</code> but a <code>term</code>.
+
+An example of expanding the definitions manually is <code>LessEqual</code> in [http://wikiproofs.org/w/index.php?title=Basic_arithmetic&oldid=1867 Basic arithmetic]. An example of moving the proof into a separate module in which the term is declared with <code>term</code> rather than <code>def</code> is the way that [http://wikiproofs.org/w/index.php?title=Basic_operations_of_Zermelo%E2%80%93Fraenkel_set_theory&oldid=2366 Basic operations of Zermelo–Fraenkel set theory] is separate from [http://wikiproofs.org/w/index.php?title=First_steps_in_set_theory&oldid=2159 First steps in set theory].
+
+Once JHilbert definitions are redesigned (see [[Wikiproofs:JHilbert definition soundness]]), it is likely that whatever kind of definitions allow dummy variables won't be automatically expanded.
+
+[[Category:Help]]
+[[Category:JHilbert]]
