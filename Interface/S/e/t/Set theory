@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
 | importedby = [[Interface:Complex number axioms]] and others
-| exportedby = [[Relations]]
+| exportedby = [[Relations 2]]
 }}
 
 This page will eventually cover as much of set theory as is generally used in the bulk of mathematics: empty set, singletons, unordered and ordered pairs, relations, functions, subset, union, intersection, etc.
@@ -113,6 +113,8 @@ stmt (MembershipCartesianProduct
       ∧ (((value a) ∈ A) ∧ ((value b) ∈ B)))))))
 stmt (OrderedPairCartesianProduct () ()
   (((orderedPair A0 B0) ∈ (A × B)) ↔ ((A0 ∈ A) ∧ (B0 ∈ B))))
+stmt (FirstSecondCartesianProduct () ()
+  ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))))
 </jh>
 
 The domain of a relation is a set consisting of all of the first elements of the ordered pairs in the relation. Our definition, and the theorems that follow, do not require <code>R</code> to be a relation, but they aren't especially interesting if it is not.
