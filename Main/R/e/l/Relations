@@ -4,10 +4,10 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = Here we start with [[Interface:Basic operations of Zermelo–Fraenkel set theory]] and provide ordered pairs, relations, and functions. }}
+ | notes    = Here we start with [[Interface:Basic operations of Zermelo–Fraenkel set theory]] and provide ordered pairs, relations, and functions. This is the first part of a series of pages which need to be split partly just to keep their sizes manageable, but also because of [[Example where distinct variable constraints are violated based on automatic expansion of a definition|JHilbert limitations]] }}
 {{interfaces
 | imports = [[Interface:Basic operations of Zermelo–Fraenkel set theory]]
-| exports = [[Interface:Set theory]]
+| exports = [[Interface:Relations 1]]
 }}
 
 We first import [[Interface:Classical propositional calculus|propositional logic]] and [[Interface:First-order logic with quantifiability|first-order logic]].
@@ -1121,9 +1121,8 @@ thm (FirstSecondCartesianProduct-A-C ((a b A) (a b B) (a b C)) ()
 Either here or in other set theory files: induction, recursion, ordinal successors. some kinds of unions, intersection, set difference, and so on.
 
 == Export ==
-We export to [[Interface:Set theory]].
 <jh>
-export (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+export (RESULT Interface:Relations_1 (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == References ==
