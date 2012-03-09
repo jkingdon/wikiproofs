@@ -2019,7 +2019,7 @@ thm (*3.4 () () ((p ∧ q) → (p → q)) (
         applySyllogism
 ))
 
-thm (*5.1 () () ((p ∧ q) → (p ↔ q)) (
+thm (TruthBiconditional () () ((p ∧ q) → (p ↔ q)) ( # *5.1
         p q *3.4
 
         p q ConjunctionCommutativity
@@ -2035,7 +2035,7 @@ thm (TautologyId () () ((p → p) ↔ (⊤)) (
         q NoContradiction
         introduceConjunction
 
-        (p → p) (¬ (q ∧ (¬ q))) *5.1
+        (p → p) (¬ (q ∧ (¬ q))) TruthBiconditional
         applyModusPonens
 ))
 </jh>

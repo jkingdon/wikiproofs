@@ -2064,7 +2064,7 @@ thm (*3.4 () () ((p ∧ q) → (p → q)) (
         applySyllogism
 ))
 
-thm (*5.1 () () ((p ∧ q) → (p ↔ q)) (
+thm (TruthBiconditional () () ((p ∧ q) → (p ↔ q)) ( # *5.1
         p q *3.4
 
         p q *3.22
@@ -2079,12 +2079,12 @@ thm (Tautology () () ((p ∨ (¬ p)) ↔ (⊤)) (
         q TertiumNonDatur
         introduceConjunction
 
-        (p ∨ (¬ p)) (q ∨ (¬ q)) *5.1
+        (p ∨ (¬ p)) (q ∨ (¬ q)) TruthBiconditional
         applyModusPonens
 ))
 
-thm (*5.21 () () (((¬ p) ∧ (¬ q)) → (p ↔ q)) (
-        (¬ p) (¬ q) *5.1
+thm (FalsityBiconditional () () (((¬ p) ∧ (¬ q)) → (p ↔ q)) ( # *5.21
+        (¬ p) (¬ q) TruthBiconditional
         p q NegationFunction eliminateBiconditionalForward
         applySyllogism
 ))
@@ -2094,7 +2094,7 @@ thm (Contradiction () () ((p ∧ (¬ p)) ↔ (⊥)) (
         q *3.24
         introduceConjunction
 
-        (p ∧ (¬ p)) (q ∧ (¬ q)) *5.21
+        (p ∧ (¬ p)) (q ∧ (¬ q)) FalsityBiconditional
         applyModusPonens
 ))
 </jh>
@@ -2186,7 +2186,7 @@ thm (*4.82-forward () () (((p → q) ∧ (p → (¬ q))) → (¬ p)) (
 
 thm (*5.15 () () ((p ↔ q) ∨ (p ↔ (¬ q))) (
         p q *4.61 eliminateBiconditionalReverse
-        p (¬ q) *5.1
+        p (¬ q) TruthBiconditional
         applySyllogism
 
         (p → q) (p ↔ (¬ q)) *2.54
@@ -2195,7 +2195,7 @@ thm (*5.15 () () ((p ↔ q) ∨ (p ↔ (¬ q))) (
 At this point we have <math>(p\rightarrow q)\vee(p\leftrightarrow(\neg q))</math>.  We'll come back to that, after we prove <math>(q\rightarrow p)\vee(p\leftrightarrow(\neg q))</math>:
 <jh>
         q p *4.61 eliminateBiconditionalReverse
-        q (¬ p) *5.1
+        q (¬ p) TruthBiconditional
         applySyllogism
 
         q p BiconditionalTranspositionWithNegatedRight eliminateBiconditionalReverse
