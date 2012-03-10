@@ -7,7 +7,7 @@
  | notes    = The axiom of quantifiability asserts that any object (term) can be made equal to a variable which is subject to quantification.  It corresponds roughly to the notion that there are no [[w:proper class|proper classes]].
 }}
 
-In [[Interface:First-order logic]], we present a theory which deals with quantifiers (∀ and ∃), free variables, and the substitution of one variable for another. However, there is an issue with substitution of a term for a variable. To make this work as straightforwardly as substitution of a variable for a variable, we put forth an axiom here which we call the axiom of quantifiability. It is a variant of the axiom of existence which says that any object can be made equal to a variable.
+In [[Interface:First-order logic]], we present a theory which deals with quantifiers (∀ and ∃), free variables, and the substitution of one variable for another. However, there is an issue with substitution of a term for a variable. To make this work as straightforwardly as substitution of a variable for a variable, we put forth an axiom here which we call the axiom of quantifiability. It is a variant of the axiom of existence which says that we can introduce a variable equal to a given variable.
 
 == The axiom ==
 We build on [[Interface:Classical propositional calculus]] and [[Interface:First-order logic]]:
