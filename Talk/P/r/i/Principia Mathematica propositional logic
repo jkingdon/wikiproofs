@@ -33,7 +33,7 @@ Summary: I'm not sure what the right answer is, but thought I should at least br
 
 :::Sounds good. I won't feel guilty about all the pages where I'm just using straight Unicode but also won't worry if some pages do it the other way. I'm not up on MathML but a little searching comes up with [http://www.mediawiki.org/wiki/Texvc texvc] (what we are presumably using now) and [http://www.mediawiki.org/wiki/Extension:Blahtex blahtex]. Probably low priority to worry about this much. [[User:Kingdon|Kingdon]] 02:44, 3 March 2010 (UTC)
 
-=== Negative Examples ===
+== Negative Examples ==
 
 Dear All,
 
@@ -51,3 +51,12 @@ BTW: Did a proof of the 193 Problems in 2006 here:
 http://www.xlog.ch/jekejeke/principia/proofs.html
 
 [[User:Janburse|Janburse]] 13:12, 10 March 2012 (UTC)
+
+== Reference Metamath ==
+
+BTW: I was scraping my problems from here:
+http://us.metamath.org/mmsolitaire/pmproofs.txt
+
+Need this link also go to the main page?
+
+[[User:Janburse|Janburse]] 13:19, 10 March 2012 (UTC)
