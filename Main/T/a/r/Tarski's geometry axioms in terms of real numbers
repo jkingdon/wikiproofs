@@ -52,6 +52,19 @@ def ((set.≡ A B C D) (
 def ((≡ X Y Z W) (set.≡ (asSet X) (asSet Y) (asSet Z) (asSet W)))
 </jh>
 
+=== The coordinates of points are real ===
+Given two points (as sets), the first and second coordinates are real.
+<jh>
+thm (set.TwoPointsRealParts () ()
+  (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ ((ℝ) × (ℝ)))) →
+    ((((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ))) ∧
+      (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ))))) (
+        A (ℝ) (ℝ) FirstSecondCartesianProduct
+        B (ℝ) (ℝ) FirstSecondCartesianProduct
+        conjoin
+))
+</jh>
+
 === Distance from A to B is the distance from B to A ===
 Here we will prove <code>X Y ≡ Y X</code>. Restating this in terms of sets, we need to prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B set.≡ B A</code>.
 
@@ -61,6 +74,10 @@ Here we will prove <code>X Y ≡ Y X</code>. Restating this in terms of sets, we
 </jh>
 The left hand side of the definition of congruence expands to <code>(1st A − 1st B) · (1st A − 1st B) + (2nd A − 2nd B) · (2nd A − 2nd B)</code>, which we first transform to <code>(- (1st B − 1st A)) · (- (1st B − 1st A)) + (- (1st B − 1st A)) · (- (1st B − 1st A))<code>.
 <jh>
+        
+</jh>
+The right hand side of the definition of congruence expands to <code>(1st B − 1st A) · (1st B − 1st A) + (2nd B − 2nd A) · (2nd B − 2nd A)</code>.
+<jh>
 #        (1st B) (1st A) 
 #))
 
@@ -68,6 +85,8 @@ The left hand side of the definition of congruence expands to <code>(1st A − 1
 # This should be a relatively straightforward application of InUniverse
 #))
 </jh>
+stmt (NegativeSubtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((- (z − w)) = (w − z))))
+stmt (MultiplicationNegativeNegative () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → (((- z) · (- w)) = (z · w))))
 
 == Betweenness ==
 Betweenness is a matter of asserting that the slopes of the line segments between pairs of points are equal, and that the signs of the differences between the coordinates of the points are correct. Again, the Tarski and Givant paper has a diagram and more explanation.<ref>Tarski and Givant, page 201</ref>
