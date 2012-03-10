@@ -813,7 +813,7 @@ A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code>
 Although the distinct variable constraint between <code>x</code> and <code>s</code> should not be necessary (if we wanted to require that <code>x</code> and <code>s</code> are distinct we could have a simpler definition of <code>subst</code>), even the version with the constraint can be useful.
 
 <jh>
-thm (convertImplicitToSubst ((x s)  (y ψ) (x y) (y s) (y φ)) 
+thm (makeSubstExplicitNotFree ((x s)  (y ψ) (x y) (y s) (y φ))
   ((HFREE (x is-not-free-in ψ))
    (HEQ (((value x) = s) → (φ ↔ ψ)))
   )
@@ -866,7 +866,7 @@ thm (makeSubstExplicit ((x s) (x ψ))
   ((subst s x φ) ↔ ψ) (
         x ψ DistinctNotFree
         H
-        convertImplicitToSubst
+        makeSubstExplicitNotFree
 ))
 </jh>
 
@@ -1054,6 +1054,21 @@ Our hypothesis implies that <code>[ y / x ] φx ↔ φy</code>, so we use this t
 That gives us [[Interface:First-order logic with quantifiability]], which we now export.
 <jh>
 export (WITH_QUANTIFIABILITY Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+</jh>
+
+== Exporting to the axioms of first-order logic in terms of substitution based on equality ==
+We also export [[Interface:Axioms of first-order logic in terms of substitution built on equality]], to show that those axioms are no stronger than the ones we worked from here.
+
+For <code>GeneralizationNotFree</code>, we need a slight rearrangement of theorems we have, but other than that we've already proved everything.
+
+<jh>
+thm (GeneralizationNotFree () ((H (x is-not-free-in φ))) (φ → (∀ x φ)) (
+        H
+        ForAllAddRemoveNotFree
+        eliminateBiconditionalForward
+))
+
+export (SUBSTITUTION Interface:Axioms_of_first-order_logic_in_terms_of_substitution_built_on_equality (CLASSICAL) ())
 </jh>
 
 == Footnotes ==
