@@ -1906,7 +1906,7 @@ First we observe <code>x is-not-free-in ∀ x φ</code>.
 <jh>
         x φ BoundForAllNotFree
 </jh>
-Then is <code>∀ x φ ↔ φ</code>.
+Next is <code>∀ x φ ↔ φ</code>.
 <jh>
         H
         x generalize
