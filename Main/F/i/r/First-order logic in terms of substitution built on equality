@@ -1895,6 +1895,37 @@ We also export the axiom of quantifiability, just to emphasize that this "axiom"
 export (QUANTIFIABILITY Interface:Axiom_of_quantifiability (PROPOSITIONAL FIRSTORDER) ())
 </jh>
 
+== Freeness ==
+Until now we have glossed over one fact, which is that <code>is-not-free-in</code> does not quite match the textbook definition of freeness given in sources like Margaris. Our axioms for <code>is-not-free-in</code> also imply that a variable is considered to not be free in a theorem. For example, we can prove <code>x is-not-free-in x = x</code>, whereas Margaris and other conventional treatments would consider <code>x</code> to be free in <code>x = x</code>. Therefore, <code>is-not-free-in</code> could perhaps be better read as "is effectively not free in" than "is not free in", although its function is close enough to the traditional definition for most purposes.<ref>[http://us.metamath.org/mpeuni/mmset.html#traditional Appendix 2: Traditional Textbook Axioms of Predicate Calculus with Equality], Metamath Proof Explorer, accessed February 20, 2010.</ref>
+
+To demonstrate this property of <code>is-not-free-in</code>, we prove the following theorem.
+<jh>
+thm (TheoremNotFree () ((H φ)) (x is-not-free-in φ) (
+</jh>
+First we observe <code>x is-not-free-in ∀ x φ</code>.
+<jh>
+        x φ BoundForAllNotFree
+</jh>
+Then is <code>∀ x φ ↔ φ</code>.
+<jh>
+        H
+        x generalize
+
+        H
+
+        introduceConjunction
+
+        (∀ x φ) φ TruthBiconditional
+        applyModusPonens
+</jh>
+Adding <code>x is-not-free-in</code> to both sides is basically all we need from here.
+<jh>
+        x buildNotFree
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
 == Metamath axiomization of first-order logic ==
 We also export the metamath axiomization of first-order logic, to provide a the solution to a modified version of the problem stated at [http://us.metamath.org/award2003.html#17 17] on the metamath site.
 
