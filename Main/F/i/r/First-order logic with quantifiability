@@ -1059,7 +1059,7 @@ export (WITH_QUANTIFIABILITY Interface:First-order_logic_with_quantifiability (C
 == Exporting to the axioms of first-order logic in terms of substitution based on equality ==
 We also export [[Interface:Axioms of first-order logic in terms of substitution built on equality]], to show that those axioms are no stronger than the ones we worked from here.
 
-A few of them are slight rearrangements of theorems we have, but there is nothing complicated here.
+For <code>GeneralizationNotFree</code>, we need a slight rearrangement of theorems we have, but other than that we've already proved everything.
 
 <jh>
 thm (GeneralizationNotFree () ((H (x is-not-free-in φ))) (φ → (∀ x φ)) (
