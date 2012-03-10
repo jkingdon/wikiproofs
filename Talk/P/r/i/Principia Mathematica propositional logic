@@ -32,3 +32,19 @@ Summary: I'm not sure what the right answer is, but thought I should at least br
 ::I don't care too much whether to use TeX or Unicode. I just wanted to create a uniform appearance in the module. Sure, for the more complicated stuff, Unicode is not flexible enough. I wasn't aware of the display issues with the rendered bitmaps until now. This problem at least should solve itself sooner or later with MathML. Actually, firefox is already quite good at displaying MathML. It's just that for some reason the MediaWiki MathML renderer produces bitmaps nevertheless. So either I misconfigured something server-side or there's a bug in MediaWiki.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 18:58, 2 March 2010 (UTC)
 
 :::Sounds good. I won't feel guilty about all the pages where I'm just using straight Unicode but also won't worry if some pages do it the other way. I'm not up on MathML but a little searching comes up with [http://www.mediawiki.org/wiki/Texvc texvc] (what we are presumably using now) and [http://www.mediawiki.org/wiki/Extension:Blahtex blahtex]. Probably low priority to worry about this much. [[User:Kingdon|Kingdon]] 02:44, 3 March 2010 (UTC)
+
+=== Negative Examples ===
+
+Dear All,
+
+Is there somewhere a collection of negative examples, i.e. propositional
+formulas that are not tautologies, from Principia Mathematica. Does it
+contain at all such formulas?
+
+How would one deal with such formulas in your system? They could be used
+to shorten proof attempts, or they could be used to indicate counter
+models. Can your system model G |/- A?
+
+Bye
+
+[[User:Janburse|Janburse]] 13:12, 10 March 2012 (UTC)
