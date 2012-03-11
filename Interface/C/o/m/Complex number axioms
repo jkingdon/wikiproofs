@@ -111,6 +111,16 @@ stmt (Supremum ((x bound supremum A)) ()
         (∃ x (((value x) ∈ A) ∧ ((value bound) < (value x))))))))))))
 </jh>
 
+== Builders ==
+In the metamath version of these axioms, addition and multiplication are relations and therefore there is just a need for one generic builder for relations.<ref>[http://us.metamath.org/mpeuni/breq12.html breq12]</ref> Here, because addition and multiplication are individual operations, they each need their own builder.
+
+Although the builders are not interesting unless <code>A0<code> and so on are complex numbers, we state them without restricting them to complex numbers. However we define the sum of two sets which are not complex numbers, it is no hardship to make that definition obey the builders.
+<jh>
+var (object A0 A1 B0 B1)
+stmt (AdditionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 + B0) = (A1 + B1))))
+stmt (MultiplicationBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 · B0) = (A1 · B1))))
+</jh>
+
 {{Unproven|axioms=Set theory}}
 
 == References ==
