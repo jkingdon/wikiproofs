@@ -52,6 +52,8 @@ http://www.xlog.ch/jekejeke/principia/proofs.html
 
 [[User:Janburse|Janburse]] 13:12, 10 March 2012 (UTC)
 
+:One could presumably list non-tautologies by enumerating formulas and then checking them via truth tables. But I'm not sure there is any way to express "p is not a tautology" in JHilbert. At least right now, JHilbert is just a proof checker and does nothing to find proofs. So shortening proof attempts is not an issue, if I correctly understand what you mean by that. Now, writing a prover which outputs JHilbert proofs might be interesting, but I don't think I've seen any work on that sort of thing. As for the models and G |/- A I'm afraid I'm not familiar with that. [[User:Kingdon|Kingdon]] 18:56, 10 March 2012 (UTC)
+
 == Reference Metamath ==
 
 BTW: I was scraping my problems from here:
