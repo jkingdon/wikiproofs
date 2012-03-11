@@ -70,15 +70,46 @@ Here we will prove <code>X Y ≡ Y X</code>. Restating this in terms of sets, we
 
 {{under construction}}
 <jh>
-#thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ (ℝ) × (ℝ))) → (A B set.≡ B A)) (
+thm (SquareBuilder () () ((A set.= B) → ((A · A) set.= (B · B))) (
+        (A set.= B) ConjunctionIdempotence
+        eliminateBiconditionalReverse
+
+        A B A B MultiplicationBuilder
+        applySyllogism
+))
+
+#thm (set.CongruenceABBA-1 () ()
+#  (((((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ))) ∧
+#    (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))) →
+#    (A B set.≡ B A)
+#  ) (
 </jh>
 The left hand side of the definition of congruence expands to <code>(1st A − 1st B) · (1st A − 1st B) + (2nd A − 2nd B) · (2nd A − 2nd B)</code>, which we first transform to <code>(- (1st B − 1st A)) · (- (1st B − 1st A)) + (- (1st B − 1st A)) · (- (1st B − 1st A))<code>.
+
+The transformation starts with <code>1st A − 1st B = - (1st B − 1st A)</code>.
 <jh>
-        
+#        (((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ)))
+#          (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))
+#          ConjunctionRightElimination
+#        eliminateRightConjunctInConsequent
+
+#        (((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ)))
+#          (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))
+#          ConjunctionLeftElimination
+#        eliminateRightConjunctInConsequent
+
+#        (1st A) (1st B) NegativeSubtraction
 </jh>
 The right hand side of the definition of congruence expands to <code>(1st B − 1st A) · (1st B − 1st A) + (2nd B − 2nd A) · (2nd B − 2nd A)</code>.
 <jh>
 #        (1st B) (1st A) 
+        
+#))
+
+#thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ (ℝ) × (ℝ))) → (A B set.≡ B A)) (
+#        A B set.TwoPointsRealParts
+#        A B set.CongruenceABBA-1
+#        applySyllogism
 #))
 
 #thm (CongruenceABBA () () (X Y ≡ Y X) (
