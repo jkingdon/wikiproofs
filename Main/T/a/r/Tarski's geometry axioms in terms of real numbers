@@ -55,12 +55,6 @@ def ((≡ X Y Z W) (set.≡ (asSet X) (asSet Y) (asSet Z) (asSet W)))
 === Distance from A to B is the distance from B to A ===
 Here we will prove <code>X Y ≡ Y X</code>. Restating this in terms of sets, we need to prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B set.≡ B A</code>.
 
-We start with a corollary to <code>OrderedPairCartesianProduct</code> which we'll perhaps move to the set theory interface someday.  see elxp7 in metamath.
-<jh>
-#thm (FirstSecondCartesianProduct () () ((A ∈ (B × C)) → (((1st A) ∈ B) ∧ ((2nd A) ∈ C))) (
-#))
-</jh>
-
 {{under construction}}
 <jh>
 #thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ (ℝ) × (ℝ))) → (A B set.≡ B A)) (
