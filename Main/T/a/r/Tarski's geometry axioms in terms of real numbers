@@ -227,11 +227,11 @@ We can now apply <code>MultiplicationNegativeNegative</code> to get <code>(1st B
         set.applyEqualityTransitivityInConsequent
 ))
 
-#thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ (ℝ) × (ℝ))) → (A B set.≡ B A)) (
-#        A B set.TwoPointsRealParts
-#        A B set.CongruenceABBA-1
-#        applySyllogism
-#))
+thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ ((ℝ) × (ℝ)))) → (A B set.≡ B A)) (
+        A B set.TwoPointsComplexParts
+        A B set.CongruenceABBA-1
+        applySyllogism
+))
 
 #thm (CongruenceABBA () () (X Y ≡ Y X) (
 # This should be a relatively straightforward application of InUniverse
