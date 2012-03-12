@@ -233,9 +233,14 @@ thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ ((ℝ) × (�
         applySyllogism
 ))
 
-#thm (CongruenceABBA () () (X Y ≡ Y X) (
-# This should be a relatively straightforward application of InUniverse
-#))
+thm (CongruenceABBA () () (X Y ≡ Y X) (
+        X InUniverse
+        Y InUniverse
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.CongruenceABBA
+        applyModusPonens
+))
 </jh>
 
 == Betweenness ==
