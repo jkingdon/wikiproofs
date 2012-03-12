@@ -53,7 +53,7 @@ def ((≡ X Y Z W) (set.≡ (asSet X) (asSet Y) (asSet Z) (asSet W)))
 </jh>
 
 === The coordinates of points are real ===
-Given two points (as sets), the first and second coordinates are real.
+Given two points (as sets), the first and second coordinates are complex (in fact, they are real, but it will sometimes be convenient to say that they are complex without the extra step of saying that any real number is a complex number).
 <jh>
 thm (set.TwoPointsRealParts () ()
   (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ ((ℝ) × (ℝ)))) →
@@ -62,6 +62,37 @@ thm (set.TwoPointsRealParts () ()
         A (ℝ) (ℝ) FirstSecondCartesianProduct
         B (ℝ) (ℝ) FirstSecondCartesianProduct
         conjoin
+))
+
+thm (set.TwoPointsComplexParts () ()
+  (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ ((ℝ) × (ℝ)))) →
+    ((((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ))) ∧
+      (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ))))) (
+        A B set.TwoPointsRealParts
+
+        RealComplex
+        (ℝ) (ℂ) (1st A) SubsetMembership
+        applyModusPonens
+
+        RealComplex
+        (ℝ) (ℂ) (2nd A) SubsetMembership
+        applyModusPonens
+
+        conjoin
+
+        RealComplex
+        (ℝ) (ℂ) (1st B) SubsetMembership
+        applyModusPonens
+
+        RealComplex
+        (ℝ) (ℂ) (2nd B) SubsetMembership
+        applyModusPonens
+
+        conjoin
+
+        conjoin
+
+        applySyllogism
 ))
 </jh>
 
@@ -99,6 +130,10 @@ The transformation starts with <code>1st A − 1st B = - (1st B − 1st A)</code
 #        eliminateRightConjunctInConsequent
 
 #        (1st A) (1st B) NegativeSubtraction
+#        applySyllogism
+
+#        ((1st A) − (1st B)) (- ((1st B) − (1st A))) SquareBuilder
+#        applySyllogism
 </jh>
 The right hand side of the definition of congruence expands to <code>(1st B − 1st A) · (1st B − 1st A) + (2nd B − 2nd A) · (2nd B − 2nd A)</code>.
 <jh>
