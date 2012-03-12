@@ -99,7 +99,6 @@ thm (set.TwoPointsComplexParts () ()
 === Distance from A to B is the distance from B to A ===
 Here we will prove <code>X Y ≡ Y X</code>. Restating this in terms of sets, we need to prove <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ → A B set.≡ B A</code>.
 
-{{under construction}}
 <jh>
 thm (SquareBuilder () () ((A set.= B) → ((A · A) set.= (B · B))) (
         (A set.= B) ConjunctionIdempotence
@@ -109,37 +108,124 @@ thm (SquareBuilder () () ((A set.= B) → ((A · A) set.= (B · B))) (
         applySyllogism
 ))
 
-#thm (set.CongruenceABBA-1 () ()
-#  (((((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ))) ∧
-#    (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))) →
-#    (A B set.≡ B A)
-#  ) (
+thm (set.CongruenceABBA-1 () ()
+  (((((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ))) ∧
+    (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))) →
+    (A B set.≡ B A)
+  ) (
 </jh>
-The left hand side of the definition of congruence expands to <code>(1st A − 1st B) · (1st A − 1st B) + (2nd A − 2nd B) · (2nd A − 2nd B)</code>, which we first transform to <code>(- (1st B − 1st A)) · (- (1st B − 1st A)) + (- (1st B − 1st A)) · (- (1st B − 1st A))<code>.
+The left hand side of the definition of congruence expands to <code>(1st A − 1st B) · (1st A − 1st B) + (2nd A − 2nd B) · (2nd A − 2nd B)</code>, which we first transform to <code>(- (1st B − 1st A)) · (- (1st B − 1st A)) + (- (2nd B − 2nd A)) · (- (2nd B − 2nd A))<code>.
 
-The transformation starts with <code>1st A − 1st B = - (1st B − 1st A)</code>.
+We start with the <code>(1st A − 1st B) · (1st A − 1st B)</code> part.
 <jh>
-#        (((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ)))
-#          (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))
-#          ConjunctionRightElimination
-#        eliminateRightConjunctInConsequent
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
 
-#        (((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ)))
-#          (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))
-#          ConjunctionLeftElimination
-#        eliminateRightConjunctInConsequent
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
 
-#        (1st A) (1st B) NegativeSubtraction
-#        applySyllogism
+        composeConjunction
 
-#        ((1st A) − (1st B)) (- ((1st B) − (1st A))) SquareBuilder
-#        applySyllogism
+        (1st B) (1st A) NegativeSubtraction
+        applySyllogism
+
+        set.swapEqualityInConsequent
+
+        ((1st A) − (1st B)) (- ((1st B) − (1st A))) SquareBuilder
+        applySyllogism
 </jh>
-The right hand side of the definition of congruence expands to <code>(1st B − 1st A) · (1st B − 1st A) + (2nd B − 2nd A) · (2nd B − 2nd A)</code>.
+The <code>(2nd A − 2nd B) · (2nd A − 2nd B)</code> part is very similar.
 <jh>
-#        (1st B) (1st A) 
-        
-#))
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        (2nd B) (2nd A) NegativeSubtraction
+        applySyllogism
+
+        set.swapEqualityInConsequent
+
+        ((2nd A) − (2nd B)) (- ((2nd B) − (2nd A))) SquareBuilder
+        applySyllogism
+
+        composeConjunction
+
+        (((1st A) − (1st B)) · ((1st A) − (1st B)))
+          ((- ((1st B) − (1st A))) · (- ((1st B) − (1st A))))
+          (((2nd A) − (2nd B)) · ((2nd A) − (2nd B)))
+          ((- ((2nd B) − (2nd A))) · (- ((2nd B) − (2nd A))))
+          AdditionBuilder
+        applySyllogism
+</jh>
+We can now apply <code>MultiplicationNegativeNegative</code> to get <code>(1st B − 1st A) · (1st B − 1st A) + (2nd B − 2nd A) · (2nd B − 2nd A)</code>, which is the right hand side of the definition of congruence.
+<jh>
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        composeConjunction
+
+        (1st B) (1st A) SubtractionClosed
+        applySyllogism
+
+        (((1st B) − (1st A)) ∈  (ℂ)) ConjunctionIdempotence
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((1st B) − (1st A)) ((1st B) − (1st A)) MultiplicationNegativeNegative
+        applySyllogism
+
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+
+        (((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ)))
+          (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ)))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        composeConjunction
+
+        (2nd B) (2nd A) SubtractionClosed
+        applySyllogism
+
+        (((2nd B) − (2nd A)) ∈  (ℂ)) ConjunctionIdempotence
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ((2nd B) − (2nd A)) ((2nd B) − (2nd A)) MultiplicationNegativeNegative
+        applySyllogism
+
+        composeConjunction
+
+        ((- ((1st B) − (1st A))) · (- ((1st B) − (1st A))))
+          (((1st B) − (1st A)) · ((1st B) − (1st A)))
+          ((- ((2nd B) − (2nd A))) · (- ((2nd B) − (2nd A))))
+          (((2nd B) − (2nd A)) · ((2nd B) − (2nd A)))
+          AdditionBuilder
+        applySyllogism
+
+        set.applyEqualityTransitivityInConsequent
+))
 
 #thm (set.CongruenceABBA () () (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ (ℝ) × (ℝ))) → (A B set.≡ B A)) (
 #        A B set.TwoPointsRealParts
@@ -151,8 +237,6 @@ The right hand side of the definition of congruence expands to <code>(1st B − 
 # This should be a relatively straightforward application of InUniverse
 #))
 </jh>
-stmt (NegativeSubtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((- (z − w)) = (w − z))))
-stmt (MultiplicationNegativeNegative () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → (((- z) · (- w)) = (z · w))))
 
 == Betweenness ==
 Betweenness is a matter of asserting that the slopes of the line segments between pairs of points are equal, and that the signs of the differences between the coordinates of the points are correct. Again, the Tarski and Givant paper has a diagram and more explanation.<ref>Tarski and Givant, page 201</ref>
