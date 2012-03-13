@@ -64,30 +64,24 @@ thm (set.TwoPointsRealParts () ()
         conjoin
 ))
 
+thm (RealComplexMembership () () ((A ∈ (ℝ)) → (A ∈ (ℂ))) (
+        RealComplex
+        (ℝ) (ℂ) A SubsetMembership
+        applyModusPonens
+))
+
 thm (set.TwoPointsComplexParts () ()
   (((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ ((ℝ) × (ℝ)))) →
     ((((1st A) ∈ (ℂ)) ∧ ((2nd A) ∈ (ℂ))) ∧
       (((1st B) ∈ (ℂ)) ∧ ((2nd B) ∈ (ℂ))))) (
         A B set.TwoPointsRealParts
 
-        RealComplex
-        (ℝ) (ℂ) (1st A) SubsetMembership
-        applyModusPonens
-
-        RealComplex
-        (ℝ) (ℂ) (2nd A) SubsetMembership
-        applyModusPonens
-
+        (1st A) RealComplexMembership
+        (2nd A) RealComplexMembership
         conjoin
 
-        RealComplex
-        (ℝ) (ℂ) (1st B) SubsetMembership
-        applyModusPonens
-
-        RealComplex
-        (ℝ) (ℂ) (2nd B) SubsetMembership
-        applyModusPonens
-
+        (1st B) RealComplexMembership
+        (2nd B) RealComplexMembership
         conjoin
 
         conjoin
