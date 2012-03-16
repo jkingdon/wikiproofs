@@ -1,0 +1,51 @@
+{{header
+ | title    = Intuitionistic first-order logic
+ | subtitle =
+ | left     =
+ | right    =
+ | shortcut =
+ | notes    = The purpose of this page is to prove the statements of [[Interface:Intuitionistic first-order logic]] from the [[Interface:Axioms of intuitionistic first-order logic]].
+}}
+{{interfaces
+| imports = [[Interface:Axioms of intuitionistic first-order logic]]
+| exports = [[Interface:Intuitionistic first-order logic]]
+}}
+
+We start with propositional logic and our axioms.
+
+<jh>
+import (PROPOSITIONAL Interface:Intuitionistic_propositional_logic () ())
+import (AXIOMS Interface:Axioms_of_intuitionistic_first-order_logic (PROPOSITIONAL) ())
+</jh>
+
+As usual, φ and ψ are formulas, x, y, and z are variables, and s, t, and u are terms:
+
+<jh>
+var (formula φ ψ φx φy φs antecedent)
+var (object s t u s0 s1 t0 t1)
+var (variable x y z x0 x1 y0 y1)
+</jh>
+
+We largely follow the development from [[First-order logic in terms of substitution built on equality]] although some of the details are different and of course we don't prove quite all the theorems.
+
+== A few rules based on axioms ==
+Here are two rules which are convenience forms of an axiom, just as in [[First-order logic in terms of substitution built on equality]]
+<jh>
+thm (specializeToObject () ((H (∀ x φ))) (subst s x φ) (
+        H
+        x φ s SpecializationToObject
+        applyModusPonens
+))
+
+thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antecedent → (subst s x φ)) (
+        H
+        x φ s SpecializationToObject
+        applySyllogism
+))
+</jh>
+
+== Generalization ==
+<jh>
+</jh>
+
+[[Category:Subsystems of classical logic|${PAGENAME}]]
