@@ -54,4 +54,20 @@ thm (GeneralizationNotFree () ((HFREE (x is-not-free-in φ))) (φ → (∀ x φ)
 ))
 </jh>
 
+We also can generalize a theorem, even if the variable is free in it. The proof proceeds by turning <code>φ</code> into <code>⊤ → φ</code>, adding the quantifier to the consequent, and then removing the antecedent.
+<jh>
+thm (generalize () ((H φ)) (∀ x φ) (
+        True
+
+        x (⊤) DistinctNotFree
+
+        H
+        (⊤) introduceAntecedent
+
+        addForAllToConsequentNotFree
+
+        applyModusPonens
+))
+</jh>
+
 [[Category:Subsystems of classical logic|${PAGENAME}]]
