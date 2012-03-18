@@ -45,7 +45,13 @@ thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antece
 </jh>
 
 == Generalization ==
+Here we show that <code>φ → ∀ x φ</code>, provided that <code>x</code> is not free in <code>φ</code>.
 <jh>
+thm (GeneralizationNotFree () ((HFREE (x is-not-free-in φ))) (φ → (∀ x φ)) (
+        HFREE
+        φ ImplicationReflexivity
+        addForAllToConsequentNotFree
+))
 </jh>
 
 [[Category:Subsystems of classical logic|${PAGENAME}]]
