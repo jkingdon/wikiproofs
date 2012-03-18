@@ -28,8 +28,11 @@ var (variable x y z x0 x1 y0 y1)
 
 We largely follow the development from [[First-order logic in terms of substitution built on equality]] although some of the details are different and of course we don't prove quite all the theorems.
 
-== A few rules based on axioms ==
-Here are two rules which are convenience forms of an axiom, just as in [[First-order logic in terms of substitution built on equality]]
+== Substitution ==
+As with [[First-order logic in terms of substitution built on equality]] (slightly more so, even), substitution is central to our proofs, so we start with some substitution theorems.
+
+=== Rule forms of substitution axioms ===
+Here are some rules which are convenience forms of axioms, just as in [[First-order logic in terms of substitution built on equality]].
 <jh>
 thm (specializeToObject () ((H (∀ x φ))) (subst s x φ) (
         H
@@ -41,6 +44,32 @@ thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antece
         H
         x φ s SpecializationToObject
         applySyllogism
+))
+
+thm (makeSubstExplicit ((x s) (x ψ))
+  ((H (((value x) = s) → (φ ↔ ψ))))
+  ((subst s x φ) ↔ ψ) (
+        x ψ DistinctNotFree
+        H
+        makeSubstExplicitNotFree
+))
+
+thm (buildSubstReplacement () ((H (s = t)))
+  ((subst s x φ) ↔ (subst t x φ)) (
+        H
+        s t x φ SubstBuilderReplacement
+        applyModusPonens
+))
+</jh>
+
+=== Composition ===
+Substitution composition works just as in [[First-order logic in terms of substitution built on equality]].
+
+<jh>
+thm (SubstitutionComposition ((φ y) (s y) (x y)) ()
+  ((subst s y (subst (value y) x φ)) ↔ (subst s x φ)) (
+        (value y) s x φ SubstBuilderReplacement
+        makeSubstExplicit
 ))
 </jh>
 
