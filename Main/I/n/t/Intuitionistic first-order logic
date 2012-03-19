@@ -158,4 +158,10 @@ thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
 ))
 </jh>
 
+== Export ==
+Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
+<jh>
+#export (RESULT Interface:Intuitionistic_first-order_logic (PROPOSITIONAL) ())
+</jh>
+
 [[Category:Subsystems of classical logic|${PAGENAME}]]
