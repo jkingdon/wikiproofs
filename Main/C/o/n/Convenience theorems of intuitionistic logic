@@ -1,0 +1,760 @@
+{{header
+ | title    = Convenience theorems of
+ | subtitle = intuitionistic propositional logic
+ | left     =
+ | right    =
+ | shortcut =
+ | notes    = This page proves those statments of [[Interface:Intuitionistic propositional logic]] which aren't in [[Interface:Basic intuitionistic propositional logic]].  This includes chiefly additional builders (which aren't necessarily in most textbook treatments as they take substitution for granted), additional variants on modus ponens and related theorems, and the like. As it turns out the majority of convenience theorems of this sort are the same between classical and intuitionistic logic.
+}}
+{{interfaces
+| imports = [[Interface:Principia Mathematica propositional logic theorems]]
+| exports = [[Interface:Classical propositional calculus]]
+}}
+
+Here we import [[Interface:Basic intuitionistic propositional logic]] (where our classical counterpart imports [[Interface:Principia Mathematica propositional logic theorems]]):
+<jh>
+import (BASIC Interface:Basic_intuitionistic_propositional_logic () ())
+</jh>
+
+As usual, <code>p</code>, <code>q</code>, and <code>r</code> are formulas. We also define some longer names which will make the formulas with a lot of variables more readable.
+<jh>
+var (formula p q r s antecedent common)
+</jh>
+
+== Detachment ==
+We have already encountered our first detachment rule, <code>applyModusPonens</code>, which takes a proposition and an implication with that proposition as antecedent.  
+
+=== Multiple antecedents ===
+This section is for variants in which the implication has several antecedents (that is, the antecedent is a conjunction of two or more propositions) and we detach one or more of the antecedents.
+
+<jh>
+thm (detach1of2 () ((H p) (HIMP ((p ∧ q) → r))) (q → r) (
+        H
+        HIMP export
+        applyModusPonens
+))
+
+thm (detach2of2 () ((H q) (HIMP ((p ∧ q) → r))) (p → r) (
+        H
+
+        q p ConjunctionCommutativity eliminateBiconditionalReverse
+        HIMP
+        applySyllogism
+
+        export
+        applyModusPonens
+))
+
+var (formula consequent)
+thm (detach1of3 () ((H p) (HIMP (((p ∧ q) ∧ r) → consequent))) ((q ∧ r) → consequent) (
+        H
+
+        HIMP
+        export
+        export
+
+        applyModusPonens
+
+        import
+))
+
+thm (detach2of3 () ((H q) (HIMP (((p ∧ q) ∧ r) → consequent))) ((p ∧ r) → consequent) (
+        H
+
+        q p ConjunctionCommutativity eliminateBiconditionalReverse
+        HIMP
+        export
+        applySyllogism
+
+        export
+        applyModusPonens
+
+        import
+))
+
+thm (detach1of4 () ((H p) (HIMP ((((p ∧ q) ∧ r) ∧ s) → consequent))) (((q ∧ r) ∧ s) → consequent) (
+        H
+
+        HIMP
+        export
+        export
+        export
+
+        applyModusPonens
+
+        import
+        import
+))
+</jh>
+
+=== Nested formulas ===
+Here the "implication" is really a nesting of implications and/or biconditionals, and we detach one of the formulas from somewhere inside the nested formulas.
+
+<jh>
+thm (applyComm () ((H (p → (q → r)))) (q → (p → r)) (
+        H
+        import
+
+        q p ConjunctionCommutativity eliminateBiconditionalReverse
+        r addCommonConsequent
+
+        applyModusPonens
+        export
+))
+
+thm (detachImplicationImplication () 
+  ((H p) (HIMP (antecedent → (p → q))))
+  (antecedent → q) (
+        H
+        HIMP
+        applyComm
+        applyModusPonens
+))
+
+thm (detachImplicationBiconditional () 
+  ((H q) 
+   (HIMP (p → (q ↔ r))))
+  (p → r) (
+        H
+
+        HIMP
+        q r BiconditionalReverseElimination
+        applySyllogism
+        import
+
+        detach2of2
+))
+
+thm (detachImplicationBiconditionalRight () 
+  ((H r) 
+   (HIMP (p → (q ↔ r))))
+  (p → q) (
+        H
+
+        HIMP
+        q r BiconditionalSymmetry eliminateBiconditionalReverse
+        applySyllogism
+
+        detachImplicationBiconditional
+))
+</jh>
+
+=== Negated detachment ===
+This variant of ''modus tollens'' detaches the right hand side of a biconditional, which is a consequent.<ref>[http://us.metamath.org/mpeuni/mtbiri.html mtbiri], metamath's set.mm, accessed July 20, 2010</ref>
+<jh>
+thm (negatedDetachImplicationBiconditionalRight () 
+  ((H (¬ r)) 
+   (HIMP (p → (q ↔ r))))
+  (p → (¬ q)) (
+        H
+
+        HIMP
+        q r NegationBuilder
+        applySyllogism
+
+        detachImplicationBiconditionalRight
+))
+</jh>
+
+Here's the same thing for the left side of the biconditional.
+<jh>
+thm (negatedDetachImplicationBiconditional () 
+  ((H (¬ q)) 
+   (HIMP (p → (q ↔ r))))
+  (p → (¬ r)) (
+        H
+
+        HIMP
+        q r NegationBuilder
+        applySyllogism
+
+        detachImplicationBiconditional
+))
+</jh>
+
+Here's one for two implications.
+<jh>
+thm (negatedDetachImplicationImplication () 
+  ((H (¬ r)) 
+   (HIMP (p → (q → r))))
+  (p → (¬ q)) (
+        H
+
+        HIMP
+        q r TranspositionIntroduction
+        applySyllogism
+
+        detachImplicationImplication
+))
+</jh>
+
+== Transforming parts of formula ==
+By "transforming", we mean applying a biconditional to replace part of a formula.
+<jh>
+thm (transformAntecedent () ((HIMP (p → q)) (HEQ (p ↔ r))) (r → q) (
+        HEQ eliminateBiconditionalForward
+        HIMP
+        applySyllogism
+))
+
+thm (transformImplicationImplicationConsequent () ((HIMP (antecedent → (p → q))) (HEQ (q ↔ r))) (antecedent → (p → r)) (
+        HIMP
+
+        HEQ eliminateBiconditionalReverse
+        p addCommonAntecedent
+        antecedent addCommonAntecedent
+
+        applyModusPonens
+))
+
+thm (transformImplicationImplicationAntecedent ()
+  ((HIMP (antecedent → (p → q))) (HEQ (p ↔ r)))
+  (antecedent → (r → q)) (
+        HEQ eliminateBiconditionalForward
+        antecedent introduceAntecedent
+
+        HIMP
+
+        applySyllogismInConsequent
+))
+
+thm (transformImplicationBiconditionalLeft () ((HIMP (antecedent → (p ↔ q))) (HEQ (p ↔ r))) (antecedent → (r ↔ q)) (
+        HEQ
+        swapBiconditional
+        antecedent introduceAntecedent
+
+        HIMP
+
+        composeConjunction
+        
+        r p q BiconditionalTransitivity
+
+        applySyllogism
+))
+
+thm (transformImplicationBiconditionalRight () ((HIMP (antecedent → (p ↔ q))) (HEQ (q ↔ r))) (antecedent → (p ↔ r)) (
+        HIMP
+
+        HEQ
+        antecedent introduceAntecedent
+        composeConjunction
+        
+        p q r BiconditionalTransitivity
+
+        applySyllogism
+))
+
+thm (transformDisjunctionRight () ((H (p ∨ q)) (HEQ (q ↔ r))) (p ∨ r) (
+        H
+
+        HEQ
+        eliminateBiconditionalReverse
+        p disjoinLL
+
+        applyModusPonens
+))
+</jh>
+
+== More relationships between connectives ==
+
+=== Conjunction and implication ===
+We omit the <code>ConjunctionImplication</code> theorem from [[Convenience theorems of propositional logic]], which is <code>p ∧ q ↔ ¬ (p → ¬ q)</code>, and <code>ImplicationConjunction</code>, which is <code>(p → q) ↔ ¬ (p ∧ ¬ q)</code>.
+
+=== Negation and biconditional ===
+We have already proved that <code>¬ p ↔ (p → ⊥)</code>. As in classical logic, we can also show <code>¬ p ↔ (p ↔ ⊥)</code>, but the proof in [[Convenience theorems of propositional logic]] doesn't work.
+{{cleanup|finishing the proof here, assuming that it holds in intuitionistic logic}}
+
+{{cleanup|renaming Explosion from [[Interface:Axioms of intuitionistic propositional logic]], perhaps to ExplosionExported or ExplosionAxiom or something, proving Explosion (called ExplosionImported below just to be clear) as <code>p ∧ ¬ p → q</code>, and then exporting it from [[Intuitionistic propositional logic]]}}
+
+<jh>
+#thm (FalsityExplosion () () ((¬ p) → ((⊥) → p)) (
+#        p Contradiction
+#        eliminateBiconditionalForward
+</jh>
+That gives us <code>⊥ → p ∧ ¬ p</code>. The consequent of that in turn implies anything, in this case <code>p</code>.
+<jh>
+#        p p ExplosionImported
+#        applySyllogism
+
+#        (¬ p) introduceAntecedent
+#))
+</jh>
+
+== Additional builders ==
+The builders in [[Interface:Principia Mathematica propositional logic theorems]] for the various connectives often have a theorem form (e.g. <code>ConjunctionFunction</code>) and a rule form (e.g. <code>buildConjunction</code>). They may have a version for the implication rather than the biconditional (e.g. <code>DisjunctionSummation</code>, although sometimes only the biconditionalized version holds) and variants which add a common formula to one side or the other (e.g. <code>DisjunctionSummationLL</code> and <code>DisjunctionSummationRR</code>). Here we prove some of those variations which we haven't proved yet. The LR and RL variations (analogous to <code>DisjunctionSummationLR</code> and <code>DisjunctionSummationRL</code>) haven't as often been needed, but they could go here too, if there is a need.
+<jh>
+thm (DisjunctionBuilderLL () () ((p ↔ q) → ((r ∨ p) ↔ (r ∨ q))) (
+        r BiconditionalReflexivity
+        r r p q DisjunctionFunction export
+        applyModusPonens
+))
+
+thm (buildDisjunctionLL () ((H (p ↔ q)))
+  ((r ∨ p) ↔ (r ∨ q)) (
+        H
+        p q r DisjunctionBuilderLL
+        applyModusPonens
+))
+
+thm (DisjunctionBuilderRR () () ((p ↔ q) → ((p ∨ common) ↔ (q ∨ common))) (
+        common BiconditionalReflexivity
+        p q common common DisjunctionFunction
+        detach2of2
+))
+
+thm (buildDisjunctionRR () ((H (p ↔ q)))
+  ((p ∨ common) ↔ (q ∨ common)) (
+        H
+        p q common DisjunctionBuilderRR
+        applyModusPonens
+))
+
+thm (buildConjunctionLL () ((H (p ↔ q))) ((r ∧ p) ↔ (r ∧ q)) (
+        r BiconditionalReflexivity
+        H
+        buildConjunction
+))
+
+thm (buildConjunctionRR () ((H (p ↔ q))) ((p ∧ r) ↔ (q ∧ r)) (
+        H
+        r BiconditionalReflexivity
+        buildConjunction
+))
+
+thm (BiconditionalBuilderRR () () ((p ↔ q) → ((p ↔ common) ↔ (q ↔ common))) (
+</jh>
+We first derive <code>(p ↔ q) → ((p ↔ q) ∧ (common ↔ common))</code>:
+<jh>
+        common BiconditionalReflexivity
+        (common ↔ common) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+</jh>
+Then we just need to apply <code>BiconditionalFunction</code>:
+<jh>
+        p q common common BiconditionalFunction
+        applySyllogism
+))
+
+thm (buildBiconditionalLL () ((H (p ↔ q))) ((common ↔ p) ↔ (common ↔ q)) (
+        common BiconditionalReflexivity
+        H
+        buildBiconditional
+))
+</jh>
+
+For implications, we call the two sides the antecedent and consequent, rather than L and R (well, except for theorems which were named before this convention was establish and which noone has gotten around to renaming yet).
+<jh>
+thm (ImplicationBuilderConsequent () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
+        common BiconditionalReflexivity
+        (common ↔ common) (p ↔ q) ConjunctionLeftIntroduction
+        applyModusPonens
+
+        p q common common ImplicationFunction
+        applySyllogism
+))
+
+thm (ImplicationBuilderRR () () ((p ↔ q) → ((p → common) ↔ (q → common))) (
+        p q common ImplicationBuilderConsequent
+))
+
+thm (buildImplicationConsequent () ((H (p ↔ q))) ((p → common) ↔ (q → common)) (
+        H
+        common BiconditionalReflexivity
+        buildImplication
+))
+
+thm (buildImplicationAntecedent () ((H (p ↔ q))) ((common → p) ↔ (common → q)) (
+        common BiconditionalReflexivity
+        H
+        buildImplication
+))
+</jh>
+
+=== Building in the consequent ===
+Often we work with formulas which all have an antecedent in common, and in which all our building happens in the consequent. This is particularly helpful when dealing with substitution as it is handled in [[Interface:First-order logic with quantifiability]].
+
+<jh>
+thm (addNegationInConsequent () ((H (antecedent → (p ↔ q)))) (antecedent → ((¬ p) ↔ (¬ q))) (
+        H
+        p q NegationBuilder
+        applySyllogism
+))
+
+thm (buildConjunctionRRInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((p ∧ common) ↔ (q ∧ common))) (
+        H
+        common BiconditionalReflexivity
+        p q common common ConjunctionFunction detach2of2
+        applySyllogism
+))
+
+thm (buildConjunctionLLInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common ∧ p) ↔ (common ∧ q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q ConjunctionFunction detach1of2
+        applySyllogism
+))
+
+thm (buildDisjunctionRRInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((p ∨ common) ↔ (q ∨ common))) (
+        H
+        common BiconditionalReflexivity
+        p q common common DisjunctionFunction detach2of2
+        applySyllogism
+))
+
+thm (buildDisjunctionLLInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common ∨ p) ↔ (common ∨ q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q DisjunctionFunction detach1of2
+        applySyllogism
+))
+
+var (formula p0 q0 p1 q1)
+thm (buildConjunctionInConsequent ()
+  ((H0 (antecedent → (p0 ↔ q0)))
+   (H1 (antecedent → (p1 ↔ q1))))
+  (antecedent → ((p0 ∧ p1) ↔ (q0 ∧ q1))) (
+        H0 H1 composeConjunction
+        p0 q0 p1 q1 ConjunctionFunction
+        applySyllogism
+))
+
+thm (buildDisjunctionInConsequent ()
+  ((H0 (antecedent → (p0 ↔ q0)))
+   (H1 (antecedent → (p1 ↔ q1))))
+  (antecedent → ((p0 ∨ p1) ↔ (q0 ∨ q1))) (
+        H0
+        H1
+        composeConjunction
+        p0 q0 p1 q1 DisjunctionFunction
+        applySyllogism
+))
+
+thm (buildCommonConsequentInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((p → common) ↔ (q → common))) (
+        H
+        common BiconditionalReflexivity
+        p q common common ImplicationFunction detach2of2
+        applySyllogism
+))
+
+thm (buildCommonAntecedentInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common → p) ↔ (common → q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q ImplicationFunction detach1of2
+        applySyllogism
+))
+
+thm (buildImplicationInConsequent ()
+  ((H0 (antecedent → (p0 ↔ q0)))
+   (H1 (antecedent → (p1 ↔ q1))))
+  (antecedent → ((p0 → p1) ↔ (q0 → q1))) (
+        H0 H1 composeConjunction
+        p0 q0 p1 q1 ImplicationFunction
+        applySyllogism
+))
+
+thm (buildBiconditionalInConsequent ()
+  ((H0 (antecedent → (p0 ↔ q0)))
+   (H1 (antecedent → (p1 ↔ q1))))
+  (antecedent → ((p0 ↔ p1) ↔ (q0 ↔ q1))) (
+        H0 H1 composeConjunction
+        p0 q0 p1 q1 BiconditionalFunction
+        applySyllogism
+))
+
+thm (buildBiconditionalLLInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((common ↔ p) ↔ (common ↔ q))) (
+        H
+        common BiconditionalReflexivity
+        common common p q BiconditionalFunction detach1of2
+        applySyllogism
+))
+
+thm (buildBiconditionalRRInConsequent ()
+  ((H (antecedent → (p ↔ q))))
+  (antecedent → ((p ↔ common) ↔ (q ↔ common))) (
+        H
+        common BiconditionalReflexivity
+        p q common common BiconditionalFunction detach2of2
+        applySyllogism
+))
+</jh>
+
+== Additional transformations ==
+<jh>
+thm (transformImplicationDisjunctionLeft () ((HIMP (antecedent → (p ∨ q))) (HEQ (p ↔ r))) (antecedent → (r ∨ q)) (
+        HIMP
+
+        antecedent BiconditionalReflexivity
+        HEQ
+        q buildDisjunctionRR
+        buildImplication
+
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
+== Additional theorems in the consequent ==
+The various *InConsequent theorems are generally easy consequences of <code>composeConjunction</code>.
+<jh>
+thm (introduceBiconditionalFromImplicationsInConsequent ()
+  ((HFORWARD (antecedent → (p → q)))
+   (HREVERSE (antecedent → (q → p))))
+  (antecedent → (p ↔ q)) (
+        HFORWARD
+        HREVERSE
+        composeConjunction
+
+        p q BiconditionalImplication eliminateBiconditionalForward
+
+        applySyllogism
+))
+
+thm (eliminateBiconditionalReverseInConsequent ()
+  ((HIMP (antecedent → (p ↔ q))))
+  (antecedent → (p → q)) (
+        HIMP
+        p q BiconditionalReverseElimination
+        applySyllogism
+))
+
+thm (eliminateBiconditionalForwardInConsequent ()
+  ((HIMP (antecedent → (p ↔ q))))
+  (antecedent → (q → p)) (
+        HIMP
+        p q BiconditionalForwardElimination
+        applySyllogism
+))
+
+thm (applyModusPonensInConsequent ()
+  ((H (antecedent → p))
+   (HIMP (antecedent → (p → q))))
+  (antecedent → q) (
+        H
+        HIMP
+        composeConjunction
+
+        p q ModusPonens
+
+        applySyllogism
+))
+
+thm (applyBiconditionalTransitivityInConsequent ()
+  ((H1 (antecedent → (p ↔ q)))
+   (H2 (antecedent → (q ↔ r))))
+  (antecedent → (p ↔ r)) (
+        H1
+        H2
+        composeConjunction
+
+        p q r BiconditionalTransitivity
+
+        applySyllogism
+))
+
+thm (introduceAntecedentInConsequent () ((H (antecedent → p))) (antecedent → (q → p)) (
+        H
+        p q AntecedentIntroduction
+        applySyllogism
+))
+
+thm (importInConsequent ()
+  ((H (antecedent → (p → (q → r)))))
+  (antecedent → ((p ∧ q) → r)) (
+        H
+        p q r Transportation eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (exportInConsequent ()
+  ((H (antecedent → ((p ∧ q) → r))))
+  (antecedent → (p → (q → r))) (
+        H
+        p q r Transportation eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (eliminateLeftConjunctInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → q) (
+        H
+        p q ConjunctionLeftElimination
+        applySyllogism
+))
+
+thm (eliminateRightConjunctInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → p) (
+        H
+        p q ConjunctionRightElimination
+        applySyllogism
+))
+
+thm (introduceTranspositionInConsequent ()
+  ((H (antecedent → (p → q))))
+  (antecedent → ((¬ q) → (¬ p))) (
+        H
+        p q TranspositionIntroduction
+        applySyllogism
+))
+</jh>
+
+=== Deprecated ===
+{{deprecated|renaming eliminateLeftConjunctionInConsequent to eliminateLeftConjunctInConsequent and eliminateRightConjunctionInConsequent to eliminateRightConjunctInConsequent}}
+
+<jh>
+thm (eliminateLeftConjunctionInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → q) (
+        H
+        eliminateLeftConjunctInConsequent
+))
+
+thm (eliminateRightConjunctionInConsequent ()
+  ((H (antecedent → (p ∧ q))))
+  (antecedent → p) (
+        H
+        eliminateRightConjunctInConsequent
+))
+</jh>
+
+== Theorems partly in the consequent ==
+<jh>
+thm (introduceLeftConjunctToConsequent () ((HIMP (antecedent → p)) (HNEW q)) (antecedent → (q ∧ p)) (
+        HNEW
+        antecedent introduceAntecedent
+
+        HIMP
+
+        composeConjunction
+))
+
+thm (introduceRightConjunctToConsequent () ((HIMP (antecedent → p)) (HNEW q)) (antecedent → (p ∧ q)) (
+        HIMP
+
+        HNEW
+        antecedent introduceAntecedent
+
+        composeConjunction
+))
+</jh>
+
+== Theorems in the antecedent ==
+There are more cases where it is convenient to have a rule that operates in the consequent than in the antecedent.  But there are a few for the latter.
+<jh>
+thm (importInAntecedent ()
+  ((H ((p → (q → r)) → consequent)))
+  (((p ∧ q) → r) → consequent) (
+        p q r Transportation eliminateBiconditionalForward
+        H
+        applySyllogism
+))
+
+thm (exportInAntecedent ()
+  ((H (((p ∧ q) → r) → consequent)))
+  ((p → (q → r)) → consequent) (
+        p q r Transportation eliminateBiconditionalReverse
+        H
+        applySyllogism
+))
+</jh>
+
+== Combinations of commutativity and associativity ==
+Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
+
+The first one swaps the second and third disjuncts in a disjunction of four formulas.<ref>[http://us.metamath.org/mpeuni/or4.html or4], metamath's set.mm, accessed February 5, 2011</ref>
+<jh>
+thm (Disjunction4 () () (((p ∨ q) ∨ (r ∨ s)) ↔ ((p ∨ r) ∨ (q ∨ s))) (
+        p q (r ∨ s) DisjunctionAssociativity
+
+        q r s DisjunctionAssociativity swapBiconditional
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        q r DisjunctionCommutativity
+        s buildDisjunctionRR
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        r q s DisjunctionAssociativity
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        p r (q ∨ s) DisjunctionAssociativity swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (swap23ofDisjunction4 () ((H ((p ∨ q) ∨ (r ∨ s)))) ((p ∨ r) ∨ (q ∨ s)) (
+        H
+        p q r s Disjunction4
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (Disjunction3 () () (((p ∨ q) ∨ r) ↔ ((p ∨ r) ∨ q)) (
+        p q r DisjunctionAssociativity
+
+        q r DisjunctionCommutativity
+        p buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        p r q DisjunctionAssociativity
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+
+thm (swap23ofDisjunction3 () ((H ((p ∨ q) ∨ r))) ((p ∨ r) ∨ q) (
+        H
+        p q r Disjunction3
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
+The next theorem swaps the second and third conjuncts in a conjunction of four formulas.<ref>[http://us.metamath.org/mpeuni/an4.html an4], metamath's set.mm, accessed February 5, 2011</ref>
+<jh>
+thm (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))) (
+        p q (r ∧ s) ConjunctionAssociativity
+
+        q r s ConjunctionAssociativity swapBiconditional
+        p buildConjunctionLL
+        applyBiconditionalTransitivity
+
+        q r ConjunctionCommutativity
+        s buildConjunctionRR
+        p buildConjunctionLL
+        applyBiconditionalTransitivity
+
+        r q s ConjunctionAssociativity
+        p buildConjunctionLL
+        applyBiconditionalTransitivity
+
+        p r (q ∧ s) ConjunctionAssociativity swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+== Done ==
+We now export [[Interface:Intuitionistic propositional logic]].
+<jh>
+export (PROPOSITIONAL Interface:Intuitionistic_propositional_logic () ())
+</jh>
+
+== Footnotes ==
+<references/>
+
+[[Category:Subsystems of classical logic|${PAGENAME}]]
