@@ -144,4 +144,18 @@ thm (generalize () ((H φ)) (∀ x φ) (
 ))
 </jh>
 
+== Building for-all across implication ==
+Here we differ from [[First-order logic in terms of substitution built on equality]] mainly because our axiom set is a bit different from the axioms used there, not primarily because of any differences between intuitionistic logic and classical logic. In particular, we don't have an axiom for <code>∀ x (φ → ψ) → (∀ x φ → ∀ x ψ)</code> and related theorems, but need to derive them from <code>addForAllToConsequentNotFree</code> and the like. We start with the rule which lets us add <code>∀</code> to both sides of an implication.
+<jh>
+thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
+        x φ BoundForAllNotFree
+
+        x φ Specialization
+        H
+        applySyllogism
+
+        addForAllToConsequentNotFree
+))
+</jh>
+
 [[Category:Subsystems of classical logic|${PAGENAME}]]
