@@ -83,6 +83,40 @@ thm (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))) (
 ))
 </jh>
 
+== Specialization and existential introduction without a substitution ==
+The theorems <code>∀ x φ → φ</code> and <code>φ → ∃ x φ</code> (which are special cases of the corresponding axioms which include substitutions) follow using the same proofs as in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (Specialization () () ((∀ x φ) → φ) (
+        x φ (value x) SpecializationToObject
+
+        x φ SubstItself
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (specialize () ((H (∀ x φ))) φ (
+        H
+        x φ Specialization
+        applyModusPonens
+))
+
+thm (ThereExistsIntroduction () () (φ → (∃ x φ)) (
+        x φ SubstItself
+        eliminateBiconditionalForward
+
+        (value x) x φ ThereExistsIntroductionFromObject
+        applySyllogism
+))
+</jh>
+
+The previous results let us conclude <code>∀ x φ → ∃ x φ</code>.
+<jh>
+thm (ForAllThereExists () () ((∀ x φ) → (∃ x φ)) (
+        x φ Specialization
+        φ x ThereExistsIntroduction
+        applySyllogism
+))
+</jh>
 
 == Generalization ==
 Here we show that <code>φ → ∀ x φ</code>, provided that <code>x</code> is not free in <code>φ</code>.
