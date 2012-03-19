@@ -73,6 +73,17 @@ thm (SubstitutionComposition ((φ y) (s y) (x y)) ()
 ))
 </jh>
 
+=== EqualitySubst ===
+Similarly, the proof from [[First-order logic in terms of substitution built on equality]] of <code>EqualitySubst</code> works here too.
+<jh>
+thm (EqualitySubst () () (((value x) = s) → (φ ↔ (subst s x φ))) (
+        (value x) s x φ SubstBuilderReplacement
+        x φ SubstItself
+        transformImplicationBiconditionalLeft
+))
+</jh>
+
+
 == Generalization ==
 Here we show that <code>φ → ∀ x φ</code>, provided that <code>x</code> is not free in <code>φ</code>.
 <jh>
