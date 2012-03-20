@@ -204,6 +204,40 @@ thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
 ))
 </jh>
 
+=== Moving substitution across negation ===
+Substitution can be moved in or out of a predicate or operation, provided the predicate or operation has a builder. We start with the case where the predicate is <code>¬</code> and the builder <code>NegationBuilder</code>. Other than changing <code>NegationFunction</code> to <code>NegationBuilder</code>, the proof is as in [[First-order logic in terms of substitution built on equality]], where it is explained in more detail.
+
+We start with the special case in which the variable being substituted is distinct from its replacement.
+<jh>
+thm (SubstNegationDistinct ((x s)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+        x s φ SubstNotFree
+        negateNotFree
+
+        x s φ EqualitySubst
+
+        φ (subst s x φ) NegationBuilder
+        applySyllogism
+
+        makeSubstExplicitNotFree
+))
+
+thm (SubstNegation ( (y x) (y s) (y φ)) () ((subst s x (¬ φ)) ↔ (¬ (subst s x φ))) (
+        s y x (¬ φ) SubstitutionComposition
+        swapBiconditional
+
+        (value y) x φ SubstNegationDistinct
+        s y buildSubst
+        applyBiconditionalTransitivity
+
+        s y (subst (value y) x φ) SubstNegationDistinct
+        applyBiconditionalTransitivity
+
+        s y x φ SubstitutionComposition
+        addNegation
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
