@@ -167,6 +167,43 @@ thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
 ))
 </jh>
 
+== More substitution ==
+Now that we have proved builders, we can return to some more substitution results.
+
+=== Builders ===
+Here are some builders for which the proof from [[First-order logic in terms of substitution built on equality]] works verbatim.
+<jh>
+thm (SubstBuilder () () ((∀ x (φ ↔ ψ)) → ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ s SubstAddition
+        applySyllogism
+
+        φ ψ BiconditionalForwardElimination
+        x addForAll
+
+        x ψ φ s SubstAddition
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+
+thm (addSubst () ((H (φ → ψ))) ((subst s x φ) → (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstAddition
+        applyModusPonens
+))
+
+thm (buildSubst () ((H (φ ↔ ψ))) ((subst s x φ) ↔ (subst s x ψ)) (
+        H
+        x generalize
+        x φ ψ s SubstBuilder
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
