@@ -46,7 +46,7 @@ term (formula (∃ variable formula))
 </jh>
 
 == Free variables ==
-Here we follow the treatment of free variables from [[Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. As described there, our predicate <code>is-not-free-in</code> is similar to, but not identical with, conventional (intuitionistic or otherwise) definitions of freeness. The one change we make for intuitionistic logic is to provide axions for both kinds of quantifiers.
+Here we follow the treatment of free variables from [[Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. As described there, our predicate <code>is-not-free-in</code> is similar to, but not identical with, conventional (intuitionistic or otherwise) definitions of freeness. The one change we make for intuitionistic logic is to provide axioms for both kinds of quantifiers, and for additional connectives, to reflect the smaller number of intuitionistic quantifiers and connectives which can be defined in terms of others.
 
 <jh>
 term (formula (is-not-free-in variable formula))
@@ -62,6 +62,14 @@ stmt (negateNotFree () ((x is-not-free-in φ)) (x is-not-free-in (¬ φ)))
 stmt (implicationNotFree ()
   ((x is-not-free-in φ) (x is-not-free-in ψ))
   (x is-not-free-in (φ → ψ))
+)
+stmt (disjunctionNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ ∨ ψ))
+)
+stmt (conjunctionNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ ∧ ψ))
 )
 
 stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)))
