@@ -238,6 +238,44 @@ thm (SubstNegation ( (y x) (y s) (y φ)) () ((subst s x (¬ φ)) ↔ (¬ (subst 
 ))
 </jh>
 
+=== Moving substitution across implication ===
+The proof for other connectives is similar and also matches what we did in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (SubstImplicationDistinct ((s x)) () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) (
+        x s φ SubstNotFree
+        x s ψ SubstNotFree
+        implicationNotFree
+
+        (value x) s x φ SubstBuilderReplacement
+        (value x) s x ψ SubstBuilderReplacement
+        buildImplicationInConsequent
+
+        x φ SubstItself
+        x ψ SubstItself
+        buildImplication
+        transformImplicationBiconditionalLeft
+
+        makeSubstExplicitNotFree
+))
+
+thm (SubstImplication ( (y x) (y s) (y φ) (y ψ)) () ((subst s x (φ → ψ)) ↔ ((subst s x φ) → (subst s x ψ))) (
+        s y x (φ → ψ) SubstitutionComposition
+        swapBiconditional
+
+        (value y) x φ ψ SubstImplicationDistinct
+        s y buildSubst
+        applyBiconditionalTransitivity
+
+        s y (subst (value y) x φ) (subst (value y) x ψ) SubstImplicationDistinct
+        applyBiconditionalTransitivity
+
+        s y x φ SubstitutionComposition
+        s y x ψ SubstitutionComposition
+        buildImplication
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
