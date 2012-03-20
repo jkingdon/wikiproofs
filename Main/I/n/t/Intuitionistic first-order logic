@@ -158,6 +158,15 @@ thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
 ))
 </jh>
 
+The builder for the biconditional follows trivially:
+<jh>
+thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
+        H eliminateBiconditionalReverse x addForAll
+        H eliminateBiconditionalForward x addForAll
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
