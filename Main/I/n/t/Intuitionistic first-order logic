@@ -418,6 +418,30 @@ thm (ForAllAddRemoveNotFree () ((XFREE (x is-not-free-in φ))) ((∀ x φ) ↔ �
 ))
 </jh>
 
+== Moving is-not-free-in across connectives ==
+We've adopted as axioms the ability the move <code>is-not-free-in</code> across most connectives. The one remaining is the biconditional, which follows from the axioms for implication and conjunction.
+
+<jh>
+thm (biconditionalNotFree ()
+  ((HPHI (x is-not-free-in φ)) (HPSI (x is-not-free-in ψ)))
+  (x is-not-free-in (φ ↔ ψ)) (
+        HPHI
+        HPSI
+        implicationNotFree
+
+        HPSI
+        HPHI
+        implicationNotFree
+
+        conjunctionNotFree
+
+        φ ψ BiconditionalImplication
+        x buildNotFree
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
