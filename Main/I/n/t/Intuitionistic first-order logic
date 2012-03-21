@@ -371,6 +371,39 @@ thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (
 ))
 </jh>
 
+== Quantifier commutation ==
+Being able to exchange the order of universal quantifiers is proved just as in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (ForAllCommutationImplication () () ((∀ x (∀ y φ)) → (∀ y (∀ x φ))) (
+
+        x (∀ y φ) BoundForAllNotFree
+        GeneralizationNotFree
+
+        y φ BoundForAllNotFree
+        x addForAllNotFree
+        x addForAllNotFree
+        GeneralizationNotFree
+        applySyllogism
+
+        y φ Specialization
+        x addForAll
+        x addForAll
+        y addForAll
+        applySyllogism
+
+        x φ Specialization
+        x addForAll
+        y addForAll
+        applySyllogism
+))
+
+thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
+        x y φ ForAllCommutationImplication
+        y x φ ForAllCommutationImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
