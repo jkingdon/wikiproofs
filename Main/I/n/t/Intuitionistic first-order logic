@@ -276,7 +276,7 @@ thm (SubstImplication ( (y x) (y s) (y φ) (y ψ)) () ((subst s x (φ → ψ)) �
 ))
 </jh>
 
-=== Subst across disjunction ===
+=== Subst across disjunction, conjunction, and biconditional ===
 Disjunction and conjunction are not related to implication and negation in as simple a manner as in classical logic, so we just prove the disjunction and conjunction results the same way we proved the implication and negation ones.
 <jh>
 thm (SubstDisjunctionDistinct ((s x)) () ((subst s x (φ ∨ ψ)) ↔ ((subst s x φ) ∨ (subst s x ψ))) (
@@ -311,6 +311,41 @@ thm (SubstDisjunction ( (y x) (y s) (y φ) (y ψ)) ()
         s y x φ SubstitutionComposition
         s y x ψ SubstitutionComposition
         buildDisjunction
+        applyBiconditionalTransitivity
+))
+
+thm (SubstConjunctionDistinct ((s x)) () ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))) (
+        x s φ SubstNotFree
+        x s ψ SubstNotFree
+        conjunctionNotFree
+
+        (value x) s x φ SubstBuilderReplacement
+        (value x) s x ψ SubstBuilderReplacement
+        buildConjunctionInConsequent
+
+        x φ SubstItself
+        x ψ SubstItself
+        buildConjunction
+        transformImplicationBiconditionalLeft
+
+        makeSubstExplicitNotFree
+))
+
+thm (SubstConjunction ( (y x) (y s) (y φ) (y ψ)) ()
+  ((subst s x (φ ∧ ψ)) ↔ ((subst s x φ) ∧ (subst s x ψ))) (
+        s y x (φ ∧ ψ) SubstitutionComposition
+        swapBiconditional
+
+        (value y) x φ ψ SubstConjunctionDistinct
+        s y buildSubst
+        applyBiconditionalTransitivity
+
+        s y (subst (value y) x φ) (subst (value y) x ψ) SubstConjunctionDistinct
+        applyBiconditionalTransitivity
+
+        s y x φ SubstitutionComposition
+        s y x ψ SubstitutionComposition
+        buildConjunction
         applyBiconditionalTransitivity
 ))
 </jh>
