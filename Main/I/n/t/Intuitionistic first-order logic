@@ -404,6 +404,20 @@ thm (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))) (
 ))
 </jh>
 
+== Adding and removing quantifiers ==
+The biconditionalized thereorem <code>∀ x φ ↔ φ</code> works just as in [[First-order logic in terms of substitution built on equality]].
+
+<jh>
+thm (ForAllAddRemoveNotFree () ((XFREE (x is-not-free-in φ))) ((∀ x φ) ↔ φ) (
+        x φ Specialization
+
+        XFREE
+        GeneralizationNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
