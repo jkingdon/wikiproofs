@@ -350,6 +350,27 @@ thm (SubstConjunction ( (y x) (y s) (y φ) (y ψ)) ()
 ))
 </jh>
 
+The biconditional, on the other hand, can be defined in terms of implication and conjunction, as in classical logic. Therefore, it is more convenient to prove the corresponding theorem for the biconditional in terms of the theorems for implication and conjunction.
+
+<jh>
+thm (SubstBiconditional () () ((subst s x (φ ↔ ψ)) ↔ ((subst s x φ) ↔ (subst s x ψ))) (
+        φ ψ BiconditionalImplication
+        s x buildSubst
+
+        s x (φ → ψ) (ψ → φ) SubstConjunction
+        applyBiconditionalTransitivity
+
+        s x φ ψ SubstImplication
+        s x ψ φ SubstImplication
+        buildConjunction
+        applyBiconditionalTransitivity
+
+        (subst s x φ) (subst s x ψ) BiconditionalImplication
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
