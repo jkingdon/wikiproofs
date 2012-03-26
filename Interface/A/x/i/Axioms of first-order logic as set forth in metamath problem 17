@@ -79,7 +79,30 @@ stmt (dfsb7 () () ((subst (value y) x φ) ↔
 Metamath discusses free variables in the context of the formula <code>φ → ∀ x φ</code>, which can be read as "x is effectively not free in φ".<ref>[http://us.metamath.org/mpeuni/stdpc5.html stdpc5], metamath's set.mm, accessed March 24, 2012</ref> Metamath does not give this concept a notation other than <code>φ → ∀ x φ</code>, so we do not either.
 
 == Axioms ==
-{{cleanup|defining the axioms as mentioned in problem 17}}
+The first axiom is the ability to specialize to another variable.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc4 () () ((∀ x φ) → (subst (value y) x φ)))
+</jh>
+
+The second axiom is a version of being able to add universal quantification to the consequent.<ref>[http://us.metamath.org/mpeuni/stdpc5.html stdpc5], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc5 () ((φ → (∀ x φ))) ((∀ x (φ → ψ)) → (φ → (∀ x ψ))))
+</jh>
+
+The third axiom is the ability to generalize a theorem.<ref>[http://us.metamath.org/mpeuni/ax-gen.html ax-gen], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (ax-gen () (φ) (∀ x φ))
+</jh>
+
+The last two arguments concern equality. The first equality axiom is reflexivity.<ref>[http://us.metamath.org/mpeuni/stdpc6.html stdpc6], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc6 () () (∀ x ((value x) = (value x))))
+</jh>
+
+The other equality axiom is a version of being able to substitute equals for equals.<ref>[http://us.metamath.org/mpeuni/stdpc7.html stdpc7], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc7 () () (((value x) = (value y)) → ((subst (value x) y φ) → φ)))
+</jh>
 
 == References ==
 <references/>
