@@ -79,7 +79,7 @@ thm (Nicod.applyRule () ((HP p) (HPR (p | (q | r)))) r (
         HPR unNicodize
         applyModusPonens
 
-        eliminateLeftConjunction
+        eliminateLeftConjunct
 ))
 </jh>
 
