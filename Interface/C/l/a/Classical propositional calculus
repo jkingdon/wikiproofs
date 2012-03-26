@@ -596,21 +596,6 @@ stmt (swap23ofDisjunction3 () (((p ∨ q) ∨ r)) ((p ∨ r) ∨ q))
 stmt (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))))
 </jh>
 
-=== Deprecated ===
-The rules in this section are deprecated; that is, they are likely to disappear in a future version of this interface.
-
-The following two are synonyms for <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code>. The names <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code> are preferred because the whole conjunction is not being eliminated, just one of the conjuncts.
-<jh>
-stmt (eliminateLeftConjunction () ((p ∧ q)) q)
-stmt (eliminateRightConjunction () ((p ∧ q)) p)
-</jh>
-
-Likewise for the versions in the consequent:
-<jh>
-stmt (eliminateLeftConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → q))
-stmt (eliminateRightConjunctionInConsequent () ((antecedent → (p ∧ q))) (antecedent → p))
-</jh>
-
 == References ==
 
 <references />
