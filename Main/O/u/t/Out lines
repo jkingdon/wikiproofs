@@ -1069,8 +1069,8 @@ thm (OutSegmentConstructionUniqueness-axay () ()
           (A is-outside Y R))
           (A Y ≡ B C)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         (((((R ≠ A) ∧ (B ≠ C)) ∧
           (A is-outside X R)) ∧ (A X ≡ B C)) ∧
