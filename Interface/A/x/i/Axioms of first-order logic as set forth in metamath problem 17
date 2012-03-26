@@ -1,0 +1,110 @@
+{{header
+ | title    = Axioms of first-order logic as set forth in metamath problem 17
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Predicate logic builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. More specifically, the kind of predicate logic we define here is known as first-order logic, which is a common basis for theories such as set theory or arithmetic.
+}}
+
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]]
+| importedby = [[First-order logic in terms of substitution built on equality]]
+| exportedby = none
+}}
+
+The axioms for first-order logic that we present here are intended to represent a relatively traditional axiomization of first-order logc in terms of free variables and substitution. The specific way of representing those concepts in JHilbert is the one given in problem 17 [http://us.metamath.org/award2003.html#17 17] on the metamath site. To solve that problem, we need to start with these axioms and prove "any or all" of the metamath statements ax-4 through ax-17, which roughly are the statements at [[Interface:Axioms of first-order logic]].
+
+== Formulas and objects ==
+First we build on [[Interface:Classical propositional calculus]].
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+We use φ, ψ, χ, and θ to represent formulas.
+<jh>
+var (formula φ ψ χ θ)
+</jh>
+
+A [[w:First-order_logic#Terms|term]] in conventional terminology corresponds to what metamath calls a class. Here we use the word ''object'' only because ''term'' is a JHilbert keyword.
+
+<jh>
+kind (object)
+var (object s t u s0 s1 t0 t1)
+</jh>
+
+A ''variable'' is what metamath calls a set. The parts of metamath we're concerned with here don't include actual set theory axioms (with the possible except of those which are really equality axioms, only peripherally related to set theory), but calls the things being quantifier over sets.
+
+<jh>
+kind (variable)
+var (variable x y z x0 x1 y0 y1)
+</jh>
+
+A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected). In metamath, the equivalent conversion is <code>cv</code>,<ref>[http://us.metamath.org/mpeuni/cv.html], metamath's set.mm, accessed March 24, 2012</ref> although metamath is slightly different from JHilbert in terms of how it must be used.
+<jh>
+term (object (value variable))
+</jh>
+
+== Quantification ==
+We extend the available formulas with [[w:Universal quantification|universal quantification]].<ref>[http://us.metamath.org/mpeuni/wal.html wal], metamath's set.mm, accessed March 24, 2012</ref>
+<jh>
+term (formula (∀ variable formula))
+</jh>
+
+Although the statement of problem 17 does not explicitly mention <code>∃</code>, since it is used in the definition of substitution (given next), we assume the problem intends for the usual metamath definitions to be applied.<ref>http://us.metamath.org/mpeuni/wex.html wex] and [http://us.metamath.org/mpeuni/df-ex.html df-ex], metamath's set.mm, accessed March 24, 2012</ref>
+<jh>
+term (formula (∃ variable formula))
+stmt (df-ex () () ((∃ x φ) ↔ (¬ (∀ x (¬ φ)))))
+</jh>
+
+== Equality ==
+The statement of the problem does not mention any equality axioms other than stdpc6 and stdpc7 discussed below. Therefore, we assume that those are intended to be sufficient.
+
+As a matter of syntax, metamath defines equality of two classes, not just two set variables, so we do the same.<ref>[http://us.metamath.org/mpeuni/wceq.html wceq], metamath's set.mm, accessed March 24, 2012</ref> However, stdpc6 and stdpc7 only give equality meaning with set variables, not more general classes (the parts of metamath which define class equality, in the set theory section, are not part of the statement of problem 17).
+
+<jh>
+term (formula (= object object))
+</jh>
+
+== Substitution ==
+A number of the axioms are stated in terms of substitution. According to the statement of problem 17, we are supposed to use the following definition of substitution.<ref>[http://us.metamath.org/mpeuni/dfsb7.html dfsb7], metamath's set.mm, accessed March 24, 2012</ref> As a matter of syntax, metamath defines the substitution of a class for a set variable, not just a set variable for a set variable, so we do the same.<ref>[http://us.metamath.org/mpeuni/wsbc.html wsbc], metamath's set.mm, accessed March 24, 2012</ref> However, there isn't any theorem or axiom that gives substitution any meaning except when a variable is being substituted (the parts of metamath which define substitution of a class for a set, in the set theory section, are not part of the statement of problem 17).
+
+<jh>
+term (formula (subst object variable formula))
+stmt (dfsb7 () () ((subst (value y) x φ) ↔
+  (∃ z (((value z) = (value y)) ∧ (∃ x (((value x) = (value z)) ∧ φ))))))
+</jh>
+
+== Free variables ==
+Metamath discusses free variables in the context of the formula <code>φ → ∀ x φ</code>, which can be read as "x is effectively not free in φ".<ref>[http://us.metamath.org/mpeuni/stdpc5.html stdpc5], metamath's set.mm, accessed March 24, 2012</ref> Metamath does not give this concept a notation other than <code>φ → ∀ x φ</code>, so we do not either.
+
+== Axioms ==
+The first axiom is the ability to specialize to another variable.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc4 () () ((∀ x φ) → (subst (value y) x φ)))
+</jh>
+
+The second axiom is a version of being able to add universal quantification to the consequent.<ref>[http://us.metamath.org/mpeuni/stdpc5.html stdpc5], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc5 () ((φ → (∀ x φ))) ((∀ x (φ → ψ)) → (φ → (∀ x ψ))))
+</jh>
+
+The third axiom is the ability to generalize a theorem.<ref>[http://us.metamath.org/mpeuni/ax-gen.html ax-gen], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (ax-gen () (φ) (∀ x φ))
+</jh>
+
+The last two arguments concern equality. The first equality axiom is reflexivity.<ref>[http://us.metamath.org/mpeuni/stdpc6.html stdpc6], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc6 () () (∀ x ((value x) = (value x))))
+</jh>
+
+The other equality axiom is a version of being able to substitute equals for equals.<ref>[http://us.metamath.org/mpeuni/stdpc7.html stdpc7], metamath's set.mm, accessed March 25, 2012</ref>
+<jh>
+stmt (stdpc7 () () (((value x) = (value y)) → ((subst (value x) y φ) → φ)))
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Classical first-order logic|{{PAGENAME}}]]
