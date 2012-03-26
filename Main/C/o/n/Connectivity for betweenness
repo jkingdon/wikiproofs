@@ -247,7 +247,7 @@ First is <code>between A B D</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 </jh>
 Second is <code>between A D C′</code>
 <jh>
@@ -257,10 +257,10 @@ Second is <code>between A D C′</code>
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
 
         composeConjunction
@@ -288,8 +288,8 @@ This is another application of transitivity, starting with <code>between B″ D�
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D′ B″ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -303,10 +303,10 @@ The other thing we need is <code>between D′ C A</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A C D′ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -335,10 +335,10 @@ Each of the segments <code>D C′</code> and <code>D′ C</code> is congruent to
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         (((((between A D C′) ∧ (D C′ ≡ C D)) ∧
             ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -346,10 +346,10 @@ Each of the segments <code>D C′</code> and <code>D′ C</code> is congruent to
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C D′ C D CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -391,8 +391,8 @@ The next is <code>B D ≡ B″ D′</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         D′ B″ D B CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -437,7 +437,7 @@ This is an application of transitivity to <code>between A B D</code>
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 </jh>
 and <code>between A D C′</code>.
 <jh>
@@ -447,10 +447,10 @@ and <code>between A D C′</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -479,9 +479,9 @@ and <code>between A C′ B′</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -506,10 +506,10 @@ Here we apply transitivity to <code>between A C D′</code>
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 and <code>between A D′ B″</code>
 <jh>
@@ -519,8 +519,8 @@ and <code>between A D′ B″</code>
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -545,8 +545,8 @@ Here we apply transitivity to <code>A B C</code>
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 </jh>
 and the previous lemma (<code>between A C B″</code>)
 <jh>
@@ -594,9 +594,9 @@ Next we need <code>between B″ C B</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
@@ -624,8 +624,8 @@ thm (a-b-dprime () ()
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
 </jh>
 <code>between A C D′</code>:
@@ -636,10 +636,10 @@ thm (a-b-dprime () ()
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -663,8 +663,8 @@ We'll prove <code>B′ = B″</code> (and flip the order later). We first need <
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Next is <code>between A B B′</code>, which follows from <code>between A B C′</code> and <code>between A C′ B′</code> by betweenness transitivity.
 <jh>
@@ -676,9 +676,9 @@ Next is <code>between A B B′</code>, which follows from <code>between A B C′
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
         composeConjunction
 
         A B C′ B′ BetweennessMiddleTransitivityFlipped
@@ -701,8 +701,8 @@ Next is <code>between A B B″</code>, which follows from <code>between A B D′
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
         composeConjunction
 
         A B D′ B″ BetweennessMiddleTransitivityFlipped
@@ -894,10 +894,10 @@ Next is <code>B C ≡ B′ C′</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
             (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C′ B′ C B CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -918,11 +918,11 @@ Next is <code>C D′ ≡ C′ D</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
             (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         (B ≠ C)
           ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
@@ -931,11 +931,11 @@ Next is <code>C D′ ≡ C′ D</code>.
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
             (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         D C′ C D CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -1017,10 +1017,10 @@ thm (bprime-cprime () ()
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
             (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C′ B′ C B CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -1124,9 +1124,9 @@ We've proved all the interesting parts. We just need to pick out the various ant
             ((between A D′ B″) ∧ (D′ B″ ≡ D B))) ∧
             (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
         composeConjunction
 </jh>
 <code>B = C</code>:
@@ -1182,10 +1182,10 @@ thm (e-exists-1
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A C D′ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -1197,10 +1197,10 @@ thm (e-exists-1
             ((between A D′ B″) ∧ (D′ B″ ≡ D B)))
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -1276,7 +1276,7 @@ First we need <code>between D E D′</code>, which is one of our antecedents.
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ((between C E C′) ∧ (between D E D′))
           ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 </jh>
 Secondly we need a second copy of <code>between D E D′</code>.
 <jh>
@@ -1317,11 +1317,11 @@ Next we need <code>D C ≡ D C′</code>, which is one of our antecedents (sligh
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ((between C E C′) ∧ (between D E D′))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         D C′ C D CongruenceRightCommutativity
         eliminateBiconditionalReverse
@@ -1342,11 +1342,11 @@ Finally we need <code>D′ C ≡ D′ C′</code>, which follows from the antece
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ((between C E C′) ∧ (between D E D′))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -1401,7 +1401,7 @@ First we need <code>between C E C′</code>, which is one of our antecedents.
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ((between C E C′) ∧ (between D E D′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Secondly we need a second copy of <code>between C E C′</code>.
 <jh>
@@ -1442,11 +1442,11 @@ Next we need <code>C D ≡ C D′</code>, which is one of our antecedents (sligh
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ((between C E C′) ∧ (between D E D′))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C D′ C D CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -1463,11 +1463,11 @@ Finally we need <code>C′ D ≡ C′ D′</code>, which follows from the antece
           (((A ≠ B) ∧ (between A B C)) ∧ (between A B D)))
           ((between C E C′) ∧ (between D E D′))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         ((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -1682,15 +1682,15 @@ Secondly we need <code>C D′ ≡ D′ C′</code> which we derive from <code>C 
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C = D′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -1703,10 +1703,10 @@ Secondly we need <code>C D′ ≡ D′ C′</code> which we derive from <code>C 
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C = D′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ cprime-dprime-c-d
         applySyllogism
@@ -1818,10 +1818,10 @@ thm (p-c-e () ()
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         C′ C P BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -1838,11 +1838,11 @@ thm (p-c-e () ()
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -1886,9 +1886,9 @@ Next is <code>between D′ C R</code>, from the construction of <code>R</code>.
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -1910,10 +1910,10 @@ Next is <code>D′ C ≡ P C</code>, from the construction of <code>P</code>.
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C P C D′ CongruenceCommutativity
         eliminateBiconditionalReverse
@@ -1938,9 +1938,9 @@ Next is <code>C R ≡ C E</code>, from the construction of <code>R</code>.
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -1962,10 +1962,10 @@ Next is <code>C P ≡ C D′</code>, from the construction of <code>P</code>.
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -2006,8 +2006,8 @@ We start with <code>R Q ≡ R P</code> (from the construction of <code>Q</code>)
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 </jh>
 Next is <code>R P ≡ E D′</code> (from the previous section).
 <jh>
@@ -2030,9 +2030,9 @@ Finally is <code>E D′ ≡ E D</code> (which we proved a few sections back).
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ E e-d-e-dprime
         applySyllogism
@@ -2079,11 +2079,11 @@ First is <code>between D′ E D</code>
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         D E D′ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -2102,8 +2102,8 @@ Next is <code>between P R Q</code>
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -2184,10 +2184,10 @@ thm (c-q-c-d-case-dprime-e-e-d () ()
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ E e-d-e-dprime
         applySyllogism
@@ -2318,11 +2318,11 @@ Now we need <code>C P ≡ C D</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         (D′ = E)
           (((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
@@ -2336,16 +2336,16 @@ Now we need <code>C P ≡ C D</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
@@ -2419,12 +2419,12 @@ Next we need <code>between D′ E D</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         D E D′ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -2446,9 +2446,9 @@ Next is <code>between P R Q</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -2518,11 +2518,11 @@ Here is <code>D′ C ≡ P C</code>, from the construction of <code>P</code>.
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C P C D′ CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -2548,10 +2548,10 @@ Finally we need <code>E C ≡ R C</code>, which comes from the construction of <
           ((between P R Q) ∧ (R Q ≡ R P))) ∧
           (C ≠ C′))
           ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C R C E CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -2632,15 +2632,15 @@ thm (c-p-c-q () ()
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C D′ C D CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -2662,10 +2662,10 @@ thm (c-p-c-q () ()
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C P C D′ CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -2727,9 +2727,9 @@ thm (c-e () ()
           ((between P R Q) ∧ (R Q ≡ R P)))
           (R = C)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         ((((((((((between A D C′) ∧ (D C′ ≡ C D)) ∧
           ((between A C D′) ∧ (C D′ ≡ C D))) ∧
@@ -2780,9 +2780,9 @@ thm (e-cprime () ()
           ((between P R Q) ∧ (R Q ≡ R P)))
           (R = C)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ E e-c-e-cprime
         applySyllogism
@@ -2873,9 +2873,9 @@ Next is <code>collinear R C D′</code>.
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         D′ C R BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -2899,8 +2899,8 @@ Next is <code>R P ≡ R Q</code>.
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         R Q R P CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -2950,10 +2950,10 @@ First we put on the proof stack two things: <code>B″ D′ C</code> and <code>B
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ bdoubleprime-dprime-c
         applySyllogism
@@ -2969,10 +2969,10 @@ First we put on the proof stack two things: <code>B″ D′ C</code> and <code>B
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ bdoubleprime-bprime
         applySyllogism
@@ -3077,10 +3077,10 @@ Next is <code>collinear C D′ B</code>
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ b-c-dprime
         applySyllogism
@@ -3186,10 +3186,10 @@ First we prove <code>C = B</code>, by means of <code>B = B′ ∧ between B C B�
           ((between P R Q) ∧ (R Q ≡ R P)))
           (B = B′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ bprime-c-b
         applySyllogism
@@ -3232,10 +3232,10 @@ Then we prove <code>B = C′</code>, by means of <code>B = B′ ∧ between B C�
           ((between P R Q) ∧ (R Q ≡ R P)))
           (B = B′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
         A D C′ C D′ B′ B B″ b-cprime-bprime
         applySyllogism
 
@@ -3306,10 +3306,10 @@ Next is <code>collinear B B′ C′</code>.
           ((between P R Q) ∧ (R Q ≡ R P)))
           (C ≠ C′)
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A D C′ C D′ B′ B B″ b-cprime-bprime
         applySyllogism
@@ -3393,7 +3393,7 @@ Next is <code>collinear C′ C P</code>.
         eliminateRightConjunctInConsequent
         eliminateRightConjunctInConsequent
         eliminateLeftConjunctInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         C′ C P BetweennessCollinearity
         applySyllogism
