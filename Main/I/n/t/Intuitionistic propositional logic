@@ -249,22 +249,10 @@ thm (eliminateLeftConjunct () ((H (p ∧ q))) q (
         applyModusPonens
 ))
 
-# deprecated synonym
-thm (eliminateLeftConjunction () ((H (p ∧ q))) q (
-        H
-        eliminateLeftConjunct
-))
-
 thm (eliminateRightConjunct () ((H (p ∧ q))) p (
         H
         p q ConjunctionRightElimination
         applyModusPonens
-))
-
-# deprecated synonym
-thm (eliminateRightConjunction () ((H (p ∧ q))) p (
-        H
-        eliminateRightConjunct
 ))
 </jh>
 
@@ -741,11 +729,11 @@ thm (BiconditionalReverseElimination () () ((p ↔ q) → (p → q)) (
 ))
 
 thm (eliminateBiconditionalForward () ((H (p ↔ q))) (q → p) (
-        H eliminateLeftConjunction
+        H eliminateLeftConjunct
 ))
 
 thm (eliminateBiconditionalReverse () ((H (p ↔ q))) (p → q) (
-        H eliminateRightConjunction
+        H eliminateRightConjunct
 ))
 </jh>
 
