@@ -13,7 +13,7 @@
 | exportedby = none
 }}
 
-The axioms for first-order logic that we present here are intended to represent a relatively traditional axiomization of first-order logc in terms of free variables and substitution. The specific way of representing those concepts in JHilbert is the one given in problem 17 [http://us.metamath.org/award2003.html#17 17] on the metamath site. To solve that problem, we need to start with these axioms and prove "any or all" of the metamath statements ax-4 through ax-17, which roughly are the statements at [[Interface:Axioms of first-order logic]].
+The axioms for first-order logic that we present here are intended to represent a relatively traditional axiomization of first-order logc in terms of free variables and substitution. The specific way of representing those concepts in JHilbert is the one given in problem 17<ref>[http://us.metamath.org/award2003.html#17 17], accessed 25 Mar 2012</ref> on the metamath site. To solve that problem, we need to start with these axioms and prove "any or all" of the metamath statements ax-4 through ax-17, which roughly are the statements at [[Interface:Axioms of first-order logic]].
 
 == Formulas and objects ==
 First we build on [[Interface:Classical propositional calculus]].
@@ -40,7 +40,7 @@ kind (variable)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
-A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected). In metamath, the equivalent conversion is <code>cv</code>,<ref>[http://us.metamath.org/mpeuni/cv.html], metamath's set.mm, accessed March 24, 2012</ref> although metamath is slightly different from JHilbert in terms of how it must be used.
+A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected). In metamath, the equivalent conversion is <code>cv</code>,<ref>[http://us.metamath.org/mpeuni/cv.html cv], metamath's set.mm, accessed March 24, 2012</ref> although metamath is slightly different from JHilbert in terms of how it must be used.
 <jh>
 term (object (value variable))
 </jh>
