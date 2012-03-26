@@ -366,15 +366,6 @@ stmt (convertToNegationFromImplication () ((p → (⊥))) (¬ p))
 stmt (distributeImplicationOverBiconditional () ((p → (q ↔ r))) ((p → q) ↔ (p → r)))
 </jh>
 
-=== Deprecated ===
-The rules in this section are deprecated; that is, they are likely to disappear in a future version of this interface.
-
-The following two are synonyms for <code>eliminateLeftConjunct</code> and <code>eliminateRightConjunct</code>.
-<jh>
-stmt (eliminateLeftConjunction () ((p ∧ q)) q)
-stmt (eliminateRightConjunction () ((p ∧ q)) p)
-</jh>
-
 == Footnotes ==
 
 <references />
