@@ -45,10 +45,10 @@ thm (InnerFiveSegmentXEqualsZ () () ((x = z) → (((((((between x y z) ∧ (betw
 First we pick out <code>between x y z</code>.
 <jh>
         (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Then we apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x = y</code>.
 <jh>
@@ -60,9 +60,9 @@ Then we apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''m
 Now we pick out <code>x z ≡ x′ z′</code> and apply <code>CongruenceIdentityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = z′</code>.
 <jh>
         (((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) (z u ≡ z′ u′) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         (x = z) conjoinLL
         x z x′ z′ CongruenceIdentityFromEquality
@@ -72,11 +72,11 @@ Now we pick out <code>x z ≡ x′ z′</code> and apply <code>CongruenceIdentit
 Now we pick out <code>between x′ y′ z′</code> and apply <code>IndivisibilityFromEquality</code> to get <code>x = z ∧ ''many conjuncts'' → x′ = y′</code>.
 <jh>
         (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
@@ -88,8 +88,8 @@ Now we pick out <code>between x′ y′ z′</code> and apply <code>Indivisibili
 Next we pick out <code>x u ≡ x′ u′</code> and combine with the previous results to get <code>x = z ∧ ''many conjuncts'' → x = y ∧ x′ = y′ ∧ x u ≡ x′ u′</code>
 <jh>
         (x = z) ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -128,41 +128,41 @@ thm (InnerFiveSegmentWU () () ((
 The first thing we need to apply outer five segment to <code>x z w u</code> is <code>x ≠ z</code>
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 The second thing we need is <code>between x z w</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
 The third thing we need is <code>between x′ z′ w′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
 The fourth thing we need is <code>x z ≡ x′ z′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
 The fifth thing we need is <code>z w ≡ z′ w′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         z′ w′ z w CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -173,19 +173,19 @@ The fifth thing we need is <code>z w ≡ z′ w′</code>.
 The sixth thing we need is <code>x u ≡ x′ u′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
 The last thing we need is <code>z u ≡ z′ u′</code>.
 <jh>
         ((between x z w) ∧ (z ≠ w)) (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′)))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -210,8 +210,8 @@ thm (InnerFiveSegmentYU () () ((
 The first thing we need to apply outer five segment to <code>w z y u</code> is <code>w ≠ z</code>.
 <jh>
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         z w EqualitySymmetry
         addNegation
@@ -221,22 +221,22 @@ The first thing we need to apply outer five segment to <code>w z y u</code> is <
 The second thing we need is <code>between w z y</code>. This follows from <code>between w z x</code> and <code>between z y x</code>.
 <jh>
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         x z w BetweennessSymmetry
         eliminateBiconditionalReverse
         applySyllogism
 
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         x y z BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -252,23 +252,23 @@ The second thing we need is <code>between w z y</code>. This follows from <code>
 The third thing we need is <code>between w′ z′ y′</code>. This follows from <code>between w′ z′ x′</code> and <code>between z′ y′ x′</code>.
 <jh>
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         x′ z′ w′ BetweennessSymmetry
         eliminateBiconditionalReverse
         applySyllogism
 
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         x′ y′ z′ BetweennessSymmetry
         eliminateBiconditionalReverse
@@ -284,9 +284,9 @@ The third thing we need is <code>between w′ z′ y′</code>. This follows fro
 The fourth thing we need is <code>w z ≡ w′ z′</code>.
 <jh>
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         z′ w′ z w CongruenceSymmetry
         eliminateBiconditionalReverse
@@ -301,12 +301,12 @@ The fourth thing we need is <code>w z ≡ w′ z′</code>.
 The fifth thing we need is <code>z y ≡ z′ y′</code>.
 <jh>
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         y z y′ z′ CongruenceCommutativity
         eliminateBiconditionalReverse
@@ -322,10 +322,10 @@ The sixth thing we need is <code>w u ≡ w′ u′</code>.
 The last thing we need is <code>z u ≡ z′ u′</code>.
 <jh>
         (((between x z w) ∧ (z ≠ w)) ∧ (((between x′ z′ w′) ∧ (z′ w′ ≡ z w)) ∧ ((x ≠ z) ∧ ((((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ∧ (x u ≡ x′ u′)) ∧ (z u ≡ z′ u′))))) ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -388,8 +388,8 @@ The next is <code>x x ≡ x′ x′</code>.
 The last conjunct is <code>z x ≡ z′ x′</code>
 <jh>
         ((((between x y z) ∧ (between x′ y′ z′)) ∧ (x z ≡ x′ z′)) ∧ (y z ≡ y′ z′)) ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         commuteCongruenceInConsequent
 
@@ -414,7 +414,7 @@ The corresponding sides of congruent (possibly degenerate) triangles are congrue
 <jh>
 thm (Congruence12 () () ((A B C ≅ A′ B′ C′) → (A B ≡ A′ B′)) (
         ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 ))
 
 thm (Congruence23 () () ((A B C ≅ A′ B′ C′) → (B C ≡ B′ C′)) (
@@ -423,7 +423,7 @@ thm (Congruence23 () () ((A B C ≅ A′ B′ C′) → (B C ≡ B′ C′)) (
 
 thm (Congruence13 () () ((A B C ≅ A′ B′ C′) → (A C ≡ A′ C′)) (
         ((A B ≡ A′ B′) ∧ (A C ≡ A′ C′)) (B C ≡ B′ C′) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 ))
 </jh>
 
@@ -594,10 +594,10 @@ First we pick out <code>between D′ A′ B′</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Second we pick out <code>between D′ B′ C″</code>.
 <jh>
@@ -606,9 +606,9 @@ Second we pick out <code>between D′ B′ C″</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -635,8 +635,8 @@ First we pick out <code>between A B C</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Second is <code>between A′ B′ C″</code>.
 <jh>
@@ -650,10 +650,10 @@ Third is <code>A B ≡ A′ B′</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         swapCongruenceInConsequent
 
@@ -666,9 +666,9 @@ Fourth is <code>B C ≡ B′ C″</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         swapCongruenceInConsequent
 
@@ -697,10 +697,10 @@ First we need <code>between D′ A′ B′</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Secondly we need <code>between D′ B′ C″</code>.
 <jh>
@@ -709,9 +709,9 @@ Secondly we need <code>between D′ B′ C″</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -739,10 +739,10 @@ The first antecedent for segment construction uniqueness is <code>D′ ≠ A′<
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A′ D′ EqualitySymmetry
         addNegation
@@ -756,10 +756,10 @@ The second is <code>between D′ A′ C′</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         swapBetweennessInConsequent
 
@@ -772,8 +772,8 @@ The third is <code>A′ C′ ≡ A C</code>.
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         swapCongruenceInConsequent
 
@@ -838,10 +838,10 @@ thm (InnerDegenerateTriangle-abcabc () () (
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         swapCongruenceInConsequent
 </jh>
@@ -852,8 +852,8 @@ thm (InnerDegenerateTriangle-abcabc () () (
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -866,9 +866,9 @@ thm (InnerDegenerateTriangle-abcabc () () (
           ((between D′ B′ C″) ∧ (B′ C″ ≡ B C))) ∧
           ((between A B C) ∧ (A C ≡ A′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
@@ -997,8 +997,8 @@ We start with <code>A′ B″ ≡ A B</code>.
         (((between A′ B″ C′) ∧ (A B C ≅ A′ B″ C′)) ∧
           ((between A B C) ∧ (A B C ≅ A′ B′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B″ C′ Congruence12
         applySyllogism
@@ -1010,8 +1010,8 @@ In a similar way we get <code>A B ≡ A′ B′</code>.
         (((between A′ B″ C′) ∧ (A B C ≅ A′ B″ C′)) ∧
           ((between A B C) ∧ (A B C ≅ A′ B′ C′)))
           ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B′ C′ Congruence12
         applySyllogism
@@ -1037,8 +1037,8 @@ We start with <code>B″ C′ ≡ B C</code>.
         (((between A′ B″ C′) ∧ (A B C ≅ A′ B″ C′)) ∧
           ((between A B C) ∧ (A B C ≅ A′ B′ C′)))
           ImplicationReflexivity
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B″ C′ Congruence23
         applySyllogism
@@ -1050,8 +1050,8 @@ In a similar way we get <code>B C ≡ B′ C′</code>.
         (((between A′ B″ C′) ∧ (A B C ≅ A′ B″ C′)) ∧
           ((between A B C) ∧ (A B C ≅ A′ B′ C′)))
           ImplicationReflexivity
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B′ C′ Congruence23
         applySyllogism
@@ -1080,7 +1080,7 @@ The proof is by inner five segment on the line segments <code>A′ B″ C′</co
         ((between A′ B″ C′) ∧ (A B C ≅ A′ B″ C′))
           ((between A B C) ∧ (A B C ≅ A′ B′ C′))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         (between A′ B″ C′) ConjunctionIdempotence
         eliminateBiconditionalReverse
@@ -1139,7 +1139,7 @@ Here's <code>between A′ B″ C′</code>:
         ((between A′ B″ C′) ∧ (A B C ≅ A′ B″ C′))
           ((between A B C) ∧ (A B C ≅ A′ B′ C′))
           ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
