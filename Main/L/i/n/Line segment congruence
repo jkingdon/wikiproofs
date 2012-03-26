@@ -305,8 +305,8 @@ thm (SegmentConstructionUniquenessAxAy () () ((((((Q ≠ A) ∧ (between Q A x))
 First we extract the two pieces we care about, first showing that big long antecedent implies <code>A x ≡ B C</code>,
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 </jh>
 And then that it implies <code>A y ≡ B C</code>.
 <jh>
@@ -331,14 +331,14 @@ thm (SegmentConstructionUniquenessQxQy () () ((((((Q ≠ A) ∧ (between Q A x))
 To apply <code>OuterThreeSegment</code> we need four things. The first is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 </jh>
 The second is <code>between Q A y</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -369,15 +369,15 @@ thm (SegmentConstructionUniquenessxxxy () () ((((((Q ≠ A) ∧ (between Q A x))
 We'll be applying <code>OuterFiveSegment</code> which has seven antecedents. The first two we can do together, <code>Q ≠ A ∧ between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 The next is <code>between Q A x</code>.
 <jh>
         ((((Q ≠ A) ∧ (between Q A x)) ∧ (A x ≡ B C)) ∧ (between Q A y)) (A y ≡ B C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
