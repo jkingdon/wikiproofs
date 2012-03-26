@@ -249,8 +249,8 @@ The next few lemmas form the bulk of the <code>between A B C</code> case. Extend
 thm (CollinearityConstructDegenerateTriangle-abc-bc () ()
   (((between A B C) ∧ ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C)))) → (B C ≡ B′ C′)) (
         (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         swapCongruenceInConsequent
 ))
@@ -265,15 +265,15 @@ The proof is an application of <code>OuterThreeSegment</code>. First we need <co
 Next, <code>between A′ B′ C′</code>.
 <jh>
         (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
 We need two congruences. The first is <code>A B ≡ A′ B′</code>.
 <jh>
         (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -292,7 +292,7 @@ We can now apply outer three segment.
 thm (CollinearityConstructDegenerateTriangle-abc-core () ()
   (((between A B C) ∧ ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C)))) → (A B C ≅ A′ B′ C′)) (
         (between A B C) ((A B ≡ A′ B′) ∧ ((between A′ B′ C′) ∧ (B′ C′ ≡ B C))) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         A B C A′ B′ C′ CollinearityConstructDegenerateTriangle-abc-ac
         composeConjunction
@@ -320,8 +320,8 @@ The second case, <code>between C A B</code>, is similar. Extend <code>B′ A′<
 thm (CollinearityConstructDegenerateTriangle-cab-ac () ()
   (((between C A B) ∧ ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C)))) → (A C ≡ A′ C′)) (
         (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         swapCongruenceInConsequent
 ))
@@ -336,8 +336,8 @@ The proof is an application of <code>OuterThreeSegment</code>. First we need <co
 Next, <code>between C′ A′ B′</code>.
 <jh>
         (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         swapBetweennessInConsequent
 
@@ -354,7 +354,7 @@ We need two congruences. The first is <code>C A ≡ C′ A′</code>.
 The other is <code>A B ≡ A′ B′</code>.
 <jh>
         (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -369,7 +369,7 @@ We can now apply outer three segment.
 thm (CollinearityConstructDegenerateTriangle-cab-core () ()
   (((between C A B) ∧ ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C)))) → (A B C ≅ A′ B′ C′)) (
         (between C A B) ((A B ≡ A′ B′) ∧ ((between B′ A′ C′) ∧ (A′ C′ ≡ A C))) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         C A B A′ B′ C′ CollinearityConstructDegenerateTriangle-cab-ac
         composeConjunction
@@ -439,16 +439,16 @@ We prove the result separately for each of the three betweenness relationships w
 var (formula p q r s t)
 thm (FiveSegment-anotb () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A ≠ B)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 ))
 
 thm (FiveSegment-ab () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A B ≡ A′ B′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B′ C′
         Congruence12
@@ -457,9 +457,9 @@ thm (FiveSegment-ab () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) �
 
 thm (FiveSegment-bc () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (B C ≡ B′ C′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B′ C′
         Congruence23
@@ -468,22 +468,22 @@ thm (FiveSegment-bc () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) �
 
 thm (FiveSegment-ad () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (A D ≡ A′ D′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 ))
 
 thm (FiveSegment-bd () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (B D ≡ B′ D′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 ))
 
 thm (FiveSegment-abcabc () () (((between A B C) ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (between A′ B′ C′)) (
         (between A B C) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionRightElimination
 
         (between A B C) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
         composeConjunction
 
         A B C A′ B′ C′ BetweennessDegenerateTriangle
@@ -521,9 +521,9 @@ thm (FiveSegment-bcabca () () (((between B C A) ∧ ((((A ≠ B) ∧ (A B C ≅ 
         (between B C A) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionRightElimination
 
         (between B C A) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B′ C′ CongruenceRotation
         eliminateBiconditionalReverse
@@ -537,9 +537,9 @@ thm (FiveSegment-bcabca () () (((between B C A) ∧ ((((A ≠ B) ∧ (A B C ≅ 
 
 thm (FiveSegment-ca () () ((p ∧ ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′))) → (C A ≡ C′ A′)) (
         p ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         A B C A′ B′ C′
         Congruence13
@@ -586,9 +586,9 @@ thm (FiveSegment-bacbac () () (((between B A C) ∧ ((((A ≠ B) ∧ (A B C ≅ 
         applySyllogism
 
         (between B A C) ((((A ≠ B) ∧ (A B C ≅ A′ B′ C′)) ∧ (A D ≡ A′ D′)) ∧ (B D ≡ B′ D′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         C A B C′ A′ B′ CongruenceRotation
         eliminateBiconditionalForward
@@ -702,14 +702,14 @@ thm (EquidistantLine () ()
 <code>A ≠ B</code>:
 <jh>
         (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 <code>collinear A B C</code>:
 <jh>
         (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -722,7 +722,7 @@ thm (EquidistantLine () ()
 <code>A P ≡ A Q</code>:
 <jh>
         (((A ≠ B) ∧ (collinear A B C)) ∧ (A P ≡ A Q)) (B P ≡ B Q) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -762,8 +762,8 @@ thm (BetweennessTwoDistanceUniqueness-ac () () ((A = B) → ((((between A C B) �
         (A = B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionRightElimination
 
         (A = B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -778,8 +778,8 @@ thm (BetweennessTwoDistanceUniqueness-acprime () () ((A = B) → ((((between A C
         import
         
         (A = B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
         composeConjunction
 
         A C A C′ CongruenceIdentityFromEquality
@@ -820,8 +820,8 @@ First, <code>A ≠ B</code>.
 Next, <code>collinear A B C</code>
 <jh>
         (A ≠ B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         A C B BetweennessCollinearity
         applySyllogism
@@ -835,15 +835,15 @@ Next, <code>collinear A B C</code>
 Next, <code>A C ≡ A C′</code>
 <jh>
         (A ≠ B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
 Lastly, <code>B C ≡ B C′</code>
 <jh>
         (A ≠ B) (((between A C B) ∧ (A C ≡ A C′)) ∧ (B C ≡ B C′)) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
