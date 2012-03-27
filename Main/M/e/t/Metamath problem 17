@@ -1,0 +1,38 @@
+{{interfaces
+| imports = [[Interface:Axioms of first-order logic as set forth in metamath problem 17]]
+| exports = Eventually perhaps [[Interface:Axioms of first-order logic]]. Also maybe [[Interface:First-order logic]].
+}}
+
+We import some interfaces and define some variables:
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (AXIOMS Interface:Axioms_of_first-order_logic_as_set_forth_in_metamath_problem_17 (PROPOSITIONAL) ())
+
+var (formula φ ψ χ θ φx φy φs ψy antecedent)
+var (object s t u s0 s1 t0 t1)
+var (variable x y z x0 x1 y0 y1)
+</jh>
+
+The purpose of this page is to figure out whether the axioms at [[Interface:Axioms of first-order logic as set forth in metamath problem 17]] are a sufficient set of axioms for first-order logic, as set forth in [[Interface:Axioms of first-order logic]]. We try to mostly follow a similar course of action as in [[First-order logic in terms of substitution built on equality]].
+
+== A few rules based on axioms ==
+Here is a rule form of <code>stdpc4</code>.
+<jh>
+thm (specializeToVariable () ((H (∀ x φ))) (subst (value y) x φ) (
+        H
+        x φ y stdpc4
+        applyModusPonens
+))
+</jh>
+
+== Metamath axiomization of first-order logic ==
+Once we are done, here we would export the metamath axioms, or rather the versions stated at [[Interface:Axioms of first-order logic]].
+
+<jh>
+#export (METAMATH Interface:Axioms_of_first-order_logic (PROPOSITIONAL) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Classical first-order logic]]
