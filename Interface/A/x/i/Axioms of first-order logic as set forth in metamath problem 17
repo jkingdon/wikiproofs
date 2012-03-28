@@ -94,7 +94,7 @@ The third axiom is the ability to generalize a theorem.<ref>[http://us.metamath.
 stmt (ax-gen () (φ) (∀ x φ))
 </jh>
 
-The last two arguments concern equality. The first equality axiom is reflexivity.<ref>[http://us.metamath.org/mpeuni/stdpc6.html stdpc6], metamath's set.mm, accessed March 25, 2012</ref>
+The last two axioms concern equality. The first equality axiom is reflexivity.<ref>[http://us.metamath.org/mpeuni/stdpc6.html stdpc6], metamath's set.mm, accessed March 25, 2012</ref>
 <jh>
 stmt (stdpc6 () () (∀ x ((value x) = (value x))))
 </jh>
