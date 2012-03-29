@@ -54,12 +54,29 @@ TRY#2
 
 TRY#3
 * turn dfsb7 into some version of SubstItself
-φ |- ∀ x ¬ ¬ φ
-φ |- φ → ∀ x ¬ ¬ φ
-φ |- ¬ ∀ x ¬ ¬ φ → ¬ φ
+φ ⊢ ∀ x ¬ ¬ φ
+φ ⊢ φ → ∀ x ¬ ¬ φ
+φ ⊢ ¬ ∀ x ¬ ¬ φ → ¬ φ
 
 TRY#3a
 * Start out with some ∃ theorems? Look at [[First-order logic]] for ideas.
+
+doubling?
+stmt (stdpc5 () ((φ → (∀ x φ))) ((∀ x (φ → ψ)) → (φ → (∀ x ψ))))
+φ → (∀ x φ) ⊢ ∀ x (φ → ∀ x φ) → (φ → ∀ x ∀ x φ)
+∀ x φ → ∀ x ∀ x φ ⊢ ∀ x (∀ x φ → ψ) → (∀ x φ → ∀ x ψ)
+
+ThereExistsIntroductionFromVariable?
+  depends on SubstNegation
+
+SubstNegation?
+  [ y / x ] ¬ φ ↔ ∃ z (z = y ∧ ∃ x (x = z ∧ ¬ φ))
+  ¬ [ y / x ] φ ↔ ¬ ∃ z (z = y ∧ ∃ x (x = z ∧ φ))
+    ↔ ∀ z ¬ (z = y ∧ ∃ x (x = z ∧ φ))
+stmt (dfsb7 () () ((subst (value y) x φ) ↔
+  (∃ z (((value z) = (value y)) ∧ (∃ x (((value x) = (value z)) ∧ φ))))))
+
+ImplicationForAll is hard to do without....
 
 == Substitution of a variable for itself ==
 We start with being able to substitute a variable for itself. The ability to remove such a substitution follows directly from our axioms (?).
