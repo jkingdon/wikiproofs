@@ -442,6 +442,10 @@ thm (biconditionalNotFree ()
 ))
 </jh>
 
+== TODO ==
+{{cleanup|handling these theorems somehow}}
+* ThereExistsAntecedentIntroductionNotFree: similar to addThereExistsToAntecedent in spirit but not easily derivable from it. Perhaps more closely related to ForAllImplication.
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
