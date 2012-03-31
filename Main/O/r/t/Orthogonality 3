@@ -94,7 +94,7 @@ thm (PerpendicularAtUniqueIntersection-Y-X-Y ( (p q A) (p q B) (p q C) (p q D) (
 Towards the end of the proof, we'll need <code>A B C D ⟂at X ∧ collinear Y A B ∧ collinear Y C D → collinear Y A B ∧ collinear Y C D</code>. So we stick this on the proof stack.
 <jh>
         ((A B C D ⟂at X) ∧ (collinear Y A B)) (collinear Y C D) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         ((A B C D ⟂at X) ∧ (collinear Y A B)) (collinear Y C D) ConjunctionLeftElimination
 
@@ -103,7 +103,7 @@ Towards the end of the proof, we'll need <code>A B C D ⟂at X ∧ collinear Y A
 Leaving that aside, we now expand <code>⟂at</code> and pick out the part we care about.
 <jh>
         ((A B C D ⟂at X) ∧ (collinear Y A B)) (collinear Y C D) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         A B C D X p q PerpendicularAt
         eliminateBiconditionalReverse

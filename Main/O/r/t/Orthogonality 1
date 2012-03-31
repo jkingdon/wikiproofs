@@ -215,7 +215,7 @@ We'll be applying <code>EquidistantLine</code> which in this case is <code>B ≠
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
         eliminateRightConjunctInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
         commuteCongruenceLeftInConsequent
         composeConjunction
 </jh>
@@ -225,7 +225,7 @@ We'll be applying <code>EquidistantLine</code> which in this case is <code>B ≠
           (collinear B A A′)
           ConjunctionRightElimination
         eliminateRightConjunctInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
         composeConjunction
 </jh>
 Applying <code>EquidistantLine</code> gives <code>A′ C ≡ A′ c′</code>, which we combine with <code>B is-midpoint-of C c′</code> to give <code>is-right-angle A′ B C</code>

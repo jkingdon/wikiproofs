@@ -40,7 +40,11 @@ kind (variable)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
+<<<<<<< HEAD
+A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected). In metamath, the equivalent conversion is <code>cv</code>,<ref>[http://us.metamath.org/mpeuni/cv.html], metamath's set.mm, accessed March 24, 2012</ref> although metamath is slightly different from JHilbert in terms of how it must be used.
+=======
 A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected). In metamath, the equivalent conversion is <code>cv</code>,<ref>[http://us.metamath.org/mpeuni/cv.html cv], metamath's set.mm, accessed March 24, 2012</ref> although metamath is slightly different from JHilbert in terms of how it must be used.
+>>>>>>> levitation
 <jh>
 term (object (value variable))
 </jh>
@@ -94,7 +98,11 @@ The third axiom is the ability to generalize a theorem.<ref>[http://us.metamath.
 stmt (ax-gen () (φ) (∀ x φ))
 </jh>
 
+<<<<<<< HEAD
 The last two axioms concern equality. The first equality axiom is reflexivity.<ref>[http://us.metamath.org/mpeuni/stdpc6.html stdpc6], metamath's set.mm, accessed March 25, 2012</ref>
+=======
+The last two arguments concern equality. The first equality axiom is reflexivity.<ref>[http://us.metamath.org/mpeuni/stdpc6.html stdpc6], metamath's set.mm, accessed March 25, 2012</ref>
+>>>>>>> levitation
 <jh>
 stmt (stdpc6 () () (∀ x ((value x) = (value x))))
 </jh>
@@ -104,6 +112,7 @@ The other equality axiom is a version of being able to substitute equals for equ
 stmt (stdpc7 () () (((value x) = (value y)) → ((subst (value x) y φ) → φ)))
 </jh>
 
+<<<<<<< HEAD
 == Distinct variables ==
 None of the axioms presented so far make any reference to distinct variable constraints. Therefore, no theorems which rely on distinct variable contraints could be proved. This isn't really a problem from the point of view of proving metamath's <code>ax-4</code> through <code>ax-16</code>, which is the main point of this exercise. The only one of the standard metamath axioms for first-order logic which involves distinct variables is <code>ax-17</code>, which corresponds pretty closely to <code>DistinctNotFree</code> at [[Interface:Axioms of first-order logic in terms of substitution built on equality]] (given our use of <code>φ → ∀ x φ</code> to represent <code>x</code> being effectively not free in <code>φ</code>).
 
@@ -111,3 +120,9 @@ None of the axioms presented so far make any reference to distinct variable cons
 <references/>
 
 [[Category:Classical first-order logic|{{PAGENAME}}]]
+=======
+== References ==
+<references/>
+
+[[Category:Classical first-order logic|{{PAGENAME}}]]
+>>>>>>> levitation

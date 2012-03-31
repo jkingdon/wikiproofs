@@ -259,7 +259,7 @@ First, <code>C a ≡ C D ∧ between B C a</code>.
 Next, <code>between B C D</code>
 <jh>
         ((between A B C) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
@@ -289,24 +289,24 @@ We'll be applying <code>SegmentConstructionUniqueness</code>. It has five antece
 The second is <code>between B C a</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
 The third is <code>C a ≡ C D</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateLeftConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
 The fourth is <code>between B C D</code>
 <jh>
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -329,9 +329,9 @@ thm (BetweennessOuterTransitivityFlipped-aca-ad () () ((((((between A C (value a
         A C a D B BetweennessOuterTransitivityFlipped-ad
 
         ((((between A C (value a)) ∧ (C (value a) ≡ C D)) ∧ (between B C (value a))) ∧ (between B C D)) (B ≠ C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 ))
@@ -396,7 +396,7 @@ To apply <code>BetweennessOuterTransitivityFlipped</code> we need three things. 
 The second is <code>between B C D</code>
 <jh>
         (B ≠ C) ((between A B D) ∧ (between B C D)) ConjunctionLeftElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 </jh>
@@ -506,7 +506,7 @@ The <code>a = b</code> case involves first picking out <code>¬ between b c a</c
           ∧ (¬ (between (value b) (value c) (value a))))
         (¬ (between (value c) (value a) (value b)))
         ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         ((value a) = (value b)) introduceAntecedent
 </jh>
@@ -753,7 +753,7 @@ To construct <code>q′</code>, we need <code>between A P A′</code> and <code>
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionLeftElimination
 
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
         swapBetweennessInConsequent
 
         composeConjunction
@@ -764,7 +764,7 @@ To construct <code>q′</code>, we need <code>between A P A′</code> and <code>
 That gives us <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A)</code>. We'll need <code>between C B A</code> in the next step, so we put <code>between C B A</code> inside the quantifier to get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code>.
 <jh>
         ((between A B C) ∧ (between A′ B′ C)) (between A P A′) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
         swapBetweennessInConsequent
 
         composeConjunction
@@ -778,7 +778,7 @@ To construct <code>q</code>, we need <code>between C B A</code> and <code>betwee
         ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionLeftElimination
 
         ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
@@ -788,7 +788,7 @@ To construct <code>q</code>, we need <code>between C B A</code> and <code>betwee
 We're getting close. Right now there are two things on the proof stack, <code><code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ (between P q′ C ∧ between B′ q′ A ∧ between C B A)</code> and <code>between P q′ C ∧ between B′ q′ A ∧ between C B A → ∃ q between B q B′ ∧ between q′ q C</code>. Half of what we need is <code>between B q B′</code>. We'll need to fish out <code>between q′ q C</code> and <code>between P q′ C</code> to get <code>between P q C</code>, so start by putting <code>between P q′ C</code> inside the <code>∃ q</code>
 <jh>
         ((between P (value q′) C) ∧ (between B′ (value q′) A)) (between C B A) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 
         composeConjunction
 
@@ -806,7 +806,7 @@ Now we can extract <code>between P q′ C</code> and <code>between q′ q C</cod
         ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionLeftElimination
 
         ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
-        eliminateLeftConjunctionInConsequent
+        eliminateLeftConjunctInConsequent
 
         composeConjunction
 
@@ -816,7 +816,7 @@ Now we can extract <code>between P q′ C</code> and <code>between q′ q C</cod
 The other half of what we need is <code>between B q B′</code>
 <jh>
         ((between B (value q) B′) ∧ (between (value q′) (value q) C)) (between P (value q′) C) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
 </jh>
 Combining we get <code>between A B C ∧ between A′ B′ C ∧ between A P A′ → ∃ q′ ∃ q (between P q C ∧ between B q B′)</code>.
 <jh>

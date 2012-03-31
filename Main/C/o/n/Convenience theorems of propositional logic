@@ -659,25 +659,6 @@ thm (eliminateTranspositionInConsequent ()
 ))
 </jh>
 
-=== Deprecated ===
-{{deprecated|renaming eliminateLeftConjunctionInConsequent to eliminateLeftConjunctInConsequent and eliminateRightConjunctionInConsequent to eliminateRightConjunctInConsequent}}
-
-<jh>
-thm (eliminateLeftConjunctionInConsequent ()
-  ((H (antecedent → (p ∧ q))))
-  (antecedent → q) (
-        H
-        eliminateLeftConjunctInConsequent
-))
-
-thm (eliminateRightConjunctionInConsequent ()
-  ((H (antecedent → (p ∧ q))))
-  (antecedent → p) (
-        H
-        eliminateRightConjunctInConsequent
-))
-</jh>
-
 == Theorems partly in the consequent ==
 <jh>
 thm (introduceLeftConjunctToConsequent () ((HIMP (antecedent → p)) (HNEW q)) (antecedent → (q ∧ p)) (
