@@ -26,7 +26,7 @@ var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
-We largely follow the development from [[First-order logic in terms of substitution built on equality]] although some of the details are different and of course we don't prove quite all the theorems.
+We largely follow the development from [[First-order logic in terms of substitution built on equality]] although some of the details are different and of course we don't prove quite all the theorems, as not all of them hold in intuitionistic logic.
 
 == Substitution ==
 As with [[First-order logic in terms of substitution built on equality]] (slightly more so, even), substitution is central to our proofs, so we start with some substitution theorems.
