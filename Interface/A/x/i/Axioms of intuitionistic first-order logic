@@ -85,9 +85,7 @@ stmt (addForAllToConsequentNotFree () ((x is-not-free-in φ) (φ → ψ)) (φ �
 
 The other is that existential quantification can be added to the antecedent of an implication, where the variable of quantification is not free in the consequent.<ref>Rule ∃-Elimination in Moschovakis</ref>
 <jh>
-stmt (addThereExistsToAntecedent ((x ψ))
-  ((φ → ψ))
-  ((∃ x φ) → ψ))
+stmt (addThereExistsToAntecedentNotFree () ((x is-not-free-in ψ) (φ → ψ)) ((∃ x φ) → ψ))
 </jh>
 
 == Equality ==
