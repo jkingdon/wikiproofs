@@ -442,6 +442,18 @@ thm (biconditionalNotFree ()
 ))
 </jh>
 
+== Adding there exists to the antecedent ==
+We have as an axiom the rule that one can add there exists to the antecedent if the variable of quantification is not free in the consequent. Here's the special case where the variable does not occur in the consequent.
+<jh>
+thm (addThereExistsToAntecedent ((x ψ))
+  ((H (φ → ψ)))
+  ((∃ x φ) → ψ) (
+        x ψ DistinctNotFree
+        H
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
 == TODO ==
 {{cleanup|handling these theorems somehow}}
 * ThereExistsAntecedentIntroductionNotFree: similar to addThereExistsToAntecedent in spirit but not easily derivable from it. Perhaps more closely related to ForAllImplication.
