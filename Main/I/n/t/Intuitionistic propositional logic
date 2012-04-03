@@ -2104,9 +2104,9 @@ thm (convertToNegationFromImplication () ((H (p → (⊥)))) (¬ p) (
 </jh>
 
 == Export ==
-Once this file is complete, we'll be ready to export to [[Interface:Intuitionistic propositional logic]].
+We have proved everything in [[Interface:Basic intuitionistic propositional logic]]. There are additional theorems in [[Interface:Intuitionistic propositional logic]], but those are proved in [[Convenience theorems of intuitionistic propositional logic]].
 <jh>
-export (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
+export (INTUITIONISTIC Interface:Basic_intuitionistic_propositional_logic () ())
 </jh>
 
 == References ==
