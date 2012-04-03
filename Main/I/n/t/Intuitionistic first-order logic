@@ -167,6 +167,30 @@ thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
 ))
 </jh>
 
+=== For-all across an implication ===
+We've just proved rules regarding distributing <code>∀</code> across an implication or biconditional. There are corresponding non-rule theorems. For implication, this is <code>∀ x (φ → ψ) → (∀ x φ → ∀ x ψ)</code>.
+<jh>
+thm (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))) (
+</jh>
+The proof is based on <code>∀ x φ ∧ ∀ x (φ → ψ) → ψ</code> (which follows from specialization and propositional logic). From there we'll be adding for-all to the consequent, so we start with <code>x is-not-free-in (∀ x φ ∧ ∀ x (φ → ψ))</code>.
+<jh>
+        x φ BoundForAllNotFree
+        x (φ → ψ) BoundForAllNotFree
+        conjunctionNotFree
+
+        x φ Specialization
+        x (φ → ψ) Specialization
+        conjoin
+
+        φ ψ ModusPonens
+        applySyllogism
+
+        addForAllToConsequentNotFree
+        export
+        applyComm
+))
+</jh>
+
 == More substitution ==
 Now that we have proved builders, we can return to some more substitution results.
 
