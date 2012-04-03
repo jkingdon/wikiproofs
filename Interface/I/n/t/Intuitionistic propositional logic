@@ -8,8 +8,8 @@
 }}
 {{modules
 | parameters = ''None''
-| importedby = [[From intuitionistic to classical propositional logic]]
-| exportedby = [[Intuitionistic propositional logic]]
+| importedby = [[Intuitionistic first-order logic]]
+| exportedby = [[Convenience theorems of intuitionistic propositional logic]]
 }}
 
 == Well-formed formulas ==
