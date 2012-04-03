@@ -484,10 +484,22 @@ thm (addThereExistsToAntecedent ((x ψ))
 === Non-rule form ===
 Here is a non-rule form of adding there-exists to the antecedent.
 <jh>
-#thm (ThereExistsAntecedentIntroductionNotFree ()
-#  ((HFREE (x is-not-free-in ψ)))
-#  ((∀ x (φ → ψ)) → ((∃ x φ) → ψ)) (
-#))
+thm (ThereExistsAntecedentIntroductionNotFree ()
+  ((HFREE (x is-not-free-in ψ)))
+  ((∀ x (φ → ψ)) → ((∃ x φ) → ψ)) (
+</jh>
+The proof first constructs <code>φ → (∀ x (φ → ψ) → ψ)</code> (from specialization and propositional logic) and then adds there-exists to the antecedent. We start with <code>x is-not-free-in (∀ x (φ → ψ) → ψ)</code>.
+<jh>
+        x (φ → ψ) BoundForAllNotFree
+        HFREE
+        implicationNotFree
+
+        x (φ → ψ) Specialization
+        applyComm
+
+        addThereExistsToAntecedentNotFree
+        applyComm
+))
 </jh>
 
 === There exists across a conjunction ===
