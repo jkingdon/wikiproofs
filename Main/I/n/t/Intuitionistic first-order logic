@@ -467,7 +467,10 @@ thm (biconditionalNotFree ()
 </jh>
 
 == Adding there exists to the antecedent ==
-We have as an axiom the rule that one can add there exists to the antecedent if the variable of quantification is not free in the consequent. Here's the special case where the variable does not occur in the consequent.
+We have as an axiom the rule that one can add there exists to the antecedent if the variable of quantification is not free in the consequent. In this section we prove some variations of this rule and consequences of it.
+
+=== Distinct variable version ===
+Here's the special case where the variable does not occur in the consequent.
 <jh>
 thm (addThereExistsToAntecedent ((x ψ))
   ((H (φ → ψ)))
@@ -476,6 +479,15 @@ thm (addThereExistsToAntecedent ((x ψ))
         H
         addThereExistsToAntecedentNotFree
 ))
+</jh>
+
+=== Non-rule form ===
+Here is a non-rule form of adding there-exists to the antecedent.
+<jh>
+#thm (ThereExistsAntecedentIntroductionNotFree ()
+#  ((HFREE (x is-not-free-in ψ)))
+#  ((∀ x (φ → ψ)) → ((∃ x φ) → ψ)) (
+#))
 </jh>
 
 === There exists across a conjunction ===
@@ -501,10 +513,6 @@ thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ 
         addThereExistsToAntecedentNotFree
 ))
 </jh>
-
-== TODO ==
-{{cleanup|handling these theorems somehow}}
-* ThereExistsAntecedentIntroductionNotFree: similar to addThereExistsToAntecedent in spirit but not easily derivable from it. Perhaps more closely related to ForAllImplication.
 
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
