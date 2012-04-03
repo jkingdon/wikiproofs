@@ -9,7 +9,7 @@
 
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]]
-| importedby = [[First-order logic in terms of substitution built on equality]]
+| importedby = [[Metamath problem 17]]
 | exportedby = none
 }}
 
