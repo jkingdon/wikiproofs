@@ -4,11 +4,11 @@
  | left     = 
  | right    = 
  | shortcut = 
- | notes    = Adding the [[Interface:Law of the excluded middle]] to [[Interface:Intuitionistic propositional logic]] gives classical propositional logic.
+ | notes    = Adding the [[Interface:Law of the excluded middle]] to [[Interface:Basic intuitionistic propositional logic]] gives classical propositional logic.
 }}
 {{interfaces
 | imports = 
-[[Interface:Intuitionistic propositional logic]]<br />
+[[Interface:Basic intuitionistic propositional logic]]<br />
 [[Interface:Law of the excluded middle]]
 | exports = [[Interface:Principia Mathematica propositional logic theorems]]
 }}
@@ -16,7 +16,7 @@
 Instead of proving the axioms of classical propositional logic (for example, [[Interface:Standard axioms of propositional logic]]), we prove the [[Interface:Principia Mathematica propositional logic theorems]].  This is for two reasons.  The first is to show that all the connectives, not just those mentioned in the axioms, have the same meanings (this could alternately be achieved by including all the definitions in the interface with the axioms, as in [[Interface:Principia Mathematica propositional logic]]). The second is to present an alternative proof of the [[Interface:Principia Mathematica propositional logic theorems]].  In some cases the way we prove the theorems is very similar, but in others it is quite different.  The proofs in [[Principia Mathematica propositional logic]] rely heavily on the relationships between the connectives (especially implication and disjunction), and the proofs via intuitionistic logic rely more heavily on theorems such as disjunction composition and conjunction composition.
 
 <jh>
-import (INTUITIONISTIC Interface:Intuitionistic_propositional_logic () ())
+import (INTUITIONISTIC Interface:Basic_intuitionistic_propositional_logic () ())
 
 kindbind (formula wff)
 import (EXCLUDED_MIDDLE Interface:Law_of_the_excluded_middle (INTUITIONISTIC) ())
