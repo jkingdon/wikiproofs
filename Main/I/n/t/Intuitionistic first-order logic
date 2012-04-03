@@ -454,6 +454,30 @@ thm (addThereExistsToAntecedent ((x ψ))
 ))
 </jh>
 
+=== There exists across a conjunction ===
+The proof of <code>∃ x (φ ∧ ψ) → ∃ x φ ∧ ∃ x ψ</code> works as in [[First-order logic in terms of substitution built on equality]] without modification.
+<jh>
+thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))) (
+        x φ BoundThereExistsNotFree
+        x ψ BoundThereExistsNotFree
+        conjunctionNotFree
+
+        φ ψ ConjunctionRightElimination
+
+        φ x ThereExistsIntroduction
+        applySyllogism
+
+        φ ψ ConjunctionLeftElimination
+
+        ψ x ThereExistsIntroduction
+        applySyllogism
+
+        composeConjunction
+
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
 == TODO ==
 {{cleanup|handling these theorems somehow}}
 * ThereExistsAntecedentIntroductionNotFree: similar to addThereExistsToAntecedent in spirit but not easily derivable from it. Perhaps more closely related to ForAllImplication.
