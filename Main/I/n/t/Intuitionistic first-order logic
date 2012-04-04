@@ -548,6 +548,32 @@ thm (addThereExists () ((H (φ → ψ))) ((∃ x φ) → (∃ x ψ)) (
 ))
 </jh>
 
+=== There exists commutation ===
+Being able to swap the order of two existential quantifiers, <code>∃ x ∃ y φ → ∃ y ∃ x φ</code>, follows from the proof in [[First-order logic in terms of substitution built on equality]] (which, by not being based on the corresponding theorem for <code>∀</code>, works in intuitionistic logic).
+<jh>
+thm (ThereExistsCommutationImplication () () ((∃ x (∃ y φ)) → (∃ y (∃ x φ))) (
+        x φ BoundThereExistsNotFree
+        y addThereExistsNotFree
+
+        y (∃ x φ) BoundThereExistsNotFree
+
+        φ x ThereExistsIntroduction
+
+        (∃ x φ) y ThereExistsIntroduction
+        applySyllogism
+
+        addThereExistsToAntecedentNotFree
+
+        addThereExistsToAntecedentNotFree
+))
+
+thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
+        x y φ ThereExistsCommutationImplication
+        y x φ ThereExistsCommutationImplication
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
