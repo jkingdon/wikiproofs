@@ -574,6 +574,34 @@ thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
 ))
 </jh>
 
+=== Adding for-all to the consequent ===
+Although the proof of <code>ForAllConsequentNotFree</code> from [[First-order logic in terms of substitution built on equality]] would work here, at least for now we omit it, as we already have <code>addForAllToConsequentNotFree</code>.
+
+=== For all across a biconditional ===
+We can distribute for all across a biconditional, and the proof in [[First-order logic in terms of substitution built on equality]] works here without modification.
+<jh>
+thm (ForAllBiconditionalImplication () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) → (∀ x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ ForAllImplication
+        applySyllogism
+))
+
+thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x ψ))) (
+        x φ ψ ForAllBiconditionalImplication
+
+        φ ψ BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        x addForAll
+
+        x ψ φ ForAllBiconditionalImplication
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
