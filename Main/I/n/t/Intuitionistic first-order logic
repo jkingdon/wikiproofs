@@ -612,6 +612,62 @@ thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
 ))
 </jh>
 
+=== Change of variable in ∀ ===
+The proof in [[First-order logic in terms of substitution built on equality]] holds as-is.
+
+<jh>
+thm (ChangeVariableForAllImplicationNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
+  ((∀ x φx) → (∀ y φy)) (
+        HFREEY
+        x addForAllNotFree
+        x φx (value y) SpecializationToObject
+        addForAllToConsequentNotFree
+
+        HFREEX
+        H
+        makeSubstExplicitNotFree
+
+        eliminateBiconditionalReverse
+        y addForAll
+        applySyllogism
+))
+
+thm (ChangeVariableForAllNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
+  ((∀ x φx) ↔ (∀ y φy)) (
+        HFREEX HFREEY H ChangeVariableForAllImplicationNotFree
+
+        HFREEY HFREEX
+        H
+        (value x) (value y) EqualitySymmetry
+        transformAntecedent
+
+        φx φy BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableForAllImplicationNotFree
+
+        introduceBiconditionalFromImplications
+))
+
+thm (ChangeVariableForAll ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∀ x φx) ↔ (∀ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableForAllNotFree
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
