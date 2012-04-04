@@ -526,6 +526,28 @@ thm (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ 
 ))
 </jh>
 
+=== Adding there exists to both sides of an implication ===
+We prove <code>∀ x (φ → ψ) → (∃ x φ → ∃ x ψ)</code> as in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))) (
+        ψ x ThereExistsIntroduction
+        φ addCommonAntecedent
+        x addForAll
+
+        x ψ BoundThereExistsNotFree
+        φ ThereExistsAntecedentIntroductionNotFree
+
+        applySyllogism
+))
+
+thm (addThereExists () ((H (φ → ψ))) ((∃ x φ) → (∃ x ψ)) (
+        H
+        x generalize
+        x φ ψ ForAllImplicationThereExists
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
