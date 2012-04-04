@@ -602,6 +602,16 @@ thm (ForAllBiconditional () () ((∀ x (φ ↔ ψ)) → ((∀ x φ) ↔ (∀ x �
 ))
 </jh>
 
+=== Adding there-exists to both sides of a biconditional ===
+The counterpart to <code>buildForAll</code> follows from <code>addThereExists</code>. The proof in [[First-order logic in terms of substitution built on equality]] is based on the relationship between <code>∀</code> and <code>∃</code> which holds in classical logic but not in intuitionistic logic.
+<jh>
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        H eliminateBiconditionalReverse x addThereExists
+        H eliminateBiconditionalForward x addThereExists
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
