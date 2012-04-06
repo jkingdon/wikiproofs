@@ -768,6 +768,27 @@ thm (NotForAllReverse () () ((∃ x (¬ φ)) → (¬ (∀ x φ))) (
 ))
 </jh>
 
+Next is <code>¬ ∃ x φ ↔ ∀ x ¬ φ</code>. The forward direction is much like the previous proof.
+<jh>
+thm (NotThereExistsForward () () ((¬ (∃ x φ)) → (∀ x (¬ φ))) (
+        x φ BoundThereExistsNotFree
+        negateNotFree
+
+        φ x ThereExistsIntroduction
+        introduceTransposition
+
+        addForAllToConsequentNotFree
+))
+</jh>
+<jh>
+#thm (NotThereExistsReverse () () ((∀ x (¬ φ)) → (¬ (∃ x φ))) (
+#))
+</jh>
+
+<jh>
+#stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
