@@ -668,6 +668,38 @@ thm (ChangeVariableForAll ((y φx) (x φy) (x y))
 ))
 </jh>
 
+=== Change of variable in ∃ ===
+We prove the similar theorem for <code>∃</code> in a similar way, in which we rewrite <code>φy</code> to <code>[ y / x ] φx</code> and then to <code>∃ x φx</code>.
+
+<jh>
+thm (ChangeVariableThereExistsImplicationNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
+  ((∃ y φy) → (∃ x φx)) (
+</jh>
+We start with <code>y is-not-free-in ∃ x φx</code>.
+<jh>
+        HFREEY
+        x addThereExistsNotFree
+</jh>
+Next is <code>φy → [ y / x ] φx</code>.
+<jh>
+        HFREEX
+        H
+        makeSubstExplicitNotFree
+        eliminateBiconditionalForward
+</jh>
+Then we can combine that with <code>[ y / x ] φx → ∃ x φx</code>.
+<jh>
+        (value y) x φx ThereExistsIntroductionFromObject
+        applySyllogism
+
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
