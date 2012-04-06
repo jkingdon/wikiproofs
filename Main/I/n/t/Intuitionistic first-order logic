@@ -723,6 +723,15 @@ thm (ChangeVariableThereExistsNotFree ((x y))
 
         introduceBiconditionalFromImplications
 ))
+
+thm (ChangeVariableThereExists ((y φx) (x φy) (x y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((∃ x φx) ↔ (∃ y φy)) (
+        x φy DistinctNotFree
+        y φx DistinctNotFree
+        H
+        ChangeVariableThereExistsNotFree
+))
 </jh>
 
 == Export ==
