@@ -734,6 +734,24 @@ thm (ChangeVariableThereExists ((y φx) (x φy) (x y))
 ))
 </jh>
 
+=== Stating changes of variable in terms of explicit substitutions ===
+Another way to express the change variable theorems is with explicit substitution (using <code>subst</code>). The proofs from [[First-order logic with quantifiability]] work without modification.
+<jh>
+thm (ChangeVariableExplicitThereExists ((y φ) (x y)) () ((∃ x φ) ↔ (∃ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ EqualitySubst
+        ChangeVariableThereExistsNotFree
+))
+
+thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subst (value y) x φ))) (
+        x (value y) φ SubstNotFree
+        y φ DistinctNotFree
+        x (value y) φ EqualitySubst
+        ChangeVariableForAllNotFree
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
