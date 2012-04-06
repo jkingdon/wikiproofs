@@ -752,6 +752,22 @@ thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subs
 ))
 </jh>
 
+== Relationship between universal and existential quantification ==
+In classical first-order logic, there are a number of equivalences involving negation and both kinds of quantifiers. Only some of them hold intuitionistically.
+
+The first one is <code>∃ x ¬ φ → ¬ ∀ x φ</code>. This is a biconditional in classical logic, but this direction holds intuitionistically.
+<jh>
+thm (NotForAllReverse () () ((∃ x (¬ φ)) → (¬ (∀ x φ))) (
+        x φ BoundForAllNotFree
+        negateNotFree
+
+        x φ Specialization
+        introduceTransposition
+
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
