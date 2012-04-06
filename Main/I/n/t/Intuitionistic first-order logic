@@ -700,6 +700,31 @@ Then we can combine that with <code>[ y / x ] φx → ∃ x φx</code>.
 ))
 </jh>
 
+Now that we've proved the implication, we just need to biconditionalize it and also would like a variant with distinct variables rather than freeness hypotheses.
+<jh>
+thm (ChangeVariableThereExistsNotFree ((x y))
+  ((HFREEX (x is-not-free-in φy))
+   (HFREEY (y is-not-free-in φx))
+   (H (((value x) = (value y)) → (φx ↔ φy)))
+  )
+  ((∃ x φx) ↔ (∃ y φy)) (
+        HFREEY HFREEX
+        H
+        (value x) (value y) EqualitySymmetry
+        transformAntecedent
+
+        φx φy BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        ChangeVariableThereExistsImplicationNotFree
+
+        HFREEX HFREEY H ChangeVariableThereExistsImplicationNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
