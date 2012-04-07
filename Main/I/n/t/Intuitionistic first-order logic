@@ -789,6 +789,39 @@ thm (NotThereExistsForward () () ((¬ (∃ x φ)) → (∀ x (¬ φ))) (
 #stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
 </jh>
 
+== Adding and removing there exists ==
+Here are a number of results involving removing <code>∃</code>. The proofs in [[First-order logic in terms of substitution built on equality]] apply without modification.
+<jh>
+thm (ThereExistsAddRemoveNotFree () ((HFREE (x is-not-free-in φ))) ((∃ x φ) ↔ φ) (
+        HFREE
+        φ ImplicationReflexivity
+        addThereExistsToAntecedentNotFree
+
+        φ x ThereExistsIntroduction
+
+        introduceBiconditionalFromImplications
+))
+
+thm (NullThereExists ((x φ)) () ((∃ x φ) ↔ φ) (
+        x φ DistinctNotFree
+        ThereExistsAddRemoveNotFree
+))
+
+thm (removeThereExists ((x φ)) ((H (∃ x φ))) φ (
+        H
+        x φ NullThereExists
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (removeThereExistsInConsequent ((x φ)) ((H (antecedent → (∃ x φ)))) (antecedent → φ) (
+        H
+        x φ NullThereExists
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
