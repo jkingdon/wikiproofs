@@ -752,43 +752,6 @@ thm (ChangeVariableExplicitForAll ((y φ) (x y)) () ((∀ x φ) ↔ (∀ y (subs
 ))
 </jh>
 
-== Relationship between universal and existential quantification ==
-In classical first-order logic, there are a number of equivalences involving negation and both kinds of quantifiers. Only some of them hold intuitionistically.
-
-The first one is <code>∃ x ¬ φ → ¬ ∀ x φ</code>. This is a biconditional in classical logic, but this direction holds intuitionistically.
-<jh>
-thm (NotForAllReverse () () ((∃ x (¬ φ)) → (¬ (∀ x φ))) (
-        x φ BoundForAllNotFree
-        negateNotFree
-
-        x φ Specialization
-        introduceTransposition
-
-        addThereExistsToAntecedentNotFree
-))
-</jh>
-
-Next is <code>¬ ∃ x φ ↔ ∀ x ¬ φ</code>. The forward direction is much like the previous proof.
-<jh>
-thm (NotThereExistsForward () () ((¬ (∃ x φ)) → (∀ x (¬ φ))) (
-        x φ BoundThereExistsNotFree
-        negateNotFree
-
-        φ x ThereExistsIntroduction
-        introduceTransposition
-
-        addForAllToConsequentNotFree
-))
-</jh>
-<jh>
-#thm (NotThereExistsReverse () () ((∀ x (¬ φ)) → (¬ (∃ x φ))) (
-#))
-</jh>
-
-<jh>
-#stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
-</jh>
-
 == Adding and removing there exists ==
 Here are a number of results involving removing <code>∃</code>. The proofs in [[First-order logic in terms of substitution built on equality]] apply without modification.
 <jh>
@@ -820,6 +783,60 @@ thm (removeThereExistsInConsequent ((x φ)) ((H (antecedent → (∃ x φ)))) (a
         eliminateBiconditionalReverse
         applySyllogism
 ))
+</jh>
+
+== Relationship between universal and existential quantification ==
+In classical first-order logic, there are a number of equivalences involving negation and both kinds of quantifiers. Only some of them hold intuitionistically.
+
+The first one is <code>∃ x ¬ φ → ¬ ∀ x φ</code>. This is a biconditional in classical logic, but this direction holds intuitionistically.
+<jh>
+thm (NotForAllReverse () () ((∃ x (¬ φ)) → (¬ (∀ x φ))) (
+        x φ BoundForAllNotFree
+        negateNotFree
+
+        x φ Specialization
+        introduceTransposition
+
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
+Next is <code>¬ ∃ x φ ↔ ∀ x ¬ φ</code>. The forward direction is much like the previous proof.
+<jh>
+thm (NotThereExistsForward () () ((¬ (∃ x φ)) → (∀ x (¬ φ))) (
+        x φ BoundThereExistsNotFree
+        negateNotFree
+
+        φ x ThereExistsIntroduction
+        introduceTransposition
+
+        addForAllToConsequentNotFree
+))
+</jh>
+
+We prove the reverse direction by rewriting <code>¬ φ</code> as <code>φ → ⊥</code> and applying <code>ForAllImplicationThereExists</code>.
+<jh>
+thm (NotThereExistsReverse () () ((∀ x (¬ φ)) → (¬ (∃ x φ))) (
+        φ NegationImplication
+        eliminateBiconditionalReverse
+        x addForAll
+
+        x φ (⊥) ForAllImplicationThereExists
+        applySyllogism
+</jh>
+Now we have <code>∀ x ¬ φ → (∃ x φ → ∃ x ⊥)</code> and we can remove the second <code>∃</code> because the variable <code>x</code> does not occur in the formula <code>⊥</code>.
+<jh>
+        import
+        removeThereExistsInConsequent
+        export
+
+        (∃ x φ) NegationImplication
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+#thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
+#))
 </jh>
 
 == Export ==
