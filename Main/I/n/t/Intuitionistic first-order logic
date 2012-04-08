@@ -835,8 +835,11 @@ Now we have <code>∀ x ¬ φ → (∃ x φ → ∃ x ⊥)</code> and we can rem
         applySyllogism
 ))
 
-#thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
-#))
+thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
+        x φ NotThereExistsForward
+        x φ NotThereExistsReverse
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 == Export ==
