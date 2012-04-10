@@ -919,6 +919,38 @@ thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ)
 ))
 </jh>
 
+=== Distribution of there-exists across a disjunction ===
+Here is <code>∃ x (φ ∨ ψ) ↔ ∃ x φ ∨ ∃ x ψ</code>. Since DeMorgan's law and the relationship between negation and quantification does not follow the rules of classical logic, we cannot just derive it from the previous theorem (the one about conjunction and <code>∀</code>). However, the proof in [[First-order logic in terms of substitution built on equality]] does work fine.
+<jh>
+thm (ThereExistsDisjunctionSplitting () () ((∃ x (φ ∨ ψ)) → ((∃ x φ) ∨ (∃ x ψ))) (
+        x φ BoundThereExistsNotFree
+        x ψ BoundThereExistsNotFree
+        disjunctionNotFree
+
+        φ x ThereExistsIntroduction
+        ψ x ThereExistsIntroduction
+        disjoin
+
+        addThereExistsToAntecedentNotFree
+))
+
+thm (ThereExistsDisjunctionCombining () () (((∃ x φ) ∨ (∃ x ψ)) → (∃ x (φ ∨ ψ))) (
+        φ ψ DisjunctionRightIntroduction
+        x addThereExists
+
+        ψ φ DisjunctionLeftIntroduction
+        x addThereExists
+
+        composeDisjunction
+))
+
+thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))) (
+        x φ ψ ThereExistsDisjunctionSplitting
+        x φ ψ ThereExistsDisjunctionCombining
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
