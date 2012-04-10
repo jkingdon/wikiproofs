@@ -881,6 +881,44 @@ thm (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) �
 ))
 </jh>
 
+== Distribution of for-all over conjunction ==
+Next is <code>∀ x (φ ∧ ψ) ↔ ∀ x φ ∧ ∀ x ψ</code>, proved the same way as [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (ForAllConjunctionForward () () ((∀ x (φ ∧ ψ)) → ((∀ x φ) ∧ (∀ x ψ))) (
+        φ ψ ConjunctionRightElimination
+        x addForAll
+
+        φ ψ ConjunctionLeftElimination
+        x addForAll
+
+        composeConjunction
+))
+
+thm (ForAllConjunctionReverse () () (((∀ x φ) ∧ (∀ x ψ)) → (∀ x (φ ∧ ψ))) (
+        x φ BoundForAllNotFree
+        x ψ BoundForAllNotFree
+        conjunctionNotFree
+
+        (∀ x φ) (∀ x ψ) ConjunctionRightElimination
+        x φ Specialization
+        applySyllogism
+
+        (∀ x φ) (∀ x ψ) ConjunctionLeftElimination
+        x ψ Specialization
+        applySyllogism
+
+        composeConjunction
+
+        addForAllToConsequentNotFree
+))
+
+thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))) (
+        x φ ψ ForAllConjunctionForward
+        x φ ψ ForAllConjunctionReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
