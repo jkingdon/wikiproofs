@@ -842,7 +842,7 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
 ))
 </jh>
 
-=== Commuting ∃ followed by ∀ ===
+== Commuting ∃ followed by ∀ ==
 ∃ followed by ∀ can be switched. We don't need any modifications to the proof in [[First-order logic in terms of substitution built on equality]].
 <jh>
 thm (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))) (
@@ -858,6 +858,26 @@ thm (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ
         addThereExistsToAntecedentNotFree
 
         addForAllToConsequentNotFree
+))
+</jh>
+
+== Biconditionalized version of ForAllImplicationThereExists ==
+This is a biconditionalized variation of a theorem we already proved, using the proof from [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (ForAllBiconditionalThereExists () () ((∀ x (φ ↔ ψ)) → ((∃ x φ) ↔ (∃ x ψ))) (
+        φ ψ BiconditionalReverseElimination
+        x addForAll
+
+        x φ ψ ForAllImplicationThereExists
+        applySyllogism
+
+        φ ψ BiconditionalForwardElimination
+        x addForAll
+
+        x ψ φ ForAllImplicationThereExists
+        applySyllogism
+
+        introduceBiconditionalFromImplicationsInConsequent
 ))
 </jh>
 
