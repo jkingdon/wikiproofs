@@ -1054,7 +1054,7 @@ thm (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ)
 </jh>
 
 === Distribution of there-exists across a disjunction ===
-Here is <code>∃ x (φ ∨ ψ) ↔ ∃ x φ ∨ ∃ x ψ</code>.<ref>Theorem scheme 43, Margaris, page 90</ref> Margaris leaves the proof as an exercise, so we need to decide whether to derive it from <code>ForAllConjunction</code> using our definition of ∃ and DeMorgan's law, or derive it from other theorems which involved ∃. We elect the latter.
+Here is <code>∃ x (φ ∨ ψ) ↔ ∃ x φ ∨ ∃ x ψ</code>.<ref>Theorem scheme 43, Margaris, page 90</ref> Margaris leaves the proof as an exercise, so we need to decide whether to derive it from <code>ForAllConjunction</code> using our definition of ∃ and DeMorgan's law, or derive it from other theorems which involve ∃. We elect the latter.
 <jh>
 thm (ThereExistsDisjunctionSplitting () () ((∃ x (φ ∨ ψ)) → ((∃ x φ) ∨ (∃ x ψ))) (
 </jh>
