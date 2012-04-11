@@ -951,6 +951,28 @@ thm (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ 
 ))
 </jh>
 
+=== Distribution of there-exists across an implication ===
+When distributing ∃ across an implication, the quantifier on the antecedent changes to ∀. In classical logic this is a biconditional. The forward direction is easy to prove in intuitionistic logic, but the reverse direction doesn't work, at least not using the proof in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (ThereExistsImplicationForward () () ((∃ x (φ → ψ)) → ((∀ x φ) → (∃ x ψ))) (
+        x φ BoundForAllNotFree
+        x ψ BoundThereExistsNotFree
+        implicationNotFree
+
+</jh>
+Next is <code>∀ x φ → φ</code> and <code>ψ → ∃ x ψ</code>, which we combine into <code>(φ → ψ) → (∀ x φ → ∃ x ψ)</code>.
+<jh>
+        x φ Specialization
+        ψ addCommonConsequent
+
+        ψ x ThereExistsIntroduction
+        (∀ x φ) addCommonAntecedent
+        applySyllogism
+
+        addThereExistsToAntecedentNotFree
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
