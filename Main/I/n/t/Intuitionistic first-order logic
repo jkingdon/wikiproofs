@@ -973,6 +973,9 @@ Next is <code>∀ x φ → φ</code> and <code>ψ → ∃ x ψ</code>, which we 
 ))
 </jh>
 
+=== Movement ===
+There are a variety of theorems which involve moving a formula in or out of the scope of a quantifier (where the variable being quantified is not free in the formula). In intuitionistic logic most of these can be proved as in [[First-order logic in terms of substitution built on equality]].
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
