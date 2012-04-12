@@ -4,7 +4,7 @@
  | left     =
  | right    =
  | shortcut =
- | notes    = This page proves those statments of [[Interface:Intuitionistic propositional logic]] which aren't in [[Interface:Basic intuitionistic propositional logic]].  This includes chiefly additional builders (which aren't necessarily in most textbook treatments as they take substitution for granted), additional variants on modus ponens and related theorems, and the like. As it turns out the majority of convenience theorems of this sort are the same between classical and intuitionistic logic.
+ | notes    = This page proves those statments of [[Interface:Intuitionistic propositional logic]] which aren't in [[Interface:Basic intuitionistic propositional logic]].  This includes chiefly additional builders (which aren't necessary in most textbook treatments as they take substitution for granted), additional variants on modus ponens and related theorems, and the like. As it turns out the majority of convenience theorems of this sort are the same between classical and intuitionistic logic.
 }}
 {{interfaces
 | imports = [[Interface:Basic intuitionistic propositional logic]]
