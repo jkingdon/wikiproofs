@@ -866,7 +866,7 @@ thm (ChangeVariableForAll ((y φx) (x φy) (x y))
 </jh>
 
 === Change of variable in ∃ ===
-Although it should be possible to provide the corresponding theorem for ∃ via <code>ThereExistsIntroductionFromObject</code> and the like, to keep things simple we just follow Margaris' proof which derives it from the one for ∀.<ref>Theorem 18.8, Margaris, page 86</ref>
+Although it should be possible to provide the corresponding theorem for ∃ via <code>ThereExistsIntroductionFromObject</code> and the like (see [[Intuitionistic first-order logic]] for an example of that), to keep things simple we just follow Margaris' proof which derives it from the one for ∀.<ref>Theorem 18.8, Margaris, page 86</ref>
 <jh>
 thm (ChangeVariableThereExists
   ((y φx) (x φy) (x y))
