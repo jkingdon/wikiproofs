@@ -976,6 +976,46 @@ Next is <code>∀ x φ → φ</code> and <code>ψ → ∃ x ψ</code>, which we 
 === Movement ===
 There are a variety of theorems which involve moving a formula in or out of the scope of a quantifier (where the variable being quantified is not free in the formula). In intuitionistic logic most of these can be proved as in [[First-order logic in terms of substitution built on equality]].
 
+==== There exists and conjunction ====
+<jh>
+thm (ThereExistsConjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
+  ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+        x φ ψ ThereExistsConjunction
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        eliminateBiconditionalReverse
+        (∃ x ψ) conjoinRR
+        applySyllogism
+
+        HFREE
+        φ ψ ConjunctionRightIntroduction
+        addForAllToConsequentNotFree
+
+        x ψ (φ ∧ ψ) ForAllImplicationThereExists
+        applySyllogism
+
+        import
+        introduceBiconditionalFromImplications
+))
+
+thm (ThereExistsConjunctionMovement ((x φ)) () ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsConjunctionMovementNotFree
+))
+
+thm (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ ((∃ x φ) ∧ ψ)) (
+        φ ψ ConjunctionCommutativity
+        x buildThereExists
+
+        x ψ φ ThereExistsConjunctionMovement
+        applyBiconditionalTransitivity
+
+        ψ (∃ x φ) ConjunctionCommutativity
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
