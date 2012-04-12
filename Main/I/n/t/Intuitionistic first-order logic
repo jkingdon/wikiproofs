@@ -1061,6 +1061,27 @@ thm (moveAntecedentIntoForAll ()
 ))
 </jh>
 
+=== Moving antecedent in or out of there exists ===
+Here we only provide the forward direction, as we only have the forward direction of <code>ThereExistsImplication</code>.
+<jh>
+thm (ThereExistsAntecedentMovementForwardNotFree
+  () ((HFREE (x is-not-free-in φ))) ((∃ x (φ → ψ)) → (φ → (∃ x ψ))) (
+        x φ ψ ThereExistsImplicationForward
+
+        HFREE
+        ForAllAddRemoveNotFree
+        (∃ x ψ) buildImplicationConsequent
+        eliminateBiconditionalReverse
+
+        applySyllogism
+))
+
+thm (ThereExistsAntecedentMovementForward ((x φ)) () ((∃ x (φ → ψ)) → (φ → (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsAntecedentMovementForwardNotFree
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
