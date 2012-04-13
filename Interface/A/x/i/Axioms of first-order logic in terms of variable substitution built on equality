@@ -1,0 +1,148 @@
+{{header
+ | title    = Axioms of first-order logic in terms of variable substitution built on equality
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Here we provide axioms for a version of predicate logic which is similar to [[Interface:Axioms of first-order logic in terms of substitution built on equality]], but which only provides for substitution of a variable for another variable, not a term for a variable.
+}}
+
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]]
+| importedby = [[First-order logic in terms of variable substitution built on equality]]
+| exportedby = none
+}}
+
+These axioms provide a version of first-order logic which is similar to the one in metamath's set.mm, which allows for proper classes and does not include the [[Interface:Axiom of quantifiability]]. We thereby provide an alternative axiomization to the metamath-inspired one at [[Interface:Axioms of first-order logic]]. Adding quantifiability to these axioms produces a system equivalent to the one defined by [[Interface:Axioms of first-order logic in terms of substitution built on equality]], as shown in [[First-order logic with quantifiability]].
+
+It is possible to prove everything in [[Interface:First-order logic]] from these axioms.
+
+== Formulas and objects ==
+First we build on [[Interface:Classical propositional calculus]].
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+</jh>
+
+We use φ, ψ, χ, and θ to represent formulas.
+<jh>
+var (formula φ ψ χ θ)
+</jh>
+
+A [[w:First-order_logic#Terms|term]] in conventional terminology corresponds to what metamath calls a class. Here we use the word ''object'' only because ''term'' is a JHilbert keyword.
+
+<jh>
+kind (object)
+var (object s t u s0 s1 t0 t1)
+</jh>
+
+A ''variable'' is what metamath calls a set. The parts of metamath we're concerned with here don't include actual set theory axioms (with the possible exception of those which are really equality axioms, only peripherally related to set theory), but calls the things being quantified over sets.
+
+<jh>
+kind (variable)
+var (variable x y z x0 x1 y0 y1)
+</jh>
+
+A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected).
+In metamath, the equivalent conversion is <code>cv</code>,<ref>[http://us.metamath.org/mpeuni/cv.html cv], metamath's set.mm, accessed March 24, 2012</ref> although metamath is slightly different from JHilbert in terms of how it must be used.
+<jh>
+term (object (value variable))
+</jh>
+
+The reverse is not possible.  Examples of objects which are not variables might be <code>s + t</code> for Peano arithmetic, or <code>s ∪ t</code> for set theory.
+
+== Quantification ==
+We extend the available formulas with [[w:Universal quantification|universal quantification]].
+<jh>
+term (formula (∀ variable formula))
+</jh>
+
+Universal quantification can be distributed across implication.
+<jh>
+stmt (ForAllImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ)) ) )
+</jh>
+
+== Free variables ==
+We define free variables as in [[Interface:Axioms of first-order logic in terms of substitution built on equality]].
+<jh>
+term (formula (is-not-free-in variable formula))
+
+stmt (BoundForAllNotFree () () (x is-not-free-in (∀ x φ)))
+stmt (DistinctNotFree ((x φ)) () (x is-not-free-in φ))
+
+stmt (addForAllNotFree () ((x is-not-free-in φ)) (x is-not-free-in (∀ y φ)))
+
+stmt (negateNotFree () ((x is-not-free-in φ)) (x is-not-free-in (¬ φ)))
+stmt (implicationNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ → ψ))
+)
+
+stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)))
+</jh>
+
+== Generalization ==
+We can [[w:Generalization (logic)|generalize]] when the variable is not free in the formula.
+<jh>
+stmt (GeneralizationNotFree () ((x is-not-free-in φ)) (φ → (∀ x φ)))
+</jh>
+
+We can also generalize a theorem, even if the variable is free in the formula.
+<jh>
+stmt (generalize () (φ) (∀ x φ))
+</jh>
+
+We will define a second quantifier (∃ for "there exists") in terms of ∀, so we have avoided it in the above axioms and do not need to define it here.
+
+There is one more axiom, specialization (including the ability to substitute). Roughly speaking it says that one can take a formula of the form <code>∀ x φ</code> and substitute a variable <code>t</code> for the variable <code>x</code> inside <code>φ</code>. This is more restricted than the usual formulation of this axiom, as we are only subsituting a variable for a variable, not a term for a variable.
+
+== Equality ==
+
+=== Reflexive, symmetry, and transitive ===
+
+We introduce equality, which is reflexive, symmetry, and transitive.  For simplicity, we simply adopt these three properties as axioms, rather than a smaller set of axioms which imply them. We adopt them only for variables, not terms. That is based on metamath usage, where term (class) equality is defined in terms of <code>∈</code>.<ref>[http://us.metamath.org/mpeuni/df-cleq.html df-cleq], metamath's set.mm</ref>
+
+<jh>
+term (formula (= object object))
+
+stmt (EqualityReflexivity () () ((value x) = (value x)))
+stmt (EqualitySymmetry () () (((value x) = (value y)) ↔ ((value y) = (value x))))
+stmt (EqualityTransitivity () () ((((value x) = (value y)) ∧ ((value y) = (value z))) → ((value x) = (value z))))
+</jh>
+
+== Substitution ==
+We first define <code>subst</code>:
+
+<jh>
+term (formula (subst object variable formula))
+</jh>
+
+so for example <code>subst s x φ</code> can be thought of as a copy of <code>φ</code> in which <code>x</code> is changed to <code>s</code>. In more conventional notation this would be <code>[ s / x ] φ</code>. Although we define the notation for substituting a term, rather than a variable, we do not adopt any axioms which allow substituting anything other than a variable. This is mainly to make it convenient to later add substituting a term for a variable if we want to, although the result for our purposes isn't different than if we had defined <code>substVariable y x φ</code>.
+
+We start with special cases of <code>makeSubstExplicitNotFree</code>, <code>SubstBuilderReplacement</code>, <code>SubstAddition</code> and <code>SubstNotFree</code> for variables, not terms.
+<jh>
+stmt (makeVariableSubstExplicitNotFree ((x y))
+  ((x is-not-free-in ψ) (((value x) = (value y)) → (φ ↔ ψ)))
+  ((subst (value y) x φ) ↔ ψ))
+
+stmt (VariableSubstBuilderReplacement () ()
+  (((value y) = (value z)) → ((subst (value y) x φ) ↔ (subst (value z) x φ))))
+stmt (VariableSubstAddition () () ((∀ x (φ → ψ)) → ((subst (value y) x φ) → (subst (value z) x ψ))))
+
+stmt (VariableSubstNotFree ((x y)) () (x is-not-free-in (subst (value y) x φ)))
+</jh>
+
+Substituting a variable for itself has no effect. This one can be stated the same as in [[Interface:Axioms of first-order logic in terms of substitution built on equality]], as it already concerns substituting a variable, rather than any term.
+<jh>
+stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
+</jh>
+
+== Specialization ==
+Having defined substitution, we are prepared to adopt our final first-order logic axiom.
+<jh>
+stmt (SpecializationToVariable () () ((∀ x φ) → (subst (value y) x φ)))
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Classical first-order logic|{{PAGENAME}}]]
