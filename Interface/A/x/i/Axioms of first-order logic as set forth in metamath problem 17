@@ -33,7 +33,7 @@ kind (object)
 var (object s t u s0 s1 t0 t1)
 </jh>
 
-A ''variable'' is what metamath calls a set. The parts of metamath we're concerned with here don't include actual set theory axioms (with the possible except of those which are really equality axioms, only peripherally related to set theory), but calls the things being quantified over sets.
+A ''variable'' is what metamath calls a set. The parts of metamath we're concerned with here don't include actual set theory axioms (with the possible exception of those which are really equality axioms, only peripherally related to set theory), but calls the things being quantified over sets.
 
 <jh>
 kind (variable)
