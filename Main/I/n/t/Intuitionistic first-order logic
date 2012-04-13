@@ -1123,6 +1123,43 @@ thm (ThereExistsImplicationForwardConsequentMovement () ((HFREE (x is-not-free-i
 ))
 </jh>
 
+==== Disjunction movement ====
+We can move a conjunct out of or into there exists, and the proofs in [[First-order logic in terms of substitution built on equality]] hold here too.
+<jh>
+thm (ThereExistsDisjunctionMovementNotFree () ((HFREE (x is-not-free-in φ)))
+  ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ ψ ThereExistsDisjunction
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∃ x ψ) buildDisjunctionRR
+
+        applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))) (
+        x φ DistinctNotFree
+        ψ ThereExistsDisjunctionMovementNotFree
+))
+
+thm (ThereExistsDisjunctionRightMovementNotFree () ((HFREE (x is-not-free-in ψ)))
+  ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        x φ ψ ThereExistsDisjunction
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        (∃ x φ) buildDisjunctionLL
+
+        applyBiconditionalTransitivity
+))
+
+thm (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) (
+        x ψ DistinctNotFree
+        φ ThereExistsDisjunctionRightMovementNotFree
+))
+
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
