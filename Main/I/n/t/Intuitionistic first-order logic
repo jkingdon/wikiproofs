@@ -1082,6 +1082,31 @@ thm (ThereExistsAntecedentMovementForward ((x φ)) () ((∃ x (φ → ψ)) → (
 ))
 </jh>
 
+=== Moving the consequent in or out of for all ===
+When we move the consequent out of <code>∀</code>, it changes to <code>∃</code>, and we can prove it just as in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (ForAllImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ))) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)) (
+        x φ ψ ForAllImplicationThereExists
+
+        HFREE
+        ThereExistsAddRemoveNotFree
+        eliminateBiconditionalReverse
+        (∃ x φ) addCommonAntecedent
+        applySyllogism
+
+        x φ BoundThereExistsNotFree
+        HFREE
+        implicationNotFree
+
+        φ x ThereExistsIntroduction
+        ψ addCommonConsequent
+
+        addForAllToConsequentNotFree
+
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
