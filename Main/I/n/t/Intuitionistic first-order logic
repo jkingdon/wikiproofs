@@ -1157,7 +1157,45 @@ thm (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((
         x ψ DistinctNotFree
         φ ThereExistsDisjunctionRightMovementNotFree
 ))
+</jh>
 
+=== Combining one universal and one existential quantifier ===
+Suppose we have one formula which holds for all values of a variable, and another which holds for some value. Then there is a value for which both hold. In symbols, <code>∀ x φ ∧ ∃ x ψ → ∃ x (φ ∧ ψ)</code>, which we prove as in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (ThereExistsConjunctionCombining () ()
+  (((∀ x φ) ∧ (∃ x ψ)) → (∃ x (φ ∧ ψ))) (
+        x φ BoundForAllNotFree
+        ψ ThereExistsConjunctionMovementNotFree
+        eliminateBiconditionalForward
+
+        x φ Specialization
+        ψ conjoinRR
+        x addThereExists
+        applySyllogism
+))
+
+thm (ThereExistsConjunctionRightCombining () ()
+  (((∃ x φ) ∧ (∀ x ψ)) → (∃ x (φ ∧ ψ))) (
+        (∃ x φ) (∀ x ψ) ConjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        x ψ φ ThereExistsConjunctionCombining
+        applySyllogism
+
+        ψ φ ConjunctionCommutativity
+        eliminateBiconditionalReverse
+        x addThereExists
+        applySyllogism
+))
+
+thm (combineThereExistsForAll () ((HEXISTS (∃ x φ)) (HALL (∀ x ψ))) (∃ x (φ ∧ ψ)) (
+        HEXISTS
+        HALL
+        introduceConjunction
+
+        x φ ψ ThereExistsConjunctionRightCombining
+        applyModusPonens
+))
 </jh>
 
 == Export ==
