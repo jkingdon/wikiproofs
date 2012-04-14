@@ -1487,6 +1487,43 @@ thm (VariableToObject ((x s) (x φs))
 ))
 </jh>
 
+== Substitution ==
+Although our axioms were based on substitution and we've proved many of the substitution theorems we need, here are a few more consequences and convenience theorems. Nothing specific to intuitionistic logic here, we just follow proofs from [[First-order logic in terms of substitution built on equality]].
+
+=== Substitution of a theorem remains a theorem ===
+If we have a theorem, we can add a variable substitution onto it. This is just a generalization followed by specializeToObject.
+<jh>
+thm (introduceSubst () ((H φ)) (subst s x φ) (
+        H
+        x generalize
+        s specializeToObject
+))
+</jh>
+
+=== Moving substitution across quantifiers ===
+We have already shown we can move substitution across connectives. We can also move it across quantifiers (when variables are distinct).
+<jh>
+thm (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s x φ))) (
+        x s φ SubstNotFree
+        y addThereExistsNotFree
+
+        x s φ EqualitySubst
+
+        y buildThereExistsInConsequent
+        makeSubstExplicitNotFree
+))
+</jh>
+
+=== Substitution of a variable which does not appear ===
+If a variable does not appear in a formula, substituting it for anything does not affect the truth of the formula.
+<jh>
+thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
+        φ BiconditionalReflexivity
+        ((value x) = s) introduceAntecedent
+        makeSubstExplicit
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
