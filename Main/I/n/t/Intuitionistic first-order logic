@@ -1524,6 +1524,76 @@ thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
 ))
 </jh>
 
+=== A lemma regarding substitution and equality ===
+Here we show <code>[ s / x ] x = s</code>.
+<jh>
+thm (SubstEquality ((x s)) () (subst s x ((value x) = s)) (
+        s EqualityReflexivity
+
+        (value x) s s EqualityBuilderRR
+        makeSubstExplicit
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+=== Change of variable in substitution ===
+Changing the bound variable in a substitution is possible, much as we do for quantifiers.
+<jh>
+thm (ChangeVariableSubstitution-1
+  ((x y) (s x) (s y)) ()
+  (subst s y (subst s x ((value x) = (value y)))) (
+        s x SubstEquality
+
+        (value y) s (value x) EqualityBuilderLL
+        x addForAllToConsequent
+
+        x ((value x) = (value y)) ((value x) = s) s SubstBuilder
+        applySyllogism
+
+        makeSubstExplicit
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (ChangeVariableSubstitution
+  ((y φx) (x φy) (x y) (s x) (s y))
+  ((H (((value x) = (value y)) → (φx ↔ φy))))
+  ((subst s x φx) ↔ (subst s y φy)) (
+</jh>
+We'll stick our lemma on the proof stack for later.
+<jh>
+        s y x ChangeVariableSubstitution-1
+
+        H
+
+        s x addSubst
+
+        s x φx φy SubstBiconditional
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        s y addSubst
+
+        s y (subst s x φx) (subst s x φy) SubstBiconditional
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        applyModusPonens
+
+        swapBiconditional
+        s y (subst s x φx) NullSubstitution
+        applyBiconditionalTransitivity
+        swapBiconditional
+
+        s x φy NullSubstitution
+        s y buildSubst
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
