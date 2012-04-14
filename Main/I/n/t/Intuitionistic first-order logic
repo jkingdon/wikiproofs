@@ -1466,6 +1466,27 @@ thm (Quantifiability ((x s)) () (∃ x ((value x) = s)) (
 ))
 </jh>
 
+=== Variable to term ===
+Converting a variable to a term is no different than in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (VariableToObject ((x s) (x φs))
+  ((HSUBST (((value x) = s) → (φx ↔ φs)))
+   (H φx)
+  )
+  φs (
+        H
+        x generalize
+
+        x φx s SpecializationToObject
+        applyModusPonens
+
+        HSUBST
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
