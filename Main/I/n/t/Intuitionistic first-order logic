@@ -1440,6 +1440,32 @@ thm (buildEqualityLLInConsequent ()
 ))
 </jh>
 
+=== A rule for there-exists introduction ===
+We haven't gotten around to adding a rule form of <code>ThereExistsIntroductionFromObject</code> until now:
+<jh>
+thm (introduceThereExistsFromObject () ((H (subst s x φ))) (∃ x φ) (
+        H
+        s x φ ThereExistsIntroductionFromObject
+        applyModusPonens
+))
+</jh>
+
+=== Quantifiability ===
+We prove quantifiability as in [[First-order logic in terms of substitution built on equality]].
+<jh>
+thm (Quantifiability ((x s)) () (∃ x ((value x) = s)) (
+        s EqualityReflexivity
+
+        (value x) s s EqualityBuilderRR
+
+        makeSubstExplicit
+        eliminateBiconditionalForward
+        applyModusPonens
+
+        introduceThereExistsFromObject
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
