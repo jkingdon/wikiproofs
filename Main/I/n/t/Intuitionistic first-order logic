@@ -1634,6 +1634,48 @@ thm (ImplicitForAll ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
 ))
 </jh>
 
+=== Implicit substitution and existential quantification ===
+There is another similar expression, involving <code>∃</code>, namely <code>∃ x (x = s ∧ φ)</code>.
+<jh>
+thm (ImplicitThereExists-1 ((x s)) ()
+  ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
+        (subst s x φ) ImplicationReflexivity
+        s x SubstEquality
+        introduceLeftConjunctToConsequent
+
+        s x ((value x) = s) φ SubstConjunction
+        eliminateBiconditionalForward
+        applySyllogism
+
+        s x (((value x) = s) ∧ φ) ThereExistsIntroductionFromObject
+        applySyllogism
+))
+
+thm (ImplicitThereExists-2 ((x s)) ()
+  ((∃ x (((value x) = s) ∧ φ)) → (subst s x φ)) (
+        x s φ SubstNotFree
+
+        x s φ EqualitySubst
+
+        eliminateBiconditionalReverseInConsequent
+        import
+
+        addThereExistsToAntecedentNotFree
+))
+
+thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
+  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
+        x s φ ImplicitThereExists-2
+        s x φ ImplicitThereExists-1
+        introduceBiconditionalFromImplications
+
+        H
+        makeSubstExplicit
+
+        applyBiconditionalTransitivity
+))
+</jh>
+
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
