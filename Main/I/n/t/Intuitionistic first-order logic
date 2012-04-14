@@ -1159,7 +1159,40 @@ thm (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((
 ))
 </jh>
 
-=== Combining one universal and one existential quantifier ===
+=== A few more movement rules ===
+Here are a few rules, for convenience:
+<jh>
+thm (moveLeftConjunctIntoThereExistsInConsequent ((x φ))
+  ((H (antecedent → (φ ∧ (∃ x ψ)))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (moveRightConjunctIntoThereExistsInConsequent ((x ψ))
+  ((H (antecedent → ((∃ x φ) ∧ ψ))))
+  (antecedent → (∃ x (φ ∧ ψ))) (
+        H
+
+        x φ ψ ThereExistsConjunctionRightMovement
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (repeatAntecedentThereExists ((x antecedent))
+  ((H (antecedent → (∃ x ψ))))
+  (antecedent → (∃ x (antecedent ∧ ψ))) (
+        antecedent ImplicationReflexivity
+        H
+        composeConjunction
+        moveLeftConjunctIntoThereExistsInConsequent
+))
+</jh>
+
+== Combining one universal and one existential quantifier ==
 Suppose we have one formula which holds for all values of a variable, and another which holds for some value. Then there is a value for which both hold. In symbols, <code>∀ x φ ∧ ∃ x ψ → ∃ x (φ ∧ ψ)</code>, which we prove as in [[First-order logic in terms of substitution built on equality]].
 <jh>
 thm (ThereExistsConjunctionCombining () ()
