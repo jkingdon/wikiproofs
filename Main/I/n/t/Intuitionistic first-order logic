@@ -21,7 +21,7 @@ import (AXIOMS Interface:Axioms_of_intuitionistic_first-order_logic (PROPOSITION
 As usual, φ and ψ are formulas, x, y, and z are variables, and s, t, and u are terms:
 
 <jh>
-var (formula φ ψ φx φy φs antecedent)
+var (formula φ ψ φx φy φs ψy antecedent)
 var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
@@ -1228,6 +1228,40 @@ thm (combineThereExistsForAll () ((HEXISTS (∃ x φ)) (HALL (∀ x ψ))) (∃ x
 
         x φ ψ ThereExistsConjunctionRightCombining
         applyModusPonens
+))
+</jh>
+
+==== Scattering and gathering ====
+The rules and theorems we call ''scattering'' and ''gathering'' are just consequences of the movement theorems, and as such we can use the exact same proofs as in [[First-order logic]].
+<jh>
+thm (ThereExistsScattering ((φx y) (ψy x)) ()
+  ((∃ x (∃ y (φx ∧ ψy))) ↔ ((∃ x φx) ∧ (∃ y ψy))) (
+        (∃ x φx) (∃ y ψy) ConjunctionCommutativity
+
+        x ψy DistinctNotFree
+        y addThereExistsNotFree
+        φx ThereExistsConjunctionMovementNotFree
+        swapBiconditional
+        applyBiconditionalTransitivity
+
+        (∃ y ψy) φx ConjunctionCommutativity
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        y φx ψy ThereExistsConjunctionMovement
+        swapBiconditional
+        x buildThereExists
+        applyBiconditionalTransitivity
+
+        swapBiconditional
+))
+
+thm (gatherThereExistsInConsequent ((φx y) (ψy x)) ((H (antecedent → ((∃ x φx) ∧ (∃ y ψy)))))
+  (antecedent → (∃ x (∃ y (φx ∧ ψy)))) (
+        H
+        x y φx ψy ThereExistsScattering
+        eliminateBiconditionalForward
+        applySyllogism
 ))
 </jh>
 
