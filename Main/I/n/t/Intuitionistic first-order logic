@@ -577,6 +577,18 @@ thm (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))) (
 === Adding for-all to the consequent ===
 Although the proof of <code>ForAllConsequentNotFree</code> from [[First-order logic in terms of substitution built on equality]] would work here, at least for now we omit it, as we already have <code>addForAllToConsequentNotFree</code>.
 
+Here's a distinct variable version of <code>addForAllToConsequentNotFree</code>.
+
+<jh>
+thm (addForAllToConsequent ((x φ))
+  ((H (φ → ψ)))
+  (φ → (∀ x ψ)) (
+        x φ DistinctNotFree
+        H
+        addForAllToConsequentNotFree
+))
+</jh>
+
 === For all across a biconditional ===
 We can distribute for all across a biconditional, and the proof in [[First-order logic in terms of substitution built on equality]] works here without modification.
 <jh>
@@ -1262,6 +1274,35 @@ thm (gatherThereExistsInConsequent ((φx y) (ψy x)) ((H (antecedent → ((∃ x
         x y φx ψy ThereExistsScattering
         eliminateBiconditionalForward
         applySyllogism
+))
+</jh>
+
+== Other theorems ==
+Here we present a few theorems which are convenience theorems, or other fairly simple deductions from theorems we have.
+<jh>
+thm (buildThereExistsInConsequent ((x antecedent))
+  ((H (antecedent → (φ ↔ ψ))))
+  (antecedent → ((∃ x φ) ↔ (∃ x ψ))) (
+        H
+        x addForAllToConsequent
+
+        x φ ψ ForAllBiconditionalThereExists
+        applySyllogism
+))
+
+thm (buildForAllInConsequent ((x antecedent))
+  ((H (antecedent → (φ ↔ ψ))))
+  (antecedent → ((∀ x φ) ↔ (∀ x ψ))) (
+        H
+        x addForAllToConsequent
+
+        x φ ψ ForAllBiconditional
+        applySyllogism
+))
+
+thm (Generalization ((x φ)) () (φ → (∀ x φ)) (
+        x φ DistinctNotFree
+        GeneralizationNotFree
 ))
 </jh>
 
