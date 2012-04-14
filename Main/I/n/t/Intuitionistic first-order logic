@@ -1122,7 +1122,7 @@ thm (ForAllImplicationConsequentMovement () ((HFREE (x is-not-free-in ψ))) ((�
 === Moving the consequent in or out of there exists ===
 Similar to the previous one, but with ∃ and ∀ exchanged. We only have one direction, as it relies on <code>ThereExistsImplication</code>.
 <jh>
-thm (ThereExistsImplicationForwardConsequentMovement () ((HFREE (x is-not-free-in ψ)))
+thm (ThereExistsImplicationConsequentMovementForward () ((HFREE (x is-not-free-in ψ)))
   ((∃ x (φ → ψ)) → ((∀ x φ) → ψ)) (
         x φ ψ ThereExistsImplicationForward
 
@@ -1679,7 +1679,7 @@ thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
 == Export ==
 Having proved everything in [[Interface:Intuitionistic first-order logic]], we export to it.
 <jh>
-#export (RESULT Interface:Intuitionistic_first-order_logic (PROPOSITIONAL) ())
+export (RESULT Interface:Intuitionistic_first-order_logic (PROPOSITIONAL) ())
 </jh>
 
 [[Category:Subsystems of classical logic|${PAGENAME}]]

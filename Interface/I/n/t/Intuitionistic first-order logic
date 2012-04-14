@@ -100,9 +100,13 @@ Quantifiers of the same variable can sometimes be combined or split:
 <jh>
 stmt (ForAllConjunction () () ((∀ x (φ ∧ ψ)) ↔ ((∀ x φ) ∧ (∀ x ψ))))
 stmt (ThereExistsDisjunction () () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ (∃ x ψ))))
-stmt (ThereExistsImplication () () ((∃ x (φ → ψ)) ↔ ((∀ x φ) → (∃ x ψ))))
 stmt (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))))
 stmt (ThereExistsConjunction () () ((∃ x (φ ∧ ψ)) → ((∃ x φ) ∧ (∃ x ψ))))
+</jh>
+
+This one is a biconditional in classical logic, but we only provide the forward direction.
+<jh>
+stmt (ThereExistsImplicationForward () () ((∃ x (φ → ψ)) → ((∀ x φ) → (∃ x ψ))))
 </jh>
 
 === Biconditional ===
@@ -271,11 +275,17 @@ stmt (moveAntecedentIntoForAll ()
   ((φ → (∀ x ψ)) (x is-not-free-in φ)) 
   (∀ x (φ → ψ)))
 
-stmt (ThereExistsAntecedentMovementNotFree () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
 stmt (ForAllImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∀ x (φ → ψ)) ↔ ((∃ x φ) → ψ)))
-stmt (ThereExistsImplicationConsequentMovement () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) ↔ ((∀ x φ) → ψ)))
 
 stmt (ThereExistsConjunctionMovementNotFree () ((x is-not-free-in φ)) ((∃ x (φ ∧ ψ)) ↔ (φ ∧ (∃ x ψ))))
+</jh>
+
+Some of these are biconditionals in classical logic, but we only provide them in one direction for intuitinistic logic.
+<jh>
+stmt (ThereExistsAntecedentMovementForwardNotFree
+  () ((x is-not-free-in φ)) ((∃ x (φ → ψ)) → (φ → (∃ x ψ))))
+stmt (ThereExistsImplicationConsequentMovementForward
+  () ((x is-not-free-in ψ)) ((∃ x (φ → ψ)) → ((∀ x φ) → ψ)))
 </jh>
 
 ==== Versions with distinct variables ====
@@ -285,8 +295,11 @@ stmt (ThereExistsConjunctionRightMovement ((x ψ)) () ((∃ x (φ ∧ ψ)) ↔ (
 
 stmt (ThereExistsDisjunctionMovement ((x φ)) () ((∃ x (φ ∨ ψ)) ↔ (φ ∨ (∃ x ψ))))
 stmt (ThereExistsDisjunctionRightMovement ((x ψ)) () ((∃ x (φ ∨ ψ)) ↔ ((∃ x φ) ∨ ψ)) )
+</jh>
 
-stmt (ThereExistsAntecedentMovement ((x φ)) () ((∃ x (φ → ψ)) ↔ (φ → (∃ x ψ))))
+This one is a biconditional in classical logic, but we only provide one direction.
+<jh>
+stmt (ThereExistsAntecedentMovementForward ((x φ)) () ((∃ x (φ → ψ)) → (φ → (∃ x ψ))))
 </jh>
 
 Here are a few rules based on these:
@@ -480,4 +493,4 @@ stmt (Quantifiability ((x s)) () (∃ x ((value x) = s)) )
 == References ==
 <references />
 
-[[Category:Classical first-order logic|{{PAGENAME}}]]
+[[Category:Subsystems of classical logic|${PAGENAME}]]
