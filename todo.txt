@@ -47,7 +47,6 @@ Items which may be doable without a network connection:
 
 * Needed to derive geometry axioms from reals (page 201 of Givant1999)
   - For CongruenceIdentity
-    • x ∈ ℝ → 0 ≤ x · x
     • 0 ≤ x ∧ 0 ≤ y ∧ x + y = 0 → x = 0 (or some such)
   - For Indivisibility
     • (x - y) · (y - x) ≤ 0
