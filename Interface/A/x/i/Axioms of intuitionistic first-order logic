@@ -1,0 +1,136 @@
+{{header
+ | title    = Axioms of intuitionistic first-order logic
+ | subtitle = 
+ | left     = 
+ | right    = 
+ | shortcut = 
+ | notes    = Predicate logic builds on [[Interface:Classical propositional calculus|propositional logic]] by adding quantifiers ("for all" and "there exists") and equality. More specifically, here we describe intuitionistic predicate logic, which is noted by its strict approach to "there exists", in which one can prove the existence of something only if it is possible to prove that a particular thing has that property.
+}}
+
+{{modules
+| parameters = [[Interface:Intuitionistic propositional logic]]
+| importedby = [[Intuitionistic first-order logic]]
+| exportedby = none
+}}
+
+The treatment of intuitionistic first-order logic is pretty close to the non-intuitionistic one at [[Axioms of first-order logic in terms of substitution built on equality]]. The axiom set is adapted from the ''Stanford Encyclopedia of Philosophy''.<ref>Joan Moschovakis (2010), "Intuitionistic Logic", [http://plato.stanford.edu/entries/logic-intuitionistic/ Stanford Encyclopedia of Philosophy], Edward N. Zalta (ed.)</ref>
+
+We will prove the theorems in [[Interface:Intuitionistic first-order logic]] which are most of what is in [[Interface:First-order logic with quantifiability]] (adding the [[Interface:Law of the excluded middle]] would produce the whole thing).
+
+== Formulas and objects ==
+First we build on [[Interface:Intuitionistic propositional logic]].
+<jh>
+param (PROPOSITIONAL Interface:Intuitionistic_propositional_logic () ())
+</jh>
+
+We use φ, ψ, χ, and θ to represent formulas.
+<jh>
+var (formula φ ψ χ θ)
+</jh>
+
+As in non-intuitionistic logic, we define variables and terms (the latter we also sometimes call objects, because <code>term</code> is a JHilbert keyword with a different meaning), and allow a variable to be used where a term is expected (but only via an explicit conversion via <code>value</code>).
+
+<jh>
+kind (object)
+var (object s t u s0 s1 t0 t1)
+kind (variable)
+var (variable x y z x0 x1 y0 y1)
+term (object (value variable))
+</jh>
+
+== Quantification ==
+In intuitionistic logic, [[w:Existential quantification|existential quantification]] and [[w:Universal quantification|universal quantification]] both need to be defined.
+<jh>
+term (formula (∀ variable formula))
+term (formula (∃ variable formula))
+</jh>
+
+== Free variables ==
+Here we follow the treatment of free variables from [[Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. As described there, our predicate <code>is-not-free-in</code> is similar to, but not identical with, conventional (intuitionistic or otherwise) definitions of freeness. The one change we make for intuitionistic logic is to provide axioms for both kinds of quantifiers, and for additional connectives, to reflect the smaller number of intuitionistic quantifiers and connectives which can be defined in terms of others.
+
+<jh>
+term (formula (is-not-free-in variable formula))
+
+stmt (BoundForAllNotFree () () (x is-not-free-in (∀ x φ)))
+stmt (BoundThereExistsNotFree () () (x is-not-free-in (∃ x φ)))
+stmt (DistinctNotFree ((x φ)) () (x is-not-free-in φ))
+
+stmt (addForAllNotFree () ((x is-not-free-in φ)) (x is-not-free-in (∀ y φ)))
+stmt (addThereExistsNotFree () ((x is-not-free-in φ)) (x is-not-free-in (∃ y φ)))
+
+stmt (negateNotFree () ((x is-not-free-in φ)) (x is-not-free-in (¬ φ)))
+stmt (implicationNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ → ψ))
+)
+stmt (disjunctionNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ ∨ ψ))
+)
+stmt (conjunctionNotFree ()
+  ((x is-not-free-in φ) (x is-not-free-in ψ))
+  (x is-not-free-in (φ ∧ ψ))
+)
+
+stmt (buildNotFree () ((φ ↔ ψ)) ((x is-not-free-in φ) ↔ (x is-not-free-in ψ)))
+</jh>
+
+== Adding universal quantification or existential quantification ==
+The Moschovakis axiomization has two rules regarding adding and removing quantifiers.
+
+The first is that universal quantification can be added to the consequent of an implication, where the variable of quantification is not free in the antecedent.<ref>Rule ∀-Introduction in Moschovakis</ref>
+<jh>
+stmt (addForAllToConsequentNotFree () ((x is-not-free-in φ) (φ → ψ)) (φ → (∀ x ψ)))
+</jh>
+
+The other is that existential quantification can be added to the antecedent of an implication, where the variable of quantification is not free in the consequent.<ref>Rule ∃-Elimination in Moschovakis</ref>
+<jh>
+stmt (addThereExistsToAntecedentNotFree () ((x is-not-free-in ψ) (φ → ψ)) ((∃ x φ) → ψ))
+</jh>
+
+== Equality ==
+
+Unlike Moschovakis, who treats equality as a non-logical predicate, we will need equality as the basis for our treatment of substitution.
+
+Equality is reflexive, symmetry, and transitive.  For simplicity, we simply adopt these three properties as axioms, rather than a smaller set of axioms which imply them.
+
+<jh>
+term (formula (= object object))
+
+stmt (EqualityReflexivity () () (s = s))
+stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
+stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
+</jh>
+
+== Substitution ==
+We define substitution, and provide various axioms for it, as in [[Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. Here we make no changes to adapt these axioms for intuitionistic logic.
+
+<jh>
+term (formula (subst object variable formula))
+stmt (makeSubstExplicitNotFree ((x s))
+  ((x is-not-free-in ψ) (((value x) = s) → (φ ↔ ψ)))
+  ((subst s x φ) ↔ ψ))
+stmt (SubstBuilderReplacement () ()
+  ((s = t) → ((subst s x φ) ↔ (subst t x φ))))
+stmt (SubstAddition () () ((∀ x (φ → ψ)) → ((subst s x φ) → (subst s x ψ))))
+stmt (SubstNotFree ((x s)) () (x is-not-free-in (subst s x φ)))
+stmt (SubstItself () () ((subst (value x) x φ) ↔ φ))
+</jh>
+
+== Specialization ==
+Having defined substitution, we are prepared to adopt our last two axioms.
+
+The first one is that we can specialize from a universally quantified variable to any term.<ref>∀xA(x) → A(t) in Moschovakis</ref>
+<jh>
+stmt (SpecializationToObject () () ((∀ x φ) → (subst s x φ)))
+</jh>
+
+The second is that we can conclude existence, given that a formula holds for a term.<ref>A(t) → ∃xA(x) in Moschovakis</ref>
+<jh>
+stmt (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)))
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Subsystems of classical logic|${PAGENAME}]]
