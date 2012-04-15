@@ -46,12 +46,7 @@ Items which may be doable without a network connection:
       - e.g. http://us.metamath.org/mpeuni/df-rdg.html
 
 * Needed to derive geometry axioms from reals (page 201 of Givant1999)
-  - ≤ for reals (defined in terms of <)
-  - (x - y) · (x - y) = (y - x) · (y - x) (needed to prove CongruenceABBA)
-  - builders for +, ·
   - For CongruenceIdentity
-    • x - x = 0
-    • x - y = 0 → x = y
     • x ∈ ℝ → 0 ≤ x · x
     • 0 ≤ x ∧ 0 ≤ y ∧ x + y = 0 → x = 0 (or some such)
   - For Indivisibility

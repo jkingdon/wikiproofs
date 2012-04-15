@@ -138,6 +138,16 @@ stmt (SubtractionClosed () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) 
 stmt (Subtraction () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → ((z − w) = (z + (- w)))))
 </jh>
 
+Subtracting a number from itself yields zero.<ref>[http://us.metamath.org/mpeuni/subid.html subid], metamath's set.mm, accessed 2011</ref>
+<jh>
+stmt (SubtractionItself () () ((z ∈ (ℂ)) → ((z − z) = (0))))
+</jh>
+
+The difference between two numbers is zero if and only if they are equal.<ref>[http://us.metamath.org/mpeuni/subeq0.html subeq0], metamath's set.mm, accessed 2011</ref>
+<jh>
+stmt (ZeroDifferenceEquality () () (((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) → (((z − w) = (0)) ↔ (z = w))))
+</jh>
+
 ==== Properties of negation ====
 Negation distributes across multiplication in the familiar ways.<ref>[http://us.metamath.org/mpeuni/mul2neg.html mul2neg], metamath's set.mm, accessed 2011</ref>
 <jh>
