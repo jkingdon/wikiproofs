@@ -208,7 +208,7 @@ stmt (Supremum ((x bound supremum A)) ()
 === Squares ===
 At least for now, we notate the square of <code>z</code> as <code>z · z</code>. We have not yet developed exponentiation, which might treat <code>z</code> square as a special case of <code>z</code> to an integer power.
 
-The square of a real number is nonnegative.<ref>With a few minor differences, this is <ref>[http://us.metamath.org/mpeuni/sqge0i.html sqge0i], metamath's set.mm, accessed June 9, 2011</ref>
+The square of a real number is nonnegative.<ref>[http://us.metamath.org/mpeuni/msqge0.html msqge0], metamath's set.mm, accessed April 16, 2012</ref>
 <jh>
 stmt (RealSquareNonnegative () () ((a ∈ (ℝ)) → ((0) ≤ (a · a))))
 </jh>
