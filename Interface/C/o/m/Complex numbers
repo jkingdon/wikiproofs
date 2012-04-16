@@ -206,7 +206,7 @@ stmt (Supremum ((x bound supremum A)) ()
 </jh>
 
 === Squares ===
-At least for now, we notate the square of <code>z</code> as <code>z · z</code>. We have not yet developed exponentiation, which might treat <code>z</code> square as a special case of <code>z</code> to an integer power.
+At least for now, we notate the square of <code>z</code> as <code>z · z</code>. We have not yet developed exponentiation, which might treat <code>z</code> squared as a special case of <code>z</code> to an integer power.
 
 The square of a real number is nonnegative.<ref>[http://us.metamath.org/mpeuni/msqge0.html msqge0], metamath's set.mm, accessed April 16, 2012</ref>
 <jh>
