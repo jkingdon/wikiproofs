@@ -395,7 +395,7 @@ stmt (SubstThereExists ((x y s)) () ((subst s x (∃ y φ)) ↔ (∃ y (subst s 
 
 === Substitution of a variable which does not appear ===
 <jh>
-stmt (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ))
+stmt (NullSubstitution ((x φ)) () ((subst s x φ) ↔ φ))
 </jh>
 
 === Turning substitution into there-exists ===
