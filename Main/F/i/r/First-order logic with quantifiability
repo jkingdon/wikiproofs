@@ -75,6 +75,32 @@ thm (TermEqualityReflexivity ( (x s)) () (s = s) (
 ))
 </jh>
 
+=== Symmetry ===
+Symmetry start with <code>s = t → (s = s → t = s)</code> from the equality axiom, and then detach <code>s = s</code> because we have already proved reflexivity.
+<jh>
+thm (TermEqualitySymmetryImplication () ()
+  ((s = t) → (t = s)) (
+        s TermEqualityReflexivity
+        s t s TermEqualityAxiom
+        detachImplicationImplication
+))
+
+thm (TermEqualitySymmetry () () ((s = t) ↔ (t = s)) (
+        s t TermEqualitySymmetryImplication
+        t s TermEqualitySymmetryImplication
+        introduceBiconditionalFromImplications
+))
+
+thm (swapTermEquality () ((H (s = t))) (t = s) (
+        H
+
+        s t TermEqualitySymmetry
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
 == Substitution of objects ==
 We now turn to substitution of an object for a variable.
 
