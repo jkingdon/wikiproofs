@@ -17,7 +17,7 @@ param (FIRSTORDER Interface:First-order_logic (CLASSICAL) ())
 </jh>
 
 == Equality between terms ==
-The axiom of quantifiability is all about equality between terms, not just equality between variables (the latter is what is covered in [[Interface:Axioms of first-order logic]]). So we first define term equality much the way that variable equality was defined in [[Interface:Axioms of first-order logic]]. [[Interface:Equality of classes]] has a different approach (for those who would like metamath-style proper classes, instead of the axiom of quantifiability).<ref>[http://us.metamath.org/mpeuni/df-cleq.html df-cleq], metamath's set.mm, accessed April 16, 2012</ref>
+The axiom of quantifiability is all about equality between terms, not just equality between variables (the latter is what is covered in [[Interface:Axioms of first-order logic]]). So we first define term equality much the way that variable equality was defined in [[Interface:Axioms of first-order logic]]. [[Interface:Equality of classes]] has a different approach (which also defines term equality, but in a way consistent with metamath-style proper classes, and not consistent with the axiom of quantifiability).<ref>[http://us.metamath.org/mpeuni/df-cleq.html df-cleq], metamath's set.mm, accessed April 16, 2012</ref>
 
 <jh>
 var (object s t u)
