@@ -67,7 +67,99 @@ thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
 
 == Equality ==
 
-The basic facts about equality are that it is reflexive, symmetric and transitive. Since we have axioms for those properties, we just add a few rules:
+The basic facts about equality are that it is reflexive, symmetric and transitive. Instead of supposing these as axioms, we have a single axiom which implies them (when combined with some of the other axioms).
+
+=== Reflexivity ===
+We start with reflexivity.  The first two theorems are intermediate steps:
+
+<jh>
+thm (VariableEqualityReflexivity-1 () ()
+  (((value x) = (value y)) → ((value y) = (value y))) (
+        ((value x) = (value y)) ConjunctionIdempotence eliminateBiconditionalReverse
+
+        x y y EqualityAxiom
+        import
+
+        applySyllogism
+))
+
+thm (VariableEqualityReflexivity-2 () ()
+  ((∀ x (¬ ((value y) = (value y)))) → (∀ x (¬ ((value x) = (value y))))) (
+        x y VariableEqualityReflexivity-1
+        introduceTransposition
+        x generalize
+
+        x (¬ ((value y) = (value y))) (¬ ((value x) = (value y))) QuantifiedImplication
+        applyModusPonens
+))
+</jh>
+
+The proof of reflexivity involves adding an extra variable <code>x</code>. We need to specify that this variable is distinct from <code>y</code>, but this doesn't affect the generality of the result. The variable <code>x</code> only appears in the proof, not in the theorem, and so the distinct variable constraint only needs to appear here, not in the statement of the theorem in [[Interface:First-order logic]].
+<jh>
+thm (VariableEqualityReflexivity ( (x y)) () ((value y) = (value y)) (
+        x y Existence
+
+        (¬ ((value y) = (value y))) x Generalization
+        x y VariableEqualityReflexivity-2
+        applySyllogism
+
+        applyModusTollens
+        eliminateDoubleNegation
+))
+</jh>
+
+=== Symmetry ===
+To prove symmetry, we take <code>x = y → (x = x → y = x)</code> from the equality axiom, and then detach <code>x = x</code> because we have already proved reflexivity.
+<jh>
+thm (VariableEqualitySymmetryImplication () ()
+  (((value x) = (value y)) → ((value y) = (value x))) (
+        x VariableEqualityReflexivity
+        x y x EqualityAxiom
+        detachImplicationImplication
+))
+
+thm (VariableEqualitySymmetry () ()
+  (((value x) = (value y)) ↔ ((value y) = (value x))) (
+        x y VariableEqualitySymmetryImplication
+        y x VariableEqualitySymmetryImplication
+        introduceBiconditionalFromImplications
+))
+
+thm (swapVariableEquality () ((H ((value x) = (value y))))
+  ((value y) = (value x)) (
+        H
+
+        x y VariableEqualitySymmetry
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
+=== Transitivity ===
+Transitivity is now just a rearangement of our equality axiom:
+<jh>
+thm (VariableEqualityTransitivity () ()
+  ((((value x) = (value y)) ∧ ((value y) = (value z))) → ((value x) = (value z))) (
+        x y VariableEqualitySymmetryImplication
+        y x z EqualityAxiom
+        applySyllogism
+        import
+))
+
+thm (applyVariableEqualityTransitivity ()
+  ((H1 ((value x) = (value y))) (H2 ((value y) = (value z))))
+  ((value x) = (value z)) (
+        H1
+        H2
+        introduceConjunction
+        x y z VariableEqualityTransitivity
+        applyModusPonens
+))
+</jh>
+
+=== Rules ===
+Here are some rules for equality of terms (which will move out of this file shortly, as we are getting out of the term equality business in favor of handing it to [[First-order logic with quantifiability]] or alternatives).
 
 <jh>
 thm (swapEquality () ((H (s = t))) (t = s) (

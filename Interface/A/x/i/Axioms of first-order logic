@@ -26,13 +26,6 @@ By convention we use φ, ψ, χ, and θ to represent formulas:
 var (formula φ ψ χ θ)
 </jh>
 
-We use the word ''object'' to refer to something which is subject to equality (or, indirectly, via <code>variable</code>, quantification). We define a kind called <code>object</code>, which corresponds to a [[w:First-order_logic#Terms|term]] in more conventional terminology. Theories built on first-order logic, like [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[Interface:Peano axioms|Peano arithmetic]], will define additional kinds of terms such as <code>+</code> (addition) or <code>∪</code> (union).
-
-<jh>
-kind (object)
-var (object s t u s0 s1 t0 t1)
-</jh>
-
 A ''variable'' is something we can quantify over.
 
 <jh>
@@ -40,12 +33,19 @@ kind (variable)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
-A variable can be used where an object is expected, although it needs to be converted via the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where an object is expected).
+We also define [[w:First-order_logic#Terms|term]]s, although for our current purposes the only kind of term we consider is a variable. Theories built on first-order logic, like [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[Interface:Peano axioms|Peano arithmetic]], will define additional kinds of terms such as <code>+</code> (addition) or <code>∪</code> (union). Because <code>term</code> is a JHilbert keyword, we use the word ''object'' to refer to a term.
+
+<jh>
+kind (object)
+var (object s t u s0 s1 t0 t1)
+</jh>
+
+To use a variable as a term in JHilbert needs the following explicit conversion.  When we are writing informally (rather than in JHilbert proofs themselves), we may omit the conversion (it should be understood whereever we use a variable in a context where a term is expected).
 <jh>
 term (object (value variable))
 </jh>
 
-The reverse is not possible.  Examples of objects which are not variables might be <code>s + t</code> for Peano arithmetic, or <code>s ∪ t</code> for set theory.
+Using a term where a variable is expected (for example the <code>x</code> in <code>∀ x φ</code>) is of course not allowed.
 
 == Quantification ==
 We extend the available formulas with [[w:Universal quantification|universal quantification]]:
@@ -66,14 +66,24 @@ stmt (generalize () (φ) (∀ x φ))
 Although a usable theory of predicate logic will generally have at least one more quantifier (∃ for "there exists"), it can be defined in terms of ∀, so we have avoided it in the above axioms and do not need to define it here.
 
 == Equality ==
-
-=== Reflexive, symmetry, and transitive ===
-
-We introduce equality, which is reflexive, symmetry, and transitive.  For simplicity, we simply adopt these three properties as axioms, rather than a smaller set of axioms which imply them.
+In this set of axioms we are concerned with equality between two variables, rather than two terms. [[Interface:Axiom of quantifiability]] takes up equality of terms in one way, and [[Interface:Equality of classes]] has a different approach.<ref>[http://us.metamath.org/mpeuni/df-cleq.html df-cleq], metamath's set.mm, accessed April 16, 2012</ref> However, as a matter of syntax we do say that equality is between two terms, so that those interfaces can adopt an axiom concerning equality between terms without having to use two different equality symbols, one for variables and one for terms.
 
 <jh>
 term (formula (= object object))
+</jh>
 
+=== Building equalities ===
+One of the equality axioms in most formulations of predicate logic with equality is some variation of <code>x = y → (x = z → y = z)</code>.<ref>[http://us.metamath.org/mpeuni/ax-8.html ax-8], metamath's set.mm, accessed April 16, 2012</ref> This can be thought of as a funny way to write transitivity, or as a slight variation of [[Interface:First-order logic with quantifiability#statEqualityBuilderRR|<code>EqualityBuilderRR</code>]].
+<jh>
+stmt (EqualityAxiom () ()
+  (((value x) = (value y)) → (((value x) = (value z)) → ((value y) = (value z)))))
+</jh>
+
+=== Reflexive, symmetry, and transitive ===
+
+Equality, is reflexive, symmetry, and transitive.  For now, we adopt these three properties, for terms, as axioms, rather than a smaller set of axioms which imply them. In the future we expect to pare this down.
+
+<jh>
 stmt (EqualityReflexivity () () (s = s))
 stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
 stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))

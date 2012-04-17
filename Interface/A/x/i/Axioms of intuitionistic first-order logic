@@ -13,7 +13,7 @@
 | exportedby = none
 }}
 
-The treatment of intuitionistic first-order logic is pretty close to the non-intuitionistic one at [[Axioms of first-order logic in terms of substitution built on equality]]. The axiom set is adapted from the ''Stanford Encyclopedia of Philosophy''.<ref>Joan Moschovakis (2010), "Intuitionistic Logic", [http://plato.stanford.edu/entries/logic-intuitionistic/ Stanford Encyclopedia of Philosophy], Edward N. Zalta (ed.)</ref>
+The treatment of intuitionistic first-order logic is pretty close to the non-intuitionistic one at [[Interface:Axioms of first-order logic in terms of substitution built on equality]]. The axiom set is adapted from the ''Stanford Encyclopedia of Philosophy''.<ref>Joan Moschovakis (2010), "Intuitionistic Logic", [http://plato.stanford.edu/entries/logic-intuitionistic/ Stanford Encyclopedia of Philosophy], Edward N. Zalta (ed.)</ref>
 
 We will prove the theorems in [[Interface:Intuitionistic first-order logic]] which are most of what is in [[Interface:First-order logic with quantifiability]] (adding the [[Interface:Law of the excluded middle]] would produce the whole thing).
 
@@ -125,7 +125,7 @@ The first one is that we can specialize from a universally quantified variable t
 stmt (SpecializationToObject () () ((∀ x φ) → (subst s x φ)))
 </jh>
 
-The second is that we can conclude existence, given that a formula holds for a term.<ref>A(t) → ∃xA(x) in Moschovakis<ref>
+The second is that we can conclude existence, given that a formula holds for a term.<ref>A(t) → ∃xA(x) in Moschovakis</ref>
 <jh>
 stmt (ThereExistsIntroductionFromObject () () ((subst s x φ) → (∃ x φ)))
 </jh>

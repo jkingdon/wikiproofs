@@ -87,7 +87,6 @@ stmt (ForAllCommutation () () ((∀ x (∀ y φ)) ↔ (∀ y (∀ x φ))))
 stmt (ThereExistsCommutation () () ((∃ x (∃ y φ)) ↔ (∃ y (∃ x φ))))
 </jh>
 
-{{cleanup|figuring out whether the following is true intuitionistically}}
 ∃ followed by ∀ can be switched,
 <jh>
 stmt (ThereExistsForAllCommutation () () ((∃ x (∀ y φ)) → (∀ y (∃ x φ))))

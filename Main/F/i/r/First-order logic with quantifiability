@@ -11,7 +11,7 @@
 | exports = [[Interface:First-order logic with quantifiability]]
 }}
 
-We start with [[Interface:Classical propositional calculus]] and [[Interface:First-order logic]]. We don't import the [[Interface:Axiom of quantifiability]] yet.
+We start with [[Interface:Classical propositional calculus]] and [[Interface:First-order logic]].
 
 <jh>
 import (CLASSICAL Interface:Classical_propositional_calculus () ())
@@ -26,6 +26,103 @@ var (object s t u s0 s1 t0 t1)
 var (variable x y z x0 x1 y0 y1)
 </jh>
 
+== Term equality ==
+Here we prove that equality between terms (not just variables) is reflexive, symmetric, and transitive, and prove some related convenience theorems.
+
+=== Axiom of quantifiability ===
+We define term equality in [[Interface:Axiom of quantifiability]], so we need to import that interface now, even though for now we are just using it for term equality, rather than for using the axiom of quantifiability in other contexts.
+
+<jh>
+import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
+</jh>
+
+=== Reflexivity ===
+We start with reflexivity. The proof is just as in [[First-order logic]] except we are using a term rather than a variable, and <code>Existence</code> and <code>EqualityAxiom</code> are replaced by <code>Quantifiability</code> and <code>TermEqualityAxiom</code>.
+
+<jh>
+thm (TermEqualityReflexivity-1 () ()
+  (((value x) = s) → (s = s)) (
+        ((value x) = s) ConjunctionIdempotence eliminateBiconditionalReverse
+
+        (value x) s s TermEqualityAxiom
+        import
+
+        applySyllogism
+))
+
+thm (TermEqualityReflexivity-2 () ()
+  ((∀ x (¬ (s = s))) → (∀ x (¬ ((value x) = s)))) (
+        x s TermEqualityReflexivity-1
+        introduceTransposition
+
+        x addForAll
+))
+
+thm (TermEqualityReflexivity ( (x s)) () (s = s) (
+        x s Quantifiability
+
+        (¬ (s = s)) x Generalization
+        x s TermEqualityReflexivity-2
+        applySyllogism
+
+        x ((value x) = s) NotThereExists
+        eliminateBiconditionalForward
+        applySyllogism
+
+        eliminateTransposition
+
+        applyModusPonens
+))
+</jh>
+
+=== Symmetry ===
+Symmetry start with <code>s = t → (s = s → t = s)</code> from the equality axiom, and then detach <code>s = s</code> because we have already proved reflexivity.
+<jh>
+thm (TermEqualitySymmetryImplication () ()
+  ((s = t) → (t = s)) (
+        s TermEqualityReflexivity
+        s t s TermEqualityAxiom
+        detachImplicationImplication
+))
+
+thm (TermEqualitySymmetry () () ((s = t) ↔ (t = s)) (
+        s t TermEqualitySymmetryImplication
+        t s TermEqualitySymmetryImplication
+        introduceBiconditionalFromImplications
+))
+
+thm (swapTermEquality () ((H (s = t))) (t = s) (
+        H
+
+        s t TermEqualitySymmetry
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
+=== Transitivity ===
+Transitivity is now just a rearangement of our equality axiom:
+<jh>
+thm (TermEqualityTransitivity () ()
+  (((s = t) ∧ (t = u)) → (s = u)) (
+        s t TermEqualitySymmetryImplication
+        t s u TermEqualityAxiom
+        applySyllogism
+        import
+))
+
+thm (applyTermEqualityTransitivity ()
+  ((H1 (s = t)) (H2 (t = u)))
+  (s = u) (
+        H1
+        H2
+        introduceConjunction
+        s t u TermEqualityTransitivity
+        applyModusPonens
+))
+</jh>
+
 == Substitution of objects ==
 We now turn to substitution of an object for a variable.
 
@@ -36,7 +133,7 @@ We define a formula <code>(subst s x φ)</code> which means, roughly, that <code
 def ((subst s x φ) (∃ y (((value y) = s) ∧ (∃ x (((value x) = (value y)) ∧ φ)))))
 </jh>
 
-This section contains a few of the preliminary results, which we can prove without the axiom of quantifiability.
+This section contains a few of the preliminary results, which mostly don't need the axiom of quantifiability (but which do rely on some term equality theorems which rely on [[Interface:Axiom of quantifiability]]).
 
 === Definition as theorem ===
 We first prove a theorem form of the definition.
@@ -228,11 +325,7 @@ The proof consists of just applying our not-free theorems to each piece of the d
 </jh>
 
 == Axiom of quantifiability ==
-Having gotten about as far as we're going to get without the [[Interface:Axiom of quantifiability]], we now start proving some consequences of it.
-
-<jh>
-import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
-</jh>
+At this point we start using the axiom of quantifiability without reservation, not just as a way of defining term equality.
 
 == Specialization with substitution ==
 The version of <code>Specialization</code> from [[Interface:First-order logic]] is not the one most often presented as a theorem (or axiom) of predicate logic.  The standard version also contains a substitution, and is often worded something like "if a formula holds for all values of a variable, it also holds when a particular term is properly substituted for that variable" or in symbols <code>∀ x φ → [ s / x ] φ</code>.<ref>[http://us.metamath.org/mpeuni/stdpc4.html stdpc4] in metamath's set.mm, accessed June 9, 2010</ref><ref>a5sbc in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed June 9, 2010</ref><ref>Hirst and Hirst, axiom 4 on page 51</ref>
