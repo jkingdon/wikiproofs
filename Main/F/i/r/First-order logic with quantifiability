@@ -58,7 +58,7 @@ thm (TermEqualityReflexivity-2 () ()
         x addForAll
 ))
 
-thm (TermEqualityReflexivity ( (x s)) () (s = s) (
+thm (EqualityReflexivity ( (x s)) () (s = s) (
         x s Quantifiability
 
         (¬ (s = s)) x Generalization
@@ -80,12 +80,12 @@ Symmetry start with <code>s = t → (s = s → t = s)</code> from the equality a
 <jh>
 thm (TermEqualitySymmetryImplication () ()
   ((s = t) → (t = s)) (
-        s TermEqualityReflexivity
+        s EqualityReflexivity
         s t s TermEqualityAxiom
         detachImplicationImplication
 ))
 
-thm (TermEqualitySymmetry () () ((s = t) ↔ (t = s)) (
+thm (EqualitySymmetry () () ((s = t) ↔ (t = s)) (
         s t TermEqualitySymmetryImplication
         t s TermEqualitySymmetryImplication
         introduceBiconditionalFromImplications
@@ -94,7 +94,7 @@ thm (TermEqualitySymmetry () () ((s = t) ↔ (t = s)) (
 thm (swapTermEquality () ((H (s = t))) (t = s) (
         H
 
-        s t TermEqualitySymmetry
+        s t EqualitySymmetry
         eliminateBiconditionalReverse
 
         applyModusPonens
@@ -104,7 +104,7 @@ thm (swapTermEquality () ((H (s = t))) (t = s) (
 === Transitivity ===
 Transitivity is now just a rearangement of our equality axiom:
 <jh>
-thm (TermEqualityTransitivity () ()
+thm (EqualityTransitivity () ()
   (((s = t) ∧ (t = u)) → (s = u)) (
         s t TermEqualitySymmetryImplication
         t s u TermEqualityAxiom
@@ -118,13 +118,172 @@ thm (applyTermEqualityTransitivity ()
         H1
         H2
         introduceConjunction
-        s t u TermEqualityTransitivity
+        s t u EqualityTransitivity
         applyModusPonens
 ))
 </jh>
 
-== Substitution of objects ==
-We now turn to substitution of an object for a variable.
+=== Rules ===
+Here are some rules for equality of terms.
+
+<jh>
+thm (swapEquality () ((H (s = t))) (t = s) (
+        H
+        s t EqualitySymmetry eliminateBiconditionalReverse
+        applyModusPonens
+))
+
+thm (swapEqualityInConsequent () ((H (φ → (s = t)))) (φ → (t = s)) (
+        H
+        s t EqualitySymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (applyEqualityTransitivity () ((H1 (s = t)) (H2 (t = u))) (s = u) (
+        H1
+        H2
+        introduceConjunction
+        s t u EqualityTransitivity
+        applyModusPonens
+))
+
+thm (applyEqualityTransitivityInConsequent () ((H1 (φ → (s = t))) (H2 (φ → (t = u)))) (φ → (s = u)) (
+        H1
+        H2
+        composeConjunction
+        s t u EqualityTransitivity
+        applySyllogism
+))
+</jh>
+
+=== Builder ===
+<code>EqualityBuilder</code> can be derived from transitivity.  We start with a special case:
+
+<jh>
+thm (EqualityBuilderRR () () ((s0 = s1) → ((s0 = t) ↔ (s1 = t))) (
+</jh>
+The proof has two halves, each of which is proved by transitivity and an export.
+The forward implication, <code>s0 = s1 → (s0 = t → s1 = t)</code>, also involves switching the order of the opening equality.
+<jh>
+        s0 s1 EqualitySymmetry
+        eliminateBiconditionalReverse
+
+        s1 s0 t EqualityTransitivity
+        export
+
+        applySyllogism
+
+</jh>
+The reverse implication, <code>s0 = s1 → (s1 = t → s0 = t)</code>, is even simpler:
+<jh>
+        s0 s1 t EqualityTransitivity
+        export
+
+</jh>
+We then combine the two directions:
+<jh>
+        composeConjunction
+
+        (s0 = t) (s1 = t) BiconditionalImplication eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+We provide an analogous result with the order of the equalities changed, <code>EqualityBuilderLL</code>.
+<jh>
+thm (commute2 () () (((s0 = t0) ↔ (s1 = t1)) → ((t0 = s0) ↔ (t1 = s1))) (
+        s0 t0 EqualitySymmetry
+        s1 t1 EqualitySymmetry
+        buildBiconditional
+        eliminateBiconditionalReverse
+))
+
+thm (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))) (
+        s0 s1 t EqualityBuilderRR
+        s0 t s1 t commute2
+        applySyllogism
+))
+</jh>
+
+Combining <code>EqualityBuilderLL</code> and <code>EqualityBuilderRR</code> gives us the full builder.
+
+<jh>
+thm (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))) (
+        (s0 = s1) (t0 = t1) ConjunctionRightElimination
+        s0 s1 t0 EqualityBuilderRR
+        applySyllogism
+
+        (s0 = s1) (t0 = t1) ConjunctionLeftElimination
+        t0 t1 s1 EqualityBuilderLL
+        applySyllogism
+
+        composeConjunction
+
+        (s0 = t0) (s1 = t0) (s1 = t1) BiconditionalTransitivity
+        applySyllogism
+))
+
+thm (buildEquality () ((HX (s0 = s1)) (HY (t0 = t1))) ((s0 = t0) ↔ (s1 = t1)) (
+        HX
+        HY
+        introduceConjunction
+        s0 s1 t0 t1 EqualityBuilder
+        applyModusPonens
+))
+
+thm (buildEqualityRR () ((H (s0 = s1))) ((s0 = t) ↔ (s1 = t)) (
+        H
+        t EqualityReflexivity
+        introduceConjunction
+
+        s0 s1 t t EqualityBuilder
+
+        applyModusPonens
+))
+
+thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
+        s EqualityReflexivity
+        H
+        introduceConjunction
+
+        s s t0 t1 EqualityBuilder
+
+        applyModusPonens
+))
+</jh>
+
+For convenience, we also supply builders in the consequent:
+
+<jh>
+thm (buildEqualityInConsequent ()
+  ((HN (φ → (s0 = s1)))
+   (HM (φ → (t0 = t1))))
+  (φ → ((s0 = t0) ↔ (s1 = t1))) (
+        HN HM composeConjunction
+        s0 s1 t0 t1 EqualityBuilder
+        applySyllogism
+))
+
+thm (buildEqualityRRInConsequent ()
+  ((H (φ → (s0 = s1))))
+  (φ → ((s0 = t) ↔ (s1 = t))) (
+        H
+        t EqualityReflexivity φ introduceAntecedent
+        buildEqualityInConsequent
+))
+
+thm (buildEqualityLLInConsequent ()
+  ((H (φ → (t0 = t1))))
+  (φ → ((s = t0) ↔ (s = t1))) (
+        s EqualityReflexivity φ introduceAntecedent
+        H
+        buildEqualityInConsequent
+))
+</jh>
+
+== Substitution of terms ==
+We now turn to substitution of a term for a variable.
 
 In some formulations of predicate logic, this kind of substitution (known as ''proper substitution'' as there are some rules about what kinds of substitution are valid) is performed syntactically and the rules governing it are expressed in English or a meta-theory.  JHilbert does not have a feature to do syntactic proper substitution, but we are able to build up equivalent mechanisms from equality. The theorems in [[Interface:First-order logic with quantifiability]] could be proven from either the syntactic definition or ours.
 

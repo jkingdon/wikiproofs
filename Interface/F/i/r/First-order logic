@@ -171,48 +171,20 @@ stmt (removeThereExistsInConsequent ((x φ)) ((antecedent → (∃ x φ))) (ante
 </jh>
 
 == Equality ==
+Here we are concerned with equality between variables. Equality between terms is treated in [[Interface:First-order logic with quantifiability]].
+
 Equality is reflexive, symmetry, and transitive.
 <jh>
 term (formula (= object object))
-stmt (EqualityReflexivity () () (s = s))
+stmt (VariableEqualityReflexivity () () ((value x) = (value x)))
 
-stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
-stmt (swapEquality () ((s = t)) (t = s))
+stmt (VariableEqualitySymmetry () () (((value x) = (value y)) ↔ ((value y) = (value x))))
+stmt (swapVariableEquality () (((value x) = (value y))) ((value y) = (value x)))
 
-stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
-stmt (applyEqualityTransitivity () ((s = t) (t = u)) (s = u))
-</jh>
-
-Here are convenience theorems which are closely related to those:
-<jh>
-stmt (swapEqualityInConsequent () ((φ → (s = t))) (φ → (t = s)))
-stmt (applyEqualityTransitivityInConsequent () ((φ → (s = t)) (φ → (t = u))) (φ → (s = u)))
-</jh>
-
-There is also the principle of "equals can be substituted for equals". In our system, this is done via builders, and here we provide one for equals itself. Theories which build on first-order logic will provide builders for additional expressions such as <code>∈</code> (is an element of) for set theory or <code>+</code> (addition) for Peano arithmetic.
-<jh>
-stmt (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))))
-stmt (buildEquality () ((s0 = s1) (t0 = t1)) ((s0 = t0) ↔ (s1 = t1)))
-</jh>
-
-We also supply a variety of variant builders, for convenience:
-<jh>
-stmt (EqualityBuilderRR () () ((s0 = s1) → ((s0 = t) ↔ (s1 = t))))
-stmt (buildEqualityRR () ((s0 = s1)) ((s0 = t) ↔ (s1 = t)))
-
-stmt (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))))
-stmt (buildEqualityLL () ((t0 = t1)) ((s = t0) ↔ (s = t1)))
-
-stmt (buildEqualityInConsequent ()
-  ((φ → (s0 = s1))
-   (φ → (t0 = t1)))
-  (φ → ((s0 = t0) ↔ (s1 = t1))))
-stmt (buildEqualityRRInConsequent ()
-  ((φ → (s0 = s1)))
-  (φ → ((s0 = t) ↔ (s1 = t))))
-stmt (buildEqualityLLInConsequent ()
-  ((φ → (t0 = t1)))
-  (φ → ((s = t0) ↔ (s = t1))))
+stmt (VariableEqualityTransitivity () ()
+  ((((value x) = (value y)) ∧ ((value y) = (value z))) → ((value x) = (value z))))
+stmt (applyVariableEqualityTransitivity ()
+  (((value x) = (value y)) ((value y) = (value z))) ((value x) = (value z)))
 </jh>
 
 We also define <code>≠</code>, which is just an abbreviation for negation and equality.
