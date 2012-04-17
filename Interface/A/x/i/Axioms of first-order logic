@@ -79,16 +79,6 @@ stmt (EqualityAxiom () ()
   (((value x) = (value y)) → (((value x) = (value z)) → ((value y) = (value z)))))
 </jh>
 
-=== Reflexive, symmetry, and transitive ===
-
-Equality, is reflexive, symmetry, and transitive.  For now, we adopt these three properties, for terms, as axioms, rather than a smaller set of axioms which imply them. In the future we expect to pare this down.
-
-<jh>
-stmt (EqualityReflexivity () () (s = s))
-stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
-stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
-</jh>
-
 === Axioms combining equality and quantification ===
 
 The <code>Existence</code> axiom asserts that there is at least one object:
