@@ -36,6 +36,45 @@ We define term equality in [[Interface:Axiom of quantifiability]], so we need to
 import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITHOUT_QUANTIFIABILITY) ())
 </jh>
 
+=== Reflexivity ===
+We start with reflexivity. The proof is just as in [[First-order logic]] except we are using a term rather than a variable, and <code>Existence</code> and <code>EqualityAxiom</code> are replaced by <code>Quantifiability</code> and <code>TermEqualityAxiom</code>.
+
+<jh>
+thm (TermEqualityReflexivity-1 () ()
+  (((value x) = s) → (s = s)) (
+        ((value x) = s) ConjunctionIdempotence eliminateBiconditionalReverse
+
+        (value x) s s TermEqualityAxiom
+        import
+
+        applySyllogism
+))
+
+thm (TermEqualityReflexivity-2 () ()
+  ((∀ x (¬ (s = s))) → (∀ x (¬ ((value x) = s)))) (
+        x s TermEqualityReflexivity-1
+        introduceTransposition
+
+        x addForAll
+))
+
+thm (TermEqualityReflexivity ( (x s)) () (s = s) (
+        x s Quantifiability
+
+        (¬ (s = s)) x Generalization
+        x s TermEqualityReflexivity-2
+        applySyllogism
+
+        x ((value x) = s) NotThereExists
+        eliminateBiconditionalForward
+        applySyllogism
+
+        eliminateTransposition
+
+        applyModusPonens
+))
+</jh>
+
 == Substitution of objects ==
 We now turn to substitution of an object for a variable.
 
