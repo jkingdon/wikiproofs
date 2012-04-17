@@ -1676,10 +1676,15 @@ add the quantifier to the two sides of the biconditional, and invoke <code>makeS
 === Substitution of a variable which does not appear ===
 If a variable does not appear in a formula, substituting it for anything does not affect the truth of the formula.
 <jh>
-thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
-        φ BiconditionalReflexivity
-        ((value x) = s) introduceAntecedent
-        makeSubstExplicit
+thm (NullSubstitution ((x φ)) () ((subst s x φ) ↔ φ) (
+        s x φ ThereExistsIntroductionFromObject
+        removeThereExistsInConsequent
+
+        φ x Generalization
+        x φ s SpecializationToObject
+        applySyllogism
+
+        introduceBiconditionalFromImplications
 ))
 </jh>
 
