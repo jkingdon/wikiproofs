@@ -806,22 +806,12 @@ Now we just need to apply the definition of <code>subst</code> and we are done:
 Substituting a formula with a variable which is not free in that formula has no effect.<ref>[http://us.metamath.org/mpeuni/sbf.html sbf], metamath's set.mm, accessed July 20, 2010, except that the replacement is an object not a variable</ref>
 
 <jh>
-thm (NullSubstitution ((s x) (x φ)) () ((subst s x φ) ↔ φ) (
+thm (NullSubstitution ((x φ)) () ((subst s x φ) ↔ φ) (
 </jh>
-We begin with <code>[s / x] φ → ∃ x (x = s ∧ φ)</code>.  The distinct variable constraint between <code>x</code> and <code>s</code> prevents the quantifier from capturing an instance of the variable <code>x</code>. For example, in arithmetic <code>[ x + 1 / x ] x = x</code> holds (and means, expanding the substitution, <code>x + 1 = x + 1</code>). However, <code>∃ x (x = x + 1 ∧ x = x)</code> does not, because <code>x + 1</code> has illegitimately been moved inside the quantifier.
+The forward direction is <code>[s / x] φ → φ</code>.
 <jh>
-        s x φ SubstitutionThereExists
-        eliminateBiconditionalReverse
-</jh>
-Since <code>x</code> is not free in <code>φ</code>, <code>∃ x (x = s ∧ φ)</code> in turn implies <code>∃ x x = s ∧ φ</code>
-<jh>
-        x ((value x) = s) φ ThereExistsConjunctionRightMovement
-        eliminateBiconditionalReverse
-        applySyllogism
-</jh>
-We can eliminate the left hand side of the consequent to get <code>[s / x] φ → φ</code>, which is the forward half of our desired result.
-<jh>
-        extractRightConjunction
+        s x φ ThereExistsIntroductionFromObject
+        removeThereExistsInConsequent
 </jh>
 The reverse direction is easier. Generalization gets us <code>φ → ∀ x φ</code>, and <code>SpecializationToObject</code> turns that into <code>[ s / x ] φ</code>
 <jh>
