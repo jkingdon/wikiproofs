@@ -66,14 +66,17 @@ stmt (generalize () (φ) (∀ x φ))
 Although a usable theory of predicate logic will generally have at least one more quantifier (∃ for "there exists"), it can be defined in terms of ∀, so we have avoided it in the above axioms and do not need to define it here.
 
 == Equality ==
-
-=== Reflexive, symmetry, and transitive ===
-
-We introduce equality, which is reflexive, symmetry, and transitive.  For simplicity, we simply adopt these three properties as axioms, rather than a smaller set of axioms which imply them.
+In this set of axioms we are concerned with equality between two variables, rather than two terms. [[Interface:Axiom of quantifiability]] takes up equality of terms in one way, and [[Interface:Equality of classes]] has a different approach.<ref>http://us.metamath.org/mpeuni/df-cleq.html df-cleq], metamath's set.mm, accessed April 16, 2012</ref> However, as a matter of syntax we do say that equality is between two terms, so that those interfaces can adopt an axiom concerning equality between terms without having to use two different equality symbols, one for variables and one for terms.
 
 <jh>
 term (formula (= object object))
+</jh>
 
+=== Reflexive, symmetry, and transitive ===
+
+Equality, is reflexive, symmetry, and transitive.  For now, we adopt these three properties, for terms, as axioms, rather than a smaller set of axioms which imply them. In the future we expect to pare this down.
+
+<jh>
 stmt (EqualityReflexivity () () (s = s))
 stmt (EqualitySymmetry () () ((s = t) ↔ (t = s)))
 stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
