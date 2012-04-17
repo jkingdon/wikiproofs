@@ -101,6 +101,28 @@ thm (swapTermEquality () ((H (s = t))) (t = s) (
 ))
 </jh>
 
+=== Transitivity ===
+Transitivity is now just a rearangement of our equality axiom:
+<jh>
+thm (TermEqualityTransitivity () ()
+  (((s = t) ∧ (t = u)) → (s = u)) (
+        s t TermEqualitySymmetryImplication
+        t s u TermEqualityAxiom
+        applySyllogism
+        import
+))
+
+thm (applyTermEqualityTransitivity ()
+  ((H1 (s = t)) (H2 (t = u)))
+  (s = u) (
+        H1
+        H2
+        introduceConjunction
+        s t u TermEqualityTransitivity
+        applyModusPonens
+))
+</jh>
+
 == Substitution of objects ==
 We now turn to substitution of an object for a variable.
 
