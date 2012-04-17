@@ -40,7 +40,7 @@ import (QUANTIFIABILITY_AXIOM Interface:Axiom_of_quantifiability (CLASSICAL WITH
 We start with reflexivity. The proof is just as in [[First-order logic]] except we are using a term rather than a variable, and <code>Existence</code> and <code>EqualityAxiom</code> are replaced by <code>Quantifiability</code> and <code>TermEqualityAxiom</code>.
 
 <jh>
-thm (TermEqualityReflexivity-1 () ()
+thm (EqualityReflexivity-1 () ()
   (((value x) = s) → (s = s)) (
         ((value x) = s) ConjunctionIdempotence eliminateBiconditionalReverse
 
@@ -50,9 +50,9 @@ thm (TermEqualityReflexivity-1 () ()
         applySyllogism
 ))
 
-thm (TermEqualityReflexivity-2 () ()
+thm (EqualityReflexivity-2 () ()
   ((∀ x (¬ (s = s))) → (∀ x (¬ ((value x) = s)))) (
-        x s TermEqualityReflexivity-1
+        x s EqualityReflexivity-1
         introduceTransposition
 
         x addForAll
@@ -62,7 +62,7 @@ thm (EqualityReflexivity ( (x s)) () (s = s) (
         x s Quantifiability
 
         (¬ (s = s)) x Generalization
-        x s TermEqualityReflexivity-2
+        x s EqualityReflexivity-2
         applySyllogism
 
         x ((value x) = s) NotThereExists
@@ -78,7 +78,7 @@ thm (EqualityReflexivity ( (x s)) () (s = s) (
 === Symmetry ===
 Symmetry start with <code>s = t → (s = s → t = s)</code> from the equality axiom, and then detach <code>s = s</code> because we have already proved reflexivity.
 <jh>
-thm (TermEqualitySymmetryImplication () ()
+thm (EqualitySymmetryImplication () ()
   ((s = t) → (t = s)) (
         s EqualityReflexivity
         s t s TermEqualityAxiom
@@ -86,18 +86,9 @@ thm (TermEqualitySymmetryImplication () ()
 ))
 
 thm (EqualitySymmetry () () ((s = t) ↔ (t = s)) (
-        s t TermEqualitySymmetryImplication
-        t s TermEqualitySymmetryImplication
+        s t EqualitySymmetryImplication
+        t s EqualitySymmetryImplication
         introduceBiconditionalFromImplications
-))
-
-thm (swapTermEquality () ((H (s = t))) (t = s) (
-        H
-
-        s t EqualitySymmetry
-        eliminateBiconditionalReverse
-
-        applyModusPonens
 ))
 </jh>
 
@@ -106,20 +97,10 @@ Transitivity is now just a rearangement of our equality axiom:
 <jh>
 thm (EqualityTransitivity () ()
   (((s = t) ∧ (t = u)) → (s = u)) (
-        s t TermEqualitySymmetryImplication
+        s t EqualitySymmetryImplication
         t s u TermEqualityAxiom
         applySyllogism
         import
-))
-
-thm (applyTermEqualityTransitivity ()
-  ((H1 (s = t)) (H2 (t = u)))
-  (s = u) (
-        H1
-        H2
-        introduceConjunction
-        s t u EqualityTransitivity
-        applyModusPonens
 ))
 </jh>
 
