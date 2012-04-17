@@ -71,7 +71,7 @@ Possibility distributes or collects across a disjunction.<ref>theorem K6, page 2
 stmt (PossibilityDisjunction () () ((◊ (p ∨ q)) ↔ ((◊ p) ∨ (◊ q))))
 </jh>
 
-TODO: there are more, for example in Hughes and Cresswell beyond page 29.
+{{cleanup|adding other modal logic theorems, for example those in Hughes and Cresswell beyond page 29}}
 
 == Notes ==
 <references/>
