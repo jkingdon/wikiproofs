@@ -170,7 +170,7 @@ We can remove a universal quantifier. This is sometimes taken as an axiom but he
 <jh>
 thm (Specialization-18 ((x y)) () 
   (((value y) = (value x)) → ((¬ φ) → (∀ x (((value x) = (value y)) → (¬ φ))))) (
-        (value y) (value x) EqualitySymmetry eliminateBiconditionalReverse
+        y x VariableEqualitySymmetry eliminateBiconditionalReverse
         x y (¬ φ) VariableSubstitution
         applySyllogism
 ))
@@ -1281,7 +1281,7 @@ thm (ChangeVariableThereExistsForwardNotFree ((x y))
 
         H
 
-        (value x) (value y) EqualitySymmetry
+        x y VariableEqualitySymmetry
         φx φy BiconditionalSymmetry
         buildImplication
 
