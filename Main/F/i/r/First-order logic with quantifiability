@@ -813,7 +813,7 @@ The forward direction is <code>[s / x] φ → φ</code>.
         s x φ ThereExistsIntroductionFromObject
         removeThereExistsInConsequent
 </jh>
-The reverse direction is easier. Generalization gets us <code>φ → ∀ x φ</code>, and <code>SpecializationToObject</code> turns that into <code>[ s / x ] φ</code>
+The reverse direction starts with <code>Generalization</code> to give <code>φ → ∀ x φ</code>, and then <code>SpecializationToObject</code> turns that into <code>[ s / x ] φ</code>
 <jh>
         φ x Generalization
         x φ s SpecializationToObject
