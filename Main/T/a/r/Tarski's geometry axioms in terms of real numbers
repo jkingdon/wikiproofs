@@ -16,7 +16,10 @@ import (COMPLEX Interface:Complex_numbers (CLASSICAL QUANTIFY_OVER_SETS SETS) ()
 
 We also import an interface, [[Interface:Restricting all quantifiers]], which provides the mapping between quantifiers which range over sets and quantifiers which range over points. The reason for this to be a separate interface rather than just a set of definitions and theorems in this file is that when it comes time to export to [[Interface:Tarski's geometry axioms]], we'll need an interface to pass as a parameter.
 <jh>
-import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers (CLASSICAL QUANTIFY_OVER_SETS SETS COMPLEX) ())
+import (UNIVERSE_OF_POINTS Interface:Universe_of_points (CLASSICAL QUANTIFY_OVER_SETS SETS COMPLEX) ())
+
+import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers
+  (CLASSICAL QUANTIFY_OVER_SETS SETS COMPLEX UNIVERSE_OF_POINTS) ())
 </jh>
 
 The interface [[Interface:Restricting all quantifiers]] defines a kind for restricted terms called <code>object</code>, which corresponds to a point.
