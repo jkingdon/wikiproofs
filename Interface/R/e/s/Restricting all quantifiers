@@ -24,7 +24,7 @@ param (COMPLEX Interface:Complex_number_axioms (CLASSICAL FIRSTORDER SETS) ())
 var (formula φ)
 </jh>
 
-Although the construction we are doing here isn't dependent on what set we are using for the universe of the restricted quantifiers, at least for now we specify the universe here directly (as a set; within the world of restrcited quantifiers, the restricted universe is implicit). The choice of ℝ<sup>2</sup> is what we need to construct two dimensional geometry from the reals.
+Although the construction we are doing here isn't dependent on what set we are using for the universe of the restricted quantifiers, at least for now we specify the universe here directly (as a set; within the world of restricted quantifiers, the restricted universe is implicit). The choice of ℝ<sup>2</sup> is what we need to construct two dimensional geometry from the reals.
 <jh>
 def ((universe) ((ℝ) × (ℝ)))
 </jh>
