@@ -21,14 +21,9 @@ param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) s
 param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
-In order to take [[Interface:Universe of points]] as a parameter, we need to take complex numbers as a parameter. We may be able to avoid this by using a different interface for the universe here (say, one which restricts to <code>{ ∅ }</code>, a nonempty universe being required for most flavors of predicate logic, including the one at [[Interface:First-order logic with quantifiability]]).
-<jh>
-param (COMPLEX Interface:Complex_numbers (CLASSICAL FIRSTORDER SETS) ())
-</jh>
-
 We take a parameter indicating what set to restrict to. It needs to define one 0-ary term, <code>(universe)</code>. It indicates the universe as a set (within the world of restricted quantifiers, the restricted universe is implicit). That is, it is of kind <code>set.object</code>.
 <jh>
-param (UNIVERSE Interface:Universe_of_points (CLASSICAL FIRSTORDER SETS COMPLEX) ())
+param (UNIVERSE Interface:Universe (CLASSICAL FIRSTORDER SETS) ())
 
 var (formula φ)
 </jh>
