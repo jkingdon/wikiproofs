@@ -53,6 +53,23 @@ term (object (· object object))
 stmt (MultiplicationBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 · y0) = (x1 · y1))))
 </jh>
 
+It is associative<ref>axiom F5 of Margaris, page 115</ref> and commutative<ref>axiom F8 of Margaris, page 115</ref>.
+<jh>
+stmt (MultiplicationAssociativity () () (((x · y) · z) = (x · (y · z))))
+stmt (MultiplicationCommutativity () () ((x · y) = (y · x)))
+</jh>
+
+There is a multiplicative identity called <code>1</code>.<ref>axiom F6 of Margaris, page 115</ref>
+<jh>
+term (object (1))
+stmt (MultiplicativeIdentity () () ((x · (1)) = x))
+</jh>
+
+Every nonzero element has a multiplicative inverse.<ref>axiom F7 of Margaris, page 116</ref>
+<jh>
+stmt (MultiplicativeInverse () () ((x ≠ (0)) → (∃ v ((x · (value v)) = (1)))))
+</jh>
+
 == Footnotes ==
 <references/>
 
