@@ -1,0 +1,63 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
+| importedby = none yet
+| exportedby = none yet
+}}
+
+A ''field'' has two operations, addition and multiplication, which obey the familiar properties shown below. Here we present a first-order theory of fields (that is, all variables indicate an element of the field, and there is no general way to form sets of elements or variables which represent elements of some structure other than the field). This is as opposed to building the field within set theory, where the field consists of a set and addition and multiplication are [[Interface:Relations|relations]] on that set.
+
+Our first-order theory of fields is taken from a book by Margaris.<ref>Margaris, theory F, page 115</ref>
+
+We start by importing propositional and predicate logic.
+
+<jh>
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+</jh>
+
+== Addition ==
+There is an addition operation,<ref>Margaris, page 115</ref> which obeys the usual equality axioms.<ref>Margaris, exercise 1, page 120</ref>
+<jh>
+var (object x y z x0 y0 z0 x1 y1 z1)
+var (variable v v0 v1 v2)
+
+term (object (+ object object))
+stmt (AdditionBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 + y0) = (x1 + y1))))
+</jh>
+
+It is associative<ref>axiom F1 of Margaris, page 115</ref> and commutative<ref>axiom F4 of Margaris, page 115</ref>.
+<jh>
+stmt (AdditionAssociativity () () (((x + y) + z) = (x + (y + z))))
+stmt (AdditionCommutativity () () ((x + y) = (y + x)))
+</jh>
+
+There is an additive identity called <code>0</code>.<ref>axiom F2 of Margaris, page 115</ref>
+<jh>
+term (object (0))
+stmt (AdditiveIdentity () () ((x + (0)) = x))
+</jh>
+
+Every element has an additive inverse.<ref>axiom F3 of Margaris, page 115</ref>
+<jh>
+stmt (AdditiveInverse () () (∃ v ((x + (value v)) = (0))))
+</jh>
+
+== Terms versus variables ==
+
+An astute reader comparing the axioms above with the ones in Margaris will notice that the above ones are stated in terms of terms rather than variables. For example, Margaris' states commutativity as <code>∀ x ∀ y (x + y = y + x)</code> (where <code>x</code> and <code>y</code> are variables), whereas we state it above as <code>x + y = y + x</code>, where <code>x</code> and <code>y</code> are terms. The axioms using variables would suffice; we could convert them to their term counterparts using <code>VariableToObject</code> combined with the equality axioms. We state the axioms using terms merely to avoid a number of repetitive proofs of this sort.
+
+== Multiplication ==
+There is a multiplication operation,<ref>Margaris, page 115</ref> which obeys the usual equality axioms.<ref>Margaris, exercise 1, page 120</ref>
+<jh>
+term (object (· object object))
+stmt (MultiplicationBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 · y0) = (x1 · y1))))
+</jh>
+
+== Footnotes ==
+<references/>
+
+== Cited works ==
+* Margaris, Angelo (1990), ''First Order Mathematical Logic'', ISBN 978-0-486-66269-5
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Real and complex fields]]
