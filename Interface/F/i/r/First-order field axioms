@@ -70,6 +70,12 @@ Every nonzero element has a multiplicative inverse.<ref>axiom F7 of Margaris, pa
 stmt (MultiplicativeInverse () () ((x ≠ (0)) → (∃ v ((x · (value v)) = (1)))))
 </jh>
 
+== Distributivity ==
+It is not enough to merely have addition and multiplication operations which obey the above axioms. Addition and multiplication also need to relate to each other. Specifically, multiplication must distribute over addition.<ref>axiom F9 of Margaris, page 116</ref>
+<jh>
+stmt (Distributivity () () ((x · (y + z)) = ((x · y) + (x · z))))
+</jh>
+
 == Footnotes ==
 <references/>
 
