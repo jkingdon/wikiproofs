@@ -76,6 +76,12 @@ It is not enough to merely have addition and multiplication operations which obe
 stmt (Distributivity () () ((x · (y + z)) = ((x · y) + (x · z))))
 </jh>
 
+== Non-degenerative ==
+The axioms presented so far allow for a situation where there is exactly one element, but we wish to exclude that case.
+<jh>
+stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
 == Footnotes ==
 <references/>
 
