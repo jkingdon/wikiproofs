@@ -46,6 +46,13 @@ def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
 == Addition ==
 <jh>
 def ((+ X Y) ((asSet X) set.+ (asSet Y)))
+def ((0) (set.0))
+</jh>
+
+== Multiplication ==
+<jh>
+def ((· X Y) ((asSet X) set.· (asSet Y)))
+def ((1) (set.1))
 </jh>
 
 == Export ==
