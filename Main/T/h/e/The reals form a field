@@ -1,0 +1,63 @@
+{{interfaces
+| imports = [[Interface:Complex number axioms]]
+| exports = [[Interface:First-order field axioms]]
+}}
+
+Here we show that the real numbers form a field, in the sense that we can export to [[Interface:First-order field axioms]].
+
+We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]],  [[Interface:Set theory]], and [[Interface:Complex number axioms]].
+
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (QUANTIFY_OVER_SETS Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
+import (SETS Interface:Set_theory (CLASSICAL QUANTIFY_OVER_SETS) ())
+import (COMPLEX Interface:Complex_numbers (CLASSICAL QUANTIFY_OVER_SETS SETS) set.)
+</jh>
+
+We also import an interface, [[Interface:Restricting all quantifiers]], which provides the mapping between quantifiers which range over sets and quantifiers which range over real numbers. The reason for this to be a separate interface rather than just a set of definitions and theorems in this file is that when it comes time to export to [[Interface:First-order field axioms]], we'll need an interface to pass as a parameter.
+<jh>
+def ((universe) (set.ℝ))
+export (UNIVERSE Interface:Universe (CLASSICAL QUANTIFY_OVER_SETS SETS) ())
+
+import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers
+  (CLASSICAL QUANTIFY_OVER_SETS SETS UNIVERSE) ())
+</jh>
+
+The interface [[Interface:Restricting all quantifiers]] defines a kind for restricted terms called <code>object</code>, which corresponds to a real number.
+<jh>
+kindbind (object real)
+</jh>
+
+Now we define some variables.
+
+<jh>
+var (variable x y z w)
+var (object X Y Z W)
+var (set.variable a b c)
+var (set.object A B C D)
+var (formula φ)
+</jh>
+
+The following definition should perhaps go in [[Interface:Restricting all quantifiers]] although that perhaps is a question of whether that interface assumes the axiom of quantifiability.
+<jh>
+def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
+</jh>
+
+== Addition ==
+<jh>
+def ((+ X Y) ((asSet X) set.+ (asSet Y)))
+</jh>
+
+== Export ==
+<jh>
+#export (FIELD Interface:First-order_field_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
+</jh>
+
+== Footnotes ==
+<references/>
+
+== References ==
+* Tarski, Alfred; Givant, Steven (1999), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.27.9012 Tarski's system of geometry]", The Bulletin of Symbolic Logic 5 (2): 175–214, [[doi:10.2307/421089]], MR1791303, ISSN 1079-8986
+
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
