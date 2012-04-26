@@ -54,6 +54,13 @@ Having defined <code>asSet</code>, equality of restricted terms can be defined i
 def ((= X Y) ((asSet X) set.= (asSet Y)))
 </jh>
 
+We use <code>asSet</code> to go from a restricted term to a set. To go from a set to a restricted term is possible but a bit trickier. The term <code>asRestrictedTerm A</code> represents the term corresponding to the set <code>A</code>, if that set is in the universe, or else an arbitrary value (in the presence of first-order logic e [[Interace:
+<jh>
+term (object (asRestrictedTerm set.object))
+stmt (SetRestrictedTerm () ((A ∈ (universe))) ((asSet (asRestrictedTerm A)) set.= A))
+stmt (RestrictedTermSet () () ((asRestrictedTerm (asSet X)) = X))
+</jh>
+
 Taking the value of a restricted variable yields a restricted term. It might be possible to define <code>value</code> in terms of other things like <code>asSetVariable<code>, <code>set.value</code>, and probably others, but at least for now we define it via axioms, rather than a JHilbert definition.
 <jh>
 term (object (value variable))

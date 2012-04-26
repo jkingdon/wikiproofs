@@ -32,7 +32,7 @@ Now we define some variables.
 
 <jh>
 var (variable x y z w)
-var (object X Y Z W)
+var (object X Y Z W X0 X1 Y0 Y1)
 var (set.variable a b c)
 var (set.object A B C D)
 var (formula φ)
@@ -45,9 +45,18 @@ def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
 
 == Addition ==
 <jh>
-def ((+ X Y) ((asSet X) set.+ (asSet Y)))
+def ((+ X Y) (asRestrictedTerm ((asSet X) set.+ (asSet Y))))
 def ((0) (set.0))
+
+#thm (AdditionBuilder () () (((X0 = X1) ∧ (Y0 = Y1)) → ((X0 + Y0) = (X1 + Y1))) (
+#        (asSet X0) (asSet X1) (asSet Y0) (asSet Y1) set.AdditionBuilder
+# TODO:now deal with the asRestrictedTerm stuff
+#))
 </jh>
+
+For information:
+stmt (set.AdditionBuilder () () (((A0 set.= A1) ∧ (B0 set.= B1)) → ((A0 set.+ B0) set.= (A1 set.+ B1))))
+
 
 == Multiplication ==
 <jh>
