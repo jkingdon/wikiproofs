@@ -105,12 +105,18 @@ thm (InComplex () () ((asSet X) ∈ (set.ℂ)) (
 === Associativity ===
 We can first state a version of associativity which is stated in terms of <code>set.+</code> and <code>set.=</code> but where we don't need explicit antecedents for the numbers being complex.
 <jh>
-#thm (AdditionAssociativity-1 () ()
-#  ((((asSet X) set.+ (asSet Y)) set.+ (asSet Z)) set.=
-#    ((asSet X) set.+ ((asSet Y) set.+ (asSet Z)))) (
-#        X InUniverse
-#        set.RealComplex
-#))
+thm (AdditionAssociativity-1 () ()
+  ((((asSet X) set.+ (asSet Y)) set.+ (asSet Z)) set.=
+    ((asSet X) set.+ ((asSet Y) set.+ (asSet Z)))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+        Z InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) (asSet Z) set.AdditionAssociativity
+        applyModusPonens
+))
 </jh>
 
 Now we need our usual transformation between <code>set.+</code> and <code>+</code>, and between <code>set.=</code> and <code>=</code>, to give the version of associativity which we need to export.
