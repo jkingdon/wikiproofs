@@ -88,17 +88,69 @@ For the consequent, we just have to translate the additions and the equality.
 ))
 </jh>
 
+=== Restricted terms are complex ===
+Here's a convenience theorem.
+<jh>
+thm (InComplex () () ((asSet X) ∈ (set.ℂ)) (
+        X InUniverse
+
+        set.RealComplex
+        (set.ℝ) (set.ℂ) (asSet X) SubsetMembership
+        applyModusPonens
+
+        applyModusPonens
+))
+</jh>
+
 === Associativity ===
+We can first state a version of associativity which is stated in terms of <code>set.+</code> and <code>set.=</code> but where we don't need explicit antecedents for the numbers being complex.
+<jh>
+#thm (AdditionAssociativity-1 () ()
+#  ((((asSet X) set.+ (asSet Y)) set.+ (asSet Z)) set.=
+#    ((asSet X) set.+ ((asSet Y) set.+ (asSet Z)))) (
+#        X InUniverse
+#        set.RealComplex
+#))
+</jh>
+
+Now we need our usual transformation between <code>set.+</code> and <code>+</code>, and between <code>set.=</code> and <code>=</code>, to give the version of associativity which we need to export.
 <jh>
 #thm (AdditionAssociativity () () (((X + Y) + Z) = (X + (Y + Z))) (
-#        (asSet X) (asSet Y) (asSet Z) set.AdditionAssociativity
+</jh>
+We'll start with <code>asSet ((X + Y) + Z) set.= (asSet (X + Y)) set.+ (asSet Z)
+<jh>
+#        (X + Y) Z Addition
+</jh>
+Next we turn that into <code>((asSet X) set.+ (asSet Y)) set.+ (asSet Z)</code>.
+<jh>
+#        X Y Addition
+#        (asSet Z) set.buildAdditionRR
+#        set.applyEqualityTransitivity
+</jh>
+That's ready to apply associativity of <code>set.+</code>
+<jh>
+#        (asSet X) (asSet Y) (asSet Z) AdditionAssociativity-1
+#        set.applyEqualityTransitivity
+</jh>
+Now we apply similar transformations to the first half of the proof in reverse. The first one is turning <code>(asSet X) set.+ ((asSet Y) set.+ (asSet Z))</code> into <code>(asSet X) set.+ asSet (Y + Z)</code>.
+<jh>
+#        Y Z Addition
+#        (asSet X) set.buildAdditionLL
+#        set.swapEquality
+#        set.applyEqualityTransitivity
+</jh>
+And then we just need to make that <code>asSet (X + (Y + Z))</code>.
+<jh>
+#        X (Y + Z) Addition
+#        set.swapEquality
+#        set.applyEqualityTransitivity
 #))
 </jh>
 
 == Multiplication ==
 <jh>
-def ((· X Y) ((asSet X) set.· (asSet Y)))
-def ((1) (set.1))
+def ((· X Y) (asRestrictedTerm ((asSet X) set.· (asSet Y))))
+def ((1) (asRestrictedTerm (set.1)))
 </jh>
 
 == Export ==
