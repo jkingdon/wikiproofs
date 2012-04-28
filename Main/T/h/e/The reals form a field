@@ -121,36 +121,36 @@ thm (AdditionAssociativity-1 () ()
 
 Now we need our usual transformation between <code>set.+</code> and <code>+</code>, and between <code>set.=</code> and <code>=</code>, to give the version of associativity which we need to export.
 <jh>
-#thm (AdditionAssociativity () () (((X + Y) + Z) = (X + (Y + Z))) (
+thm (AdditionAssociativity () () (((X + Y) + Z) = (X + (Y + Z))) (
 </jh>
 We'll start with <code>asSet ((X + Y) + Z) set.= (asSet (X + Y)) set.+ (asSet Z)
 <jh>
-#        (X + Y) Z Addition
+        (X + Y) Z Addition
 </jh>
 Next we turn that into <code>((asSet X) set.+ (asSet Y)) set.+ (asSet Z)</code>.
 <jh>
-#        X Y Addition
-#        (asSet Z) set.buildAdditionRR
-#        set.applyEqualityTransitivity
+        X Y Addition
+        (asSet Z) set.buildAdditionRR
+        set.applyEqualityTransitivity
 </jh>
 That's ready to apply associativity of <code>set.+</code>
 <jh>
-#        (asSet X) (asSet Y) (asSet Z) AdditionAssociativity-1
-#        set.applyEqualityTransitivity
+        X Y Z AdditionAssociativity-1
+        set.applyEqualityTransitivity
 </jh>
 Now we apply similar transformations to the first half of the proof in reverse. The first one is turning <code>(asSet X) set.+ ((asSet Y) set.+ (asSet Z))</code> into <code>(asSet X) set.+ asSet (Y + Z)</code>.
 <jh>
-#        Y Z Addition
-#        (asSet X) set.buildAdditionLL
-#        set.swapEquality
-#        set.applyEqualityTransitivity
+        Y Z Addition
+        (asSet X) set.buildAdditionLL
+        set.swapEquality
+        set.applyEqualityTransitivity
 </jh>
 And then we just need to make that <code>asSet (X + (Y + Z))</code>.
 <jh>
-#        X (Y + Z) Addition
-#        set.swapEquality
-#        set.applyEqualityTransitivity
-#))
+        X (Y + Z) Addition
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
 </jh>
 
 == Multiplication ==
