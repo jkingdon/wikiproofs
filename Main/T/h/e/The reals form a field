@@ -49,45 +49,50 @@ def ((+ X Y) (asRestrictedTerm ((asSet X) set.+ (asSet Y))))
 def ((0) (asRestrictedTerm (set.0)))
 </jh>
 
+=== A lemma ===
+Since the complex numbers built on sets already have the theorems we need, our task is just to translate between the two worlds. This lemma translates between <code>+</code> and <code>set.+</code>.
+<jh>
+thm (Addition () () ((asSet (X + Y)) set.= ((asSet X) set.+ (asSet Y))) (
+</jh>
+The proof starts with <code>(asSet X) set.+ (asSet Y) ∈ ℝ</code>.
+<jh>
+        X InUniverse
+        Y InUniverse
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.RealAdditionClosure
+        applyModusPonens
+</jh>
+That lets us wrap <code>asRestrictedTerm</code> and <code>asSet</code> around <code>(asSet X) set.+ (asSet Y)</code>, to get <code>asSet (asRestrictedTerm ((asSet X) set.+ (asSet Y)))</code>.
+<jh>
+        SetRestrictedTerm
+))
+</jh>
+
+=== Builder ===
 Proving the addition builder is a relatively straightforward application of the addition builder for real numbers built on sets.
 <jh>
 thm (AdditionBuilder () () (((X0 = X1) ∧ (Y0 = Y1)) → ((X0 + Y0) = (X1 + Y1))) (
         (asSet X0) (asSet X1) (asSet Y0) (asSet Y1) set.AdditionBuilder
 </jh>
-The antecedent is now what we need, as <code>X0 = X1</code> is the same as <code>(asSet X0) set.= (asSet X1)</code> (by the definition of <code>=</code>), and likewise for the <code>Y0</code> and <code>Y1</code>.
+The antecedent is now what we need, as <code>X0 = X1</code> is the same as <code>(asSet X0) set.= (asSet X1)</code> (by the definition of <code>=</code>), and likewise for <code>Y0 = Y1</code>.
 
-For the consequent, we have <code>(asSet X0) set.+ (asSet Y0)</code> and likewise for <code>X1</code> and <code>Y1</code>. Our next task is to wrap each addition, so for example we get <code>asSet (asRestrictedTerm ((asSet X0) set.+ (asSet Y0)))</code>. We start with <code>(asSet X0) set.+ (asSet Y0) ∈ ℝ</code>.
+For the consequent, we just have to translate the additions and the equality.
 <jh>
-        X0 InUniverse
-        Y0 InUniverse
-        introduceConjunction
-
-        (asSet X0) (asSet Y0) set.RealAdditionClosure
-        applyModusPonens
-</jh>
-That lets us wrap <code>asRestrictedTerm</code> and <code>asSet</code> around <code>(asSet X0) set.+ (asSet Y0)</code>.
-<jh>
-        SetRestrictedTerm
-        set.swapEquality
-</jh>
-Now we repeat the same process for <code>X1</code> and <code>Y1</code>.
-<jh>
-        X1 InUniverse
-        Y1 InUniverse
-        introduceConjunction
-
-        (asSet X1) (asSet Y1) set.RealAdditionClosure
-        applyModusPonens
-
-        SetRestrictedTerm
-        set.swapEquality
-</jh>
-We just need to combine these pieces and we are done.
-<jh>
+        X0 Y0 Addition
+        X1 Y1 Addition
         set.buildEquality
-        eliminateBiconditionalReverse
+
+        eliminateBiconditionalForward
         applySyllogism
 ))
+</jh>
+
+=== Associativity ===
+<jh>
+#thm (AdditionAssociativity () () (((X + Y) + Z) = (X + (Y + Z))) (
+#        (asSet X) (asSet Y) (asSet Z) set.AdditionAssociativity
+#))
 </jh>
 
 == Multiplication ==
