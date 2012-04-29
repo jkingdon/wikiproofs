@@ -187,13 +187,20 @@ thm (Zero () () ((asSet (0)) set.= (set.0)) (
         SetRestrictedTerm
 ))
 
-#thm (AdditionIdentity-1 () ()
-#  (((asSet X) set.+ (asSet (0))) set.= (asSet X)) (
+thm (AdditiveIdentity-1 () ()
+  (((asSet X) set.+ (asSet (0))) set.= (asSet X)) (
+        Zero
+        (asSet X) set.buildAdditionLL
+
+        X InComplex
+        (asSet X) set.AdditiveIdentity
+        applyModusPonens
+
+        set.applyEqualityTransitivity
+))
+
+#thm (AdditiveIdentity () () ((x + (0)) = x) (
 #))
-
-#stmt (set.AdditiveIdentity () () ((z ∈ (ℂ)) → ((z set.+ (set.0)) set.= z)))
-
-#stmt (AdditiveIdentity () () ((x + (0)) = x))
 </jh>
 
 == Multiplication ==
