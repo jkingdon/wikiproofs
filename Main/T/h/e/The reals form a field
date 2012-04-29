@@ -222,7 +222,27 @@ thm (ForAll () () ((∀ x φ) ↔ (set.∀ (asSetVariable x) (((set.value (asSet
 ))
 </jh>
 
-==== ====
+==== Restricted ∃ ====
+Here is a similar theorem about <code>∃</code>. The proof just rewrites <code>∃</code> into an equivalent expression involving <code>∀</code> and applies <code>ForAll</code> and some logic.
+<jh>
+thm (ThereExists () ()
+  ((∃ x φ) ↔ (set.∃ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) ∧ φ))) (
+        x (¬ φ) ForAll
+        addNegation
+</jh>
+That gives us <code>∃ x φ ↔ ¬ set.∀ (asSetVariable x) ((asSetVariable x) ∈ universe → ¬ φ)</code>. We first move the negation inside the quantifier.
+<jh>
+        (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) → (¬ φ)) set.NotForAll
+        applyBiconditionalTransitivity
+</jh>
+Now we can transform <code>¬ ((asSetVariable x) ∈ universe → ¬ φ)</code> to <code>((asSetVariable x) ∈ universe ∧ φ</code>.
+<jh>
+        ((set.value (asSetVariable x)) ∈ (universe)) φ ConjunctionImplication
+        swapBiconditional
+        (asSetVariable x) set.buildThereExists
+        applyBiconditionalTransitivity
+))
+</jh>
 
 == Multiplication ==
 <jh>
