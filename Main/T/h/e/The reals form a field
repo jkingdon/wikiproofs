@@ -35,7 +35,7 @@ var (variable x y z w)
 var (object X Y Z W X0 X1 Y0 Y1)
 var (set.variable a b c)
 var (set.object A B C D)
-var (formula φ)
+var (formula φ ψ)
 </jh>
 
 The following definition should perhaps go in [[Interface:Restricting all quantifiers]] although that perhaps is a question of whether that interface assumes the axiom of quantifiability.
@@ -242,6 +242,45 @@ Now we can transform <code>¬ ((asSetVariable x) ∈ universe → ¬ φ)</code> 
         (asSetVariable x) set.buildThereExists
         applyBiconditionalTransitivity
 ))
+</jh>
+
+==== Builders for restricted quantifiers ====
+The builders for <code>∀</code> and <code>∃</code> follow directly from the builders for everything which make up <code>ForAll</code> or <code>ThereExists</code>
+<jh>
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        x φ ThereExists
+
+        H
+        ((set.value (asSetVariable x)) ∈ (universe)) buildConjunctionLL
+        (asSetVariable x) set.buildThereExists
+        applyBiconditionalTransitivity
+
+        x ψ ThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Inverse ===
+Now we are ready to prove <code>∃ x Y + x = 0</code>. The first lemma takes care of the quantifier.
+<jh>
+thm (AdditiveInverse-1 ((x Y)) () (∃ x (((asSet Y) set.+ (set.value (asSetVariable x))) set.= (set.0))) (
+        Y InUniverse
+        (asSet Y) (asSetVariable x) set.RealAdditiveInverseExists
+        applyModusPonens
+</jh>
+That gives us <code>set.∃ (asSetVariable x) (asSetVariable x) ∈ ℝ ∧ Y set.+ (asSetVariable x) set.= (set.0)</code>, which is basically what we need.
+<jh>
+        x (((asSet Y) set.+ (set.value (asSetVariable x))) set.= (set.0)) ThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+From this point it is pretty much just
+<jh>
+#thm (AdditiveInverse ((x Y)) () (∃ x ((Y + (value x)) = (0))) (
+#))
 </jh>
 
 == Multiplication ==
