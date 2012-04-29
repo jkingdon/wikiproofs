@@ -199,8 +199,12 @@ thm (AdditiveIdentity-1 () ()
         set.applyEqualityTransitivity
 ))
 
-#thm (AdditiveIdentity () () ((x + (0)) = x) (
-#))
+thm (AdditiveIdentity () () ((X + (0)) = X) (
+        X (0) Addition
+
+        X AdditiveIdentity-1
+        set.applyEqualityTransitivity
+))
 </jh>
 
 == Multiplication ==
