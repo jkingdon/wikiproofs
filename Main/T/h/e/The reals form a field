@@ -277,10 +277,34 @@ That gives us <code>set.∃ (asSetVariable x) (asSetVariable x) ∈ ℝ ∧ Y se
 ))
 </jh>
 
-From this point it is pretty much just
+We then want to rewrite the one remaining occurrence of <code>asSetVariable</code>.
 <jh>
-#thm (AdditiveInverse ((x Y)) () (∃ x ((Y + (value x)) = (0))) (
-#))
+thm (AdditiveInverse-2 ((x Y)) () (∃ x (((asSet Y) set.+ (asSet (value x))) set.= (set.0))) (
+        x Y AdditiveInverse-1
+
+        x ValueValue
+        (asSet Y) set.buildAdditionLL
+        (set.0) set.buildEqualityRR
+        x buildThereExists
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
+From this point it is pretty similar to the proof of identity.
+<jh>
+thm (AdditiveInverse ((x Y)) () (∃ x ((Y + (value x)) = (0))) (
+        x Y AdditiveInverse-2
+
+        Y (value x) Addition
+        Zero
+        set.buildEquality
+        x buildThereExists
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
 </jh>
 
 == Multiplication ==
