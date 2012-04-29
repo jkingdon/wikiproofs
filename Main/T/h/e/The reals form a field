@@ -166,8 +166,16 @@ thm (AdditionCommutativity-1 () ()
         applyModusPonens
 ))
 
-#thm (AdditionCommutativity () () ((x + y) = (y + x)) (
-#))
+thm (AdditionCommutativity () () ((X + Y) = (Y + X)) (
+        X Y Addition
+
+        X Y AdditionCommutativity-1
+        set.applyEqualityTransitivity
+
+        Y X Addition
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
 </jh>
 
 == Multiplication ==
