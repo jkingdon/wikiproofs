@@ -153,6 +153,23 @@ And then we just need to make that <code>asSet (X + (Y + Z))</code>.
 ))
 </jh>
 
+=== Commutativity ===
+Commutativity is much the same.
+<jh>
+thm (AdditionCommutativity-1 () ()
+  (((asSet X) set.+ (asSet Y)) set.= ((asSet Y) set.+ (asSet X))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.AdditionCommutativity
+        applyModusPonens
+))
+
+#thm (AdditionCommutativity () () ((x + y) = (y + x)) (
+#))
+</jh>
+
 == Multiplication ==
 <jh>
 def ((· X Y) (asRestrictedTerm ((asSet X) set.· (asSet Y))))
