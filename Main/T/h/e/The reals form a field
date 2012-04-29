@@ -207,6 +207,23 @@ thm (AdditiveIdentity () () ((X + (0)) = X) (
 ))
 </jh>
 
+=== Quantifiers ===
+The additive inverse theorem presents another new feature: it contains a quantifier. So we'll prove some theorems regarding quantifiers before tackling inverse itself.
+
+==== Restricted ∀ ====
+Here is a slight restatement of the definition of the restricted <code>∀</code> from [[Interface:Restricting all quantifiers]].
+<jh>
+thm (ForAll () () ((∀ x φ) ↔ (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) → φ))) (
+        x ValueValue
+        (universe) buildMembershipRR
+        φ buildImplicationConsequent
+        (asSetVariable x) set.buildForAll
+        swapBiconditional
+))
+</jh>
+
+==== ====
+
 == Multiplication ==
 <jh>
 def ((· X Y) (asRestrictedTerm ((asSet X) set.· (asSet Y))))
