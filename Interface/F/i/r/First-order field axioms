@@ -39,12 +39,14 @@ stmt (AdditiveIdentity () () ((x + (0)) = x))
 
 Every element has an additive inverse.<ref>axiom F3 of Margaris, page 115</ref>
 <jh>
-stmt (AdditiveInverse () () (∃ v ((x + (value v)) = (0))))
+stmt (AdditiveInverse ((x v)) () (∃ v ((x + (value v)) = (0))))
 </jh>
 
 == Terms versus variables ==
 
 An astute reader comparing the axioms above with the ones in Margaris will notice that the above ones are stated in terms of terms rather than variables. For example, Margaris' states commutativity as <code>∀ x ∀ y (x + y = y + x)</code> (where <code>x</code> and <code>y</code> are variables), whereas we state it above as <code>x + y = y + x</code>, where <code>x</code> and <code>y</code> are terms. The axioms using variables would suffice; we could convert them to their term counterparts using <code>VariableToObject</code> combined with the equality axioms. We state the axioms using terms merely to avoid a number of repetitive proofs of this sort.
+
+A similar rationale applies to the distinct variable constraints. In a work like Margaris, the axioms are stated using variables and it is implicitly true that variables which are given different letters cannot refer to the same variable.
 
 == Multiplication ==
 There is a multiplication operation,<ref>Margaris, page 115</ref> which obeys the usual equality axioms.<ref>Margaris, exercise 1, page 120</ref>
@@ -67,7 +69,7 @@ stmt (MultiplicativeIdentity () () ((x · (1)) = x))
 
 Every nonzero element has a multiplicative inverse.<ref>axiom F7 of Margaris, page 116</ref>
 <jh>
-stmt (MultiplicativeInverse () () ((x ≠ (0)) → (∃ v ((x · (value v)) = (1)))))
+stmt (MultiplicativeInverse ((x v)) () ((x ≠ (0)) → (∃ v ((x · (value v)) = (1)))))
 </jh>
 
 == Distributivity ==
