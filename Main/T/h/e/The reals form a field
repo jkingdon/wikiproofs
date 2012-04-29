@@ -178,6 +178,24 @@ thm (AdditionCommutativity () () ((X + Y) = (Y + X)) (
 ))
 </jh>
 
+=== Identity ===
+Next we need <code>X + 0 = X</code>. This is pretty much similar to the last two, except that we need to also translate from <code>set.0</code> to <code>0</code>.
+
+<jh>
+thm (Zero () () ((asSet (0)) set.= (set.0)) (
+        set.ZeroReal
+        SetRestrictedTerm
+))
+
+#thm (AdditionIdentity-1 () ()
+#  (((asSet X) set.+ (asSet (0))) set.= (asSet X)) (
+#))
+
+#stmt (set.AdditiveIdentity () () ((z ∈ (ℂ)) → ((z set.+ (set.0)) set.= z)))
+
+#stmt (AdditiveIdentity () () ((x + (0)) = x))
+</jh>
+
 == Multiplication ==
 <jh>
 def ((· X Y) (asRestrictedTerm ((asSet X) set.· (asSet Y))))
