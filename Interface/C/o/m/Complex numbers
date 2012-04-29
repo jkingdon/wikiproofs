@@ -45,7 +45,6 @@ stmt (Distributivity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))
 There is a complex number <code>1</code>, which serves as a multiplicative identity.
 <jh>
 term (object (1))
-stmt (OneComplex () () ((1) ∈ (ℂ)))
 stmt (MultiplicativeIdentity () () ((z ∈ (ℂ)) → ((z · (1)) = z)))
 </jh>
 
@@ -104,6 +103,8 @@ def ((360) (((3) · (100)) + (60)))
 def ((1000) ((100) · (10)))
 def ((1000000) ((1000) · (1000)))
 
+stmt (ZeroReal () () ((0) ∈ (ℝ)))
+stmt (OneReal () () ((1) ∈ (ℝ)))
 stmt (TwoReal () () ((2) ∈ (ℝ)))
 stmt (ThreeReal () () ((3) ∈ (ℝ)))
 stmt (FourReal () () ((4) ∈ (ℝ)))
