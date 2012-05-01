@@ -11,7 +11,7 @@ Interfaces contain:
 
 * Parameters.  This is a way to import kinds, terms and definitions from another interface. Except that it does not import statements, it has much the same meaning as the import statement in a module, and the same syntax except that it starts with <code>param</code> instead of <code>import</code>.
  param (''identifier'' ''page'' (''parameter1'' ''parameter2'' &hellip;) ''prefix'')
-When interfaces with one or more <code>param</code> commands in them are imported or exported, the <code>import</code> or <code>export</code> command must be given a parameter list matching the parameters of the interface. This does not mean that parameters generated from exactly the same page with the correct prefix have to be used (in that case, parameter lists would be somewhat pointless). Instead, any parameters providing the kinds, terms and definitions as the specified ''page'' with ''prefix'' can be used.
+When interfaces with one or more <code>param</code> commands in them are imported or exported, the <code>import</code> or <code>export</code> command must be given a parameter list matching the parameters of the interface. This does not mean that parameters generated from exactly the same page with the correct prefix have to be used (in that case, parameter lists would be somewhat pointless). Instead, any parameters providing the kinds, terms and definitions as the specified ''page'' with ''prefix'' can be used. See [[Example of trying to supply a parameter with a non-matching definition]].
 
 * Kinds.  Each variable will be of some kind, and the kinds are declared with the <code>kind</code> statement.
  kind (''new-kind'')
