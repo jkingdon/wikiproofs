@@ -158,165 +158,6 @@ thm (applyVariableEqualityTransitivity ()
 ))
 </jh>
 
-=== Rules ===
-Here are some rules for equality of terms (which will move out of this file shortly, as we are getting out of the term equality business in favor of handing it to [[First-order logic with quantifiability]] or alternatives).
-
-<jh>
-thm (swapEquality () ((H (s = t))) (t = s) (
-        H
-        s t EqualitySymmetry eliminateBiconditionalReverse
-        applyModusPonens
-))
-
-thm (swapEqualityInConsequent () ((H (φ → (s = t)))) (φ → (t = s)) (
-        H
-        s t EqualitySymmetry
-        eliminateBiconditionalReverse
-        applySyllogism
-))
-
-thm (applyEqualityTransitivity () ((H1 (s = t)) (H2 (t = u))) (s = u) (
-        H1
-        H2
-        introduceConjunction
-        s t u EqualityTransitivity
-        applyModusPonens
-))
-
-thm (applyEqualityTransitivityInConsequent () ((H1 (φ → (s = t))) (H2 (φ → (t = u)))) (φ → (s = u)) (
-        H1
-        H2
-        composeConjunction
-        s t u EqualityTransitivity
-        applySyllogism
-))
-</jh>
-
-=== Builder ===
-<code>EqualityBuilder</code> can be derived from transitivity.  We start with a special case:
-
-<jh>
-thm (EqualityBuilderRR () () ((s0 = s1) → ((s0 = t) ↔ (s1 = t))) (
-</jh>
-The proof has two halves, each of which is proved by transitivity and an export.
-The forward implication, <code>s0 = s1 → (s0 = t → s1 = t)</code>, also involves switching the order of the opening equality.
-<jh>
-        s0 s1 EqualitySymmetry
-        eliminateBiconditionalReverse
-
-        s1 s0 t EqualityTransitivity
-        export
-
-        applySyllogism
-
-</jh>
-The reverse implication, <code>s0 = s1 → (s1 = t → s0 = t)</code>, is even simpler:
-<jh>
-        s0 s1 t EqualityTransitivity
-        export
-
-</jh>
-We then combine the two directions:
-<jh>
-        composeConjunction
-
-        (s0 = t) (s1 = t) BiconditionalImplication eliminateBiconditionalForward
-        applySyllogism
-))
-</jh>
-
-We provide an analogous result with the order of the equalities changed, <code>EqualityBuilderLL</code>.
-<jh>
-thm (commute2 () () (((s0 = t0) ↔ (s1 = t1)) → ((t0 = s0) ↔ (t1 = s1))) (
-        s0 t0 EqualitySymmetry
-        s1 t1 EqualitySymmetry
-        buildBiconditional
-        eliminateBiconditionalReverse
-))
-
-thm (EqualityBuilderLL () () ((s0 = s1) → ((t = s0) ↔ (t = s1))) (
-        s0 s1 t EqualityBuilderRR
-        s0 t s1 t commute2
-        applySyllogism
-))
-</jh>
-
-Combining <code>EqualityBuilderLL</code> and <code>EqualityBuilderRR</code> gives us the full builder.
-
-<jh>
-thm (EqualityBuilder () () (((s0 = s1) ∧ (t0 = t1)) → ((s0 = t0) ↔ (s1 = t1))) (
-        (s0 = s1) (t0 = t1) ConjunctionRightElimination
-        s0 s1 t0 EqualityBuilderRR
-        applySyllogism
-
-        (s0 = s1) (t0 = t1) ConjunctionLeftElimination
-        t0 t1 s1 EqualityBuilderLL
-        applySyllogism
-
-        composeConjunction
-
-        (s0 = t0) (s1 = t0) (s1 = t1) BiconditionalTransitivity
-        applySyllogism
-))
-
-thm (buildEquality () ((HX (s0 = s1)) (HY (t0 = t1))) ((s0 = t0) ↔ (s1 = t1)) (
-        HX
-        HY
-        introduceConjunction
-        s0 s1 t0 t1 EqualityBuilder
-        applyModusPonens
-))
-
-thm (buildEqualityRR () ((H (s0 = s1))) ((s0 = t) ↔ (s1 = t)) (
-        H
-        t EqualityReflexivity
-        introduceConjunction
-
-        s0 s1 t t EqualityBuilder
-
-        applyModusPonens
-))
-
-thm (buildEqualityLL () ((H (t0 = t1))) ((s = t0) ↔ (s = t1)) (
-        s EqualityReflexivity
-        H
-        introduceConjunction
-
-        s s t0 t1 EqualityBuilder
-
-        applyModusPonens
-))
-</jh>
-
-For convenience, we also supply builders in the consequent:
-
-<jh>
-thm (buildEqualityInConsequent ()
-  ((HN (φ → (s0 = s1)))
-   (HM (φ → (t0 = t1))))
-  (φ → ((s0 = t0) ↔ (s1 = t1))) (
-        HN HM composeConjunction
-        s0 s1 t0 t1 EqualityBuilder
-        applySyllogism
-))
-
-thm (buildEqualityRRInConsequent ()
-  ((H (φ → (s0 = s1))))
-  (φ → ((s0 = t) ↔ (s1 = t))) (
-        H
-        t EqualityReflexivity φ introduceAntecedent
-        buildEqualityInConsequent
-))
-
-thm (buildEqualityLLInConsequent ()
-  ((H (φ → (t0 = t1))))
-  (φ → ((s = t0) ↔ (s = t1))) (
-        s EqualityReflexivity φ introduceAntecedent
-        H
-        buildEqualityInConsequent
-))
-</jh>
-
 === Not equal ===
 Although <code>≠</code> is just an abbreviation for negation and equality, we do need to repeat the definition in this file to be able to export to [[Interface:First-order logic]].
 <jh>
@@ -329,7 +170,7 @@ We can remove a universal quantifier. This is sometimes taken as an axiom but he
 <jh>
 thm (Specialization-18 ((x y)) () 
   (((value y) = (value x)) → ((¬ φ) → (∀ x (((value x) = (value y)) → (¬ φ))))) (
-        (value y) (value x) EqualitySymmetry eliminateBiconditionalReverse
+        y x VariableEqualitySymmetry eliminateBiconditionalReverse
         x y (¬ φ) VariableSubstitution
         applySyllogism
 ))
@@ -1440,7 +1281,7 @@ thm (ChangeVariableThereExistsForwardNotFree ((x y))
 
         H
 
-        (value x) (value y) EqualitySymmetry
+        x y VariableEqualitySymmetry
         φx φy BiconditionalSymmetry
         buildImplication
 
