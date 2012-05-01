@@ -45,7 +45,6 @@ stmt (Distributivity () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (s ∈ (ℂ))
 There is a complex number <code>1</code>, which serves as a multiplicative identity.
 <jh>
 term (object (1))
-stmt (OneComplex () () ((1) ∈ (ℂ)))
 stmt (MultiplicativeIdentity () () ((z ∈ (ℂ)) → ((z · (1)) = z)))
 </jh>
 
@@ -104,6 +103,8 @@ def ((360) (((3) · (100)) + (60)))
 def ((1000) ((100) · (10)))
 def ((1000000) ((1000) · (1000)))
 
+stmt (ZeroReal () () ((0) ∈ (ℝ)))
+stmt (OneReal () () ((1) ∈ (ℝ)))
 stmt (TwoReal () () ((2) ∈ (ℝ)))
 stmt (ThreeReal () () ((3) ∈ (ℝ)))
 stmt (FourReal () () ((4) ∈ (ℝ)))
@@ -229,13 +230,20 @@ Here we supply builders for each operation.
 
 Although the builders are not interesting unless <code>A0<code> and so on are complex numbers, we state them without restricting them to complex numbers. However we define the sum of two sets which are not complex numbers, it is no hardship to make that definition obey the builders.
 <jh>
-var (object A0 A1 B0 B1)
+var (object B A0 A1 B0 B1)
 stmt (AdditionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 + B0) = (A1 + B1))))
 stmt (SubtractionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 − B0) = (A1 − B1))))
 stmt (NegativeBuilder () () ((A0 = A1) → ((- A0) = (- A1))))
 stmt (MultiplicationBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 · B0) = (A1 · B1))))
 stmt (DivisionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 / B0) = (A1 / B1))))
 stmt (SquarerootBuilder () () ((A0 = A1) → ((√ A0) = (√ A1))))
+</jh>
+
+=== Convenience builders ===
+The following builders, of course, follow from the ones above.
+<jh>
+stmt (buildAdditionLL () ((B0 = B1)) ((A + B0) = (A + B1)))
+stmt (buildAdditionRR () ((A0 = A1)) ((A0 + B) = (A1 + B)))
 </jh>
 
 {{unproven|axioms=Complex number axioms}}
