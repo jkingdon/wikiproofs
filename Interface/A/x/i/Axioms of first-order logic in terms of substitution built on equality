@@ -17,7 +17,7 @@ The axioms of first-order logic are usually stated in terms of substitution of o
 
 The axioms are (somewhat loosely) based on those in Margaris.<ref>Margaris, Angelo (1990), ''First Order Mathematical Logic'', ISBN 978-0-486-66269-5</ref>
 
-It is possible to prove everything in [[Interface:First-order logic with quantifiability]] from these axioms. Therefore, this axiomization is an alternative to the metamath-inspired axiomization [[Interface:Axioms of first-order logic]] (plus the [[Interface:Axiom of quantifiability]] which is what allows substitution to proceed smoohtly).
+It is possible to prove everything in [[Interface:First-order logic with quantifiability]] from these axioms. Therefore, this axiomization is an alternative to the metamath-inspired axiomization [[Interface:Axioms of first-order logic]] (plus the [[Interface:Axiom of quantifiability]] which is what allows substitution to proceed smoothly).
 
 == Formulas and objects ==
 First we build on [[Interface:Classical propositional calculus]].
