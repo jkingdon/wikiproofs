@@ -4,7 +4,7 @@
 | exportedby = none yet
 }}
 
-A ''field'' has two operations, addition and multiplication, which obey the familiar properties shown below. Here we present a first-order theory of fields (that is, all variables indicate an element of the field, and there is no general way to form sets of elements or variables which represent elements of some structure other than the field). This is as opposed to building the field within set theory, where the field consists of a set and addition and multiplication are [[Interface:Relations|relations]] on that set.
+A ''field'' has two operations, addition and multiplication, which obey the familiar properties shown below. Here we present a first-order theory of fields (that is, all variables indicate an element of the field, and there is no general way to form sets of elements or variables which represent elements of some structure other than the field). This is as opposed to building the field within set theory, where the field consists of a set and addition and multiplication are [[Relations|relations]] on that set.
 
 Our first-order theory of fields is taken from a book by Margaris.<ref>Margaris, theory F, page 115</ref>
 
