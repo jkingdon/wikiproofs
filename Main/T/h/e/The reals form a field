@@ -324,6 +324,17 @@ thm (Multiplication () () ((asSet (X · Y)) set.= ((asSet X) set.· (asSet Y))) 
 
         SetRestrictedTerm
 ))
+
+thm (MultiplicationBuilder () () (((X0 = X1) ∧ (Y0 = Y1)) → ((X0 · Y0) = (X1 · Y1))) (
+        (asSet X0) (asSet X1) (asSet Y0) (asSet Y1) set.MultiplicationBuilder
+
+        X0 Y0 Multiplication
+        X1 Y1 Multiplication
+        set.buildEquality
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
 </jh>
 
 == Export ==
