@@ -308,9 +308,22 @@ thm (AdditiveInverse ((x Y)) () (∃ x ((Y + (value x)) = (0))) (
 </jh>
 
 == Multiplication ==
+We now handle the definition of multiplication, the number one, associativity, commutativity, identity, and inverse. Everything is pretty similar to what we did for addition.
+
 <jh>
 def ((· X Y) (asRestrictedTerm ((asSet X) set.· (asSet Y))))
 def ((1) (asRestrictedTerm (set.1)))
+
+thm (Multiplication () () ((asSet (X · Y)) set.= ((asSet X) set.· (asSet Y))) (
+        X InUniverse
+        Y InUniverse
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.RealMultiplicationClosure
+        applyModusPonens
+
+        SetRestrictedTerm
+))
 </jh>
 
 == Export ==
