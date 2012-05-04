@@ -389,6 +389,30 @@ thm (MultiplicationCommutativity () () ((X · Y) = (Y · X)) (
         set.swapEquality
         set.applyEqualityTransitivity
 ))
+
+thm (One () () ((asSet (1)) set.= (set.1)) (
+        set.OneReal
+        SetRestrictedTerm
+))
+
+thm (MultiplicativeIdentity-1 () ()
+  (((asSet X) set.· (asSet (1))) set.= (asSet X)) (
+        One
+        (asSet X) set.buildMultiplicationLL
+
+        X InComplex
+        (asSet X) set.MultiplicativeIdentity
+        applyModusPonens
+
+        set.applyEqualityTransitivity
+))
+
+thm (MultiplicativeIdentity () () ((X · (1)) = X) (
+        X (1) Multiplication
+
+        X MultiplicativeIdentity-1
+        set.applyEqualityTransitivity
+))
 </jh>
 
 == Export ==
