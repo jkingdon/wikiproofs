@@ -335,6 +335,39 @@ thm (MultiplicationBuilder () () (((X0 = X1) ∧ (Y0 = Y1)) → ((X0 · Y0) = (X
         eliminateBiconditionalForward
         applySyllogism
 ))
+
+thm (MultiplicationAssociativity-1 () ()
+  ((((asSet X) set.· (asSet Y)) set.· (asSet Z)) set.=
+    ((asSet X) set.· ((asSet Y) set.· (asSet Z)))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+        Z InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) (asSet Z) set.MultiplicationAssociativity
+        applyModusPonens
+))
+
+thm (MultiplicationAssociativity () () (((X · Y) · Z) = (X · (Y · Z))) (
+        (X · Y) Z Multiplication
+
+        X Y Multiplication
+        (asSet Z) set.buildMultiplicationRR
+        set.applyEqualityTransitivity
+
+        X Y Z MultiplicationAssociativity-1
+        set.applyEqualityTransitivity
+
+        Y Z Multiplication
+        (asSet X) set.buildMultiplicationLL
+        set.swapEquality
+        set.applyEqualityTransitivity
+
+        X (Y · Z) Multiplication
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
 </jh>
 
 == Export ==
