@@ -244,6 +244,8 @@ The following builders, of course, follow from the ones above.
 <jh>
 stmt (buildAdditionLL () ((B0 = B1)) ((A + B0) = (A + B1)))
 stmt (buildAdditionRR () ((A0 = A1)) ((A0 + B) = (A1 + B)))
+stmt (buildMultiplicationLL () ((B0 = B1)) ((A · B0) = (A · B1)))
+stmt (buildMultiplicationRR () ((A0 = A1)) ((A0 · B) = (A1 · B)))
 </jh>
 
 {{unproven|axioms=Complex number axioms}}
