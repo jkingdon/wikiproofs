@@ -368,6 +368,27 @@ thm (MultiplicationAssociativity () () (((X · Y) · Z) = (X · (Y · Z))) (
         set.swapEquality
         set.applyEqualityTransitivity
 ))
+
+thm (MultiplicationCommutativity-1 () ()
+  (((asSet X) set.· (asSet Y)) set.= ((asSet Y) set.· (asSet X))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.MultiplicationCommutativity
+        applyModusPonens
+))
+
+thm (MultiplicationCommutativity () () ((X · Y) = (Y · X)) (
+        X Y Multiplication
+
+        X Y MultiplicationCommutativity-1
+        set.applyEqualityTransitivity
+
+        Y X Multiplication
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
 </jh>
 
 == Export ==
