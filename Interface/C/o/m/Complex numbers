@@ -122,12 +122,13 @@ stmt (MillionReal () () ((1000000) ∈ (ℝ)))
 </jh>
 
 === Additive inverse and subtraction ===
-Any real (complex?) number has an additive inverse. Our notation is <code>- a</code> for the additive inverse of <code>a</code>.
+Any complex number has an additive inverse, and for a real number the inverse is real. Our notation is <code>- a</code> for the additive inverse of <code>a</code>.
 
 <jh>
-stmt (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) → (∃ x (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))))))
-
 term (object (- object))
+
+stmt (RealAdditiveInverseClosed () () ((z ∈ (ℝ)) → ((- z) ∈ (ℝ))))
+
 stmt (ComplexAdditiveInverseClosed () () ((z ∈ (ℂ)) → ((- z) ∈ (ℂ))))
 stmt (ComplexAdditiveInverse () () ((z ∈ (ℂ)) → ((z + (- z)) = (0))))
 </jh>
