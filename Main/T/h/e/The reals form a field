@@ -515,9 +515,25 @@ thm (Distributivity () () ((X · (Y + Z)) = ((X · Y) + (X · Z))) (
 ))
 </jh>
 
+== Zero is not one ==
+The last field property we need to prove is <code>ZeroOne</code>.
+<jh>
+thm (ZeroOne () () ((0) ≠ (1)) (
+        set.ZeroOne
+
+        Zero
+        One
+        set.buildEquality
+        addNegation
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
 == Export ==
 <jh>
-#export (FIELD Interface:First-order_field_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
+export (FIELD Interface:First-order_field_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
 </jh>
 
 == Footnotes ==
