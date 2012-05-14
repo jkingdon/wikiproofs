@@ -415,6 +415,68 @@ thm (MultiplicativeIdentity () () ((X · (1)) = X) (
 ))
 </jh>
 
+Multiplicative inverse is slightly different from additive inverse in that it has an antecedent which says that the inverse only exists for nonzero numbers.
+
+<jh>
+thm (MultiplicativeInverse-1 ((x Y)) ()
+  (((asSet Y) set.≠ (set.0)) → (∃ x (((asSet Y) set.· (set.value (asSetVariable x))) set.= (set.1)))) (
+        Y InUniverse
+        (asSet Y) (asSetVariable x) set.RealReciprocalExists
+        detach1of2
+</jh>
+That gives us <code>set.∃ (asSetVariable x) (asSetVariable x) ∈ ℝ ∧ Y set.· (asSetVariable x) set.= (set.1)</code>, which is basically what we need.
+<jh>
+        x (((asSet Y) set.· (set.value (asSetVariable x))) set.= (set.1)) ThereExists
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+We then want to rewrite the one remaining occurrence of <code>asSetVariable</code>.
+<jh>
+thm (MultiplicativeInverse-2 ((x Y)) ()
+ (((asSet Y) set.≠ (set.0)) → (∃ x (((asSet Y) set.· (asSet (value x))) set.= (set.1)))) (
+        Y x MultiplicativeInverse-1
+
+        x ValueValue
+        (asSet Y) set.buildMultiplicationLL
+        (set.1) set.buildEqualityRR
+        x buildThereExists
+        eliminateBiconditionalReverse
+
+        applySyllogism
+))
+</jh>
+
+From this point it is pretty similar to the proof of identity.
+<jh>
+thm (MultiplicativeInverse-3 ((x Y)) () (((asSet Y) set.≠ (set.0)) → (∃ x ((Y · (value x)) = (1)))) (
+        Y x MultiplicativeInverse-2
+
+        Y (value x) Multiplication
+        One
+        set.buildEquality
+        x buildThereExists
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+The antecedent is closer to <code>Y ≠ 0</code> than it looks, because of the automatic expansion of <code>=</code> and <code>set.≠</code>. The only thing we need to do is change <code>set.0</code> to <code>asSet 0</code>.
+
+<jh>
+thm (MultiplicativeInverse ((x Y)) () ((Y ≠ (0)) → (∃ x ((Y · (value x)) = (1)))) (
+        Zero
+        (asSet Y) set.buildEqualityLL
+        addNegation
+        eliminateBiconditionalReverse
+
+        Y x MultiplicativeInverse-3
+        applySyllogism
+))
+</jh>
+
 == Export ==
 <jh>
 #export (FIELD Interface:First-order_field_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
