@@ -477,6 +477,44 @@ thm (MultiplicativeInverse ((x Y)) () ((Y ≠ (0)) → (∃ x ((Y · (value x)) 
 ))
 </jh>
 
+== Distributivity ==
+Distributivity does not involve any quantifiers or constants, so it is similar to something like commutativity or associativity.
+
+<jh>
+thm (Distributivity-1 () () (((asSet X) set.· ((asSet Y) set.+ (asSet Z))) set.=
+  (((asSet X) set.· (asSet Y)) set.+ ((asSet X) set.· (asSet Z)))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+        Z InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) (asSet Z) set.Distributivity
+        applyModusPonens
+))
+
+thm (Distributivity () () ((X · (Y + Z)) = ((X · Y) + (X · Z))) (
+        X (Y + Z) Multiplication
+
+        Y Z Addition
+        (asSet X) set.buildMultiplicationLL
+        set.applyEqualityTransitivity
+
+        X Y Z Distributivity-1
+        set.applyEqualityTransitivity
+
+        X Y Multiplication
+        X Z Multiplication
+        set.buildAddition
+        set.swapEquality
+        set.applyEqualityTransitivity
+
+        (X · Y) (X · Z) Addition
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
+</jh>
+
 == Export ==
 <jh>
 #export (FIELD Interface:First-order_field_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
