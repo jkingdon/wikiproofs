@@ -168,6 +168,14 @@ stmt (ReciprocalClosed () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → (((1) / z) ∈
 stmt (Reciprocal () () (((z ∈ (ℂ)) ∧ (z ≠ (0))) → ((z · ((1) / z)) = (1))))
 </jh>
 
+The reciprocal of a real number is real. We state this two ways, once with <code>1 / a</code> and once with <code>∃</code>.
+<jh>
+stmt (RealReciprocalClosed () () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → (((1) / a) ∈ (ℝ))))
+stmt (RealReciprocalExists ((x a)) ()
+  (((a ∈ (ℝ)) ∧ (a ≠ (0))) →
+    (∃ x (((value x) ∈ (ℝ)) ∧ ((a · (value x)) = (1))))))
+</jh>
+
 We can divide any complex number by any nonzero complex number.<ref>[http://us.metamath.org/mpeuni/divcl.html divcl], metamath's set.mm, accessed June 9, 2011</ref>
 <jh>
 stmt (DivisionClosed () () ((((z ∈ (ℂ)) ∧ (w ∈ (ℂ))) ∧ (w ≠ (0))) →
