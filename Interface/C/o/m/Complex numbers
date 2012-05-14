@@ -250,6 +250,7 @@ stmt (SquarerootBuilder () () ((A0 = A1) → ((√ A0) = (√ A1))))
 === Convenience builders ===
 The following builders, of course, follow from the ones above.
 <jh>
+stmt (buildAddition () ((A0 = A1) (B0 = B1)) ((A0 + B0) = (A1 + B1)))
 stmt (buildAdditionLL () ((B0 = B1)) ((A + B0) = (A + B1)))
 stmt (buildAdditionRR () ((A0 = A1)) ((A0 + B) = (A1 + B)))
 stmt (buildMultiplicationLL () ((B0 = B1)) ((A · B0) = (A · B1)))
