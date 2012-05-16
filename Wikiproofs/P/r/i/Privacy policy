@@ -12,7 +12,7 @@ The underlying server software (but not the wiki software) collects and stores t
 * the [[w:user agent|user agent]].
 This data is used for maintenance and debugging purposes only. Only the site operator has access to it. Each dataset is deleted from the server after a few days.
 
-The wiki software asks the browser to store [[w:Cookie (browser)|session cookies]]. They are stored on the user's machine, not on the server. Users may choose to reject these cookies. The cookies are only required for logging in and editing. The wiki software asks the browser to keep the cookies only for a limited time since the last visit of Wikiproofs. This time limit does not exceed thirty days. Since cookie data is stored on the user's machine, it is the user's responsibility to protect it from third party access. On a public computer it is advisable to clear all session cookies after concluding usage of Wikiproofs.
+The wiki software asks the browser to store [[w:Cookie (browser)|session cookies]]. They are stored on the user's machine, not on the server. Users may choose to reject these cookies. The cookies are only required for logging in and editing. The wiki software asks the browser to keep the cookies only for a limited time since the last visit of Wikiproofs. This time limit does not exceed six months. Since cookie data is stored on the user's machine, it is the user's responsibility to protect it from third party access. On a public computer it is advisable to clear all session cookies after concluding usage of Wikiproofs.
 
 == Readers ==
 
