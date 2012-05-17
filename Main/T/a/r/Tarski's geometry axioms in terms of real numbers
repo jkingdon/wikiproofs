@@ -16,7 +16,11 @@ import (COMPLEX Interface:Complex_numbers (CLASSICAL QUANTIFY_OVER_SETS SETS) ()
 
 We also import an interface, [[Interface:Restricting all quantifiers]], which provides the mapping between quantifiers which range over sets and quantifiers which range over points. The reason for this to be a separate interface rather than just a set of definitions and theorems in this file is that when it comes time to export to [[Interface:Tarski's geometry axioms]], we'll need an interface to pass as a parameter.
 <jh>
-import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers (CLASSICAL QUANTIFY_OVER_SETS SETS COMPLEX) ())
+def ((universe) ((ℝ) × (ℝ)))
+export (UNIVERSE Interface:Universe (CLASSICAL QUANTIFY_OVER_SETS SETS) ())
+
+import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers
+  (CLASSICAL QUANTIFY_OVER_SETS SETS UNIVERSE) ())
 </jh>
 
 The interface [[Interface:Restricting all quantifiers]] defines a kind for restricted terms called <code>object</code>, which corresponds to a point.
@@ -235,6 +239,62 @@ thm (CongruenceABBA () () (X Y ≡ Y X) (
         (asSet X) (asSet Y) set.CongruenceABBA
         applyModusPonens
 ))
+</jh>
+
+=== Congruence identity ===
+An empty line segment starts and ends at the same point. That is, <code>X Y ≡ Z Z → X = Y</code> in the language of points or <code>A ∈ ℝ × ℝ ∧ B ∈ ℝ × ℝ ∧ C ∈ ℝ × ℝ → (A B set.≡ C C → A set.= B)</code> in the language of sets.
+
+Our notation is pretty verbose here, so in informal discussion we'll adopt the following simplifications. Instead of <code>1st A</code> we'll write <code>A<sub>1</sub></code> and instead of <code>A · A</code> we'll write <code>A<sup>2</sup></code>. So <code>(1st A − 1st B) · (1st A − 1st B)</code> becomes <code>(A<sub>1</sub> − B<sub>1</sub>)<sup>2</sup></code>.
+
+The sketch of the proof is that we'll expand <code>A B set.≡ C C</code> into <code>(A<sub>1</sub> − B<sub>1</sub>)<sup>2</sup> + (A<sub>2</sub> − B<sub>2</sub>)<sup>2</sup> set.= (C<sub>1</sub> − C<sub>1</sub>)<sup>2</sup> + (C<sub>2</sub> − C<sub>2</sub>)<sup>2</sup>. But the right side of that is zero, so then we just need to note that we are adding two nonnegative numbers to get zero, which means both of them must be zero. From there we get <code>A<sub>1</sub> set.= B<sub>1</sub></code> and <code>A<sub>2</sub> set.= B<sub>2</sub></code>, which leads to <code>A set.= B</code>.
+
+We can start with <code>(C<sub>1</sub> − C<sub>1</sub>)<sup>2</sup> + (C<sub>2</sub> − C<sub>2</sub>)<sup>2</sup> = 0</code>, which we prove by means of a series of simpler lemmas.
+<jh>
+thm (set.CongruenceIdentity-d () ()
+  ((D ∈ (ℝ)) →
+    ((D − D) set.= (0))) (
+        D RealComplexMembership
+        D SubtractionItself
+        applySyllogism
+))
+
+#thm (set.CongruenceIdentity-d-2 () ()
+#  ((D ∈ (ℝ)) →
+#    (((D − D) · (D − D)) = (0))) (
+#))
+
+#thm (set.CongruenceIdentity-c-0 () ()
+#  ((((1st C) ∈ (ℝ)) ∧ ((2nd C) ∈ (ℝ))) →
+#    (((((1st C) − (1st C)) · ((1st C) − (1st C))) + (((2nd C) − (2nd C)) · ((2nd C) − (2nd C)))) = (0))) (
+#))
+</jh>
+
+Now we are ready to combine that result with the expansion of <code>A B set.≡ C C</code>.
+<jh>
+#thm (set.CongruenceIdentity-2 () ()
+#  ((((((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ))) ∧
+#    (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))) ∧
+#    (((1st C) ∈ (ℝ)) ∧ ((2nd C) ∈ (ℝ)))) →
+#    ((A B set.≡ C C) →
+#      (((((1st A) − (1st B)) · ((1st A) − (1st B))) + (((2nd A) − (2nd B)) · ((2nd A) − (2nd B)))) = (0)))) (
+</jh>
+Expanding <code>A B set.≡ C C</code> gives us <code>(A<sub>1</sub> − B<sub>1</sub>)<sup>2</sup> + (A<sub>2</sub> − B<sub>2</sub>)<sup>2</sup> set.= (C<sub>1</sub> − C<sub>1</sub>)<sup>2</sup> + (C<sub>2</sub> − C<sub>2</sub>)<sup>2</sup>.
+<jh>
+#))
+
+#thm (set.CongruenceIdentity-5 () ()
+#  ((((((1st A) ∈ (ℝ)) ∧ ((2nd A) ∈ (ℝ))) ∧
+#    (((1st B) ∈ (ℝ)) ∧ ((2nd B) ∈ (ℝ)))) ∧
+#    (((1st C) ∈ (ℝ)) ∧ ((2nd C) ∈ (ℝ)))) →
+#    ((A B set.≡ C C) → (A set.= B))) (
+
+
+#thm (set.CongruenceIdentity () () ((((A ∈ ((ℝ) × (ℝ))) ∧ (B ∈ ((ℝ) × (ℝ)))) ∧ (C ∈ ((ℝ) × (ℝ)))) →
+#  (A B set.≡ C C) → (A set.= B)) (
+#))
+
+#thm (CongruenceIdentity () () ((X Y ≡ Z Z) → (X = Y)) (
+#))
 </jh>
 
 == Betweenness ==
