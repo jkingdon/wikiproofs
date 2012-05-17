@@ -6,7 +6,7 @@
  | shortcut = 
  | notes    = In proving theories such as [[Interface:Tarski's geometry axioms]] or [[Interface:Peano axioms]] from set theory, we need to provide a way for a quantifier of the theory to be translated into a set theory quantifier which is restricted to the universe of the theory. For example, <code>∀ x φ</code> in Peano arithmetic corresponds to <code>∀ x ∈ ℕ φ</code> in the underlying set theory.
 
-Such a construction should prove that the [[Interface:Axioms of first-order logic]] (and the [[Interface:Axiom of quantifiability]], if in use) are satisfied by the restricted quantifiers, to justify the use of this interface as a parameter in place of [[Interface:First-order logic]] (or [[Interface:First-order logic with quantifiability]]). We do not yet attempt such a task, and ensuring the soundness of such an effort would require some thought about how parameters and interfaces in JHilbert relate to soundness (most discussion of JHilbert soundness to date has concerned soundness within a single proof module, not how soundness relates to interfaces and parameters).
+Such a construction should prove that the axioms of first-order logic, for example [[Interface:Axioms of first-order logic]] and the [[Interface:Axiom of quantifiability]] if in use, are satisfied by the restricted quantifiers, to justify the use of this interface as a parameter in place of [[Interface:First-order logic]] (or [[Interface:First-order logic with quantifiability]]). We do not yet attempt such a task, and ensuring that such a proof would establish soundness would require some thought about how parameters and interfaces in JHilbert relate to soundness (most discussion of JHilbert soundness to date has concerned soundness within a single proof module, not how soundness relates to interfaces and parameters).
 }}
 {{modules
 | parameters = [[Interface:Classical propositional calculus]]
@@ -14,19 +14,18 @@ Such a construction should prove that the [[Interface:Axioms of first-order logi
 | exportedby = none yet
 }}
 
-Our parameters are [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], and [[Interface:Set theory]].
+We first take parameters for the set theory: [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], and [[Interface:Set theory]].
 <jh>
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
 param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
 param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
-param (COMPLEX Interface:Complex_number_axioms (CLASSICAL FIRSTORDER SETS) ())
-
-var (formula φ)
 </jh>
 
-Although the construction we are doing here isn't dependent on what set we are using for the universe of the restricted quantifiers, at least for now we specify the universe here directly (as a set; within the world of restrcited quantifiers, the restricted universe is implicit). The choice of ℝ<sup>2</sup> is what we need to construct two dimensional geometry from the reals.
+We take a parameter indicating what set to restrict to. It needs to define one 0-ary term, <code>(universe)</code>. It indicates the universe as a set (within the world of restricted quantifiers, the restricted universe is implicit). That is, it is of kind <code>set.object</code>.
 <jh>
-def ((universe) ((ℝ) × (ℝ)))
+param (UNIVERSE Interface:Universe (CLASSICAL FIRSTORDER SETS) ())
+
+var (formula φ)
 </jh>
 
 Although the title of this page is "Restricting all quantifiers", in the presence of axioms/theorems like <code>Generalization</code>, the quantifiers interact with concepts like what values a variable can take on. That is, we need to distinguish between set variables and variables within the universe we are restricting to. Set variables are of kind <code>set.variable</code> and terms (classes) which are not restricted are of kind <code>set.object</code>. The restricted counterparts are <code>variable</code> and <code>object</code>.
@@ -53,6 +52,13 @@ stmt (InUniverse () () ((asSet X) ∈ (universe)))
 Having defined <code>asSet</code>, equality of restricted terms can be defined in terms of equality of sets.
 <jh>
 def ((= X Y) ((asSet X) set.= (asSet Y)))
+</jh>
+
+We use <code>asSet</code> to go from a restricted term to a set. To go from a set to a restricted term is possible but a bit trickier. The term <code>asRestrictedTerm A</code> represents the term corresponding to the set <code>A</code>, if that set is in the universe.
+<jh>
+term (object (asRestrictedTerm set.object))
+stmt (SetRestrictedTerm () ((A ∈ (universe))) ((asSet (asRestrictedTerm A)) set.= A))
+stmt (RestrictedTermSet () () ((asRestrictedTerm (asSet X)) = X))
 </jh>
 
 Taking the value of a restricted variable yields a restricted term. It might be possible to define <code>value</code> in terms of other things like <code>asSetVariable<code>, <code>set.value</code>, and probably others, but at least for now we define it via axioms, rather than a JHilbert definition.
