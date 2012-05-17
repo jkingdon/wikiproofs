@@ -1,0 +1,546 @@
+{{interfaces
+| imports = [[Interface:Complex number axioms]]
+| exports = [[Interface:First-order field axioms]]
+}}
+
+Here we show that the real numbers form a field, in the sense that we can export to [[Interface:First-order field axioms]].
+
+We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]],  [[Interface:Set theory]], and [[Interface:Complex numbers]].
+
+<jh>
+import (CLASSICAL Interface:Classical_propositional_calculus () ())
+import (QUANTIFY_OVER_SETS Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
+import (SETS Interface:Set_theory (CLASSICAL QUANTIFY_OVER_SETS) ())
+import (COMPLEX Interface:Complex_numbers (CLASSICAL QUANTIFY_OVER_SETS SETS) set.)
+</jh>
+
+We also import an interface, [[Interface:Restricting all quantifiers]], which provides the mapping between quantifiers which range over sets and quantifiers which range over real numbers. The reason for this to be a separate interface rather than just a set of definitions and theorems in this file is that when it comes time to export to [[Interface:First-order field axioms]], we'll need an interface to pass as a parameter.
+<jh>
+def ((universe) (set.ℝ))
+export (UNIVERSE Interface:Universe (CLASSICAL QUANTIFY_OVER_SETS SETS) ())
+
+import (QUANTIFY_OVER_POINTS Interface:Restricting_all_quantifiers
+  (CLASSICAL QUANTIFY_OVER_SETS SETS UNIVERSE) ())
+</jh>
+
+The interface [[Interface:Restricting all quantifiers]] defines a kind for restricted terms called <code>object</code>, which corresponds to a real number.
+<jh>
+kindbind (object real)
+</jh>
+
+Now we define some variables.
+
+<jh>
+var (variable x y z w)
+var (object X Y Z W X0 X1 Y0 Y1)
+var (set.variable a b c)
+var (set.object A B C D)
+var (formula φ ψ)
+</jh>
+
+The following definition should perhaps go in [[Interface:Restricting all quantifiers]] although that perhaps is a question of whether that interface assumes the axiom of quantifiability.
+<jh>
+def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
+</jh>
+
+== Addition ==
+<jh>
+def ((+ X Y) (asRestrictedTerm ((asSet X) set.+ (asSet Y))))
+def ((0) (asRestrictedTerm (set.0)))
+</jh>
+
+=== A lemma ===
+Since the complex numbers built on sets already have the theorems we need, our task is just to translate between the two worlds. This lemma translates between <code>+</code> and <code>set.+</code>.
+<jh>
+thm (Addition () () ((asSet (X + Y)) set.= ((asSet X) set.+ (asSet Y))) (
+</jh>
+The proof starts with <code>(asSet X) set.+ (asSet Y) ∈ ℝ</code>.
+<jh>
+        X InUniverse
+        Y InUniverse
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.RealAdditionClosure
+        applyModusPonens
+</jh>
+That lets us wrap <code>asRestrictedTerm</code> and <code>asSet</code> around <code>(asSet X) set.+ (asSet Y)</code>, to get <code>asSet (asRestrictedTerm ((asSet X) set.+ (asSet Y)))</code>.
+<jh>
+        SetRestrictedTerm
+))
+</jh>
+
+=== Builder ===
+Proving the addition builder is a relatively straightforward application of the addition builder for real numbers built on sets.
+<jh>
+thm (AdditionBuilder () () (((X0 = X1) ∧ (Y0 = Y1)) → ((X0 + Y0) = (X1 + Y1))) (
+        (asSet X0) (asSet X1) (asSet Y0) (asSet Y1) set.AdditionBuilder
+</jh>
+The antecedent is now what we need, as <code>X0 = X1</code> is the same as <code>(asSet X0) set.= (asSet X1)</code> (by the definition of <code>=</code>), and likewise for <code>Y0 = Y1</code>.
+
+For the consequent, we just have to translate the additions and the equality.
+<jh>
+        X0 Y0 Addition
+        X1 Y1 Addition
+        set.buildEquality
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+=== Restricted terms are complex ===
+Here's a convenience theorem.
+<jh>
+thm (InComplex () () ((asSet X) ∈ (set.ℂ)) (
+        X InUniverse
+
+        set.RealComplex
+        (set.ℝ) (set.ℂ) (asSet X) SubsetMembership
+        applyModusPonens
+
+        applyModusPonens
+))
+</jh>
+
+=== Associativity ===
+We can first state a version of associativity which is stated in terms of <code>set.+</code> and <code>set.=</code> but where we don't need explicit antecedents for the numbers being complex.
+<jh>
+thm (AdditionAssociativity-1 () ()
+  ((((asSet X) set.+ (asSet Y)) set.+ (asSet Z)) set.=
+    ((asSet X) set.+ ((asSet Y) set.+ (asSet Z)))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+        Z InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) (asSet Z) set.AdditionAssociativity
+        applyModusPonens
+))
+</jh>
+
+Now we need our usual transformation between <code>set.+</code> and <code>+</code>, and between <code>set.=</code> and <code>=</code>, to give the version of associativity which we need to export.
+<jh>
+thm (AdditionAssociativity () () (((X + Y) + Z) = (X + (Y + Z))) (
+</jh>
+We'll start with <code>asSet ((X + Y) + Z) set.= (asSet (X + Y)) set.+ (asSet Z)
+<jh>
+        (X + Y) Z Addition
+</jh>
+Next we turn that into <code>((asSet X) set.+ (asSet Y)) set.+ (asSet Z)</code>.
+<jh>
+        X Y Addition
+        (asSet Z) set.buildAdditionRR
+        set.applyEqualityTransitivity
+</jh>
+That's ready to apply associativity of <code>set.+</code>
+<jh>
+        X Y Z AdditionAssociativity-1
+        set.applyEqualityTransitivity
+</jh>
+Now we apply similar transformations to the first half of the proof in reverse. The first one is turning <code>(asSet X) set.+ ((asSet Y) set.+ (asSet Z))</code> into <code>(asSet X) set.+ asSet (Y + Z)</code>.
+<jh>
+        Y Z Addition
+        (asSet X) set.buildAdditionLL
+        set.swapEquality
+        set.applyEqualityTransitivity
+</jh>
+And then we just need to make that <code>asSet (X + (Y + Z))</code>.
+<jh>
+        X (Y + Z) Addition
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
+</jh>
+
+=== Commutativity ===
+Commutativity is much the same.
+<jh>
+thm (AdditionCommutativity-1 () ()
+  (((asSet X) set.+ (asSet Y)) set.= ((asSet Y) set.+ (asSet X))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.AdditionCommutativity
+        applyModusPonens
+))
+
+thm (AdditionCommutativity () () ((X + Y) = (Y + X)) (
+        X Y Addition
+
+        X Y AdditionCommutativity-1
+        set.applyEqualityTransitivity
+
+        Y X Addition
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
+</jh>
+
+=== Identity ===
+Next we need <code>X + 0 = X</code>. This is pretty much similar to the last two, except that we need to also translate from <code>set.0</code> to <code>0</code>.
+
+<jh>
+thm (Zero () () ((asSet (0)) set.= (set.0)) (
+        set.ZeroReal
+        SetRestrictedTerm
+))
+
+thm (AdditiveIdentity-1 () ()
+  (((asSet X) set.+ (asSet (0))) set.= (asSet X)) (
+        Zero
+        (asSet X) set.buildAdditionLL
+
+        X InComplex
+        (asSet X) set.AdditiveIdentity
+        applyModusPonens
+
+        set.applyEqualityTransitivity
+))
+
+thm (AdditiveIdentity () () ((X + (0)) = X) (
+        X (0) Addition
+
+        X AdditiveIdentity-1
+        set.applyEqualityTransitivity
+))
+</jh>
+
+=== Quantifiers ===
+The additive inverse theorem presents another new feature: it contains a quantifier. So we'll prove some theorems regarding quantifiers before tackling inverse itself.
+
+==== Restricted ∀ ====
+Here is a slight restatement of the definition of the restricted <code>∀</code> from [[Interface:Restricting all quantifiers]].
+<jh>
+thm (ForAll () () ((∀ x φ) ↔ (set.∀ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) → φ))) (
+        x ValueValue
+        (universe) buildMembershipRR
+        φ buildImplicationConsequent
+        (asSetVariable x) set.buildForAll
+        swapBiconditional
+))
+</jh>
+
+==== Restricted ∃ ====
+Here is a similar theorem about <code>∃</code>. The proof just rewrites <code>∃</code> into an equivalent expression involving <code>∀</code> and applies <code>ForAll</code> and some logic.
+<jh>
+thm (ThereExists () ()
+  ((∃ x φ) ↔ (set.∃ (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) ∧ φ))) (
+        x (¬ φ) ForAll
+        addNegation
+</jh>
+That gives us <code>∃ x φ ↔ ¬ set.∀ (asSetVariable x) ((asSetVariable x) ∈ universe → ¬ φ)</code>. We first move the negation inside the quantifier.
+<jh>
+        (asSetVariable x) (((set.value (asSetVariable x)) ∈ (universe)) → (¬ φ)) set.NotForAll
+        applyBiconditionalTransitivity
+</jh>
+Now we can transform <code>¬ ((asSetVariable x) ∈ universe → ¬ φ)</code> to <code>((asSetVariable x) ∈ universe ∧ φ</code>.
+<jh>
+        ((set.value (asSetVariable x)) ∈ (universe)) φ ConjunctionImplication
+        swapBiconditional
+        (asSetVariable x) set.buildThereExists
+        applyBiconditionalTransitivity
+))
+</jh>
+
+==== Builders for restricted quantifiers ====
+The builders for <code>∀</code> and <code>∃</code> follow directly from the builders for everything which make up <code>ForAll</code> or <code>ThereExists</code>
+<jh>
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        x φ ThereExists
+
+        H
+        ((set.value (asSetVariable x)) ∈ (universe)) buildConjunctionLL
+        (asSetVariable x) set.buildThereExists
+        applyBiconditionalTransitivity
+
+        x ψ ThereExists
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Inverse ===
+Now we are ready to prove <code>∃ x Y + x = 0</code>. The first lemma takes care of the quantifier.
+<jh>
+thm (AdditiveInverse-1 ((x Y)) () (∃ x (((asSet Y) set.+ (set.value (asSetVariable x))) set.= (set.0))) (
+        Y InUniverse
+        (asSet Y) (asSetVariable x) set.RealAdditiveInverseExists
+        applyModusPonens
+</jh>
+That gives us <code>set.∃ (asSetVariable x) (asSetVariable x) ∈ ℝ ∧ Y set.+ (asSetVariable x) set.= (set.0)</code>, which is basically what we need.
+<jh>
+        x (((asSet Y) set.+ (set.value (asSetVariable x))) set.= (set.0)) ThereExists
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+We then want to rewrite the one remaining occurrence of <code>asSetVariable</code>.
+<jh>
+thm (AdditiveInverse-2 ((x Y)) () (∃ x (((asSet Y) set.+ (asSet (value x))) set.= (set.0))) (
+        x Y AdditiveInverse-1
+
+        x ValueValue
+        (asSet Y) set.buildAdditionLL
+        (set.0) set.buildEqualityRR
+        x buildThereExists
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+</jh>
+
+From this point it is pretty similar to the proof of identity.
+<jh>
+thm (AdditiveInverse ((x Y)) () (∃ x ((Y + (value x)) = (0))) (
+        x Y AdditiveInverse-2
+
+        Y (value x) Addition
+        Zero
+        set.buildEquality
+        x buildThereExists
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+== Multiplication ==
+We now handle the definition of multiplication, the number one, associativity, commutativity, identity, and inverse. Everything is pretty similar to what we did for addition.
+
+<jh>
+def ((· X Y) (asRestrictedTerm ((asSet X) set.· (asSet Y))))
+def ((1) (asRestrictedTerm (set.1)))
+
+thm (Multiplication () () ((asSet (X · Y)) set.= ((asSet X) set.· (asSet Y))) (
+        X InUniverse
+        Y InUniverse
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.RealMultiplicationClosure
+        applyModusPonens
+
+        SetRestrictedTerm
+))
+
+thm (MultiplicationBuilder () () (((X0 = X1) ∧ (Y0 = Y1)) → ((X0 · Y0) = (X1 · Y1))) (
+        (asSet X0) (asSet X1) (asSet Y0) (asSet Y1) set.MultiplicationBuilder
+
+        X0 Y0 Multiplication
+        X1 Y1 Multiplication
+        set.buildEquality
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
+
+thm (MultiplicationAssociativity-1 () ()
+  ((((asSet X) set.· (asSet Y)) set.· (asSet Z)) set.=
+    ((asSet X) set.· ((asSet Y) set.· (asSet Z)))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+        Z InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) (asSet Z) set.MultiplicationAssociativity
+        applyModusPonens
+))
+
+thm (MultiplicationAssociativity () () (((X · Y) · Z) = (X · (Y · Z))) (
+        (X · Y) Z Multiplication
+
+        X Y Multiplication
+        (asSet Z) set.buildMultiplicationRR
+        set.applyEqualityTransitivity
+
+        X Y Z MultiplicationAssociativity-1
+        set.applyEqualityTransitivity
+
+        Y Z Multiplication
+        (asSet X) set.buildMultiplicationLL
+        set.swapEquality
+        set.applyEqualityTransitivity
+
+        X (Y · Z) Multiplication
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
+
+thm (MultiplicationCommutativity-1 () ()
+  (((asSet X) set.· (asSet Y)) set.= ((asSet Y) set.· (asSet X))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) set.MultiplicationCommutativity
+        applyModusPonens
+))
+
+thm (MultiplicationCommutativity () () ((X · Y) = (Y · X)) (
+        X Y Multiplication
+
+        X Y MultiplicationCommutativity-1
+        set.applyEqualityTransitivity
+
+        Y X Multiplication
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
+
+thm (One () () ((asSet (1)) set.= (set.1)) (
+        set.OneReal
+        SetRestrictedTerm
+))
+
+thm (MultiplicativeIdentity-1 () ()
+  (((asSet X) set.· (asSet (1))) set.= (asSet X)) (
+        One
+        (asSet X) set.buildMultiplicationLL
+
+        X InComplex
+        (asSet X) set.MultiplicativeIdentity
+        applyModusPonens
+
+        set.applyEqualityTransitivity
+))
+
+thm (MultiplicativeIdentity () () ((X · (1)) = X) (
+        X (1) Multiplication
+
+        X MultiplicativeIdentity-1
+        set.applyEqualityTransitivity
+))
+</jh>
+
+Multiplicative inverse is slightly different from additive inverse in that it has an antecedent which says that the inverse only exists for nonzero numbers.
+
+<jh>
+thm (MultiplicativeInverse-1 ((x Y)) ()
+  (((asSet Y) set.≠ (set.0)) → (∃ x (((asSet Y) set.· (set.value (asSetVariable x))) set.= (set.1)))) (
+        Y InUniverse
+        (asSet Y) (asSetVariable x) set.RealReciprocalExists
+        detach1of2
+</jh>
+That gives us <code>set.∃ (asSetVariable x) (asSetVariable x) ∈ ℝ ∧ Y set.· (asSetVariable x) set.= (set.1)</code>, which is basically what we need.
+<jh>
+        x (((asSet Y) set.· (set.value (asSetVariable x))) set.= (set.1)) ThereExists
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+We then want to rewrite the one remaining occurrence of <code>asSetVariable</code>.
+<jh>
+thm (MultiplicativeInverse-2 ((x Y)) ()
+ (((asSet Y) set.≠ (set.0)) → (∃ x (((asSet Y) set.· (asSet (value x))) set.= (set.1)))) (
+        Y x MultiplicativeInverse-1
+
+        x ValueValue
+        (asSet Y) set.buildMultiplicationLL
+        (set.1) set.buildEqualityRR
+        x buildThereExists
+        eliminateBiconditionalReverse
+
+        applySyllogism
+))
+</jh>
+
+From this point it is pretty similar to the proof of identity.
+<jh>
+thm (MultiplicativeInverse-3 ((x Y)) () (((asSet Y) set.≠ (set.0)) → (∃ x ((Y · (value x)) = (1)))) (
+        Y x MultiplicativeInverse-2
+
+        Y (value x) Multiplication
+        One
+        set.buildEquality
+        x buildThereExists
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+The antecedent is closer to <code>Y ≠ 0</code> than it looks, because of the automatic expansion of <code>=</code> and <code>set.≠</code>. The only thing we need to do is change <code>set.0</code> to <code>asSet 0</code>.
+
+<jh>
+thm (MultiplicativeInverse ((x Y)) () ((Y ≠ (0)) → (∃ x ((Y · (value x)) = (1)))) (
+        Zero
+        (asSet Y) set.buildEqualityLL
+        addNegation
+        eliminateBiconditionalReverse
+
+        Y x MultiplicativeInverse-3
+        applySyllogism
+))
+</jh>
+
+== Distributivity ==
+Distributivity does not involve any quantifiers or constants, so it is similar to something like commutativity or associativity.
+
+<jh>
+thm (Distributivity-1 () () (((asSet X) set.· ((asSet Y) set.+ (asSet Z))) set.=
+  (((asSet X) set.· (asSet Y)) set.+ ((asSet X) set.· (asSet Z)))) (
+        X InComplex
+        Y InComplex
+        introduceConjunction
+        Z InComplex
+        introduceConjunction
+
+        (asSet X) (asSet Y) (asSet Z) set.Distributivity
+        applyModusPonens
+))
+
+thm (Distributivity () () ((X · (Y + Z)) = ((X · Y) + (X · Z))) (
+        X (Y + Z) Multiplication
+
+        Y Z Addition
+        (asSet X) set.buildMultiplicationLL
+        set.applyEqualityTransitivity
+
+        X Y Z Distributivity-1
+        set.applyEqualityTransitivity
+
+        X Y Multiplication
+        X Z Multiplication
+        set.buildAddition
+        set.swapEquality
+        set.applyEqualityTransitivity
+
+        (X · Y) (X · Z) Addition
+        set.swapEquality
+        set.applyEqualityTransitivity
+))
+</jh>
+
+== Zero is not one ==
+The last field property we need to prove is <code>ZeroOne</code>.
+<jh>
+thm (ZeroOne () () ((0) ≠ (1)) (
+        set.ZeroOne
+
+        Zero
+        One
+        set.buildEquality
+        addNegation
+
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+</jh>
+
+== Export ==
+<jh>
+export (FIELD Interface:First-order_field_axioms (CLASSICAL QUANTIFY_OVER_POINTS) ())
+</jh>
+
+== Footnotes ==
+<references/>
+
+== References ==
+* Tarski, Alfred; Givant, Steven (1999), "[http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.27.9012 Tarski's system of geometry]", The Bulletin of Symbolic Logic 5 (2): 175–214, [[doi:10.2307/421089]], MR1791303, ISSN 1079-8986
+
+[[Category:Euclidean geometries (general) and generalizations]]
+[[Category:Foundations of classical theories (including reverse mathematics)]]
