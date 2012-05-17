@@ -1,0 +1,28 @@
+{{header
+ | title    = Restricting to a universe
+ | subtitle =
+ | left     =
+ | right    =
+ | shortcut =
+ | notes    = This module is to be used in conjunction with [[Interface:Restricting all quantifiers]] to restrict the terms and variables of a theory.
+}}
+{{modules
+| parameters = [[Interface:Classical propositional calculus]] [[Interface:First-order logic with quantifiability]] [[Interface:Set theory]]
+| importedby = parameter to [[Interface:Restricting all quantifiers]]
+| exportedby = various modules using [[Interface:Restricting all quantifiers]]
+}}
+
+We need enough parameters to define set theory.
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) set.)
+param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+</jh>
+
+Now we define the universe, and that's all we need to do here. The rest is in [[Interface:Restricting all quantifiers]] and the module which is restricting the quantifiers (for example [[Tarski's geometry axioms in terms of real numbers]]).
+<jh>
+term (set.object (universe))
+</jh>
+
+[[Category:Classical first-order logic|{{PAGENAME}}]]
+[[Category:JHilbert]]
