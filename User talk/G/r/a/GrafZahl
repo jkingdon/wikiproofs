@@ -98,3 +98,9 @@ I just added another change there, which is to make ⟂ (perpendicular) a legal 
 :::--[[User:GrafZahl|GrafZahl]] 21:47, 21 November 2011 (UTC)
 
 ::::That the extreme site slowness (and frequent 500 errors) had an easy fix (or at least apparent fix) is very good news. I can work around it, in the sense that <code>--wiki</code> lets me write and verify proofs locally, but in terms of hoping that others will at least browse the site, it is nice to have it responsive. At least at the moment, the site seems to be doing OK, so the CPU speed (or whatever other limitations might be there) doesn't seem like it is the same kind of severe problem we've been seeing the last few weeks. [[User:Kingdon|Kingdon]] 13:10, 24 November 2011 (UTC)
+
+== Categories not working ==
+
+If I try to go to http://wikiproofs.org/w/index.php?title=Category:Categories I get a 500 error. As far as I can tell, this is true for all categories.
+
+I've been working on various things lately, such as axiomizations of first-order logic and [[Interface:Restricting all quantifiers]]. [[User:Kingdon|Kingdon]] ([[User talk:Kingdon|talk]]) 13:41, 19 May 2012 (UTC)
