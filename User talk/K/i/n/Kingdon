@@ -151,3 +151,9 @@ Hi Kingdon, and Happy New Year to you! I did an OS upgrade, and the JHilbert ext
 Thanks for your pull request. I'm very busy, so I cannot review it right now. Sorry for the inconvenience.--[[User:GrafZahl|GrafZahl]]&nbsp;([[User talk:GrafZahl|talk]]) 21:00, 4 April 2012 (UTC)
 
 :Nothing urgent in it, I don't think. I just figured it would be easier to send one now before the number of changes got even bigger, that's all. Thanks for keeping me posted. [[User:Kingdon|Kingdon]] 06:42, 6 April 2012 (UTC)
+
+== Wikiproofs ==
+
+Hi, I have done some proofs with Metamath's set.mm in the past (many of my shortened proofs are there).  I was wondering: does wikiproofs have any advantages over Metamath and friends, besides the fact that it is easily accessible and editable by anyone?  Also, more specifically, let's say I had a set and operations that satisfied the axioms for complex numbers.  Would I be able to use the complex number module directly, or would I have to create an isomorphism? [[User:Asalmon14|Asalmon14]] ([[User talk:Asalmon14|talk]]) 07:02, 16 May 2012 (UTC)
+
+:Wikiproofs uses [[Help:JHilbert|JHilbert]], which is like ghilbert in that it aims to solve some of the problems of metamath, while preserving its basic spirit. If you have a module built on set theory which defines +, ·, ℂ, etc, and proves the axioms, you could then export [[Interface:Complex number axioms]] which would then justify an immediate import of [[Interface:Complex numbers]]. An isomorphism would not be necessary or helpful, as far as I can see, because in [[Interface:Complex number axioms]], ℂ is not a particular set; it is either posited to exist (if you take those axioms as axioms), or proven to exist in a module which exports the interface (not in the interface itself). [[User:Kingdon|Kingdon]] ([[User talk:Kingdon|talk]]) 03:21, 17 May 2012 (UTC)
