@@ -104,6 +104,13 @@ The other equality axiom is a version of being able to substitute equals for equ
 stmt (stdpc7 () () (((value x) = (value y)) → ((subst (value x) y φ) → φ)))
 </jh>
 
+== Distributing universal quantification across implication ==
+Although it is not mentioned in the statement of metamath problem 17, it seems hard to build up formulas without an axiom such as the following. At least for now, we assume it here although it is not known whether it is independent from the remaining axioms.
+
+<jh>
+stmt (ForAllImplication () () ((∀ x (φ → ψ)) → ((∀ x φ) → (∀ x ψ))))
+</jh>
+
 == Distinct variables ==
 None of the axioms presented so far make any reference to distinct variable constraints. Therefore, no theorems which rely on distinct variable contraints could be proved. This isn't really a problem from the point of view of proving metamath's <code>ax-4</code> through <code>ax-16</code>, which is the main point of this exercise. The only one of the standard metamath axioms for first-order logic which involves distinct variables is <code>ax-17</code>, which corresponds pretty closely to <code>DistinctNotFree</code> at [[Interface:Axioms of first-order logic in terms of substitution built on equality]] (given our use of <code>φ → ∀ x φ</code> to represent <code>x</code> being effectively not free in <code>φ</code>).
 
