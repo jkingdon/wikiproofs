@@ -66,6 +66,35 @@ thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
 ))
 </jh>
 
+=== Adding there exists to both sides of an implication ===
+Here we prove <code>∀ x (φ → ψ) → (∃ x φ → ∃ x ψ)</code>.
+<jh>
+thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))) (
+</jh>
+We start by changing <code>φ → ψ</code> to <code>¬ ψ → ¬ φ</code>
+<jh>
+        φ ψ Transposition
+        eliminateBiconditionalReverse
+        x addForAll
+</jh>
+Then we distribute the quantifier across <code>¬ ψ → ¬ φ</code> and transpose to get <code>¬ ∀ x ¬ φ → ¬ ∀ x ¬ ψ</code>.
+<jh>
+        x (¬ ψ) (¬ φ) ForAllImplication
+        applySyllogism
+
+        introduceTranspositionInConsequent
+</jh>
+Now we just need to apply the definition of <code>∃</code>.
+<jh>
+        x φ df-ex
+        x ψ df-ex
+        buildImplication
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 == What next? ==
 {{cleanup|figuring out where to start}}
 TRY#2
@@ -98,10 +127,8 @@ SubstNegation?
 stmt (dfsb7 () () ((subst (value y) x φ) ↔
   (∃ z (((value z) = (value y)) ∧ (∃ x (((value x) = (value z)) ∧ φ))))))
 
-ImplicationForAll is hard to do without....
-
 == Substitution of a variable for itself ==
-We start with being able to substitute a variable for itself. The ability to remove such a substitution follows directly from our axioms (?).
+We start with being able to substitute a variable for itself. The ability to remove such a substitution follows directly from our axioms (? - seems to need ∀ x x = x → x = x which we don't have yet).
 <jh>
 #thm (SubstItselfRemove () () ((subst (value x) x φ) → φ) (
 #        x stdpc6
