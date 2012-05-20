@@ -95,6 +95,24 @@ Now we just need to apply the definition of <code>∃</code>.
 ))
 </jh>
 
+A consequence are builders for <code>∃</code>:
+<jh>
+thm (addThereExists () ((H (φ → ψ))) ((∃ x φ) → (∃ x ψ)) (
+        H
+        x ax-gen
+
+        x φ ψ ForAllImplicationThereExists
+
+        applyModusPonens
+))
+
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        H eliminateBiconditionalReverse x addThereExists
+        H eliminateBiconditionalForward x addThereExists
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == What next? ==
 {{cleanup|figuring out where to start}}
 TRY#2
