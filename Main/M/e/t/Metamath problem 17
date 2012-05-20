@@ -55,12 +55,15 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
         applyBiconditionalTransitivity
 ))
 
-# Need buildForAll or some equivalent, like Margaris' replacement theorem
-#thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
-#        φ DoubleNegation
-#        x buildForAll
-#        addNegation
-#))
+thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
+        φ DoubleNegation
+        x buildForAll
+        addNegation
+
+        x (¬ φ) df-ex
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
 </jh>
 
 == What next? ==
