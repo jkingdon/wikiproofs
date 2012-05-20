@@ -25,6 +25,25 @@ thm (specializeToVariable () ((H (∀ x φ))) (subst (value y) x φ) (
 ))
 </jh>
 
+== Distributing for-all across an implication ==
+At least for now, we adopted <code>∀ x (φ → ψ) → (∀ x φ → ∀ x ψ)</code> as an axiom. Here are some consequences of that.
+<jh>
+thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
+        H
+        x ax-gen
+
+        x φ ψ ForAllImplication
+
+        applyModusPonens
+))
+
+thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
+        H eliminateBiconditionalReverse x addForAll
+        H eliminateBiconditionalForward x addForAll
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Existential quantification ==
 In [[Interface:Axioms of first-order logic as set forth in metamath problem 17]] we defined <code>∃ x φ</code> as <code>¬ ∀ x ¬ φ</code>. Here are a few easy consequences.
 <jh>
