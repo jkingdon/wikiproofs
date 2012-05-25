@@ -142,6 +142,10 @@ SubstNegation?
   [ y / x ] ¬ φ ↔ ∃ z (z = y ∧ ∃ x (x = z ∧ ¬ φ))
   ¬ [ y / x ] φ ↔ ¬ ∃ z (z = y ∧ ∃ x (x = z ∧ φ))
     ↔ ∀ z ¬ (z = y ∧ ∃ x (x = z ∧ φ))
+    ↔ ∀ z (z ≠ y ∨ ¬ ∃ x (x = z ∧ φ))
+    ↔ ∀ z (z ≠ y ∨ ∀ x ¬ (x = z ∧ φ))
+    ↔ ∀ z (z ≠ y ∨ ∀ x (x ≠ z ∨ ¬ φ))
+    ↔ ∀ z (z = y → ∀ x (x = z → ¬ φ))
 stmt (dfsb7 () () ((subst (value y) x φ) ↔
   (∃ z (((value z) = (value y)) ∧ (∃ x (((value x) = (value z)) ∧ φ))))))
 
