@@ -25,6 +25,25 @@ thm (specializeToVariable () ((H (∀ x φ))) (subst (value y) x φ) (
 ))
 </jh>
 
+== Distributing for-all across an implication ==
+At least for now, we adopted <code>∀ x (φ → ψ) → (∀ x φ → ∀ x ψ)</code> as an axiom. Here are some consequences of that.
+<jh>
+thm (addForAll () ((H (φ → ψ))) ((∀ x φ) → (∀ x ψ)) (
+        H
+        x ax-gen
+
+        x φ ψ ForAllImplication
+
+        applyModusPonens
+))
+
+thm (buildForAll () ((H (φ ↔ ψ))) ((∀ x φ) ↔ (∀ x ψ)) (
+        H eliminateBiconditionalReverse x addForAll
+        H eliminateBiconditionalForward x addForAll
+        introduceBiconditionalFromImplications
+))
+</jh>
+
 == Existential quantification ==
 In [[Interface:Axioms of first-order logic as set forth in metamath problem 17]] we defined <code>∃ x φ</code> as <code>¬ ∀ x ¬ φ</code>. Here are a few easy consequences.
 <jh>
@@ -36,12 +55,62 @@ thm (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))) (
         applyBiconditionalTransitivity
 ))
 
-# Need buildForAll or some equivalent, like Margaris' replacement theorem
-#thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
-#        φ DoubleNegation
-#        x buildForAll
-#        addNegation
-#))
+thm (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))) (
+        φ DoubleNegation
+        x buildForAll
+        addNegation
+
+        x (¬ φ) df-ex
+        swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+=== Adding there exists to both sides of an implication ===
+Here we prove <code>∀ x (φ → ψ) → (∃ x φ → ∃ x ψ)</code>.
+<jh>
+thm (ForAllImplicationThereExists () () ((∀ x (φ → ψ)) → ((∃ x φ) → (∃ x ψ))) (
+</jh>
+We start by changing <code>φ → ψ</code> to <code>¬ ψ → ¬ φ</code>
+<jh>
+        φ ψ Transposition
+        eliminateBiconditionalReverse
+        x addForAll
+</jh>
+Then we distribute the quantifier across <code>¬ ψ → ¬ φ</code> and transpose to get <code>¬ ∀ x ¬ φ → ¬ ∀ x ¬ ψ</code>.
+<jh>
+        x (¬ ψ) (¬ φ) ForAllImplication
+        applySyllogism
+
+        introduceTranspositionInConsequent
+</jh>
+Now we just need to apply the definition of <code>∃</code>.
+<jh>
+        x φ df-ex
+        x ψ df-ex
+        buildImplication
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+A consequence are builders for <code>∃</code>:
+<jh>
+thm (addThereExists () ((H (φ → ψ))) ((∃ x φ) → (∃ x ψ)) (
+        H
+        x ax-gen
+
+        x φ ψ ForAllImplicationThereExists
+
+        applyModusPonens
+))
+
+thm (buildThereExists () ((H (φ ↔ ψ))) ((∃ x φ) ↔ (∃ x ψ)) (
+        H eliminateBiconditionalReverse x addThereExists
+        H eliminateBiconditionalForward x addThereExists
+        introduceBiconditionalFromImplications
+))
 </jh>
 
 == What next? ==
@@ -73,13 +142,15 @@ SubstNegation?
   [ y / x ] ¬ φ ↔ ∃ z (z = y ∧ ∃ x (x = z ∧ ¬ φ))
   ¬ [ y / x ] φ ↔ ¬ ∃ z (z = y ∧ ∃ x (x = z ∧ φ))
     ↔ ∀ z ¬ (z = y ∧ ∃ x (x = z ∧ φ))
+    ↔ ∀ z (z ≠ y ∨ ¬ ∃ x (x = z ∧ φ))
+    ↔ ∀ z (z ≠ y ∨ ∀ x ¬ (x = z ∧ φ))
+    ↔ ∀ z (z ≠ y ∨ ∀ x (x ≠ z ∨ ¬ φ))
+    ↔ ∀ z (z = y → ∀ x (x = z → ¬ φ))
 stmt (dfsb7 () () ((subst (value y) x φ) ↔
   (∃ z (((value z) = (value y)) ∧ (∃ x (((value x) = (value z)) ∧ φ))))))
 
-ImplicationForAll is hard to do without....
-
 == Substitution of a variable for itself ==
-We start with being able to substitute a variable for itself. The ability to remove such a substitution follows directly from our axioms (?).
+We start with being able to substitute a variable for itself. The ability to remove such a substitution follows directly from our axioms (? - seems to need ∀ x x = x → x = x which we don't have yet).
 <jh>
 #thm (SubstItselfRemove () () ((subst (value x) x φ) → φ) (
 #        x stdpc6
