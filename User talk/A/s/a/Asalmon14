@@ -1,3 +1,7 @@
 == Blanking ==
 
 Thanks for blanking the spammy page which was at [[XERXESYALITZA75]]. I have deleted it. If you have any questions about wikiproofs, please ask. [[User:Kingdon|Kingdon]] ([[User talk:Kingdon|talk]]) 05:14, 16 May 2012 (UTC)
+
+== Wikiproofs ==
+
+I took a stab at answering your question at [[User talk:Kingdon#Wikiproofs]]. I focussed on the modules, as that might be the #1 win over metamath, but the syntax makes it less easy to shoot oneself in the foot and there might be other things I'm not thinking of right now. We don't really have a detailed comparison with metamath (either in terms of the proof verifier itself, or the existing proof libraries), but I suppose perhaps I could try to write something like that and I'm certainly willing to answer questions. We're also quite open to contributions if you know some Java and want to work on the verifier itself (as described at [[Wikiproofs:JHilbert development]]). Does that help explain what advantages JHilbert has over metamath? [[User:Kingdon|Kingdon]] ([[User talk:Kingdon|talk]]) 00:24, 20 May 2012 (UTC)
