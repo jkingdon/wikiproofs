@@ -180,6 +180,70 @@ thm (PerpendicularAtUniqueIntersection () ()
 ))
 </jh>
 
+== Perpendicular lines which intersect are perpendicular at that point ==
+If two lines are perpendicular and they intersect at a point, they are perpendicular at that point. In symbols, <code>A B ⟂ C D ∧ collinear X A B ∧ collinear X C D → A B C D ⟂at X</code>.<ref>l8_14_2_1b_bis in Narboux</ref>
+
+The proof is a straightforward application of <code>PerpendicularAtUniqueIntersection<code>. We start with a lemma performing a substitution.
+
+<jh>
+thm (PerpendicularIntersectionPerpendicularAt-1 () ()
+  ((((A B C D ⟂at Y) ∧ (collinear X A B)) ∧ (collinear X C D)) → (A B C D ⟂at X)) (
+</jh>
+We'll put <code>A B C D ⟂at Y</code> on the proof stack for later.
+<jh>
+        ((A B C D ⟂at Y) ∧ (collinear X A B))
+          (collinear X C D)
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+</jh>
+We start with <code>Y = X</code>.
+<jh>
+        A B C D Y X PerpendicularAtUniqueIntersection
+</jh>
+Then <code>Y = X → (A B C D ⟂at Y → A B C D ⟂at X)</code> by a substitution.
+<jh>
+        A EqualityReflexivity
+        B EqualityReflexivity
+        C EqualityReflexivity
+        D EqualityReflexivity
+        A A B B C C D D Y X PerpendicularAtBuilder
+        detach2of3
+        detach2of3
+        detach2of3
+        detach1of2
+        eliminateBiconditionalReverseInConsequent
+
+        applySyllogism
+</jh>
+That's all we need.
+<jh>
+        applyModusPonensInConsequent
+))
+
+thm (PerpendicularIntersectionPerpendicularAt
+  ((y A) (y B) (y C) (y D) (y X)) ()
+  ((((A B ⟂ C D) ∧ (collinear X A B)) ∧ (collinear X C D)) →
+    (A B C D ⟂at X)) (
+</jh>
+We first expand <code>A B ⟂ C D</code> to <code>∃ y A B C D ⟂at y</code>
+<jh>
+        A B C D y Perpendicular
+        eliminateBiconditionalReverse
+        (collinear X A B) conjoinRR
+        moveRightConjunctIntoThereExistsInConsequent
+        (collinear X C D) conjoinRR
+        moveRightConjunctIntoThereExistsInConsequent
+</jh>
+Our lemma then gives us <code>A B C D ⟂at X</code>
+<jh>
+        A B C D (value y) X PerpendicularIntersectionPerpendicularAt-1
+        y addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
+</jh>
+
 == References ==
 <references/>
 * Tarski, Alfred; Givant, Steven (1999), "Tarski's system of geometry", The Bulletin of Symbolic Logic 5 (2): 175–214, doi:10.2307/421089, MR1791303, ISSN 1079-8986
