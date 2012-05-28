@@ -294,6 +294,11 @@ A true conjunct does not affect the truth of a proposition.
 stmt (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))))
 </jh>
 
+Two true propositions are equivalent.
+<jh>
+stmt (TruthBiconditional () () ((p ∧ q) → (p ↔ q)))
+</jh>
+
 == Rules ==
 
 Each propositional calculus needs at least one rule of detachment (modus ponens appears to be the most common). However, it will be convenient to have certain toolbox of rules implementing often used statements.
