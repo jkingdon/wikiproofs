@@ -359,8 +359,8 @@ thm (LessEqualCongruence-2
 We first construct <code>e′</code>.
 <jh>
         (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionRightElimination
-        eliminateRightConjunctionInConsequent
-        eliminateRightConjunctionInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
 
         (((between C E D) ∧ (A B ≡ C E)) ∧ (A B ≡ A′ B′)) (C D ≡ C′ D′) ConjunctionLeftElimination
 
