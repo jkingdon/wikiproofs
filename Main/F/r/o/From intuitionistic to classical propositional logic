@@ -528,8 +528,6 @@ thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
 </jh>
 
 == Export ==
-When this file is done, we'll be ready to export to [[Interface:Principia Mathematica propositional logic theorems]].
-
 <jh>
 kindbind (wff formula)
 export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
