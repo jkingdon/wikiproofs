@@ -269,6 +269,11 @@ A true conjunct does not affect the truth of a proposition.
 stmt (BiconditionalConjunct () () (q → (p ↔ (p ∧ q))))
 </jh>
 
+Two true propositions are equivalent.
+<jh>
+stmt (TruthBiconditional () () ((p ∧ q) → (p ↔ q)))
+</jh>
+
 == Rules ==
 
 Here we supply rules corresponding to many of the theorems above, including those rules from [[Interface:Principia Mathematica propositional logic theorems]] which hold intuitionistically.
