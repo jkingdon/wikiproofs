@@ -292,20 +292,33 @@ thm (PerpendicularUniqueIntersectionPerpendicularAt-subst
         applySyllogism
 ))
 
-#thm (PerpendicularUniqueIntersectionPerpendicularAt-x-x0 () ()
-#  (((A B C D ⟂at X0) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
-#  X = X0)
-#))
+thm (PerpendicularUniqueIntersectionPerpendicularAt-x-x0
+  ((y A) (y B) (y C) (y D) (y X) (y X0)) ()
+  (((A B C D ⟂at X0) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
+  (X = X0)) (
+        (A B C D ⟂at X0)
+          (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))
+          ConjunctionRightElimination
 
-#thm (PerpendicularUniqueIntersectionPerpendicularAt () ()
+        A B C D X0 PerpendicularUniqueIntersectionPerpendicularAt-collinear
+        applySyllogism
+
+        (A B C D ⟂at X0)
+          (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))
+          ConjunctionLeftElimination
+
+        y A B C D X X0 PerpendicularUniqueIntersectionPerpendicularAt-subst
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+
+#thm (PerpendicularUniqueIntersectionPerpendicularAt
+#  ((y A) (y B) (y C) (y D) (y X) (y X)) ()
 #  (((A B ⟂ C D) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
 #  (A B C D ⟂at X)) (
 #))
 </jh>
-
-specialize, substituting x0 for y
-collinear x0 A B ∧ collinear x0 C D → X = x0
-and once we have that, change A B C D ⟂at x0 to A B C D ⟂at X.
 
 == References ==
 <references/>
