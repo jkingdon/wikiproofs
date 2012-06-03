@@ -18,7 +18,7 @@ var (point U0 V0 X0)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
 var (point C″)
 var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v v′ w x x′ y y′ z)
-var (variable u0 v0)
+var (variable x0 u0 v0)
 </jh>
 
 == Perpendicular lines ==
@@ -313,11 +313,50 @@ thm (PerpendicularUniqueIntersectionPerpendicularAt-x-x0
         applyModusPonensInConsequent
 ))
 
-#thm (PerpendicularUniqueIntersectionPerpendicularAt
-#  ((y A) (y B) (y C) (y D) (y X) (y X)) ()
-#  (((A B ⟂ C D) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
-#  (A B C D ⟂at X)) (
-#))
+thm (PerpendicularUniqueIntersectionPerpendicularAt-x
+  ((y A) (y B) (y C) (y D) (y X) (y X0)) ()
+  (((A B C D ⟂at X0) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
+  (A B C D ⟂at X)) (
+        (A B C D ⟂at X0)
+          (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))
+          ConjunctionRightElimination
+
+        A B C D X0 y X PerpendicularUniqueIntersectionPerpendicularAt-x-x0
+
+        A EqualityReflexivity
+        B EqualityReflexivity
+        C EqualityReflexivity
+        D EqualityReflexivity
+        A A B B C C D D X X0 PerpendicularAtBuilder
+        detach2of3
+        detach2of3
+        detach2of3
+        detach1of2
+
+        eliminateBiconditionalForwardInConsequent
+        applySyllogism
+
+        applyModusPonensInConsequent
+))
+
+thm (PerpendicularUniqueIntersectionPerpendicularAt
+  ((y A) (y B) (y C) (y D) (y X)
+   (x0 A) (x0 B) (x0 C) (x0 D) (x0 y) (x0 X)) ()
+  (((A B ⟂ C D) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
+  (A B C D ⟂at X)) (
+        A B C D x0 Perpendicular
+        eliminateBiconditionalReverse
+
+        (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y)))) conjoinRR
+        moveRightConjunctIntoThereExistsInConsequent
+
+        A B C D (value x0) y X
+          PerpendicularUniqueIntersectionPerpendicularAt-x
+        x0 addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
 
 == References ==
