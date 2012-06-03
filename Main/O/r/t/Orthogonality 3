@@ -14,10 +14,10 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) 
 import (START Interface:Orthogonality_2 (CLASSICAL FIRSTORDER) ())
 
 var (point A B C D E F M P Q R S U V X Y Z)
-var (point U0 V0)
+var (point U0 V0 X0)
 var (point A′ B′ C′ D′ E′ M′ P′ Q′ R′ S′ X′ Y′)
 var (point C″)
-var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v v′ x x′ y y′ z)
+var (variable a a′ b b′ c c′ c″ d d′ e e′ f p p′ q r r′ u u′ v v′ w x x′ y y′ z)
 var (variable u0 v0)
 </jh>
 
@@ -180,7 +180,7 @@ thm (PerpendicularAtUniqueIntersection () ()
 ))
 </jh>
 
-== Perpendicular lines which intersect are perpendicular at that point ==
+=== Perpendicular lines which intersect are perpendicular at that point ===
 If two lines are perpendicular and they intersect at a point, they are perpendicular at that point. In symbols, <code>A B ⟂ C D ∧ collinear X A B ∧ collinear X C D → A B C D ⟂at X</code>.<ref>l8_14_2_1b_bis in Narboux</ref>
 
 The proof is a straightforward application of <code>PerpendicularAtUniqueIntersection<code>. We start with a lemma performing a substitution.
@@ -243,6 +243,69 @@ Our lemma then gives us <code>A B C D ⟂at X</code>
         removeThereExistsInConsequent
 ))
 </jh>
+
+=== Perpendicular lines which intersect at one point are perpendicular at that point ===
+Here is another theorem which relates being perpendicular to being perpendicular at a point: <code>A B ⟂ C D ∧ ∀ y (collinear y A B ∧ collinear y C D → X = y) → A B C D ⟂at X</code>.<ref>l8_14_2_2 in Narboux</ref>
+
+The proof only relies on <code>PerpendicularAt</code>, the definition of <code>⟂</code>, and logic. Basically, we expand <code>A B ⟂ C D</code> to <code>A B C D ⟂at X0</code>, use the other hypothesis to conclude <code>X = X0</code>, and then substitute to turn <code>A B C D ⟂at X0</code> into <code>A B C D ⟂at X</code>.
+
+<jh>
+thm (PerpendicularUniqueIntersectionPerpendicularAt-collinear
+  ( (z w A) (z w B) (z w C) (z w D) (z w X0)) ()
+  ((A B C D ⟂at X0) → ((collinear X0 A B) ∧ (collinear X0 C D))) (
+        A B C D X0 z w PerpendicularAt
+        eliminateBiconditionalReverse
+
+        eliminateRightConjunctInConsequent
+        associateConjunctionRightInConsequent
+        eliminateLeftConjunctInConsequent
+))
+
+thm (PerpendicularUniqueIntersectionPerpendicularAt-subst
+  ((y A) (y B) (y C) (y D) (y X) (y X0)) ()
+  ((∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y)))) →
+  (((collinear X0 A B) ∧ (collinear X0 C D)) → (X = X0))) (
+        y
+          (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y)))
+          X0
+          SpecializationToObject
+
+        B EqualityReflexivity
+        A EqualityReflexivity
+        (value y) X0 A A B B CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        D EqualityReflexivity
+        C EqualityReflexivity
+        (value y) X0 C C D D CollinearityBuilder
+        detach2of3
+        detach2of2
+
+        buildConjunctionInConsequent
+
+        (value y) X0 X EqualityBuilderLL
+        buildImplicationInConsequent
+
+        makeSubstExplicit
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+#thm (PerpendicularUniqueIntersectionPerpendicularAt-x-x0 () ()
+#  (((A B C D ⟂at X0) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
+#  X = X0)
+#))
+
+#thm (PerpendicularUniqueIntersectionPerpendicularAt () ()
+#  (((A B ⟂ C D) ∧ (∀ y (((collinear (value y) A B) ∧ (collinear (value y) C D)) → (X = (value y))))) →
+#  (A B C D ⟂at X)) (
+#))
+</jh>
+
+specialize, substituting x0 for y
+collinear x0 A B ∧ collinear x0 C D → X = x0
+and once we have that, change A B C D ⟂at x0 to A B C D ⟂at X.
 
 == References ==
 <references/>
