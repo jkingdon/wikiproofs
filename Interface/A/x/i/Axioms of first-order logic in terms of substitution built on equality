@@ -30,7 +30,7 @@ We use φ, ψ, χ, and θ to represent formulas.
 var (formula φ ψ χ θ)
 </jh>
 
-We use the word ''object'' to refer to something which is subject to equality (or, indirectly, via <code>variable</code>, quantification). We define a kind called <code>object</code>, which corresponds to a [[w:First-order_logic#Terms|term]] in more conventional terminology.<ref>Margaris, page 48</ref> Theories built on first-order logic, like [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[Interface:Peano axioms|Peano arithmetic]], will define additional kinds of terms such as <code>+</code> (addition) or <code>∪</code> (union). This corresponds to the operation symbols of Margaris.<ref>Margaris, page 47</ref> Such theories will also define new kinds of formulas such as <code>&lt;</code> (less than) or <code>∈</code> (is an element of), which correspond to the predicate symbols of Margaris.<ref>Margaris, page 47</ref>
+We use the word ''object'' to refer to something which is subject to equality (or, indirectly, via <code>variable</code>, quantification). We define a kind called <code>object</code>, which corresponds to a [[w:First-order_logic#Terms|term]] in more conventional terminology.<ref>Margaris, page 48</ref> Theories built on first-order logic, like [[w:Zermelo–Fraenkel set theory|ZFC set theory]] or [[Interface:Peano axioms|Peano arithmetic]], will define additional kinds of terms such as <code>+</code> (addition) or <code>∪</code> (union). This corresponds to the operation symbols of Margaris.<ref>Margaris, page 47</ref> Such theories will also define new kinds of formulas such as <code><</code> (less than) or <code>∈</code> (is an element of), which correspond to the predicate symbols of Margaris.<ref>Margaris, page 47</ref>
 
 <jh>
 kind (object)

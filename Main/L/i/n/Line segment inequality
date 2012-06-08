@@ -1221,7 +1221,7 @@ thm (LessEqualZero () () ((A B ≤ C C) → (A = B)) (
 </jh>
 
 == Strict inequality ==
-Following Narboux, we define <code>&lt;</code> and <code>&gt;</code> in terms of <code>≤</code> and line segment congruence.
+Following Narboux, we define <code><</code> and <code>></code> in terms of <code>≤</code> and line segment congruence.
 <jh>
 def ((< A B C D) ((A B ≤ C D) ∧ (¬ (A B ≡ C D))))
 def ((> A B C D) (C D < A B))

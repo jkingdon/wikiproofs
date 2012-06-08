@@ -1844,7 +1844,7 @@ The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a 
 </jh>
 
 ==== Strict order ====
-Here we define <code>&lt;</code>, as well as <code>&gt;</code> and <code>≥</code>.
+Here we define <code><</code>, as well as <code>></code> and <code>≥</code>.
 <jh>
 def ((< a b) ((a ≤ b) ∧ (a ≠ b)))
 def ((> b a) (a < b))
@@ -1894,31 +1894,19 @@ thm (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))) (
         swapBiconditional
         applyBiconditionalTransitivity
 </jh>
-<<<<<<< HEAD
-That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <code>a ≤ b ∧ a ≠ b</code> is just the definition of <code>&lt;</code>, so this is enough.
-=======
 That gives us <code>a ≤ b ↔ (a ≤ b ∧ a ≠ b) ∨ a = b</code>.  But <code>a ≤ b ∧ a ≠ b</code> is just the definition of <code><</code>, so this is enough.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 <jh>
 ))
 </jh>
 
-<<<<<<< HEAD
-For parallelism, we also provide the definition of <code>&lt;</code> as a theorem.
-=======
 For parallelism, we also provide the definition of <code><</code> as a theorem.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 <jh>
 thm (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))) (
         (a < b) BiconditionalReflexivity
 ))
 </jh>
 
-<<<<<<< HEAD
-The builder for <code>&lt;</code> is a consequence of the one for <code>≤</code>.
-=======
 The builder for <code><</code> is a consequence of the one for <code>≤</code>.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 
 <jh>
 thm (LessThanBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 < b0) ↔ (a1 < b1))) (
@@ -1964,11 +1952,7 @@ thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
 </jh>
 
 ==== Transitivity ====
-<<<<<<< HEAD
-We start by proving that <code>a ≤ b ∧ b < c → a < c</code>. This has transitivity for <code>&lt;</code> as an immediate consequence, but will occasionally be useful in its own right.
-=======
 We start by proving that <code>a ≤ b ∧ b < c → a < c</code>. This has transitivity for <code><</code> as an immediate consequence, but will occasionally be useful in its own right.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 
 The first lemma constitutes the easy part of the proof.
 <jh>
@@ -2032,11 +2016,7 @@ And a transposition finishes the job.
 ))
 </jh>
 
-<<<<<<< HEAD
-Combining the two lemmas gives us transitivity for <code>a ≤ b ∧ b &lt; c</code>.
-=======
 Combining the two lemmas gives us transitivity for <code>a ≤ b ∧ b < c</code>.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 <jh>
 thm (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)) (
         a b c  LessEqualLessThanTransitivity-1
@@ -2045,11 +2025,7 @@ thm (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)) (
 ))
 </jh>
 
-<<<<<<< HEAD
-Transitivity for <code>&lt;</code> is an immediate consequence.
-=======
 Transitivity for <code><</code> is an immediate consequence.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 <jh>
 thm (LessThanLessEqualImplication () () ((a < b) → (a ≤ b)) (
         (a ≤ b) (a ≠ b) ConjunctionRightElimination
@@ -2066,11 +2042,7 @@ thm (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)) (
 </jh>
 
 ==== Strict order totality ====
-<<<<<<< HEAD
-Exactly one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> holds. We start with the proposition that at least one of the three holds.
-=======
 Exactly one of <code>a < b</code>, <code>a = b</code>, or <code>a > b</code> holds. We start with the proposition that at least one of the three holds.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 <jh>
 thm (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)) (
 </jh>
@@ -2102,11 +2074,7 @@ We just need to do some rearranging to finish.
 ))
 </jh>
 
-<<<<<<< HEAD
-The following theorems imply that no more than one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> holds.
-=======
 The following theorems imply that no more than one of <code>a < b</code>, <code>a = b</code>, or <code>a > b</code> holds.
->>>>>>> 4ca49c20ca2749b97b475fb73c350452237d11cd
 <jh>
 thm (LessThanEquality () () ((a < b) → (a ≠ b)) (
         a b LessThanLessEqual

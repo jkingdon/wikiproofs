@@ -160,7 +160,7 @@ stmt (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)))
 stmt (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)))
 </jh>
 
-Exactly one of <code>a &lt; b</code>, <code>a = b</code>, or <code>a &gt; b</code> hold.
+Exactly one of <code>a < b</code>, <code>a = b</code>, or <code>a > b</code> hold.
 <jh>
 stmt (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)))
 stmt (LessThanEquality () () ((a < b) → (a ≠ b)))

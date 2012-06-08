@@ -1,6 +1,6 @@
 This page is designed to be (eventually) a full reference manual for JHilbert. If you don't have some familiarity with JHilbert, it is probably easier to start with the [[Help:Tutorial|tutorial]] and then come back here.
 
-The language in which the proofs and statements being proved are written is called JHilbert, which is also the name of the software that runs to verify the proof when you save or preview a page.  On the wiki, JHilbert statements are enclosed between <code>&lt;jh&gt;</code> and <code>&lt;/jh&gt;</code> tags.
+The language in which the proofs and statements being proved are written is called JHilbert, which is also the name of the software that runs to verify the proof when you save or preview a page.  On the wiki, JHilbert statements are enclosed between <code><jh></code> and <code></jh></code> tags.
 
 JHilbert distinguishes between interfaces and modules and different commands are valid in interfaces or modules.  Interfaces live in the Interface namespace (for example, [[Interface:Classical propositional calculus]]) and modules live in the main namespace (for example, [[Principia Mathematica propositional logic]]). Interfaces contain axioms and statements to be proved; modules prove those statements. A [[w:lemma|lemma]] which is proven in a module but which is not likely to be useful in contexts other than the given proof should not be listed in any interface.
 

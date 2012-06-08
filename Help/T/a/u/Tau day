@@ -12,13 +12,13 @@ To play along, start by editing a ''proof module''. You can [http://wikiproofs.o
 
 Start by putting the following text into your module:
 
-  &lt;jh&gt;
+  <jh>
   import (PROPOSITIONS Interface:Classical_propositional_calculus () ())
   import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONS) ())
   import (TAU Interface:Tau_day_axioms (PROPOSITIONS FIRSTORDER) ())
-  &lt;/jh&gt;
+  </jh>
 
-Everything between the <code>&lt;jh&gt;…&lt;/jh&gt;</code>-tags is interpreted by the proof verifier. The <code>jh</code> stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on Wikiproofs. The ''import'' statements tell the verifier to make use of some previously proved, or assumed, results. They provide logic (''and'', ''or'', ''implies'', etc.) and real numbers which are familiar numbers such as 1, -5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
+Everything between the <code><jh>…</jh></code>-tags is interpreted by the proof verifier. The <code>jh</code> stands for [[Help:JHilbert|JHilbert]], which is the proof verifier used on Wikiproofs. The ''import'' statements tell the verifier to make use of some previously proved, or assumed, results. They provide logic (''and'', ''or'', ''implies'', etc.) and real numbers which are familiar numbers such as 1, -5, 44/7, √2, τ, or e, as well as operations on real numbers such as addition, division, square root, and a few others.
 
 Once you have copy-pasted those imports into your proof module, hit the preview button. You should see "Proof module parsed successfully" at the bottom of the page in green.
 
@@ -26,7 +26,7 @@ Once you have copy-pasted those imports into your proof module, hit the preview 
 
 Our first exercise is to show how proofs work by writing a very simple proof. It is just a restatement of something in the tau day axioms file, but with a new name.
 
-Edit the page and move the cursor above the &lt;/jh&gt; (everything we will be talking about in this exercise is a formal proof, which means it goes between the &lt;jh&gt; and &lt;/jh&gt; tags).
+Edit the page and move the cursor above the </jh> (everything we will be talking about in this exercise is a formal proof, which means it goes between the <jh> and </jh> tags).
 
 Then we need to declare a variable. So first add <code>var (real θ)</code> to your proof module, which declares a variable named θ. If your keyboard doesn't have θ, you can insert it by clicking on θ below the edit window. All the variables we will be adding are real numbers, which is what the "real" means.
 
