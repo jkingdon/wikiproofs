@@ -1,6 +1,6 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
-| importedby = none yet
+| importedby = [[First-order linear order defined via nonstrict inequality]]
 | exportedby = none yet
 }}
 
