@@ -94,13 +94,7 @@ stmt (buildLessEqualRR () ((x0 = x1)) ((x0 ≤ y) ↔ (x1 ≤ y)))
 stmt (buildLessEqualLL () ((y0 = y1)) ((x ≤ y0) ↔ (x ≤ y1)))
 </jh>
 
-{{Unproven|axioms = First-order linear order defined via strict inequality}}
-
-== Footnotes ==
-<references/>
-
-== Cited works ==
-* Margaris, Angelo (1990), ''First Order Mathematical Logic'', ISBN 978-0-486-66269-5
+{{Unproven|proof = First-order linear order defined via nonstrict inequality}}
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Total order]]
