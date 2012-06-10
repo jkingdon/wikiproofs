@@ -6,7 +6,7 @@
 
 A ''linear order'' or ''total order'' has an ordering predicate which obeys the familiar properties shown below. Here we present a first-order theory of linear orders (that is, all variables indicate one of the items being ordered, and there is no general way to form sets of items or variables which represent elements of some structure other than the field). This is as opposed to building the linear order within set theory, where the linear order consists of a set plus a [[Relations|relation]] for the ordering predicate.
 
-This interface aims to collect theorems about linear orders, including a variety of convenience theorems and consequences of definitions of a linear order. It contains both theorems stated in terms of strict inequality (less-than) or less than or equal, and relationships between the two.
+This interface aims to collect theorems about linear orders, including a variety of convenience theorems and consequences of definitions of a linear order. It contains theorems stated in terms of strict inequality (less-than), theorems stated in terms of less than or equal, and relationships between the two.
 
 We start by importing propositional and predicate logic.
 
@@ -93,6 +93,8 @@ stmt (buildLessEqual () ((x0 = x1) (y0 = y1)) ((x0 ≤ y0) ↔ (x1 ≤ y1)))
 stmt (buildLessEqualRR () ((x0 = x1)) ((x0 ≤ y) ↔ (x1 ≤ y)))
 stmt (buildLessEqualLL () ((y0 = y1)) ((x ≤ y0) ↔ (x ≤ y1)))
 </jh>
+
+{{Unproven|axioms = First-order linear order defined via strict inequality}}
 
 == Footnotes ==
 <references/>
