@@ -27,9 +27,9 @@ stmt (LessThanBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 < y0) ↔ (x1 < 
 
 It is irreflexive<ref>axiom L1 of Margaris, page 113</ref>, transitive<ref>axiom L2 of Margaris, page 113</ref> and total<ref>axiom L3 of Margaris, page 113</ref>. The totality axiom looks like the [[w:Trichotomy (mathematics)|trichotomy]] law, but it merely states that at least one of <code>x &lt y</code>, <code>x = y</code>, or <code>y &lt; x</code> hold; trichotomy holds that exactly one of the three holds (trichotomy can be proved from these three axioms, however<ref>Margaris, page 123–134</ref>).
 <jh>
-stmt (LessThanIrreflexive () () (¬ (x < x)))
-stmt (LessThanTransitive () () (((x < y) ∧ (y < z)) → (x < z)))
-stmt (LessThanTotalityAxiom () () (((x < y) ∨ (x = y)) ∨ (y < x)))
+stmt (LessThanIrreflexivity () () (¬ (x < x)))
+stmt (LessThanTransitivity () () (((x < y) ∧ (y < z)) → (x < z)))
+stmt (LessThanTotality () () (((x < y) ∨ (x = y)) ∨ (y < x)))
 </jh>
 
 == Terms versus variables ==
