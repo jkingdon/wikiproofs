@@ -51,7 +51,7 @@ The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a 
 ))
 </jh>
 
-==== Strict order ====
+=== Strict order ===
 Here we define <code><</code>, as well as <code>></code> and <code>≥</code>.
 <jh>
 def ((< a b) ((a ≤ b) ∧ (a ≠ b)))
@@ -322,6 +322,20 @@ thm (EqualityLessThan () () ((a = b) → (¬ (a < b))) (
         a b LessThanEquality
         transposeWithNegatedConsequent
 ))
+</jh>
+
+==== Irreflexivity ====
+<jh>
+thm (LessThanIrreflexivity () () (¬ (a < a)) (
+        a EqualityReflexivity
+        a a EqualityLessThan
+        applyModusPonens
+))
+</jh>
+
+== Export ==
+<jh>
+#export (RESULT Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
 </jh>
 
 {{DEFAULTSORT:{{PAGENAME}}}}
