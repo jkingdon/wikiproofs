@@ -1,0 +1,38 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
+| importedby = none yet
+| exportedby = none yet
+}}
+
+A ''[[w:total order|linear order]]'' or ''total order'' has an ordering predicate which lets us compare any two elements for order.
+
+Here we define a linear order in terms of what is called non-strict inequality, or "less than or equal to".
+
+This is a first-order presentation (that is, not built on set theory).
+
+We start by importing propositional and predicate logic.
+<jh>
+param (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+</jh>
+
+== Non-strict order ==
+There is an order which obeys the usual equality axioms.
+<jh>
+var (object x y z x0 y0 z0 x1 y1 z1)
+
+term (formula (≤ object object))
+stmt (LessEqualBuilder () () (((x0 = x1) ∧ (y0 = y1)) → ((x0 ≤ y0) ↔ (x1 ≤ y1))))
+</jh>
+
+It is antisymmetric, transitive, and total.
+<jh>
+stmt (LessEqualAntisymmetry () () (((x ≤ y) ∧ (y ≤ x)) → (x = y)))
+stmt (LessEqualTransitivity () () (((x ≤ y) ∧ (y ≤ z)) → (x ≤ z)))
+stmt (LessEqualTotality () () ((x ≤ y) ∨ (y ≤ x)))
+</jh>
+
+That is sufficient. These properties imply the theorems in [[Interface:First-order linear order]].
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Total order]]
