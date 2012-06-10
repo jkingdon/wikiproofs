@@ -1,0 +1,12 @@
+Here we prove [[Interface:First-order linear order]], starting from [[Interface:First-order linear order defined via nonstrict inequality]].
+
+== Import ==
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+import (START Interface:First-order_linear_order_defined_via_nonstrict_inequality
+  (PROPOSITIONAL FIRSTORDER) ())
+</jh>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Total order]]
