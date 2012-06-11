@@ -38,6 +38,29 @@ thm (LessEqualBuilderRR () () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
 ))
 </jh>
 
+Here are rules forms of those builders.
+<jh>
+thm (buildLessEqual () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 ≤ b0) ↔ (a1 ≤ b1)) (
+        HA
+        HB
+        introduceConjunction
+        a0 a1 b0 b1 LessEqualBuilder
+        applyModusPonens
+))
+
+thm (buildLessEqualRR () ((H (a0 = a1))) ((a0 ≤ b) ↔ (a1 ≤ b)) (
+        H
+        a0 a1 b LessEqualBuilderRR
+        applyModusPonens
+))
+
+thm (buildLessEqualLL () ((H (b0 = b1))) ((a ≤ b0) ↔ (a ≤ b1)) (
+        H
+        b0 b1 a LessEqualBuilderLL
+        applyModusPonens
+))
+</jh>
+
 Equality implies <code>≤</code>.
 <jh>
 thm (EqualityLessEqual () () ((a = b) → (a ≤ b)) (
@@ -51,7 +74,7 @@ The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a 
 ))
 </jh>
 
-=== Strict order ===
+== Strict order ==
 Here we define <code><</code>, as well as <code>></code> and <code>≥</code>.
 <jh>
 def ((< a b) ((a ≤ b) ∧ (a ≠ b)))
@@ -159,7 +182,7 @@ thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
 ))
 </jh>
 
-==== Transitivity ====
+=== Transitivity ===
 We start by proving that <code>a ≤ b ∧ b < c → a < c</code>. This has transitivity for <code><</code> as an immediate consequence, but will occasionally be useful in its own right.
 
 The first lemma constitutes the easy part of the proof.
@@ -249,7 +272,7 @@ thm (LessThanTransitivity () () (((a < b) ∧ (b < c)) → (a < c)) (
 ))
 </jh>
 
-==== Strict order totality ====
+=== Strict order totality ===
 Exactly one of <code>a < b</code>, <code>a = b</code>, or <code>a > b</code> holds. We start with the proposition that at least one of the three holds.
 <jh>
 thm (LessThanTotality () () (((a < b) ∨ (a = b)) ∨ (a > b)) (
@@ -324,7 +347,7 @@ thm (EqualityLessThan () () ((a = b) → (¬ (a < b))) (
 ))
 </jh>
 
-==== Irreflexivity ====
+=== Irreflexivity ===
 <jh>
 thm (LessThanIrreflexivity () () (¬ (a < a)) (
         a EqualityReflexivity
@@ -335,7 +358,7 @@ thm (LessThanIrreflexivity () () (¬ (a < a)) (
 
 == Export ==
 <jh>
-#export (RESULT Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
+export (RESULT Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
 </jh>
 
 {{DEFAULTSORT:{{PAGENAME}}}}
