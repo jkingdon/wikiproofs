@@ -1874,9 +1874,11 @@ Combining these two finishes the proof.
 ))
 </jh>
 
-Here we prove the analogous theorems for the strict order.
+Here we prove the analogous theorems for the strict order. We're just expanding <code>a &lt; b</code> into <code>a ≤ b ∧ a ≠ b</code> and showing that both sides of the conjunction work.
 <jh>
 thm (LessThanAdditionRR () () ((a0 < a1) ↔ ((a0 + b) < (a1 + b))) (
+        a0 a1 LessThanLessEqual
+
         a0 a1 b LessEqualAdditionRR
 
         a0 b a1 AdditionCancellationRight
@@ -1884,9 +1886,17 @@ thm (LessThanAdditionRR () () ((a0 < a1) ↔ ((a0 + b) < (a1 + b))) (
         addNegation
 
         buildConjunction
+
+        applyBiconditionalTransitivity
+
+        (a0 + b) (a1 + b) LessThanLessEqual
+        swapBiconditional
+        applyBiconditionalTransitivity
 ))
 
 thm (LessThanAdditionLL () () ((b0 < b1) ↔ ((a + b0) < (a + b1))) (
+        b0 b1 LessThanLessEqual
+
         b0 b1 a LessEqualAdditionLL
 
         a b0 b1 AdditionCancellationLeft
@@ -1894,6 +1904,12 @@ thm (LessThanAdditionLL () () ((b0 < b1) ↔ ((a + b0) < (a + b1))) (
         addNegation
 
         buildConjunction
+
+        applyBiconditionalTransitivity
+
+        (a + b0) (a + b1) LessThanLessEqual
+        swapBiconditional
+        applyBiconditionalTransitivity
 ))
 
 thm (LessEqualLessThanAddition () () (((a0 ≤ a1) ∧ (b0 < b1)) → ((a0 + b0) < (a1 + b1))) (
