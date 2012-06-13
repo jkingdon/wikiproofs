@@ -1802,7 +1802,7 @@ Due to the issue with distinct variables discussed at <code>Totality-sub</code>,
 </jh>
 
 === Consequences of total order properties ===
-In the above section, we have proved that <code>≤</code> is a total order.  Total orders have characteristic properties, and due to our import/export system, we can derive many consequences of the total order from this fact without having to prove them.  In addition to theorems, we also get a definition for <code><</code>, strictly less than.
+In the above section, we have proved that <code>≤</code> is a total order.  Total orders have characteristic properties, and due to our import/export system, we can derive many consequences of the total order from this fact without having to prove them (since we have already proved them in that module).  In addition to theorems, we also get a definition for <code><</code>, strictly less than.
 <jh>
 export (ORDER_DEFINED Interface:First-order_linear_order_defined_via_nonstrict_inequality (PROPOSITIONAL FIRSTORDER) ())
 
