@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
 | importedby = none yet
-| exportedby = none yet
+| exportedby = [[First-order linear order defined via nonstrict inequality]]
 }}
 
 Here we provide theorems for a [[w:total order|linear order]] for use in a proof module which has already exported [[Interface:First-order linear order defined via nonstrict inequality]].
@@ -50,9 +50,14 @@ stmt (EqualityLessThan () () ((x = y) → (¬ (x < y))))
 == Less than or equal to ==
 The predicate <code>≤</code> for less than or equal to was defined in [[Interface:First-order linear order defined via nonstrict inequality]], which also provides the builder <code>LessEqualBuilder</code>, transitivity, antisymmetry, and totality. We add some consequences and convenience theorems.
 
-Other properties include reflexivity.
+One consequence is reflexivity.
 <jh>
 stmt (LessEqualReflexivity () () (x ≤ x))
+</jh>
+
+We also provide greater-than-or-equal, which is just an abbreviation for less-than-or-equal with the order of the arguments reversed.
+<jh>
+def ((≥ x y) (y ≤ x))
 </jh>
 
 == Relationships between less-than, less-equal, and equality ==
