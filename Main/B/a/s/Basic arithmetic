@@ -1111,7 +1111,7 @@ We have proved <code>∃ m a + m = b ↔ ∃ n a + n = b</code>, and that is eno
 === Builders ===
 The builders for <code>≤</code> follow readily from the builders for addition, equality, and so on.
 <jh>
-thm (LessEqualBuilderRR ( (a0 n) (a1 n) (b n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
+thm (LessEqualBuilderRight ( (a0 n) (a1 n) (b n)) () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
 </jh>
 What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = b)</code>.  On the right hand side it is OK to use the same variable for both quantifiers because we are folding the definition explicitly using <code>LessEqual</code>.
 <jh>
@@ -1129,7 +1129,7 @@ What we do here is prove <code>a0 = a1 → (∃ n a0 + n = b ↔ ∃ n a1 + n = 
 
 The builder for adding a common number to the left is similar, and is proved in the same way.
 <jh>
-thm (LessEqualBuilderLL ( (a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))) (
+thm (LessEqualBuilderLeft ( (a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))) (
         b0 b1 (a + (value n)) EqualityBuilderLL
         n buildThereExistsInConsequent
 
@@ -1141,42 +1141,22 @@ thm (LessEqualBuilderLL ( (a n) (b0 n) (b1 n)) () ((b0 = b1) → ((a ≤ b0) ↔
 ))
 </jh>
 
-Combining <code>LessEqualBuilderLL</code> and <code>LessEqualBuilderRR</code> gives us the full builder.
+Combining <code>LessEqualBuilderLeft</code> and <code>LessEqualBuilderRright</code> gives us the full builder.
 
 <jh>
 thm (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))) (
         (a0 = a1) (b0 = b1) ConjunctionRightElimination
-        a0 a1 b0 LessEqualBuilderRR
+        a0 a1 b0 LessEqualBuilderRight
         applySyllogism
 
         (a0 = a1) (b0 = b1) ConjunctionLeftElimination
-        b0 b1 a1 LessEqualBuilderLL
+        b0 b1 a1 LessEqualBuilderLeft
         applySyllogism
 
         composeConjunction
 
         (a0 ≤ b0) (a1 ≤ b0) (a1 ≤ b1) BiconditionalTransitivity
         applySyllogism
-))
-
-thm (buildLessEqual () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 ≤ b0) ↔ (a1 ≤ b1)) (
-        HA
-        HB
-        introduceConjunction
-        a0 a1 b0 b1 LessEqualBuilder
-        applyModusPonens
-))
-
-thm (buildLessEqualRR () ((H (a0 = a1))) ((a0 ≤ b) ↔ (a1 ≤ b)) (
-        H
-        a0 a1 b LessEqualBuilderRR
-        applyModusPonens
-))
-
-thm (buildLessEqualLL () ((H (b0 = b1))) ((a ≤ b0) ↔ (a ≤ b1)) (
-        H
-        b0 b1 a LessEqualBuilderLL
-        applyModusPonens
 ))
 </jh>
 
