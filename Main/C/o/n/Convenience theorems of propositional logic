@@ -700,6 +700,26 @@ thm (exportInAntecedent ()
 ))
 </jh>
 
+== Rules for associativity ==
+Here are some rules for changing the associativity in the consequent.
+<jh>
+thm (associateConjunctionRightInConsequent () ((H (antecedent → ((p ∧ q) ∧ r))))
+  (antecedent → (p ∧ (q ∧ r))) (
+        H
+        p q r ConjunctionAssociativity
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+thm (associateConjunctionLeftInConsequent () ((H (antecedent → (p ∧ (q ∧ r)))))
+  (antecedent → ((p ∧ q) ∧ r)) (
+        H
+        p q r ConjunctionAssociativity
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
 == Combinations of commutativity and associativity ==
 Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
 
