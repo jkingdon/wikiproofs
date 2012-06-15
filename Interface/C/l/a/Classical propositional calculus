@@ -586,6 +586,14 @@ stmt (ImplicationConjunction () () ((p → q) ↔ (¬ (p ∧ (¬ q)))))
 stmt (NegationBiconditional () () ((¬ p) ↔ (p ↔ (⊥))))
 </jh>
 
+=== Rules for associativity ===
+<jh>
+stmt (associateConjunctionRightInConsequent () ((antecedent → ((p ∧ q) ∧ r)))
+  (antecedent → (p ∧ (q ∧ r))))
+stmt (associateConjunctionLeftInConsequent () ((antecedent → (p ∧ (q ∧ r))))
+  (antecedent → ((p ∧ q) ∧ r)))
+</jh>
+
 === Combinations of commutativity and associativity ===
 Commutativity and associativity might be combined in any number of ways, but a few patterns turn out to be common.
 <jh>
