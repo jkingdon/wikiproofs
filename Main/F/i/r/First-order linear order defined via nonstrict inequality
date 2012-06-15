@@ -4,7 +4,7 @@ Here we prove [[Interface:First-order linear order]], starting from [[Interface:
 <jh>
 import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
-import (START Interface:First-order_linear_order_defined_via_nonstrict_inequality
+import (DEFINED Interface:First-order_linear_order_defined_via_nonstrict_inequality
   (PROPOSITIONAL FIRSTORDER) ())
 </jh>
 
@@ -357,8 +357,14 @@ thm (LessThanIrreflexivity () () (¬ (a < a)) (
 </jh>
 
 == Export ==
+We first export an interface which contains everything we handle here, including the import from [[Interface:First-order linear order defined via nonstrict inequality]].
 <jh>
-export (RESULT Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
+export (COMPLETE Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
+</jh>
+
+It will also be helpful to export an interface which does not duplicate the declarations in [[Interface:First-order linear order defined via nonstrict inequality]], for use in a module which has already exported the latter.
+<jh>
+export (ADDITIONAL Interface:First-order_linear_order_from_nonstrict_inequality (PROPOSITIONAL FIRSTORDER DEFINED) ())
 </jh>
 
 {{DEFAULTSORT:{{PAGENAME}}}}
