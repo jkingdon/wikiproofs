@@ -104,9 +104,10 @@ We introduce equality, which is reflexive, symmetry, and transitive.  For simpli
 <jh>
 term (formula (= object object))
 
-stmt (EqualityReflexivity () () ((value x) = (value x)))
-stmt (EqualitySymmetry () () (((value x) = (value y)) ↔ ((value y) = (value x))))
-stmt (EqualityTransitivity () () ((((value x) = (value y)) ∧ ((value y) = (value z))) → ((value x) = (value z))))
+stmt (VariableEqualityReflexivity () () ((value x) = (value x)))
+stmt (VariableEqualitySymmetry () () (((value x) = (value y)) ↔ ((value y) = (value x))))
+stmt (VariableEqualityTransitivity () ()
+  ((((value x) = (value y)) ∧ ((value y) = (value z))) → ((value x) = (value z))))
 </jh>
 
 == Substitution ==
@@ -126,7 +127,7 @@ stmt (makeVariableSubstExplicitNotFree ((x y))
 
 stmt (VariableSubstBuilderReplacement () ()
   (((value y) = (value z)) → ((subst (value y) x φ) ↔ (subst (value z) x φ))))
-stmt (VariableSubstAddition () () ((∀ x (φ → ψ)) → ((subst (value y) x φ) → (subst (value z) x ψ))))
+stmt (VariableSubstAddition () () ((∀ x (φ → ψ)) → ((subst (value y) x φ) → (subst (value y) x ψ))))
 
 stmt (VariableSubstNotFree ((x y)) () (x is-not-free-in (subst (value y) x φ)))
 </jh>
