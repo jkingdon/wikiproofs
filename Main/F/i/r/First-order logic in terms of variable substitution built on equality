@@ -1731,39 +1731,39 @@ thm (VariableImplicitForAll ((x y) (x ψ)) ((H (((value x) = (value y)) → (φ 
 </jh>
 
 === Implicit substitution and existential quantification ===
-There is another similar expression, involving <code>∃</code>, namely <code>∃ x (x = s ∧ φ)</code>.
+There is another similar expression, involving <code>∃</code>, namely <code>∃ x (x = y ∧ φ)</code>.
 <jh>
-thm (ImplicitThereExists-1 ((x s)) ()
-  ((subst s x φ) → (∃ x (((value x) = s) ∧ φ))) (
+thm (VariableImplicitThereExists-1 ((x y)) ()
+  ((subst (value y) x φ) → (∃ x (((value x) = (value y)) ∧ φ))) (
 </jh>
-We start with <code>[ s / x ] φ → [ s / x ] x = s ∧ [ s / x ] φ<code>.
+We start with <code>[ y / x ] φ → [ y / x ] x = y ∧ [ y / x ] φ<code>.
 <jh>
-        (subst s x φ) ImplicationReflexivity
-        s x SubstEquality
+        (subst (value y) x φ) ImplicationReflexivity
+        y x VariableSubstEquality
         introduceLeftConjunctToConsequent
 </jh>
 Combining the substitutions in the consequent and then using the presence of a substitution to imply existence finishes the proof.
 <jh>
-        s x ((value x) = s) φ SubstConjunction
+        y x ((value x) = (value y)) φ VariableSubstConjunction
         eliminateBiconditionalForward
         applySyllogism
 
-        s x (((value x) = s) ∧ φ) ThereExistsIntroductionFromObject
+        y x (((value x) = (value y)) ∧ φ) ThereExistsIntroductionFromVariable
         applySyllogism
 ))
 
-thm (ImplicitThereExists-2 ((x s)) ()
-  ((∃ x (((value x) = s) ∧ φ)) → (subst s x φ)) (
+thm (VariableImplicitThereExists-2 ((x y)) ()
+  ((∃ x (((value x) = (value y)) ∧ φ)) → (subst (value y) x φ)) (
 </jh>
-In a few steps we'll need <code>x is-not-free-in [ s / x ] φ</code>.
+In a few steps we'll need <code>x is-not-free-in [ y / x ] φ</code>.
 <jh>
-        x s φ SubstNotFree
+        x y φ VariableSubstNotFree
 </jh>
-We start with <code>x = s → (φ ↔ [ s / x ] φ)</code>,
+We start with <code>x = y → (φ ↔ [ y / x ] φ)</code>,
 <jh>
-        x s φ EqualitySubst
+        x y φ EqualityVariableSubst
 </jh>
-and apply propositional logic to turn it into <code>x = s ∧ φ → [ s / x ] φ</code>.
+and apply propositional logic to turn it into <code>x = y ∧ φ → [ y / x ] φ</code>.
 <jh>
         eliminateBiconditionalReverseInConsequent
         import
@@ -1773,14 +1773,14 @@ Adding <code>∃</code> to the antecedent we are done.
         addThereExistsToAntecedentNotFree
 ))
 
-thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
-  ((∃ x (((value x) = s) ∧ φ)) ↔ ψ) (
-        x s φ ImplicitThereExists-2
-        s x φ ImplicitThereExists-1
+thm (VariableImplicitThereExists ((x y) (x ψ)) ((H (((value x) = (value y)) → (φ ↔ ψ))))
+  ((∃ x (((value x) = (value y)) ∧ φ)) ↔ ψ) (
+        x y φ VariableImplicitThereExists-2
+        y x φ VariableImplicitThereExists-1
         introduceBiconditionalFromImplications
 
         H
-        makeSubstExplicit
+        makeVariableSubstExplicit
 
         applyBiconditionalTransitivity
 ))
@@ -1789,20 +1789,8 @@ thm (ImplicitThereExists ((x s) (x ψ)) ((H (((value x) = s) → (φ ↔ ψ))))
 == Export ==
 We can export first-order logic now.
 <jh>
-export (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
-</jh>
-
-=== Quantifiability ===
-We also export the axiom of quantifiability, just to emphasize that this "axiom" is not just a (possibly arbitrary seeming) statement about proper classes, but is a consequence of substitution rules such as those described in Margaris.
-
-We've already proved <code>Quantifiability</code>, but for the export we also need a slight rearrangement of one of the equality builders.
-<jh>
-thm (TermEqualityAxiom () () ((s = t) → ((s = u) → (t = u))) (
-        s t u EqualityBuilderRR
-        eliminateBiconditionalReverseInConsequent
-))
-
-export (QUANTIFIABILITY Interface:Axiom_of_quantifiability (PROPOSITIONAL FIRSTORDER) ())
+# Commented out until we can straighten up ax6o and perhaps other loose ends
+#export (FIRSTORDER Interface:First-order_logic (PROPOSITIONAL) ())
 </jh>
 
 == Freeness ==
@@ -1864,18 +1852,18 @@ thm (QuantifiedNegation () () ( (¬ (∀ x φ)) → (∀ x (¬ (∀ x φ))) ) (
 
 Although metamath has <code>Existence</code> without <code>Quantifiability</code>, for our purposes we might just try to prove the former as a special case of the latter. {{cleanup|figuring out how ExistenceDistinct and ExistenceNotDistinct could be combined into a proof of Existence, or finding another proof}}
 <jh>
-thm (ExistenceDistinct ((x y)) () (¬ (∀ x (¬ ((value x) = (value y))))) (
-        x (value y) Quantifiability
-))
+#thm (ExistenceDistinct ((x y)) () (¬ (∀ x (¬ ((value x) = (value y))))) (
+# probably see how Quantifiability is proved in the term (not variable) version of this module
+#))
 
 thm (ExistenceNotDistinct () () (¬ (∀ x (¬ ((value x) = (value x))))) (
-        (value x) EqualityReflexivity
+        x VariableEqualityReflexivity
         ((value x) = (value x)) x ThereExistsIntroduction
         applyModusPonens
 ))
 </jh>
 
-{{cleanup|also proving QuantifierSubstitution and VariableSubstitution}}
+{{cleanup|also proving Existence, QuantifierSubstitution and VariableSubstitution}}
 
 Once we are done, here we would export the metamath axioms.
 
