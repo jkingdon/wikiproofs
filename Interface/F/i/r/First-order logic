@@ -77,7 +77,6 @@ stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
 
 == Variations and consequences of double quantification elimination ==
 <jh>
-stmt (ax6o () () ((∃ x (∀ x φ)) → φ))
 stmt (a5i () (((∀ x φ) → ψ)) ((∀ x φ) → (∀ x ψ)))
 </jh>
 
