@@ -528,25 +528,6 @@ thm (specializeToObjectInConsequent () ((H (antecedent → (∀ x φ)))) (antece
 
 Here we prove a number of results involving equality and quantifiers. Many of them will pave the way for results involving explicit (subst) substitution.
 
-=== ax9oc ===
-First is a consequence of the <code>Quantifiability</code> axiom:<ref>like [http://us.metamath.org/mpeuni/ax9o.html ax9o] in metamath's set.mm, accessed February 22, 2010, but for an object not a variable</ref>
-
-<jh>
-thm (ax9oc ((x s)) () ((∀ x (((value x) = s) → (∀ x φ))) → φ) (
-        x s Quantifiability
-        x ((value x) = s) (∀ x φ) ForAllImplicationThereExists
-</jh>
-This gives us <code>∀ x (x = s → ∀ x φ) → (∃ x x = s → ∃ x ∀ x φ)</code>, which can be simplified to our desired result.  The first step is to note that <code>∃x x = s</code> is just the <code>Quantifiability</code> axiom, and can therefore be removed:
-<jh>
-        detachImplicationImplication
-</jh>
-Now we need to reduce <code>∃ x ∀ x φ</code> to <code>φ</code>:
-<jh>
-        x φ ax6o
-        applySyllogism
-))
-</jh>
-
 === Implicit substitution and ∀ ===
 A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. Here we relate such a statement to <code>∀x(x = s → φ)</code> (which is one of the formulas we'll be using in manipulating substitutions).<ref>[http://us.metamath.org/mpeuni/equsal.html equsal] in metamath's set.mm, accessed May 11, 2010, but for an object not a variable</ref> The proof is based on one from Raph Levien.<ref>ceqsal in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 2012</ref>
 <jh>
