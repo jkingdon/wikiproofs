@@ -75,11 +75,6 @@ stmt (NotForAll () () ((¬ (∀ x φ)) ↔ (∃ x (¬ φ))))
 stmt (NotThereExists () () ((¬ (∃ x φ)) ↔ (∀ x (¬ φ))))
 </jh>
 
-== Variations and consequences of double quantification elimination ==
-<jh>
-stmt (a5i () (((∀ x φ) → ψ)) ((∀ x φ) → (∀ x ψ)))
-</jh>
-
 == Builders for quantifiers ==
 As with propositional calculus, we need to build up formulas explicitly, and these rules let us do it.  We provide them for both quantifiers, for implication and the biconditional.
 <jh>
