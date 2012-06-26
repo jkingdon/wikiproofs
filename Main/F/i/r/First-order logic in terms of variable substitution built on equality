@@ -1786,6 +1786,33 @@ thm (VariableImplicitThereExists ((x y) (x ψ)) ((H (((value x) = (value y)) →
 ))
 </jh>
 
+=== A quantified statement which starts with a proposition ===
+Here we prove a few theorems concerning negation and, one the one hand, universal quantification of an implication or, on the other hand, existential quantification of a conjunction. They aren't used particularly often, but we need <code>equs3</code> to export to [[Interface:First-order logic]].
+<jh>
+thm (alinexa () () ((∀ x (φ → (¬ ψ))) ↔ (¬ (∃ x (φ ∧ ψ)))) (
+        φ (¬ ψ) ImplicationDisjunction
+        φ ψ DeMorganPCP swapBiconditional
+        applyBiconditionalTransitivity
+
+        x buildForAll
+</jh>
+That gives us <code>∀ x (φ → ¬ ψ) ↔ ∀ x ¬ (φ ∧ ψ)</code>.  Now we just need to apply <code>NotThereExists</code> to the right hand side:
+<jh>
+        x (φ ∧ ψ) NotThereExists swapBiconditional
+        applyBiconditionalTransitivity
+))
+</jh>
+
+The second theorem, <code>equs3</code>, is a special case which will be useful in dealing with substitution:<ref>[http://us.metamath.org/mpeuni/equs3.html equs3] in metamath's set.mm, accessed February 22, 2010</ref>
+
+<jh>
+thm (equs3 () ()
+  ((∃ x (((value x) = s) ∧ φ)) ↔ (¬ (∀ x (((value x) = s) → (¬ φ))))) (
+        x ((value x) = s) φ alinexa
+        transposeBiconditionalWithNegatedRight
+))
+</jh>
+
 == Export ==
 We can export first-order logic now.
 <jh>
