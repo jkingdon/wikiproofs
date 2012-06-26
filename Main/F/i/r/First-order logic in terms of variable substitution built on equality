@@ -1482,7 +1482,7 @@ thm (swapVariableEqualityInConsequent () ((H (φ → ((value x) = (value y))))) 
         applySyllogism
 ))
 
-thm (applyEqualityTransitivity () ((H1 ((value x) = (value y))) (H2 ((value y) = (value z))))
+thm (applyVariableEqualityTransitivity () ((H1 ((value x) = (value y))) (H2 ((value y) = (value z))))
   ((value x) = (value z)) (
         H1
         H2
