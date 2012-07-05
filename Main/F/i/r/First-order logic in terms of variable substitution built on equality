@@ -1814,9 +1814,8 @@ thm (equs3 () ()
 </jh>
 
 == Export ==
-We can export first-order logic now.
+At this point, we would be ready to export [[Interface:First-order logic]] if we figured out what to do with <code>VariableSubstitution</code>.
 <jh>
-# Commented out until we can straighten up ax6o and perhaps other loose ends
 #export (FIRSTORDER Interface:First-order_logic (PROPOSITIONAL) ())
 </jh>
 
