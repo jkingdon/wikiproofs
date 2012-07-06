@@ -38,7 +38,7 @@ thm (LessEqualBuilderRR () () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
 ))
 </jh>
 
-Here are rules forms of those builders.
+Here are rule forms of those builders.
 <jh>
 thm (buildLessEqual () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 ≤ b0) ↔ (a1 ≤ b1)) (
         HA
