@@ -183,7 +183,7 @@ thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
 </jh>
 
 === Transitivity ===
-We start by proving that <code>a ≤ b ∧ b < c → a < c</code>. This has transitivity for <code><</code> as an immediate consequence, but will occasionally be useful in its own right.
+We start by proving that <code>a ≤ b ∧ b < c → a < c</code>.<ref>Exercise 8(b) of Tarski, Alfred, ''Introduction to Logic and to the Methodology of Deductive Sciences'', Dover, 1995, page 167</ref> This has transitivity for <code><</code> as an immediate consequence, but will occasionally be useful in its own right.
 
 The first lemma constitutes the easy part of the proof.
 <jh>
