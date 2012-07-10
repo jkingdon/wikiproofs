@@ -9,7 +9,7 @@ import (DEFINED Interface:First-order_linear_order_defined_via_nonstrict_inequal
 </jh>
 
 == Consequences ==
-Here we prove various consequences of the order properties. At least for now, there is quite a bit of duplication between this and [[Basic arithmetic]].
+Here we prove various consequences of the order properties.
 
 <jh>
 var (object a b c a0 b0 a1 b1)
@@ -38,7 +38,7 @@ thm (LessEqualBuilderRR () () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
 ))
 </jh>
 
-Here are rules forms of those builders.
+Here are rule forms of those builders.
 <jh>
 thm (buildLessEqual () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 ≤ b0) ↔ (a1 ≤ b1)) (
         HA
@@ -183,7 +183,7 @@ thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
 </jh>
 
 === Transitivity ===
-We start by proving that <code>a ≤ b ∧ b < c → a < c</code>. This has transitivity for <code><</code> as an immediate consequence, but will occasionally be useful in its own right.
+We start by proving that <code>a ≤ b ∧ b < c → a < c</code>.<ref>Exercise 8(b) of Tarski, Alfred, ''Introduction to Logic and to the Methodology of Deductive Sciences'', Dover, 1995, page 167</ref> This has transitivity for <code><</code> as an immediate consequence, but will occasionally be useful in its own right.
 
 The first lemma constitutes the easy part of the proof.
 <jh>
@@ -366,6 +366,9 @@ It will also be helpful to export an interface which does not duplicate the decl
 <jh>
 export (ADDITIONAL Interface:First-order_linear_order_from_nonstrict_inequality (PROPOSITIONAL FIRSTORDER DEFINED) ())
 </jh>
+
+== References ==
+<references/>
 
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Total order]]
