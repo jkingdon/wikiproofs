@@ -63,7 +63,7 @@ stmt (ForAllImplication () () ( (∀ x (φ → ψ)) → ((∀ x φ) → (∀ x �
 </jh>
 
 == Free variables ==
-Margaris defines free variables in terms of whether the variable has any occurences in a subformula which quantifies the occurence in question.<ref>Margaris, page 48</ref> At first glance, this might appear to be impossible to express in JHilbert, but we can actually express it fairly directly (at least, as much of it as we need). There is one subtlety: Margaris states that the presence of a non-bound occurence is a necessary and sufficient condition. We only provide one direction of this: we provide various ways to conclude that a variable is not free in a formula, but no way to show that a variable is free in one. This fits in better with the metamath-inspired treatment at [[Interface:Axioms of first-order logic]] and turns to be all we need to express Margaris's axioms.
+Margaris defines free variables in terms of whether the variable has any occurences in a subformula which quantifies the occurence in question.<ref>Margaris, page 48</ref> At first glance, this might appear to be impossible to express in JHilbert, but we can actually express it fairly directly (at least, a good enough approximation for our purposes). There is one subtlety: Margaris states that the presence of a non-bound occurrence is a necessary and sufficient condition. We only provide one direction of this: we provide various ways to conclude that a variable is not free in a formula, but no way to show that a variable is free in one. This fits in better with the metamath-inspired treatment at [[Interface:Axioms of first-order logic]] and turns to be all we need to express Margaris's axioms.
 
 <jh>
 term (formula (is-not-free-in variable formula))

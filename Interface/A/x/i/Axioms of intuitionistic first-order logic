@@ -46,7 +46,7 @@ term (formula (∃ variable formula))
 </jh>
 
 == Free variables ==
-Here we follow the treatment of free variables from [[Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. As described there, our predicate <code>is-not-free-in</code> is similar to, but not identical with, conventional (intuitionistic or otherwise) definitions of freeness. The one change we make for intuitionistic logic is to provide axioms for both kinds of quantifiers, and for additional connectives, to reflect the smaller number of intuitionistic quantifiers and connectives which can be defined in terms of others.
+Here we follow the treatment of free variables from [[Interface:Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. As described there, our predicate <code>is-not-free-in</code> is similar to, but not identical with, conventional (intuitionistic or otherwise) definitions of freeness. The one change we make for intuitionistic logic is to provide axioms for both kinds of quantifiers, and for additional connectives, to reflect the smaller number of intuitionistic quantifiers and connectives which can be defined in terms of others.
 
 <jh>
 term (formula (is-not-free-in variable formula))
@@ -103,7 +103,7 @@ stmt (EqualityTransitivity () () (((s = t) ∧ (t = u)) → (s = u)))
 </jh>
 
 == Substitution ==
-We define substitution, and provide various axioms for it, as in [[Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. Here we make no changes to adapt these axioms for intuitionistic logic.
+We define substitution, and provide various axioms for it, as in [[Interface:Axioms of first-order logic in terms of substitution built on equality]]; see that page for more detailed discussion. Here we make no changes to adapt these axioms for intuitionistic logic.
 
 <jh>
 term (formula (subst object variable formula))

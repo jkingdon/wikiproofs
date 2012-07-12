@@ -367,5 +367,8 @@ It will also be helpful to export an interface which does not duplicate the decl
 export (ADDITIONAL Interface:First-order_linear_order_from_nonstrict_inequality (PROPOSITIONAL FIRSTORDER DEFINED) ())
 </jh>
 
+== References ==
+<references/>
+
 {{DEFAULTSORT:{{PAGENAME}}}}
 [[Category:Total order]]
