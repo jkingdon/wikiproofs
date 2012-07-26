@@ -1,0 +1,131 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]]
+| importedby = none yet
+| exportedby = none yet
+}}
+
+The axioms in this file describe the real numbers on top of set theory. This is an axiom set which is designed for ease of understanding; the axioms are not independent<ref>Tarski, page 221</ref> and it is possible to come up with a set of real number axioms which are considerably shorter.<ref>Tarski, page 221</ref>. They are based on a system of Tarski.<ref>"Second axiom system for the arithmetic of real numbers", section 63 of chapter X, Tarski, page 217</ref>
+
+We build on [[Interface:Classical propositional calculus|propositional logic]], [[Interface:First-order logic with quantifiability|first-order logic]], and [[Interface:Set theory|set theory]].
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== Real numbers ==
+There is a set of real numbers. As a convention, we tend to use <code>x</code> and <code>y</code> to refer to real numbers, although using these names does not by itself ensure that a term is a real number rather than a set of numbers or a relation or something else.
+<jh>
+term (object (ℝ))
+var (object x y z)
+var (variable v)
+</jh>
+
+=== Ordered ===
+We define a [[w:Total order|total order]] on the reals.<ref>Axioms 1″, 2″, and 3″ on page 217 of Tarski</ref>
+<jh>
+term (formula (< object object))
+stmt (LessThanTotalityImplication () () (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → ((x ≠ y) → ((x < y) ∨ (y < x)))))
+stmt (LessThanAsymmetry () () (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → ((x < y) → (¬ (y < x)))))
+stmt (LessThanTransitivity () () ((((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) ∧ (z ∈ (ℝ))) →
+  (((x < y) ∧ (y < z)) → (x < z))))
+</jh>
+
+=== Continuity ===
+Continuity, or completeness, refers to the existence of numbers which bound given sets. It distinguishes the reals from the rationals and involves sets of numbers, not just individual numbers. The formulation in Tarski is the following. Given a set <code>K</code> and a set <code>L</code>, such that every element in <code>K</code> is less than every element in <code>L</code>, there exists a number <code>separator</code> such that every element of <code>K</code> is less than or equal to <code>separator</code>, and every element of <code>L</code> is greater than or equal to <code>separator</code>.
+<jh>
+var (object K L)
+var (variable separator k l)
+stmt (Continuity ((separator K L)) ()
+  ((((K ⊆ (ℝ)) ∧ (L ⊆ (ℝ))) ∧
+  (∀ k (∀ l ((((value k) ∈ K) ∧ ((value l) ∈ L)) → ((value k) < (value l)))))) →
+  (∃ separator (∀ k (∀ l ((((value k) ≠ (value separator)) ∧ ((value l) ≠ (value separator))) →
+    (((value k) < (value separator)) ∧ ((value separator) < (value l)))))))))
+</jh>
+
+{{cleanup|linking to a wikipedia page which explains completeness}}
+
+=== Addition ===
+The real numbers are closed under an addition operation,<ref>axiom 5″ in Tarski, page 217</ref> which is commutative and associative.<ref>axioms 6″ and 7″ in Tarski, page 218</ref>
+<jh>
+term (object (+ object object))
+stmt (RealAdditionClosure () () (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → ((x + y) ∈ (ℝ))))
+stmt (AdditionCommutativity () () (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → ((x + y) = (y + x))))
+stmt (AdditionAssociativity () () ((((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) ∧ (z ∈ (ℝ))) → (((x + y) + z) = (x + (y + z)))))
+</jh>
+
+Addition is invertible.<ref>axiom 8″ in Tarski, page 218</ref> Invertibility states that given two numbers, there is a third number that when added to the second yields the first.<ref>Tarski, page 169</ref>
+<jh>
+stmt (AdditionInvertibility () () (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → (∃ v (x = (y + (value v))))))
+</jh>
+
+Addition is monotonic with respect to <code>&lt;</code>.<ref>axiom 9″ in Tarski, page 218</ref>
+<jh>
+stmt (AdditionMonotonic () () ((((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) ∧ (z ∈ (ℝ))) → ((y < z) → ((x + y) < (x + z)))))
+</jh>
+
+There is a number zero which is an additive identity.<ref>axioms 10″ and 11″ in Tarski, page 218</ref>
+<jh>
+term (object (0))
+stmt (ZeroReal () () ((0) ∈ (ℝ)))
+stmt (AdditiveIdentity () () ((x ∈ (ℝ)) → ((x + (0)) = x)))
+</jh>
+
+=== Multiplication ===
+The real numbers are closed under a multiplication operation, which is commutative and associative.<ref>axioms 12″, 13″, and 14″ in Tarski, page 218</ref>
+<jh>
+term (object (· object object))
+stmt (MultiplicationClosure () () (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → ((x · y) ∈ (ℝ))))
+stmt (MultiplicationCommutativity () () (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → ((x · y) = (y · x))))
+stmt (MultiplicationAssociativity () () ((((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) ∧ (z ∈ (ℝ))) → (((x · y) · z) = (x · (y · z)))))
+</jh>
+
+The law of invertibility for multiplication is slightly different from the one for addition in that it excludes zero.<ref>axiom 15″ in Tarski, page 218</ref>
+<jh>
+stmt (MultiplicationInvertibility () ()
+  (((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) → ((y ≠ (0)) → (∃ v (x = (y · (value v)))))))
+</jh>
+
+The law of monotony for multiplication only applies to positive multipliers.<ref>axiom 16″ in Tarski, page 218</ref>
+<jh>
+stmt (MultiplicationMonotonic () () ((((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) ∧ (z ∈ (ℝ))) →
+  ((((0) < x) ∧ (y < z)) → ((x · y) < (x · z)))))
+</jh>
+
+Multiplication distributes over addition.<ref>axiom 17″ in Tarski, page 218</ref>
+<jh>
+stmt (Distributivity () () ((((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) ∧ (z ∈ (ℝ))) → ((x · (y + z)) = ((x · y) + (x · z)))))
+</jh>
+
+There is a complex number <code>1</code>, which serves as a multiplicative identity.<ref>axioms 18″ and 19″ in Tarski, page 218</ref>
+<jh>
+term (object (1))
+stmt (OneReal () () ((1) ∈ (ℝ)))
+stmt (MultiplicativeIdentity () () ((x ∈ (ℝ)) → ((x · (1)) = x)))
+</jh>
+
+Zero is not equal to one.<ref>axiom 20″ in Tarski, page 218</ref>
+
+<jh>
+stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
+== Builders ==
+This work by Tarski, as an introductory text, does not go into fine points of logic, but he does assume the ability to substitute equals for equals.<ref>Tarski, page 62</ref> Our equivalent is builders.
+
+Although the builders are not interesting unless <code>A0<code> and so on are real numbers, we state them without restricting them to real numbers. However we define the sum of two sets which are not real numbers, it is no hardship to make that definition obey the builders.
+<jh>
+var (object A0 A1 B0 B1)
+stmt (AdditionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 + B0) = (A1 + B1))))
+stmt (MultiplicationBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 · B0) = (A1 · B1))))
+</jh>
+
+== References ==
+<references/>
+
+== Cited works ==
+* Tarski, Alfred (1946), ''Introduction to Logic and to the Methodology of Deductive Sciences'', Dover edition of 1995
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Real and complex fields]]
