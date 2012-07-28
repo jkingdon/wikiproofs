@@ -20,6 +20,20 @@ We start by defining the set of complex numbers, <code>ℂ</code>, as <code>ℝ 
 def ((complex.ℂ) ((ℝ) × (ℝ)))
 </jh>
 
+We will refer to a complex number with real part <code>a</code> and imaginary part <code>b</code> as <code>a + bi</code>, although we haven't developed concepts of addition, multiplication, or the imaginary unit <code>i</code> to really justify that notation yet.
+
+We will typically use <code>z</code> and <code>w</code> to refer to complex numbers.
+<jh>
+var (object z w)
+</jh>
+
+== Addition ==
+Adding <code>a + bi</code> to <code>c + di</code> yields <code>(a + c) + (b + d)i</code>.
+
+<jh>
+def ((complex.+ z w) (orderedPair ((1st z) + (1st w)) ((2nd z) + (2nd w))))
+</jh>
+
 == Export ==
 
 <jh>
