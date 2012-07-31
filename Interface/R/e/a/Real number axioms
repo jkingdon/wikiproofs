@@ -33,7 +33,7 @@ stmt (LessThanTransitivity () () ((((x ∈ (ℝ)) ∧ (y ∈ (ℝ))) ∧ (z ∈ 
 </jh>
 
 === Continuity ===
-Continuity, or completeness, refers to the existence of numbers which bound given sets. It distinguishes the reals from the rationals and involves sets of numbers, not just individual numbers. The formulation in Tarski is the following. Given a set <code>K</code> and a set <code>L</code>, such that every element in <code>K</code> is less than every element in <code>L</code>, there exists a number <code>separator</code> such that every element of <code>K</code> is less than or equal to <code>separator</code>, and every element of <code>L</code> is greater than or equal to <code>separator</code>.
+Continuity, or [[w:Completeness of the real numbers|completeness]], refers to the existence of numbers which bound given sets. It distinguishes the reals from the rationals and involves sets of numbers, not just individual numbers. The formulation in Tarski is the following. Given a set <code>K</code> and a set <code>L</code>, such that every element in <code>K</code> is less than every element in <code>L</code>, there exists a number <code>separator</code> such that every element of <code>K</code> is less than or equal to <code>separator</code>, and every element of <code>L</code> is greater than or equal to <code>separator</code>.
 <jh>
 var (object K L)
 var (variable separator k l)
@@ -43,8 +43,6 @@ stmt (Continuity ((separator K L)) ()
   (∃ separator (∀ k (∀ l ((((value k) ≠ (value separator)) ∧ ((value l) ≠ (value separator))) →
     (((value k) < (value separator)) ∧ ((value separator) < (value l)))))))))
 </jh>
-
-{{cleanup|linking to a wikipedia page which explains completeness}}
 
 === Addition ===
 The real numbers are closed under an addition operation,<ref>axiom 5″ in Tarski, page 217</ref> which is commutative and associative.<ref>axioms 6″ and 7″ in Tarski, page 218</ref>
