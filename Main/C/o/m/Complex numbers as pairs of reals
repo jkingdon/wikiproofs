@@ -34,6 +34,11 @@ Adding <code>a + bi</code> to <code>c + di</code> yields <code>(a + c) + (b + d)
 def ((complex.+ z w) (orderedPair ((1st z) + (1st w)) ((2nd z) + (2nd w))))
 </jh>
 
+== Subtraction ==
+
+== Multiplication ==
+Multiplying <code>a + bi</code> by <code>c + di</code> yields <code>(a · c — b · d) + (b · c + a · d) i</code>.
+
 == Export ==
 
 <jh>
