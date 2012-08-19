@@ -1,0 +1,25 @@
+{{interfaces
+| imports = [[Interface:Real number axioms]]
+| exports = [[Interface:Real numbers]]
+}}
+
+The '''[[w:real numbers|real numbers]]''' are defined here by axioms which define addition, multiplication, and the [[w:completeness of the real numbers|completeness]] property. Here we add some elementary consequences of the axioms such as subtraction.
+
+We import the interfaces we build on, which are logic, set theory, and the real number axioms.
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
+import (AXIOMS Interface:Real_number_axioms (PROPOSITIONAL FIRSTORDER SETS) ())
+</jh>
+
+== Export ==
+
+<jh>
+#export (RESULTS Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Real and complex fields]]
