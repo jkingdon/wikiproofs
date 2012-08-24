@@ -1,0 +1,51 @@
+{{interfaces
+| imports = [[Interface:Real number axioms]]
+| exports = [[Interface:Complex number axioms]]
+}}
+
+A complex number can be broken into two real numbers: a real part and an imaginary part. Here we construct the complex numbers from the reals in this way.
+
+We import [[Interface:Classical propositional calculus]], [[Interface:First-order logic with quantifiability]], and [[Interface:Set theory]]. We also import [[Interface:Real number axioms]] and define some variables:
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
+
+import (REALS Interface:Real_number_axioms (PROPOSITIONAL FIRSTORDER SETS) ())
+</jh>
+
+== Complex numbers ==
+We start by defining the set of complex numbers, <code>ℂ</code>, as <code>ℝ × ℝ</code>. Everything we will be exporting to [[Interface:Complex number axioms]] is prefixed with <code>complex.</code> We need to make this distinction to avoid naming conflicts. In particular, <code>ℝ</code> is the set of real numbers we started with, but <code>complex.ℝ</code> is a subset of <code>ℝ × ℝ</code>, containing those numbers with imaginary part zero.
+<jh>
+def ((complex.ℂ) ((ℝ) × (ℝ)))
+</jh>
+
+We will refer to a complex number with real part <code>a</code> and imaginary part <code>b</code> as <code>a + bi</code>, although we haven't developed concepts of addition, multiplication, or the imaginary unit <code>i</code> to really justify that notation yet.
+
+We will typically use <code>z</code> and <code>w</code> to refer to complex numbers.
+<jh>
+var (object z w)
+</jh>
+
+== Addition ==
+Adding <code>a + bi</code> to <code>c + di</code> yields <code>(a + c) + (b + d)i</code>.
+
+<jh>
+def ((complex.+ z w) (orderedPair ((1st z) + (1st w)) ((2nd z) + (2nd w))))
+</jh>
+
+== Subtraction ==
+
+== Multiplication ==
+Multiplying <code>a + bi</code> by <code>c + di</code> yields <code>(a · c — b · d) + (b · c + a · d) i</code>.
+
+== Export ==
+
+<jh>
+#export (COMPLEX Interface:Complex_number_axioms (PROPOSITIONAL FIRSTORDER SETS) complex.)
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Real and complex fields]]
