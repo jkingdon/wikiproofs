@@ -50,6 +50,30 @@ thm (RealAdditionAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c 
 ))
 </jh>
 
+== Multiplication ==
+Similarly, a number of our multiplication theorems just need to be stated for reals, based directly on complex number versions.
+<jh>
+thm (RealMultiplicationCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a · b) = (b · a))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b MultiplicationCommutativity
+        applySyllogism
+))
+
+thm (RealMultiplicationAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a · b) · c) = (a · (b · c)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+        c RealComplexMembership
+        conjoin
+
+        a b c MultiplicationAssociativity
+        applySyllogism
+))
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
