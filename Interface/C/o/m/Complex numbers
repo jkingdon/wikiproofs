@@ -15,7 +15,7 @@ param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
 </jh>
 
 == Complex numbers ==
-There is a set of complex numbers. As a convention, we tend to use <code>z</code> and <code>w</code> to refer to complex numbers, although using these names does not by itself ensure that an <code>object</code> is a complex number rather than a set of numbers or a relation or something else.
+There is a set of complex numbers. As a convention, we tend to use <code>z</code> and <code>w</code> to refer to complex numbers, although using these names does not by itself ensure that a term is a complex number rather than a set of numbers or a relation or something else.
 <jh>
 term (object (ℂ))
 var (object z w s)
@@ -63,7 +63,7 @@ stmt (ISquared () () ((((i) · (i)) + (1)) = (0)))
 </jh>
 
 == Real numbers ==
-There is a subset of the complex numbers called the real numbers which are closed under addition and multiplication. We conventionally use <code>a</code>, <code>b</code>, and <code>c</code> to refer to real number objects, and <code>x</code> and <code>y</code> for real variables.
+There is a subset of the complex numbers called the real numbers which are closed under addition and multiplication. We conventionally use <code>a</code>, <code>b</code>, and <code>c</code> to refer to real number terms, and <code>x</code> and <code>y</code> for real variables.
 <jh>
 term (object (ℝ))
 var (object a b c)
