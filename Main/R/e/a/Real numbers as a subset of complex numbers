@@ -74,6 +74,20 @@ thm (RealMultiplicationAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) �
 ))
 </jh>
 
+== Distributivity ==
+<jh>
+thm (RealDistributivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a · (b + c)) = ((a · b) + (a · c)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+        c RealComplexMembership
+        conjoin
+
+        a b c Distributivity
+        applySyllogism
+))
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
