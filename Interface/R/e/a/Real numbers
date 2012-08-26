@@ -52,7 +52,7 @@ stmt (RealMultiplicativeIdentity () () ((a ∈ (ℝ)) → ((a · (1)) = a)))
 There is a real number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
 <jh>
 term (object (0))
-stmt (AdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)))
+stmt (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)))
 stmt (ZeroOne () () ((0) ≠ (1)))
 </jh>
 
