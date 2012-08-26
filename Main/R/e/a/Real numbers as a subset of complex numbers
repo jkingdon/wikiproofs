@@ -42,7 +42,7 @@ thm (RealAdditionCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a 
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
-export (COMPLEX Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+#export (COMPLEX Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
 </jh>
 
 == References ==
