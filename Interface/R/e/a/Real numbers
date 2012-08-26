@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]]
 | importedby = none yet
-| exportedby = none yet
+| exportedby = [[Real numbers as a subset of complex numbers]]
 }}
 
 This file contains the basic operations on real numbers: addition, subtraction, square roots, and so on. It also contains a variety of convenience theorems and notations; for a smaller set of theorems/axioms sufficient to define the real numbers see [[Interface:Real number axioms]]. Many of the theorems here apply more broadly than the real numbers (for example, for complex numbers or arbitrary fields); many of them have complex number versions at [[Interface:Complex numbers]].
@@ -12,10 +12,6 @@ We build on [[Interface:Classical propositional calculus|propositional logic]], 
 param (CLASSICAL Interface:Classical_propositional_calculus () ())
 param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
 param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
-</jh>
-
-== Real numbers ==
-<jh>
 </jh>
 
 == Real numbers ==
