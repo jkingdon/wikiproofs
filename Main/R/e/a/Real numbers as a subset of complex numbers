@@ -26,10 +26,23 @@ thm (RealComplexMembership () () ((a ∈ (ℝ)) → (a ∈ (ℂ))) (
 ))
 </jh>
 
+== Addition ==
+A number of properties we have for the complex numbers, and we just need to restate them for reals (via the fact that a real is complex). Here is addition commutativity:
+<jh>
+thm (RealAdditionCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a + b) = (b + a))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b AdditionCommutativity
+        applySyllogism
+))
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
-#export (COMPLEX Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+export (COMPLEX Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
 </jh>
 
 == References ==
