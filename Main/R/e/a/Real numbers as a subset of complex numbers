@@ -103,6 +103,24 @@ thm (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)) (
 ))
 </jh>
 
+== Subtraction ==
+We start with another theorem where we merely restate something in terms of reals.
+<jh>
+thm (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (a + (- b)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b Subtraction
+        applySyllogism
+))
+</jh>
+
+Now we need to prove something nontrivial. Namely, that subtracting two real numbers yields a real number (not just a complex number). Fortunately, <code>RealSubtraction</code> enables us to prove this in terms of closure of addition and additive inverse.
+<jh>
+#todo: prove this
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
