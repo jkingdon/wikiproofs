@@ -1,0 +1,246 @@
+{{modules
+| parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]], [[Interface:Set theory|set theory]]
+| importedby = none yet
+| exportedby = none yet
+}}
+
+This file contains the basic operations on real numbers: addition, subtraction, square roots, and so on. It also contains a variety of convenience theorems and notations; for a smaller set of theorems/axioms sufficient to define the real numbers see [[Interface:Real number axioms]]. Many of the theorems here apply more broadly than the real numbers (for example, for complex numbers or arbitrary fields); many of them have complex number versions at [[Interface:Complex numbers]].
+
+We build on [[Interface:Classical propositional calculus|propositional logic]], [[Interface:First-order logic with quantifiability|first-order logic]], and [[Interface:Set theory|set theory]].
+
+<jh>
+param (CLASSICAL Interface:Classical_propositional_calculus () ())
+param (FIRSTORDER Interface:First-order_logic_with_quantifiability (CLASSICAL) ())
+param (SETS Interface:Set_theory (CLASSICAL FIRSTORDER) ())
+</jh>
+
+== Real numbers ==
+<jh>
+</jh>
+
+== Real numbers ==
+There is a set of real numbers. As a convention, we tend to use <code>a</code> and <code>b</code> to refer to real numbers, although using these names does not by itself ensure that an <code>object</code> is a real number rather than a set of numbers or a relation or something else. Similarly, <code>x</code> and <code>y</code> are intended for real variables.
+<jh>
+term (object (ℝ))
+var (object a b c)
+var (variable x y)
+</jh>
+
+The real numbers are closed under an addition operation, which is commutative and associative.
+<jh>
+term (object (+ object object))
+stmt (RealAdditionClosure () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a + b) ∈ (ℝ))))
+stmt (RealAdditionCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a + b) = (b + a))))
+stmt (RealAdditionAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + b) + c) = (a + (b + c)))))
+</jh>
+
+The real numbers are closed under a multiplication operation, which is commutative and associative.
+<jh>
+term (object (· object object))
+stmt (RealMultiplicationClosure () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a · b) ∈ (ℝ))))
+stmt (RealMultiplicationCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a · b) = (b · a))))
+stmt (RealMultiplicationAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a · b) · c) = (a · (b · c)))))
+</jh>
+
+Multiplication distributes over addition.
+<jh>
+stmt (RealDistributivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a · (b + c)) = ((a · b) + (a · c)))))
+</jh>
+
+There is a real number <code>1</code>, which serves as a multiplicative identity.
+<jh>
+term (object (1))
+stmt (RealMultiplicativeIdentity () () ((a ∈ (ℝ)) → ((a · (1)) = a)))
+</jh>
+
+There is a real number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
+<jh>
+term (object (0))
+stmt (AdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)))
+stmt (ZeroOne () () ((0) ≠ (1)))
+</jh>
+
+=== Numerical constants ===
+
+There is not (yet at least) any particularly convenient way of expressing integers short of defining each one, so here are some of the more commonly used ones.
+<jh>
+def ((2) ((1) + (1)))
+def ((3) ((2) + (1)))
+def ((4) ((3) + (1)))
+def ((5) ((4) + (1)))
+def ((6) ((5) + (1)))
+def ((7) ((6) + (1)))
+def ((8) ((7) + (1)))
+def ((9) ((8) + (1)))
+def ((10) ((9) + (1)))
+def ((11) ((10) + (1)))
+def ((12) ((11) + (1)))
+def ((30) ((3) · (10)))
+def ((45) (((4) · (10)) + (5)))
+def ((60) ((6) · (10)))
+def ((90) ((9) · (10)))
+def ((100) ((10) · (10)))
+def ((180) ((100) + ((8) · (10))))
+def ((360) (((3) · (100)) + (60)))
+def ((1000) ((100) · (10)))
+def ((1000000) ((1000) · (1000)))
+
+stmt (ZeroReal () () ((0) ∈ (ℝ)))
+stmt (OneReal () () ((1) ∈ (ℝ)))
+stmt (TwoReal () () ((2) ∈ (ℝ)))
+stmt (ThreeReal () () ((3) ∈ (ℝ)))
+stmt (FourReal () () ((4) ∈ (ℝ)))
+stmt (FiveReal () () ((5) ∈ (ℝ)))
+stmt (SixReal () () ((6) ∈ (ℝ)))
+stmt (SevenReal () () ((7) ∈ (ℝ)))
+stmt (EightReal () () ((8) ∈ (ℝ)))
+stmt (NineReal () () ((9) ∈ (ℝ)))
+stmt (TenReal () () ((10) ∈ (ℝ)))
+stmt (ElevenReal () () ((11) ∈ (ℝ)))
+stmt (TwelveReal () () ((12) ∈ (ℝ)))
+stmt (HundredReal () () ((100) ∈ (ℝ)))
+stmt (ThousandReal () () ((1000) ∈ (ℝ)))
+stmt (MillionReal () () ((1000000) ∈ (ℝ)))
+</jh>
+
+=== Additive inverse and subtraction ===
+Any real number has a real additive inverse. Our notation is <code>- a</code> for the additive inverse of <code>a</code>.
+
+<jh>
+term (object (- object))
+
+stmt (RealAdditiveInverseClosed () () ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))))
+stmt (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) →
+  (∃ x (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))))))
+</jh>
+
+We can subtract any real number from another. In case your screen doesn't show it clearly, the minus sign is a different character (longer) than the negation sign above.
+<jh>
+term (object (− object object))
+stmt (RealSubtractionClosed () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) ∈ (ℝ))))
+stmt (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (a + (- b)))))
+</jh>
+
+Subtracting a number from itself yields zero.
+<jh>
+stmt (RealSubtractionItself () () ((a ∈ (ℝ)) → ((a − a) = (0))))
+</jh>
+
+The difference between two numbers is zero if and only if they are equal.
+<jh>
+stmt (RealZeroDifferenceEquality () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → (((a − b) = (0)) ↔ (a = b))))
+</jh>
+
+==== Properties of negation ====
+Negation distributes across multiplication in the familiar ways.
+<jh>
+stmt (RealMultiplicationNegativeNegative () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → (((- a) · (- b)) = (a · b))))
+</jh>
+
+Negating a subtraction is the same as reversing the operands to the subtraction.
+<jh>
+stmt (RealNegativeSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((- (a − b)) = (b − a))))
+</jh>
+
+=== Multiplicative inverse and division ===
+Every nonzero real number has a multiplicative inverse.
+<jh>
+term (object (/ object object))
+stmt (RealReciprocalClosed () () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → (((1) / a) ∈ (ℝ))))
+stmt (Reciprocal () () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → ((a · ((1) / a)) = (1))))
+</jh>
+
+There is another way of stating this, with <code>∃</code>.
+<jh>
+stmt (RealReciprocalExists ((x a)) ()
+  (((a ∈ (ℝ)) ∧ (a ≠ (0))) →
+    (∃ x (((value x) ∈ (ℝ)) ∧ ((a · (value x)) = (1))))))
+</jh>
+
+We can divide any real number by any nonzero real number.
+<jh>
+stmt (RealDivisionClosed () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (b ≠ (0))) →
+  ((a / b) ∈ (ℝ))))
+stmt (RealDivision () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (b ≠ (0))) →
+  ((a / b) = (a · ((1) / b)))))
+</jh>
+
+== Order on the reals ==
+We define a [[w:Total order|total order]] on the reals, which is consistent with addition and multiplication.
+<jh>
+term (formula (< object object))
+stmt (Trichotomy () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a < b) ↔ (¬ ((a = b) ∨ (b < a))))))
+stmt (Transitivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a < b) ∧ (b < c)) → (a < c))))
+stmt (LessThanAddition () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a < b) → ((c + a) < (c + b)))))
+stmt (LessThanMultiplication () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((((0) < a) ∧ ((0) < b)) → ((0) < (a · b)))))
+
+def ((> a b) (b < a))
+def ((≤ a b) ((a < b) ∨ (a = b)))
+def ((≥ a b) (b ≤ a))
+</jh>
+
+Any nonempty set of real numbers which is bounded above has a least upper bound ([[w:supremum|supremum]]) which is a real number. This property distinguishes the reals from the rationals. It is this property which causes us to build the reals on top of set theory, instead of just first-order logic, as it involves sets of reals not just individual real numbers. The statement of the axiom is as in metamath (modulo variable renamings and notation changes); the occurence of <code>bound</code> in the second part might better be read as "would-be upper bound" as of course the point is that it can't be less than the supremum and still be an upper bound.<ref>[http://us.metamath.org/mpeuni/axsup.html axsup]</ref>
+<jh>
+var (object A)
+var (variable bound supremum)
+stmt (Supremum ((x bound supremum A)) ()
+  ((((A ⊆ (ℝ))
+    ∧ (A ≠ (∅)))
+    ∧ (∃ bound (((value bound) ∈ (ℝ)) ∧ 
+      (∀ x (((value x) ∈ A) → ((value x) < (value bound)))))))
+  →
+    (∃ supremum (((value supremum) ∈ (ℝ)) ∧ (
+      (∀ x (((value x) ∈ A) → (¬ ((value supremum) < (value x))))) ∧ 
+      (∀ bound (((value bound) ∈ (ℝ)) → (((value bound) < (value supremum)) →
+        (∃ x (((value x) ∈ A) ∧ ((value bound) < (value x))))))))))))
+</jh>
+
+== Squares and square root ==
+At least for now, we notate the square of <code>a</code> as <code>a · a</code>. We have not yet developed exponentiation, which might treat <code>a</code> squared as a special case of <code>a</code> to an integer power.
+
+=== Squares ===
+The square of a real number is nonnegative.<ref>[http://us.metamath.org/mpeuni/msqge0.html msqge0], metamath's set.mm, accessed April 16, 2012</ref>
+<jh>
+stmt (RealSquareNonnegative () () ((a ∈ (ℝ)) → ((0) ≤ (a · a))))
+</jh>
+
+=== Square root ===
+
+The square root of a nonnegative real is real.
+<jh>
+term (object (√ object))
+stmt (SquareRootReal () () (((a ∈ (ℝ)) ∧ (a ≥ (0))) → ((√ a) ∈ (ℝ))))
+stmt (RealSquareRoot () () (((a ∈ (ℝ)) ∧ (a ≥ (0))) → (((√ a) · (√ a)) = a)))
+</jh>
+
+== Builders ==
+Here we supply builders for each operation.
+
+Although the builders are not interesting unless <code>A0<code> and so on are real numbers, we state them without restricting them to real numbers. However we define the sum of two sets which are not real numbers, it is no hardship to make that definition obey the builders.
+<jh>
+var (object B A0 A1 B0 B1)
+stmt (AdditionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 + B0) = (A1 + B1))))
+stmt (SubtractionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 − B0) = (A1 − B1))))
+stmt (NegativeBuilder () () ((A0 = A1) → ((- A0) = (- A1))))
+stmt (MultiplicationBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 · B0) = (A1 · B1))))
+stmt (DivisionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 / B0) = (A1 / B1))))
+stmt (SquareRootBuilder () () ((A0 = A1) → ((√ A0) = (√ A1))))
+</jh>
+
+=== Convenience builders ===
+The following builders, of course, follow from the ones above.
+<jh>
+stmt (buildAddition () ((A0 = A1) (B0 = B1)) ((A0 + B0) = (A1 + B1)))
+stmt (buildAdditionLL () ((B0 = B1)) ((A + B0) = (A + B1)))
+stmt (buildAdditionRR () ((A0 = A1)) ((A0 + B) = (A1 + B)))
+stmt (buildMultiplicationLL () ((B0 = B1)) ((A · B0) = (A · B1)))
+stmt (buildMultiplicationRR () ((A0 = A1)) ((A0 · B) = (A1 · B)))
+</jh>
+
+{{unproven|axioms=Real number axioms}}
+
+== References ==
+<references/>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Real and complex fields]]
