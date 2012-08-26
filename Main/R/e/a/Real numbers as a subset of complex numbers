@@ -12,6 +12,18 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITION
 import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
 
 import (START Interface:Complex_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+
+var (object a b c)
+</jh>
+
+== A real number is a complex number ==
+Here's a convenience theorem which is an easy consequence of <code>ℝ ⊆ ℂ</code>.
+<jh>
+thm (RealComplexMembership () () ((a ∈ (ℝ)) → (a ∈ (ℂ))) (
+        RealComplex
+        (ℝ) (ℂ) a SubsetMembership
+        applyModusPonens
+))
 </jh>
 
 == Export ==
