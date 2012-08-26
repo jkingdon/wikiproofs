@@ -46,12 +46,14 @@ stmt (RealDistributivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (�
 There is a real number <code>1</code>, which serves as a multiplicative identity.
 <jh>
 term (object (1))
+stmt (OneReal () () ((1) ∈ (ℝ)))
 stmt (RealMultiplicativeIdentity () () ((a ∈ (ℝ)) → ((a · (1)) = a)))
 </jh>
 
 There is a real number <code>0</code>, not equal to <code>1</code>, which serves as an additive identity.
 <jh>
 term (object (0))
+stmt (ZeroReal () () ((0) ∈ (ℝ)))
 stmt (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)))
 stmt (ZeroOne () () ((0) ≠ (1)))
 </jh>
@@ -81,8 +83,6 @@ def ((360) (((3) · (100)) + (60)))
 def ((1000) ((100) · (10)))
 def ((1000000) ((1000) · (1000)))
 
-stmt (ZeroReal () () ((0) ∈ (ℝ)))
-stmt (OneReal () () ((1) ∈ (ℝ)))
 stmt (TwoReal () () ((2) ∈ (ℝ)))
 stmt (ThreeReal () () ((3) ∈ (ℝ)))
 stmt (FourReal () () ((4) ∈ (ℝ)))
