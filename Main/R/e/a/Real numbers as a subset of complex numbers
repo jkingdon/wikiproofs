@@ -1,0 +1,26 @@
+{{interfaces
+| imports = [[Interface:Complex numbers]]
+| exports = [[Interface:Real numbers]]
+}}
+
+The [[w:real number|real numbers]] can be seen as those [[w:complex number|complex numbers]] which have imaginary part zero. In our context, that means we can prove [[Interface:Real numbers]] from complex numbers. Starting from [[Interface:Complex numbers]], this is fairly simple because it already has many theorems for the reals, so here we just need to restate a few variations, or in some cases prove that an operation applied to real numbers yields reals.
+
+We import the interfaces we build on, which are logic, set theory, and the complex numbers.
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
+
+import (START Interface:Complex_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+</jh>
+
+== Export ==
+{{cleanup|proving the rest of this interface and enabling the export}}
+<jh>
+#export (COMPLEX Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Real and complex fields]]
