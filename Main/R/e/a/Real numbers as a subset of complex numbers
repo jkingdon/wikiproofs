@@ -88,6 +88,21 @@ thm (RealDistributivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (�
 ))
 </jh>
 
+== Identities ==
+<jh>
+thm (RealMultiplicativeIdentity () () ((a ∈ (ℝ)) → ((a · (1)) = a)) (
+        a RealComplexMembership
+        a MultiplicativeIdentity
+        applySyllogism
+))
+
+thm (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)) (
+        a RealComplexMembership
+        a AdditiveIdentity
+        applySyllogism
+))
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
