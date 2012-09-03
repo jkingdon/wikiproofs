@@ -93,7 +93,7 @@ stmt (VariableSubstitution ((x y)) ()
   (((value x) = (value y)) → (φ → (∀ x (((value x) = (value y)) → φ)))) )
 </jh>
 
-There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of expression which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic). Such a statement for equals itself, <code>(s0 = s1 ∧ t0 = t1) → (s0 = t0 ↔ s1 = t1)</code>, can be proved from the above axioms, so an additional axiom is not needed here.
+There is also the principle of "equals can be substituted for equals". In our system, there is no way to express this generally, and it must be provided separately for each kind of predicate or operation which exists in the theory (for example, <code>∈</code> (is an element of), for set theory, or <code>S</code> (successor) or <code>+</code> (addition) for Peano arithmetic). Such a statement for equals itself, <code>(s0 = s1 ∧ t0 = t1) → (s0 = t0 ↔ s1 = t1)</code>, can be proved from the above axioms, so an additional axiom is not needed here.
 
 == Axiom of quantifiability ==
 In the axioms as shown above, we do not preclude the possibility of a term which cannot be equal to any variable (this will be true of [[w:proper class|proper classes]] in some formulations of set theory, for example). If this generality is not needed, assuming the [[Interface:Axiom of quantifiability]] may make life easier.
