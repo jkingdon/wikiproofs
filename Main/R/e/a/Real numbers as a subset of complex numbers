@@ -116,6 +116,7 @@ thm (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (
 ))
 </jh>
 
+=== Closure ===
 Now we need to prove something nontrivial. Namely, that subtracting two real numbers yields a real number (not just a complex number). Fortunately, <code>RealSubtraction</code> enables us to prove this in terms of closure of addition and additive inverse.
 <jh>
 thm (RealSubtractionClosedLemma () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a + (- b)) ∈ (ℝ))) (
@@ -139,6 +140,16 @@ Our substitution is <code>a − b = a + - b → (a − b ∈ ℝ ↔ a + - b ∈
         eliminateBiconditionalForwardInConsequent
 
         applyModusPonensInConsequent
+))
+</jh>
+
+=== Subtracting a real number from itself ===
+Here's another theorem which we just need to restate for reals, already having the corresponding theorem for complex numbers.
+<jh>
+thm (RealSubtractionItself () () ((a ∈ (ℝ)) → ((a − a) = (0))) (
+        a RealComplexMembership
+        a SubtractionItself
+        applySyllogism
 ))
 </jh>
 
