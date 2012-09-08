@@ -1,0 +1,133 @@
+{{interfaces
+| imports = [[Interface:Complex numbers]]
+| exports = [[Interface:Real numbers]]
+}}
+
+The [[w:real number|real numbers]] can be seen as those [[w:complex number|complex numbers]] which have imaginary part zero. In our context, that means we can prove [[Interface:Real numbers]] from complex numbers. Starting from [[Interface:Complex numbers]], this is fairly simple because it already has many theorems for the reals, so here we just need to restate a few variations, or in some cases prove that an operation applied to real numbers yields reals.
+
+We import the interfaces we build on, which are logic, set theory, and the complex numbers.
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
+
+import (START Interface:Complex_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+
+var (object a b c)
+</jh>
+
+== A real number is a complex number ==
+Here's a convenience theorem which is an easy consequence of <code>ℝ ⊆ ℂ</code>.
+<jh>
+thm (RealComplexMembership () () ((a ∈ (ℝ)) → (a ∈ (ℂ))) (
+        RealComplex
+        (ℝ) (ℂ) a SubsetMembership
+        applyModusPonens
+))
+</jh>
+
+== Addition ==
+For commutativity and associativity, we have them for the complex numbers, and we just need to restate them for reals (via the fact that a real is complex).
+<jh>
+thm (RealAdditionCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a + b) = (b + a))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b AdditionCommutativity
+        applySyllogism
+))
+
+thm (RealAdditionAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + b) + c) = (a + (b + c)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+        c RealComplexMembership
+        conjoin
+
+        a b c AdditionAssociativity
+        applySyllogism
+))
+</jh>
+
+== Multiplication ==
+Similarly, a number of our multiplication theorems just need to be stated for reals, based directly on complex number versions.
+<jh>
+thm (RealMultiplicationCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a · b) = (b · a))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b MultiplicationCommutativity
+        applySyllogism
+))
+
+thm (RealMultiplicationAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a · b) · c) = (a · (b · c)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+        c RealComplexMembership
+        conjoin
+
+        a b c MultiplicationAssociativity
+        applySyllogism
+))
+</jh>
+
+== Distributivity ==
+<jh>
+thm (RealDistributivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a · (b + c)) = ((a · b) + (a · c)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+        c RealComplexMembership
+        conjoin
+
+        a b c Distributivity
+        applySyllogism
+))
+</jh>
+
+== Identities ==
+<jh>
+thm (RealMultiplicativeIdentity () () ((a ∈ (ℝ)) → ((a · (1)) = a)) (
+        a RealComplexMembership
+        a MultiplicativeIdentity
+        applySyllogism
+))
+
+thm (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)) (
+        a RealComplexMembership
+        a AdditiveIdentity
+        applySyllogism
+))
+</jh>
+
+== Subtraction ==
+We start with another theorem where we merely restate something in terms of reals.
+<jh>
+thm (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (a + (- b)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b Subtraction
+        applySyllogism
+))
+</jh>
+
+Now we need to prove something nontrivial. Namely, that subtracting two real numbers yields a real number (not just a complex number). Fortunately, <code>RealSubtraction</code> enables us to prove this in terms of closure of addition and additive inverse.
+<jh>
+#todo: prove this
+</jh>
+
+== Export ==
+{{cleanup|proving the rest of this interface and enabling the export}}
+<jh>
+#export (COMPLEX Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
+</jh>
+
+== References ==
+<references/>
+
+[[Category:Real and complex fields]]

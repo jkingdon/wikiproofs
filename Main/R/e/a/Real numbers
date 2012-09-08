@@ -11,6 +11,16 @@ import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
 import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
 import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
 import (AXIOMS Interface:Real_number_axioms (PROPOSITIONAL FIRSTORDER SETS) ())
+
+var (object a b)
+var (variable x)
+</jh>
+
+== Subtraction ==
+We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
+
+<jh>
+def ((− b a) (⋃ (separate x (ℝ) ((a + (value x)) = b))))
 </jh>
 
 == Export ==

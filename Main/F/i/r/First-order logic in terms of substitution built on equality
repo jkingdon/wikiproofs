@@ -1980,7 +1980,7 @@ thm (ExistenceNotDistinct () () (¬ (∀ x (¬ ((value x) = (value x))))) (
 
 {{cleanup|also proving QuantifierSubstitution and VariableSubstitution}}
 
-Once we are done, here we would export the metamath axioms.
+Once we are done, here we would export the [[Interface:Axioms of first-order logic|metamath axioms]].
 
 <jh>
 #export (METAMATH Interface:Axioms_of_first-order_logic (PROPOSITIONAL) ())

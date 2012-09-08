@@ -1,7 +1,7 @@
 {{modules
 | parameters = [[Interface:Classical propositional calculus|Classical propositional calculus]], [[Interface:First-order logic with quantifiability|first-order logic]]
 | importedby = [[First-order linear order defined via nonstrict inequality]]
-| exportedby = none yet
+| exportedby = [[Basic arithmetic]]
 }}
 
 A ''[[w:total order|linear order]]'' or ''total order'' has an ordering predicate which lets us compare any two elements for order.
