@@ -245,6 +245,20 @@ Our substitution is <code>a / b = a · (1 / b) → (a / b ∈ ℝ ↔ a · (1 / 
 ))
 </jh>
 
+== Square root ==
+A number of theorems about square roots were provided by [[Interface:Complex numbers]], but here we show that <code>√ a · √ a = a</code>. Since this holds for complex numbers, we can just treat nonnegative real numbers as a special case.
+<jh>
+thm (RealSquareRoot () () (((a ∈ (ℝ)) ∧ (a ≥ (0))) → (((√ a) · (√ a)) = a)) (
+        (a ∈ (ℝ)) (a ≥ (0)) ConjunctionRightElimination
+
+        a RealComplexMembership
+        applySyllogism
+
+        a SquareRoot
+        applySyllogism
+))
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
