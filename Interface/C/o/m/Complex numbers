@@ -247,7 +247,7 @@ stmt (SubtractionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 − B0) = (A1
 stmt (NegativeBuilder () () ((A0 = A1) → ((- A0) = (- A1))))
 stmt (MultiplicationBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 · B0) = (A1 · B1))))
 stmt (DivisionBuilder () () (((A0 = A1) ∧ (B0 = B1)) → ((A0 / B0) = (A1 / B1))))
-stmt (SquarerootBuilder () () ((A0 = A1) → ((√ A0) = (√ A1))))
+stmt (SquareRootBuilder () () ((A0 = A1) → ((√ A0) = (√ A1))))
 </jh>
 
 === Convenience builders ===
