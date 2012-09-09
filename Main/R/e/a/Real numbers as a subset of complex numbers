@@ -162,6 +162,19 @@ thm (RealZeroDifferenceEquality () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → (((
 ))
 </jh>
 
+== More properties of negation ==
+Here are another few theorems where we just need to restate them for reals, already having the corresponding theorem for complex numbers.
+<jh>
+thm (RealMultiplicationNegativeNegative () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → (((- a) · (- b)) = (a · b))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b MultiplicationNegativeNegative
+        applySyllogism
+))
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
