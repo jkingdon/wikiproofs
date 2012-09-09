@@ -184,6 +184,56 @@ thm (RealNegativeSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((- (a
 ))
 </jh>
 
+== Division ==
+
+=== Reciprocal and division ===
+Division can be defined as multiplication with a reciprocal for all complex numbers, so we just need to restate it for reals.
+<jh>
+thm (RealDivision () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (b ≠ (0))) →
+  ((a / b) = (a · ((1) / b)))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        (b ≠ (0)) conjoinRR
+
+        a b Division
+        applySyllogism
+))
+</jh>
+
+=== Dividing a real by a real ===
+We next want to show that dividing one real number by another real number produces a real number.
+<jh>
+thm (RealDivisionClosedLemma () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (b ≠ (0))) → ((a · ((1) / b)) ∈ (ℝ))) (
+        (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (b ≠ (0))) ImplicationReflexivity
+        associateConjunctionRightInConsequent
+
+        b RealReciprocalClosed
+        (a ∈ (ℝ)) conjoinLL
+        applySyllogism
+
+        a ((1) / b) RealMultiplicationClosure
+        applySyllogism
+))
+
+thm (RealDivisionClosed () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (b ≠ (0))) →
+  ((a / b) ∈ (ℝ))) (
+        a b RealDivisionClosedLemma
+
+        a b RealDivision
+</jh>
+Our substitution is <code>a / b = a · (1 / b) → (a / b ∈ ℝ ↔ a · (1 / b) ∈ ℝ)</code>.
+<jh>
+        (a / b) (a · ((1) / b)) (ℝ) MembershipBuilderRR
+        applySyllogism
+
+        eliminateBiconditionalForwardInConsequent
+
+        applyModusPonensInConsequent
+))
+</jh>
+
 == Export ==
 {{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
