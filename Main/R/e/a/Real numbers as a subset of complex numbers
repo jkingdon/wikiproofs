@@ -173,6 +173,15 @@ thm (RealMultiplicationNegativeNegative () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ)))
         a b MultiplicationNegativeNegative
         applySyllogism
 ))
+
+thm (RealNegativeSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((- (a − b)) = (b − a))) (
+        a RealComplexMembership
+        b RealComplexMembership
+        conjoin
+
+        a b NegativeSubtraction
+        applySyllogism
+))
 </jh>
 
 == Export ==
