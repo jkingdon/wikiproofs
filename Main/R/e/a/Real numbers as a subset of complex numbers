@@ -202,6 +202,17 @@ thm (RealDivision () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (b ≠ (0))) →
 ))
 </jh>
 
+The ability of the reciprocal to serve as a multiplicative inverse is similar.
+<jh>
+thm (RealReciprocal () () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → ((a · ((1) / a)) = (1))) (
+        a RealComplexMembership
+        (a ≠ (0)) conjoinRR
+
+        a Reciprocal
+        applySyllogism
+))
+</jh>
+
 === Dividing a real by a real ===
 We next want to show that dividing one real number by another real number produces a real number.
 <jh>
