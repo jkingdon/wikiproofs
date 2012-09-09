@@ -16,11 +16,50 @@ var (object a b)
 var (variable x)
 </jh>
 
+== Constants ==
+To export to [[Interface:Real numbers]], we need to define various contants, such as <code>2</code> and <code>1000</code>. Since we have already defined addition and multiplication, we have what we need to define these constants.
+<jh>
+def ((2) ((1) + (1)))
+def ((3) ((2) + (1)))
+def ((4) ((3) + (1)))
+def ((5) ((4) + (1)))
+def ((6) ((5) + (1)))
+def ((7) ((6) + (1)))
+def ((8) ((7) + (1)))
+def ((9) ((8) + (1)))
+def ((10) ((9) + (1)))
+def ((11) ((10) + (1)))
+def ((12) ((11) + (1)))
+def ((30) ((3) · (10)))
+def ((45) (((4) · (10)) + (5)))
+def ((60) ((6) · (10)))
+def ((90) ((9) · (10)))
+def ((100) ((10) · (10)))
+def ((180) ((100) + ((8) · (10))))
+def ((360) (((3) · (100)) + (60)))
+def ((1000) ((100) · (10)))
+def ((1000000) ((1000) · (1000)))
+</jh>
+
+== Additive inverse ==
+We define <code>- a</code> to be the unique number <code>x</code> for which <code>a + x = 0</code>.
+{{cleanup|deciding whether to stick to this definition or moving this after subtraction is defined and then defining - a to be 0 − a}}
+<jh>
+def ((- a) (⋃ (separate x (ℝ) ((a + (value x)) = (0)))))
+</jh>
+
 == Subtraction ==
 We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
 
 <jh>
 def ((− b a) (⋃ (separate x (ℝ) ((a + (value x)) = b))))
+</jh>
+
+== Division ==
+We define <code>b / a</code> to be the unique number <code>x</code> for which <code>a · x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a · x = b }</code>, which works because the union of a singleton is the singleton's element.
+
+<jh>
+def ((/ b a) (⋃ (separate x (ℝ) ((a · (value x)) = b))))
 </jh>
 
 == Export ==
