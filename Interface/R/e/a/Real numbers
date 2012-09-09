@@ -143,7 +143,7 @@ Every nonzero real number has a multiplicative inverse.
 <jh>
 term (object (/ object object))
 stmt (RealReciprocalClosed () () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → (((1) / a) ∈ (ℝ))))
-stmt (Reciprocal () () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → ((a · ((1) / a)) = (1))))
+stmt (RealReciprocal () () (((a ∈ (ℝ)) ∧ (a ≠ (0))) → ((a · ((1) / a)) = (1))))
 </jh>
 
 There is another way of stating this, with <code>∃</code>.
