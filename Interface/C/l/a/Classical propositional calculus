@@ -600,6 +600,7 @@ Commutativity and associativity might be combined in any number of ways, but a f
 stmt (Disjunction4 () () (((p ∨ q) ∨ (r ∨ s)) ↔ ((p ∨ r) ∨ (q ∨ s))))
 stmt (swap23ofDisjunction4 () (((p ∨ q) ∨ (r ∨ s))) ((p ∨ r) ∨ (q ∨ s)))
 stmt (swap23ofDisjunction3 () (((p ∨ q) ∨ r)) ((p ∨ r) ∨ q))
+stmt (swap12ofDisjunction3 () (((p ∨ q) ∨ r)) ((q ∨ p) ∨ r))
 
 stmt (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))))
 </jh>
