@@ -604,6 +604,14 @@ stmt (swap23ofDisjunction3 () (((p ∨ q) ∨ r)) ((p ∨ r) ∨ q))
 stmt (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))))
 </jh>
 
+=== Proof by contradiction ===
+Although <code>Contradiction</code> and similar theorems provide some tools for proof by contradiction, here are some rules to make it easier.
+<jh>
+stmt (noteContradiction () ((p → q) (p → (¬ q))) (¬ p))
+stmt (deduceNegationFromContradiction () ((p → (¬ p))) (¬ p))
+stmt (deduceFromNegatedContradiction () (((¬ p) → p)) p)
+</jh>
+
 == References ==
 
 <references />
