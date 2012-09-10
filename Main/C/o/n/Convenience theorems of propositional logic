@@ -795,6 +795,41 @@ thm (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))
 ))
 </jh>
 
+== Proof by contradiction ==
+Although the theorems presented thus far do provide ways to make deductions concerning contradictions, the usual form of a proof by contradiction is either to assume a statement and proof its negation, or the other way around.
+<jh>
+thm (noteContradiction () ((HTRUE (p → q)) (HFALSE (p → (¬ q)))) (¬ p) (
+        HTRUE
+        HFALSE
+        composeConjunction
+
+        q Contradiction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        p NegationImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (deduceNegationFromContradiction () ((H (p → (¬ p)))) (¬ p) (
+        p ImplicationReflexivity
+        H
+        noteContradiction
+))
+
+thm (deduceFromNegatedContradiction () ((H ((¬ p) → p))) p (
+        H
+        p DoubleNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        deduceNegationFromContradiction
+
+        eliminateDoubleNegation
+))
+</jh>
+
 == Done ==
 We now export [[Interface:Classical propositional calculus]].
 <jh>
