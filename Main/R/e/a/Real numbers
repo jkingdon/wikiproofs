@@ -62,6 +62,92 @@ We define <code>b / a</code> to be the unique number <code>x</code> for which <c
 def ((/ b a) (⋃ (separate x (ℝ) ((a · (value x)) = b))))
 </jh>
 
+== Order ==
+Our axioms define a total (linear) order, so we just need to define the various convenience theorems and other total order notations.
+
+To get to the starting point ([[Interface:First-order linear order defined via strict inequality]]), we need to prove a few theorems (there are various ways to state that an order is a total order, and the one there is slightly different than the one at [[Interface:Real number axioms]]).
+
+Using [[Interface:First-order linear order defined via strict inequality]] is actually kind of awkward here, as it is a first-order theory and we are built on set theory. But partly just as a proof of concept that such things can be done, we translate between the two worlds rather than just duplicating the linear order proofs in a set theory context. We use the <code>restrict.</code> prefix for things which are restricted to real numbers.
+
+<jh>
+def ((universe) (ℝ))
+export (UNIVERSE Interface:Universe (PROPOSITIONAL FIRSTORDER SETS) ())
+import (RESTRICT Interface:Restricting_all_quantifiers (PROPOSITIONAL FIRSTORDER SETS UNIVERSE) restrict.)
+
+var (restrict.object restrict.x restrict.y restrict.z)
+def ((restrict.< restrict.x restrict.y) ((restrict.asSet restrict.x) < (restrict.asSet restrict.y)))
+thm (restrict.LessThanAsymmetry () ()
+  ((restrict.x restrict.< restrict.y) → (¬ (restrict.y restrict.< restrict.x))) (
+        restrict.x restrict.InUniverse
+        restrict.y restrict.InUniverse
+        introduceConjunction
+
+        (restrict.asSet restrict.x) (restrict.asSet restrict.y) LessThanAsymmetry
+        applyModusPonens
+))
+
+var (restrict.object restrict.x0 restrict.x1 restrict.y0 restrict.y1)
+thm (restrict.LessThanBuilder () ()
+  (((restrict.x0 restrict.= restrict.x1) ∧ (restrict.y0 restrict.= restrict.y1)) →
+    ((restrict.x0 restrict.< restrict.y0) ↔ (restrict.x1 restrict.< restrict.y1))
+  ) (
+        (restrict.asSet restrict.x0) (restrict.asSet restrict.x1)
+          (restrict.asSet restrict.y0) (restrict.asSet restrict.y1)
+          LessThanBuilder
+))
+
+thm (restrict.LessThanTransitivity () ()
+  (((restrict.x restrict.< restrict.y) ∧ (restrict.y restrict.< restrict.z)) → (restrict.x restrict.< restrict.z)) (
+        restrict.x restrict.InUniverse
+        restrict.y restrict.InUniverse
+        introduceConjunction
+
+        restrict.z restrict.InUniverse
+        introduceConjunction
+
+        (restrict.asSet restrict.x) (restrict.asSet restrict.y) (restrict.asSet restrict.z) LessThanTransitivity
+        applyModusPonens
+))
+
+</jh>
+
+The first substantive order theorem is <code>¬ x &lt; x</code>. The proof is by contradiction: if <code>x &lt; x</code>, then <code>¬ x &lt; x</code> (by LessThanAsymmetry), which is a contradiction.
+<jh>
+thm (restrict.LessThanIrreflexivity () () (¬ (restrict.x restrict.< restrict.x)) (
+        restrict.x restrict.x restrict.LessThanAsymmetry
+        deduceNegationFromContradiction
+))
+</jh>
+
+The other non-trivial theorem is that we need to restate totality a bit.
+<jh>
+thm (restrict.LessThanTotality () ()
+  (((restrict.x restrict.< restrict.y) ∨ (restrict.x restrict.= restrict.y)) ∨
+    (restrict.y restrict.< restrict.x)) (
+        restrict.x restrict.InUniverse
+        restrict.y restrict.InUniverse
+        introduceConjunction
+        (restrict.asSet restrict.x) (restrict.asSet restrict.y) LessThanTotalityImplication
+        applyModusPonens
+
+        convertToDisjunctionFromImplication
+        groupDisjunctionLeft
+        swap12ofDisjunction3
+))
+
+
+export (ORDER_DEFINED Interface:First-order_linear_order_defined_via_strict_inequality (PROPOSITIONAL RESTRICT) restrict.)
+
+import (ORDER Interface:First-order_linear_order_from_strict_inequality (PROPOSITIONAL RESTRICT ORDER_DEFINED) restrict.)
+</jh>
+
+We've defined all the order theorems and notations in the <code>restrict.</code> world; we just need to translate back to the set theory world.
+<jh>
+def ((> a b) ((restrict.asRestrictedTerm a) restrict.> (restrict.asRestrictedTerm b)))
+def ((≤ a b) ((restrict.asRestrictedTerm a) restrict.≤ (restrict.asRestrictedTerm b)))
+def ((≥ a b) ((restrict.asRestrictedTerm a) restrict.≥ (restrict.asRestrictedTerm b)))
+</jh>
+
 == Export ==
 
 <jh>
