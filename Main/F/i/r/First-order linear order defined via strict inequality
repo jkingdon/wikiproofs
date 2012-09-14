@@ -212,6 +212,13 @@ The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a 
 ))
 </jh>
 
+=== Less than and less equal ===
+<jh>
+thm (LessThanLessEqualImplication () () ((a < b) → (a ≤ b)) (
+        (a < b) (a = b) DisjunctionRightIntroduction
+))
+</jh>
+
 === Transitivity ===
 We start by proving that <code>a ≤ b ∧ b < c → a < c</code>.<ref>Exercise 8(b) of Tarski, Alfred, ''Introduction to Logic and to the Methodology of Deductive Sciences'', Dover, 1995, page 167</ref>
 
@@ -330,19 +337,34 @@ Combining the two halves we are done.
         applySyllogism
 ))
 
-#thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
-#))
+thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
+        (a < b) (a = b) (b ≤ a) ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+</jh>
+The first half is <code>a &lt; b ∧ b ≤ a → a = b</code>, which is the lemma we already proved.
+<jh>
+        a b LessEqualAntisymmetryLemma
+</jh>
+The second half is <code>a = b ∧ b ≤ a → a = b<code>.
+<jh>
+        (a = b) (b ≤ a) ConjunctionRightElimination
+</jh>
+Combining the halves we are done.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
 </jh>
 
 == Export ==
 We first export an interface which contains everything we handle here, including the import from [[Interface:First-order linear order defined via nonstrict inequality]].
 <jh>
-#export (COMPLETE Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
+export (COMPLETE Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
 </jh>
 
 It will also be helpful to export an interface which does not duplicate the declarations in [[Interface:First-order linear order defined via nonstrict inequality]], for use in a module which has already exported the latter.
 <jh>
-#export (ADDITIONAL Interface:First-order_linear_order_from_nonstrict_inequality (PROPOSITIONAL FIRSTORDER DEFINED) ())
+export (ADDITIONAL Interface:First-order_linear_order_from_nonstrict_inequality (PROPOSITIONAL FIRSTORDER DEFINED) ())
 </jh>
 
 == References ==
