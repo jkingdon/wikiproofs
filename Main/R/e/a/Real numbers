@@ -51,6 +51,10 @@ thm (RealAdditionCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a 
 thm (RealAdditionAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + b) + c) = (a + (b + c)))) (
         a b c AdditionAssociativity
 ))
+
+thm (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)) (
+        a AdditiveIdentity
+))
 </jh>
 
 == Additive inverse ==
@@ -85,6 +89,10 @@ thm (RealMultiplicationAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) �
 
 thm (RealDistributivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a · (b + c)) = ((a · b) + (a · c)))) (
         a b c Distributivity
+))
+
+thm (RealMultiplicativeIdentity () () ((a ∈ (ℝ)) → ((a · (1)) = a)) (
+        a MultiplicativeIdentity
 ))
 </jh>
 
