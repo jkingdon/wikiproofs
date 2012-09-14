@@ -20,6 +20,15 @@ var (variable x)
 To export to [[Interface:Real numbers]], we need to define various contants, such as <code>2</code> and <code>1000</code>. Since we have already defined addition and multiplication, we have what we need to define these constants.
 <jh>
 def ((2) ((1) + (1)))
+thm (TwoReal () () ((2) ∈ (ℝ)) (
+        OneReal
+        OneReal
+        introduceConjunction
+
+        (1) (1) RealAdditionClosure
+        applyModusPonens
+))
+
 def ((3) ((2) + (1)))
 def ((4) ((3) + (1)))
 def ((5) ((4) + (1)))
