@@ -299,6 +299,37 @@ thm (EqualityLessThan () () ((a = b) → (¬ (a < b))) (
 
 === Antisymmetry ===
 <jh>
+thm (LessEqualAntisymmetryLemma () () (((a < b) ∧ (b ≤ a)) → (a = b)) (
+        (a < b) (b < a) (b = a) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+</jh>
+The first half is <code>a &lt; b ∧ b &lt; a → a = b</code>. This holds trivially because <code>a &lt; b ∧ b &lt; a</code> is a contradiction.
+<jh>
+        a b LessThanGreaterThan
+
+        (a < b) (¬ (b < a)) ImplicationDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        (a < b) (b < a) DeMorganPCP
+        eliminateBiconditionalForward
+        applyModusPonens
+
+        (¬ (a = b)) introduceAntecedent
+
+        eliminateTransposition
+</jh>
+The second half is <code>a &lt; b ∧ b = a → a = b</code>, which of course is just rearranging.
+<jh>
+        (a < b) (b = a) ConjunctionLeftElimination
+        swapEqualityInConsequent
+</jh>
+Combining the two halves we are done.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
+
 #thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
 #))
 </jh>
