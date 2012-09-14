@@ -43,22 +43,25 @@ def ((1000000) ((1000) · (1000)))
 
 All of the above constants are real numbers. Here we prove this for each one.
 <jh>
+thm (closeAddition () ((HLeft (a ∈ (ℝ))) (HRight (b ∈ (ℝ)))) ((a + b) ∈ (ℝ)) (
+        HLeft
+        HRight
+        introduceConjunction
+
+        a b RealAdditionClosure
+        applyModusPonens
+))
+
 thm (TwoReal () () ((2) ∈ (ℝ)) (
         OneReal
         OneReal
-        introduceConjunction
-
-        (1) (1) RealAdditionClosure
-        applyModusPonens
+        closeAddition
 ))
 
 thm (ThreeReal () () ((3) ∈ (ℝ)) (
         TwoReal
         OneReal
-        introduceConjunction
-
-        (2) (1) RealAdditionClosure
-        applyModusPonens
+        closeAddition
 ))
 </jh>
 
