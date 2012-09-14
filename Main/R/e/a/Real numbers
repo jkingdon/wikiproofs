@@ -67,6 +67,27 @@ We define <code>b − a</code> to be the unique number <code>x</code> for which 
 def ((− b a) (⋃ (separate x (ℝ) ((a + (value x)) = b))))
 </jh>
 
+== Multiplication ==
+There are a few theorems which have different names in [[Interface:Real numbers]] than they did in [[Interface:Real number axioms]], but are otherwise unchanged.
+
+<jh>
+thm (RealMultiplicationClosure () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a · b) ∈ (ℝ))) (
+        a b MultiplicationClosure
+))
+
+thm (RealMultiplicationCommutativity () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a · b) = (b · a))) (
+        a b MultiplicationCommutativity
+))
+
+thm (RealMultiplicationAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a · b) · c) = (a · (b · c)))) (
+        a b c MultiplicationAssociativity
+))
+
+thm (RealDistributivity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → ((a · (b + c)) = ((a · b) + (a · c)))) (
+        a b c Distributivity
+))
+</jh>
+
 == Division ==
 We define <code>b / a</code> to be the unique number <code>x</code> for which <code>a · x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a · x = b }</code>, which works for non-zero <code>a</code> because the union of a singleton is the singleton's element. If <code>a</code> is zero, the definition can produce anything (in particular, it doesn't need to produce a real number), because we don't expect dividing by zero to yield anything useful.
 
