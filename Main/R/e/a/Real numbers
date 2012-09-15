@@ -39,6 +39,22 @@ We define <code>- a</code> to be the unique number <code>x</code> for which <cod
 def ((- a) (⋃ (separate x (ℝ) ((a + (value x)) = (0)))))
 </jh>
 
+That an additive inverse exists is a consequence of the invertibility of addition. We just need to rearrange some things.
+<jh>
+thm (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) →
+  (∃ x (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))))) (
+        ZeroReal
+        (0) a x AdditionInvertibility
+        detach1of2
+
+        (0) (a + (value x)) EqualitySymmetry
+        eliminateBiconditionalReverse
+        ((value x) ∈ (ℝ)) conjoinLL
+        x addThereExists
+        applySyllogism
+))
+</jh>
+
 == Subtraction ==
 We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
 
