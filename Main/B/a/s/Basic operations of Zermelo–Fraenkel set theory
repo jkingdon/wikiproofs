@@ -220,29 +220,17 @@ Combining those gives <code>y ∈ A ∧ [ y / x ] φ ↔ y ∈ B ∧ [ y / x ] �
 </jh>
 
 === A rule ===
-Here's a builder based on equivalent formulas: <code>(φ ↔ ψ) → { x ∈ A | φ } = { x ∈ A | ψ }</code>.
-
-The first lemma is <code>C ∈ { x ∈ A | φ } ↔ C ∈ { x ∈ A | ψ }</code>.
+Here's a rule form for one case of the above separation builder: from <code>φ ↔ ψ</code> we can deduce <code>{ x ∈ A | φ } = { x ∈ A | ψ }</code>.
 <jh>
-thm (buildSeparation-1 ((x A)) ((H (φ ↔ ψ)))
-  ((C ∈ (separate x A φ)) ↔ (C ∈ (separate x A ψ))) (
-        C x A φ Separation
-
+thm (buildSeparation ((x A)) ((H (φ ↔ ψ))) ((separate x A φ) = (separate x A ψ)) (
         H
-        C x buildSubst
-        (C ∈ A) buildConjunctionLL
-        applyBiconditionalTransitivity
+        x generalize
 
-        C x A ψ Separation
-        swapBiconditional
-        applyBiconditionalTransitivity
-))
+        A EqualityReflexivity
+        A A x φ ψ SeparationBuilder
+        detach1of2
 
-thm (buildSeparation ((x A)  (z x) (z A) (z φ) (z ψ)) ((H (φ ↔ ψ)))
-  ((separate x A φ) = (separate x A ψ)) (
-        H
-        (value z) x A buildSeparation-1
-        applyExtensionality
+        applyModusPonens
 ))
 </jh>
 
