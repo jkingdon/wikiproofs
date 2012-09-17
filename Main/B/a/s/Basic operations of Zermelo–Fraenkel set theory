@@ -276,7 +276,7 @@ thm (FormulaBound ((z A) (z B)) ((H (φ → ((value z) ∈ A))))
 === Change variable ===
 As with a quantifier, we can make an equivalent formula by changing the variable which is bound by <code>separate</code> and making an according change to that variable in the formula inside <code>separate</code>. That is, given <code>x = y → (φx ↔ φy)</code>, we can conclude <code>{ x ∈ A | φx } = { y ∈ A | φy }</code>.<ref>[http://us.metamath.org/mpeuni/cbvrabv.html cbvrabv], metamath's set.mm, accessed February 26, 2011</ref>
 
-As with the proof of <code>buildSeparation</code>, it will be convenient to first prove <code>C ∈ { x ∈ A | φx } ↔ C ∈ { y ∈ A | φy }</code> as a separate lemma.
+We first prove <code>C ∈ { x ∈ A | φx } ↔ C ∈ { y ∈ A | φy }</code> as a lemma.
 <jh>
 thm (ChangeVariableSeparation-1 ((y φx) (x φy) (x y A) (C x) (C y))
   ((H (((value x) = (value y)) → (φx ↔ φy))))
