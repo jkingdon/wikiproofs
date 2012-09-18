@@ -1820,26 +1820,6 @@ thm (PerpendicularAtCommutativity () ()
 ))
 </jh>
 
-=== A propositional logic theorem involving contradictions ===
-
-Partly to avoid having to use both of the symbols <code>⊥</code> (falsity) and <code>⟂</code> (perpendicular) in close proximity, we first prove a propositional logic theorem.
-<jh>
-var (formula φ ψ)
-thm (noteContradiction () ((HTRUE (φ → ψ)) (HFALSE (φ → (¬ ψ)))) (¬ φ) (
-        HTRUE
-        HFALSE
-        composeConjunction
-
-        ψ Contradiction
-        eliminateBiconditionalReverse
-        applySyllogism
-
-        φ NegationImplication
-        eliminateBiconditionalForward
-        applyModusPonens
-))
-</jh>
-
 === No line is perpendicular to itself ===
 Here we show <code>¬ A B A B ⟂at X</code>. The proof is by contradiction: <code>A ≠ B</code> from the definition, but <code>A = B</code> will follow from two applications of <code>RightAngleLegItself</code>.<ref>l8_14_1 in Narboux</ref>
 <jh>
