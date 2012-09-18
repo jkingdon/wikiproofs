@@ -770,6 +770,17 @@ thm (swap23ofDisjunction3 () ((H ((p ∨ q) ∨ r))) ((p ∨ r) ∨ q) (
         eliminateBiconditionalReverse
         applyModusPonens
 ))
+
+thm (swap12ofDisjunction3 () ((H ((p ∨ q) ∨ r))) ((q ∨ p) ∨ r) (
+        H
+
+        p q DisjunctionCommutativity
+        r buildDisjunctionRR
+        eliminateBiconditionalReverse
+
+        applyModusPonens
+))
+
 </jh>
 
 The next theorem swaps the second and third conjuncts in a conjunction of four formulas.<ref>[http://us.metamath.org/mpeuni/an4.html an4], metamath's set.mm, accessed February 5, 2011</ref>
@@ -792,6 +803,41 @@ thm (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s))
 
         p r (q ∧ s) ConjunctionAssociativity swapBiconditional
         applyBiconditionalTransitivity
+))
+</jh>
+
+== Proof by contradiction ==
+Although the theorems presented thus far do provide ways to make deductions concerning contradictions, the usual form of a proof by contradiction is either to assume a statement and proof its negation, or the other way around.
+<jh>
+thm (noteContradiction () ((HTRUE (p → q)) (HFALSE (p → (¬ q)))) (¬ p) (
+        HTRUE
+        HFALSE
+        composeConjunction
+
+        q Contradiction
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        p NegationImplication
+        eliminateBiconditionalForward
+        applyModusPonens
+))
+
+thm (deduceNegationFromContradiction () ((H (p → (¬ p)))) (¬ p) (
+        p ImplicationReflexivity
+        H
+        noteContradiction
+))
+
+thm (deduceFromNegatedContradiction () ((H ((¬ p) → p))) p (
+        H
+        p DoubleNegation
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        deduceNegationFromContradiction
+
+        eliminateDoubleNegation
 ))
 </jh>
 
