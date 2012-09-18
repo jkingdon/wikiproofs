@@ -55,6 +55,30 @@ thm (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) →
 ))
 </jh>
 
+=== Addition Cancellation ===
+
+=== Closure of additive inverse ===
+Here we prove that <code>- a</code> is real if <code>a</code> is real. There are two parts, first of all showing that the additive inverse, as defined by <code>RealAdditiveInverseExists</code>, is unique, and secondly doing enough logic to turn that into the proof that <code>- a</code> is real.
+
+<jh>
+#thm (RealAdditiveInverseClosed () () ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
+#))
+</jh>
+
+{{cleanup|finishing this proof. Here's an outline of how it might be done}}
+one solution would be: ∃ x (x ∈ ℝ ∧ a + x = 0 ∧ { y ∈ ℝ | a + y = 0 } = { x })
+  for that need A ∈ { y ∈ ℝ | a + y = 0 } ↔ A ∈ { x }
+  for that need [ A / y ] a + y = 0 ↔ A = x (I think, look up the exact theorem)
+  for that need a + A = 0 ↔ A = x
+    the A = x → a + A = 0 direction is just a substitution
+    to get a + A = 0 → A = x, 
+      a + x = a + A (because both are equal to zero)
+      x = A (by cancellation)
+Then we get - a = x
+  and we're a substitution away, because x ∈ ℝ
+
+def ((- a) (⋃ (separate x (ℝ) ((a + (value x)) = (0)))))
+
 == Subtraction ==
 We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
 
