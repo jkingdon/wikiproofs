@@ -56,6 +56,21 @@ thm (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) →
 </jh>
 
 === Addition Cancellation ===
+<jh>
+#thm (RealAdditionCancellationRightForward () ()
+#  ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + c) = (b + c)) → (a = b))) (
+#))
+</jh>
+
+We've proved the interesting direction of cancellation, but in line with our usual practice of biconditionalizing theorems which can be biconditionalized, we combine it with the addition builder to make a biconditional.
+<jh>
+#thm (RealAdditionCancellationRight () ()
+#  ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + c) = (b + c)) ↔ (a = b))) (
+#        a b c RealAdditionCancellationRightForward
+#        a b c AdditionBuilder
+#        introduceBiconditionalFromImplications
+#))
+</jh>
 
 === Closure of additive inverse ===
 Here we prove that <code>- a</code> is real if <code>a</code> is real. There are two parts, first of all showing that the additive inverse, as defined by <code>RealAdditiveInverseExists</code>, is unique, and secondly doing enough logic to turn that into the proof that <code>- a</code> is real.
