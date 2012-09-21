@@ -209,14 +209,17 @@ Copying the antecedent inside the quantifier we are ready to apply our lemma.
 ))
 </jh>
 
-We've proved the interesting direction of cancellation, but in line with our usual practice of biconditionalizing theorems which can be biconditionalized, we combine it with the addition builder to make a biconditional.
+We've proved the interesting direction of cancellation, but in line with our usual practice of biconditionalizing theorems which can be biconditionalized, we combine it with the addition builder.
 <jh>
-#thm (RealAdditionCancellationRight () ()
-#  ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + c) = (b + c)) ↔ (a = b))) (
-#        a b c RealAdditionCancellationRightForward
-#        a b c AdditionBuilder
-#        introduceBiconditionalFromImplications
-#))
+thm (RealAdditionCancellationRight () ()
+  ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + c) = (b + c)) ↔ (a = b))) (
+        a b c RealAdditionCancellationRightForward
+
+        a b c AdditionBuilderRR
+        (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) introduceAntecedent
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
 </jh>
 
 === Closure of additive inverse ===
