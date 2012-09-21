@@ -12,7 +12,7 @@ import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITION
 import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
 import (AXIOMS Interface:Real_number_axioms (PROPOSITIONAL FIRSTORDER SETS) ())
 
-var (object a b c)
+var (object a b c d)
 var (variable x)
 </jh>
 
@@ -29,6 +29,23 @@ thm (RealAdditionAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c 
 
 thm (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)) (
         a AdditiveIdentity
+))
+</jh>
+
+=== Builders ===
+We have assumed the basic addition builder as an axiom, so we just want to define some convenience theorems.
+<jh>
+var (object b0 b1 a0 a1)
+thm (AdditionBuilderLL () () ((b0 = b1) → ((a + b0) = (a + b1))) (
+        a EqualityReflexivity
+        a a b0 b1 AdditionBuilder
+        detach1of2
+))
+
+thm (AdditionBuilderRR () () ((a0 = a1) → ((a0 + b) = (a1 + b))) (
+        b EqualityReflexivity
+        a0 a1 b b AdditionBuilder
+        detach2of2
 ))
 </jh>
 
@@ -56,10 +73,140 @@ thm (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) →
 </jh>
 
 === Addition Cancellation ===
+In this section we are gonig to prove <code>a + c = b + c → a = b</code>.
+
 <jh>
-#thm (RealAdditionCancellationRightForward () ()
-#  ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + c) = (b + c)) → (a = b))) (
-#))
+thm (RealAdditionCancellationRightForward-ab () ()
+  ((((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0)))) ∧ ((a + c) = (b + c))) →
+  (a = b)) (
+</jh>
+We start with <code>a + c = b + c</code> and then add <code>d</code> to both sides.
+<jh>
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionLeftElimination
+
+        (a + c) (b + c) d AdditionBuilderRR
+        applySyllogism
+</jh>
+The next step is to regroup the additions. This is just a matter of applying associativity twice, but needing to assert that all the terms are real is what makes this part of the proof longer. 
+<jh>
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        a c d AdditionAssociativity
+        applySyllogism
+
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        composeConjunction
+
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        b c d AdditionAssociativity
+        applySyllogism
+
+        buildEqualityInConsequent
+
+        eliminateBiconditionalReverseInConsequent
+        applyModusPonensInConsequent
+</jh>
+That gives us <code>a + (c + d) = b + (c + d)</code>. Now we turn each occurrence of <code>c + d</code> into <code>0</code> via the substitution <code>c + d = 0 → (a + (c + d) = b + (c + d) ↔ a + 0 = b + 0)</code>.
+<jh>
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        (c + d) (0) a AdditionBuilderLL
+        (c + d) (0) b AdditionBuilderLL
+        buildEqualityInConsequent
+        eliminateBiconditionalReverseInConsequent
+        applySyllogism
+
+        applyModusPonensInConsequent
+</jh>
+Now we have <code>a + 0 = b + 0</code> and we just need to turn that into <code>a = b</code>.
+<jh>
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+
+        a RealAdditiveIdentity
+        applySyllogism
+
+        ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) ∧ ((d ∈ (ℝ)) ∧ ((c + d) = (0))))
+          ((a + c) = (b + c))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+
+        b RealAdditiveIdentity
+        applySyllogism
+
+        buildEqualityInConsequent
+        eliminateBiconditionalReverseInConsequent
+        applyModusPonensInConsequent
+))
+
+thm (RealAdditionCancellationRightForward ( (x a) (x b) (x c)) ()
+  ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + c) = (b + c)) → (a = b))) (
+</jh>
+We start with <code>∃ x (x ∈ ℝ ∧ c + x = 0)</code>
+<jh>
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) (c ∈ (ℝ)) ConjunctionLeftElimination
+        c x RealAdditiveInverseExists
+        applySyllogism
+</jh>
+Copying the antecedent inside the quantifier we are ready to apply our lemma.
+<jh>
+        repeatAntecedentThereExists
+
+        a b c (value x) RealAdditionCancellationRightForward-ab
+        export
+        x addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
 
 We've proved the interesting direction of cancellation, but in line with our usual practice of biconditionalizing theorems which can be biconditionalized, we combine it with the addition builder to make a biconditional.
