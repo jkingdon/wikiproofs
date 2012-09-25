@@ -232,9 +232,94 @@ The first lemma is <code>a ∈ ℝ ∧ x ∈ ℝ → a + A = 0 ↔ A = x</code> 
 #))
 </jh>
 
+Here are some theorems about showing that an operation is closed on a base set.
+<jh>
+var (object baseSet xx A)
+var (variable y)
+var (formula φx φy)
+
+thm (ClosureLemma1Reverse-baseSet () ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  ((A = (value x)) → (A ∈ baseSet))) (
+        (((value x) ∈ baseSet) ∧ φx)
+          (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+        A (value x) baseSet MembershipBuilderRR
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+
+        applySyllogism
+))
+
+thm (ClosureLemma1Reverse-phiy ((y φx) (y x))
+  ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  ((A = (value x)) → (subst A y φy))) (
+</jh>
+We first transform <code>φx</code> to <code>[ x / y ] φy</code>.
+<jh>
+        (((value x) ∈ baseSet) ∧ φx)
+          (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        (value y) (value x) EqualitySymmetry
+        eliminateBiconditionalReverse
+        HSUB
+        applySyllogism
+
+        φx φy BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        makeSubstExplicit
+
+        eliminateBiconditionalForward
+        applySyllogism
+</jh>
+Then we can turn the substitution <code>A = x → ([ A / y ] φy ↔ [ x / y ] φy)</code> into <code>A = x → [ A / y ] φy</code>.
+<jh>
+        A (value x) y φy SubstBuilderReplacement
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+
+        applySyllogism
+))
+
+thm (ClosureLemma1Reverse ((y φx) (y x)) ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  ((A = (value x)) → ((A ∈ baseSet) ∧ (subst A y φy)))) (
+        HSUB
+        baseSet A ClosureLemma1Reverse-baseSet
+
+        HSUB
+        baseSet A ClosureLemma1Reverse-phiy
+
+        composeConjunction
+
+        (A = (value x))
+          (A ∈ baseSet)
+          (subst A y φy)
+          ConjunctionComposition
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+#thm (ClosureLemma1 () () (
+#  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+#  (((A ∈ baseSet) ∧ (subst A y φy)) ↔ (A = (value x)))) (
+#))
+</jh>
+
 stmt (Separation ((x A)) ()
   ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))))
 
+hyp: ψ → ∃ x (x ∈ BaseSet ∧ φx ∧ (A ∈ BaseSet ∧ [ A / y ] φy ↔ A = x))
+  or maybe ψ → ∃ x (x ∈ BaseSet ∧ φx ∧ (∀ y φy → y = x))
+concl: ψ → ⋃ { y ∈ BaseSet | φy } ∈ BaseSet
+closed form: ∃ x (x ∈ BaseSet ∧ φx ∧ ∀ y (φy → y = x)) → ⋃ { y ∈ BaseSet | φy } ∈ BaseSet
 
 {{cleanup|finishing this proof. Here's an outline of how it might be done}}
 one solution would be: ∃ x (x ∈ ℝ ∧ a + x = 0 ∧ { y ∈ ℝ | a + y = 0 } = { x })
