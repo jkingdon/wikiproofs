@@ -232,7 +232,9 @@ The first lemma is <code>a ∈ ℝ ∧ x ∈ ℝ → a + A = 0 ↔ A = x</code> 
 #))
 </jh>
 
-Here are some theorems about showing that an operation is closed on a base set.
+Here are some theorems about showing that an operation is closed on a base set. They start from the starting point that the result of the operation is unique. That is, <code>∃ x (x ∈ BaseSet ∧ φx ∧ ∀ y (φy → y = x))</code> (where <code>φx</code> and <code>φy</code> represent the same formula, with <code>x</code> and with <code>y</code>, respectively).
+
+We start by showing that <code>A = x → A ∈ baseSet ∧ [ A / y ] φy</code>. This is basically just a matter of substitution into <code>x ∈ baseSet</code> and <code>φx</code>.
 <jh>
 var (object baseSet xx A)
 var (variable y)
@@ -306,6 +308,15 @@ thm (ClosureLemma1Reverse ((y φx) (y x)) ((HSUB (((value x) = (value y)) → (�
         eliminateBiconditionalReverse
         applySyllogism
 ))
+</jh>
+
+The converse of that is <code>A ∈ baseSet ∧ [ A / y ] φy → A = x</code>. Here we use uniqueness. That is, we take <code>∀ y (y ∈ baseSet ∧ φy → y = x)</code> and specialize <code>y</code> to <code>A</code>.
+<jh>
+#thm (ClosureLemma1Forward () () (
+#  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+#  (((A ∈ baseSet) ∧ (subst A y φy)) → (A = (value x)))) (
+#        
+#))
 
 #thm (ClosureLemma1 () () (
 #  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
