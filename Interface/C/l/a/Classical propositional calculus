@@ -587,6 +587,7 @@ stmt (NegationBiconditional () () ((¬ p) ↔ (p ↔ (⊥))))
 </jh>
 
 === Rules for associativity ===
+{{cleanup|renaming these to groupConjunction* or renaming groupConjunctionRight to associateConjunctionRight and likewise for the other group* ones. Talk page discussion would be a good way to figure out which rename is better}}
 <jh>
 stmt (associateConjunctionRightInConsequent () ((antecedent → ((p ∧ q) ∧ r)))
   (antecedent → (p ∧ (q ∧ r))))
