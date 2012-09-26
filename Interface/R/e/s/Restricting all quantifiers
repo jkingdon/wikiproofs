@@ -81,5 +81,10 @@ def ((≠ X Y) (¬ (X = Y)))
 def ((is-not-free-in x φ) (φ → (∀ x φ)))
 </jh>
 
+Most/all of what we have done so far would work with [[Interface:First-order logic]] rather than [[Interface:First-order logic with quantifiability]]. However, since pretty much all pages on this site so far use the latter rather than the former, it will be convenient to also provide a translated version of substitution.
+<jh>
+def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
+</jh>
+
 [[Category:Classical first-order logic|{{PAGENAME}}]]
 [[Category:JHilbert]]
