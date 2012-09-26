@@ -607,7 +607,7 @@ stmt (Conjunction4 () () (((p ∧ q) ∧ (r ∧ s)) ↔ ((p ∧ r) ∧ (q ∧ s)
 </jh>
 
 === Proof by contradiction ===
-Although <code>Contradiction</code> and similar theorems provide some tools for
+Although <code>Contradiction</code> and similar theorems provide some tools for proof by contradiction, here are some rules to make it easier.
 <jh>
 stmt (noteContradiction () ((p → q) (p → (¬ q))) (¬ p))
 stmt (deduceNegationFromContradiction () ((p → (¬ p))) (¬ p))
