@@ -312,11 +312,39 @@ thm (ClosureLemma1Reverse ((y φx) (y x)) ((HSUB (((value x) = (value y)) → (�
 
 The converse of that is <code>A ∈ baseSet ∧ [ A / y ] φy → A = x</code>. Here we use uniqueness. That is, we take <code>∀ y (y ∈ baseSet ∧ φy → y = x)</code> and specialize <code>y</code> to <code>A</code>.
 <jh>
-#thm (ClosureLemma1Forward () () (
-#  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
-#  (((A ∈ baseSet) ∧ (subst A y φy)) → (A = (value x)))) (
-#        
-#))
+thm (ClosureLemma1Forward ((A y) (baseSet y) (x y)) () (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  (((A ∈ baseSet) ∧ (subst A y φy)) → (A = (value x)))) (
+        (((value x) ∈ baseSet) ∧ φx)
+          (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))
+          ConjunctionLeftElimination
+
+        A specializeToObjectInConsequent
+
+        A y (((value y) ∈ baseSet) ∧ φy) ((value y) = (value x)) SubstImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+
+        A y ((value y) ∈ baseSet) φy SubstConjunction
+        (subst A y ((value y) = (value x))) buildImplicationConsequent
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+So far we have <code>[ A / y ] y ∈ baseSet ∧ [ A / y ] φy → [ A / y ] y = x</code>. The first substitution can be simplified via <code>y = A → (y ∈ baseSet ↔ A ∈ baseSet)</code>, which leads to <code>[ A / y ] y ∈ baseSet ↔ A ∈ baseSet</code>, and likewise for the third.
+<jh>
+        (value y) A baseSet MembershipBuilderRR
+        makeSubstExplicit
+
+        (subst A y φy) buildConjunctionRR
+
+        (value y) A (value x) EqualityBuilderRR
+        makeSubstExplicit
+
+        buildImplication
+
+        eliminateBiconditionalReverse
+        applySyllogism
+))
 
 #thm (ClosureLemma1 () () (
 #  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
