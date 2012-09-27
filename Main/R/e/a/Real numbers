@@ -346,10 +346,16 @@ So far we have <code>[ A / y ] y ∈ baseSet ∧ [ A / y ] φy → [ A / y ] y =
         applySyllogism
 ))
 
-#thm (ClosureLemma1 () () (
-#  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
-#  (((A ∈ baseSet) ∧ (subst A y φy)) ↔ (A = (value x)))) (
-#))
+thm (ClosureLemma1 ((y φx) (y x) (y A) (y baseSet)) ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  (((A ∈ baseSet) ∧ (subst A y φy)) ↔ (A = (value x)))) (
+        x baseSet φx y φy A ClosureLemma1Forward
+
+        HSUB
+        baseSet A ClosureLemma1Reverse
+
+        introduceBiconditionalFromImplicationsInConsequent
+))
 </jh>
 
 stmt (Separation ((x A)) ()
