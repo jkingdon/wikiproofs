@@ -13,7 +13,7 @@ import (SETS Interface:Set_theory (PROPOSITIONAL FIRSTORDER) ())
 import (AXIOMS Interface:Real_number_axioms (PROPOSITIONAL FIRSTORDER SETS) ())
 
 var (object a b c d)
-var (variable x)
+var (variable x y z)
 </jh>
 
 == Addition ==
@@ -237,7 +237,6 @@ Here are some theorems about showing that an operation is closed on a base set. 
 We start by showing that <code>A = x → A ∈ baseSet ∧ [ A / y ] φy</code>. This is basically just a matter of substitution into <code>x ∈ baseSet</code> and <code>φx</code>.
 <jh>
 var (object baseSet xx A)
-var (variable y)
 var (formula φx φy)
 
 thm (ClosureLemma1Reverse-baseSet () ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
@@ -375,6 +374,29 @@ thm (ClosureLemma2 ((y φx) (y x) (y A) (y baseSet)) ((HSUB (((value x) = (value
         buildBiconditional
 
         eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
+
+We're getting close, because the previous lemma is just extensionality away from <code>{ y ∈ baseSet | φy } = { x }</code>, and adding union to both sides gives <code>⋃ { y ∈ BaseSet | φy } = x</code>.
+<jh>
+thm (ClosureLemma3 ((y φx) (y x) (y A) (y baseSet)  (z x) (z baseSet) (z φx) (z y) (z φy))
+  ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  ((⋃ (separate y baseSet φy)) = (value x))) (
+        HSUB
+        baseSet (value z) ClosureLemma2
+        z addForAllToConsequent
+
+        z (separate y baseSet φy) (singleton (value x)) Extensionality
+        applySyllogism
+
+        (separate y baseSet φy) (singleton (value x)) UnionBuilder
+        applySyllogism
+
+        (value x) UnionSingleton
+        (⋃ (separate y baseSet φy)) buildEqualityLL
+        eliminateBiconditionalReverse
         applySyllogism
 ))
 </jh>
