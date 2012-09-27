@@ -273,7 +273,7 @@ Now we are ready to combine that result with the expansion of <code>A B set.≡ 
 #    ((A B set.≡ C C) →
 #      (((((1st A) − (1st B)) · ((1st A) − (1st B))) + (((2nd A) − (2nd B)) · ((2nd A) − (2nd B)))) = (0)))) (
 </jh>
-Expanding <code>A B set.≡ C C</code> gives us <code>(A<sub>1</sub> − B<sub>1</sub>)<sup>2</sup> + (A<sub>2</sub> − B<sub>2</sub>)<sup>2</sup> set.= (C<sub>1</sub> − C<sub>1</sub>)<sup>2</sup> + (C<sub>2</sub> − C<sub>2</sub>)<sup>2</sup>.
+Expanding <code>A B set.≡ C C</code> gives us <code>(A<sub>1</sub> − B<sub>1</sub>)<sup>2</sup> + (A<sub>2</sub> − B<sub>2</sub>)<sup>2</sup> set.= (C<sub>1</sub> − C<sub>1</sub>)<sup>2</sup> + (C<sub>2</sub> − C<sub>2</sub>)<sup>2</sup></code>.
 <jh>
 #))
 
