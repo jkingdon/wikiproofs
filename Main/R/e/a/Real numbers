@@ -222,16 +222,7 @@ thm (RealAdditionCancellationRight () ()
 ))
 </jh>
 
-=== Closure of additive inverse ===
-Here we prove that <code>- a</code> is real if <code>a</code> is real. This involves showing that the additive inverse is unique and doing enough logic to turn that into the proof that <code>- a</code> is real.
-
-The first lemma is <code>a ∈ ℝ ∧ x ∈ ℝ → a + A = 0 ↔ A = x</code> TODO: what about A being real?
-
-<jh>
-#thm (RealAdditiveInverseClosed () () ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
-#))
-</jh>
-
+=== Proving closure based on uniqueness ===
 Here are some theorems about showing that an operation is closed on a base set. They start from the starting point that the result of the operation is unique. That is, <code>∃ x (x ∈ BaseSet ∧ φx ∧ ∀ y (φy → y = x))</code> (where <code>φx</code> and <code>φy</code> represent the same formula, with <code>x</code> and with <code>y</code>, respectively).
 
 We start by showing that <code>A = x → A ∈ baseSet ∧ [ A / y ] φy</code>. This is basically just a matter of substitution into <code>x ∈ baseSet</code> and <code>φx</code>.
@@ -401,24 +392,53 @@ thm (ClosureLemma3 ((y φx) (y x) (y A) (y baseSet)  (z x) (z baseSet) (z φx) (
 ))
 </jh>
 
-hyp: ψ → ∃ x (x ∈ BaseSet ∧ φx ∧ (A ∈ BaseSet ∧ [ A / y ] φy ↔ A = x))
-  or maybe ψ → ∃ x (x ∈ BaseSet ∧ φx ∧ (∀ y φy → y = x))
-concl: ψ → ⋃ { y ∈ BaseSet | φy } ∈ BaseSet
-closed form: ∃ x (x ∈ BaseSet ∧ φx ∧ ∀ y (φy → y = x)) → ⋃ { y ∈ BaseSet | φy } ∈ BaseSet
+Here's our main closure theorem: if a predicate holds for exactly one element of a base set, then we can define a member of the base set which obeys the predicate (as the union of the set of all elements in the base set which obey the predicate).
+<jh>
+thm (Closure ((y φx) (y x) (y A) (y baseSet))
+  ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  ((⋃ (separate y baseSet φy)) ∈ baseSet)) (
+</jh>
+First is picking out <code>x ∈ baseSet</code>.
+<jh>
+        (((value x) ∈ baseSet) ∧ φx)
+          (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))
+          ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+
+</jh>
+Next is <code>⋃ { y ∈ baseSet | φy } = x</code>, which by means of a builder we can transform to <code>⋃ { y ∈ baseSet | φy } ∈ baseSet ↔ x ∈ baseSet</code>.
+<jh>
+        HSUB
+        baseSet ClosureLemma3
+
+        (⋃ (separate y baseSet φy)) (value x) baseSet MembershipBuilderRR
+        applySyllogism
+</jh>
+Combining those two we are done.
+<jh>
+        eliminateBiconditionalForwardInConsequent
+        applyModusPonensInConsequent
+))
+</jh>
+
+=== Closure of additive inverse ===
+Here we prove that <code>- a</code> is real if <code>a</code> is real. This involves showing that the additive inverse is unique and then applying <code>Closure</code>.
+
+<jh>
+#thm (RealAdditiveInverseClosed () () ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
+#))
+</jh>
 
 {{cleanup|finishing this proof. Here's an outline of how it might be done}}
-one solution would be: ∃ x (x ∈ ℝ ∧ a + x = 0 ∧ { y ∈ ℝ | a + y = 0 } = { x })
-  for that need A ∈ { y ∈ ℝ | a + y = 0 } ↔ A ∈ { x }
-  for that need A ∈ ℝ ∧ [ A / y ] a + y = 0 ↔ A = x (by Separation and Singleton)
+φx is a + x = 0
+We want a ∈ ℝ → ∃ x blah blah blah φx blah blah blah (as in antecedent of Closure)
+
   for that need a + A = 0 ↔ A = x
     the A = x → a + A = 0 direction is just a substitution
     to get a + A = 0 → A = x, 
       a + x = a + A (because both are equal to zero)
       x = A (by cancellation)
-Then we get - a = x
-  and we're a substitution away, because x ∈ ℝ
-
-def ((- a) (⋃ (separate x (ℝ) ((a + (value x)) = (0)))))
 
 == Subtraction ==
 We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
