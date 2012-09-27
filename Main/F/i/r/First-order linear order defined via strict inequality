@@ -1,0 +1,374 @@
+Here we prove [[Interface:First-order linear order]], starting from [[Interface:First-order linear order defined via strict inequality]].
+
+== Import ==
+<jh>
+import (PROPOSITIONAL Interface:Classical_propositional_calculus () ())
+import (FIRSTORDER Interface:First-order_logic_with_quantifiability (PROPOSITIONAL) ())
+import (DEFINED Interface:First-order_linear_order_defined_via_strict_inequality
+  (PROPOSITIONAL FIRSTORDER) ())
+</jh>
+
+== Less than ==
+We have been provided with a predicate <code><</code> and a few basic properties. Here are some consequences of that.
+
+<jh>
+var (object a b c a0 b0 a1 b1)
+</jh>
+
+=== Builders ===
+Here are some convenience builders for less-than.
+<jh>
+thm (LessThanBuilderLL () () ((b0 = b1) → ((a < b0) ↔ (a < b1))) (
+        a EqualityReflexivity
+        a a b0 b1 LessThanBuilder
+        detach1of2
+))
+
+thm (LessThanBuilderRR () () ((a0 = a1) → ((a0 < b) ↔ (a1 < b))) (
+        b EqualityReflexivity
+        a0 a1 b b LessThanBuilder
+        detach2of2
+))
+
+thm (buildLessThan () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 < b0) ↔ (a1 < b1)) (
+        HA
+        HB
+        introduceConjunction
+        a0 a1 b0 b1 LessThanBuilder
+        applyModusPonens
+))
+
+thm (buildLessThanLL () ((HB (b0 = b1))) ((a < b0) ↔ (a < b1)) (
+        HB
+        b0 b1 a LessThanBuilderLL
+        applyModusPonens
+))
+
+thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
+        HA
+        a0 a1 b LessThanBuilderRR
+        applyModusPonens
+))
+</jh>
+
+=== Less than and equality ===
+<jh>
+thm (LessThanEquality () () ((a < b) → (a ≠ b)) (
+</jh>
+We'll put <code>¬ a < a</code> on the proof stack for later.
+<jh>
+        a LessThanIrreflexivity
+</jh>
+We start with a substitution: <code>a = b → (a < a ↔ a < b)</code>.
+<jh>
+        a b a LessThanBuilderLL
+</jh>
+Adding negation to the consequent and detaching <code>¬ a < a</code> we get <code>a = b → ¬ a < b</code>, which is a transposition away from what we need.
+<jh>
+        addNegationInConsequent
+        detachImplicationBiconditional
+        transposeWithNegatedConsequent
+))
+</jh>
+
+== Nonstrict order ==
+Here we define <code>≤</code>, as well as <code>></code> and <code>≥</code>.
+<jh>
+def ((≤ a b) ((a < b) ∨ (a = b)))
+def ((> b a) (a < b))
+def ((≥ b a) (a ≤ b))
+</jh>
+
+We next prove <code>a < b ↔ a ≤ b ∧ a ≠ b</code>. The forward implication is easy, because <code>a < b</code> implies <code>a ≤ b</code> and also <code>a ≠ b</code>.
+<jh>
+thm (LessThanLessEqualForward () () ((a < b) → ((a ≤ b) ∧ (a ≠ b))) (
+        (a < b) (a = b) DisjunctionRightIntroduction
+        a b LessThanEquality
+        composeConjunction
+))
+</jh>
+
+The reverse direction starts by taking <code>a ≤ b → (a = b ∨ a < b)</code>.
+<jh>
+thm (LessThanLessEqualReverse () () (((a ≤ b) ∧ (a ≠ b)) → (a < b)) (
+        (a < b) (a = b) DisjunctionCommutativity
+        eliminateBiconditionalReverse
+
+        (a = b) (a < b) DisjunctionImplication
+        eliminateBiconditionalReverse
+        applySyllogism
+</jh>
+That gives us <code>a ≤ b → (a ≠ b → a < b)</code>, so importing we are done.
+<jh>
+        import
+))
+
+thm (LessThanLessEqual () () ((a < b) ↔ ((a ≤ b) ∧ (a ≠ b))) (
+        a b LessThanLessEqualForward
+        a b LessThanLessEqualReverse
+        introduceBiconditionalFromImplications
+))
+</jh>
+
+For parallelism, we also provide the definition of <code>≤</code> as a theorem.
+<jh>
+thm (LessEqualLessThan () () ((a ≤ b) ↔ ((a < b) ∨ (a = b))) (
+        (a ≤ b) BiconditionalReflexivity
+))
+</jh>
+
+=== Nonstrict order totality ===
+We need to prove that <code>a ≤ b</code> or <code>b ≤ a</code>. Expanding the definition of <code>≤</code>, that is <code>(a < b ∨ a = b) ∨ (b < a ∨ b = a)</code>, which will follow readily from <code>LessThanTotality</code>.
+<jh>
+thm (LessEqualTotality () () ((a ≤ b) ∨ (b ≤ a)) (
+        a b LessThanTotality
+        swap23ofDisjunction3
+</jh>
+We now have <code>(a < b ∨ b < a) ∨ a = b</code> so the next step is turning <code>a = b</code> into <code>a = b ∨ b = a</code>.
+<jh>
+        (a = b) DisjunctionIdempotence
+
+        a b EqualitySymmetry
+        (a = b) buildDisjunctionLL
+        applyBiconditionalTransitivity
+
+        transformDisjunctionRight
+</jh>
+We are almost done. We're just one step away from <code>a < b ∨ a = b) ∨ (b < a ∨ b = a)</code>, which is what we need.
+<jh>
+        swap23ofDisjunction4
+))
+</jh>
+
+=== Reflexivity ===
+Reflexivity follows from totality:
+<jh>
+thm (LessEqualReflexivity () () (a ≤ a) (
+        a a LessEqualTotality
+        conflateDisjunction
+))
+</jh>
+
+=== Builders ===
+The builder for nonstrict inequality follows from the ones for equality and strict inequality.
+<jh>
+thm (LessEqualBuilder () () (((a0 = a1) ∧ (b0 = b1)) → ((a0 ≤ b0) ↔ (a1 ≤ b1))) (
+        a0 a1 b0 b1 LessThanBuilder
+
+        a0 a1 b0 b1 EqualityBuilder
+
+        buildDisjunctionInConsequent
+))
+</jh>
+
+Here are a few builders which are consequences of the one we have.
+<jh>
+thm (LessEqualBuilderLL () () ((b0 = b1) → ((a ≤ b0) ↔ (a ≤ b1))) (
+        a EqualityReflexivity
+        a a b0 b1 LessEqualBuilder
+        detach1of2
+))
+
+thm (LessEqualBuilderRR () () ((a0 = a1) → ((a0 ≤ b) ↔ (a1 ≤ b))) (
+        b EqualityReflexivity
+        a0 a1 b b LessEqualBuilder
+        detach2of2
+))
+</jh>
+
+Here are rule forms of those builders.
+<jh>
+thm (buildLessEqual () ((HA (a0 = a1)) (HB (b0 = b1))) ((a0 ≤ b0) ↔ (a1 ≤ b1)) (
+        HA
+        HB
+        introduceConjunction
+        a0 a1 b0 b1 LessEqualBuilder
+        applyModusPonens
+))
+
+thm (buildLessEqualRR () ((H (a0 = a1))) ((a0 ≤ b) ↔ (a1 ≤ b)) (
+        H
+        a0 a1 b LessEqualBuilderRR
+        applyModusPonens
+))
+
+thm (buildLessEqualLL () ((H (b0 = b1))) ((a ≤ b0) ↔ (a ≤ b1)) (
+        H
+        b0 b1 a LessEqualBuilderLL
+        applyModusPonens
+))
+</jh>
+
+Equality implies <code>≤</code>.
+<jh>
+thm (EqualityLessEqual () () ((a = b) → (a ≤ b)) (
+        a LessEqualReflexivity
+
+        a b a LessEqualBuilderLL
+</jh>
+The builder gives us <code>a = b → (a ≤ a ↔ a ≤ b)</code>.  But <code>a ≤ a</code> is a theorem, so we are done.
+<jh>
+        detachImplicationBiconditional
+))
+</jh>
+
+=== Less than and less equal ===
+<jh>
+thm (LessThanLessEqualImplication () () ((a < b) → (a ≤ b)) (
+        (a < b) (a = b) DisjunctionRightIntroduction
+))
+</jh>
+
+=== Transitivity ===
+We start by proving that <code>a ≤ b ∧ b < c → a < c</code>.<ref>Exercise 8(b) of Tarski, Alfred, ''Introduction to Logic and to the Methodology of Deductive Sciences'', Dover, 1995, page 167</ref>
+
+<jh>
+thm (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)) (
+        (a < b) (a = b) (b < c) ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+
+</jh>
+The first part of this proof is <code>a < b ∧ b < c → a < c</code>.
+<jh>
+        a b c LessThanTransitivity
+</jh>
+The other part is <code>a = b ∧ b < c → a < c</code>.
+<jh>
+        a b c LessThanBuilderRR
+        eliminateBiconditionalForwardInConsequent
+        import
+</jh>
+Combining those two parts we are done.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
+</jh>
+
+The proof for transitivity for nonstrict inequality, <code>a ≤ b ∧ b ≤ c → a ≤ c</code>, is similar.
+<jh>
+thm (LessEqualTransitivity () () (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
+        (a ≤ b) (b < c) (b = c) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+</jh>
+The first part of this proof is <code>a ≤ b ∧ b < c → a ≤ c</code>.
+<jh>
+        a b c LessEqualLessThanTransitivity
+        (a < c) (a = c) DisjunctionRightIntroduction
+        applySyllogism
+</jh>
+The second part of the proof is <code>a ≤ b ∧ b = c → a ≤ c</code>.
+<jh>
+        b c a LessEqualBuilderLL
+        eliminateBiconditionalReverseInConsequent
+        applyComm
+        import
+</jh>
+Combining the two parts we are done.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
+</jh>
+
+The following theorems imply that no more than one of <code>a < b</code>, <code>a = b</code>, or <code>a > b</code> holds.
+<jh>
+thm (LessThanGreaterThan () () ((a < b) → (¬ (a > b))) (
+        a EqualityReflexivity
+
+</jh>
+We start with <code>a < b ∧ b < a → a < a</code>.
+<jh>
+        a b a LessThanTransitivity
+</jh>
+Using the previous theorem we turn this into <code>a < b ∧ b < a → a ≠ a</code>.
+<jh>
+        a a LessThanEquality
+        applySyllogism
+
+</jh>
+Since <code>a = a</code> is a theorem, this gives us <code>¬ (a < b ∧ b < a)</code>
+<jh>
+        transposeWithNegatedConsequent
+        applyModusPonens
+</jh>
+A bit of propositional logic turns this into what we need.
+<jh>
+        distributeNegationPCP
+        convertToImplicationFromDisjunction
+))
+
+thm (EqualityLessThan () () ((a = b) → (¬ (a < b))) (
+        a b LessThanEquality
+        transposeWithNegatedConsequent
+))
+</jh>
+
+=== Antisymmetry ===
+<jh>
+thm (LessEqualAntisymmetryLemma () () (((a < b) ∧ (b ≤ a)) → (a = b)) (
+        (a < b) (b < a) (b = a) ConjunctionLeftDistribution
+        eliminateBiconditionalReverse
+</jh>
+The first half is <code>a < b ∧ b < a → a = b</code>. This holds trivially because <code>a < b ∧ b < a</code> is a contradiction.
+<jh>
+        a b LessThanGreaterThan
+
+        (a < b) (¬ (b < a)) ImplicationDisjunction
+        eliminateBiconditionalReverse
+        applyModusPonens
+
+        (a < b) (b < a) DeMorganPCP
+        eliminateBiconditionalForward
+        applyModusPonens
+
+        (¬ (a = b)) introduceAntecedent
+
+        eliminateTransposition
+</jh>
+The second half is <code>a < b ∧ b = a → a = b</code>, which of course is just rearranging.
+<jh>
+        (a < b) (b = a) ConjunctionLeftElimination
+        swapEqualityInConsequent
+</jh>
+Combining the two halves we are done.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
+
+thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
+        (a < b) (a = b) (b ≤ a) ConjunctionRightDistribution
+        eliminateBiconditionalReverse
+</jh>
+The first half is <code>a < b ∧ b ≤ a → a = b</code>, which is the lemma we already proved.
+<jh>
+        a b LessEqualAntisymmetryLemma
+</jh>
+The second half is <code>a = b ∧ b ≤ a → a = b<code>.
+<jh>
+        (a = b) (b ≤ a) ConjunctionRightElimination
+</jh>
+Combining the halves we are done.
+<jh>
+        composeDisjunction
+        applySyllogism
+))
+</jh>
+
+== Export ==
+We first export an interface which contains everything we handle here, including the import from [[Interface:First-order linear order defined via nonstrict inequality]].
+<jh>
+export (COMPLETE Interface:First-order_linear_order (PROPOSITIONAL FIRSTORDER) ())
+</jh>
+
+It will also be helpful to export an interface which does not duplicate the declarations in [[Interface:First-order linear order defined via nonstrict inequality]], for use in a module which has already exported the latter.
+<jh>
+export (ADDITIONAL Interface:First-order_linear_order_from_nonstrict_inequality (PROPOSITIONAL FIRSTORDER DEFINED) ())
+</jh>
+
+== References ==
+<references/>
+
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Total order]]
