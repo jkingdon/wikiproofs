@@ -38,11 +38,6 @@ var (set.object A B C D)
 var (formula φ ψ)
 </jh>
 
-The following definition should perhaps go in [[Interface:Restricting all quantifiers]] although that perhaps is a question of whether that interface assumes the axiom of quantifiability.
-<jh>
-def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
-</jh>
-
 == Addition ==
 <jh>
 def ((+ X Y) (asRestrictedTerm ((asSet X) set.+ (asSet Y))))
