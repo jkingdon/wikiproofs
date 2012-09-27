@@ -345,7 +345,10 @@ So far we have <code>[ A / y ] y ∈ baseSet ∧ [ A / y ] φy → [ A / y ] y =
         eliminateBiconditionalReverse
         applySyllogism
 ))
+</jh>
 
+Combining the two previous results gives <code>A ∈ baseSet ∧ [ A / y ] φy ↔ A = x</code>.
+<jh>
 thm (ClosureLemma1 ((y φx) (y x) (y A) (y baseSet)) ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
   ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
   (((A ∈ baseSet) ∧ (subst A y φy)) ↔ (A = (value x)))) (
@@ -358,8 +361,23 @@ thm (ClosureLemma1 ((y φx) (y x) (y A) (y baseSet)) ((HSUB (((value x) = (value
 ))
 </jh>
 
-stmt (Separation ((x A)) ()
-  ((C ∈ (separate x A φ)) ↔ ((C ∈ A) ∧ (subst C x φ))))
+Next we want <code>A ∈ { y ∈ baseSet | φy } ↔ A ∈ { x }</code>. This follows from the previous result by <code>Separation</code> and <code>Singleton</code>.
+
+<jh>
+thm (ClosureLemma2 ((y φx) (y x) (y A) (y baseSet)) ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  ((A ∈ (separate y baseSet φy)) ↔ (A ∈ (singleton (value x))))) (
+        HSUB
+        baseSet A ClosureLemma1
+
+        A y baseSet φy Separation
+        A (value x) Singleton
+        buildBiconditional
+
+        eliminateBiconditionalForward
+        applySyllogism
+))
+</jh>
 
 hyp: ψ → ∃ x (x ∈ BaseSet ∧ φx ∧ (A ∈ BaseSet ∧ [ A / y ] φy ↔ A = x))
   or maybe ψ → ∃ x (x ∈ BaseSet ∧ φx ∧ (∀ y φy → y = x))
