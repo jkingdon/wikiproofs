@@ -39,7 +39,7 @@ var (formula φ)
 </jh>
 
 == Congruence ==
-We define congruence using the usual Pythagorean theorem based definition for Cartesian two-dimensional space. The Tarski and Givant paper has a diagram.<ref>Tarski and Givant, page 201</ref> The definition is interesting if <code>A</code> is an ordered pair <code>〈1st A, 2nd A〉</code>, where <code>1st A</code> and <code>2nd A</code> are real numbers, and likewise for <code>B</code>, <code>C</code>, and <code>D</code>.
+We define congruence using the usual [[w:Pythagorean theorem|Pythagorean theorem]] based definition for [[w:Cartesian coordinate system|Cartesian two-dimensional space]]. The Tarski and Givant paper has a diagram.<ref>Tarski and Givant, page 201</ref> The definition is interesting if <code>A</code> is an ordered pair <code>〈1st A, 2nd A〉</code>, where <code>1st A</code> and <code>2nd A</code> are real numbers, and likewise for <code>B</code>, <code>C</code>, and <code>D</code>.
 <jh>
 def ((set.≡ A B C D) (
   ((((1st A) − (1st B)) · ((1st A) − (1st B))) +
