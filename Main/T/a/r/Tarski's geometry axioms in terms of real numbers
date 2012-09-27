@@ -38,11 +38,6 @@ var (set.object A B C D)
 var (formula φ)
 </jh>
 
-The following definition should perhaps go in [[Interface:Restricting all quantifiers]] although that perhaps is a question of whether that interface assumes the axiom of quantifiability.
-<jh>
-def ((subst Y x φ) (set.subst (asSet Y) (asSetVariable x) φ))
-</jh>
-
 == Congruence ==
 We define congruence using the usual Pythagorean theorem based definition for Cartesian two-dimensional space. The Tarski and Givant paper has a diagram.<ref>Tarski and Givant, page 201</ref> The definition is interesting if <code>A</code> is an ordered pair <code>〈1st A, 2nd A〉</code>, where <code>1st A</code> and <code>2nd A</code> are real numbers, and likewise for <code>B</code>, <code>C</code>, and <code>D</code>.
 <jh>
