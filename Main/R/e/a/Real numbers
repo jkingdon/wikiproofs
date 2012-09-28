@@ -73,7 +73,7 @@ thm (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) →
 </jh>
 
 === Addition Cancellation ===
-In this section we are gonig to prove <code>a + c = b + c → a = b</code>.
+In this section we are going to prove <code>a + c = b + c → a = b</code>.
 
 <jh>
 thm (RealAdditionCancellationRightForward-ab () ()
