@@ -222,12 +222,51 @@ thm (RealAdditionCancellationRight () ()
 ))
 </jh>
 
+==== Cancellingn on the left ====
+Cancelling on the left is an easy consequence, because addition is commutative.
+<jh>
+thm (RealAdditionCancellationLeft () ()
+  ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c ∈ (ℝ))) → (((a + b) = (a + c)) ↔ (b = c))) (
+</jh>
+First we need <code>a + b = a + c ↔ b + a = c + a</code>
+<jh>
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) (c ∈ (ℝ)) ConjunctionRightElimination
+        a b RealAdditionCommutativity
+        applySyllogism
+
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) (c ∈ (ℝ)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) (c ∈ (ℝ)) ConjunctionLeftElimination
+        composeConjunction
+        a c RealAdditionCommutativity
+        applySyllogism
+
+        buildEqualityInConsequent
+</jh>
+Then right cancellation is <code>b + a = c + a ↔ b = c</code>, which finishes the proof.
+<jh>
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) (c ∈ (ℝ)) ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) (c ∈ (ℝ)) ConjunctionLeftElimination
+        composeConjunction
+
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) (c ∈ (ℝ)) ConjunctionRightElimination
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        b c a RealAdditionCancellationRight
+        applySyllogism
+
+        applyBiconditionalTransitivityInConsequent
+))
+</jh>
+
 === Proving closure based on uniqueness ===
 Here are some theorems about showing that an operation is closed on a base set. They start from the starting point that the result of the operation is unique. That is, <code>∃ x (x ∈ BaseSet ∧ φx ∧ ∀ y (φy → y = x))</code> (where <code>φx</code> and <code>φy</code> represent the same formula, with <code>x</code> and with <code>y</code>, respectively).
 
 We start by showing that <code>A = x → A ∈ baseSet ∧ [ A / y ] φy</code>. This is basically just a matter of substitution into <code>x ∈ baseSet</code> and <code>φx</code>.
 <jh>
-var (object baseSet xx A)
+var (object baseSet xx yy A)
 var (formula φx φy)
 
 thm (ClosureLemma1Reverse-baseSet () ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
@@ -426,6 +465,41 @@ Combining those two we are done.
 Here we prove that <code>- a</code> is real if <code>a</code> is real. This involves showing that the additive inverse is unique and then applying <code>Closure</code>.
 
 <jh>
+#thm (RealAdditiveInverseClosed-uniq1 () () (((a ∈ (ℝ)) ∧
+#  (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧
+#    ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))) → (yy = xx)) (
+</jh>
+We start with <code>a + yy = a + xx</code>.
+<jh>
+#        (a ∈ (ℝ))
+#          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
+#          ConjunctionLeftElimination
+#        eliminateLeftConjunctInConsequent
+#        eliminateLeftConjunctInConsequent
+
+#        (a ∈ (ℝ))
+#          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
+#          ConjunctionLeftElimination
+#        eliminateRightConjunctInConsequent
+#        eliminateLeftConjunctInConsequent
+#        swapEqualityInConsequent
+
+#        applyEqualityTransitivityInConsequent
+</jh>
+Cancelling the <code>a</code> gives <code>yy = xx</code>, which is what we need.
+<jh>
+#))
+
+#a ∈ R → ∃ x (x ∈ R ∧ a + x = 0)
+#want: x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x)
+
+#thm (RealAdditiveInverseClosed-uniq2 () () ((a ∈ (ℝ)) →
+#  (∃ x ((((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))) ∧
+#    (∀ y ((((value y) ∈ (ℝ)) ∧ ((a + (value y)) = (0)) → ((value y) = (value x))))))
+#  )
+#) (
+#))
+
 #thm (RealAdditiveInverseClosed () () ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
 #))
 </jh>
