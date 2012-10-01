@@ -465,30 +465,53 @@ Combining those two we are done.
 Here we prove that <code>- a</code> is real if <code>a</code> is real. This involves showing that the additive inverse is unique and then applying <code>Closure</code>.
 
 <jh>
-#thm (RealAdditiveInverseClosed-uniq1 () () (((a ∈ (ℝ)) ∧
-#  (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧
-#    ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))) → (yy = xx)) (
+thm (RealAdditiveInverseClosed-uniq1 () () (((a ∈ (ℝ)) ∧
+  (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧
+    ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))) → (yy = xx)) (
 </jh>
 We start with <code>a + yy = a + xx</code>.
 <jh>
-#        (a ∈ (ℝ))
-#          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
-#          ConjunctionLeftElimination
-#        eliminateLeftConjunctInConsequent
-#        eliminateLeftConjunctInConsequent
+        (a ∈ (ℝ))
+          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateLeftConjunctInConsequent
 
-#        (a ∈ (ℝ))
-#          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
-#          ConjunctionLeftElimination
-#        eliminateRightConjunctInConsequent
-#        eliminateLeftConjunctInConsequent
-#        swapEqualityInConsequent
+        (a ∈ (ℝ))
+          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateLeftConjunctInConsequent
+        swapEqualityInConsequent
 
-#        applyEqualityTransitivityInConsequent
+        applyEqualityTransitivityInConsequent
 </jh>
 Cancelling the <code>a</code> gives <code>yy = xx</code>, which is what we need.
 <jh>
-#))
+        (a ∈ (ℝ))
+          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
+          ConjunctionRightElimination
+
+        (a ∈ (ℝ))
+          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
+          ConjunctionLeftElimination
+        eliminateLeftConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        (a ∈ (ℝ))
+          (((xx ∈ (ℝ)) ∧ ((a + xx) = (0))) ∧ ((yy ∈ (ℝ)) ∧ ((a + yy) = (0))))
+          ConjunctionLeftElimination
+        eliminateRightConjunctInConsequent
+        eliminateRightConjunctInConsequent
+        composeConjunction
+
+        a yy xx RealAdditionCancellationLeft
+        applySyllogism
+
+        eliminateBiconditionalReverseInConsequent
+        applyModusPonensInConsequent
+))
 
 #a ∈ R → ∃ x (x ∈ R ∧ a + x = 0)
 #want: x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x)
