@@ -24,7 +24,7 @@ var (object x y z x0 y0 z0 x1 y1 z1)
 </jh>
 
 == Strict order ==
-The predicate <code>&lt;</code> for less than was defined in [[Interface:First-order linear order defined via strict inequality]], which also provides the builder <code>LessThanBuilder</code>, transitivity, asymmetry, and totality. We add some consequences and convenience theorems.
+The predicate <code><</code> for less than was defined in [[Interface:First-order linear order defined via strict inequality]], which also provides the builder <code>LessThanBuilder</code>, transitivity, asymmetry, and totality. We add some consequences and convenience theorems.
 
 We also provide greater-than, which is just an abbreviation for less-than with the order of the arguments reversed.
 <jh>
@@ -94,4 +94,8 @@ stmt (buildLessEqualLL () ((y0 = y1)) ((x ≤ y0) ↔ (x ≤ y1)))
 </jh>
 
 {{DEFAULTSORT:{{PAGENAME}}}}
+<<<<<<< HEAD
 [[Category:Total order]]
+=======
+[[Category:Total order]]
+>>>>>>> levitation/master

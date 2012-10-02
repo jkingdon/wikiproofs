@@ -73,7 +73,7 @@ thm (RealAdditiveInverseExists ((x a)) () ((a ∈ (ℝ)) →
 </jh>
 
 === Addition Cancellation ===
-In this section we are gonig to prove <code>a + c = b + c → a = b</code>.
+In this section we are going to prove <code>a + c = b + c → a = b</code>.
 
 <jh>
 thm (RealAdditionCancellationRightForward-ab () ()
@@ -222,7 +222,7 @@ thm (RealAdditionCancellationRight () ()
 ))
 </jh>
 
-==== Cancellingn on the left ====
+==== Cancelling on the left ====
 Cancelling on the left is an easy consequence, because addition is commutative.
 <jh>
 thm (RealAdditionCancellationLeft () ()
@@ -704,7 +704,7 @@ thm (restrict.LessThanTransitivity () ()
 
 </jh>
 
-The first substantive order theorem is <code>¬ x &lt; x</code>. The proof is by contradiction: if <code>x &lt; x</code>, then <code>¬ x &lt; x</code> (by LessThanAsymmetry), which is a contradiction.
+The first substantive order theorem is <code>¬ x < x</code>. The proof is by contradiction: if <code>x < x</code>, then <code>¬ x < x</code> (by LessThanAsymmetry), which is a contradiction.
 <jh>
 thm (restrict.LessThanIrreflexivity () () (¬ (restrict.x restrict.< restrict.x)) (
         restrict.x restrict.x restrict.LessThanAsymmetry

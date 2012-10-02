@@ -9,7 +9,7 @@ import (DEFINED Interface:First-order_linear_order_defined_via_strict_inequality
 </jh>
 
 == Less than ==
-We have been provided with a predicate <code>&lt;</code> and a few basic properties. Here are some consequences of that.
+We have been provided with a predicate <code><</code> and a few basic properties. Here are some consequences of that.
 
 <jh>
 var (object a b c a0 b0 a1 b1)
@@ -55,15 +55,15 @@ thm (buildLessThanRR () ((HA (a0 = a1))) ((a0 < b) ↔ (a1 < b)) (
 <jh>
 thm (LessThanEquality () () ((a < b) → (a ≠ b)) (
 </jh>
-We'll put <code>¬ a &lt; a</code> on the proof stack for later.
+We'll put <code>¬ a < a</code> on the proof stack for later.
 <jh>
         a LessThanIrreflexivity
 </jh>
-We start with a substitution: <code>a = b → (a &lt; a ↔ a &lt; b)</code>.
+We start with a substitution: <code>a = b → (a < a ↔ a < b)</code>.
 <jh>
         a b a LessThanBuilderLL
 </jh>
-Adding negation to the consequent and detaching <code>¬ a &lt; a</code> we get <code>a = b → ¬ a &lt; b</code>, which is a transposition away from what we need.
+Adding negation to the consequent and detaching <code>¬ a < a</code> we get <code>a = b → ¬ a < b</code>, which is a transposition away from what we need.
 <jh>
         addNegationInConsequent
         detachImplicationBiconditional
@@ -72,14 +72,14 @@ Adding negation to the consequent and detaching <code>¬ a &lt; a</code> we get 
 </jh>
 
 == Nonstrict order ==
-Here we define <code>≤</code>, as well as <code>&gt;</code> and <code>≥</code>.
+Here we define <code>≤</code>, as well as <code>></code> and <code>≥</code>.
 <jh>
 def ((≤ a b) ((a < b) ∨ (a = b)))
 def ((> b a) (a < b))
 def ((≥ b a) (a ≤ b))
 </jh>
 
-We next prove <code>a &lt; b ↔ a ≤ b ∧ a ≠ b</code>. The forward implication is easy, because <code>a &lt; b</code> implies <code>a ≤ b</code> and also <code>a ≠ b</code>.
+We next prove <code>a < b ↔ a ≤ b ∧ a ≠ b</code>. The forward implication is easy, because <code>a < b</code> implies <code>a ≤ b</code> and also <code>a ≠ b</code>.
 <jh>
 thm (LessThanLessEqualForward () () ((a < b) → ((a ≤ b) ∧ (a ≠ b))) (
         (a < b) (a = b) DisjunctionRightIntroduction
@@ -88,7 +88,7 @@ thm (LessThanLessEqualForward () () ((a < b) → ((a ≤ b) ∧ (a ≠ b))) (
 ))
 </jh>
 
-The reverse direction starts by taking <code>a ≤ b → (a = b ∨ a &lt; b)</code>.
+The reverse direction starts by taking <code>a ≤ b → (a = b ∨ a < b)</code>.
 <jh>
 thm (LessThanLessEqualReverse () () (((a ≤ b) ∧ (a ≠ b)) → (a < b)) (
         (a < b) (a = b) DisjunctionCommutativity
@@ -98,7 +98,7 @@ thm (LessThanLessEqualReverse () () (((a ≤ b) ∧ (a ≠ b)) → (a < b)) (
         eliminateBiconditionalReverse
         applySyllogism
 </jh>
-That gives us <code>a ≤ b → (a ≠ b → a &lt; b)</code>, so importing we are done.
+That gives us <code>a ≤ b → (a ≠ b → a < b)</code>, so importing we are done.
 <jh>
         import
 ))
@@ -124,7 +124,7 @@ thm (LessEqualTotality () () ((a ≤ b) ∨ (b ≤ a)) (
         a b LessThanTotality
         swap23ofDisjunction3
 </jh>
-We now have <code>(a &lt; b ∨ b &lt; a) ∨ a = b</code> so the next step is turning <code>a = b</code> into <code>a = b ∨ b = a</code>.
+We now have <code>(a < b ∨ b < a) ∨ a = b</code> so the next step is turning <code>a = b</code> into <code>a = b ∨ b = a</code>.
 <jh>
         (a = b) DisjunctionIdempotence
 
@@ -134,7 +134,7 @@ We now have <code>(a &lt; b ∨ b &lt; a) ∨ a = b</code> so the next step is t
 
         transformDisjunctionRight
 </jh>
-We are almost done. We're just one step away from <code>a &lt; b ∨ a = b) ∨ (b &lt; a ∨ b = a)</code>, which is what we need.
+We are almost done. We're just one step away from <code>a < b ∨ a = b) ∨ (b < a ∨ b = a)</code>, which is what we need.
 <jh>
         swap23ofDisjunction4
 ))
@@ -228,11 +228,11 @@ thm (LessEqualLessThanTransitivity () () (((a ≤ b) ∧ (b < c)) → (a < c)) (
         eliminateBiconditionalReverse
 
 </jh>
-The first part of this proof is <code>a &lt; b ∧ b &lt; c → a &lt; c</code>.
+The first part of this proof is <code>a < b ∧ b < c → a < c</code>.
 <jh>
         a b c LessThanTransitivity
 </jh>
-The other part is <code>a = b ∧ b &lt; c → a &lt; c</code>.
+The other part is <code>a = b ∧ b < c → a < c</code>.
 <jh>
         a b c LessThanBuilderRR
         eliminateBiconditionalForwardInConsequent
@@ -251,7 +251,7 @@ thm (LessEqualTransitivity () () (((a ≤ b) ∧ (b ≤ c)) → (a ≤ c)) (
         (a ≤ b) (b < c) (b = c) ConjunctionLeftDistribution
         eliminateBiconditionalReverse
 </jh>
-The first part of this proof is <code>a ≤ b ∧ b &lt; c → a ≤ c</code>.
+The first part of this proof is <code>a ≤ b ∧ b < c → a ≤ c</code>.
 <jh>
         a b c LessEqualLessThanTransitivity
         (a < c) (a = c) DisjunctionRightIntroduction
@@ -310,7 +310,7 @@ thm (LessEqualAntisymmetryLemma () () (((a < b) ∧ (b ≤ a)) → (a = b)) (
         (a < b) (b < a) (b = a) ConjunctionLeftDistribution
         eliminateBiconditionalReverse
 </jh>
-The first half is <code>a &lt; b ∧ b &lt; a → a = b</code>. This holds trivially because <code>a &lt; b ∧ b &lt; a</code> is a contradiction.
+The first half is <code>a < b ∧ b < a → a = b</code>. This holds trivially because <code>a < b ∧ b < a</code> is a contradiction.
 <jh>
         a b LessThanGreaterThan
 
@@ -326,7 +326,7 @@ The first half is <code>a &lt; b ∧ b &lt; a → a = b</code>. This holds trivi
 
         eliminateTransposition
 </jh>
-The second half is <code>a &lt; b ∧ b = a → a = b</code>, which of course is just rearranging.
+The second half is <code>a < b ∧ b = a → a = b</code>, which of course is just rearranging.
 <jh>
         (a < b) (b = a) ConjunctionLeftElimination
         swapEqualityInConsequent
@@ -341,7 +341,7 @@ thm (LessEqualAntisymmetry () () (((a ≤ b) ∧ (b ≤ a)) → (a = b)) (
         (a < b) (a = b) (b ≤ a) ConjunctionRightDistribution
         eliminateBiconditionalReverse
 </jh>
-The first half is <code>a &lt; b ∧ b ≤ a → a = b</code>, which is the lemma we already proved.
+The first half is <code>a < b ∧ b ≤ a → a = b</code>, which is the lemma we already proved.
 <jh>
         a b LessEqualAntisymmetryLemma
 </jh>
