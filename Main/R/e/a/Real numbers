@@ -514,7 +514,15 @@ Cancelling the <code>a</code> gives <code>yy = xx</code>, which is what we need.
 ))
 
 #a ∈ R → ∃ x (x ∈ R ∧ a + x = 0)
+#a ∈ R → ∃ x (a ∈ R ∧ x ∈ R ∧ a + x = 0) (1)
+#a ∈ R ∧ x ∈ R ∧ a + x = 0 → (y ∈ R ∧ a + y = 0 → y = x) by lemma
+#hence a ∈ R ∧ x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x)
+#hence a ∈ R ∧ x ∈ R ∧ a + x = 0 → (x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x))
+#combine with (1): ∃ x (a ∈ R ∧ x ∈ R ∧ a + x = 0) →
+#  ∃ x (x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x))
+
 #want: x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x)
+
 
 #thm (RealAdditiveInverseClosed-uniq2 () () ((a ∈ (ℝ)) →
 #  (∃ x ((((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))) ∧
