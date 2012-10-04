@@ -513,37 +513,53 @@ Cancelling the <code>a</code> gives <code>yy = xx</code>, which is what we need.
         applyModusPonensInConsequent
 ))
 
-#a ∈ R → ∃ x (x ∈ R ∧ a + x = 0)
-#a ∈ R → ∃ x (a ∈ R ∧ x ∈ R ∧ a + x = 0) (1)
-#a ∈ R ∧ x ∈ R ∧ a + x = 0 → (y ∈ R ∧ a + y = 0 → y = x) by lemma
-#hence a ∈ R ∧ x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x)
-#hence a ∈ R ∧ x ∈ R ∧ a + x = 0 → (x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x))
-#combine with (1): ∃ x (a ∈ R ∧ x ∈ R ∧ a + x = 0) →
-#  ∃ x (x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x))
+thm (RealAdditiveInverseClosed-uniq2 ((a x) (y a) (y x)) () ((a ∈ (ℝ)) →
+  (∃ x ((((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))) ∧
+    (∀ y ((((value y) ∈ (ℝ)) ∧ ((a + (value y)) = (0))) → ((value y) = (value x)))))
+  )
+) (
+</jh>
+We start with <code>a ∈ R → ∃ x (a ∈ R ∧ (x ∈ R ∧ a + x = 0))</code>.
+<jh>
+        a x RealAdditiveInverseExists
+        repeatAntecedentThereExists
+</jh>
+We'll also need <code>a ∈ ℝ ∧ (x ∈ ℝ ∧ a + x = 0) → x ∈ ℝ ∧ a + x = 0</code> a bit later.
+<jh>
+        (a ∈ (ℝ))
+          (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0)))
+          ConjunctionLeftElimination
+</jh>
+Setting that aside for a bit, rearranging <code>RealAdditiveInverseClosed-uniq1</code> a bit gives <code>a ∈ ℝ ∧ (x ∈ ℝ ∧ a + x = 0) → ∀ y (y ∈ ℝ ∧ a + y = 0 → y = x)</code>
+<jh>
+        a (value x) (value y) RealAdditiveInverseClosed-uniq1
 
-#want: x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x)
+        (a ∈ (ℝ))
+          (((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0)))
+          (((value y) ∈ (ℝ)) ∧ ((a + (value y)) = (0)))
+          ConjunctionAssociativity
+        swapBiconditional
+        transformAntecedent
+        export
 
+        y addForAllToConsequent
+</jh>
+Adding a copy of <code>x ∈ ℝ ∧ a + x = 0</code> to the consequent and then adding <code>∃ x</code> to both antecedent and consequent gives us <code>∃ x (a ∈ R ∧ (x ∈ R ∧ a + x = 0)) → ∃ x (x ∈ R ∧ a + x = 0 → ∀ y (y ∈ R ∧ a + y = 0 → y = x))</code>.
+<jh>
+        composeConjunction
 
-#thm (RealAdditiveInverseClosed-uniq2 () () ((a ∈ (ℝ)) →
-#  (∃ x ((((value x) ∈ (ℝ)) ∧ ((a + (value x)) = (0))) ∧
-#    (∀ y ((((value y) ∈ (ℝ)) ∧ ((a + (value y)) = (0)) → ((value y) = (value x))))))
-#  )
-#) (
-#))
+        x addThereExists
+</jh>
+Combining that with <code>a ∈ R → ∃ x (a ∈ R ∧ (x ∈ R ∧ a + x = 0))</code> we are done.
+<jh>
+        applySyllogism
+))
 
 #thm (RealAdditiveInverseClosed () () ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
 #))
 </jh>
 
-{{cleanup|finishing this proof. Here's an outline of how it might be done}}
-φx is a + x = 0
-We want a ∈ ℝ → ∃ x blah blah blah φx blah blah blah (as in antecedent of Closure)
-
-  for that need a + A = 0 ↔ A = x
-    the A = x → a + A = 0 direction is just a substitution
-    to get a + A = 0 → A = x, 
-      a + x = a + A (because both are equal to zero)
-      x = A (by cancellation)
+{{cleanup|finishing this proof, by combining RealAdditiveInverseClosed-uniq2 and Closure.}}
 
 == Subtraction ==
 We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
