@@ -433,7 +433,7 @@ thm (ClosureLemma3 ((y φx) (y x) (y A) (y baseSet)  (z x) (z baseSet) (z φx) (
 
 Here's our main closure theorem: if a predicate holds for exactly one element of a base set, then we can define a member of the base set which obeys the predicate (as the union of the set of all elements in the base set which obey the predicate).
 <jh>
-thm (Closure ((y φx) (y x) (y A) (y baseSet))
+thm (Closure ((y φx) (y x) (y baseSet)  (y A))
   ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
   ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
   ((⋃ (separate y baseSet φy)) ∈ baseSet)) (
@@ -554,12 +554,24 @@ Combining that with <code>a ∈ R → ∃ x (a ∈ R ∧ (x ∈ R ∧ a + x = 0)
 <jh>
         applySyllogism
 ))
-
-#thm (RealAdditiveInverseClosed () () ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
-#))
 </jh>
 
-{{cleanup|finishing this proof, by combining RealAdditiveInverseClosed-uniq2 and Closure.}}
+Proving closure is just a matter of combining <code>RealAdditiveInverseClosed-uniq2</code> and <code>Closure</code>.
+<jh>
+thm (RealAdditiveInverseClosed ( (y a) (y x) (x a)) ()
+  ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
+        a x y RealAdditiveInverseClosed-uniq2
+
+        (value x) (value y) a AdditionBuilderLL
+        (0) buildEqualityRRInConsequent
+
+        (ℝ) Closure
+        x addThereExists
+
+        applySyllogism
+        removeThereExistsInConsequent
+))
+</jh>
 
 == Subtraction ==
 We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
