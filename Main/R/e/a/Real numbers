@@ -583,7 +583,7 @@ def ((− b a) (b + (- a)))
 === Closure ===
 Subtraction is closed.
 <jh>
-thm (RealSubtractionClosed () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) ∈ (ℝ))) (
+thm (RealSubtractionClosure () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) ∈ (ℝ))) (
         (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionRightElimination
 
         (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
@@ -594,6 +594,11 @@ thm (RealSubtractionClosed () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − 
 
         a (- b) RealAdditionClosure
         applySyllogism
+))
+
+# synonym: goal is to move to *Closure not *Closed names
+thm (RealSubtractionClosed () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) ∈ (ℝ))) (
+        a b RealSubtractionClosure
 ))
 </jh>
 
