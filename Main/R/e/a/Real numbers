@@ -574,10 +574,27 @@ thm (RealAdditiveInverseClosed ( (y a) (y x) (x a)) ()
 </jh>
 
 == Subtraction ==
-We define <code>b − a</code> to be the unique number <code>x</code> for which <code>a + x = b</code>. Our notation for this is <code>⋃ { x ∈ ℝ | a + x = b }</code>, which works because the union of a singleton is the singleton's element.
+We define <code>b − a</code> to be <code>b + - a</code>.
 
 <jh>
-def ((− b a) (⋃ (separate x (ℝ) ((a + (value x)) = b))))
+def ((− b a) (b + (- a)))
+</jh>
+
+=== Closure ===
+Subtraction is closed.
+<jh>
+thm (RealSubtractionClosed () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) ∈ (ℝ))) (
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionRightElimination
+
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        b RealAdditiveInverseClosed
+        applySyllogism
+
+        composeConjunction
+
+        a (- b) RealAdditionClosure
+        applySyllogism
+))
 </jh>
 
 == Multiplication ==
