@@ -651,16 +651,12 @@ thm (RealSubtractionClosed () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − 
 </jh>
 
 === Subtraction and additive inverse ===
-Here we prove that <code>a − b = a + - b</code>. This is just a restatement of our definition of subtraction, with one twist: because the definition of additive inverse contains a dummy variable, and we are still in the same file as the definitions of subtraction and additive inverse, we need a change of variable.
+Here we prove that <code>a − b = a + - b</code>. This is just a restatement of our definition of subtraction. Apparently JHilbert does not expand <code>- b</code> according to its definition, once on each side of the equality, because we do not need to apply <code>ChangeVariableSeparation</code> and various builders to show that the two instances of <code>- b</code> are equal.
 <jh>
-#thm (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (a + (- b)))) (
-#        (value x) (value y) b AdditionBuilderLL
-#        (0) buildEqualityRRInConsequent
-#        (ℝ) ChangeVariableSeparation
-#        buildUnion
-
-#        a buildAdditionLL
-#))
+thm (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (a + (- b)))) (
+        (a + (- b)) EqualityReflexivity
+        ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) introduceAntecedent
+))
 </jh>
 
 == Multiplication ==
