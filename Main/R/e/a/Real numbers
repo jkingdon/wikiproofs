@@ -457,8 +457,9 @@ thm (ClosureLemma2 ((y φx) (y x) (y A) (y baseSet)) ((HSUB (((value x) = (value
 </jh>
 
 We're getting close, because the previous lemma is just extensionality away from <code>{ y ∈ baseSet | φy } = { x }</code>, and adding union to both sides gives <code>⋃ { y ∈ BaseSet | φy } = x</code>.
+
 <jh>
-thm (ClosureLemma3 ((y φx) (y x) (y A) (y baseSet)  (z x) (z baseSet) (z φx) (z y) (z φy))
+thm (UnionUnique ((y φx) (y x) (y A) (y baseSet)  (z x) (z baseSet) (z φx) (z y) (z φy))
   ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
   ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
   ((⋃ (separate y baseSet φy)) = (value x))) (
@@ -497,7 +498,7 @@ First is picking out <code>x ∈ baseSet</code>.
 Next is <code>⋃ { y ∈ baseSet | φy } = x</code>, which by means of a builder we can transform to <code>⋃ { y ∈ baseSet | φy } ∈ baseSet ↔ x ∈ baseSet</code>.
 <jh>
         HSUB
-        baseSet ClosureLemma3
+        baseSet UnionUnique
 
         (⋃ (separate y baseSet φy)) (value x) baseSet MembershipBuilderRR
         applySyllogism
@@ -657,6 +658,14 @@ thm (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (
         (a + (- b)) EqualityReflexivity
         ((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) introduceAntecedent
 ))
+</jh>
+
+=== Subtracting a number from itself ===
+{{cleanup|proving this, probably via some variant of y = - a → a + y = 0 and UnionUnique}}
+
+<jh>
+#thm (RealSubtractionItself () () ((a ∈ (ℝ)) → ((a − a) = (0))) (
+#))
 </jh>
 
 == Multiplication ==
