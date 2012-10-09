@@ -661,7 +661,39 @@ thm (RealSubtraction () () (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → ((a − b) = (
 </jh>
 
 === Subtracting a number from itself ===
-{{cleanup|proving this, probably via some variant of y = - a → a + y = 0 and UnionUnique}}
+In this section we are trying to prove that <code>a − a = 0</code>, or, applying the definition of subtraction, <code>a + - a = 0</code>.
+
+The first step is <code>∃ x (a + x = 0 ∧ - a = x)</code>, which we basically proved when we were working on closure. We prove a general-purpose corollary of <code>UnionUnique</code> (really just a rearrangement), and then apply it to this case.
+<jh>
+thm (UnionUnique-x
+  ((y φx) (y x) (y A) (y baseSet)  (z x) (z baseSet) (z φx) (z y) (z φy))
+  ((HSUB (((value x) = (value y)) → (φx ↔ φy)))) (
+  ((((value x) ∈ baseSet) ∧ φx) ∧ (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))) →
+  (φx ∧ ((⋃ (separate y baseSet φy)) = (value x)))) (
+        (((value x) ∈ baseSet) ∧ φx)
+          (∀ y ((((value y) ∈ baseSet) ∧ φy) → ((value y) = (value x))))
+          ConjunctionRightElimination
+        eliminateLeftConjunctInConsequent
+
+        HSUB
+        baseSet UnionUnique
+
+        composeConjunction
+))
+
+thm (RealSubtractionItselfLemma ( (y a) (y x) (x a)) ()
+  ((a ∈ (ℝ)) → (∃ x (((a + (value x)) = (0)) ∧ ((- a) = (value x))))) (
+        a x y RealAdditiveInverseClosed-uniq2
+
+        (value x) (value y) a AdditionBuilderLL
+        (0) buildEqualityRRInConsequent
+
+        (ℝ) UnionUnique-x
+        x addThereExists
+
+        applySyllogism
+))
+</jh>
 
 <jh>
 #thm (RealSubtractionItself () () ((a ∈ (ℝ)) → ((a − a) = (0))) (
