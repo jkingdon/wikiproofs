@@ -363,7 +363,7 @@ stmt (buildSubstReplacement () ((s = t))
   ((subst s x φ) ↔ (subst t x φ)))
 </jh>
 
-A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. The discrete variable constraint between <code>x</code> and <code>s</code> should be one we can eliminate, but in practice it isn't too difficult to deal with.
+A statement of the form <code>x = s → (φ ↔ ψ)</code>, where <code>x</code> is not free in <code>ψ</code>, can be thought of as an ''implicit substitution'', as it can be used to relate a formula about <code>x</code> to a formula about <code>s</code>. The distinct variable constraint between <code>x</code> and <code>s</code> might be one we can eliminate, but in practice it isn't too difficult to deal with.
 <jh>
 stmt (makeSubstExplicit ((x s) (x ψ))
   ((((value x) = s) → (φ ↔ ψ)))

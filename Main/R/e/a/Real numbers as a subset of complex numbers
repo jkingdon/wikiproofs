@@ -260,7 +260,6 @@ thm (RealSquareRoot () () (((a ∈ (ℝ)) ∧ (a ≥ (0))) → (((√ a) · (√
 </jh>
 
 == Export ==
-{{cleanup|proving the rest of this interface and enabling the export}}
 <jh>
 export (COMPLEX Interface:Real_numbers (PROPOSITIONAL FIRSTORDER SETS) ())
 </jh>
