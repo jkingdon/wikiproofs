@@ -632,6 +632,14 @@ thm (RealAdditiveInverseClosed ( (y a) (y x) (x a)) ()
 ))
 </jh>
 
+Here's an alternate name and some rules.
+<jh>
+thm (RealAdditiveInverseClosure () ()
+  ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
+        a RealAdditiveInverseClosed
+))
+</jh>
+
 == Subtraction ==
 We define <code>b − a</code> to be <code>b + - a</code>.
 
@@ -735,6 +743,36 @@ At this point we just need to remove <code>∃</code>. However, if we just did t
 
         removeThereExistsInConsequent
 ))
+</jh>
+
+=== Differences which are zero ===
+The difference between two numbers is zero if and only if they are equal.
+<jh>
+#thm (RealZeroDifferenceEquality () ()
+#  (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → (((a − b) = (0)) ↔ (a = b))) (
+</jh>
+We start with <code>a − b = 0 ↔ a − b + b = 0 + b<code>
+<jh>
+#        a b SubtractionClosure
+
+#        ZeroReal
+#        introduceRightConjunctToConsequent
+
+#        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+#        composeConjunction
+
+#        (a − b) (0) b AdditionCancellationRight
+#        applySyllogism
+
+#        swapBiconditionalInConsequent
+</jh>
+Next we apply associativity and commutativity to get <code>a + (b − b) = 0 + b</code>.
+<jh>
+#        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionRightElimination
+
+#        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+#        closeAdditiveInverseInConsequent
+#))
 </jh>
 
 == Multiplication ==
