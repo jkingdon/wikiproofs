@@ -99,9 +99,19 @@ thm (AdditionBuilderRR () () ((a0 = a1) → ((a0 + b) = (a1 + b))) (
 
 == Additive inverse ==
 We define <code>- a</code> to be the unique number <code>x</code> for which <code>a + x = 0</code>.
-{{cleanup|deciding whether to stick to this definition or moving this after subtraction is defined and then defining - a to be 0 − a}}
 <jh>
 def ((- a) (⋃ (separate x (ℝ) ((a + (value x)) = (0)))))
+</jh>
+
+We'll want the definition as an equality.
+<jh>
+thm (AdditiveInverse ((a x)  (a y) (x y)) ()
+  ((- a) = (⋃ (separate x (ℝ) ((a + (value x)) = (0))))) (
+        (value y) (value x) a AdditionBuilderLL
+        (0) buildEqualityRRInConsequent
+        (ℝ) ChangeVariableSeparation
+        buildUnion
+))
 </jh>
 
 That an additive inverse exists is a consequence of the invertibility of addition. We just need to rearrange some things.
@@ -681,7 +691,7 @@ thm (UnionUnique-x
         composeConjunction
 ))
 
-thm (RealSubtractionItselfLemma ( (y a) (y x) (x a)) ()
+thm (RealSubtractionItselfLemma ((x a)  (y a) (y x)) ()
   ((a ∈ (ℝ)) → (∃ x (((a + (value x)) = (0)) ∧ ((- a) = (value x))))) (
         a x y RealAdditiveInverseClosed-uniq2
 
@@ -695,9 +705,36 @@ thm (RealSubtractionItselfLemma ( (y a) (y x) (x a)) ()
 ))
 </jh>
 
+Here is <code>a − a = 0</code> itself. It is just a substitution from <code>RealSubtractionItselfLemma</code>.
 <jh>
-#thm (RealSubtractionItself () () ((a ∈ (ℝ)) → ((a − a) = (0))) (
-#))
+thm (RealSubtractionItself ( (x a) (y a) (y x)) ()
+  ((a ∈ (ℝ)) → ((a − a) = (0))) (
+        a x RealSubtractionItselfLemma
+</jh>
+Our substitution is <code>a + x = 0 ∧ - a = x → a + - a = 0</code>.
+<jh>
+        (- a) (value x) a AdditionBuilderLL
+        (0) buildEqualityRRInConsequent
+        eliminateBiconditionalForwardInConsequent
+        applyComm
+        import
+</jh>
+Then we combine that with the lemma.
+<jh>
+        x addThereExists
+        applySyllogism
+</jh>
+At this point we just need to remove <code>∃</code>. However, if we just did that now, the automatic expansion of the <code>- a</code> definition would created a distinct variable constraint we would be unable to satisfy. Expanding the definition solves this problem.
+<jh>
+        a y AdditiveInverse
+        a buildAdditionLL
+        (0) buildEqualityRR
+        eliminateBiconditionalReverse
+        x addThereExists
+        applySyllogism
+
+        removeThereExistsInConsequent
+))
 </jh>
 
 == Multiplication ==
