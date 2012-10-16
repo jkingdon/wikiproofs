@@ -14,6 +14,7 @@ import (AXIOMS Interface:Real_number_axioms (PROPOSITIONAL FIRSTORDER SETS) ())
 
 var (object a b c d)
 var (variable x y z)
+var (formula antecedent)
 </jh>
 
 == Convenience builders ==
@@ -637,6 +638,13 @@ Here's an alternate name and some rules.
 thm (RealAdditiveInverseClosure () ()
   ((a ∈ (ℝ)) → ((- a) ∈ (ℝ))) (
         a RealAdditiveInverseClosed
+))
+
+thm (closeAdditiveInverseInConsequent () ((H (antecedent → (a ∈ (ℝ)))))
+  (antecedent → ((- a) ∈ (ℝ))) (
+        H
+        a RealAdditiveInverseClosure
+        applySyllogism
 ))
 </jh>
 
