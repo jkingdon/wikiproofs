@@ -496,6 +496,8 @@ stmt (applyBiconditionalTransitivityInConsequent ()
   ((antecedent → (p ↔ q))
    (antecedent → (q ↔ r)))
   (antecedent → (p ↔ r)))
+stmt (swapBiconditionalInConsequent () ((antecedent → (p ↔ q))) (antecedent → (q ↔ p)))
+
 stmt (introduceAntecedentInConsequent () ((antecedent → p)) (antecedent → (q → p)))
 stmt (importInConsequent ()
   ((antecedent → (p → (q → r))))

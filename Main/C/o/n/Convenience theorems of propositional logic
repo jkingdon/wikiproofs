@@ -602,6 +602,15 @@ thm (applyBiconditionalTransitivityInConsequent ()
         applySyllogism
 ))
 
+thm (swapBiconditionalInConsequent () ((H (antecedent → (p ↔ q))))
+  (antecedent → (q ↔ p)) (
+        H
+        p q BiconditionalSymmetry
+        eliminateBiconditionalReverse
+        applySyllogism
+))
+
+
 thm (introduceAntecedentInConsequent () ((H (antecedent → p))) (antecedent → (q → p)) (
         H
         p q AntecedentIntroduction
