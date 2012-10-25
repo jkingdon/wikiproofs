@@ -38,3 +38,5 @@ If I go to the subversion version 9 of peano_thms.gh, I see the following (extra
       y x ph sbc5
 
 Shoudn't the second invocation of sbc5 blow up because there isn't a distinct variable constraint on (x y)? If not, why not? Is this a bug in the var/tvar code? I don't see a reason why being a var rather than a tvar could soundly bypass distinct variable constraints, but I could have missed something. [[User:Kingdon|Kingdon]] 20:08, 12 June 2010 (UTC)
+
+: Heh, I just saw this now, but no reason not to answer. All binding variables ('var') are always assumed to be distinct from each other. Thus, constraints only need be of the form "variable not free in term". This is a change from Metamath (and thus will require some work to translate Metamath proofs over), but is a lot closer to, say, HOL, so should simplify the task of importing Ghilbert proofs into HOL. Plus, I find it more ergonomic not to require them (and I _am_ interested in favoring ergonomics as long as it doesn't seriously impact complexity) [[User:Raph|Raph]] ([[User talk:Raph|talk]]) 01:00, 25 October 2012 (UTC)
