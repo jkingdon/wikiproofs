@@ -18,7 +18,7 @@ var (formula antecedent)
 </jh>
 
 == Convenience builders ==
-We adopted <code>AdditionBuilder</code> and <code>MultiplicationBuidler</code> as axioms. Here are some convenience rules which are direct results.
+We adopted <code>AdditionBuilder</code> and <code>MultiplicationBuilder</code> as axioms. Here are some convenience rules which are direct results.
 <jh>
 var (object A B A0 A1 B0 B1)
 thm (buildAddition () ((HA (A0 = A1)) (HB (B0 = B1))) ((A0 + B0) = (A1 + B1)) (
@@ -40,6 +40,19 @@ thm (buildAdditionRR () ((HA (A0 = A1))) ((A0 + B) = (A1 + B)) (
         HA
         B EqualityReflexivity
         buildAddition
+))
+
+thm (buildAdditionLLInConsequent () ((HB (antecedent → (B0 = B1))))
+  (antecedent → ((A + B0) = (A + B1))) (
+        A EqualityReflexivity
+        antecedent introduceAntecedent
+
+        HB
+
+        composeConjunction
+
+        A A B0 B1 AdditionBuilder
+        applySyllogism
 ))
 
 thm (buildMultiplication () ((HA (A0 = A1)) (HB (B0 = B1))) ((A0 · B0) = (A1 · B1)) (
@@ -78,6 +91,23 @@ thm (RealAdditionAssociativity () () ((((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) ∧ (c 
 
 thm (RealAdditiveIdentity () () ((a ∈ (ℝ)) → ((a + (0)) = a)) (
         a AdditiveIdentity
+))
+</jh>
+
+It will be convenient to have additive identity on both sides.
+<jh>
+thm (RealAdditiveIdentityRight () () ((a ∈ (ℝ)) → ((a + (0)) = a)) (
+        a AdditiveIdentity
+))
+
+thm (RealAdditiveIdentityLeft () () ((a ∈ (ℝ)) → (((0) + a) = a)) (
+        ZeroReal
+        (0) a RealAdditionCommutativity
+        detach1of2
+
+        a AdditiveIdentity
+
+        applyEqualityTransitivityInConsequent
 ))
 </jh>
 
@@ -756,31 +786,76 @@ At this point we just need to remove <code>∃</code>. However, if we just did t
 === Differences which are zero ===
 The difference between two numbers is zero if and only if they are equal.
 <jh>
-#thm (RealZeroDifferenceEquality () ()
-#  (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → (((a − b) = (0)) ↔ (a = b))) (
+thm (RealZeroDifferenceEquality () ()
+  (((a ∈ (ℝ)) ∧ (b ∈ (ℝ))) → (((a − b) = (0)) ↔ (a = b))) (
 </jh>
 We start with <code>a − b = 0 ↔ a − b + b = 0 + b<code>
 <jh>
-#        a b SubtractionClosure
+        a b RealSubtractionClosure
 
-#        ZeroReal
-#        introduceRightConjunctToConsequent
+        ZeroReal
+        introduceRightConjunctToConsequent
 
-#        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
-#        composeConjunction
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        composeConjunction
 
-#        (a − b) (0) b AdditionCancellationRight
-#        applySyllogism
+        (a − b) (0) b RealAdditionCancellationRight
+        applySyllogism
 
-#        swapBiconditionalInConsequent
+        swapBiconditionalInConsequent
 </jh>
 Next we apply associativity and commutativity to get <code>a + (b − b) = 0 + b</code>.
 <jh>
-#        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionRightElimination
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionRightElimination
 
-#        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
-#        closeAdditiveInverseInConsequent
-#))
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        closeAdditiveInverseInConsequent
+        composeConjunction
+
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        composeConjunction
+
+        a (- b) b RealAdditionAssociativity
+        applySyllogism
+
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        closeAdditiveInverseInConsequent
+
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        composeConjunction
+
+        (- b) b RealAdditionCommutativity
+        applySyllogism
+
+        a buildAdditionLLInConsequent
+
+        applyEqualityTransitivityInConsequent
+        ((0) + b) buildEqualityRRInConsequent
+        applyBiconditionalTransitivityInConsequent
+</jh>
+Next we turn <code>b − b</code> into zero,
+<jh>
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        b RealSubtractionItself
+        applySyllogism
+
+        a buildAdditionLLInConsequent
+        ((0) + b) buildEqualityRRInConsequent
+        applyBiconditionalTransitivityInConsequent
+</jh>
+and apply additive identity to give <code>a = b</code>.
+<jh>
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionRightElimination
+        a RealAdditiveIdentityRight
+        applySyllogism
+
+        (a ∈ (ℝ)) (b ∈ (ℝ)) ConjunctionLeftElimination
+        b RealAdditiveIdentityLeft
+        applySyllogism
+
+        buildEqualityInConsequent
+        applyBiconditionalTransitivityInConsequent
+))
 </jh>
 
 == Multiplication ==
