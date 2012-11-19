@@ -3,32 +3,39 @@
 == The proof of <math>2+2=4</math> ==
 
 Ready to prove <math>2+2=4</math>, the statement you ever since your childhood wondered whether it was really, really true, from our Peano axioms? Well, then, first, we need to load all that stuff we did in [[Interface:Tutorial]]:
-<jh>import (NAT Interface:Tutorial () ())
+<jh>
+import (NAT Interface:Tutorial () ())
 </jh>
 
 Let's go straight to the proof then:
-<jh>thm (2+2=4 () () (((2) + (2)) = (4)) (
+<jh>
+thm (2+2=4 () () (((2) + (2)) = (4)) (
 </jh>
 As you can see, the <code>thm</code> command looks just like a <code>stmt</code> command, except that it doesn't stop after the consequent. That single open bracket is crying for a proof. Proofs are maintained using a proof [[w:stack (data structure)|stack]] of expressions. The proof stack starts out empty, so let's push something onto it:
-<jh>        (2) addzero
+<jh>
+        (2) addzero
 </jh>
 So, first we push the expression <code>(2)</code> on the stack. The next item in the list is not an expression but the name of a statement, namely <code>addzero</code>. The consequent of <code>addzero</code> is <code>(x = (x + (0))</code> and there are no hypotheses in this statement. As we have mentioned before, each variable can actually take any expression of the correct kind. To know which expression is the desired one, <code>addzero</code> looks on the stack, finds the <code>(2)</code>, pops it from the stack and substitutes it for <code>x</code>. So now, we have <code>((2) = ((2) + (0))</code> on the stack. Great! We have proven that <math>2=2+0</math>. To reach <math>4=2+2</math>, we bump up that equation with the successor function:
-<jh>        succfunc
+<jh>
+        succfunc
 </jh>
 The <code>succfunc</code> statement requires one hypothesis, <code>(x = y)</code>. So it pops one element from the stack and finds: <code>((2) = ((2) + (0))</code>. That's a perfect match if we substitute <code>(2)</code> for <code>x</code> and <code>((2) + (0))</code> for <code>y</code>. This process is called unification. Note that <code>succfunc</code> does not look on the stack any further despite depending on two variables because these two variables have already been determined by the unification. So now we have on the stack: <code>((succ (2)) = (succ ((2) + (0))))</code>. Note that <code>(succ (2))</code> is just <code>(3)</code>. So we need <code>succfunc</code> just once more to reach <code>(4)</code>. First, however, we must use <code>addsucc</code> to move the annoying successor function deeper into the brackets:
-<jh>        (2) (0) addsucc
+<jh>
+        (2) (0) addsucc
         eqtransitive
 </jh>
 The first line pushes the expression <code>((succ ((2) + (0))) = ((2) + (succ (0))))</code> on the stack. So we have now ''two'' expressions on the stack:
 # <code>((3) = (succ ((2) + (0))))</code>
 # <code>((succ ((2) + (0))) = ((2) + (succ (0))))</code>
 This means we have proved these two expressions, and they look like they could be combined to the single expression <code>((3) = ((2) + (1)))</code> (with <code>(succ (0))</code> already simplified to <code>(1)</code>). That's just what <code>eqtransitive</code> does: it needs two expressions, the two on the stack match, so they are popped. Unification determines all variables, so we get the combined expression on the stack. Now we just need to do the same thing once more to go from <code>(3)</code> to <code>(4)</code>:
-<jh>        succfunc
+<jh>
+        succfunc
         (2) (1) addsucc
         eqtransitive
 </jh>
 This time, we have of course to instantiate <code>addsucc</code> with <code>(1)</code> for <code>y</code>, as otherwise <code>eqtransitive</code> would not be able to properly unify the stack contents with its hypotheses. Now we're practically done, for we have <code>((4) = ((2) + (2)))</code> on the stack. At the end of the proof, the stack must contain exactly one element which matches the consequent of the theorem. We do have only one element, but the consequent is <code>(((2) + (2)) = (4))</code>. So all that is left to do is to flip the equation:
-<jh>       eqsymmetric # 2 + 2 = 4
+<jh>
+       eqsymmetric # 2 + 2 = 4
 ))
 </jh>
 
