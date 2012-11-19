@@ -3,7 +3,8 @@
 == Implementation of some of the Peano axioms ==
 
 First, we must teach JHilbert that stuff like "naturals" and "formulas" exist:
-<jh>kind (nat)
+<jh>
+kind (nat)
 kind (formula)
 
 var (nat x y z)</jh>
@@ -13,9 +14,12 @@ The two <code>kind</code> commands tell JHilbert that we will use terms whose va
 Finally, the <code>var</code> command defines three variables, <code>x</code>, <code>y</code>, and <code>z</code>. They are placeholders for any JHilbert terms of kind "nat".
 
 Next, we want to teach JHilbert the first four Peano axioms, that is, the axioms involving equality. So, we first need to define the equality symbol:
-<jh>term (formula (= nat nat))</jh>
+<jh>
+term (formula (= nat nat))
+</jh>
 The <code>term</code> command here defines the new symbol "=". This new symbol can now be used to create expressions from two natural numbers, such as <code>(= x y)</code>. Hmm, shouldn't that be <code>(x = y)</code>? In fact, both are possible. JHilbert makes no assumption where orders of symbols, like operators and relation symbols, are a matter of convention, depending on the symbol itself. The "natural" order for JHilbert is [[w:Polish notation|Polish notation]], but you can place the term symbol (here the equal sign) later '''if''' you don't have a variable with the same name as otherwise the term symbol will "shadow" the variable. If you don't use Polish notation, JHilbert will reorder the expression internally. The <code>formula</code> identifier of the <code>term</code> command tells JHilbert that expressions with <code>=</code> are of kind "formula". Now we can state the equality axioms:
-<jh>stmt (eqreflexive () () (x = x)) # 1st Peano axiom
+<jh>
+stmt (eqreflexive () () (x = x)) # 1st Peano axiom
 stmt (eqsymmetric () ((x = y)) (y = x)) # 2nd Peano axiom
 stmt (eqtransitive () ((x = y) (y = z)) (x = z)) # 3rd Peano axiom
 </jh>
@@ -24,12 +28,14 @@ These are the first three Peano axioms, which we have given the names <code>eqre
 And what about the fourth axiom? Well, in the small universe we have been teaching JHilbert, there are only equations between natural numbers. So we do not need to specifically state the fourth axiom. One could also say that the fourth axiom is implied by the definition of <code>=</code>.
 
 Next, we define our very first natural number, zero:
-<jh>term (nat (0)) # 5th Peano axiom
+<jh>
+term (nat (0)) # 5th Peano axiom
 </jh>
 Neat, huh? Compare this with the definition of <code>=</code>. Just like <code>=</code>, <code>0</code> is a JHilbert term symbol, but this one doesn't take any expressions to make a <code>nat</code>, it just ''is'' a <code>nat</code>. We call such terms ''constants''.
 
 Next, we define the successor function:
-<jh>term (nat (succ nat)) # 6th Peano axiom, a
+<jh>
+term (nat (succ nat)) # 6th Peano axiom, a
 stmt (succfunc () ((x = y)) ((succ x) = (succ y))) # 6th Peano axiom, b
 </jh>
 To encode the sixth axiom, we needed two commands. One <code>term</code> to introduce the successor function, and one <code>stmt</code> to establish that <code>succ</code> is actually a function (i.e., application of <math>\mathrm{succ}</math> to the same values always yields the same results).
@@ -37,23 +43,28 @@ To encode the sixth axiom, we needed two commands. One <code>term</code> to intr
 The seventh Peano axiom says that zero is not the successor of any natural number. As we have no concept for "not" handy right now, we just ignore the seventh axiom, to keep matters simple for this tutorial. The axiom is not needed to prove <math>2+2=4</math>.
 
 The eighth axiom is just the reverse of the <code>succfunc</code> statement:
-<jh>stmt (succinj () (((succ x) = (succ y))) (x = y)) # 8th Peano axiom
+<jh>
+stmt (succinj () (((succ x) = (succ y))) (x = y)) # 8th Peano axiom
 </jh>
 
 The ninth axiom would require some kind of set theory, so we ignore this axiom as well.
 
 Now that we have zero, we can define some more natural numbers as well:
-<jh>def ((1) (succ (0)))
+<jh>
+def ((1) (succ (0)))
 def ((2) (succ (1)))
 def ((3) (succ (2)))
-def ((4) (succ (3)))</jh>
+def ((4) (succ (3)))
+</jh>
 We have now defined the natural numbers from <math>1</math> to <math>4</math>, each as the successor of the respective previous number. The <code>def</code> command creates a term (the kind of which is inferred from the definiens) which can be transparently replaced. So, <code>(4)</code> will, if necessary, be transparently replaced with <code>(succ (succ (succ (succ 0))))</code> by JHilbert. This is a very convenient feature if one wants to create abbreviations for unwieldy expressions. Definitions can also be made to depend on variables, creating a whole family of abbreviations.
 
 Finally, we define addition:
-<jh>term (nat (+ nat nat))
+<jh>
+term (nat (+ nat nat))
 stmt (addsym () () ((x + y) = (y + x)))
 stmt (addzero () () (x = (x + (0))))
-stmt (addsucc () () ((succ (x + y)) = (x + (succ y))))</jh>
+stmt (addsucc () () ((succ (x + y)) = (x + (succ y))))
+</jh>
 
 The statements <code>addzero</code> and <code>addsucc</code> recursively define addition for a fixed first summand. To do so likewise for a fixed second summand, we simply introduce the commutative law of addition as <code>addsym</code>.
 
