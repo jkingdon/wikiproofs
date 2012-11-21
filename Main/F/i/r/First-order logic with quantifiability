@@ -953,7 +953,7 @@ To prove this, we simply expand the definition of <code>subst</code> and move <c
 </jh>
 
 == Composition ==
-If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 12 Jun 2010. I don't know why the (x y) distinct variable constraint is missing from that version; the second invocation of sbc5 would seem to require it.</ref>
+If we first substitute <code>y</code> for <code>x</code>, and then substitute <code>s</code> for <code>y</code>, the whole process is equivalent to substituting <code>s</code> for <code>x</code> (subject to some distinct variable constraints).<ref>sbcco in Raph Levien's [http://levien.com/garden/ghnew/peano/ Peano], accessed 12 Jun 2010. Note that the (x y) distinct variable constraint is implicit in ghilbert, because x and y are specified with var (not tvar).</ref>
 <jh>
 thm (SubstitutionComposition ((φ y) (s y) (x y)) ()
   ((subst s y (subst (value y) x φ)) ↔ (subst s x φ)) (
