@@ -7,7 +7,8 @@ First, we must teach JHilbert that stuff like "naturals" and "formulas" exist:
 kind (nat)
 kind (formula)
 
-var (nat x y z)</jh>
+var (nat x y z)
+</jh>
 
 The two <code>kind</code> commands tell JHilbert that we will use terms whose values are natural numbers (abbreviated to "nat") or formulas. Wait a minute, didn't I tell you before that formulas aren't terms? The answer is that JHilbert's metamathematical meaning of "term" is more general than terms in Peano arithmetic. In JHilbert, all expressions are terms, and their meaning can be distinguished by their kind.
 
