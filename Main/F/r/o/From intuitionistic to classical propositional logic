@@ -529,7 +529,6 @@ thm (eliminateCases () ((HP (p → q)) (HNOTP ((¬ p) → q))) q (
 
 == Export ==
 <jh>
-kindbind (wff formula)
 export (CLASSICAL Interface:Principia_Mathematica_propositional_logic_theorems () ())
 </jh>
 
