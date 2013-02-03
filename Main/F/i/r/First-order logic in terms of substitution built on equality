@@ -331,7 +331,7 @@ turn the consequent into <code>¬ [ s / x ] φ</code>,
         s x φ SubstNegation
         eliminateBiconditionalReverse
         applySyllogism
-</jh> 
+</jh>
 and transpose to get <code>[ s / x ] φ → ¬ ∀ x ¬ φ<code>, which is what we want.
 <jh>
         transposeWithNegatedConsequent

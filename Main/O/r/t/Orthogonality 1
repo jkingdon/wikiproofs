@@ -176,7 +176,7 @@ Now we add in <code>A ≠ B</code> and <code>collinear B A A′</code> and move 
 
         (collinear B A A′) conjoinRR
         moveRightConjunctIntoThereExistsInConsequent
-</jh>        
+</jh>
 To prove <code>is-right-angle A′ B C</code> we need a point <code>p</code> for which <code>B is-midpoint-of C p ∧ A′ C ≡ A′ p</code>. Since <code>A′</code> is on the same line, <code>c′</code> itself fits the bill.
 
 The first half is <code>B is-midpoint-of C c′</code>, which we already have.
