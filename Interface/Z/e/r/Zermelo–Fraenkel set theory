@@ -23,6 +23,7 @@ First-order logic provides us with two kinds: <code>variable</code> is a variabl
 
 <jh>
 var (variable x y z w)
+var (object s t u)
 var (formula φ)
 </jh>
 
